@@ -191,7 +191,9 @@ DAG 전체 보기 (보조적 접근)
 
 ### 무료 데이터 소스 (현재 확정)
 ```
-가격/지수/환율/인트라데이 : yfinance, Finnhub 무료 (60회/분)
+가격/지수/환율/인트라데이: Finnhub 무료 (GAS에서 직접 호출)
+※ yfinance는 Python 라이브러리로 GAS 환경에서 사용 불가
+
 경제지표 + 캘린더 + 컨센서스: FRED API + Finnhub 무료
 뉴스 헤드라인: RSS (Reuters 등)
 지정학 이벤트: GDELT
