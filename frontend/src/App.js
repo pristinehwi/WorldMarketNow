@@ -5,11 +5,13 @@ import DagGraph from './components/DagGraph';
 import Timeline from './components/Timeline';
 import SidePanel from './components/SidePanel';
 import useMarketData from './hooks/useMarketData';
+import GeoMap from './components/GeoMap';
 
 function App() {
   const { data, loading, error } = useMarketData();
   const [selectedThread, setSelectedThread] = useState(null);
   const [activeTimeEvent, setActiveTimeEvent] = useState(null);
+  const [popupNode, setPopupNode] = useState(null);
 
   useEffect(() => {
     if (data?.threads?.length > 0 && !selectedThread) {
@@ -17,58 +19,73 @@ function App() {
     }
   }, [data]);
 
+  const handleTimeEventSelect = (event) => {
+    setActiveTimeEvent(event);
+    setPopupNode(null);
+  };
+
+  const handleThreadSelect = (thread) => {
+    setSelectedThread(thread);
+    setActiveTimeEvent(null);
+    setPopupNode(null);
+  };
+
   if (loading) return (
     <div className="loading-screen">
       <div className="loading-spinner" />
-      <p>시장 인과 구조 분석 중...</p>
+      <p>글로벌 시장 데이터 로딩 중...</p>
     </div>
   );
-
   if (error) return (
     <div className="error-screen">
       <p>데이터 로딩 오류: {error}</p>
     </div>
   );
-
   if (!data) return null;
 
   return (
     <div className="app">
-      {/* HEADLINE ZONE */}
       <HeadlineZone
         headline={data.headline}
         threads={data.threads}
         selectedThread={selectedThread}
-        onThreadSelect={setSelectedThread}
+        onThreadSelect={handleThreadSelect}
         layerSummary={data.layer_summary}
         generatedAt={data.generated_at}
       />
 
-      {/* MAIN ZONE */}
       <div className="main-zone">
-        <div className="dag-container">
+        <div className="dag-container" style={{ marginRight: selectedThread ? 300 : 0 }}>
           <DagGraph
             thread={selectedThread}
             activeTimeEvent={activeTimeEvent}
+            onNodeClick={(node) => setActiveTimeEvent(node)}
+            popupNode={popupNode}
+            setPopupNode={setPopupNode}
           />
         </div>
+
         <div className="timeline-container">
           <Timeline
             threads={data.threads}
             selectedThread={selectedThread}
-            onThreadSelect={setSelectedThread}
-            onTimeEventSelect={setActiveTimeEvent}
+            onThreadSelect={handleThreadSelect}
+            onTimeEventSelect={handleTimeEventSelect}
           />
         </div>
-      </div>
 
-      {/* SIDE PANEL */}
-      {selectedThread && (
-        <SidePanel
-          thread={selectedThread}
-          onClose={() => setSelectedThread(null)}
-        />
-      )}
+        {selectedThread && (
+          <div className="sidepanel-container">
+            <SidePanel
+              thread={selectedThread}
+              onClose={() => setSelectedThread(null)}
+            />
+          </div>
+        )}
+
+        {/* 지도 — main-zone 기준 absolute 오버레이 */}
+        <GeoMap thread={selectedThread} />
+      </div>
     </div>
   );
 }

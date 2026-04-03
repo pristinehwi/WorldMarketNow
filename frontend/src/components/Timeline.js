@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Timeline({ threads, selectedThread, onThreadSelect, onTimeEventSelect }) {
+  const [activeFreq, setActiveFreq] = useState(null); // null = 전체
 
   const frequencyColor = (freq) => {
     switch(freq) {
@@ -20,9 +21,14 @@ function Timeline({ threads, selectedThread, onThreadSelect, onTimeEventSelect }
     }
   };
 
-  // 모든 스레드의 노드를 타임스탬프 기준으로 정렬
+  // 프리퀀시 필터 적용된 스레드
+  const filteredThreads = activeFreq
+    ? threads?.filter(t => t.frequency === activeFreq)
+    : threads;
+
+  // 이벤트 수집 (필터 적용)
   const allEvents = [];
-  threads?.forEach(thread => {
+  filteredThreads?.forEach(thread => {
     thread.nodes?.forEach(node => {
       if (node.timestamp && node.timestamp !== 'current' && node.timestamp !== '예상') {
         allEvents.push({
@@ -36,6 +42,10 @@ function Timeline({ threads, selectedThread, onThreadSelect, onTimeEventSelect }
     });
   });
 
+  const handleFreqClick = (freq) => {
+    setActiveFreq(prev => prev === freq ? null : freq); // 토글
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header">
@@ -43,13 +53,18 @@ function Timeline({ threads, selectedThread, onThreadSelect, onTimeEventSelect }
         <span className="timeline-note">Claude 자동 배정</span>
       </div>
 
-      {/* 프리퀀시 필터 */}
+      {/* 프리퀀시 탭 — 클릭 필터링 */}
       <div className="frequency-tabs">
         {['OVERNIGHT', 'WEEKLY', 'MONTHLY'].map(freq => (
           <div
             key={freq}
-            className="freq-tab"
-            style={{ borderColor: frequencyColor(freq) }}
+            className={`freq-tab ${activeFreq === freq ? 'active' : ''}`}
+            style={{
+              borderColor: frequencyColor(freq),
+              background: activeFreq === freq ? `${frequencyColor(freq)}22` : 'transparent',
+              cursor: 'pointer'
+            }}
+            onClick={() => handleFreqClick(freq)}
           >
             <span style={{ color: frequencyColor(freq) }}>
               {frequencyLabel(freq)}
@@ -63,7 +78,7 @@ function Timeline({ threads, selectedThread, onThreadSelect, onTimeEventSelect }
 
       {/* 스레드 리스트 */}
       <div className="timeline-threads">
-        {threads?.map(thread => (
+        {filteredThreads?.map(thread => (
           <div
             key={thread.id}
             className={`timeline-thread ${selectedThread?.id === thread.id ? 'active' : ''}`}
@@ -92,7 +107,14 @@ function Timeline({ threads, selectedThread, onThreadSelect, onTimeEventSelect }
       {/* 이벤트 타임라인 */}
       {allEvents.length > 0 && (
         <div className="event-timeline">
-          <div className="event-timeline-title">주요 이벤트</div>
+          <div className="event-timeline-title">
+            주요 이벤트
+            {activeFreq && (
+              <span style={{ color: frequencyColor(activeFreq), marginLeft: 6, fontSize: 10 }}>
+                ({frequencyLabel(activeFreq)} 필터 중)
+              </span>
+            )}
+          </div>
           {allEvents.map((event, i) => (
             <div
               key={i}

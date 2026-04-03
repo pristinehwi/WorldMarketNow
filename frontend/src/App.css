@@ -18,7 +18,8 @@ body {
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* ── 로딩 / 에러 ── */
@@ -50,6 +51,7 @@ body {
   padding: 24px 32px 16px;
   border-bottom: 1px solid #1a1a2e;
   background: linear-gradient(180deg, #0d0d1a 0%, #0a0a0f 100%);
+  flex-shrink: 0;
 }
 
 .generated-at {
@@ -155,20 +157,35 @@ body {
 .main-zone {
   display: flex;
   flex: 1;
-  height: calc(100vh - 200px);
-  min-height: 500px;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 .dag-container {
   flex: 1;
-  border-right: 1px solid #1a1a2e;
   overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
 }
 
 .timeline-container {
-  width: 300px;
+  width: 260px;
   overflow-y: auto;
   background: #0d0d1a;
+  border-left: 1px solid #1a1a2e;
+  flex-shrink: 0;
+}
+
+.sidepanel-container {
+  position: absolute;
+  top: 0;
+  right: 260px;
+  width: 300px;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 10;
 }
 
 /* ── DAG GRAPH ── */
@@ -202,6 +219,28 @@ body {
   font-size: 12px;
   color: #888;
   line-height: 1.5;
+}
+
+/* ── DAG 활성 이벤트 표시바 ── */
+.dag-active-event {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  margin-bottom: 8px;
+  background: #0d1a0d;
+  border: 1px solid #6bcb7733;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.dag-event-label {
+  color: #6bcb77;
+  font-weight: 600;
+}
+
+.dag-event-source {
+  color: #444;
 }
 
 /* ── TIMELINE ── */
@@ -243,6 +282,11 @@ body {
   border-radius: 4px;
   font-size: 11px;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.freq-tab.active {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
 }
 
 .freq-count {
@@ -372,18 +416,14 @@ body {
 
 /* ── SIDE PANEL ── */
 .side-panel {
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: 360px;
-  height: 100vh;
-  background: #0d0d1a;
+  width: 100%;
+  height: 100%;
+  background: #0d0d1aee;
+  backdrop-filter: blur(8px);
   border-left: 1px solid #1a1a2e;
   overflow-y: auto;
-  z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
 .side-panel-header {
@@ -394,7 +434,7 @@ body {
   border-bottom: 1px solid #1a1a2e;
   position: sticky;
   top: 0;
-  background: #0d0d1a;
+  background: #0d0d1af0;
   z-index: 1;
 }
 
@@ -538,4 +578,86 @@ body {
   .headline-text {
     font-size: 18px;
   }
+}
+
+/* ── 노드 팝업 ── */
+.node-popup {
+  background: #13132a;
+  border: 1px solid #4d96ff55;
+  border-radius: 8px;
+  padding: 12px 14px;
+  min-width: 160px;
+  max-width: 220px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.node-popup-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.node-popup-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4d96ff;
+  margin-bottom: 4px;
+}
+
+.node-popup-source {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.node-popup-time {
+  font-size: 11px;
+  color: #444;
+}
+
+.node-popup-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: #444;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.node-popup-close:hover {
+  color: #fff;
+}
+
+/* ── 지정학 지도 ── */
+.geomap-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 560px;
+  background: #0a0a0fee;
+  border-top: 1px solid #1a1a2e;
+  backdrop-filter: blur(8px);
+  z-index: 5;
+}
+
+.geomap-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  font-size: 11px;
+}
+
+.geomap-title {
+  color: #6bcb77;
+  font-weight: 700;
+}
+
+.geomap-thread {
+  color: #555;
+  font-size: 10px;
 }
