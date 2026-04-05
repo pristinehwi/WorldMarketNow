@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
-function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNode }) {
+function DagGraph({ thread, activeTimeEvent, onNodeClick, onOpenPanel }) {
   const svgRef = useRef(null);
+  const [selectedNode, setSelectedNode] = useState(null);
 
   useEffect(() => {
     if (!thread || !svgRef.current) return;
@@ -13,6 +14,10 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
     drawDAG(thread, activeTimeEvent);
     return () => observer.disconnect();
   }, [thread, activeTimeEvent]);
+
+  useEffect(() => {
+    setSelectedNode(null);
+  }, [thread]);
 
   const assignLevels = (nodes, edges) => {
     const levels = {};
@@ -48,6 +53,35 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
     return Array.from(chainSet).sort((a, b) => (levels[a] || 0) - (levels[b] || 0));
   };
 
+  // 텍스트 너비 추정 (한글/영문 혼합 고려)
+  const estimateTextWidth = (text, fontSize = 11) => {
+    if (!text) return 0;
+    let width = 0;
+    for (const ch of text) {
+      // 한글/CJK는 영문의 약 1.8배 너비
+      if (ch.charCodeAt(0) > 127) {
+        width += fontSize * 1.1;
+      } else {
+        width += fontSize * 0.6;
+      }
+    }
+    return width;
+  };
+
+  // 노드 크기 계산 — value가 "기저→평가" 형식일 때 충분한 너비 확보
+  const calcNodeSize = (label, value) => {
+    const labelLines = (label || '').split(' ');
+    const maxLabelW = Math.max(...labelLines.map(w => estimateTextWidth(w, 11)));
+
+    // value가 "$106.81→$106.38 (-0.40%)" 같은 형식이면 더 넓게
+    const valueW = value ? estimateTextWidth(value, 11) : 0;
+
+    const nodeW = Math.max(90, maxLabelW + 24, valueW + 24);
+    const nodeH = Math.max(50, labelLines.length * 16 + (value ? 22 : 6) + 16);
+
+    return { nodeW, nodeH };
+  };
+
   const drawDAG = (thread, activeEvent) => {
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove();
@@ -57,8 +91,15 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
     const levels = assignLevels(nodes, edges);
     const maxLevel = Math.max(...Object.values(levels), 0);
 
-    const CANVAS_W = Math.max(800, (maxLevel + 1) * 160 + 120);
-    const CANVAS_H = 500;
+    // 노드 크기 미리 계산해서 캔버스 크기 결정
+    const nodeSizes = {};
+    nodes.forEach(n => {
+      nodeSizes[n.id] = calcNodeSize(n.label, n.value);
+    });
+    const maxNodeW = Math.max(...Object.values(nodeSizes).map(s => s.nodeW));
+
+    const CANVAS_W = Math.max(900, (maxLevel + 1) * (maxNodeW + 80) + 120);
+    const CANVAS_H = 520;
     const PADDING_X = 80;
     const PADDING_Y = 60;
 
@@ -80,7 +121,7 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
 
     svg.on('click', (event) => {
       if (event.target === svgRef.current || event.target.tagName === 'svg') {
-        setPopupNode(null);
+        setSelectedNode(null);
       }
     });
 
@@ -113,7 +154,7 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
     defs.append('marker')
       .attr('id', 'arrow')
       .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 28).attr('refY', 0)
+      .attr('refX', 60).attr('refY', 0)
       .attr('markerWidth', 6).attr('markerHeight', 6)
       .attr('orient', 'auto')
       .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', '#4d96ff');
@@ -121,7 +162,7 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
     defs.append('marker')
       .attr('id', 'arrow-dim')
       .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 28).attr('refY', 0)
+      .attr('refX', 60).attr('refY', 0)
       .attr('markerWidth', 6).attr('markerHeight', 6)
       .attr('orient', 'auto')
       .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', '#2a2a3a');
@@ -163,20 +204,32 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
       const chainIndex = orderedChain ? orderedChain.indexOf(node.id) : -1;
       const animDelay = chainIndex >= 0 ? chainIndex * 180 : 0;
 
+      const { nodeW, nodeH } = nodeSizes[node.id] || calcNodeSize(node.label, node.value);
+      const rx = 10;
+
+      const strokeColor = isTarget ? '#6bcb77' : (isKorea ? '#ff6b6b' : (isInChain ? '#4d96ff' : '#222'));
+      const fillColor = isTarget ? '#0d1a0d' : (isKorea ? '#1a0a0a' : '#0d0d1e');
+      const strokeW = isTarget ? 2.5 : (isInChain ? 1.5 : 0.5);
+
       const g = zoomGroup.append('g')
         .attr('transform', `translate(${pos.x}, ${pos.y})`)
         .style('cursor', 'pointer')
         .style('opacity', isInChain ? (activeChain ? 0 : 1) : 0.1);
 
-      g.append('circle')
-        .attr('r', isKorea ? 36 : (isTarget ? 34 : 30))
-        .attr('fill', isTarget ? '#0d1a0d' : (isKorea ? '#1a0a0a' : '#0d0d1e'))
-        .attr('stroke', isTarget ? '#6bcb77' : (isKorea ? '#ff6b6b' : (isInChain ? '#4d96ff' : '#222')))
-        .attr('stroke-width', isTarget ? 2.5 : (isInChain ? 1.5 : 0.5));
+      g.append('rect')
+        .attr('x', -nodeW / 2).attr('y', -nodeH / 2)
+        .attr('width', nodeW).attr('height', nodeH)
+        .attr('rx', rx).attr('ry', rx)
+        .attr('fill', fillColor)
+        .attr('stroke', strokeColor)
+        .attr('stroke-width', strokeW);
 
-      const words = (node.label || '').split(' ');
-      const lineHeight = 13;
-      const startY = -(words.length - 1) * lineHeight / 2;
+      const label = node.label || '';
+      const words = label.split(' ');
+      const lineHeight = 15;
+      const totalTextH = words.length * lineHeight + (node.value ? 18 : 0);
+      const startY = -(totalTextH / 2) + lineHeight / 2;
+
       words.forEach((word, i) => {
         g.append('text')
           .attr('y', startY + i * lineHeight)
@@ -192,45 +245,39 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
           .attr('y', startY + words.length * lineHeight)
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'middle')
-          .attr('font-size', '11px')
+          .attr('font-size', '10px')
+          .attr('font-weight', '700')
           .attr('fill', isTarget ? '#6bcb77' : (isInChain ? '#4d96ff' : '#2a2a3a'))
           .text(node.value);
       }
 
-      g.append('title').text(`${node.label}\n출처: ${node.source || ''}`);
-
       g.on('click', (event) => {
         event.stopPropagation();
-        const svgRect = svgRef.current.getBoundingClientRect();
-        const containerRect = svgRef.current.parentElement.getBoundingClientRect();
-        const scaleX = svgRect.width / CANVAS_W;
-        const scaleY = svgRect.height / CANVAS_H;
-        const px = (pos.x * scaleX) + (svgRect.left - containerRect.left);
-        const py = (pos.y * scaleY) + (svgRect.top - containerRect.top);
-        setPopupNode({ node, x: px, y: py });
+        setSelectedNode(node);
         if (onNodeClick) onNodeClick(node);
       });
 
-      g.on('mouseenter', function() {
-        d3.select(this).select('circle')
+      g.on('mouseenter', function () {
+        d3.select(this).select('rect')
           .transition().duration(150)
-          .attr('r', isKorea ? 40 : (isTarget ? 38 : 34));
+          .attr('x', -(nodeW / 2 + 4)).attr('y', -(nodeH / 2 + 4))
+          .attr('width', nodeW + 8).attr('height', nodeH + 8);
       });
-      g.on('mouseleave', function() {
-        d3.select(this).select('circle')
+      g.on('mouseleave', function () {
+        d3.select(this).select('rect')
           .transition().duration(150)
-          .attr('r', isKorea ? 36 : (isTarget ? 34 : 30));
+          .attr('x', -nodeW / 2).attr('y', -nodeH / 2)
+          .attr('width', nodeW).attr('height', nodeH);
       });
 
       if (isInChain && activeChain) {
-        g.transition()
-          .delay(animDelay)
-          .duration(300)
-          .style('opacity', 1);
+        g.transition().delay(animDelay).duration(300).style('opacity', 1);
 
         if (isTarget) {
-          const pulse = g.append('circle')
-            .attr('r', 36)
+          const pulse = g.append('rect')
+            .attr('x', -nodeW / 2).attr('y', -nodeH / 2)
+            .attr('width', nodeW).attr('height', nodeH)
+            .attr('rx', rx).attr('ry', rx)
             .attr('fill', 'none')
             .attr('stroke', '#6bcb77')
             .attr('stroke-width', 1)
@@ -238,10 +285,12 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
 
           const doPulse = () => {
             pulse
-              .attr('r', 36)
+              .attr('x', -nodeW / 2).attr('y', -nodeH / 2)
+              .attr('width', nodeW).attr('height', nodeH)
               .style('opacity', 0.8)
               .transition().duration(900)
-              .attr('r', 54)
+              .attr('x', -nodeW / 2 - 12).attr('y', -nodeH / 2 - 12)
+              .attr('width', nodeW + 24).attr('height', nodeH + 24)
               .style('opacity', 0)
               .on('end', doPulse);
           };
@@ -252,40 +301,43 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, popupNode, setPopupNod
   };
 
   return (
-    <div className="dag-graph" style={{ position: 'relative' }}>
+    <div className="dag-graph">
       <div className="dag-header">
-        <span className="dag-title">{thread?.title}</span>
+        <div className="dag-header-top">
+          <span className="dag-title">{thread?.title}</span>
+          {onOpenPanel && (
+            <button className="dag-detail-btn" onClick={onOpenPanel}>
+              📋 상세
+            </button>
+          )}
+        </div>
         <span className="dag-briefing">{thread?.briefing}</span>
       </div>
+
       {activeTimeEvent && (
         <div className="dag-active-event">
           <span className="dag-event-label">▶ {activeTimeEvent.label}</span>
           <span className="dag-event-source">{activeTimeEvent.source}</span>
         </div>
       )}
+
       <svg ref={svgRef} style={{ width: '100%', flex: 1 }} />
 
-      {popupNode && (
-        <div
-          className="node-popup"
-          style={{
-            position: 'absolute',
-            left: popupNode.x + 40,
-            top: popupNode.y - 20,
-            zIndex: 50,
-          }}
-        >
-          <div className="node-popup-label">{popupNode.node.label}</div>
-          {popupNode.node.value && (
-            <div className="node-popup-value">{popupNode.node.value}</div>
-          )}
-          {popupNode.node.source && (
-            <div className="node-popup-source">📌 {popupNode.node.source}</div>
-          )}
-          {popupNode.node.timestamp && popupNode.node.timestamp !== 'current' && popupNode.node.timestamp !== '예상' && (
-            <div className="node-popup-time">{popupNode.node.timestamp}</div>
-          )}
-          <button className="node-popup-close" onClick={() => setPopupNode(null)}>✕</button>
+      {selectedNode && (
+        <div className="node-infobar">
+          <div className="node-infobar-left">
+            <span className="node-infobar-label">{selectedNode.label}</span>
+            {selectedNode.value && (
+              <span className="node-infobar-value">{selectedNode.value}</span>
+            )}
+            {selectedNode.source && (
+              <span className="node-infobar-source">📌 {selectedNode.source}</span>
+            )}
+            {selectedNode.timestamp && selectedNode.timestamp !== 'current' && selectedNode.timestamp !== '예상' && (
+              <span className="node-infobar-time">{selectedNode.timestamp}</span>
+            )}
+          </div>
+          <button className="node-infobar-close" onClick={() => setSelectedNode(null)}>✕</button>
         </div>
       )}
     </div>

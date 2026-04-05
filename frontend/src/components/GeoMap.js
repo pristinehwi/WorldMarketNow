@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Leaflet 기본 마커 아이콘 버그 픽스
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -11,14 +10,12 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-// 지정학 키워드
 const GEO_KEYWORDS = [
   '이란', '전쟁', '지정학', '휴전', '분쟁', '제재', '러시아', '우크라이나',
   '중국', '대만', '북한', '중동', 'Gaza', 'Russia', 'China', 'Iran',
   'Ukraine', 'geopolitical', 'war', 'conflict', 'sanction'
 ];
 
-// 키워드 → 지도 중심 좌표 매핑
 const KEYWORD_LOCATIONS = {
   '이란': { lat: 32.4, lng: 53.7, label: '이란' },
   'Iran': { lat: 32.4, lng: 53.7, label: '이란' },
@@ -34,15 +31,11 @@ const KEYWORD_LOCATIONS = {
   'Gaza': { lat: 31.5, lng: 34.4, label: 'Gaza' },
 };
 
-
-
 const isGeopolitical = (thread) => {
   if (!thread) return false;
   const text = `${thread.title} ${thread.briefing} ${thread.nodes?.map(n => n.label).join(' ')}`;
   return GEO_KEYWORDS.some(kw => text.includes(kw));
 };
-
-
 
 const getLocations = (thread) => {
   const text = `${thread.title} ${thread.briefing}`;
@@ -55,14 +48,14 @@ const getLocations = (thread) => {
   return found.length > 0 ? found : [{ lat: 36.0, lng: 60.0, label: '중동/중앙아시아' }];
 };
 
-function GeoMap({ thread }) {
+function GeoMap({ thread, rightOffset = 260 }) {
   if (!thread || !isGeopolitical(thread)) return null;
 
   const locations = getLocations(thread);
   const center = [locations[0].lat, locations[0].lng];
 
   return (
-    <div className="geomap-container">
+    <div className="geomap-container" style={{ right: rightOffset }}>
       <div className="geomap-header">
         <span className="geomap-title">🌍 지정학 지도</span>
         <span className="geomap-thread">{thread.title}</span>

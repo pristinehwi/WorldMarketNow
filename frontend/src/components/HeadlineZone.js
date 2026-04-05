@@ -4,7 +4,6 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
 
-  // 타이핑 애니메이션
   useEffect(() => {
     if (!headline) return;
     setDisplayText('');
@@ -18,7 +17,7 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
         setIsTyping(false);
         clearInterval(timer);
       }
-    }, 80);
+    }, 70);
     return () => clearInterval(timer);
   }, [headline]);
 
@@ -31,32 +30,65 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
-    }) + ' KST';
+    }) + ' KST 기준';
   };
+
+  const freqOrder = { 'OVERNIGHT': 0, 'WEEKLY': 1, 'MONTHLY': 2 };
 
   const frequencyColor = (freq) => {
     switch(freq) {
-      case 'OVERNIGHT': return '#ff6b6b';
-      case 'WEEKLY':    return '#ffd93d';
-      case 'MONTHLY':   return '#6bcb77';
-      default:          return '#4d96ff';
+      case 'OVERNIGHT': return '#e05c5c';
+      case 'WEEKLY':    return '#c9a227';
+      case 'MONTHLY':   return '#52b788';
+      default:          return '#5b8dee';
     }
   };
 
+  const frequencyLabel = (freq) => {
+    switch(freq) {
+      case 'OVERNIGHT': return 'OVERNIGHT';
+      case 'WEEKLY':    return 'WEEKLY';
+      case 'MONTHLY':   return 'MONTHLY';
+      default:          return freq;
+    }
+  };
+
+  const freqBarWidth = (freq) => {
+    switch(freq) {
+      case 'OVERNIGHT': return 4;
+      case 'WEEKLY':    return 3;
+      case 'MONTHLY':   return 2;
+      default:          return 3;
+    }
+  };
+
+  const freqCardHeight = (freq) => {
+    switch(freq) {
+      case 'OVERNIGHT': return 84;
+      case 'WEEKLY':    return 80;
+      case 'MONTHLY':   return 76;
+      default:          return 80;
+    }
+  };
+
+  // 프리퀀시 우선 정렬, 같은 프리퀀시 내 priority 순
+  const sortedThreads = threads
+    ? [...threads].sort((a, b) => {
+        const fo = (freqOrder[a.frequency] ?? 9) - (freqOrder[b.frequency] ?? 9);
+        if (fo !== 0) return fo;
+        return (a.priority || 9) - (b.priority || 9);
+      })
+    : [];
+
   return (
     <div className="headline-zone">
-      {/* 생성 시각 */}
-      <div className="generated-at">
-        {formatTime(generatedAt)} 기준
-      </div>
+      <div className="generated-at">{formatTime(generatedAt)}</div>
 
-      {/* 헤드라인 타이핑 */}
       <div className="headline-text">
         {displayText}
         {isTyping && <span className="cursor">|</span>}
       </div>
 
-      {/* 3레이어 요약 */}
       {layerSummary && (
         <div className="layer-summary">
           <span className="layer-badge layer1">배경</span>
@@ -64,26 +96,44 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
         </div>
       )}
 
-      {/* 스레드 썸네일 */}
       <div className="thread-thumbnails">
-        {threads?.map((thread) => (
-          <div
-            key={thread.id}
-            className={`thread-thumb ${selectedThread?.id === thread.id ? 'active' : ''}`}
-            onClick={() => onThreadSelect(thread)}
-            style={{ borderColor: frequencyColor(thread.frequency) }}
-          >
-            <div className="thread-priority"
-              style={{ background: frequencyColor(thread.frequency) }}>
-              #{thread.priority}
+        {sortedThreads.map((thread, idx) => {
+          const color = frequencyColor(thread.frequency);
+          const barW = freqBarWidth(thread.frequency);
+          const cardH = freqCardHeight(thread.frequency);
+          const isActive = selectedThread?.id === thread.id;
+
+          return (
+            <div
+              key={thread.id}
+              className={`thread-thumb ${isActive ? 'active' : ''}`}
+              onClick={() => onThreadSelect(thread)}
+              style={{
+                borderColor: isActive ? color : `${color}55`,
+                height: cardH,
+                boxShadow: isActive ? `0 0 14px ${color}33` : 'none',
+              }}
+            >
+              {/* 좌측 프리퀀시 바 */}
+              <div className="thread-freq-indicator" style={{
+                width: barW,
+                background: color,
+              }} />
+
+              <div className="thread-thumb-content">
+                <div className="thread-priority-row">
+                  <span className="thread-priority" style={{ background: color }}>
+                    #{idx + 1}
+                  </span>
+                  <span className="thread-freq-label" style={{ color }}>
+                    {frequencyLabel(thread.frequency)}
+                  </span>
+                </div>
+                <div className="thread-title">{thread.title}</div>
+              </div>
             </div>
-            <div className="thread-title">{thread.title}</div>
-            <div className="thread-freq"
-              style={{ color: frequencyColor(thread.frequency) }}>
-              {thread.frequency}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
