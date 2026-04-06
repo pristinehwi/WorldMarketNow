@@ -30,14 +30,14 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
-    }) + ' KST 기준';
+    }) + ' KST';
   };
 
   const freqOrder = { 'OVERNIGHT': 0, 'WEEKLY': 1, 'MONTHLY': 2 };
 
   const frequencyColor = (freq) => {
     switch(freq) {
-      case 'OVERNIGHT': return '#e05c5c';
+      case 'OVERNIGHT': return '#ff4d4d';
       case 'WEEKLY':    return '#c9a227';
       case 'MONTHLY':   return '#52b788';
       default:          return '#5b8dee';
@@ -53,25 +53,6 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
     }
   };
 
-  const freqBarWidth = (freq) => {
-    switch(freq) {
-      case 'OVERNIGHT': return 4;
-      case 'WEEKLY':    return 3;
-      case 'MONTHLY':   return 2;
-      default:          return 3;
-    }
-  };
-
-  const freqCardHeight = (freq) => {
-    switch(freq) {
-      case 'OVERNIGHT': return 84;
-      case 'WEEKLY':    return 80;
-      case 'MONTHLY':   return 76;
-      default:          return 80;
-    }
-  };
-
-  // 프리퀀시 우선 정렬, 같은 프리퀀시 내 priority 순
   const sortedThreads = threads
     ? [...threads].sort((a, b) => {
         const fo = (freqOrder[a.frequency] ?? 9) - (freqOrder[b.frequency] ?? 9);
@@ -82,25 +63,37 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
 
   return (
     <div className="headline-zone">
-      <div className="generated-at">{formatTime(generatedAt)}</div>
-
-      <div className="headline-text">
-        {displayText}
-        {isTyping && <span className="cursor">|</span>}
+      {/* 상단 메타 정보 */}
+      <div className="headline-meta-row">
+        <div className="generated-at">{formatTime(generatedAt)} 기준</div>
+        <div className="live-indicator">
+          <span className="live-dot" />
+          <span className="live-text">LIVE</span>
+        </div>
       </div>
 
-      {layerSummary && (
-        <div className="layer-summary">
-          <span className="layer-badge layer1">배경</span>
-          <span className="layer-text">{layerSummary.layer1}</span>
+      {/* 헤드라인 + 배경 레이어 */}
+      <div className="headline-main">
+        <div className="headline-text">
+          {displayText}
+          {isTyping && <span className="cursor">|</span>}
         </div>
-      )}
 
+        {layerSummary && (
+          <div className="layer-summary">
+            <span className="layer-badge layer1">배경</span>
+            <span className="layer-text">{layerSummary.layer1}</span>
+          </div>
+        )}
+      </div>
+
+      {/* 구분선 */}
+      <div className="headline-divider" />
+
+      {/* 스레드 탭 카드 — 하단에 탭처럼 붙음 */}
       <div className="thread-thumbnails">
         {sortedThreads.map((thread, idx) => {
           const color = frequencyColor(thread.frequency);
-          const barW = freqBarWidth(thread.frequency);
-          const cardH = freqCardHeight(thread.frequency);
           const isActive = selectedThread?.id === thread.id;
 
           return (
@@ -109,16 +102,13 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
               className={`thread-thumb ${isActive ? 'active' : ''}`}
               onClick={() => onThreadSelect(thread)}
               style={{
-                borderColor: isActive ? color : `${color}55`,
-                height: cardH,
-                boxShadow: isActive ? `0 0 14px ${color}33` : 'none',
+                '--freq-color': color,
+                borderColor: isActive ? color : `${color}44`,
+                borderBottomColor: isActive ? 'transparent' : `${color}44`,
               }}
             >
-              {/* 좌측 프리퀀시 바 */}
-              <div className="thread-freq-indicator" style={{
-                width: barW,
-                background: color,
-              }} />
+              {/* 상단 프리퀀시 하이라이트 바 */}
+              <div className="thread-top-bar" style={{ background: color }} />
 
               <div className="thread-thumb-content">
                 <div className="thread-priority-row">

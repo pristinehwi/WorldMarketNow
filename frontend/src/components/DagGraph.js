@@ -73,12 +73,25 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, onOpenPanel }) {
     const labelLines = (label || '').split(' ');
     const maxLabelW = Math.max(...labelLines.map(w => estimateTextWidth(w, 11)));
 
-    // value가 "$106.81→$106.38 (-0.40%)" 같은 형식이면 더 넓게
-    const valueW = value ? estimateTextWidth(value, 11) : 0;
+    // value가 "기저→평가" 형식이면 두 줄로 분리해서 계산
+    let valueW = 0;
+    let valueLines = 1;
+    if (value) {
+      const arrowIdx = value.indexOf('→');
+      if (arrowIdx > -1) {
+        // 화살표 기준으로 두 줄: "기저→평가" / "(변동률%)"
+        const parenIdx = value.lastIndexOf('(');
+        const line1 = parenIdx > -1 ? value.slice(0, parenIdx).trim() : value;
+        const line2 = parenIdx > -1 ? value.slice(parenIdx).trim() : '';
+        valueW = Math.max(estimateTextWidth(line1, 10), estimateTextWidth(line2, 10));
+        valueLines = line2 ? 2 : 1;
+      } else {
+        valueW = estimateTextWidth(value, 10);
+      }
+    }
 
-    const nodeW = Math.max(90, maxLabelW + 24, valueW + 24);
-    const nodeH = Math.max(50, labelLines.length * 16 + (value ? 22 : 6) + 16);
-
+    const nodeW = Math.max(100, maxLabelW + 28, valueW + 28);
+    const nodeH = Math.max(52, labelLines.length * 16 + valueLines * 15 + 22);
     return { nodeW, nodeH };
   };
 
@@ -190,7 +203,7 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, onOpenPanel }) {
           .attr('x', mx).attr('y', my - 6)
           .attr('text-anchor', 'middle')
           .attr('font-size', '11px')
-          .attr('fill', '#555')
+          .attr('fill', '#6a6a9a')
           .text(edge.label);
       }
     });
@@ -241,14 +254,44 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, onOpenPanel }) {
       });
 
       if (node.value) {
-        g.append('text')
-          .attr('y', startY + words.length * lineHeight)
-          .attr('text-anchor', 'middle')
-          .attr('dominant-baseline', 'middle')
-          .attr('font-size', '10px')
-          .attr('font-weight', '700')
-          .attr('fill', isTarget ? '#6bcb77' : (isInChain ? '#4d96ff' : '#2a2a3a'))
-          .text(node.value);
+        const arrowIdx = node.value.indexOf('→');
+        const parenIdx = node.value.lastIndexOf('(');
+        const hasArrow = arrowIdx > -1 && parenIdx > -1;
+
+        if (hasArrow) {
+          // 두 줄 렌더링
+          const line1 = node.value.slice(0, parenIdx).trim();
+          const line2 = node.value.slice(parenIdx).trim();
+          const valueColor = line2.startsWith('(-') ? '#ff4d4d' : '#52b788';
+
+          g.append('text')
+            .attr('y', startY + words.length * lineHeight)
+            .attr('text-anchor', 'middle')
+            .attr('dominant-baseline', 'middle')
+            .attr('font-size', '9px')
+            .attr('fill', isInChain ? '#aaaacc' : '#2a2a3a')
+            .text(line1);
+
+          g.append('text')
+            .attr('y', startY + words.length * lineHeight + 13)
+            .attr('text-anchor', 'middle')
+            .attr('dominant-baseline', 'middle')
+            .attr('font-size', '10px')
+            .attr('font-weight', '700')
+            .attr('fill', isTarget ? '#6bcb77' : (isInChain ? valueColor : '#2a2a3a'))
+            .text(line2);
+        } else {
+          // 단일 줄
+          const valueColor = node.value.startsWith('-') ? '#ff4d4d' : '#52b788';
+          g.append('text')
+            .attr('y', startY + words.length * lineHeight)
+            .attr('text-anchor', 'middle')
+            .attr('dominant-baseline', 'middle')
+            .attr('font-size', '10px')
+            .attr('font-weight', '700')
+            .attr('fill', isTarget ? '#6bcb77' : (isInChain ? valueColor : '#2a2a3a'))
+            .text(node.value);
+        }
       }
 
       g.on('click', (event) => {
