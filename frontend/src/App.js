@@ -5,7 +5,6 @@ import DagGraph from './components/DagGraph';
 import Timeline from './components/Timeline';
 import SidePanel from './components/SidePanel';
 import useMarketData from './hooks/useMarketData';
-import GeoMap from './components/GeoMap';
 
 function App() {
   const { data, loading, error } = useMarketData();
@@ -92,7 +91,6 @@ function App() {
               onNodeClick={(node) => setActiveTimeEvent(node)}
               onOpenPanel={() => setShowMobilePanel(true)}
             />
-            <GeoMap thread={selectedThread} rightOffset={0} />
           </div>
         )}
 
@@ -144,15 +142,6 @@ function App() {
           />
         </div>
 
-        <div className="timeline-container">
-          <Timeline
-            threads={data.threads}
-            selectedThread={selectedThread}
-            onThreadSelect={handleThreadSelect}
-            onTimeEventSelect={handleTimeEventSelect}
-          />
-        </div>
-
         {selectedThread && showPanel && (
           <div className="sidepanel-container">
             <SidePanel
@@ -162,10 +151,14 @@ function App() {
           </div>
         )}
 
-        <GeoMap
-          thread={selectedThread}
-          rightOffset={selectedThread && showPanel ? 560 : 260}
-        />
+        <div className="timeline-container">
+          <Timeline
+            threads={data.threads}
+            selectedThread={selectedThread}
+            onThreadSelect={handleThreadSelect}
+            onTimeEventSelect={handleTimeEventSelect}
+          />
+        </div>
       </div>
     </div>
   );

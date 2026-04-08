@@ -5,6 +5,7 @@ function SidePanel({ thread, onClose }) {
 
   const frequencyColor = (freq) => {
     switch(freq) {
+      case 'NOW':
       case 'OVERNIGHT': return '#ff6b6b';
       case 'WEEKLY':    return '#ffd93d';
       case 'MONTHLY':   return '#6bcb77';
@@ -51,7 +52,7 @@ function SidePanel({ thread, onClose }) {
 
       {/* 엣지 목록 */}
       <div className="side-panel-section">
-        <div className="section-title">인과 연결</div>
+        <div className="section-title">인과 연결고리</div>
         {thread.edges?.map((edge, i) => {
           const fromNode = thread.nodes?.find(n => n.id === edge.from);
           const toNode = thread.nodes?.find(n => n.id === edge.to);

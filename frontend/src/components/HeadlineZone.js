@@ -33,10 +33,11 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
     }) + ' KST';
   };
 
-  const freqOrder = { 'OVERNIGHT': 0, 'WEEKLY': 1, 'MONTHLY': 2 };
+  const freqOrder = { 'NOW': 0, 'OVERNIGHT': 0, 'WEEKLY': 1, 'MONTHLY': 2 };
 
   const frequencyColor = (freq) => {
     switch(freq) {
+      case 'NOW':
       case 'OVERNIGHT': return '#ff4d4d';
       case 'WEEKLY':    return '#c9a227';
       case 'MONTHLY':   return '#52b788';
@@ -46,7 +47,8 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
 
   const frequencyLabel = (freq) => {
     switch(freq) {
-      case 'OVERNIGHT': return 'OVERNIGHT';
+      case 'NOW':
+      case 'OVERNIGHT': return 'NOW';
       case 'WEEKLY':    return 'WEEKLY';
       case 'MONTHLY':   return 'MONTHLY';
       default:          return freq;
@@ -90,7 +92,7 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
       {/* 구분선 */}
       <div className="headline-divider" />
 
-      {/* 스레드 탭 카드 — 하단에 탭처럼 붙음 */}
+      {/* 스레드 탭 카드 */}
       <div className="thread-thumbnails">
         {sortedThreads.map((thread, idx) => {
           const color = frequencyColor(thread.frequency);
@@ -99,27 +101,47 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
           return (
             <div
               key={thread.id}
-              className={`thread-thumb ${isActive ? 'active' : ''}`}
+              className={`thread-thumb ${isActive ? 'active' : ''} freq-${thread.frequency.toLowerCase().replace(/\s/g, '')}`}
               onClick={() => onThreadSelect(thread)}
               style={{
-                '--freq-color': color,
-                borderColor: isActive ? color : `${color}44`,
-                borderBottomColor: isActive ? 'transparent' : `${color}44`,
+                minWidth: isActive ? '180px' : '120px',
+                maxWidth: isActive ? '255px' : '170px',
+                transform: isActive ? 'translateY(-3px)' : 'none',
+                transformOrigin: 'bottom center',
+                zIndex: isActive ? 10 : 1,
+                background: isActive ? `${color}18` : 'transparent',
+                border: isActive
+                  ? `1px solid ${color}`
+                  : `1px solid ${color}44`,
+                borderBottom: 'none',
               }}
             >
-              {/* 상단 프리퀀시 하이라이트 바 */}
-              <div className="thread-top-bar" style={{ background: color }} />
+              <div className="thread-top-bar" style={{
+                background: color,
+                height: isActive ? '4px' : '2px',
+                opacity: isActive ? 1 : 0.7,
+                boxShadow: isActive ? `0 0 8px ${color}` : 'none',
+              }} />
 
               <div className="thread-thumb-content">
                 <div className="thread-priority-row">
                   <span className="thread-priority" style={{ background: color }}>
                     #{idx + 1}
                   </span>
-                  <span className="thread-freq-label" style={{ color }}>
+                  <span className="thread-freq-label" style={{
+                    color,
+                    fontSize: isActive ? '10px' : '9px',
+                  }}>
                     {frequencyLabel(thread.frequency)}
                   </span>
                 </div>
-                <div className="thread-title">{thread.title}</div>
+                <div className="thread-title" style={{
+                  fontSize: isActive ? '13px' : '12px',
+                  fontWeight: isActive ? 600 : 500,
+                  color: isActive ? '#f0f0ff' : '#c8c8e0',
+                }}>
+                  {thread.title}
+                </div>
               </div>
             </div>
           );
