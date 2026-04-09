@@ -88,6 +88,7 @@ function App() {
             <DagGraph
               thread={selectedThread}
               activeTimeEvent={activeTimeEvent}
+              prices={data.prices}
               onNodeClick={(node) => setActiveTimeEvent(node)}
               onOpenPanel={() => setShowMobilePanel(true)}
             />
@@ -137,6 +138,7 @@ function App() {
           <DagGraph
             thread={selectedThread}
             activeTimeEvent={activeTimeEvent}
+            prices={data.prices}
             onNodeClick={(node) => { setActiveTimeEvent(node); setShowPanel(true); }}
             onOpenPanel={() => setShowPanel(true)}
           />

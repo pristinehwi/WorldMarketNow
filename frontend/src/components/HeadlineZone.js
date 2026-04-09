@@ -6,18 +6,43 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
 
   useEffect(() => {
     if (!headline) return;
+    let i = 0;
+    let deleting = false;
+    let pauseCount = 0;
+    const PAUSE_FRAMES = 30; // 완성 후 잠시 대기 (30 * 60ms = 1.8초)
+
     setDisplayText('');
     setIsTyping(true);
-    let i = 0;
+
     const timer = setInterval(() => {
-      if (i < headline.length) {
-        setDisplayText(headline.slice(0, i + 1));
-        i++;
+      if (!deleting) {
+        // 타이핑 중
+        if (i < headline.length) {
+          setDisplayText(headline.slice(0, i + 1));
+          i++;
+        } else {
+          // 완성 후 대기
+          pauseCount++;
+          if (pauseCount >= PAUSE_FRAMES) {
+            deleting = true;
+            pauseCount = 0;
+          }
+        }
       } else {
-        setIsTyping(false);
-        clearInterval(timer);
+        // 지우는 중
+        if (i > 0) {
+          i--;
+          setDisplayText(headline.slice(0, i));
+        } else {
+          // 다 지운 후 잠깐 대기 후 다시 시작
+          pauseCount++;
+          if (pauseCount >= 10) {
+            deleting = false;
+            pauseCount = 0;
+          }
+        }
       }
-    }, 70);
+    }, 60);
     return () => clearInterval(timer);
   }, [headline]);
 
@@ -30,7 +55,7 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
-    }) + ' KST';
+    });
   };
 
   const freqOrder = { 'NOW': 0, 'OVERNIGHT': 0, 'WEEKLY': 1, 'MONTHLY': 2 };
@@ -67,7 +92,7 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
     <div className="headline-zone">
       {/* 상단 메타 정보 */}
       <div className="headline-meta-row">
-        <div className="generated-at">{formatTime(generatedAt)} 기준</div>
+        <div className="generated-at">Last Refresh Time : {formatTime(generatedAt)}</div>
         <div className="live-indicator">
           <span className="live-dot" />
           <span className="live-text">LIVE</span>

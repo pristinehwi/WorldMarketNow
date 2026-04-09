@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const DATA_URL = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/latest.json';
+const DATA_URL    = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/latest.json';
+const PRICES_URL  = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/prices.json';
 
 function useMarketData() {
   const [data, setData] = useState(null);
@@ -11,10 +12,16 @@ function useMarketData() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      // 캐시 방지용 타임스탬프
-      const url = `${DATA_URL}?t=${Date.now()}`;
-      const res = await axios.get(url);
-      setData(res.data);
+      const t = Date.now();
+      const [res, pricesRes] = await Promise.all([
+        axios.get(`${DATA_URL}?t=${t}`),
+        axios.get(`${PRICES_URL}?t=${t}`).catch(() => ({ data: {} })) // prices.json 없어도 graceful
+      ]);
+      setData({
+        ...res.data,
+        prices:  pricesRes.data.prices  || {},
+        indices: pricesRes.data.indices || {},
+      });
       setError(null);
     } catch (e) {
       setError(e.message);
@@ -25,7 +32,6 @@ function useMarketData() {
 
   useEffect(() => {
     fetchData();
-    // 30분마다 자동 갱신
     const interval = setInterval(fetchData, 30 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);

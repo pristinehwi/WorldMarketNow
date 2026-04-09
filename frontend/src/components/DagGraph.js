@@ -1,130 +1,453 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 
-// ── 미니 차트 팝업 (C) ──────────────────────────────────────
-function MiniChart({ node, onClose }) {
+// ── ETF 공식 명칭 테이블 (발행사 공식 기준) ──────────────────
+const ETF_FULLNAME = {
+  // 미국 주식
+  'SPY':  'SPDR S&P 500 ETF Trust',
+  'QQQ':  'Invesco QQQ Trust (Nasdaq-100)',
+  'DIA':  'SPDR Dow Jones Industrial Average ETF',
+  'IWF':  'iShares Russell 1000 Growth ETF',
+  'IWD':  'iShares Russell 1000 Value ETF',
+  // 국제 주식
+  'EWJ':  'iShares MSCI Japan ETF',
+  'EWY':  'iShares MSCI South Korea ETF',
+  'EWT':  'iShares MSCI Taiwan ETF',
+  'INDA': 'iShares MSCI India ETF',
+  'FXI':  'iShares China Large-Cap ETF',
+  'ASHR': 'Xtrackers Harvest CSI 300 China A-Shares ETF',
+  'EWA':  'iShares MSCI Australia ETF',
+  'EWG':  'iShares MSCI Germany ETF',
+  'EWU':  'iShares MSCI United Kingdom ETF',
+  'EWQ':  'iShares MSCI France ETF',
+  'EEM':  'iShares MSCI Emerging Markets ETF',
+  'EWZ':  'iShares MSCI Brazil ETF',
+  'ACWI': 'iShares MSCI ACWI ETF',
+  // 섹터
+  'XLF':  'Financial Select Sector SPDR Fund',
+  'XLE':  'Energy Select Sector SPDR Fund',
+  'XLK':  'Technology Select Sector SPDR Fund',
+  'IGV':  'iShares Expanded Tech-Software Sector ETF',
+  'XLV':  'Health Care Select Sector SPDR Fund',
+  'XBI':  'SPDR S&P Biotech ETF',
+  'XLI':  'Industrial Select Sector SPDR Fund',
+  'XLB':  'Materials Select Sector SPDR Fund',
+  'XLU':  'Utilities Select Sector SPDR Fund',
+  'XLC':  'Communication Services Select Sector SPDR Fund',
+  'XLY':  'Consumer Discretionary Select Sector SPDR Fund',
+  'XME':  'SPDR S&P Metals & Mining ETF',
+  'XAR':  'SPDR S&P Aerospace & Defense ETF',
+  'EUAD': 'Global X Defense Tech UCITS ETF',
+  'SOXX': 'iShares Semiconductor ETF',
+  'ROBO': 'ROBO Global Robotics & Automation Index ETF',
+  'BLOK': 'Amplify Transformational Data Sharing ETF',
+  'IBB':  'iShares Biotechnology ETF',
+  'ICLN': 'iShares Global Clean Energy ETF',
+  'ARKK': 'ARK Innovation ETF',
+  'VNQ':  'Vanguard Real Estate ETF',
+  // 채권
+  'TLT':  'iShares 20+ Year Treasury Bond ETF',
+  'IEF':  'iShares 7-10 Year Treasury Bond ETF',
+  'BIL':  'SPDR Bloomberg 1-3 Month T-Bill ETF',
+  'TIP':  'iShares TIPS Bond ETF',
+  'LQD':  'iShares iBoxx $ Investment Grade Corporate Bond ETF',
+  'HYG':  'iShares iBoxx $ High Yield Corporate Bond ETF',
+  'EMB':  'iShares J.P. Morgan USD Emerging Markets Bond ETF',
+  'BNDX': 'Vanguard Total International Bond ETF',
+  // 통화
+  'UUP':  'Invesco DB US Dollar Index Bullish Fund',
+  'FXE':  'Invesco CurrencyShares Euro Trust',
+  'FXY':  'Invesco CurrencyShares Japanese Yen Trust',
+  // 원자재
+  'GLD':  'SPDR Gold Shares',
+  'SLV':  'iShares Silver Trust',
+  'GDX':  'VanEck Gold Miners ETF',
+  'USO':  'United States Oil Fund',
+  'GSG':  'iShares S&P GSCI Commodity-Indexed Trust',
+  'COPX': 'Global X Copper Miners ETF',
+  'LIT':  'Global X Lithium & Battery Tech ETF',
+  'NLR':  'VanEck Uranium+Nuclear Energy ETF',
+  'CORN': 'Teucrium Corn Fund',
+  'WEAT': 'Teucrium Wheat Fund',
+  // 변동성
+  'VIXY': 'ProShares VIX Short-Term Futures ETF',
+};
+
+// ── 미니 차트 팝업 (C) — 수직 막대그래프 상대위치 비교 ──────
+function MiniChart({ node, thread, prices, onClose }) {
   const canvasRef = useRef(null);
 
-  useEffect(() => {
-    if (!canvasRef.current) return;
+  // 노드 ticker 추출 (label 괄호 안)
+  const tickerMatch = (node.label || '').match(/\(([A-Z^0-9]+)\)/);
+  const nodeTicker = tickerMatch ? tickerMatch[1] : null;
 
-    // candle 데이터가 있으면 sparkline, 없으면 value 텍스트만
+  // frequency 기반 변동률 키
+  const freq = thread?.frequency || 'NOW';
+  const changeKey = freq === 'MONTHLY' ? 'change_1m'
+                  : freq === 'WEEKLY'  ? 'change_1w'
+                  : 'change_1d';
+
+  // 노드 value에서 변동률 파싱
+  const value = node.value || '';
+  const pctMatch = value.match(/([-+]?[\d.]+)%/);
+  const nodeChangePct = pctMatch ? parseFloat(pctMatch[1]) : null;
+
+  // 날짜 파싱
+  const dateMatch2 = value.match(/\[(\d+\/\d+)\][^→]*→[^[]*\[(\d+\/\d+)\]/);
+  const baseDate = dateMatch2 ? dateMatch2[1] : null;
+  const currDate = dateMatch2 ? dateMatch2[2] : null;
+
+  // 전체 prices 랭킹 (유효한 것만)
+  const allRanked = React.useMemo(() => {
+    if (!prices) return [];
+    return Object.entries(prices)
+      .filter(([, p]) => p && !p.error && p[changeKey] != null)
+      .map(([ticker, p]) => ({ ticker, name: p.name, pct: p[changeKey] }))
+      .sort((a, b) => b.pct - a.pct);
+  }, [prices, changeKey]);
+
+  // 표시 항목: 최고1 / ... / 근접상위2 / 선택 / 근접하위2 / ... / 최저1
+  const displayItems = React.useMemo(() => {
+    if (!allRanked.length) return [];
+    const refPct = nodeChangePct ?? 0;
+    const nodeIdx = nodeTicker
+      ? allRanked.findIndex(r => r.ticker === nodeTicker)
+      : allRanked.findIndex(r => Math.abs(r.pct - refPct) < 0.01);
+    const effectiveIdx = nodeIdx >= 0 ? nodeIdx
+      : allRanked.reduce((best, r, i) =>
+          Math.abs(r.pct - refPct) < Math.abs(allRanked[best].pct - refPct) ? i : best, 0);
+
+    const top = allRanked[0];
+    const bottom = allRanked[allRanked.length - 1];
+    const selected = { ...allRanked[effectiveIdx], isSelected: true };
+
+    // 근접 상위 2개 (선택 제외)
+    const above = allRanked
+      .slice(0, effectiveIdx)
+      .filter(r => r.ticker !== top.ticker)
+      .slice(-2);
+    // 근접 하위 2개 (선택 제외)
+    const below = allRanked
+      .slice(effectiveIdx + 1)
+      .filter(r => r.ticker !== bottom.ticker)
+      .slice(0, 2);
+
+    const items = [];
+    items.push({ ...top, isTop: true });
+    if (above.length > 0) items.push({ type: 'ellipsis' });
+    above.forEach(r => items.push(r));
+    items.push(selected);
+    below.forEach(r => items.push(r));
+    if (below.length > 0) items.push({ type: 'ellipsis' });
+    items.push({ ...bottom, isBottom: true });
+
+    // 중복 제거
+    const seen = new Set();
+    return items.filter(item => {
+      if (item.type === 'ellipsis') return true;
+      if (seen.has(item.ticker)) return false;
+      seen.add(item.ticker);
+      return true;
+    });
+  }, [allRanked, nodeTicker, nodeChangePct]);
+
+  // canvas에 수직 막대그래프 그리기
+  useEffect(() => {
+    if (!canvasRef.current || !displayItems.length) return;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
     const W = canvas.width;
     const H = canvas.height;
 
+    // DPR 적용 — Retina 화면에서 선명하게
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, W, H);
 
-    // value에서 기저/평가 파싱
-    const value = node.value || '';
-    const arrowIdx = value.indexOf('→');
-    const parenIdx = value.lastIndexOf('(');
+    const bars = displayItems.filter(d => d.type !== 'ellipsis');
+    if (!bars.length) return;
 
-    let basePrice = null, currPrice = null, changePct = null;
-    if (arrowIdx > -1) {
-      const rawBase = value.slice(0, arrowIdx).replace(/[^0-9.]/g, '');
-      const rawCurr = parenIdx > -1
-        ? value.slice(arrowIdx + 1, parenIdx).replace(/[^0-9.]/g, '')
-        : value.slice(arrowIdx + 1).replace(/[^0-9.]/g, '');
-      const rawPct = parenIdx > -1 ? value.slice(parenIdx) : '';
-      basePrice = parseFloat(rawBase);
-      currPrice = parseFloat(rawCurr);
-      const pctMatch = rawPct.match(/([-+]?[\d.]+)%/);
-      changePct = pctMatch ? parseFloat(pctMatch[1]) : null;
-    }
+    const maxAbs = Math.max(...allRanked.map(r => Math.abs(r.pct)), 0.1);
+    const totalCols = displayItems.length;
+    const colW = W / totalCols;
+    const topPad = 80;
+    const botPad = 80;
+    const zeroY = topPad + (H - topPad - botPad) / 2;
+    const maxBarH = (H - topPad - botPad) / 2 - 4;
 
-    const isUp = changePct === null ? null : changePct >= 0;
-    const lineColor = isUp === null ? '#5b8dee' : (isUp ? '#52b788' : '#ff4d4d');
-    const fillColor = isUp === null ? '#5b8dee18' : (isUp ? '#52b78818' : '#ff4d4d18');
+    let colIdx = 0;
+    displayItems.forEach((item) => {
+      const cx = colIdx * colW + colW / 2;
+      colIdx++;
 
-    if (basePrice !== null && currPrice !== null && !isNaN(basePrice) && !isNaN(currPrice)) {
-      // 간단한 선형 보간 sparkline (7포인트)
-      const steps = 7;
-      const prices = Array.from({ length: steps }, (_, i) => {
-        const t = i / (steps - 1);
-        // 약간의 노이즈 추가로 자연스럽게
-        const noise = (Math.sin(i * 2.1) * 0.003 + Math.cos(i * 1.7) * 0.002);
-        return basePrice + (currPrice - basePrice) * t + basePrice * noise;
-      });
+      if (item.type === 'ellipsis') {
+        ctx.font = 'bold 11px Inter';
+        ctx.fillStyle = '#4a4a6a';
+        ctx.textAlign = 'center';
+        ctx.fillText('···', cx, zeroY + 4);
+        return;
+      }
 
-      const minP = Math.min(...prices) * 0.998;
-      const maxP = Math.max(...prices) * 1.002;
-      const range = maxP - minP || 1;
+      const pct = item.pct;
+      const isUp = pct >= 0;
+      const barH = Math.abs(pct) / maxAbs * maxBarH;
+      const barW = colW * 0.50;
+      const isSelected = item.isSelected;
 
-      const pad = 8;
-      const toX = (i) => pad + (i / (steps - 1)) * (W - pad * 2);
-      const toY = (p) => pad + (1 - (p - minP) / range) * (H - pad * 2);
+      // 색상
+      let color;
+      if (isSelected) color = '#ffffff';
+      else if (item.isTop) color = '#52b788';
+      else if (item.isBottom) color = '#ff4d4d';
+      else color = isUp ? '#52b788' : '#ff4d4d';
 
-      // fill
-      ctx.beginPath();
-      ctx.moveTo(toX(0), toY(prices[0]));
-      prices.forEach((p, i) => { if (i > 0) ctx.lineTo(toX(i), toY(p)); });
-      ctx.lineTo(toX(steps - 1), H);
-      ctx.lineTo(toX(0), H);
-      ctx.closePath();
-      ctx.fillStyle = fillColor;
-      ctx.fill();
+      // 막대
+      ctx.globalAlpha = isSelected ? 1.0 : (item.isTop || item.isBottom ? 0.85 : 0.55);
+      if (isUp) {
+        ctx.fillStyle = color;
+        ctx.fillRect(cx - barW / 2, zeroY - barH, barW, barH);
+      } else {
+        ctx.fillStyle = color;
+        ctx.fillRect(cx - barW / 2, zeroY, barW, barH);
+      }
+      ctx.globalAlpha = 1.0;
 
-      // line
-      ctx.beginPath();
-      ctx.moveTo(toX(0), toY(prices[0]));
-      prices.forEach((p, i) => { if (i > 0) ctx.lineTo(toX(i), toY(p)); });
-      ctx.strokeStyle = lineColor;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
+      // 선택된 항목 테두리
+      if (isSelected) {
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.5;
+        if (isUp) ctx.strokeRect(cx - barW / 2, zeroY - barH, barW, barH);
+        else ctx.strokeRect(cx - barW / 2, zeroY, barW, barH);
+      }
 
-      // 종가 dot
-      ctx.beginPath();
-      ctx.arc(toX(steps - 1), toY(prices[steps - 1]), 3, 0, Math.PI * 2);
-      ctx.fillStyle = lineColor;
-      ctx.fill();
-    } else {
-      // 데이터 없을 때 중앙 텍스트
-      ctx.font = '11px Inter';
-      ctx.fillStyle = '#4a4a6a';
+      // 티커 레이블 — 선택만 bold
+      ctx.font = isSelected ? 'bold 16px Inter' : '14px Inter';
+      ctx.fillStyle = isSelected ? '#ffffff' : '#c8c8e0';
       ctx.textAlign = 'center';
-      ctx.fillText('가격 데이터 없음', W / 2, H / 2);
-    }
-  }, [node]);
+      ctx.fillText(item.ticker, cx, isUp ? zeroY - barH - 8 : zeroY + barH + 20);
 
-  const value = node.value || '';
-  const arrowIdx = value.indexOf('→');
-  const parenIdx = value.lastIndexOf('(');
-  const changePart = parenIdx > -1 ? value.slice(parenIdx) : '';
-  const pctMatch = changePart.match(/([-+]?[\d.]+)%/);
-  const changePct = pctMatch ? parseFloat(pctMatch[1]) : null;
-  const isUp = changePct === null ? null : changePct >= 0;
+      // % 레이블
+      ctx.font = isSelected ? 'bold 14px Inter' : '12px Inter';
+      ctx.fillStyle = color;
+      ctx.fillText((pct > 0 ? '+' : '') + pct.toFixed(1) + '%', cx,
+        isUp ? zeroY - barH - 26 : zeroY + barH + 38);
+    });
 
+    // 0선
+    ctx.strokeStyle = '#3a3a5a';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, zeroY);
+    ctx.lineTo(W, zeroY);
+    ctx.stroke();
+
+  }, [displayItems, allRanked]);
+
+  // ETF 공식 명칭: 테이블 우선, 없으면 prices.name
+  const etfName = nodeTicker
+    ? (ETF_FULLNAME[nodeTicker] || prices?.[nodeTicker]?.name || null)
+    : null;
+
+  const isUp = nodeChangePct !== null ? nodeChangePct >= 0 : null;
+  const pctColor = '#ffffff';
+
+  // ── 개념 노드 판별: ticker 없거나 prices에 가격 데이터 없음
+  const isConcept = !nodeTicker || !prices?.[nodeTicker];
+
+  // ── 개념 노드: 연결된 edges 찾기
+  const relatedEdges = React.useMemo(() => {
+    if (!isConcept || !thread) return [];
+    const edges = thread.edges || [];
+    return edges.filter(e => e.from === node.id || e.to === node.id).map(e => {
+      const fromNode = (thread.nodes || []).find(n => n.id === e.from);
+      const toNode   = (thread.nodes || []).find(n => n.id === e.to);
+      return {
+        label: e.label,
+        from: fromNode?.label || e.from,
+        to:   toNode?.label   || e.to,
+        dir: e.from === node.id ? 'out' : 'in',
+      };
+    });
+  }, [isConcept, thread, node]);
+
+  // ── 개념 노드 팝업
+  if (isConcept) {
+    return (
+      <div className="mini-chart-popup" onClick={(e) => e.stopPropagation()}>
+        <div className="mini-chart-header">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 3, flex: 1, minWidth: 0 }}>
+            <span className="mini-chart-label" style={{ fontSize: 18, fontWeight: 700, color: '#f0f0ff' }}>
+              {node.label}
+            </span>
+            {node.source && (
+              <span style={{ fontSize: 11, color: '#ff9de2' }}>{node.source}</span>
+            )}
+          </div>
+          <button className="mini-chart-close" onClick={onClose}>✕</button>
+        </div>
+
+        {/* 개념 설명 */}
+        {value && (
+          <div style={{
+            margin: '10px 0',
+            padding: '10px 12px',
+            background: '#0e0e28',
+            borderRadius: 8,
+            border: '1px solid #2a2a4a',
+            fontSize: 13,
+            color: '#c8c8e0',
+            lineHeight: 1.7,
+          }}>
+            {value}
+          </div>
+        )}
+
+        {/* 연결된 인과 관계 */}
+        {relatedEdges.length > 0 && (
+          <div style={{ marginTop: 10 }}>
+            <div style={{ fontSize: 10, color: '#6a6a8a', marginBottom: 6, letterSpacing: 0.5 }}>
+              인과 연결고리
+            </div>
+            {relatedEdges.map((e, i) => (
+              <div key={i} style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                padding: '5px 0',
+                borderBottom: i < relatedEdges.length - 1 ? '1px solid #1a1a2e' : 'none',
+                fontSize: 12,
+              }}>
+                {e.dir === 'out' ? (
+                  <>
+                    <span style={{ color: '#52b788', fontWeight: 600 }}>{e.from}</span>
+                    <span style={{ color: '#4d96ff', fontSize: 10, padding: '1px 6px', background: '#0e1e3a', borderRadius: 3 }}>{e.label}</span>
+                    <span style={{ color: '#c8c8e0' }}>→ {e.to}</span>
+                  </>
+                ) : (
+                  <>
+                    <span style={{ color: '#c8c8e0' }}>{e.from} →</span>
+                    <span style={{ color: '#4d96ff', fontSize: 10, padding: '1px 6px', background: '#0e1e3a', borderRadius: 3 }}>{e.label}</span>
+                    <span style={{ color: '#52b788', fontWeight: 600 }}>{e.to}</span>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* 관련 뉴스 (Claude가 related_news 필드 생성 시) */}
+        {node.related_news?.length > 0 && (
+          <div style={{ marginTop: 12 }}>
+            <div style={{ fontSize: 10, color: '#6a6a8a', marginBottom: 6, letterSpacing: 0.5 }}>
+              관련 뉴스
+            </div>
+            {node.related_news.map((news, i) => (
+              <div key={i} style={{
+                padding: '6px 10px',
+                marginBottom: 4,
+                background: '#0a0a1e',
+                borderRadius: 6,
+                borderLeft: '2px solid #4d96ff',
+                fontSize: 11,
+                color: '#c8c8e0',
+                lineHeight: 1.5,
+              }}>
+                {news.source && (
+                  <span style={{ color: '#ff9de2', fontSize: 10, marginRight: 6 }}>
+                    [{news.source}]
+                  </span>
+                )}
+                {news.title || news}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── 가격 노드 팝업 (기존 막대그래프)
   return (
     <div className="mini-chart-popup" onClick={(e) => e.stopPropagation()}>
       <div className="mini-chart-header">
-        <span className="mini-chart-label">{node.label}</span>
-        {changePct !== null && (
-          <span className="mini-chart-pct" style={{ color: isUp ? '#52b788' : '#ff4d4d' }}>
-            {isUp ? '+' : ''}{changePct.toFixed(2)}%
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 3, flex: 1, minWidth: 0 }}>
+          <span className="mini-chart-label" style={{ fontSize: 18, fontWeight: 700, color: '#f0f0ff' }}>
+            {node.label}
+          </span>
+          {etfName && (
+            <span style={{ fontSize: 12, color: '#ff9de2', fontWeight: 500 }}>
+              {etfName}
+            </span>
+          )}
+        </div>
+        {nodeChangePct !== null && (
+          <span className="mini-chart-pct" style={{ color: pctColor, fontSize: 18, fontWeight: 700, flexShrink: 0 }}>
+            {isUp ? '+' : ''}{nodeChangePct.toFixed(2)}%
           </span>
         )}
         <button className="mini-chart-close" onClick={onClose}>✕</button>
       </div>
+
+      {/* 가격 정보 */}
       {value && (
-        <div className="mini-chart-value">{value}</div>
+        <div className="mini-chart-value" style={{ marginBottom: 8 }}>
+          {baseDate && currDate ? (
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <div>
+                <div style={{ fontSize: 9, color: '#6a6a8a', marginBottom: 1 }}>기저 ({baseDate})</div>
+                <div style={{ fontSize: 12, color: '#c8c8e0', fontWeight: 600 }}>
+                  {value.match(/\[\d+\/\d+\]\s*\$?([\d,.]+)/)?.[1] || '-'}
+                </div>
+              </div>
+              <div style={{ color: '#4a4a6a', fontSize: 14 }}>→</div>
+              <div>
+                <div style={{ fontSize: 9, color: '#6a6a8a', marginBottom: 1 }}>평가 ({currDate})</div>
+                <div style={{ fontSize: 12, color: pctColor, fontWeight: 700 }}>
+                  {value.match(/→[^(]*\[[\d/]+\]\s*\$?([\d,.]+)/)?.[1] || '-'}
+                  {nodeChangePct !== null && ` (${isUp ? '+' : ''}${nodeChangePct.toFixed(2)}%)`}
+                </div>
+              </div>
+            </div>
+          ) : (
+            // NOW 스레드: 날짜 없이 기저/현재
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <div>
+                <div style={{ fontSize: 9, color: '#6a6a8a', marginBottom: 1 }}>전일 종가</div>
+                <div style={{ fontSize: 12, color: '#c8c8e0', fontWeight: 600 }}>
+                  {value.match(/\$?([\d,.]+)\s*→/)?.[1] || value.split('→')[0]?.replace(/[^0-9.,]/g,'') || '-'}
+                </div>
+              </div>
+              <div style={{ color: '#4a4a6a', fontSize: 14 }}>→</div>
+              <div>
+                <div style={{ fontSize: 9, color: '#6a6a8a', marginBottom: 1 }}>현재가</div>
+                <div style={{ fontSize: 12, color: pctColor, fontWeight: 700 }}>
+                  {value.match(/→\s*\$?([\d,.]+)/)?.[1] || '-'}
+                  {nodeChangePct !== null && ` (${isUp ? '+' : ''}${nodeChangePct.toFixed(2)}%)`}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       )}
-      <canvas
-        ref={canvasRef}
-        width={220}
-        height={80}
-        className="mini-chart-canvas"
-      />
-      {node.source && (
-        <div className="mini-chart-source">📌 {node.source}</div>
+
+      {/* 수직 막대그래프 */}
+      {displayItems.length > 0 ? (
+        <canvas ref={canvasRef} width={520} height={400} className="mini-chart-canvas" />
+      ) : (
+        <div style={{ color: '#4a4a6a', fontSize: 11, textAlign: 'center', padding: '20px 0' }}>
+          비교 데이터 없음
+        </div>
       )}
+
     </div>
   );
 }
 
 // ── DAG 메인 ────────────────────────────────────────────────
-function DagGraph({ thread, activeTimeEvent, onNodeClick, onOpenPanel }) {
+function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel }) {
   const svgRef = useRef(null);
   const [selectedNode, setSelectedNode] = useState(null);
   const [miniChartNode, setMiniChartNode] = useState(null);
@@ -655,6 +978,16 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, onOpenPanel }) {
         <div className="dag-active-event">
           <span className="dag-event-label">▶ {activeTimeEvent.label}</span>
           <span className="dag-event-source">{activeTimeEvent.source}</span>
+          <button
+            className="dag-reset-btn"
+            onClick={() => {
+              setSelectedNode(null);
+              setMiniChartNode(null);
+              if (onNodeClick) onNodeClick(null);
+            }}
+          >
+            ↩ 전체 인과흐름 복귀
+          </button>
         </div>
       )}
 
@@ -665,6 +998,8 @@ function DagGraph({ thread, activeTimeEvent, onNodeClick, onOpenPanel }) {
         {miniChartNode && (
           <MiniChart
             node={miniChartNode}
+            thread={thread}
+            prices={prices}
             onClose={() => setMiniChartNode(null)}
           />
         )}
