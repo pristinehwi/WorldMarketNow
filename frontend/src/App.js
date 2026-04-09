@@ -162,6 +162,26 @@ function App() {
           />
         </div>
       </div>
+      <BuiltBy />
+    </div>
+  );
+}
+
+function BuiltBy() {
+  const [copied, setCopied] = React.useState(false);
+  const handleClick = () => {
+    const parts = ['pristineh', 'gmail.com'];
+    navigator.clipboard.writeText(parts.join('@'));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div className="built-by">
+      built by{' '}
+      <span className="built-by-name" onClick={handleClick} title="이메일 복사">
+        hwi
+      </span>
+      {copied && <span className="built-by-toast">이메일이 복사되었습니다</span>}
     </div>
   );
 }

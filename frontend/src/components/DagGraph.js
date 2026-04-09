@@ -341,7 +341,7 @@ function MiniChart({ node, thread, prices, onClose }) {
         {/* 관련 뉴스 (Claude가 related_news 필드 생성 시) */}
         {node.related_news?.length > 0 && (
           <div style={{ marginTop: 12 }}>
-            <div style={{ fontSize: 10, color: '#6a6a8a', marginBottom: 6, letterSpacing: 0.5 }}>
+            <div style={{ fontSize: 11, color: '#c8c8e0', marginBottom: 6, letterSpacing: 0.5, fontWeight: 600 }}>
               관련 뉴스
             </div>
             {node.related_news.map((news, i) => (
@@ -351,12 +351,12 @@ function MiniChart({ node, thread, prices, onClose }) {
                 background: '#0a0a1e',
                 borderRadius: 6,
                 borderLeft: '2px solid #4d96ff',
-                fontSize: 11,
-                color: '#c8c8e0',
+                fontSize: 13,
+                color: '#cc88ff',
                 lineHeight: 1.5,
               }}>
                 {news.source && (
-                  <span style={{ color: '#ff9de2', fontSize: 10, marginRight: 6 }}>
+                  <span style={{ color: '#ff9de2', fontSize: 11, marginRight: 6, fontWeight: 600 }}>
                     [{news.source}]
                   </span>
                 )}
@@ -509,33 +509,40 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
   const getOrderedChain = (chainSet, levels) =>
     Array.from(chainSet).sort((a, b) => (levels[a] || 0) - (levels[b] || 0));
 
-  const estimateTextWidth = (text, fontSize = 11) => {
+  const estimateTextWidth = (text, fontSize = 10) => {
     if (!text) return 0;
     let width = 0;
     for (const ch of text) {
-      width += ch.charCodeAt(0) > 127 ? fontSize * 1.1 : fontSize * 0.6;
+      width += ch.charCodeAt(0) > 127 ? fontSize * 1.2 : fontSize * 0.7;
     }
     return width;
   };
 
   const calcNodeSize = (label, value, scale = 1.0) => {
-    const fs = Math.round(11 * scale);
+    const fs = Math.round(10 * scale);
     const labelLines = (label || '').split(' ');
     const maxLabelW = Math.max(...labelLines.map(w => estimateTextWidth(w, fs)));
     let valueW = 0, valueLines = 1;
     if (value) {
       const arrowIdx = value.indexOf('→');
+      const parenIdx = value.lastIndexOf('(');
       if (arrowIdx > -1) {
-        const parenIdx = value.lastIndexOf('(');
-        const line1 = parenIdx > -1 ? value.slice(0, parenIdx).trim() : value;
-        const line2 = parenIdx > -1 ? value.slice(parenIdx).trim() : '';
-        valueW = Math.max(estimateTextWidth(line1, fs - 1), estimateTextWidth(line2, fs - 1));
-        valueLines = line2 ? 2 : 1;
+        // 날짜 제거 후 가격만으로 너비 계산
+        const cleanValue = value.replace(/\[\d+\/\d+\]\s*/g, '');
+        const cleanParen = cleanValue.lastIndexOf('(');
+        const priceLine = cleanParen > -1 ? cleanValue.slice(0, cleanParen).trim() : cleanValue;
+        const pctPart = parenIdx > arrowIdx ? value.slice(parenIdx).trim() : '';
+        valueW = Math.max(
+          estimateTextWidth(priceLine, fs - 1),
+          estimateTextWidth(pctPart, fs)
+        );
+        valueLines = pctPart ? 3 : 2; // 날짜줄 + 가격줄 + 변동률줄
       } else {
         valueW = estimateTextWidth(value, fs - 1);
+        if (valueW > 180) { valueW = 180; valueLines = Math.ceil(valueW / 160); }
       }
     }
-    const pad = Math.round(20 * scale);
+    const pad = Math.round(32 * scale);
     const nodeW = Math.max(Math.round(88 * scale), maxLabelW + pad, valueW + pad);
     const nodeH = Math.max(Math.round(46 * scale), labelLines.length * Math.round(15 * scale) + valueLines * Math.round(14 * scale) + Math.round(16 * scale));
     return { nodeW, nodeH, fs, scale };
@@ -557,12 +564,11 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
     const containerW = svgRef.current.parentElement.clientWidth || 800;
     const containerH = svgRef.current.parentElement.clientHeight || 520;
     const nodeCount = nodes.length;
-    // 기준: 5노드 이하 → scale 1.4, 8노드 → 1.15, 12노드 이상 → 1.0
-    const autoScale = nodeCount <= 4 ? 1.5
-      : nodeCount <= 6 ? 1.3
-      : nodeCount <= 8 ? 1.15
-      : nodeCount <= 10 ? 1.05
-      : 1.0;
+    const autoScale = nodeCount <= 4 ? 1.3
+      : nodeCount <= 6 ? 1.15
+      : nodeCount <= 8 ? 1.05
+      : nodeCount <= 10 ? 0.97
+      : 0.90;
 
     const nodeSizes = {};
     nodes.forEach(n => { nodeSizes[n.id] = calcNodeSize(n.label, n.value, autoScale); });
@@ -809,7 +815,21 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
       const words = label.split(' ');
       const { fs = 11, scale: sc = 1.0 } = nodeSizes[node.id] || {};
       const lineHeight = Math.round(15 * sc);
-      const totalTextH = words.length * lineHeight + (node.value ? Math.round(18 * sc) : 0);
+
+      // value 줄 수 미리 계산
+      let valueLineCount = 0;
+      if (node.value) {
+        const hasArrow = node.value.indexOf('→') > -1;
+        const hasParen = node.value.lastIndexOf('(') > node.value.indexOf('→');
+        const hasDate = /\[\d+\/\d+\]/.test(node.value);
+        if (hasArrow) {
+          valueLineCount = (hasDate ? 1 : 0) + 1 + (hasParen ? 1 : 0);
+        } else {
+          valueLineCount = 1;
+        }
+      }
+      const valueLH = Math.round(13 * sc);
+      const totalTextH = words.length * lineHeight + valueLineCount * valueLH;
       const startY = -(totalTextH / 2) + lineHeight / 2;
 
       words.forEach((word, i) => {
@@ -825,29 +845,59 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
       if (node.value) {
         const arrowIdx = node.value.indexOf('→');
         const parenIdx = node.value.lastIndexOf('(');
-        const hasArrow = arrowIdx > -1 && parenIdx > -1;
+        const hasArrow = arrowIdx > -1;
+        const hasParen = parenIdx > -1 && parenIdx > arrowIdx;
 
         if (hasArrow) {
-          const line1 = node.value.slice(0, parenIdx).trim();
-          const line2 = node.value.slice(parenIdx).trim();
-          const valueColor = line2.startsWith('(-') ? '#ff6060' : '#52b788';
+          // 날짜 파싱: [4/8] $127.19→[4/9] $140.07 (+10.13%)
+          const dateMatch = node.value.match(/\[(\d+\/\d+)\][^→]*→[^[]*\[(\d+\/\d+)\]/);
+          const baseDate = dateMatch ? dateMatch[1] : null;
+          const currDate = dateMatch ? dateMatch[2] : null;
 
+          // 가격만 추출 (날짜 제거)
+          const cleanValue = node.value.replace(/\[\d+\/\d+\]\s*/g, '');
+          const cleanArrow = cleanValue.indexOf('→');
+          const cleanParen = cleanValue.lastIndexOf('(');
+          const priceLine = cleanParen > -1 ? cleanValue.slice(0, cleanParen).trim() : cleanValue.slice(0, cleanArrow > -1 ? undefined : undefined).trim();
+          const pctPart = hasParen ? node.value.slice(parenIdx).trim() : '';
+          const vfs = Math.round((fs - 1) * sc);
+          const vLineH = Math.round(13 * sc);
+          const dateLineH = (baseDate && currDate) ? vLineH : 0;
+          const labelEndY = startY + (words.length - 1) * lineHeight + lineHeight / 2;
+
+          const valueColor = pctPart.startsWith('(-') ? '#ff6060' : '#52b788';
+
+          // 날짜 표시 (형광빨강)
+          if (baseDate && currDate) {
+            g.append('text')
+              .attr('y', labelEndY + vLineH * 0.6)
+              .attr('text-anchor', 'middle')
+              .attr('dominant-baseline', 'middle')
+              .attr('font-size', `${Math.round((fs - 2) * sc)}px`)
+              .attr('fill', '#ff4466')
+              .text(`${baseDate} → ${currDate}`);
+          }
+
+          // 가격 한 줄
           g.append('text')
-            .attr('y', startY + words.length * lineHeight)
+            .attr('y', labelEndY + vLineH * 0.6 + dateLineH)
             .attr('text-anchor', 'middle')
             .attr('dominant-baseline', 'middle')
-            .attr('font-size', `${Math.round((fs - 2) * sc)}px`)
+            .attr('font-size', `${vfs}px`)
             .attr('fill', isInChain ? '#b0b0cc' : '#2a2a3a')
-            .text(line1);
+            .text(priceLine);
 
-          g.append('text')
-            .attr('y', startY + words.length * lineHeight + Math.round(13 * sc))
-            .attr('text-anchor', 'middle')
-            .attr('dominant-baseline', 'middle')
-            .attr('font-size', `${Math.round((fs - 1) * sc)}px`)
-            .attr('font-weight', '700')
-            .attr('fill', isTarget ? '#6bcb77' : (isInChain ? valueColor : '#2a2a3a'))
-            .text(line2);
+          // 변동률
+          if (pctPart) {
+            g.append('text')
+              .attr('y', labelEndY + vLineH * 0.6 + dateLineH + vLineH)
+              .attr('text-anchor', 'middle')
+              .attr('dominant-baseline', 'middle')
+              .attr('font-size', `${Math.round(fs * sc)}px`)
+              .attr('font-weight', '700')
+              .attr('fill', isTarget ? '#6bcb77' : (isInChain ? valueColor : '#2a2a3a'))
+              .text(pctPart);
+          }
         } else {
           const valueColor = node.value.startsWith('-') ? '#ff6060' : '#52b788';
           g.append('text')
