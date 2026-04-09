@@ -542,8 +542,8 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
         if (valueW > 180) { valueW = 180; valueLines = Math.ceil(valueW / 160); }
       }
     }
-    const pad = Math.round(32 * scale);
-    const nodeW = Math.max(Math.round(88 * scale), maxLabelW + pad, valueW + pad);
+    const pad = Math.round(40 * scale);
+    const nodeW = Math.max(Math.round(120 * scale), maxLabelW + pad, valueW + pad);
     const nodeH = Math.max(Math.round(46 * scale), labelLines.length * Math.round(15 * scale) + valueLines * Math.round(14 * scale) + Math.round(16 * scale));
     return { nodeW, nodeH, fs, scale };
   };

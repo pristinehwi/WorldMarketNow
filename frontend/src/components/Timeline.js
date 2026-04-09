@@ -118,8 +118,8 @@ function Timeline({ threads, selectedThread, onThreadSelect, onTimeEventSelect }
 
       {/* ── 주파수 필터 탭 ── */}
       <div className="frequency-tabs">
-        {['OVERNIGHT', 'WEEKLY', 'MONTHLY'].map(freq => {
-          const count = threads?.filter(t => t.frequency === freq).length || 0;
+        {['NOW', 'WEEKLY', 'MONTHLY'].map(freq => {
+          const count = threads?.filter(t => t.frequency === freq || (freq === 'NOW' && t.frequency === 'OVERNIGHT')).length || 0;
           const color = FREQ_COLOR[freq];
           const isActive = activeFreq === freq;
           return (
