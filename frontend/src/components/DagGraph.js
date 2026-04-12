@@ -564,11 +564,12 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
     const containerW = svgRef.current.parentElement.clientWidth || 800;
     const containerH = svgRef.current.parentElement.clientHeight || 520;
     const nodeCount = nodes.length;
-    const autoScale = nodeCount <= 4 ? 1.3
+    const isMobileView = containerW < 600;
+    const autoScale = (nodeCount <= 4 ? 1.3
       : nodeCount <= 6 ? 1.15
       : nodeCount <= 8 ? 1.05
       : nodeCount <= 10 ? 0.97
-      : 0.90;
+      : 0.90) * (isMobileView ? 1.6 : 1.0);
 
     const nodeSizes = {};
     nodes.forEach(n => { nodeSizes[n.id] = calcNodeSize(n.label, n.value, autoScale); });
@@ -591,6 +592,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
       .scaleExtent([0.3, 3])
       .on('zoom', (event) => zoomGroup.attr('transform', event.transform));
     svg.call(zoom);
+
 
     // 레이어 순서: edge → pulse → node (pulse가 노드에 가려지지 않게)
     const edgeLayer = zoomGroup.append('g').attr('class', 'edge-layer');
@@ -786,9 +788,9 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
       const { nodeW, nodeH } = nodeSizes[node.id] || calcNodeSize(node.label, node.value);
       const rx = 10;
 
-      const strokeColor = isTarget ? '#6bcb77' : (isKorea ? '#ff6b6b' : (isInChain ? '#4d96ff' : '#222'));
-      const fillColor = isTarget ? '#0d1a0d' : (isKorea ? '#1a0a0a' : '#0d0d1e');
-      const strokeW = isTarget ? 2.5 : (isInChain ? 1.5 : 0.5);
+      const strokeColor = isTarget ? '#6bcb77' : (isKorea ? '#ff6b6b' : (isInChain ? '#4d96ff' : '#3a3a5a'));
+      const fillColor = isTarget ? '#0f2a0f' : (isKorea ? '#2a0e0e' : '#13132a');
+      const strokeW = isTarget ? 2.5 : (isInChain ? 1.8 : 0.8);
 
       const g = nodeLayer.append('g')
         .attr('transform', `translate(${pos.x}, ${pos.y + 20})`) // B: 아래서 시작
@@ -801,7 +803,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
         .duration(380)
         .ease(d3.easeCubicOut)
         .attr('transform', `translate(${pos.x}, ${pos.y})`)
-        .style('opacity', isInChain ? 1 : 0.12);
+        .style('opacity', isInChain ? 1 : 0.28);
 
       g.append('rect')
         .attr('x', -nodeW / 2).attr('y', -nodeH / 2)
@@ -838,7 +840,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'middle')
           .attr('font-size', `${fs}px`)
-          .attr('fill', isTarget ? '#6bcb77' : (isInChain ? '#e8e8f8' : '#333'))
+          .attr('fill', isTarget ? '#6bcb77' : (isInChain ? '#f0f0ff' : '#555'))
           .text(word);
       });
 
