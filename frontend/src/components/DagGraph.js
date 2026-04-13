@@ -513,7 +513,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
     if (!text) return 0;
     let width = 0;
     for (const ch of text) {
-      width += ch.charCodeAt(0) > 127 ? fontSize * 1.2 : fontSize * 0.7;
+      width += ch.charCodeAt(0) > 127 ? fontSize * 1.5 : fontSize * 0.7;
     }
     return width;
   };
@@ -573,10 +573,13 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
     const nodeSizes = {};
     nodes.forEach(n => { nodeSizes[n.id] = calcNodeSize(n.label, n.value, autoScale, isMobileView); });
     const maxNodeW = Math.max(...Object.values(nodeSizes).map(s => s.nodeW));
+    const maxNodeH = Math.max(...Object.values(nodeSizes).map(s => s.nodeH));
 
     const minNeededW = (maxLevel + 1) * (maxNodeW + 60) + 80;
+    // 노드 수 기반 최소 높이 (노드당 평균 높이 + 간격 보장)
+    const minNeededH = nodes.length * (maxNodeH + 40) + 100;
     const CANVAS_W = Math.max(containerW, minNeededW);
-    const CANVAS_H = Math.max(containerH, 420);
+    const CANVAS_H = Math.max(containerH, 420, minNeededH);
     const PADDING_X = maxNodeW / 2 + 20;
     const PADDING_Y = 50;
 
