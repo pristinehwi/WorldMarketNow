@@ -27,7 +27,7 @@ function BriefingPanel({ onClose }) {
     <div className="briefing-overlay" onClick={onClose}>
       <div className="briefing-panel" onClick={e => e.stopPropagation()}>
         <div className="briefing-panel-header">
-          <span className="briefing-panel-title">📰 Market Intelligence 아카이브</span>
+          <span className="briefing-panel-title">📰 Daily Intelligence Archive</span>
           <button className="briefing-panel-close" onClick={onClose}>✕</button>
         </div>
         <div className="briefing-panel-body">
@@ -170,7 +170,7 @@ function App() {
 
         <div className="briefing-btn-wrap">
           <button className="briefing-btn" onClick={() => setShowBriefing(true)}>
-            📰 브리핑 아카이브
+            📰 Daily Intelligence Archive
           </button>
         </div>
 
@@ -221,7 +221,7 @@ function App() {
       </div>
       <div className="briefing-btn-wrap-pc">
         <button className="briefing-btn" onClick={() => setShowBriefing(true)}>
-          📰 브리핑 아카이브
+          📰 Daily Intelligence Archive
         </button>
       </div>
       <BuiltBy />
