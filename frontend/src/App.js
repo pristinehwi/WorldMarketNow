@@ -6,6 +6,50 @@ import Timeline from './components/Timeline';
 import SidePanel from './components/SidePanel';
 import useMarketData from './hooks/useMarketData';
 
+// ── 브리핑 아카이브 패널 ──
+function BriefingPanel({ onClose }) {
+  const [index, setIndex] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    fetch(`https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/briefing/index.json?t=${Date.now()}`)
+      .then(r => r.json())
+      .then(data => { setIndex(data); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const openBriefing = (file) => {
+    const pagesUrl = `https://pristinehwi.github.io/WorldMarketNow/${file}`;
+    window.open(pagesUrl, '_blank');
+  };
+
+  return (
+    <div className="briefing-overlay" onClick={onClose}>
+      <div className="briefing-panel" onClick={e => e.stopPropagation()}>
+        <div className="briefing-panel-header">
+          <span className="briefing-panel-title">📰 Market Intelligence 아카이브</span>
+          <button className="briefing-panel-close" onClick={onClose}>✕</button>
+        </div>
+        <div className="briefing-panel-body">
+          {loading && <div className="briefing-loading">로딩 중...</div>}
+          {!loading && (!index || index.length === 0) && (
+            <div className="briefing-empty">아카이브가 없습니다.</div>
+          )}
+          {!loading && index && index.map(item => (
+            <div key={item.date} className="briefing-item" onClick={() => openBriefing(item.file)}>
+              <div className="briefing-item-date">{item.date}</div>
+              <div className="briefing-item-headline">{item.headline_theme}</div>
+              {item.today_watch && (
+                <div className="briefing-item-watch">{item.today_watch}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const { data, loading, error } = useMarketData();
   const [selectedThread, setSelectedThread] = useState(null);
@@ -14,6 +58,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileTab, setMobileTab] = useState('dag');
   const [showMobilePanel, setShowMobilePanel] = useState(false);
+  const [showBriefing, setShowBriefing] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -55,18 +100,23 @@ function App() {
   );
   if (!data) return null;
 
+  // ── 공통 HeadlineZone props ──
+  const headlineProps = {
+    headline:      data.headline,
+    headlines:     data.headlines,
+    threads:       data.threads,
+    selectedThread,
+    onThreadSelect: handleThreadSelect,
+    layerSummary:  data.layer_summary,
+    dataAsOf:      data.dataAsOf,
+    generatedAt:   data.generated_at,
+  };
+
   // ── 모바일 레이아웃 ──
   if (isMobile) {
     return (
       <div className="app">
-        <HeadlineZone
-          headline={data.headline}
-          threads={data.threads}
-          selectedThread={selectedThread}
-          onThreadSelect={handleThreadSelect}
-          layerSummary={data.layer_summary}
-          generatedAt={data.generated_at}
-        />
+        <HeadlineZone {...headlineProps} />
 
         <div className="mobile-tab-bar">
           <button
@@ -117,6 +167,20 @@ function App() {
             />
           </div>
         )}
+
+        <div className="briefing-btn-wrap">
+          <button className="briefing-btn" onClick={() => setShowBriefing(true)}>
+            📰 브리핑 아카이브
+          </button>
+        </div>
+
+        <div className="built-by-mobile">
+          built by <span className="built-by-name" onClick={() => {
+            navigator.clipboard.writeText('pristineh@gmail.com');
+          }}>hwi</span>
+        </div>
+
+        {showBriefing && <BriefingPanel onClose={() => setShowBriefing(false)} />}
       </div>
     );
   }
@@ -124,14 +188,7 @@ function App() {
   // ── PC 레이아웃 ──
   return (
     <div className="app">
-      <HeadlineZone
-        headline={data.headline}
-        threads={data.threads}
-        selectedThread={selectedThread}
-        onThreadSelect={handleThreadSelect}
-        layerSummary={data.layer_summary}
-        generatedAt={data.generated_at}
-      />
+      <HeadlineZone {...headlineProps} />
 
       <div className="main-zone">
         <div className="dag-container">
@@ -162,7 +219,13 @@ function App() {
           />
         </div>
       </div>
+      <div className="briefing-btn-wrap-pc">
+        <button className="briefing-btn" onClick={() => setShowBriefing(true)}>
+          📰 브리핑 아카이브
+        </button>
+      </div>
       <BuiltBy />
+      {showBriefing && <BriefingPanel onClose={() => setShowBriefing(false)} />}
     </div>
   );
 }

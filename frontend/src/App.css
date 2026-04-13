@@ -3,7 +3,7 @@
    A: edge pulse / B: node transition / C: mini chart / D: heatmap
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400&display=swap');
 
 * {
   margin: 0;
@@ -53,7 +53,7 @@ body {
 /* ── HEADLINE ZONE ── */
 .headline-zone {
   padding: 16px 32px 0;
-  border-bottom: 1px solid #14142a;
+  border-bottom: 1px solid #2a2a4a;
   background: linear-gradient(180deg, #0c0c1c 0%, #080810 100%);
   flex-shrink: 0;
 }
@@ -67,10 +67,16 @@ body {
 
 .generated-at {
   font-size: 12px;
-  color: #f5c842;
+  color: #8888aa;
   letter-spacing: 0.3px;
-  font-weight: 600;
+  font-weight: 500;
   animation: refreshBlink 2.5s ease-in-out infinite;
+}
+
+.data-as-of-value {
+  color: #f5c842;
+  font-weight: 700;
+  letter-spacing: 0.4px;
 }
 
 @keyframes refreshBlink {
@@ -155,16 +161,14 @@ body {
 
 .headline-text {
   font-family: 'DM Serif Display', 'Noto Serif KR', serif;
-  font-size: 26px;
-  font-weight: 400;
-  background: linear-gradient(135deg, #ffffff 0%, #b8b8d0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 22px;
+  font-weight: 300;
+  color: #f0f0ff; /* JS color 사이클로 덮어씀 */
   letter-spacing: -0.3px;
   margin-bottom: 10px;
-  min-height: 34px;
+  height: 60px;      /* 두 줄 고정 (22px * 1.3 * 2 ≈ 57px, 여유 포함) */
   line-height: 1.3;
+  overflow: hidden;  /* 혹시 넘쳐도 레이아웃 안 흔들리게 */
 }
 
 .cursor {
@@ -340,7 +344,7 @@ body {
   width: 260px;
   overflow-y: auto;
   background: #0a0a18;
-  border-left: 1px solid #14142a;
+  border-left: 1px solid #2a2a4a;
   flex-shrink: 0;
 }
 
@@ -349,7 +353,7 @@ body {
   height: 100%;
   overflow-y: auto;
   flex-shrink: 0;
-  border-left: 1px solid #14142a;
+  border-left: 1px solid #2a2a4a;
 }
 
 /* ── DAG GRAPH ── */
@@ -1048,12 +1052,16 @@ body {
 
 /* ── 모바일 레이아웃 ── */
 @media (max-width: 768px) {
-  .app { height: 100dvh; }
+  .app {
+    height: 100dvh;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 
   .headline-zone { padding: 14px 16px 0; }
 
   .headline-text {
-    font-size: 20px;
+    font-size: 17px;
+    height: 46px;    /* 두 줄 고정 (17px * 1.3 * 2 ≈ 44px) */
     margin-bottom: 8px;
   }
 
@@ -1123,15 +1131,18 @@ body {
     border-right: none;
   }
 
-  /* 모바일 미니차트: 중앙 고정 */
+  /* 모바일 미니차트: 중앙 고정 + 화면 fit */
   .mini-chart-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100vw - 24px);
-    max-width: 480px;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: 80vh;
+    overflow-y: auto;
     z-index: 200;
+    padding: 14px 14px 12px;
   }
 
   @keyframes miniChartIn {
@@ -1141,6 +1152,19 @@ body {
 
   /* 모바일 히트맵 배지 표시 */
   .thread-heat-badge { display: inline-flex; }
+
+  /* built-by 모바일에서 위로 (하단 브라우저 UI 위) */
+  .built-by { bottom: 72px; }
+
+  /* built-by 모바일 인라인 버전 */
+  .built-by-mobile {
+    text-align: right;
+    padding: 8px 16px;
+    font-size: 11px;
+    color: #8888aa;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+  }
 }
 
 /* PC에서 모바일 전용 요소 숨기기 */
@@ -1150,5 +1174,138 @@ body {
   .mobile-list-zone,
   .mobile-panel-overlay {
     display: none;
+  }
+}
+
+/* ── 브리핑 아카이브 버튼 ── */
+.briefing-btn-wrap {
+  padding: 10px 16px 4px;
+  text-align: center;
+}
+.briefing-btn-wrap-pc {
+  position: fixed;
+  bottom: 36px;
+  left: 20px;
+  z-index: 100;
+}
+.briefing-btn {
+  background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+  border: 1px solid #2a4a7a;
+  color: #a0c4ff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: all 0.2s;
+}
+.briefing-btn:hover {
+  background: linear-gradient(135deg, #2a3a6a, #1a2a4a);
+  border-color: #4a7aaa;
+  color: #c8dcff;
+}
+
+/* ── 브리핑 오버레이 ── */
+.briefing-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* ── 브리핑 패널 ── */
+.briefing-panel {
+  background: #0d0d1a;
+  border: 1px solid #2a2a4a;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+.briefing-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #2a2a4a;
+  flex-shrink: 0;
+}
+.briefing-panel-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #a0c4ff;
+  letter-spacing: 0.3px;
+}
+.briefing-panel-close {
+  background: none;
+  border: none;
+  color: #6666aa;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+.briefing-panel-close:hover { color: #ffffff; }
+.briefing-panel-body {
+  overflow-y: auto;
+  padding: 12px 0;
+  flex: 1;
+}
+.briefing-loading,
+.briefing-empty {
+  text-align: center;
+  padding: 40px;
+  color: #6666aa;
+  font-size: 13px;
+}
+
+/* ── 브리핑 아이템 ── */
+.briefing-item {
+  padding: 14px 20px;
+  border-bottom: 1px solid #1a1a2e;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.briefing-item:hover {
+  background: #111128;
+}
+.briefing-item:last-child { border-bottom: none; }
+.briefing-item-date {
+  font-size: 11px;
+  font-weight: 700;
+  color: #4a8aff;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+.briefing-item-headline {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e0e0f0;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.briefing-item-watch {
+  font-size: 11px;
+  color: #8888aa;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── 모바일 대응 ── */
+@media (max-width: 768px) {
+  .briefing-panel {
+    max-height: 85vh;
   }
 }
