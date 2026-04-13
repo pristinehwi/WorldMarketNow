@@ -2,20 +2,93 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "호르무즈봉쇄→원유급등",
+      "title": "반도체ETF급등파급",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "호르무즈봉쇄",
-          "value": "트럼프 해협 봉쇄 선언",
+          "label": "AI수요증가",
+          "value": "메타 신규 AI모델 발표",
+          "source": "시장분석",
+          "timestamp": null,
+          "related_news": [
+            {
+              "source": "Bloomberg",
+              "title": "Meta AI model announcement drives tech rally"
+            }
+          ]
+        },
+        {
+          "id": "n2",
+          "label": "반도체ETF(SOXX)",
+          "value": "[4/9] $378.63→[4/10] $386.60 (+2.10%)",
+          "source": "Finnhub",
+          "timestamp": null
+        },
+        {
+          "id": "n3",
+          "label": "대형테크ETF(XLK)",
+          "value": "[4/9] $142.07→[4/10] $142.62 (+0.39%)",
+          "source": "Finnhub",
+          "timestamp": null
+        },
+        {
+          "id": "n4",
+          "label": "한국ETF(EWY)",
+          "value": "[4/9] $139.29→[4/10] $138.73 (-0.40%)",
+          "source": "Finnhub",
+          "timestamp": null
+        },
+        {
+          "id": "n5",
+          "label": "KOSPI",
+          "value": "[4/10] 5858.87→[4/13] 5801.09 (-0.99%)",
+          "source": "Yahoo Finance",
+          "timestamp": "09:56"
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "직접수혜"
+        },
+        {
+          "from": "n1",
+          "to": "n3",
+          "label": "동반상승"
+        },
+        {
+          "from": "n2",
+          "to": "n4",
+          "label": "선반영"
+        },
+        {
+          "from": "n4",
+          "to": "n5",
+          "label": "차익실현"
+        }
+      ],
+      "korea_terminal_node": "n5",
+      "briefing": "전일 미국 장에서 AI 수요 증가에 따라 SOXX +2.10% 급등 확정. EWY -0.40% 선반영 후 당일 KOSPI -0.99% 조정 중. 반도체 업사이클 기대에도 불구하고 단기 차익실현 압력 지속."
+    },
+    {
+      "id": "thread_002",
+      "title": "호르무즈봉쇄원유급등",
+      "priority": 2,
+      "frequency": "NOW",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "트럼프봉쇄발표",
+          "value": "호르무즈해협 봉쇄 선언",
           "source": "MarketWatch",
           "timestamp": null,
           "related_news": [
             {
               "source": "MarketWatch",
-              "title": "Trump announces blockade of Strait of Hormuz as Vance leaves Pakistan talks with no deal"
+              "title": "Trump announces blockade of Strait of Hormuz"
             }
           ]
         },
@@ -35,198 +108,82 @@
         },
         {
           "id": "n4",
-          "label": "인플레압박",
-          "value": "유가상승 물가전염 우려",
-          "source": "FRED",
+          "label": "인플레우려",
+          "value": "글로벌 인플레 압력 확산",
+          "source": "시장분석",
           "timestamp": null,
-          "related_news": []
+          "related_news": [
+            {
+              "source": "OilPrice",
+              "title": "Oil Prices Surge Past $100 as Trump Threatens to Blockade"
+            }
+          ]
         },
         {
           "id": "n5",
-          "label": "아시아압박",
-          "value": "수입의존 신흥국 타격",
-          "source": "Bloomberg",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n6",
           "label": "KOSPI",
-          "value": "[4/10] 5,858.87→[4/13] 5,750.66 (-1.85%)",
+          "value": "[4/10] 5858.87→[4/13] 5801.09 (-0.99%)",
           "source": "Yahoo Finance",
-          "timestamp": "09:26"
-        },
-        {
-          "id": "n7",
-          "label": "닛케이225",
-          "value": "[4/10] 56,924.11→[4/13] 56,676.25 (-0.44%)",
-          "source": "Yahoo Finance",
-          "timestamp": "09:26"
+          "timestamp": "09:56"
         }
       ],
       "edges": [
         {
           "from": "n1",
           "to": "n2",
-          "label": "직격"
+          "label": "직접타격"
         },
         {
-          "from": "n2",
+          "from": "n1",
           "to": "n3",
-          "label": "섹터확산"
+          "label": "연쇄반응"
         },
         {
           "from": "n2",
           "to": "n4",
-          "label": "물가압박"
+          "label": "촉발"
         },
         {
           "from": "n4",
           "to": "n5",
-          "label": "전염"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
-          "label": "하락압박"
-        },
-        {
-          "from": "n5",
-          "to": "n7",
-          "label": "하락압박"
+          "label": "위험회피"
         }
       ],
-      "korea_terminal_node": "n6",
-      "briefing": "트럼프의 호르무즈 해협 봉쇄 선언으로 유가 상승 리스크가 재부각되고 있습니다. 전일 미국장에서 USO -1.69%, XLE -0.68%로 하락했지만 물가 전염 우려는 지속되며, 당일 아시아 현물 시장에서 KOSPI -1.85%, 닛케이 -0.44%로 하락 압박이 이어지고 있습니다."
-    },
-    {
-      "id": "thread_002",
-      "title": "반도체강세→韓조정",
-      "priority": 2,
-      "frequency": "NOW",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "반도체ETF(SOXX)",
-          "value": "[4/9] $378.63→[4/10] $386.60 (+2.10%)",
-          "source": "Finnhub",
-          "timestamp": null
-        },
-        {
-          "id": "n2",
-          "label": "테크섹터(XLK)",
-          "value": "[4/9] $142.07→[4/10] $142.62 (+0.39%)",
-          "source": "Finnhub",
-          "timestamp": null
-        },
-        {
-          "id": "n3",
-          "label": "AI기대감",
-          "value": "반도체 초격차 지속",
-          "source": "Bloomberg",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n4",
-          "label": "한국ETF(EWY)",
-          "value": "[4/9] $139.29→[4/10] $138.73 (-0.40%)",
-          "source": "Finnhub",
-          "timestamp": null
-        },
-        {
-          "id": "n5",
-          "label": "상대약세",
-          "value": "미국 반도체 대비 조정",
-          "source": "Yahoo Finance",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n6",
-          "label": "KOSPI",
-          "value": "[4/10] 5,858.87→[4/13] 5,750.66 (-1.85%)",
-          "source": "Yahoo Finance",
-          "timestamp": "09:26"
-        }
-      ],
-      "edges": [
-        {
-          "from": "n3",
-          "to": "n1",
-          "label": "직접수혜"
-        },
-        {
-          "from": "n3",
-          "to": "n2",
-          "label": "섹터확산"
-        },
-        {
-          "from": "n1",
-          "to": "n5",
-          "label": "대비"
-        },
-        {
-          "from": "n4",
-          "to": "n5",
-          "label": "상대열세"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
-          "label": "압박지속"
-        }
-      ],
-      "korea_terminal_node": "n6",
-      "briefing": "전일 미국 반도체 강세(SOXX +2.10%)에도 불구하고 한국 관련 자산은 상대적 조정을 보이고 있습니다. EWY -0.40% 약세 기록 후 당일 KOSPI -1.85% 하락이 이어지며, 미국 AI 기대감의 선반영과 국내 경기 부담 사이의 괴리가 확대되고 있습니다."
+      "korea_terminal_node": "n5",
+      "briefing": "트럼프 호르무즈 해협 봉쇄 발표로 전일 미국 장에서 USO -1.69%, XLE -0.68% 하락 확정. 글로벌 인플레이션 압력 확산 우려 속 당일 KOSPI -0.99% 위험회피 조정 중."
     },
     {
       "id": "thread_003",
-      "title": "구리급등→신흥국분화",
+      "title": "구리광산급등연쇄",
       "priority": 3,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "중국회복기대",
-          "value": "경기부양 정책 확대",
-          "source": "FT",
+          "label": "인프라투자기대",
+          "value": "글로벌 인프라 확장",
+          "source": "시장분석",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n2",
-          "label": "구리ETF(COPX)",
+          "label": "구리광산(COPX)",
           "value": "[4/9] $81.56→[4/10] $83.52 (+2.40%)",
           "source": "Finnhub",
           "timestamp": null
         },
         {
           "id": "n3",
-          "label": "소재ETF(XLB)",
-          "value": "[4/9] $51.67→[4/10] $51.96 (+0.56%)",
-          "source": "Finnhub",
-          "timestamp": null
-        },
-        {
-          "id": "n4",
           "label": "신흥국ETF(EEM)",
           "value": "[4/9] $60.28→[4/10] $60.56 (+0.46%)",
           "source": "Finnhub",
           "timestamp": null
         },
         {
-          "id": "n5",
-          "label": "자원분화",
-          "value": "자원국 vs 제조업국",
-          "source": "Bloomberg",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n6",
-          "label": "대만ETF(EWT)",
-          "value": "[4/9] $76.41→[4/10] $76.94 (+0.69%)",
+          "id": "n4",
+          "label": "금속광업(XME)",
+          "value": "[4/9] $112.71→[4/10] $113.56 (+0.75%)",
           "source": "Finnhub",
           "timestamp": null
         }
@@ -235,248 +192,209 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "수요증가"
+          "label": "직접수혜"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "섹터확산"
+          "label": "파급효과"
         },
         {
-          "from": "n2",
+          "from": "n1",
           "to": "n4",
-          "label": "자원수혜"
-        },
-        {
-          "from": "n4",
-          "to": "n5",
-          "label": "구조분화"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
-          "label": "제조강세"
+          "label": "동반상승"
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "중국 경기부양 정책 확대 기대감이 확산되며 전일 미국장에서 COPX +2.40% 급등했습니다. 구리 강세가 XLB +0.56%, EEM +0.46%로 확산되면서 신흥국 내 자원 수입국과 첨단 제조업 국가 간 성과 분화가 심화되고 있습니다."
+      "briefing": "전일 미국 장에서 글로벌 인프라 투자 기대감으로 COPX +2.40% 급등 확정. EEM +0.46%, XME +0.75% 동반 상승하며 원자재 섹터 강세 지속. 신흥국 수혜 구조 부각."
     },
     {
       "id": "thread_004",
-      "title": "VIX급락→위험회복",
+      "title": "아시아조정압력",
       "priority": 4,
-      "frequency": "WEEKLY",
+      "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "지정학완화",
-          "value": "긴장 국면 일단락",
-          "source": "Bloomberg",
+          "label": "전일급등반영",
+          "value": "미국 아시아ETF 선반영",
+          "source": "시장분석",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n2",
-          "label": "VIX",
-          "value": "[4/6] 24.17→[4/10] 19.23 (-20.44%)",
-          "source": "Yahoo Finance",
+          "label": "한국ETF(EWY)",
+          "value": "[4/9] $139.29→[4/10] $138.73 (-0.40%)",
+          "source": "Finnhub",
           "timestamp": null
         },
         {
           "id": "n3",
-          "label": "변동성둔화",
-          "value": "시장 안정성 회복",
-          "source": "FRED",
-          "timestamp": null,
-          "related_news": []
+          "label": "일본ETF(EWJ)",
+          "value": "[4/9] $88.22→[4/10] $88.13 (-0.10%)",
+          "source": "Finnhub",
+          "timestamp": null
         },
         {
           "id": "n4",
-          "label": "신흥국ETF(EEM)",
-          "value": "[4/6] $57.11→[4/10] $60.56 (+6.04%)",
-          "source": "Finnhub",
-          "timestamp": null
+          "label": "KOSPI",
+          "value": "[4/10] 5858.87→[4/13] 5801.09 (-0.99%)",
+          "source": "Yahoo Finance",
+          "timestamp": "09:56"
         },
         {
           "id": "n5",
-          "label": "한국ETF(EWY)",
-          "value": "[4/6] $125.94→[4/10] $138.73 (+10.16%)",
-          "source": "Finnhub",
-          "timestamp": null
-        },
-        {
-          "id": "n6",
-          "label": "KOSPI",
-          "value": "[4/7] 5,494.78→[4/13] 5,750.66 (+4.66%)",
+          "label": "닛케이225",
+          "value": "[4/10] 56924.11→[4/13] 56484.43 (-0.77%)",
           "source": "Yahoo Finance",
-          "timestamp": "09:26"
+          "timestamp": null
         }
       ],
       "edges": [
         {
           "from": "n1",
           "to": "n2",
-          "label": "급락촉발"
+          "label": "조정압력"
+        },
+        {
+          "from": "n1",
+          "to": "n3",
+          "label": "조정압력"
         },
         {
           "from": "n2",
-          "to": "n3",
-          "label": "안정화"
-        },
-        {
-          "from": "n3",
           "to": "n4",
-          "label": "자금유입"
+          "label": "현물조정"
         },
         {
           "from": "n3",
           "to": "n5",
-          "label": "자금유입"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
-          "label": "선반영"
+          "label": "현물조정"
         }
       ],
-      "korea_terminal_node": "n6",
-      "briefing": "지정학적 긴장 완화 신호가 나오며 주간 VIX -20.44% 급락으로 변동성이 크게 둔화되고 있습니다. 시장 안정성 회복에 따라 신흥국 자금 유입이 가속화되어 EEM +6.04%, EWY +10.16% 강세를 기록했으며, 당일 KOSPI도 주간 +4.66% 상승세를 이어가고 있습니다."
+      "korea_terminal_node": "n4",
+      "briefing": "전일 미국 장 선반영 후 당일 아시아 현물 지수 동반 조정. EWY -0.40% → KOSPI -0.99%, EWJ -0.10% → 닛케이 -0.77%로 차익실현 양상 뚜렷. 급등 후 조정 사이클 지속."
     },
     {
       "id": "thread_005",
-      "title": "달러약세→유로강세",
+      "title": "신흥국상대강세",
       "priority": 5,
       "frequency": "WEEKLY",
       "nodes": [
         {
           "id": "n1",
-          "label": "금리차확대",
-          "value": "10Y-2Y 0.5%p 확대",
-          "source": "FRED",
+          "label": "달러약세기조",
+          "value": "DXY 주간 약세 지속",
+          "source": "시장분석",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n2",
-          "label": "실질금리하락",
-          "value": "장기채 수익률 정체",
-          "source": "FRED",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n3",
           "label": "달러ETF(UUP)",
           "value": "[4/6] $27.83→[4/10] $27.44 (-1.40%)",
           "source": "Finnhub",
           "timestamp": null
         },
         {
+          "id": "n3",
+          "label": "신흥국ETF(EEM)",
+          "value": "[4/6] $57.11→[4/10] $60.56 (+6.04%)",
+          "source": "Finnhub",
+          "timestamp": null
+        },
+        {
           "id": "n4",
-          "label": "유로ETF(FXE)",
-          "value": "[4/6] $106.56→[4/10] $108.26 (+1.60%)",
+          "label": "한국ETF(EWY)",
+          "value": "[4/6] $125.94→[4/10] $138.73 (+10.16%)",
           "source": "Finnhub",
           "timestamp": null
         },
         {
           "id": "n5",
-          "label": "통화재조정",
-          "value": "유럽 통화 상대 강세",
-          "source": "ECB",
-          "timestamp": null,
-          "related_news": [
-            {
-              "source": "ECB",
-              "title": "Isabel Schnabel: Monetary policy in times of geopolitical fragmentation"
-            }
-          ]
+          "label": "대만ETF(EWT)",
+          "value": "[4/6] $71.29→[4/10] $76.94 (+7.93%)",
+          "source": "Finnhub",
+          "timestamp": null
         },
         {
           "id": "n6",
-          "label": "글로벌채권(BNDX)",
-          "value": "$48.00",
-          "source": "Finnhub",
-          "timestamp": null
+          "label": "KOSPI",
+          "value": "[4/7] 5494.78→[4/13] 5801.09 (+5.57%)",
+          "source": "Yahoo Finance",
+          "timestamp": "09:56"
         }
       ],
       "edges": [
         {
           "from": "n1",
           "to": "n2",
-          "label": "구조변화"
+          "label": "직접반영"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "약세압박"
+          "label": "자금유입"
         },
         {
           "from": "n3",
           "to": "n4",
-          "label": "상대강세"
+          "label": "아웃퍼폼"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "label": "동조상승"
         },
         {
           "from": "n4",
-          "to": "n5",
-          "label": "확산"
-        },
-        {
-          "from": "n5",
           "to": "n6",
-          "label": "수혜"
+          "label": "시차전달"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "미국 장단기 금리차 확대로 실질금리가 하락하는 구조 변화 속에 주간 UUP -1.40% 약세를 기록했습니다. 달러 약세에 따라 FXE +1.60% 상승하며 유럽 통화의 상대적 강세가 지속되고 있으며, 글로벌 채권 시장도 수혜를 받고 있습니다."
+      "korea_terminal_node": "n6",
+      "briefing": "주간 달러 약세(UUP -1.40%)로 신흥국 자금 유입 확대. EEM +6.04% 중 EWY +10.16%, EWT +7.93% 아웃퍼폼하며 당일 KOSPI도 +5.57% 강세 지속. 달러 약세 수혜 구조 뚜렷."
     },
     {
       "id": "thread_006",
-      "title": "연준축소→유동성변화",
+      "title": "테크구조적상승",
       "priority": 6,
       "frequency": "MONTHLY",
       "nodes": [
         {
           "id": "n1",
-          "label": "연준균형축소",
-          "value": "구조적 정책 전환",
-          "source": "Fed",
+          "label": "AI투자사이클",
+          "value": "테크 업사이클 본격화",
+          "source": "시장분석",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n2",
-          "label": "유동성구조",
-          "value": "글로벌 공급 축소",
-          "source": "FRED",
-          "timestamp": null,
-          "related_news": []
+          "label": "반도체ETF(SOXX)",
+          "value": "[3/11] $342.09→[4/10] $386.60 (+13.01%)",
+          "source": "Finnhub",
+          "timestamp": null
         },
         {
           "id": "n3",
-          "label": "장기채ETF(TLT)",
-          "value": "[3/11] $87.14→[4/10] $86.49 (-0.75%)",
+          "label": "나스닥ETF(QQQ)",
+          "value": "[3/11] $607.69→[4/10] $611.07 (+0.56%)",
           "source": "Finnhub",
           "timestamp": null
         },
         {
           "id": "n4",
-          "label": "회사채ETF(LQD)",
-          "value": "[3/11] $109.16→[4/10] $109.20 (+0.04%)",
+          "label": "혁신ETF(ARKK)",
+          "value": "[3/11] $73.07→[4/10] $69.29 (-5.17%)",
           "source": "Finnhub",
           "timestamp": null
         },
         {
           "id": "n5",
-          "label": "신용경색",
-          "value": "스프레드 확대 압박",
-          "source": "Fed",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n6",
-          "label": "신흥국ETF(EEM)",
-          "value": "[3/11] $58.83→[4/10] $60.56 (+2.94%)",
+          "label": "한국ETF(EWY)",
+          "value": "[3/11] $132.85→[4/10] $138.73 (+4.43%)",
           "source": "Finnhub",
           "timestamp": null
         }
@@ -485,53 +403,49 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "구조변화"
+          "label": "핵심수혜"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "금리압박"
+          "label": "업종파급"
+        },
+        {
+          "from": "n1",
+          "to": "n4",
+          "label": "선별조정"
         },
         {
           "from": "n2",
-          "to": "n4",
-          "label": "신용압박"
-        },
-        {
-          "from": "n4",
           "to": "n5",
-          "label": "전염"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
-          "label": "자금이탈"
+          "label": "글로벌확산"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "연준 밸런스시트 축소 전망으로 글로벌 유동성 공급 구조가 근본적으로 변화하고 있습니다. 월간 TLT -0.75% 하락으로 장기채 압박이 지속되며 LQD도 신용 경색 우려에 직면했으나, EEM +2.94% 상승으로 신흥국은 단기적 회복력을 유지하고 있습니다."
+      "korea_terminal_node": "n5",
+      "briefing": "월간 AI 투자 사이클 본격화로 SOXX +13.01% 급등 선도. QQQ +0.56% 온건 상승, ARKK -5.17% 선별 조정 중 EWY +4.43% 동조 상승. 반도체 중심 테크 강세 구조 지속."
     }
   ],
   "headlines": [
-    "호르무즈 봉쇄→원유 급등 아시아 증시 압박",
-    "미국 반도체 강세→한국주 상대 조정 심화",
-    "중국 경기부양→구리 급등 신흥국 분화"
+    "AI수요 SOXX 급등→한국ETF 선반영→KOSPI 차익실현",
+    "호르무즈봉쇄→원유약세→글로벌인플레→KOSPI 하락",
+    "인프라투자→구리광산급등→신흥국 동반상승",
+    "전일미국선반영→아시아ETF 조정→당일현물 동반하락"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 반도체 강세·원유 리스크 혼조 / 당일 아시아: 지정학 리스크와 AI 기대감 괴리 심화",
-    "layer2": "VIX 급락 신호 후 신흥국 자금 유입 가속화되나 에너지 가격 상승이 경기 부담 가중",
-    "layer3": "KOSPI 일중 -1.85% 약세, 구조적 유동성 축소와 단기 변동성 완화 사이 줄다리기 국면"
+    "layer1": "전일 미국: AI수요 SOXX 2.10% 급등, 인프라기대 COPX 2.40% 상승 / 당일 아시아: 차익실현 압력으로 KOSPI -0.99%, 닛케이 -0.77% 조정",
+    "layer2": "미국 ETF 선반영(EWY, EWJ) → 아시아 현물 지수 후행",
+    "layer3": "반도체 업사이클 vs 호르무즈봉쇄 인플레우려가 교차하는 가운데 주간 달러약세 수혜로 신흥국 상대강세 지속"
   },
-  "generated_at": "2026-04-13T00:28:27.689Z",
+  "generated_at": "2026-04-13T00:58:18.107Z",
   "data_as_of": {
-    "timestamp_iso": "2026-04-13T00:28:27.667Z",
-    "display": "4/13 09:28 [ KST +0900 ]",
-    "display_mobile": "4/13 09:28 KST",
+    "timestamp_iso": "2026-04-13T00:58:18.074Z",
+    "display": "4/13 09:58 [ KST +0900 ]",
+    "display_mobile": "4/13 09:58 KST",
     "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-04-13T00:28:27.689Z",
-    "elapsed_sec": 201,
+    "generated_at": "2026-04-13T00:58:18.107Z",
+    "elapsed_sec": 193,
     "market_status": [
       "한국(KOSPI/KOSDAQ)",
       "일본(닛케이)"
