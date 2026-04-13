@@ -518,7 +518,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
     return width;
   };
 
-  const calcNodeSize = (label, value, scale = 1.0) => {
+  const calcNodeSize = (label, value, scale = 1.0, mobile = false) => {
     const fs = Math.round(10 * scale);
     const labelLines = (label || '').split(' ');
     const maxLabelW = Math.max(...labelLines.map(w => estimateTextWidth(w, fs)));
@@ -527,7 +527,6 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
       const arrowIdx = value.indexOf('→');
       const parenIdx = value.lastIndexOf('(');
       if (arrowIdx > -1) {
-        // 날짜 제거 후 가격만으로 너비 계산
         const cleanValue = value.replace(/\[\d+\/\d+\]\s*/g, '');
         const cleanParen = cleanValue.lastIndexOf('(');
         const priceLine = cleanParen > -1 ? cleanValue.slice(0, cleanParen).trim() : cleanValue;
@@ -536,13 +535,13 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
           estimateTextWidth(priceLine, fs - 1),
           estimateTextWidth(pctPart, fs)
         );
-        valueLines = pctPart ? 3 : 2; // 날짜줄 + 가격줄 + 변동률줄
+        valueLines = pctPart ? 3 : 2;
       } else {
         valueW = estimateTextWidth(value, fs - 1);
         if (valueW > 180) { valueW = 180; valueLines = Math.ceil(valueW / 160); }
       }
     }
-    const pad = Math.round(40 * scale);
+    const pad = Math.round((mobile ? 60 : 40) * scale);
     const nodeW = Math.max(Math.round(120 * scale), maxLabelW + pad, valueW + pad);
     const nodeH = Math.max(Math.round(46 * scale), labelLines.length * Math.round(15 * scale) + valueLines * Math.round(14 * scale) + Math.round(16 * scale));
     return { nodeW, nodeH, fs, scale };
@@ -572,7 +571,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
       : 0.90) * (isMobileView ? 1.6 : 1.0);
 
     const nodeSizes = {};
-    nodes.forEach(n => { nodeSizes[n.id] = calcNodeSize(n.label, n.value, autoScale); });
+    nodes.forEach(n => { nodeSizes[n.id] = calcNodeSize(n.label, n.value, autoScale, isMobileView); });
     const maxNodeW = Math.max(...Object.values(nodeSizes).map(s => s.nodeW));
 
     const minNeededW = (maxLevel + 1) * (maxNodeW + 60) + 80;
