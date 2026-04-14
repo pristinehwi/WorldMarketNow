@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-15 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/15 08:18 KST</div>
+    <div class="header-date">2026-04-15</div>
+    <div class="header-headline">Trump 관세·암호화폐 정책과 Fed 인사 불확실성 재부각</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">7월 관세 복원 시사 및 Warsh 인준 과정 - 통화정책·무역 리스크 프리미엄 동시 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">통화정책 인사·정책 불확실성</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">Trump의 Fed 의장 지명자 Kevin Warsh가 최소 1억9200만 달러 이상의 자산을 공개하며 현대 최고 부유층 Fed 의장 후보로 부각됐다. 상원 인준을 앞두고 재무 공개가 진행되면서 그의 정책 독립성과 Trump 행정부와의 관계에 대한 관심이 증폭되고 있다. 한편 Fed의 Barr 이사는 농촌 경제 개발 투자의 중요성을 강조하며 지역 경제 정책 방향을 제시했다. ECB의 Lane은 유로존 경제 전망과 통화정책에 대한 연설을 통해 글로벌 통화정책 조율 필요성을 재확인했다. 주요 중앙은행 인사 및 정책 방향에 대한 불확실성이 시장 변동성 요인으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">무역정책·관세 리스크 재부상</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#9</span>
+    </div>
+    <div class="theme-summary">재무장관 Scott Bessent이 대법원이 무효화한 Trump 관세율을 7월까지 복원할 수 있다고 밝히며 무역 불확실성이 재점화됐다. 90일 유예 이후 협상 진전 없이 관세가 재개될 경우 글로벌 공급망과 인플레이션 압력이 다시 강화될 가능성이 제기됐다. Trump 행정부는 규제 완화와 금리 인하를 통해 연 3% 지속 성장을 달성하겠다는 낙관적 전망을 제시하고 있으나, 시장 컨센서스와 괴리가 크다. 한편 베네수엘라 중앙은행 제재 완화를 통해 원유 생산 회복을 지원하는 등 선별적 대외정책도 병행되고 있다. 관세 복원 시점과 범위가 향후 수개월 시장 방향성의 핵심 변수로 부각된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 경쟁 가속과 기술 섹터 구조 재편</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #10~#16</span>
+    </div>
+    <div class="theme-summary">Anthropic이 Mythos 모델 관련 Trump 행정부 브리핑을 확인하고 정부 소송과 협력을 병행하는 복잡한 입장을 드러냈으며, ECB 총재 Lagarde는 Anthropic의 신중한 접근을 높이 평가하며 AI 안전장치 강화를 촉구했다. Meta는 Mark Zuckerberg의 포토리얼리스틱 AI 복제본을 직원과의 상호작용에 투입하며 내부 AI 활용을 심화하고 있다. Nvidia는 10일 연속 상승세를 기록하며 AI 투자 심리가 회복 중이고, Novo Nordisk는 OpenAI와 신약 개발 협력을 발표해 제약-AI 융합이 가속화되고 있다. TSMC 실적은 향후 AI 수요 방향성의 선행지표로 주목받고 있으며, Anthropic은 Novartis CEO를 이사회에 영입하고 연내 IPO 가능성을 열어두고 있다. AI 인프라 투자와 규제, 응용 확산이 동시에 진행되며 기술 섹터 밸류에이션 재평가가 진행 중이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">지정학 리스크와 에너지 시장 변동성</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#20</span>
+    </div>
+    <div class="theme-summary">Trump가 '문명이 오늘밤 멸망할 것'이라 경고한 지 일주일 만에 미-이란 간 임시 휴전이 성립됐으나, 이란의 농축 우라늄 포기 거부와 호르무즈 해협 봉쇄 지속으로 근본적 해결은 요원하다. 미국의 이란 항구 봉쇄가 시작됐고 레바논 전쟁이 지속되며 중동 긴장은 여전히 고조 상태다. 금 가격은 미-이란 협상 재개 기대에 상승분을 유지하고 있으나 에너지 공급 충격에 따른 인플레 우려는 완전히 해소되지 않았다. Netanyahu는 군사적 성과에도 불구하고 명확한 출구 전략 부재로 정치적 곤경에 처해 있다는 평가를 받고 있다. 전문가들은 현재가 교착 상태이며 경제적 재앙 가능성이 여전히 남아있다고 경고한다. 에너지 리스크 프리미엄과 안전자산 수요가 당분간 시장 변동성의 핵심 동인으로 작용할 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Private Credit 시장 확대와 리스크 관리 강화</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#22</span>
+    </div>
+    <div class="theme-summary">Goldman Sachs의 Private Credit 펀드가 7억5000만 달러 규모 채권을 발행하며 이번 주 두 번째로 투자등급 채권시장에 진입한 Private Credit 펀드가 됐다. 이는 대체투자 시장의 유동성 확보 노력과 기관투자자들의 수요 확대를 동시에 보여준다. 한편 일본 Daiichi Life는 해외에서 발생한 여러 고위험 디폴트 사례 이후 Private Credit 매니저 선정 프로세스를 강화하며 리스크 관리를 강화하고 있다. Private Credit 시장이 급성장하는 가운데 신용 리스크에 대한 경계심도 함께 높아지고 있어, 향후 선별적 투자와 듀딜리전스 강화가 업계 표준으로 자리잡을 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">주요 기업 전략 전환과 섹터별 모멘텀</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #23~#29</span>
+    </div>
+    <div class="theme-summary">Amazon이 Globalstar를 115억7000만 달러에 인수하며 Musk의 Starlink에 도전장을 내밀었고, 이는 7일 연속 주가 상승을 견인하며 2022년 이후 최장 랠리를 기록 중이다. S&P 500은 사상 최고가 근접했으며 투자자들은 호르무즈 해협 봉쇄를 넘어서는 낙관론을 보이고 있다. Bitcoin은 수개월간 막혔던 핵심 저항선을 돌파하며 다음 목표가 98,000달러로 제시됐다. Microsoft는 대규모 Capex 투자의 수익 실현 시점이 다가오며 바닥 형성 신호를 보이고 있다는 분석이 나왔다. Google은 Gemini Personal Intelligence 기능을 인도에 출시하며 신흥시장 확대에 나섰고, 국방부 보도 규제에 대한 연방법원의 임시 집행 허용으로 Pentagon 관련 보도 환경도 변화하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #30</span>
+    </div>
+    <div class="theme-summary">특정 테마로 분류하기 어려운 주요 동향을 포함합니다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">통화정책 인사·정책 불확실성</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Fed 의장 지명자 Warsh, 1억9000만 달러 이상 자산 공개</div>
+    <div class="article-title-en">Fed Chair Nominee Warsh Discloses Assets Above $190 Million</div>
+    <div class="article-keypoint">Warsh의 최소 1억9200만 달러 자산 공개 - 현대 최고 부유층 Fed 의장 후보 등장</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-14/fed-chair-nominee-warsh-discloses-assets-worth-over-190-million" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 23:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Barr 이사: 농촌 지역사회, 투자 가치 충분</div>
+    <div class="article-title-en">Barr, Rural Communities: Worth the Investment</div>
+    <div class="article-keypoint">Fed Barr 이사, 농촌 경제 투자 중요성 강조하며 지역 개발 정책 방향 제시</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/barr20260414a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 01:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Philip R. Lane: 유로존 경제 전망과 통화정책</div>
+    <div class="article-title-en"> Philip R. Lane: The economic outlook and monetary policy in the euro area</div>
+    <div class="article-keypoint">ECB Lane, 유로존 경제 전망과 통화정책 연설로 글로벌 정책 조율 필요성 재확인</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp260414~b312adeb55.en.pdf" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Trump의 Federal Reserve 의장 지명자, 공개 자료에 따르면 1억 달러 이상 자산 보유</div>
+    <div class="article-title-en">Trump pick to lead Federal Reserve has assets worth over $100m, disclosures indicate</div>
+    <div class="article-keypoint">Trump의 Fed 지명자 Warsh, 1억 달러 이상 자산 보유로 인준 과정 주목</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/apr/14/trump-federal-reserve-pick-kevin-warsh" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 22:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Trump의 Fed 의장 지명자, 현대 들어 최고 부유층 될 가능성</div>
+    <div class="article-title-en">Trump’s pick for Fed chair could be the richest in modern times</div>
+    <div class="article-keypoint">Warsh, 1억9200만 달러 이상 자산으로 수십년래 최고 부유층 Fed 의장 후보</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/04/14/kevin-warsh-richest-fed-chair-financial-disclosures/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 03:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Kevin Warsh는 매우 부유하거나, 아니면 매우 매우 부유하다</div>
+    <div class="article-title-en">Kevin Warsh is very rich, or possibly very, very rich</div>
+    <div class="article-keypoint">Warsh 자산 공개 - 정확한 규모 불명확하나 1억9200만 달러는 최소치</div>
+    <a class="article-link" href="https://www.ft.com/content/2df21771-8684-4814-8816-ab84773f94ee" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 03:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">무역정책·관세 리스크 재부상</span>
+    <span class="theme-label-range">Article #7~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Bessent, Trump 관세율 7월까지 복원 가능성 언급</div>
+    <div class="article-title-en">Bessent Says Trump’s Tariff Rates Could Be Restored by July</div>
+    <div class="article-keypoint">Bessent, Trump 관세율 7월까지 복원 가능성 시사 - 무역 불확실성 재점화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-14/trump-tariff-rates-could-be-restored-by-early-july-bessent" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 08:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Trump 팀, 규제완화·금리인하로 지속적 3% 성장 제시</div>
+    <div class="article-title-en">Trump Team Pitches 3% Sustained Growth Via Lower Deregulation, Rates</div>
+    <div class="article-keypoint">Trump 행정부, 규제완화·금리인하로 연 3% 성장 목표 제시하나 시장 회의적</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-04-14/trump-team-pitches-3-sustained-growth-via-lower-deregulation-rates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">미국, 베네수엘라 중앙은행 제재 완화로 원유 회복 지원</div>
+    <div class="article-title-en">US Eases Venezuela Central Bank Sanctions to Aid Oil Revival</div>
+    <div class="article-keypoint">미국, 베네수엘라 중앙은행 제재 완화로 원유 생산 회복 지원 - 선별적 대외정책</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-14/us-eases-venezuela-sanctions-to-allow-central-bank-transactions" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 04:37 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 경쟁 가속과 기술 섹터 구조 재편</span>
+    <span class="theme-label-range">Article #10~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Anthropic 공동창업자, Trump 행정부에 Mythos 브리핑 확인</div>
+    <div class="article-title-en">Anthropic co-founder confirms the company briefed the Trump administration on Mythos</div>
+    <div class="article-keypoint">Anthropic, 정부 소송 중에도 Trump 행정부에 Mythos 브리핑 - AI 규제 협력 복잡성 부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/14/anthropic-co-founder-confirms-the-company-briefed-the-trump-administration-on-mythos/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 03:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Lagarde, AI 우려 표명하며 Anthropic의 Mythos 접근방식 칭찬</div>
+    <div class="article-title-en">Lagarde, Worried About AI, Lauds Anthropic’s Approach on Mythos</div>
+    <div class="article-keypoint">ECB Lagarde, Anthropic의 AI 모델 제한 공개 접근 높이 평가하며 안전장치 촉구</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-14/lagarde-worried-about-ai-lauds-anthropic-s-approach-on-mythos" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 00:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Nvidia 주가 10일 연속 상승, 투자자들이 다시 AI에 주목하는 이유</div>
+    <div class="article-title-en">Nvidia’s stock is on a 10-day winning streak. Here’s why investors are getting back on board with AI.</div>
+    <div class="article-keypoint">Nvidia 10일 연속 상승 - AI 투자 심리 회복으로 기술주 랠리 재점화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidias-stock-is-on-a-10-day-winning-streak-heres-why-investors-are-getting-back-on-board-with-ai-bf0bb59e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Novo Nordisk 주가 급등, OpenAI와의 협력 공개 후</div>
+    <div class="article-title-en">Novo Nordisk’s stock rallied after drugmaker reveals deal with OpenAI</div>
+    <div class="article-keypoint">Novo Nordisk, OpenAI와 AI 신약 개발 협력 발표로 제약-기술 융합 가속화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/novo-nordisks-stock-rallies-after-drugmaker-reveals-deal-with-openai-af1005e6?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 05:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Meta, Mark Zuckerberg의 포토리얼리스틱 AI 버전 제작해 직원과 상호작용</div>
+    <div class="article-title-en">Meta Builds Photorealistic AI Version Of Mark Zuckerberg To Interact With Employees</div>
+    <div class="article-keypoint">Meta, Zuckerberg의 포토리얼리스틱 AI 복제본 직원 상호작용 투입 - AI 내재화 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/meta-builds-photorealistic-ai-version-mark-zuckerberg-interact-employees" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">TSMC가 보여주는 AI 수요의 향방</div>
+    <div class="article-title-en">TSMC Shows Where AI Demand is Headed</div>
+    <div class="article-keypoint">TSMC 실적, 향후 AI 수요 방향성의 선행지표로 시장 주목도 급상승</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/tsmc-shows-where-ai-demand-is-headed-a3a3c246?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 01:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Anthropic, Novartis CEO를 이사회에 영입</div>
+    <div class="article-title-en">Anthropic Adds Novartis CEO to Board</div>
+    <div class="article-keypoint">Anthropic, Novartis CEO 이사회 영입하며 연내 IPO 가능성 열어둬</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/anthropic-adds-novartis-ceo-to-board-6e642bf4?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 23:04 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">지정학 리스크와 에너지 시장 변동성</span>
+    <span class="theme-label-range">Article #17~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Trump의 암호화폐 추진이 미국 패권을 약화시키는 방식</div>
+    <div class="article-title-en">How Trump’s Crypto Push Is Undermining American Power</div>
+    <div class="article-keypoint">Trump의 암호화폐 규제 완화가 달러 패권 약화시키며 러시아·이란·북한 제재 회피 지원</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/self-defeating-logic-of-trumps-pro-crypto-agenda-by-jayati-ghosh-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 17:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">누가 주도권을 쥐고 있나? George Friedman의 이란 전쟁 교착상태 분석</div>
+    <div class="article-title-en">Who’s Holding the Cards? George Friedman on the Iran War Stalemate</div>
+    <div class="article-keypoint">미-이란 임시 휴전에도 호르무즈 봉쇄 지속 - 경제 재앙 위험 여전히 잔존</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/whos-holding-the-cards-george-friedman-on-the-iran-war-stalemate/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 04:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">금, 미-이란 협상 재개로 리스크 완화되며 상승분 유지</div>
+    <div class="article-title-en">Gold Holds Gain as Renewed Push for US-Iran Talks Eases Risks</div>
+    <div class="article-keypoint">금 가격, 미-이란 협상 재개 기대에 상승 유지하나 에너지 인플레 우려 잔존</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-14/gold-holds-gain-as-renewed-push-for-us-iran-talks-eases-risks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 07:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">'전략적 실패': 이스라엘 화력에도 Netanyahu, 이란 전쟁에서 정치적 성과 부진</div>
+    <div class="article-title-en">‘Strategic failure’: Despite Israeli firepower, Netanyahu struggles for political gains in Iran war</div>
+    <div class="article-keypoint">Netanyahu, 군사 성과에도 명확한 출구전략 부재로 정치적 난관 직면</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/despite-israeli-firepower-netanyahu-struggles-for-political-gains-in-iran-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 21:53 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Private Credit 시장 확대와 리스크 관리 강화</span>
+    <span class="theme-label-range">Article #21~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Goldman Sachs Private Credit 펀드, 7억5000만 달러 채권 발행</div>
+    <div class="article-title-en">Goldman Sachs Private Credit Fund Sells $750 Million Bond</div>
+    <div class="article-keypoint">Goldman Private Credit 펀드 7억5000만 달러 채권 발행 - 대체투자 유동성 확보 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-14/goldman-sachs-private-credit-fund-to-sell-500-million-bond" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 23:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Daiichi Life, 리스크 대응 위해 Private Credit 매니저 선정 강화</div>
+    <div class="article-title-en">Daiichi Life to Tighten Private Credit Manager Selection on Risk</div>
+    <div class="article-keypoint">Daiichi Life, 해외 디폴트 사례 후 Private Credit 매니저 선정 강화로 리스크 관리 심화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-14/daiichi-life-to-tighten-private-credit-manager-selection-on-risk" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">주요 기업 전략 전환과 섹터별 모멘텀</span>
+    <span class="theme-label-range">Article #23~#29</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">S&P 500 사상 최고치 근접, 주식 시장 반등 저해 요인은</div>
+    <div class="article-title-en">As S&P 500 approaches record highs, this is what could derail the stock-market rebound</div>
+    <div class="article-keypoint">S&P 500 사상 최고가 근접 - 호르무즈 봉쇄에도 불구하고 낙관론 우세</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/as-s-p-500-approaches-record-highs-this-is-what-could-derail-the-stock-market-rebound-7456ebf8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 06:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Amazon, Musk의 Starlink 도전 위해 위성 기업 Globalstar 115억7000만 달러에 인수</div>
+    <div class="article-title-en">Amazon to buy satellite firm Globalstar for $11.57bn in challenge to Musk’s Starlink</div>
+    <div class="article-keypoint">Amazon, Globalstar 115억7000만 달러 인수로 Musk Starlink에 정면 도전</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/apr/14/amazon-globalstar-satellite-deal-musk-starlink" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 01:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">이 핵심 장애물 돌파 후 Bitcoin의 다음 목표가 98,000달러인 이유</div>
+    <div class="article-title-en">Why bitcoin’s next stop could be $98,000 after surmounting this key hurdle, technical analyst says</div>
+    <div class="article-keypoint">Bitcoin, 수개월 저항선 돌파 시도로 다음 목표가 98,000달러 제시</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-bitcoins-next-stop-could-be-98-000-after-surmounting-this-key-hurdle-technical-analyst-says-6e2eb6fa?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 05:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">한 애널리스트가 Microsoft 주가 바닥 형성 가능성을 보는 이유</div>
+    <div class="article-title-en">Why one analyst believes Microsoft’s stock may be bottoming out</div>
+    <div class="article-keypoint">Microsoft, Capex 투자 수익 실현 임박으로 주가 바닥 형성 신호 - 신규 진입 기회</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-one-analyst-believes-microsofts-stock-may-be-bottoming-out-560a3478?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Amazon 주가, Globalstar 인수로 2022년 이후 최고 상승세</div>
+    <div class="article-title-en">Amazon’s stock is on its best run since 2022 as Globalstar acquisition fuels rally</div>
+    <div class="article-keypoint">Amazon 주가 7일 연속 상승 - Globalstar 인수로 2022년 이후 최장 랠리</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/amazons-stock-is-on-its-best-run-since-2022-as-globalstar-acquisition-fuels-rally-5d5f22b1?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 05:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Google, Gemini Personal Intelligence 기능 인도에 출시</div>
+    <div class="article-title-en">Google brings its Gemini Personal Intelligence feature to India</div>
+    <div class="article-keypoint">Google, Gemini Personal Intelligence 인도 출시로 신흥시장 AI 서비스 확대</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/14/google-brings-its-gemini-personal-intelligence-feature-to-india/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 23:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">연방법원, Pentagon의 언론 규제 집행 임시 허용</div>
+    <div class="article-title-en">Federal Judge Temporarily Allows Pentagon To Enforce Press Restrictions</div>
+    <div class="article-keypoint">연방법원, Pentagon의 언론 접근 제한 임시 집행 허용 - 보도 환경 변화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/federal-judge-temporarily-allows-pentagon-enforce-press-restrictions" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/15 06:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">BOJ, 유가 상승 반영해 물가 전망 대폭 상향 검토 중</div>
+    <div class="article-title-en">BOJ Is Said to Mull Raising Price Outlook Sharply on Oil</div>
+    <div class="article-keypoint">BOJ, 유가 상승 반영해 이번 회의에서 인플레 전망 대폭 상향 검토 중</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-14/boj-is-said-to-mull-raising-price-outlook-sharply-on-higher-oil" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 18:10 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
