@@ -1,5 +1,5 @@
 # 지금 세계는 (WorldMarketNow) — 개발 진도 현황 v7.0
-> 마지막 업데이트: 2026-04-13 (개발_8 세션)
+> 마지막 업데이트: 2026-04-14 (개발_8 세션 추가 작업)
 > 다음 세션 시작 시 이 파일을 Claude에게 전달할 것.
 
 ---
@@ -41,15 +41,15 @@
 ### WorldMarketNow GAS
 | 파일명 | 역할 | 버전 | 상태 |
 |--------|------|------|------|
-| `data_collector.gs` | 가격/뉴스/거시/BOK/지수 수집 | v4.3 | ✅ |
+| `data_collector.gs` | 가격/뉴스/거시/BOK/지수 수집 | v4.4 | ✅ |
 | `claude_api.gs` | 3콜 Claude API 아키텍처 | v4.6 | ✅ |
-| `github_push.gs` | GitHub push + archive cleanup + 블랙아웃 | v2.2 | ✅ |
+| `github_push.gs` | GitHub push + archive cleanup + 블랙아웃 | v2.3 | ✅ |
 
 ### RSS 메일링 GAS
 | 파일명 | 역할 | 상태 |
 |--------|------|------|
 | `fetchAndSendNews()` | 뉴스 수집 + Claude 분류/요약 + 메일 발송 | ✅ |
-| `briefing_github.gs` | 브리핑 HTML 생성 + GitHub push + index.json 관리 | ✅ 신규 |
+| `briefing_github.gs` | 브리핑 HTML 생성 + GitHub push + index.json 관리 | ✅ |
 
 ### Claude API 3콜 아키텍처 (v4.6)
 | 콜 | 모델 | 역할 | max_tokens |
@@ -61,32 +61,30 @@
 ### 트리거 현황
 | 함수 | 유형 | 시간 | 상태 |
 |------|------|------|------|
-| `collectCandleData` | Day timer | 6am~7am KST | ✅ 등록됨 |
-| `runPipeline` | 분 타이머 30분 | 상시 | ✅ 등록됨 |
-| `fetchAndSendNews` (메일링) | Day timer | 매일 1회 | ✅ 등록됨 |
+| `collectCandleData` | Day timer | 6am~7am KST | ✅ |
+| `runPipeline` | 분 타이머 30분 | 상시 | ✅ |
+| `fetchAndSendNews` (메일링) | Day timer | 매일 1회 | ✅ |
 
-### 블랙아웃 스케줄 (KST 기준)
+### 블랙아웃 스케줄 (KST 기준) — v2.3
 | 시간대 | 상태 |
 |--------|------|
 | 평일 00:00~06:30 | ✅ 실행 (미국 장) |
 | 평일 06:30~09:01 | ⏸️ 스킵 |
 | 평일 09:01~16:01 | ✅ 실행 (한국 장) |
-| 평일 16:01~22:31 | ⏸️ 스킵 |
+| 평일 16:01~17:00 | ⏸️ 스킵 |
+| 평일 17:00~22:31 | ✅ 실행 (유럽 장) |
 | 평일 22:31~24:00 | ✅ 실행 (미국 장 개장) |
 | 토 09:00~월 09:00 | ⏸️ 스킵 (주말) |
-
-※ 블랙아웃 시에도 `prices.json`은 항상 push (데이터 축적용)
 
 ### GitHub push 파일 구조
 ```
 data/
-├── latest.json          — Claude 3콜 결과
-├── prices.json          — ETF 가격 데이터
+├── latest.json
+├── prices.json
 ├── archive/             — 14일 보관
-│   └── YYYYMMDD_HHmm.json
-└── briefing/            — 메일링 브리핑 아카이브 (2년 보관)
-    ├── index.json       — 날짜 목록 + headlineTheme + todayWatch
-    └── YYYY-MM-DD.html  — 날짜별 브리핑 HTML
+└── briefing/            — 2년 보관
+    ├── index.json
+    └── YYYY-MM-DD.html
 ```
 
 ---
@@ -95,24 +93,9 @@ data/
 
 | 번호 | 규칙 요약 | 상태 |
 |------|----------|------|
-| 1 | ETF 노드 티커 병기 필수 | ✅ |
-| 2 | JSON만 출력, 마크다운 금지 | ✅ |
-| 3 | 시장별 시간축 인과 규칙 (①~⑥) | ✅ v4.6 강화 |
-| 4 | 노드 label 10자 이내 | ✅ |
-| 5 | value 날짜 필드 기준 형식 | ✅ |
-| 6 | timestamp HH:MM 또는 null | ✅ |
-| 7 | 스레드 간 주제 중복 금지 | ✅ |
-| 8 | 한국 종착 노드 50% 이하 | ✅ |
-| 9 | headline/title 띄어쓰기 | ✅ |
-| 10 | layer_summary layer1 형식 + 60자 이내 | ✅ |
-| 11 | edge label 6자 이내 | ✅ |
-| 12 | 동일 미국 시간대 ETF 간 직접 인과 금지 | ✅ |
-| 13 | 전일 급등 후 조정 = "급등후조정"/"차익실현" | ✅ |
-| 14 | 개념 노드 related_news (프리퀀시별 기준 차등) | ✅ |
-| 15 | WEEKLY/MONTHLY DAG 2단계 이상 인과 체인 | ✅ |
-| 16 | MONTHLY origin 노드 = 구조적 배경, 단발 뉴스 금지 | ✅ |
+| 1~16 | (이전과 동일) | ✅ |
 
-### NOW 정의 4구간 (v4.6 신규)
+### NOW 정의 4구간
 | 세션 | KST 시간 | NOW 스레드 구성 원칙 |
 |------|---------|-------------------|
 | 아시아장중 | 09:00~15:30 | 전일 미국 장 → 당일 아시아 장 반응 |
@@ -126,11 +109,11 @@ data/
 
 ```
 frontend/src/
-├── App.js                    ✅ v7 (BriefingPanel, Daily Intelligence Archive 버튼)
-├── App.css                   ✅ v6 (브리핑 패널 스타일)
+├── App.js                    ✅ v7 (BriefingPanel, Daily Intelligence Archive)
+├── App.css                   ✅ v6 (브리핑 패널, 모바일 미니차트 팝업 축소)
 ├── components/
 │   ├── HeadlineZone.js       ✅ v6
-│   ├── DagGraph.js           ✅ v10 (autoScale *1.6, calcNodeSize mobile pad, CANVAS_H 동적)
+│   ├── DagGraph.js           ✅ v10 (autoScale *1.6, mobile pad, CANVAS_H 동적)
 │   ├── Timeline.js           ✅ v4
 │   └── SidePanel.js          ✅ v2
 └── hooks/
@@ -140,39 +123,41 @@ frontend/src/
 ### GitHub Actions
 | 파일 | 역할 | 상태 |
 |------|------|------|
-| `.github/workflows/deploy-briefing.yml` | `data/briefing/` push 시 자동 gh-pages 배포 | ✅ 신규 |
+| `.github/workflows/deploy-briefing.yml` | briefing push 시 자동 gh-pages 배포 | ✅ (permissions 추가 후 정상) |
 
 ---
 
-## 6. 개발_8 세션 완료 항목
+## 6. 개발_8 세션 완료 항목 (전체)
 
 ### GAS 백엔드
-- [x] **KOSPI/KOSDAQ 교차검증** — Yahoo + 네이버, 차이 0.5%/2% 기준 3단계 처리
-- [x] **`calcDataAsOf()` v3** — 실행 시각 기준 직접 계산 (캐시 의존 제거)
-- [x] **NOW 정의 4구간** — 아시아/유럽/미국/장외 세션별 구성 원칙
-- [x] **1번 콜 세션 주입** — `current_session` + `open_markets` 명시적 전달
-- [x] **Claude API Overloaded 재시도** — 대기시간 3초→30초
-- [x] **RSS 메일링 브리핑 아카이브** — `briefing_github.gs` 추가, 2년 보관 FIFO
+- [x] KOSPI/KOSDAQ 교차검증 (Yahoo + 네이버)
+- [x] `calcDataAsOf()` v3 — 실행 시각 기준 직접 계산
+- [x] NOW 정의 4구간 + 1번 콜 세션 주입
+- [x] Claude API Overloaded 재시도 30초
+- [x] RSS 메일링 브리핑 아카이브 (`briefing_github.gs`)
+- [x] 블랙아웃 v2.3 — 유럽 장중(17:00~22:30) 실행 추가
+- [x] `data_collector.gs` v4.4 — candle 날짜 stale 보정 (뉴욕 기준)
 
 ### React 프론트엔드
-- [x] **모바일 autoScale *1.6** — containerW < 600 적용
-- [x] **calcNodeSize mobile pad** — mobile=true 시 pad 60 (글자 넘침 방지)
-- [x] **CANVAS_H 동적 계산** — 노드 수 × (maxNodeH + 40) + 100
-- [x] **Daily Intelligence Archive** — 브리핑 아카이브 열람 버튼 + 팝업 + 새 탭 열기
-- [x] **GitHub Actions 자동 배포** — briefing push 시 gh-pages 자동 갱신
+- [x] 모바일 autoScale *1.6
+- [x] calcNodeSize mobile pad 60
+- [x] CANVAS_H 동적 계산
+- [x] Daily Intelligence Archive 버튼 + 팝업 + 새 탭 열기
+- [x] 모바일 미니차트 팝업 가로폭 축소 (max-width 320px)
+- [x] GitHub Actions 자동 배포 (permissions 수정 완료)
 
 ---
 
 ## 7. 남은 작업
 
-### 🟡 단기
-1. **브리핑 → WorldMarketNow 뉴스 재료 연동** — briefing.json의 themes/summary를 collectNews() 보완용으로 활용
-2. **노드/엣지 보조텍스트** — 2번 콜에 `detail`(노드), `rationale`(엣지) 필드 추가
-3. **WEEKLY/MONTHLY origin 시간 범위 규칙** — COMMON_RULES 추가 (브리핑 아카이브 연동 후)
-4. **통합 테스트** — 미국 장 개장 시간대 (KST 22:31~익일 06:30) 데이터 확인
+### 🟡 다음 세션 (개발_9)
+1. **브리핑 아카이브 → `collectNews()` 연동** — themes/summary/keyPoint를 Claude 재료로 활용
+2. **2번 콜 `detail`/`rationale` 필드 추가** — 노드 맥락 + 엣지 인과 근거 사전 생성
+3. **노드 팝업 + 엣지 팝업 UI 구현** — 클릭 시 detail/rationale 표시
+4. **WEEKLY/MONTHLY origin 시간 범위 COMMON_RULES 추가** (브리핑 연동 후)
 
 ### 🔵 기술 부채
-- DagGraph.js ESLint 경고 정리 (미사용 변수)
+- DagGraph.js ESLint 경고 정리
 - 수평 edge 펄스 두께 미해결
 - WEEKLY KOSPI 기저일 오차 (Yahoo 5일치 한계)
 - 모바일 노드 글자 넘침 근본 해결 (getBBox 방식 고려)
@@ -184,10 +169,10 @@ frontend/src/
 ```
 "지금 세계는" 프로젝트 개발_9 세션입니다.
 진도 현황: WMN_Progress_v7.md (첨부)
-완료: 개발_8 전체 (교차검증, NOW 4구간, Overloaded 재시도, 브리핑 아카이브, 모바일 개선, GitHub Actions)
+완료: 개발_8 전체 (교차검증, NOW 4구간, 브리핑 아카이브, 모바일 개선,
+      GitHub Actions, 유럽장 블랙아웃 수정, candle 날짜 stale 보정)
 오늘 작업 (우선순위):
-  1. 브리핑 아카이브 → collectNews() 연동 (뉴스 재료 고도화)
-  2. 노드/엣지 보조텍스트 (detail/rationale 필드)
-  3. WEEKLY/MONTHLY origin 시간 범위 COMMON_RULES 추가
-  4. 통합 테스트 (미국 장중 시간대)
+  1. 브리핑 아카이브 → collectNews() 연동
+  2. 2번 콜 detail/rationale 필드 추가
+  3. 노드/엣지 팝업 UI 구현
 ```
