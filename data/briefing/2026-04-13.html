@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-13 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/13 17:44 KST</div>
+    <div class="header-date">2026-04-13</div>
+    <div class="header-headline">호르무즈 봉쇄 선언 - 유가 $100 돌파</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Trump 호르무즈 봉쇄 실행 여부 및 이란 보복 범위 - WTI $100 지속성이 인플레·통화정책 경로 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">에너지 가격 상방 압력과 공급망 충격</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#9</span>
+    </div>
+    <div class="theme-summary">Trump가 미-이란 협상 결렬 후 호르무즈 해협 봉쇄를 선언하면서 WTI 유가가 $100을 돌파했다. Vance 부통령은 이란의 핵프로그램 포기 거부를 협상 실패 원인으로 지목했으며, 협상 진전 없이 중동 긴장이 고조되고 있다. 일본 총리는 호르무즈 리스크를 언급하며 헌법 개정 논의 가속화를 촉구했고, 영국은 봉쇄 불참을 선언했다. 이란 전쟁이 글로벌 석유 공급망을 교란하면서 일본 화장실 제조업체 Toto는 자재 부족으로 신규 주문을 중단했다. Trump는 유가 상승이 11월 중간선거까지 지속될 가능성을 인정하며 정치적 부담을 드러냈다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 인프라 투자와 규제 리스크</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #10~#16</span>
+    </div>
+    <div class="theme-summary">Anthropic의 신규 AI 모델이 사이버보안 위험을 이유로 일부 공개가 보류되면서 투자 유치를 위한 과장 논란이 제기되었다. 재무장관 Bessent과 Fed 의장 Powell이 은행 리더들을 소집해 Anthropic 모델의 시스템 리스크를 논의했으며, Trump 행정부가 은행들에 Mythos 모델 테스트를 권장하고 있다는 보도가 나왔다. CoreWeave는 Anthropic과 AI 클라우드 파트너십을 체결했고, Anthropic은 가격 정책 변경 후 OpenClaw 개발자의 Claude 접근을 일시 차단했다. AI 컴퓨팅 수요 폭증으로 연산 자원이 고갈되면서 AI 기업들이 제품 제공을 배급하기 시작했으며, 사용자 불만이 증가하고 있다. Super Micro 공동창업자가 중국 기업에 9,200만 달러 규모의 금지된 AI 칩을 불법 밀수한 혐의로 기소되었다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">빅테크 AI 전략과 기업 지배구조</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #17~#21</span>
+    </div>
+    <div class="theme-summary">Meta의 Zuckerberg는 직원들과 상호작용할 자신의 AI 버전을 구축하며 '개인 초지능' 개발을 추진하고 있다. Meta는 소셜미디어 관련 소송에서 AI를 방어 수단으로 활용하고 있으나, 지속되는 법적 분쟁이 주가 회복을 제약할 수 있다. Amazon CEO Andy Jassy는 연례 주주 서한에서 AI 비전과 로봇공학, 지방 배송 투자를 강조하며 대규모 AI 지출을 정당화했다. 한편 ChatGPT 사용자가 스토킹과 괴롭힘을 저지르는 동안 OpenAI가 대량 사상 경고를 포함한 세 차례 경고를 무시했다는 소송이 제기되었다. Nvidia가 지원하는 SiFive는 RISC-V 기반 오픈 AI 칩 설계로 36.5억 달러 밸류에이션을 달성했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">1분기 실적 시즌과 은행주 밸류에이션</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #22~#24</span>
+    </div>
+    <div class="theme-summary">4월 초 이후 미국 주식시장의 반등이 1분기 기업 실적 시즌 개막과 함께 첫 번째 중요한 시험대에 직면하고 있다. 대형 은행주들의 밸류에이션 분석 결과 장기 투자자들을 위한 매수 기회가 부각되고 있으며, 실적 시즌을 앞두고 포지션 조정 움직임이 감지된다. Federal Reserve는 Burke & Herbert Financial Services Corp.의 신청을 승인하며 일상적인 규제 업무를 지속하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">안전자산 선호와 금 가격 전망</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #25~#26</span>
+    </div>
+    <div class="theme-summary">스위스 은행 UBP는 이란 전쟁으로 촉발된 급락 후 매도했던 금 포지션을 다시 매수하기 시작했으며, 연말 금 가격을 $6,000으로 전망하고 있다. 중동 지정학 리스크와 에너지 가격 상승이 인플레 우려를 재점화하면서 금의 장기 상승 전망이 유지되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #27~#30</span>
+    </div>
+    <div class="theme-summary">AI 기술 발전에 대한 대중의 공포 서사는 언어모델 자체보다는 인간의 심리를 반영한다는 철학적 분석이 제시되었다. AI 용어의 급증으로 LLM부터 환각까지 주요 용어에 대한 이해 가이드가 제공되고 있다. 나이지리아 공군이 지하드 반군을 겨냥한 공습에서 시장을 오폭해 최소 100명의 민간인이 사망했다. 뉴질랜드에서 배우 Sam Neill이 자신의 포도밭 인근 금광 개발 승인에 반대하는 운동에 동참했다. Trump 행정부의 베네수엘라 개입 성과표가 라틴아메리카 정책 맥락에서 분석되었다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">에너지 가격 상방 압력과 공급망 충격</span>
+    <span class="theme-label-range">Article #1~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Vance, 이란의 핵프로그램 포기 거부로 협상 실패 귀결</div>
+    <div class="article-title-en">JD Vance says talks failed due to Iran’s refusal to give up nuclear programme</div>
+    <div class="article-keypoint">Vance, 이란 핵프로그램 포기 거부로 협상 실패 귀결 - 외교 교착 장기화 전망</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/apr/12/jd-vance-says-no-deal-us-iran-pakistan-talks-islamabad" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/12 18:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Trump, Vance 파키스탄 협상 무산 속 호르무즈 해협 봉쇄 선언 - 금융시장 반응</div>
+    <div class="article-title-en">Trump announces blockade of Strait of Hormuz as Vance leaves Pakistan talks with no deal. How financial markets are reacting.</div>
+    <div class="article-keypoint">미-이란 협상 결렬로 Trump 호르무즈 봉쇄 선언, 유가 $100 돌파 - 인플레 재점화 위험</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/vance-leaves-pakistan-talks-with-no-deal-how-financial-markets-are-reacting-ef6916b3?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 06:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Trump, 호르무즈 해협 봉쇄 선언 - MarketWatch 기사 참고했나?</div>
+    <div class="article-title-en">Trump says he’s closing the Strait of Hormuz. Has he been reading MarketWatch?</div>
+    <div class="article-keypoint">Trump, 호르무즈 봉쇄로 유가 상승 인정 - 11월 중간선거까지 지속 가능성 시사</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trump-says-hes-closing-the-strait-of-hormuz-has-he-been-reading-marketwatch-e059dd07?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 09:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Takaichi, 호르무즈 리스크 속 헌법 개정 논의 촉구</div>
+    <div class="article-title-en">Takaichi Urges Constitutional Reform Talks as Hormuz Risk Looms</div>
+    <div class="article-keypoint">일본 Takaichi, 호르무즈 리스크 언급하며 헌법 개정 가속화 촉구 - 안보 명분 부각</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/takaichi-urges-constitutional-reform-talks-as-hormuz-risk-looms" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 11:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Trump, 유가 11월 중간선거까지 고공행진 가능성 시사</div>
+    <div class="article-title-en">Trump says US gas prices may remain high through November midterm election</div>
+    <div class="article-keypoint">Trump, 유가 고공행진 11월까지 지속 가능성 인정 - 이란 공격 정치적 부담 드러내</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-says-gas-prices-may-remain-high-through-november-midterm-election" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 03:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Netanyahu가 이란 전쟁 휴전을 무산시킬 것인가?</div>
+    <div class="article-title-en">Will Netanyahu Derail the Iran War Cease-Fire?</div>
+    <div class="article-keypoint">Netanyahu 레바논 공세로 이란 전쟁 휴전 위협 - 중동 안정화 불확실성 지속</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/04/09/israel-lebanon-iran-cease-fire-trump-netanyahu/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/10 07:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">영국, 호르무즈 해협 봉쇄 불참 선언 - Starmer 총리</div>
+    <div class="article-title-en">UK will not back blockade of Strait of Hormuz, PM Starmer says</div>
+    <div class="article-keypoint">영국 Starmer, 호르무즈 봉쇄 불참 선언 - 동맹국 간 대응 엇갈림</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/uk-will-not-back-blockade-of-strait-of-hormuz-pm-starmer-says-4609315" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 08:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Toto, 이란 전쟁이 공급망 교란하면서 욕실 주문 중단</div>
+    <div class="article-title-en">Toto Halts Bathroom Orders After Iran War Upends Supply Chain</div>
+    <div class="article-keypoint">일본 Toto, 이란 전쟁 공급망 충격으로 욕실 신규 주문 중단 - 자재 부족 심화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/japan-s-toto-halts-bathroom-orders-on-material-shortage-amid-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 14:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Trump 호르무즈 봉쇄 위협으로 유가 $100 돌파</div>
+    <div class="article-title-en">Oil Prices Surge Past $100 as Trump Threatens to Blockade the Strait of Hormuz</div>
+    <div class="article-keypoint">Trump 호르무즈 봉쇄 선언으로 유가 $100 돌파 - 아시아 조기 거래서 WTI 급등</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Surge-Past-100-as-Trump-Threatens-to-Blockade-the-Strait-of-Hormuz.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 09:34 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 인프라 투자와 규제 리스크</span>
+    <span class="theme-label-range">Article #10~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Anthropic, OpenClaw 개발자의 Claude 접근을 일시 차단</div>
+    <div class="article-title-en">Anthropic temporarily banned OpenClaw’s creator from accessing Claude</div>
+    <div class="article-keypoint">Anthropic, 가격 변경 후 OpenClaw 개발자 Claude 접근 차단 - API 정책 변동성 부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/10/anthropic-temporarily-banned-openclaws-creator-from-accessing-claude/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/11 05:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">CoreWeave-Anthropic, AI 클라우드 계약 체결</div>
+    <div class="article-title-en">CoreWeave, Anthropic Form AI Cloud Agreement</div>
+    <div class="article-keypoint">CoreWeave-Anthropic 클라우드 파트너십 체결 - Claude 모델 인프라 확장</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/coreweave-anthropic-form-ai-cloud-agreement-13021a5b?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/10 22:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Bessent과 Powell의 AI 불안</div>
+    <div class="article-title-en">Bessent and Powell’s A.I. Anxiety</div>
+    <div class="article-keypoint">Bessent-Powell, 은행 리더 소집해 Anthropic 모델 시스템 리스크 논의 - AI 금융 안정 우려</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/04/10/business/dealbook/bessent-powell-anthropic-banking-risks.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/10 20:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">'대중에게 너무 강력': Anthropic의 AI 홍보 전쟁 내막</div>
+    <div class="article-title-en">‘Too powerful for the public’: Inside Anthropic’s bid to win the AI publicity war</div>
+    <div class="article-keypoint">Anthropic, 사이버보안 이유로 AI 모델 공개 보류 - 투자 유치 과장 논란</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/apr/12/too-powerful-for-the-public-inside-anthropics-bid-to-win-the-ai-publicity-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/12 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Trump 행정부, 은행들에 Anthropic Mythos 모델 테스트 권장 가능성</div>
+    <div class="article-title-en">Trump officials may be encouraging banks to test Anthropic’s Mythos model</div>
+    <div class="article-keypoint">Trump 행정부, 은행들에 Anthropic Mythos 모델 테스트 권장 - 국방부 공급망 리스크 지정과 모순</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/12/trump-officials-may-be-encouraging-banks-to-test-anthropics-mythos-model/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 06:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">$92M 규모 금지 AI 칩, Super Micro에서 중국 기업으로 밀수</div>
+    <div class="article-title-en">$92 Million In Banned AI Chips Went From Super Micro To Little Known Chinese Tech Company</div>
+    <div class="article-keypoint">Super Micro 공동창업자, 중국 기업에 $92M 금지 AI 칩 밀수 기소 - 수출통제 위반</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/92-million-banned-ai-chips-went-super-micro-little-known-chinese-tech-company" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 15:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">AI 에너지 소비 폭증으로 컴퓨팅 파워 고갈</div>
+    <div class="article-title-en">AI Is Using So Much Energy That Computing Firepower Is Running Out</div>
+    <div class="article-keypoint">AI 컴퓨팅 자원 고갈로 기업들 제품 배급 시작 - 수요 폭증이 채택 속도 제약</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/ai-is-using-so-much-energy-that-computing-firepower-is-running-out-156e5c85?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 10:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">빅테크 AI 전략과 기업 지배구조</span>
+    <span class="theme-label-range">Article #17~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">스토킹 피해자, ChatGPT가 가해자 망상 부추기고 경고 무시했다며 OpenAI 고소</div>
+    <div class="article-title-en">Stalking victim sues OpenAI, claims ChatGPT fueled her abuser’s delusions and ignored her warnings</div>
+    <div class="article-keypoint">OpenAI, ChatGPT 사용자 스토킹 경고 3회 무시 혐의 소송 - AI 안전 책임 쟁점</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/10/stalking-victim-sues-openai-claims-chatgpt-fueled-her-abusers-delusions-and-ignored-her-warnings/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/11 01:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Nvidia 지원 SiFive, 오픈 AI 칩으로 $36.5억 밸류에이션 달성</div>
+    <div class="article-title-en">Nvidia-backed SiFive hits $3.65 billion valuation for open AI chips</div>
+    <div class="article-keypoint">Nvidia 지원 SiFive, RISC-V 기반 AI 칩으로 $36.5억 밸류 달성 - 비ARM 아키텍처 부상</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/11/nvidia-backed-sifive-hits-3-65-billion-valuation-for-open-ai-chips/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/11 23:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Meta, 직원과 상호작용할 Zuckerberg AI 버전 구축</div>
+    <div class="article-title-en">Meta builds AI version of Mark Zuckerberg to interact with staff</div>
+    <div class="article-keypoint">Zuckerberg, 직원 상호작용용 AI 자신 구축 - 개인 초지능 개발 전략 본격화</div>
+    <a class="article-link" href="https://www.ft.com/content/02107c23-6c7a-4c19-b8e2-b45f4bb9ce5f" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 13:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Meta, 소셜미디어 소송 해결에 AI 활용</div>
+    <div class="article-title-en">Meta Banks on AI to Clear the Smoke of Social-Media Lawsuits</div>
+    <div class="article-keypoint">Meta, AI로 소셜미디어 소송 대응하나 법적 분쟁이 주가 회복 제약 가능성</div>
+    <a class="article-link" href="https://www.wsj.com/tech/meta-banks-on-ai-to-clear-the-smoke-of-social-media-lawsuits-902263dc?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/10 18:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Amazon CEO, 대규모 AI 투자 명분 제시</div>
+    <div class="article-title-en">Amazon CEO Presses His Case for Big AI Spending</div>
+    <div class="article-keypoint">Amazon CEO, 주주 서한에서 AI·로봇공학 대규모 투자 정당화 - 장기 성장 전략 강조</div>
+    <a class="article-link" href="https://www.wsj.com/tech/amazon-ceo-andy-jassy-2026-shareholder-letter-10e68a68?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/10 02:38 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">1분기 실적 시즌과 은행주 밸류에이션</span>
+    <span class="theme-label-range">Article #22~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Federal Reserve, Burke & Herbert Financial Services Corp. 신청 승인 발표</div>
+    <div class="article-title-en">Federal Reserve Board announces approval of application by Burke & Herbert Financial Services Corp.</div>
+    <div class="article-keypoint">Federal Reserve, Burke & Herbert Financial 인수 승인 - 지역 은행 M&A 규제 정상 운영</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/orders20260410a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/11 05:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">실적 시즌을 앞두고 주목할 저평가 은행주들</div>
+    <div class="article-title-en">Here are some bargain bank stocks heading into earnings season</div>
+    <div class="article-keypoint">대형 은행주 밸류에이션 분석 - 실적 시즌 앞두고 장기 투자 기회 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/here-are-some-bargain-bank-stocks-heading-into-earnings-season-d0e6b3da?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/12 03:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">4월 주식시장 반등, 실적 시즌 본격화로 첫 시험대 직면</div>
+    <div class="article-title-en">April’s stock-market rebound is about to face its first major test as earnings season swings into gear</div>
+    <div class="article-keypoint">4월 반등 주식시장, 1분기 실적 시즌으로 첫 시험대 - 기업 이익 모멘텀 검증 국면</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/aprils-stock-market-rebound-is-about-to-face-its-first-major-test-as-earnings-season-swings-into-gear-1210b246?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 05:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">안전자산 선호와 금 가격 전망</span>
+    <span class="theme-label-range">Article #25~#26</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">스위스 은행 UBP, 금 재매수하며 연말 $6,000 전망</div>
+    <div class="article-title-en">Swiss Bank UBP Buying Gold Again, Forecasting $6,000 Year-End</div>
+    <div class="article-keypoint">UBP, 금 재매수하며 연말 $6,000 전망 - 지정학 리스크로 안전자산 선호 재점화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/swiss-bank-ubp-buying-gold-again-forecasting-6-000-year-end" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 13:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">'그게 끝일 것': 배우 Sam Neill, 뉴질랜드 포도밭 인근 논란의 금광 개발 저지 투쟁 동참</div>
+    <div class="article-title-en">‘That’ll be the end’: actor Sam Neill joins fight to stop controversial goldmine near his New Zealand vineyard</div>
+    <div class="article-keypoint">배우 Sam Neill, 뉴질랜드 포도밭 인근 금광 개발 반대 - 환경 보존 논란</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/apr/11/sam-neill-vineyard-bendigo-ophir-goldmine-otago-santana-minerals" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/11 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #27~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">우리는 왜 AI에 대한 무서운 이야기를 스스로에게 하는가?</div>
+    <div class="article-title-en">Why Do We Tell Ourselves Scary Stories About AI?</div>
+    <div class="article-keypoint">AI 생존 의지 서사는 언어모델보다 인간 심리 투영 - 기술 리스크 인식론적 분석</div>
+    <a class="article-link" href="https://www.quantamagazine.org/why-do-we-tell-ourselves-scary-stories-about-ai-20260410/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/10 23:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">LLM부터 환각까지, 주요 AI 용어 간단 가이드</div>
+    <div class="article-title-en">From LLMs to hallucinations, here’s a simple guide to common AI terms</div>
+    <div class="article-keypoint">LLM·환각 등 AI 주요 용어 가이드 - 기술 이해도 격차 해소 필요성</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/12/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 00:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">나이지리아 공습, 지하드 반군 겨냥했으나 민간인 최소 100명 사망</div>
+    <div class="article-title-en">Nigerian airstrike targeting jihadists reportedly kills at least 100 civilians</div>
+    <div class="article-keypoint">나이지리아 공군 오폭으로 민간인 100명 이상 사망 - 대테러 작전 부수 피해</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/apr/12/nigeria-airstrike-market-yobe-state-boko-haram" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 02:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Trump의 베네수엘라 성적표</div>
+    <div class="article-title-en">Trump’s Venezuela Report Card</div>
+    <div class="article-keypoint">Trump 베네수엘라 개입 성과표 분석 - 라틴아메리카 정책 재현 가능성 검토</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/04/10/venezuela-us-intervention-maduro-trump-oil-rodriguez-machado/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/10 21:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
