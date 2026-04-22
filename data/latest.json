@@ -2,42 +2,273 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "전일 급등 후 아시아 반등",
+      "title": "전일美하락→당일亞방어",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "한국ETF(EWY)",
+          "label": "EWY(한국ETF)",
           "value": "[4/20] $150.09→[4/21] $146.79 (-2.16%)",
           "source": "Finnhub",
           "timestamp": null,
-          "detail": "월간 급등 후 전일 미국 장 조정의 출발점"
+          "detail": "전일 미국 장에서 한국 ETF 하락 확정"
         },
         {
           "id": "n2",
-          "label": "차익실현압박",
-          "value": "고점 부담으로 수익 확정 매물",
-          "source": "분석",
+          "label": "EWJ(일본ETF)",
+          "value": "[4/20] $89.33→[4/21] $87.14 (-2.43%)",
+          "source": "Finnhub",
           "timestamp": null,
-          "detail": "급등 구간에서 자연스러운 차익실현 압력",
-          "related_news": []
+          "detail": "전일 미국 장에서 일본 ETF 더 큰 폭 하락"
         },
         {
           "id": "n3",
+          "label": "차익실현",
+          "value": "아시아 ETF 월간 급등 후 조정",
+          "source": "Analysis",
+          "timestamp": null,
+          "detail": "월간 급등(EWY +16%, EWJ +7%) 후 차익실현 압박",
+          "related_news": [
+            {
+              "source": "Bloomberg",
+              "title": "Asian equities see profit-taking after month-long rally"
+            }
+          ]
+        },
+        {
+          "id": "n4",
           "label": "KOSPI",
           "value": "[4/21] 6,388.47→[4/22] 6,417.93 (+0.46%)",
           "source": "Yahoo Finance",
           "timestamp": null,
-          "detail": "전일 ETF 조정에도 현물 지수는 저점매수 유입"
+          "detail": "전일 EWY 하락에도 당일 플러스 전환 방어"
         },
         {
-          "id": "n4",
+          "id": "n5",
           "label": "닛케이225",
           "value": "[4/21] 59,349.17→[4/22] 59,585.86 (+0.40%)",
           "source": "Yahoo Finance",
           "timestamp": null,
-          "detail": "아시아 현물 시장 전반의 회복력 확인"
+          "detail": "전일 EWJ 하락에도 당일 소폭 상승"
+        }
+      ],
+      "edges": [
+        {
+          "from": "n3",
+          "to": "n1",
+          "label": "촉발",
+          "rationale": "월간 급등 후 차익실현 압박이 ETF 하락 유발"
+        },
+        {
+          "from": "n3",
+          "to": "n2",
+          "label": "촉발",
+          "rationale": "동일한 차익실현 압박이 일본 ETF도 하락시킴"
+        },
+        {
+          "from": "n1",
+          "to": "n4",
+          "label": "시차전달",
+          "rationale": "전일 미국 ETF 하락이 다음날 현물 지수에 영향"
+        },
+        {
+          "from": "n2",
+          "to": "n5",
+          "label": "시차전달",
+          "rationale": "전일 미국 ETF 하락이 다음날 현물 지수에 영향"
+        }
+      ],
+      "korea_terminal_node": "n4",
+      "briefing": "전일 미국 장에서 EWY·EWJ가 월간 급등 후 차익실현으로 각각 -2.16%, -2.43% 조정 확정. 그러나 당일 아시아 현물 지수는 KOSPI +0.46%, 닛케이 +0.40%으로 플러스 전환해 시차전달 효과와 현물의 독자적 수급이 혼재. 미국 ETF 조정 신호가 아시아 현물에 완전히 전이되지 않은 괴리 구조 지속."
+    },
+    {
+      "id": "thread_002",
+      "title": "원유급등→구리폭락분화",
+      "priority": 2,
+      "frequency": "NOW",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "중동긴장",
+          "value": "지정학적 리스크 확산",
+          "source": "Analysis",
+          "timestamp": null,
+          "detail": "중동 지역 지정학적 긴장 고조로 원유 공급 우려",
+          "related_news": [
+            {
+              "source": "Bloomberg",
+              "title": "Middle East tensions escalate oil supply concerns"
+            }
+          ]
+        },
+        {
+          "id": "n2",
+          "label": "USO(원유ETF)",
+          "value": "[4/20] $121.32→[4/21] $128.25 (+5.67%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "지정학적 리스크로 원유 가격 급등"
+        },
+        {
+          "id": "n3",
+          "label": "침체우려",
+          "value": "원유 급등의 경기 둔화 파급",
+          "source": "Analysis",
+          "timestamp": null,
+          "detail": "원유 급등이 글로벌 인플레이션과 경기 둔화 우려 확산",
+          "related_news": [
+            {
+              "source": "Reuters",
+              "title": "Rising oil prices fuel stagflation concerns among economists"
+            }
+          ]
+        },
+        {
+          "id": "n4",
+          "label": "COPX(구리ETF)",
+          "value": "[4/20] $86.25→[4/21] $81.47 (-5.40%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "경기 둔화 우려로 산업 수요 위축 반영"
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "직접수혜",
+          "rationale": "지정학적 긴장이 원유 공급 차질 우려로 직결"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "label": "촉발",
+          "rationale": "원유 가격 급등이 인플레이션과 경기 둔화 우려 확산"
+        },
+        {
+          "from": "n3",
+          "to": "n4",
+          "label": "타격",
+          "rationale": "경기 둔화 우려가 산업용 구리 수요 위축 예상으로 연결"
+        }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "중동 긴장 고조로 원유 공급망 우려 확산, USO +5.67% 급등. 동시에 고유가의 글로벌 경기 둔화 우려가 촉발되면서 기초금속 수요 둔화 신호로 작용, COPX -5.40% 폭락. 상품 내 분화 구조 심화: 공급 제약 자산(원유) vs 경기 선행지표(구리)의 괴리 극대화."
+    },
+    {
+      "id": "thread_003",
+      "title": "금ETF주간급락지속",
+      "priority": 3,
+      "frequency": "WEEKLY",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "연준기조전환",
+          "value": "매파 의장 후보 독립성 강조 발언",
+          "source": "CNBC",
+          "timestamp": null,
+          "detail": "Fed 의장 후보 워시의 독립성 강조가 매파 정책 지속 신호",
+          "related_news": [
+            {
+              "source": "CNBC",
+              "title": "Chair nominee Kevin Warsh says Fed must 'stay in its lane' to maintain independence"
+            }
+          ]
+        },
+        {
+          "id": "n2",
+          "label": "실질금리상승",
+          "value": "명목금리 고점 지속 기대감 확산",
+          "source": "Analysis",
+          "timestamp": null,
+          "detail": "매파 기조 지속으로 실질금리 상승 압박 지속"
+        },
+        {
+          "id": "n3",
+          "label": "UUP(달러ETF)",
+          "value": "[4/15] $27.29→[4/21] $27.47 (+0.62%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "실질금리 상승으로 달러 강세 지속"
+        },
+        {
+          "id": "n4",
+          "label": "GLD(금ETF)",
+          "value": "[4/15] $440.46→[4/21] $429.57 (-2.44%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "실질금리 상승과 달러 강세로 금 매력도 급락"
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "시사",
+          "rationale": "매파 기조 지속 신호가 실질금리 상승 압박으로 연결"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "label": "수혜",
+          "rationale": "실질금리 상승이 달러 자산의 상대적 매력도 제고"
+        },
+        {
+          "from": "n2",
+          "to": "n4",
+          "label": "타격",
+          "rationale": "실질금리 상승이 무이자 자산인 금의 기회비용 증가"
+        }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "연준 의장 후보 워시가 독립성 강조 발언으로 금리 인하 기조 연기 시사. 명목금리 고점 지속 기대감으로 실질금리 상승세 확산. 달러ETF(UUP) +0.62% 수혜하는 한편, 안전자산 수요 둔화로 금ETF(GLD) 주간 -2.44% 연속 하락. 고금리 정상화 장기화 시나리오 반영."
+    },
+    {
+      "id": "thread_004",
+      "title": "반도체월간초강세",
+      "priority": 4,
+      "frequency": "MONTHLY",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "AI투자사이클",
+          "value": "빅테크 AI 인프라 투자 본격화",
+          "source": "Analysis",
+          "timestamp": null,
+          "detail": "메타, 구글 등 빅테크의 AI 인프라 투자 확대 사이클"
+        },
+        {
+          "id": "n2",
+          "label": "반도체수요",
+          "value": "AI칩 수요 폭발적 증가",
+          "source": "Analysis",
+          "timestamp": null,
+          "detail": "생성AI 확산으로 고성능 반도체 수요 구조적 급증"
+        },
+        {
+          "id": "n3",
+          "label": "SOXX(반도체)",
+          "value": "[3/20] $332.51→[4/21] $420.70 (+26.52%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "AI 반도체 슈퍼사이클 확인으로 월간 26% 급등"
+        },
+        {
+          "id": "n4",
+          "label": "한국반도체",
+          "value": "삼성·SK하이닉스 메모리 호황 기대",
+          "source": "Analysis",
+          "timestamp": null,
+          "detail": "AI 서버용 HBM 메모리 수요 급증으로 한국 수혜"
+        },
+        {
+          "id": "n5",
+          "label": "EWY(한국ETF)",
+          "value": "[3/20] $125.78→[4/21] $146.79 (+16.75%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "반도체 수혜와 외국인 수급 개선으로 월간 16% 급등"
         }
       ],
       "edges": [
@@ -45,370 +276,50 @@
           "from": "n1",
           "to": "n2",
           "label": "촉발",
-          "rationale": "월간 16% 급등 후 자연스러운 차익실현 압력 발생"
+          "rationale": "AI 투자 확대가 반도체 수요 구조적 증가 유발"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "시차전달",
-          "rationale": "전일 미국 ETF 조정이 당일 현물 지수 개장에 반영"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
-          "label": "동조반등",
-          "rationale": "아시아 현물 시장 간 동시간대 위험선호 회복"
-        }
-      ],
-      "korea_terminal_node": "n3",
-      "briefing": "전일 미국 장에서 한국ETF(EWY) -2.16% 조정 후 당일 KOSPI +0.46% 저점 매수 확인. 월간 16% 급등 후 자연스러운 차익실현 국면이나, 아시아 현물의 빠른 반등으로 심리 회복 신호. 닛케이도 +0.40% 동반 반등하며 지역 내 안정성 재평가."
-    },
-    {
-      "id": "thread_002",
-      "title": "원유 급등·구리 급락 분화",
-      "priority": 2,
-      "frequency": "NOW",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "원유ETF(USO)",
-          "value": "[4/20] $121.32→[4/21] $128.25 (+5.67%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "지정학적 리스크로 에너지 가격 급등의 촉발점"
-        },
-        {
-          "id": "n2",
-          "label": "중동긴장고조",
-          "value": "이란 핵협상 교착 장기화",
-          "source": "분석",
-          "timestamp": null,
-          "detail": "원유 공급 차질 우려로 에너지 프리미엄 확대",
-          "related_news": [
-            {
-              "source": "Reuters",
-              "title": "Iran nuclear talks stall amid sanctions pressure"
-            }
-          ]
-        },
-        {
-          "id": "n3",
-          "label": "구리ETF(COPX)",
-          "value": "[4/20] $86.25→[4/21] $81.47 (-5.40%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "중국 경기 둔화 우려로 기초 금속 수요 위축"
-        },
-        {
-          "id": "n4",
-          "label": "인플레부담",
-          "value": "원자재 양극화로 스태그플레이션 신호",
-          "source": "분석",
-          "timestamp": null,
-          "detail": "에너지 상승-금속 하락의 인플레 압박 구조",
-          "related_news": []
-        },
-        {
-          "id": "n5",
-          "label": "금ETF(GLD)",
-          "value": "[4/20] $442.09→[4/21] $429.57 (-2.80%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "실질금리 상승 기대감으로 금 매력도 하락"
-        }
-      ],
-      "edges": [
-        {
-          "from": "n2",
-          "to": "n1",
           "label": "직접수혜",
-          "rationale": "중동 긴장 고조로 원유 공급 차질 우려 확산"
+          "rationale": "반도체 수요 급증이 섹터 ETF 급등으로 직결"
         },
         {
           "from": "n2",
-          "to": "n3",
-          "label": "수요위축",
-          "rationale": "지정학적 리스크가 중국 등 신흥국 성장 둔화 우려 증폭"
-        },
-        {
-          "from": "n1",
           "to": "n4",
-          "label": "인플레압박",
-          "rationale": "에너지 가격 상승이 인플레이션 재점화 우려 자극"
+          "label": "파급",
+          "rationale": "글로벌 반도체 수요가 한국 메모리 기업에 파급"
         },
         {
           "from": "n4",
           "to": "n5",
-          "label": "기회비용",
-          "rationale": "인플레 압박으로 실질금리 상승 기대감 확산"
+          "label": "반영",
+          "rationale": "한국 반도체 수혜가 EWY 상승으로 반영"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "전일 미국 장에서 원자재 섹터 극명한 분화 확인. USO +5.67% 급등 vs COPX -5.40% 급락. 이란 핵협상 교착으로 원유 공급 우려 촉발하는 반면, 경기 둔화 신호에 구리 등 산업금속 수요 위축. GLD -2.80% 동반 약세로 실질금리 상승 기조 지속 반영. 스태그플레이션 시나리오 부상."
-    },
-    {
-      "id": "thread_003",
-      "title": "반도체 월간 26% 급등",
-      "priority": 3,
-      "frequency": "MONTHLY",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "AI사이클재점화",
-          "value": "생성AI 추론 효율 혁신",
-          "source": "분석",
-          "timestamp": null,
-          "detail": "AI 모델 효율성 개선으로 반도체 수요 지속성 확보",
-          "related_news": [
-            {
-              "source": "TechCrunch",
-              "title": "Meta's new AI model improves inference efficiency"
-            }
-          ]
-        },
-        {
-          "id": "n2",
-          "label": "반도체ETF(SOXX)",
-          "value": "[3/20] $332.51→[4/21] $420.70 (+26.52%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "AI 반도체 수요 확대로 월간 최대 수혜 섹터"
-        },
-        {
-          "id": "n3",
-          "label": "메모리수급개선",
-          "value": "HBM4 양산 계획 가시화",
-          "source": "분석",
-          "timestamp": null,
-          "detail": "고대역폭 메모리 수급 타이트닝으로 가격 상승 기대",
-          "related_news": []
-        },
-        {
-          "id": "n4",
-          "label": "한국ETF(EWY)",
-          "value": "[3/20] $125.78→[4/21] $146.79 (+16.75%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "반도체 수출 비중으로 AI 사이클 수혜 구조"
-        },
-        {
-          "id": "n5",
-          "label": "대만ETF(EWT)",
-          "value": "[3/20] $69.74→[4/21] $83.53 (+19.79%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "TSMC 중심 파운드리 수혜로 월간 급등"
-        }
-      ],
-      "edges": [
-        {
-          "from": "n1",
-          "to": "n2",
-          "label": "직접수혜",
-          "rationale": "AI 추론 칩 수요 확대로 반도체 ETF 핵심 수혜"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
-          "label": "연관확산",
-          "rationale": "AI 칩 성장이 HBM 등 메모리 수급 타이트닝 유발"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
-          "label": "수출수혜",
-          "rationale": "한국 메모리 반도체 수출 비중으로 직접 수혜"
-        },
-        {
-          "from": "n2",
-          "to": "n5",
-          "label": "파운드리수혜",
-          "rationale": "TSMC 중심 AI 칩 위탁생산 수혜로 대만 ETF 급등"
-        }
-      ],
-      "korea_terminal_node": "n4",
-      "briefing": "월간 관점에서 SOXX +26.52% 급등으로 AI 반도체 사이클 재점화 확인. 생성AI 추론 효율 혁신과 HBM4 양산 가시화로 메모리 수급 개선 가능성 제시. 한국ETF(EWY) +16.75%, 대만ETF(EWT) +19.79%로 양사 반도체 수출 수혜 구조 명확. 한국은 메모리 공급 확대, 대만은 파운드리 독점으로 각각 AI 사이클 1차 수혜 예상."
-    },
-    {
-      "id": "thread_004",
-      "title": "신흥국 월간 분화 심화",
-      "priority": 4,
-      "frequency": "MONTHLY",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "미중기술경쟁",
-          "value": "AI 반도체 패권 경쟁 심화",
-          "source": "분석",
-          "timestamp": null,
-          "detail": "기술 패권 경쟁에서 한국-대만 수혜 vs 중국 소외",
-          "related_news": []
-        },
-        {
-          "id": "n2",
-          "label": "한국ETF(EWY)",
-          "value": "[3/20] $125.78→[4/21] $146.79 (+16.75%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "AI 반도체 공급망에서 핵심 위치로 월간 최대 수혜"
-        },
-        {
-          "id": "n3",
-          "label": "중국ETF(FXI)",
-          "value": "[3/20] $35.16→[4/21] $37.11 (+5.55%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "기술 제재 지속으로 상대적 소외 지속"
-        },
-        {
-          "id": "n4",
-          "label": "공급망재편",
-          "value": "친서방 기술 동맹 강화",
-          "source": "분석",
-          "timestamp": null,
-          "detail": "미국 중심 기술 공급망에서 한국-대만 중요성 부각",
-          "related_news": []
-        },
-        {
-          "id": "n5",
-          "label": "대만ETF(EWT)",
-          "value": "[3/20] $69.74→[4/21] $83.53 (+19.79%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "TSMC 파운드리 독점 지위로 최대 월간 수혜"
-        }
-      ],
-      "edges": [
-        {
-          "from": "n1",
-          "to": "n4",
-          "label": "구조변화",
-          "rationale": "미중 기술 경쟁이 글로벌 공급망 재편 가속화"
-        },
-        {
-          "from": "n4",
-          "to": "n2",
-          "label": "핵심수혜",
-          "rationale": "친서방 기술 동맹에서 한국 메모리 반도체 중요성 부각"
-        },
-        {
-          "from": "n4",
-          "to": "n5",
-          "label": "독점수혜",
-          "rationale": "첨단 파운드리 독점 지위로 대만 최대 수혜"
-        },
-        {
-          "from": "n1",
-          "to": "n3",
-          "label": "상대소외",
-          "rationale": "AI 반도체 기술 제재로 중국 ETF 상대적 부진"
-        }
-      ],
-      "korea_terminal_node": "n2",
-      "briefing": "월간 신흥국 분화 심화 추세. EWY +16.75% vs FXI +5.55%로 격차 3배 이상 확대. 미중 기술 패권 경쟁이 공급망 재편으로 구조화되며 친서방 동맹국(한국, 대만) 강세 심화. 한국은 메모리 반도체 중심 투자, 대만은 파운드리 독점으로 각각 핵심 및 독점 수혜 포지션. 중국ETF 상대 소외 국면 지속 전망."
-    },
-    {
-      "id": "thread_005",
-      "title": "금주간 조정·달러 강세",
-      "priority": 5,
-      "frequency": "WEEKLY",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "Fed매파지속",
-          "value": "인플레 재점화 우려 확산",
-          "source": "분석",
-          "timestamp": null,
-          "detail": "에너지 가격 상승으로 Fed 완화 기대감 후퇴",
-          "related_news": [
-            {
-              "source": "Fed Speeches",
-              "title": "Waller: One Transitory Shock After Another"
-            }
-          ]
-        },
-        {
-          "id": "n2",
-          "label": "실질금리상승",
-          "value": "10년 기대인플레 2.38%",
-          "source": "FRED",
-          "timestamp": null,
-          "detail": "인플레 기대 상승으로 실질금리 상승 압력 지속"
-        },
-        {
-          "id": "n3",
-          "label": "달러지수(UUP)",
-          "value": "[4/15] $27.29→[4/21] $27.47 (+0.62%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "Fed 매파 기조로 달러 강세 주간 지속"
-        },
-        {
-          "id": "n4",
-          "label": "금ETF(GLD)",
-          "value": "[4/15] $440.46→[4/21] $429.57 (-2.44%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "실질금리 상승으로 무수익 자산 매력도 하락"
-        },
-        {
-          "id": "n5",
-          "label": "장기채ETF(TLT)",
-          "value": "[4/15] $86.83→[4/21] $86.57 (-0.30%)",
-          "source": "Finnhub",
-          "timestamp": null,
-          "detail": "금리 상승 기대감으로 장기채 약세 지속"
-        }
-      ],
-      "edges": [
-        {
-          "from": "n1",
-          "to": "n2",
-          "label": "기대상승",
-          "rationale": "Fed 매파 기조로 인플레이션 기대치 상승 압력"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
-          "label": "달러수혜",
-          "rationale": "실질금리 상승이 달러 자산 상대적 매력도 제고"
-        },
-        {
-          "from": "n2",
-          "to": "n4",
-          "label": "기회비용",
-          "rationale": "실질금리 상승으로 무수익 금의 기회비용 확대"
-        },
-        {
-          "from": "n2",
-          "to": "n5",
-          "label": "금리압박",
-          "rationale": "실질금리 상승 기대로 장기채 가격 하락 압력"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "주간 누적 추세에서 Fed 매파 기조 지속 신호. 실질금리 상승(기대인플레 2.38%)으로 수익/비수익 자산 간 차별화 심화. UUP +0.62%, GLD -2.44%, TLT -0.30%로 달러 강세 속 원화·금 약세 구조. 향후 인플레 데이터 발표가 금리 궤적 결정 관건. 아시아 신흥국 통화 약세 압박 지속 우려."
+      "korea_terminal_node": "n5",
+      "briefing": "AI 투자 사이클 본격화로 반도체 수요 폭발적 증가. SOXX는 3/20 $332.51에서 4/21 $420.70으로 월간 +26.52% 급등, AI 반도체 슈퍼사이클 확인. 글로벌 AI칩 수요 확산이 삼성·SK하이닉스 메모리 반도체로 직접 파급되면서 EWY는 동기간 +16.75% 상승. 한국 반도체 비중(KOSPI 시총 30% 이상)을 감안하면 이 사이클이 한국 지수의 장기 상승 엔진으로 자리잡는 중."
     }
   ],
   "headlines": [
-    "EWY 조정 후 KOSPI 저점 매수로 빠른 반등",
-    "원유 급등·구리 급락으로 스태그플레이션 신호"
+    "전일 美ETF -2%대 조정 후 당일 亞현물 +0.4% 방어",
+    "중동긴장 원유급등 vs 경기우려 구리폭락 상품분화"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 반도체 AI 급등 후 차익실현 조정(EWY -2.16%) / 당일 아시아: KOSPI·닛케이 저점 반등(+0.46% 이상)",
-    "layer2": "AI 반도체 월간 사이클(SOXX +26.52%) 심화로 한국·대만 수출 수혜 구조 확대, 동시에 원자재 양극화(원유 +5.67% vs 구리 -5.40%)로 인플레 부담 증대",
-    "layer3": "현재 유럽 장중 DAX +0.14%, FTSE 보합권으로 관망세 지속하며 미중 기술 경쟁·금리 기조를 배경으로 신흥국 내 분화(EWY vs FXI 격차 심화) 공고화"
+    "layer1": "전일 미국: SOXX·EWY 월간 급등 후 차익실현 조정 / 당일 아시아: KOSPI·닛케이 현물 방어",
+    "layer2": "미국 ETF 조정 신호 → 아시아 현물 시차 전달, 지정학적 원유 랠리 vs 경기 둔화 우려 분화",
+    "layer3": "AI 반도체 슈퍼사이클 흐름은 지속, 단기 수익 실현과 경제 리스크 헤징 심화"
   },
-  "generated_at": "2026-04-22T09:34:03.301Z",
+  "generated_at": "2026-04-22T11:34:08.603Z",
   "data_as_of": {
-    "timestamp_iso": "2026-04-22T09:34:03.272Z",
-    "display": "4/22 18:34 [ KST +0900 ]",
-    "display_mobile": "4/22 18:34 KST",
+    "timestamp_iso": "2026-04-22T11:34:08.389Z",
+    "display": "4/22 20:34 [ KST +0900 ]",
+    "display_mobile": "4/22 20:34 KST",
     "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-04-22T09:34:03.301Z",
-    "elapsed_sec": 214,
+    "generated_at": "2026-04-22T11:34:08.603Z",
+    "elapsed_sec": 220,
     "market_status": [
       "유럽(DAX/CAC/FTSE)"
     ],
