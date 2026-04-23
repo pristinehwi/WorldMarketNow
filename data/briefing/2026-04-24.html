@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-24 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/24 07:48 KST</div>
+    <div class="header-date">2026-04-24</div>
+    
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">전체 뉴스</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#30</span>
+    </div>
+    <div class="theme-summary"></div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">전체 뉴스</span>
+    <span class="theme-label-range">Article #1~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">The Guardian view on Anthropic’s Claude Mythos: when AI finds every flaw, who controls the internet? | Editorial</div>
+    <div class="article-title-en">The Guardian view on Anthropic’s Claude Mythos: when AI finds every flaw, who controls the internet? | Editorial</div>
+    
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/2026/apr/23/the-guardian-view-on-anthropics-claude-mythos-when-ai-finds-every-flaw-who-controls-the-internet" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 02:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Fed’s Bowman Cautions Wall Street CEOs Against Capital Gripes</div>
+    <div class="article-title-en">Fed’s Bowman Cautions Wall Street CEOs Against Capital Gripes</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-23/fed-s-bowman-cautions-wall-street-ceos-against-capital-gripes" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 04:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Goldman: Fast Food's 'Bang For The Buck' Gains As Casual Dining Appeal Craters</div>
+    <div class="article-title-en">Goldman: Fast Food's 'Bang For The Buck' Gains As Casual Dining Appeal Craters</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/markets/goldman-fast-foods-bang-buck-gains-casual-dining-appeal-craters" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 01:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Daily Memo: French-Polish Nuclear Exercise, German Military Ambitions</div>
+    <div class="article-title-en">Daily Memo: French-Polish Nuclear Exercise, German Military Ambitions</div>
+    
+    <a class="article-link" href="https://geopoliticalfutures.com/daily-memo-french-polish-nuclear-exercise-german-military-ambitions/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 23:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Cryptoasset service providers as financial intermediaries: risks and policy approaches</div>
+    <div class="article-title-en">Cryptoasset service providers as financial intermediaries: risks and policy approaches</div>
+    
+    <a class="article-link" href="https://www.bis.org/fsi/fsipapers27.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 17:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Yet Another Dead NASA Scientist: Nuclear Propulsion Expert Was Found Charred Inside Crashed Tesla</div>
+    <div class="article-title-en">Yet Another Dead NASA Scientist: Nuclear Propulsion Expert Was Found Charred Inside Crashed Tesla</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/political/yet-another-dead-nasa-scientist-nuclear-propulsion-expert-was-found-charred-inside" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Intel Q1 2026 presentation: sixth straight beat on AI demand surge</div>
+    <div class="article-title-en">Intel Q1 2026 presentation: sixth straight beat on AI demand surge</div>
+    
+    <a class="article-link" href="https://www.investing.com/news/company-news/intel-q1-2026-presentation-sixth-straight-beat-on-ai-demand-surge-93CH-4634449" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 22:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Meta to cut 10% of jobs to ‘offset’ Zuckerberg’s AI spending</div>
+    <div class="article-title-en">Meta to cut 10% of jobs to ‘offset’ Zuckerberg’s AI spending</div>
+    
+    <a class="article-link" href="https://www.ft.com/content/fe875f6c-f45c-4dbd-9d18-168d1fdbfd5f" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 04:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Rerouted US Imports Avoiding Trump Tariffs Top $300 Billion</div>
+    <div class="article-title-en">Rerouted US Imports Avoiding Trump Tariffs Top $300 Billion</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-23/rerouted-us-imports-avoiding-trump-s-tariffs-top-300-billion" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">ECB’s Nagel Says Trump’s Fed Attacks Caused Flight to Safety</div>
+    <div class="article-title-en">ECB’s Nagel Says Trump’s Fed Attacks Caused Flight to Safety</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-23/ecb-s-nagel-says-trump-s-fed-attacks-caused-flight-to-safety" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Mamdani Considers Delaying Pension-Fund Payments to Ease Budget Gap</div>
+    <div class="article-title-en">Mamdani Considers Delaying Pension-Fund Payments to Ease Budget Gap</div>
+    
+    <a class="article-link" href="https://www.nytimes.com/2026/04/23/nyregion/mamdani-pension-funds.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 01:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">French weather forecast office files police complaint following suspicious Polymarket bets</div>
+    <div class="article-title-en">French weather forecast office files police complaint following suspicious Polymarket bets</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/french-weather-forecasting-office-files-police-complaint-following-suspicious-surge-in-polymarket-bets-fb72729d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 07:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Employee buyouts like Microsoft’s could become more common. Here’s what workers need to know.</div>
+    <div class="article-title-en">Employee buyouts like Microsoft’s could become more common. Here’s what workers need to know.</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/employee-buyouts-like-microsofts-could-become-more-common-heres-what-workers-need-to-know-2b439281?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 06:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Mobileye’s robotaxi ambitions have ‘progressed significantly,’ and the stock surges</div>
+    <div class="article-title-en">Mobileye’s robotaxi ambitions have ‘progressed significantly,’ and the stock surges</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/mobileyes-robotaxi-ambitions-have-progressed-significantly-and-the-stock-surges-971fb467?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 06:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">OpenAI releases GPT-5.5, bringing company one step closer to an AI ‘super app’</div>
+    <div class="article-title-en">OpenAI releases GPT-5.5, bringing company one step closer to an AI ‘super app’</div>
+    
+    <a class="article-link" href="https://techcrunch.com/2026/04/23/openai-chatgpt-gpt-5-5-ai-model-superapp/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 03:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">US Jobless Claims Edge Up to 214,000 as Layoffs Stay Limited</div>
+    <div class="article-title-en">US Jobless Claims Edge Up to 214,000 as Layoffs Stay Limited</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-23/us-jobless-claims-edge-up-to-214-000-suggesting-layoffs-limited" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 21:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Microsoft Offers Its First Ever Buyouts to Shape Workforce Around AI Push</div>
+    <div class="article-title-en">Microsoft Offers Its First Ever Buyouts to Shape Workforce Around AI Push</div>
+    
+    <a class="article-link" href="https://www.wsj.com/tech/microsoft-offers-buyouts-to-7-of-workforce-755b8534?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 03:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Lockheed Martin CEO sees Trump’s Pentagon as ‘golden opportunity’ for growth</div>
+    <div class="article-title-en">Lockheed Martin CEO sees Trump’s Pentagon as ‘golden opportunity’ for growth</div>
+    
+    <a class="article-link" href="https://www.theguardian.com/business/2026/apr/23/lockheed-martin-earnings-call-trump-pentagon-opportunity" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 01:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Tether Freezes $344 Million USDT Stablecoins Flagged For Illicit Activity</div>
+    <div class="article-title-en">Tether Freezes $344 Million USDT Stablecoins Flagged For Illicit Activity</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/crypto/tether-freezes-344-million-usdt-stablecoins-flagged-illicit-activity" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 00:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">UK Growth Rebounds as Firms Build Up Stocks, Surprise PMI Shows</div>
+    <div class="article-title-en">UK Growth Rebounds as Firms Build Up Stocks, Surprise PMI Shows</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-23/uk-growth-rebounds-as-firms-build-up-stocks-surprise-pmi-shows" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 17:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Ben Jennings on the Met’s interest in using Palantir AI technology – cartoon</div>
+    <div class="article-title-en">Ben Jennings on the Met’s interest in using Palantir AI technology – cartoon</div>
+    
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/picture/2026/apr/23/ben-jennings-the-met-interest-buying-palantir-ai-cartoon" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 02:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Meta plans to lay off about 8,000 employees as AI spending soars</div>
+    <div class="article-title-en">Meta plans to lay off about 8,000 employees as AI spending soars</div>
+    
+    <a class="article-link" href="https://www.lemonde.fr/en/pixels/article/2026/04/23/meta-plans-layoffs-as-ai-spending-soars_6752761_13.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 04:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Goldman’s Varadhan Signals Dealmaking Amid Volatility</div>
+    <div class="article-title-en">Goldman’s Varadhan Signals Dealmaking Amid Volatility</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-23/goldman-s-varadhan-signals-dealmaking-amid-volatility-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 04:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">
+        Jeff Bezos is raising his game in space
+      </div>
+    <div class="article-title-en">
+        Jeff Bezos is raising his game in space
+      </div>
+    
+    <a class="article-link" href="https://www.economist.com/business/2026/04/23/jeff-bezos-is-raising-his-game-in-space" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 22:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Trump rules out striking Iran with nuclear weapon: 'No, I wouldn't use it'</div>
+    <div class="article-title-en">Trump rules out striking Iran with nuclear weapon: 'No, I wouldn't use it'</div>
+    
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/04/23/trump-rules-out-striking-iran-with-nuclear-weapon-no-i-wouldn-t-use-it_6752762_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 06:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Meta to cut 10% of jobs, or 8,000 employees, report says</div>
+    <div class="article-title-en">Meta to cut 10% of jobs, or 8,000 employees, report says</div>
+    
+    <a class="article-link" href="https://techcrunch.com/2026/04/23/meta-job-cuts-10-percent-8000-employees/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 03:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Fed, FDIC Finalize Changes Easing Community Bank Leverage Ratio</div>
+    <div class="article-title-en">Fed, FDIC Finalize Changes Easing Community Bank Leverage Ratio</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-23/fed-fdic-finalize-changes-easing-community-bank-leverage-ratio" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 04:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Governments failed to deliver $160m of river improvements including for now-parched NSW wetlands, report finds</div>
+    <div class="article-title-en">Governments failed to deliver $160m of river improvements including for now-parched NSW wetlands, report finds</div>
+    
+    <a class="article-link" href="https://www.theguardian.com/environment/2026/apr/23/governments-failed-to-deliver-160m-of-river-improvements-including-for-now-parched-nsw-wetlands-report-finds" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 17:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Agencies finalize changes to enhance community bank leverage ratio</div>
+    <div class="article-title-en">Agencies finalize changes to enhance community bank leverage ratio</div>
+    
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260423a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 04:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Trump is swaying the market like no president has in decades, analysis shows</div>
+    <div class="article-title-en">Trump is swaying the market like no president has in decades, analysis shows</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/trump-is-swaying-the-market-like-no-president-has-in-decades-analysis-shows-879be0bc?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 07:09 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
