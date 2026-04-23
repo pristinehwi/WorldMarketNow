@@ -2,50 +2,150 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "EWY급등후 KOSPI방어",
+      "title": "EWY급등→KOSPI상승",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "반도체수급",
-          "value": "AI 칩 공급 부족 심화로 프리미엄 확대",
-          "detail": "글로벌 AI 수요 급증으로 반도체 공급 부족이 심화되며 관련주 프리미엄을 확대시키는 구조적 원인",
-          "source": "시장 분석",
+          "label": "SOXX(SOXX)",
+          "value": "[4/21] $420.70→[4/22] $437.64 (+2.63%)",
+          "source": "Finnhub",
           "timestamp": null,
+          "detail": "반도체 ETF 상승으로 AI 사이클 지속 확인"
+        },
+        {
+          "id": "n2",
+          "label": "EWY(EWY)",
+          "value": "[4/21] $146.79→[4/22] $150.02 (+6.12%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "한국 ETF 급등으로 한국 리레이팅 가속화"
+        },
+        {
+          "id": "n3",
+          "label": "KOSPI",
+          "value": "[4/22] 6388.47→[4/23] 6475.81 (+0.90%)",
+          "source": "Yahoo Finance + 네이버증권",
+          "timestamp": null,
+          "detail": "전일 EWY 급등에 따른 당일 현물 방어 상승"
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "동반상승",
+          "rationale": "한국 반도체 비중 높아 SOXX 상승시 EWY 연동"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "label": "시차전달",
+          "rationale": "전일 미국장 EWY 급등이 당일 한국장으로 전달"
+        }
+      ],
+      "korea_terminal_node": "n3",
+      "briefing": "전일 미국 장에서 반도체 강세에 EWY가 6.12% 급등하며 한국 리레이팅 재확인. 당일 KOSPI는 0.90% 상승으로 전일 강세를 부분 선반영하면서도 차익실현 압박이 존재함을 시사. 월간 기준 EWY 16% 급등세는 외국인 수급 개선과 기술주 회전의 결합 작용으로 해석."
+    },
+    {
+      "id": "thread_002",
+      "title": "구리급등 자원순환",
+      "priority": 2,
+      "frequency": "NOW",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "COPX(COPX)",
+          "value": "[4/21] $81.47→[4/22] $82.70 (+4.18%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "구리 ETF 급등으로 자원 슈퍼사이클 재점화"
+        },
+        {
+          "id": "n2",
+          "label": "인플레회귀",
+          "value": "구리 급등으로 리플레이션 압력",
+          "source": "분석",
+          "timestamp": null,
+          "detail": "구리 가격 상승이 인플레이션 재점화 우려 증대",
           "related_news": [
             {
-              "source": "MarketWatch",
-              "title": "The chip sector is on a historic tear, fueled by some unsuspecting stocks"
+              "source": "ECB",
+              "title": "Christine Lagarde: The energy shock: where we stand"
+            }
+          ]
+        },
+        {
+          "id": "n3",
+          "label": "EEM(EEM)",
+          "value": "[4/21] $62.25→[4/22] $62.28 (+1.83%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "신흥국 ETF가 자원 상승 수혜로 상승"
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "인플압력",
+          "rationale": "구리는 산업 원자재로 인플레이션 선행지표 역할"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "label": "자원수혜",
+          "rationale": "자원 상승은 신흥국 수출 수익성 개선으로 연결"
+        }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "COPX 4.18% 급등으로 자원 슈퍼사이클 재점화 신호 포착. 구리 가격 상승이 글로벌 리플레이션 압력으로 인식되면서 EEM이 1.83% 상승하며 신흥국 수혜 구조 재확인. 월간 기준 구리 15%+ 상승세는 인프라·신재생에너지 투자 사이클 지속을 반영하고 있으며, 한국의 반도체·소재 산업에도 긍정 신호."
+    },
+    {
+      "id": "thread_003",
+      "title": "반도체주간강세",
+      "priority": 3,
+      "frequency": "WEEKLY",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "AI기대감",
+          "value": "반도체 수요 사이클 지속",
+          "source": "분석",
+          "timestamp": null,
+          "detail": "AI 인프라 투자 지속으로 반도체 수요 견조",
+          "related_news": [
+            {
+              "source": "WSJ",
+              "title": "Microsoft Needs Copilot to Get Back in the Air"
             }
           ]
         },
         {
           "id": "n2",
-          "label": "EWY(한국ETF)",
-          "value": "[4/21] $146.79→[4/22] $150.14 (+6.12%)",
-          "detail": "전일 미국 장에서 한국 반도체 대장주들의 급등을 선반영하며 6% 이상 폭등한 핵심 지표",
+          "label": "SOXX(SOXX)",
+          "value": "[4/16] $405.95→[4/22] $437.64 (+6.36%)",
           "source": "Finnhub",
           "timestamp": null,
-          "related_news": []
+          "detail": "반도체 ETF 주간 6% 상승으로 섹터 강세 지속"
         },
         {
           "id": "n3",
-          "label": "외국인매수",
-          "value": "반도체 비중 높은 KOSPI 선호로 전환",
-          "detail": "EWY 급등으로 확인된 외국인의 한국 반도체 포지션 확대 의지가 현물 수급에 미치는 영향",
-          "source": "시장 관측",
+          "label": "기술주회전",
+          "value": "반도체 중심 재편",
+          "source": "분석",
           "timestamp": null,
+          "detail": "기술주 내 반도체 섹터로 자금 집중",
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "KOSPI",
-          "value": "[4/22] 6,388.47→[4/23] 6,475.81 (+0.9%)",
-          "detail": "전일 EWY 급등 효과를 당일 한국 장에서 제한적으로나마 현물로 구현한 종착점",
-          "source": "네이버금융",
+          "label": "EWY(EWY)",
+          "value": "[4/16] $147.47→[4/22] $150.02 (+5.64%)",
+          "source": "Finnhub",
           "timestamp": null,
-          "related_news": []
+          "detail": "한국 ETF가 반도체 강세에 연동하여 상승"
         }
       ],
       "edges": [
@@ -53,291 +153,59 @@
           "from": "n1",
           "to": "n2",
           "label": "직접수혜",
-          "rationale": "반도체 공급 부족은 한국 주요 반도체 기업들의 가격 결정력 강화로 직결됨"
+          "rationale": "AI 기대감이 반도체 ETF 상승의 직접적 동력"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "선반영",
-          "rationale": "미국 거래소 한국ETF 급등은 외국인 투자자들의 한국 현물 매수 의향을 시사함"
+          "label": "섹터회전",
+          "rationale": "반도체 강세가 기술주 내 자금 재배치 유도"
         },
         {
           "from": "n3",
           "to": "n4",
-          "label": "현물반영",
-          "rationale": "외국인 매수 기대감이 당일 한국 현물 시장의 상승 동력으로 전환됨"
+          "label": "한국연동",
+          "rationale": "한국 반도체 비중으로 EWY가 섹터 강세에 연동"
         }
       ],
       "korea_terminal_node": "n4",
-      "briefing": "전일 미국 장에서 EWY(한국ETF)는 AI 반도체 공급 부족 심화에 따라 +6.12% 급등 확정. 이는 한국 반도체 비중(KOSPI 시총 30% 이상) 재평가를 선반영한 결과로, 당일 외국인의 현물 KOSPI 매수로 이어져 +0.9% 상승 방어. 급등 후 소폭 조정이지만 구조적 반도체 수급 부족 기대감은 여전히 유효한 상황."
-    },
-    {
-      "id": "thread_002",
-      "title": "반도체 월간폭등 지속",
-      "priority": 2,
-      "frequency": "MONTHLY",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "AI혁명가속",
-          "value": "생성AI 상용화로 칩 수요 구조 변화",
-          "detail": "ChatGPT 이후 생성AI의 본격 상용화가 전통 CPU에서 AI 전용칩으로의 수요 패러다임 전환을 이끄는 거대 흐름",
-          "source": "테크 분석",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n2",
-          "label": "SOXX(반도체)",
-          "value": "[3/23] $336.59→[4/22] $439.64 (+28.28%)",
-          "detail": "월간 28% 급등으로 AI 반도체 슈퍼사이클의 본격화를 보여주는 핵심 섹터 ETF",
-          "source": "Finnhub",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n3",
-          "label": "공급부족심화",
-          "value": "TSMC 3nm 웨이팬 6개월 대기",
-          "detail": "첨단 공정 반도체의 공급 병목이 심화되면서 기존 업체들의 가격 협상력이 극대화되는 구조",
-          "source": "업계 관측",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n4",
-          "label": "EWY(한국ETF)",
-          "value": "[3/23] $133.81→[4/22] $150.14 (+16.42%)",
-          "detail": "삼성전자·SK하이닉스 중심으로 월간 16% 상승하며 한국이 AI 반도체 공급망 핵심축임을 재확인",
-          "source": "Finnhub",
-          "timestamp": null,
-          "related_news": []
-        }
-      ],
-      "edges": [
-        {
-          "from": "n1",
-          "to": "n2",
-          "label": "수요폭증",
-          "rationale": "AI 혁명이 기존 범용 반도체에서 AI 특화 칩으로의 수요 구조 변화를 가속화함"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
-          "label": "촉발",
-          "rationale": "반도체 급등으로 주문 증가가 이미 제한된 첨단 공정 생산 능력의 부족을 더욱 심화시킴"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
-          "label": "연쇄수혜",
-          "rationale": "글로벌 공급 부족 상황에서 삼성·하이닉스 등 한국 메모리 업체들의 전략적 가치가 재평가됨"
-        }
-      ],
-      "korea_terminal_node": "n4",
-      "briefing": "반도체(SOXX) 월간 +28.28% 급등으로 AI 혁명에 따른 칩 수요 폭증 사이클이 명확화. TSMC 등 글로벌 파운드리의 6개월 이상 대기 현상으로 공급 부족 구조화되며, 한국 반도체(EWY 월간 +16.42%)의 프리미엄 지속 확대 기대감. 이 추세는 반도체 수요-공급 갭이 해소되는 시기까지 장기 유지될 가능성 높음."
-    },
-    {
-      "id": "thread_003",
-      "title": "구리급등 자원순환",
-      "priority": 3,
-      "frequency": "NOW",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "중국부양기대",
-          "value": "정책 부양 신호로 원자재 수요 회복",
-          "detail": "중국의 인프라 투자 확대 시사가 구리 등 산업 금속의 수요 회복 기대감을 자극하는 출발점",
-          "source": "중국 정책",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n2",
-          "label": "COPX(구리)",
-          "value": "[4/21] $81.47→[4/22] $82.42 (+4.18%)",
-          "detail": "전일 4% 급등으로 구리 가격의 매물대 돌파 신호를 보내며 원자재 순환 매의 시작점 역할",
-          "source": "Finnhub",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n3",
-          "label": "달러약세전환",
-          "value": "원자재 가격 부담 완화로 매력도 증가",
-          "detail": "달러 약세 전환으로 달러 표시 원자재들의 상대적 매력도가 증가하면서 자금 유입을 촉진하는 환경",
-          "source": "환율 분석",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n4",
-          "label": "USO(원유)",
-          "value": "[4/21] $128.25→[4/22] $135.17 (+0.92%)",
-          "detail": "구리 급등에 동조하며 원자재 전반의 순환 매 흐름을 확인시켜주는 연쇄 반응의 한 축",
-          "source": "Finnhub",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n5",
-          "label": "GLD(금)",
-          "value": "[4/21] $429.57→[4/22] $432.21 (+1.33%)",
-          "detail": "달러 약세 수혜로 상승하며 원자재 순환 매의 완성을 보여주는 안전자산 겸 실물자산",
-          "source": "Finnhub",
-          "timestamp": null,
-          "related_news": []
-        }
-      ],
-      "edges": [
-        {
-          "from": "n1",
-          "to": "n2",
-          "label": "수요기대",
-          "rationale": "중국 인프라 부양책은 구리 등 산업 금속의 직접적인 수요 증가로 연결됨"
-        },
-        {
-          "from": "n3",
-          "to": "n2",
-          "label": "가격부담완화",
-          "rationale": "달러 약세는 달러 표시 원자재의 구매력을 높여 수요를 자극함"
-        },
-        {
-          "from": "n2",
-          "to": "n4",
-          "label": "순환확산",
-          "rationale": "구리 급등이 원자재 전반의 상승 모멘텀을 이끄는 선도 지표 역할을 수행함"
-        },
-        {
-          "from": "n3",
-          "to": "n5",
-          "label": "달러약세수혜",
-          "rationale": "달러 약세는 금 가격 상승의 전통적이고 직접적인 동력으로 작용함"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "전일 미국 장에서 중국 부양 기대감과 달러약세가 동시 진행되며 광범위 원자재 회복세. COPX(구리) +4.18% 급등으로 자원순환 신호 확인되며, USO(원유) +0.92%, GLD(금) +1.33%도 동반 상승. 달러약세 전환으로 인한 달러 기준 원자재 가격 부담 완화와 중국 경기 부양 기대가 복합 작용한 상황. 이는 신흥국 전체의 자금 유입 재개를 암시하는 신호."
+      "briefing": "주간 기준 SOXX가 6.36% 상승하며 AI 반도체 사이클 지속성을 확인. 미국 빅테크의 AI 인프라 투자 증가가 반도체 수요를 지속 견인 중이며, 이는 기술주 회전으로 이어져 EWY 주간 5.64% 상승으로 반영. 한국 반도체 기업의 수출 비중(KOSPI 시총 30% 이상)을 감안할 때, SOXX 강세는 당사 지속적 수혜 구조를 내재."
     },
     {
       "id": "thread_004",
-      "title": "VIX상승 조정압박",
+      "title": "VIX상승 경계국면",
       "priority": 4,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "고점경계감",
-          "value": "주요 지수 연고점 근접으로 차익실현 유혹",
-          "detail": "S&P500, 나스닥이 사상 최고점 근처에서 형성되는 자연스러운 차익실현 압력의 배경 요인",
-          "source": "기술적 분석",
+          "label": "정책불확실",
+          "value": "Fed 정책 혼재 신호",
+          "source": "분석",
           "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n2",
-          "label": "VIX",
-          "value": "[4/22] 18.92→[4/23] 19.95 (+5.44%)",
-          "detail": "전일 대비 5% 이상 급등하며 시장 불안감이 가시화되고 있음을 보여주는 공포 지수",
-          "source": "Yahoo Finance",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n3",
-          "label": "기관매도압박",
-          "value": "포트폴리오 리밸런싱으로 매도 물량 증가",
-          "detail": "VIX 상승으로 촉발된 기관들의 리스크 관리 차원의 포지션 축소 움직임이 매도 압력을 가중시키는 구조",
-          "source": "기관 동향",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n4",
-          "label": "SPY(S&P500)",
-          "value": "[4/21] $704.08→[4/22] $706.06 (+1.01%)",
-          "detail": "VIX 상승에도 불구하고 제한적 상승을 보이며 상승 모멘텀의 약화 조짐을 시사하는 주요 지수",
-          "source": "Finnhub",
-          "timestamp": null,
-          "related_news": []
-        }
-      ],
-      "edges": [
-        {
-          "from": "n1",
-          "to": "n2",
-          "label": "불안확산",
-          "rationale": "고점에서의 자연스러운 경계감이 시장 변동성 지표인 VIX 상승으로 표출됨"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
-          "label": "위험회피",
-          "rationale": "VIX 급등은 기관투자자들의 리스크 관리 매뉴얼에 따른 포지션 축소를 자동 유발함"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
-          "label": "상승제한",
-          "rationale": "기관들의 매도 압박이 주요 지수의 추가 상승 여력을 제약하는 직접적 요인으로 작용함"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "당일 미국 장중 VIX는 18.92→19.95(+5.44%)로 상승하며 변동성 확대 신호. 주요 지수들이 연고점 근접하면서 기술적 차익실현 압박이 증대되고, 기관의 포트폴리오 리밸런싱 매도가 활발화. SPY는 전일 +1.01%에 그쳐 모멘텀 약화 현상. 단기적으로 조정 압력이 지속될 가능성 있으며, VIX 20 이상 돌파 여부가 추가 조정의 신호."
-    },
-    {
-      "id": "thread_005",
-      "title": "신흥국 주간회복세",
-      "priority": 5,
-      "frequency": "WEEKLY",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "달러약세지속",
-          "value": "Fed 완화 기대로 신흥국 부담 완화",
-          "detail": "연준의 금리 인하 가능성 증대로 달러 강세 압력이 완화되면서 신흥국 자산의 매력도가 회복되는 구조적 배경",
-          "source": "통화정책 분석",
-          "timestamp": null,
+          "detail": "연준 정책 방향성에 대한 불확실성 증대",
           "related_news": [
             {
-              "source": "Fed Speeches",
-              "title": "Waller, One Transitory Shock After Another"
+              "source": "Bloomberg Econ",
+              "title": "ECB's Nagel Says Trump's Fed Attacks Caused Flight to Safety"
             }
           ]
         },
         {
           "id": "n2",
-          "label": "EEM(신흥국)",
-          "value": "[4/16] $62.45→[4/22] $62.17 (+1.51%)",
-          "detail": "주간 1.5% 상승으로 신흥국 전반의 자금 유입 재개 신호를 보내는 대표적인 신흥국 ETF",
-          "source": "Finnhub",
+          "label": "VIX",
+          "value": "[4/22] 18.92→[4/23] 19.49 (+3.01%)",
+          "source": "Yahoo Finance",
           "timestamp": null,
-          "related_news": []
+          "detail": "변동성 지수 상승으로 시장 경계감 확산"
         },
         {
           "id": "n3",
-          "label": "아시아선도",
-          "value": "한국·대만 중심 기술주 재평가 흐름",
-          "detail": "신흥국 내에서도 특히 기술주 비중이 높은 아시아 시장들이 AI 테마와 맞물려 선도하는 차별화 구조",
-          "source": "지역 분석",
+          "label": "안전자산선호",
+          "value": "위험회피 심리 부상",
+          "source": "분석",
           "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n4",
-          "label": "EWY(한국ETF)",
-          "value": "[4/16] $147.47→[4/22] $150.14 (+5.64%)",
-          "detail": "주간 5.6% 상승으로 신흥국 회복세 중에서도 한국 시장의 상대적 우위를 확인시켜주는 지표",
-          "source": "Finnhub",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n5",
-          "label": "EWT(대만ETF)",
-          "value": "[4/16] $81.35→[4/22] $84.00 (+5.95%)",
-          "detail": "TSMC 중심으로 주간 5.9% 상승하며 아시아 기술주 재평가의 또 다른 축을 형성하는 대만 시장",
-          "source": "Finnhub",
-          "timestamp": null,
+          "detail": "VIX 상승으로 안전자산 선호도 증가",
           "related_news": []
         }
       ],
@@ -345,56 +213,120 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "자금유입",
-          "rationale": "달러 약세는 신흥국 통화와 자산의 상대적 매력도를 높여 자본 유입을 촉진함"
+          "label": "변동성증대",
+          "rationale": "정책 불확실성이 시장 변동성 확대로 직결"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "지역선별",
-          "rationale": "신흥국 전반의 회복세 속에서 기술 경쟁력을 보유한 아시아 시장이 차별화되어 부각됨"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
-          "label": "한국선도",
-          "rationale": "아시아 기술주 재평가 흐름에서 반도체·IT 강국인 한국이 선도적 수혜를 받음"
-        },
-        {
-          "from": "n3",
-          "to": "n5",
-          "label": "대만동조",
-          "rationale": "TSMC 등 글로벌 반도체 공급망 핵심인 대만도 기술주 재평가의 수혜를 받음"
+          "label": "위험회피",
+          "rationale": "VIX 상승은 투자자 위험회피 심리 강화의 신호"
         }
       ],
-      "korea_terminal_node": "n4",
-      "briefing": "주간 달러약세 지속 추세 속에서 신흥국(EEM) 회복이 재개되며 +1.51% 상승. 특히 한국(EWY +5.64%)과 대만(EWT +5.95%)의 기술주가 신흥국 내에서 주도적으로 상승하며, 글로벌 AI 반도체 수급 부족 기대감의 지역별 선별 현상 확인. Fed 완화 기대감이 지속되는 한 신흥국 통화 강화와 기술주 선호는 주간 트렌드로 유지될 전망."
+      "korea_terminal_node": null,
+      "briefing": "당일 VIX가 18.92에서 19.49로 3.01% 상승하며 변동성 확대 신호 포착. Fed의 정책 혼재 신호와 지정학적 불확실성이 복합적으로 작용하면서 위험자산 조정 가능성 대두. 전일의 강한 상승세(EWY +6.12%, SOXX +2.63%)가 당일 VIX 상승과 동시 진행 중인 점에서 수익화 압박이 확대되는 국면으로 해석. 기술주·신흥국 부문 추가 조정 가능성 모니터링 필요."
+    },
+    {
+      "id": "thread_005",
+      "title": "월간자원랠리",
+      "priority": 5,
+      "frequency": "MONTHLY",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "글로벌리플레",
+          "value": "인플레이션 재점화 사이클",
+          "source": "분석",
+          "timestamp": null,
+          "detail": "글로벌 리플레이션 사이클의 구조적 전환점"
+        },
+        {
+          "id": "n2",
+          "label": "실물자산회귀",
+          "value": "자원 슈퍼사이클 본격화",
+          "source": "분석",
+          "timestamp": null,
+          "detail": "금융자산에서 실물자산으로 투자 패러다임 전환"
+        },
+        {
+          "id": "n3",
+          "label": "GLD(GLD)",
+          "value": "[3/23] $404.04→[4/22] $431.52 (+7.74%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "금 ETF 월간 7.74% 상승으로 인플레이션 헤지 수요"
+        },
+        {
+          "id": "n4",
+          "label": "COPX(COPX)",
+          "value": "[3/23] $73.55→[4/22] $82.70 (+15.40%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "구리 ETF 월간 15% 급등으로 산업금속 강세"
+        },
+        {
+          "id": "n5",
+          "label": "USO(USO)",
+          "value": "[3/23] $110.56→[4/22] $134.54 (+17.07%)",
+          "source": "Finnhub",
+          "timestamp": null,
+          "detail": "원유 ETF 월간 17% 상승으로 에너지 랠리"
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "패러다임전환",
+          "rationale": "리플레이션은 실물자산 선호로의 구조적 전환 유도"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "label": "인플레헤지",
+          "rationale": "실물자산 회귀가 금 투자 수요 증가로 연결"
+        },
+        {
+          "from": "n2",
+          "to": "n4",
+          "label": "산업수요",
+          "rationale": "실물자산 사이클이 산업금속 구리 수요 견인"
+        },
+        {
+          "from": "n2",
+          "to": "n5",
+          "label": "에너지수요",
+          "rationale": "자원 슈퍼사이클이 원유 등 에너지 자산 상승 견인"
+        }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "3월 23일 대비 4월 22일 기준 금·구리·원유가 각각 7.74%·15.40%·17.07% 상승하며 글로벌 리플레이션 사이클 본격화 신호 발생. 구조적 인플레 압력과 실물자산 회귀 추세가 자원 슈퍼사이클을 주도 중이며, 이는 인프라·신재생에너지 투자 가속화 및 에너지 수급 타이트닝의 결합 작용. 한국의 반도체·소재·에너지 산업 관점에서 중기적 수혜 구조 지속 가능성을 시사하는 구조적 변화."
     }
   ],
   "headlines": [
-    "전일 EWY +6.12% 급등→당일 KOSPI +0.9% 방어",
-    "중국부양+달러약세로 구리+4.18% 자원순환",
-    "VIX +5.44% 상승으로 차익실현 조정압박"
+    "전일 EWY 6% 급등→당일 KOSPI 방어상승",
+    "구리 4% 급등으로 신흥국 리플레이션 수혜",
+    "VIX 상승 신호, 차익실현 압박 확대"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: SOXX 반도체 급등+구리 수급 회복 / 당일 아시아: KOSPI 소폭 방어+신흥국 주간 회복",
-    "layer2": "EWY(한국ETF) 전일 +6.12% 급등 → 당일 KOSPI 외국인 자금 유입 재개",
-    "layer3": "미국 장중 VIX 19.95로 상승하며 조정압박이지만, 반도체·자원 구조적 수급 부족으로 중기 상승 추세는 유지"
+    "layer1": "전일 미국: 반도체·구리 강세로 EWY 6.12% 급등 / 당일 아시아: KOSPI 0.90% 상승으로 한국 프리미엄 지속",
+    "layer2": "월간 기준 자원·반도체 15%+ 상승 누적으로 리레이팅 본격화, 글로벌 리플레이션 사이클 재점화",
+    "layer3": "미국 장중 VIX 19.49로 변동성 확대, 차익실현 압박과 정책 불확실성 복합 작용 중"
   },
-  "generated_at": "2026-04-23T17:34:37.358Z",
+  "generated_at": "2026-04-23T19:33:46.562Z",
   "data_as_of": {
-    "timestamp_iso": "2026-04-23T17:34:37.330Z",
-    "display": "4/23 13:34 [ 뉴욕 현지 시각 ]",
-    "display_mobile": "4/23 13:34 뉴욕",
+    "timestamp_iso": "2026-04-23T19:33:46.534Z",
+    "display": "4/23 15:33 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "4/23 15:33 뉴욕",
     "timezone": "America/New_York"
   },
   "meta": {
-    "generated_at": "2026-04-23T17:34:37.358Z",
-    "elapsed_sec": 249,
+    "generated_at": "2026-04-23T19:33:46.562Z",
+    "elapsed_sec": 197,
     "market_status": [
       "미국(S&P500/NASDAQ)"
     ],
     "is_weekend": false,
-    "data_note": "미국 현재 장중, 아시아/유럽은 당일 마감 완료"
+    "data_note": null
   }
 }
