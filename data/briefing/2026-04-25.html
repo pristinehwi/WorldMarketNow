@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-25 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/25 07:48 KST</div>
+    <div class="header-date">2026-04-25</div>
+    <div class="header-headline">DOJ, Powell 수사 종료로 Warsh Fed 의장 인준 급물살</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Kevin Warsh 인준 및 Powell 거취 - 5월 FOMC 정책 방향성 불확실성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">통화정책 불확실성 - Fed 리더십 전환 임박</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#10</span>
+    </div>
+    <div class="theme-summary">법무부가 Jerome Powell Fed 의장에 대한 건물 보수비용 수사를 종료하면서 Kevin Warsh의 의장 인준이 급물살을 타고 있다. 백악관은 신속한 인준을 기대하고 있으며, Trump 대통령도 대체 수사 방안에 열린 입장을 시사했다. 그러나 현 의장의 사임 시기는 여전히 불확실하며, Fed 드라마는 계속될 전망이다. 이는 특히 민감한 시기의 통화정책 결정에 중요한 영향을 미칠 수 있다. 전직 Fed 관계자들은 Warsh 주도 Fed의 향후 방향성과 수요일 금리 결정을 주목하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">반도체 섹터 구조적 재편 - Intel 급등과 경쟁 역학 변화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #11~#16</span>
+    </div>
+    <div class="theme-summary">Intel 주가가 40년래 최대 일간 상승률을 기록하며 반도체 섹터 전체에 모멘텀이 확산되고 있다. Nvidia는 6개월 만에 첫 최고가를 경신하며 $5조 시가총액에 재진입했고, AMD도 $500억 돌파로 화답했다. Intel의 실적 개선과 Musk의 'Terafab' 칩 제조 구상이 화제지만, 후자는 구체화까지 수년이 소요될 전망이다. Meta는 AI 에이전트 워크로드용으로 Amazon 자체 CPU를 대규모 확보하며 GPU 일변도 경쟁 구도에 변화를 시사했다. Wall Street에서는 Intel의 펀더멘털 개선 지속성을 놓고 의견이 엇갈리고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">생성AI 경쟁 심화 - 빅테크 자본 투입 가속</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #17~#22</span>
+    </div>
+    <div class="theme-summary">Google이 Anthropic에 최대 $400억(현금+컴퓨팅) 투자를 발표하며 생성AI 인프라 확보 경쟁이 격화되고 있다. Amazon도 $50억 추가 투자를 발표한 직후이며, Anthropic은 연간 매출이 3배 증가하며 성장세를 입증했다. OpenAI의 Sam Altman은 수익성 개선을 위해 프로젝트 정리와 전략 집중을 추진 중이며, 총기 난사 용의자 미신고 건으로 사과하며 정부 협력 강화를 약속했다. DeepSeek은 V3.2 대비 효율성과 성능이 개선된 신모델 프리뷰를 공개하며 프론티어 모델 격차를 거의 해소했다고 주장했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">원자력 발전 투자 붐 - 데이터센터 전력 수요 급증</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #23~#24</span>
+    </div>
+    <div class="theme-summary">AI 데이터센터 전력 수요 급증으로 원자력 발전 스타트업에 자본이 몰리고 있다. Amazon 지원을 받는 X-energy가 예상 범위를 크게 상회하는 가격에 IPO를 진행하며 약 $10억(당초 대비 20% 상향)을 조달했다. 상장 직후 주가가 급등하며 Wall Street의 관심이 집중되고 있으나, 초기 급등이 장기 성과를 보장하지는 않는다는 신중론도 제기된다. 이는 AI 인프라 확장에 따른 전력 공급 병목 우려가 실물 투자로 전환되는 구조적 흐름을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">무역정책 불확실성 - 관세 환급과 소비자 부담 비대칭</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #25</span>
+    </div>
+    <div class="theme-summary">Trump 행정부의 위법 관세로 소비자 가격이 상승했으나, $1,660억에 달하는 환급금은 기업에만 돌아가고 있다. 많은 가정이 관세 부담을 체감했지만 기업들은 환급금 공유 계획에 대해 침묵하고 있다. 이는 관세 정책의 분배적 영향과 정치적 지속가능성에 대한 의문을 제기한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타 금융 및 산업 동향</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #26~#30</span>
+    </div>
+    <div class="theme-summary">Lumina Metals가 캐나다 IPO를 통해 예상을 상회하는 C$406.2백만($297백만)을 조달하며 구리·은 광산 개발 자금을 확보했다. Fed는 OceanFirst Financial Corp.의 인수 신청을 승인했다. Goldman Sachs는 ETF 시장조성 사업에 복귀하되 '탈출속도 도달' 가능성이 있는 펀드만 선별 지원한다는 전략을 밝혔다. 한편 신경과학 연구에서 '함께 발화하는 뉴런이 연결된다'는 기존 이론을 넘어서는 새로운 신경가소성 메커니즘이 발견되었으며, AI와 인간 지능의 상호작용에 대한 우려도 제기되고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">통화정책 불확실성 - Fed 리더십 전환 임박</span>
+    <span class="theme-label-range">Article #1~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">DOJ, Powell 수사 종료로 Warsh의 Fed 의장 인준 경로 평탄화</div>
+    <div class="article-title-en">DOJ Drops Powell Probe, Smoothing Path for Warsh to Lead Fed</div>
+    <div class="article-keypoint">DOJ의 Powell 수사 종료로 Warsh 인준 가속화 - Fed 리더십 전환 임박</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-24/doj-drops-powell-probe-smoothing-path-for-warsh-to-lead-fed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 02:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">DOJ의 Fed 수사 종료로 국채 상승 - Warsh 인준 경로 열려</div>
+    <div class="article-title-en"> Treasuries Gain as DOJ Drops Fed Probe, Opening Path for Warsh</div>
+    <div class="article-keypoint">DOJ 수사 종료로 국채 상승 - Warsh 체제 전환 불확실성 일부 완화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-24/treasuries-gain-as-doj-drops-probe-opens-path-for-warsh-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 04:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">DOJ의 Powell 수사 부분 번복으로 Fed 드라마 지속</div>
+    <div class="article-title-en">DOJ’s Partial Reversal on Powell Probe Keeps Fed Drama Alive</div>
+    <div class="article-keypoint">Pirro 검사의 수사 중단이 Powell 퇴진 보장 않아 - Fed 드라마 지속 전망</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-24/doj-s-partial-reversal-on-powell-probe-keeps-fed-drama-alive" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 06:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">수사 종료 후 Fed 의장 Powell의 거취 결정 기로 - 정책 방향성 중대 기로</div>
+    <div class="article-title-en">Will he stay or will he go? With criminal probe over, Fed Chair Powell faces big decision</div>
+    <div class="article-keypoint">Powell 수사 종료로 거취 결정 분기점 - 정책 방향성 불확실성 지속</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/04/24/will-he-stay-or-will-he-go-with-criminal-probe-over-fed-chair-powell-faces-big-decision.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 04:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">백악관, DOJ의 Powell 수사 종료 후 Warsh '신속' 인준 기대</div>
+    <div class="article-title-en">White House Expects 'Swift' Warsh Confirmation After DOJ Drops Powell Criminal Probe</div>
+    <div class="article-keypoint">백악관, Warsh 신속 인준 기대 - DOJ 수사 종료로 정치적 장애물 제거</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/doj-drops-criminal-probe-powell-fed-building-costs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump, Powell에 대한 대체 수사 방안 시사</div>
+    <div class="article-title-en">Trump Suggests He’d Be Open to Alternative Probe of Fed’s Powell</div>
+    <div class="article-keypoint">Trump, Powell 대체 수사 방안 시사 - Fed 리더십 갈등 출구 모색</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-24/trump-suggests-he-d-be-open-to-alternative-probe-of-fed-s-powell" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 19:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">전직 Fed 이사 Betsy Duke, Warsh 체제 전망과 금리 전망 논의</div>
+    <div class="article-title-en">Fmr. Fed Governor Betsy Duke on Warsh's Future, Rates</div>
+    <div class="article-keypoint">전직 Fed 이사 Duke, Warsh 주도 Fed 전망 제시 - 수요일 금리 결정 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-24/fmr-fed-governor-betsy-duke-on-warsh-s-future-rates-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 05:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">전직 Fed 법률고문, DOJ의 Powell 수사 논의</div>
+    <div class="article-title-en">Fmr. Fed General Counsel Discusses DOJ's Powell Probe </div>
+    <div class="article-keypoint">전직 Fed 법률고문, Powell 수사 종료 배경 분석 - 정치적 타협 가능성</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-24/fmr-fed-general-counsel-discusses-doj-s-powell-probe-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 04:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">DOJ, Powell 수사 종료하나 후임 인준은 여전히 불투명</div>
+    <div class="article-title-en">DOJ drops Powell probe, but successor’s confirmation remains in limbo </div>
+    <div class="article-keypoint">Powell 수사 종료로 Warsh 인준 가능성 - 상원 확인 절차 남아</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/04/24/justice-department-fed-powell/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 06:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">DOJ가 Powell 수사 개시부터 종료까지 어떻게 진행됐나</div>
+    <div class="article-title-en">How the DOJ went from investigating Powell to dropping the case</div>
+    <div class="article-keypoint">DOJ의 Powell 수사 개시부터 종료까지 경위 분석 - 정치적 배경 주목</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/how-the-doj-went-from-investigating-powell-to-dropping-the-case-4636731" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 22:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">반도체 섹터 구조적 재편 - Intel 급등과 경쟁 역학 변화</span>
+    <span class="theme-label-range">Article #11~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">AI 칩 경쟁 새 국면 - Meta, Amazon AI CPU 수백만 개 계약</div>
+    <div class="article-title-en">In another wild turn for AI chips, Meta signs deal for millions of Amazon AI CPUs</div>
+    <div class="article-keypoint">Meta, Amazon AI CPU 수백만 개 확보 - GPU 일변도 칩 경쟁 구도 변화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/24/in-another-wild-turn-for-ai-chips-meta-signs-deal-for-millions-of-amazon-ai-cpus/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Nvidia 주가, 6개월 만에 최고가 경신 - Intel 덕분</div>
+    <div class="article-title-en">Nvidia’s stock sees its first record close in 6 months — thanks to Intel</div>
+    <div class="article-keypoint">Nvidia, 6개월 만에 최고가 경신 - Intel 효과로 칩 섹터 전반 강세</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidias-stock-heads-for-first-record-close-in-6-months-thanks-to-intel-21af7d28?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Musk의 Intel 칩 제조 비전은 먼 미래 전망</div>
+    <div class="article-title-en">Musk’s Chip-Making Vision With Intel Is a Distant Prospect</div>
+    <div class="article-keypoint">Musk의 Intel 칩 제조 구상 'Terafab' 구체화는 수년 소요 전망</div>
+    <a class="article-link" href="https://www.wsj.com/tech/musks-chip-making-vision-with-intel-is-a-distant-prospect-f0e81a93?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 18:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Intel 주가, 40년래 최대 일간 상승률 기록하며 상승세 연장</div>
+    <div class="article-title-en">Intel’s stock extends its spectacular run by posting its best day in nearly four decades</div>
+    <div class="article-keypoint">Intel 주가 40년래 최대 일간 상승 - 펀더멘털 개선 지속성은 논쟁적</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/intels-stock-extends-its-spectacular-run-and-could-see-its-best-daily-gain-on-record-6e6ef0de?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 05:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Nvidia 돌파로 칩 대장주 10월 이래 첫 최고가 경신</div>
+    <div class="article-title-en">Nvidia Breakout Sends Chip Giant to First Record Since October</div>
+    <div class="article-keypoint">Nvidia, 10월 이래 첫 최고가로 $5조 복귀 - AI 칩 리더 모멘텀 회복</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-24/nvidia-breakout-sends-chip-giant-to-first-record-since-october" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 05:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">AMD 주가 급등세 - 주요 이정표 돌파</div>
+    <div class="article-title-en">AMD’s stock is red-hot — and just hit a major milestone</div>
+    <div class="article-keypoint">AMD, $500억 시총 돌파 - Intel 실적 후 반도체 섹터 동반 상승</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/amds-stock-is-red-hot-and-on-track-to-hit-a-major-milestone-0b3d9f9d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 05:36 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">생성AI 경쟁 심화 - 빅테크 자본 투입 가속</span>
+    <span class="theme-label-range">Article #17~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Google, AI 기업 Anthropic에 최대 $400억 투자</div>
+    <div class="article-title-en">Google to invest up to $40 billion in AI firm Anthropic</div>
+    <div class="article-keypoint">Google, Anthropic에 최대 $400억 투자 - 생성AI 인프라 확보 경쟁 격화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/pixels/article/2026/04/24/google-to-invest-up-to-40bn-in-artificial-intelligence-firm-anthropic_6752806_13.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 05:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Sam Altman의 다음 줄타기 - OpenAI 수익성 개선</div>
+    <div class="article-title-en">Sam Altman’s Next High-Wire Act: Getting OpenAI to Make More Money</div>
+    <div class="article-keypoint">Sam Altman, OpenAI 수익성 개선 위해 프로젝트 정리 - 전략 집중 전환</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/04/24/technology/sam-altman-openai-money.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 18:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">DeepSeek, 프론티어 모델과 '격차 해소' 신규 AI 모델 프리뷰 공개</div>
+    <div class="article-title-en">DeepSeek previews new AI model that ‘closes the gap’ with frontier models</div>
+    <div class="article-keypoint">DeepSeek, 프론티어 모델 격차 해소 주장 신모델 공개 - 효율성 개선</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/24/deepseek-previews-new-ai-model-that-closes-the-gap-with-frontier-models/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Meta의 손실이 Thinking Machines의 이득</div>
+    <div class="article-title-en">Meta’s loss is Thinking Machines’ gain</div>
+    <div class="article-keypoint">Meta의 Thinking Machines 인재 영입 양방향 - AI 인재 이동 활발</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/24/metas-loss-is-thinking-machines-gain/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 05:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Google, Anthropic에 현금 및 컴퓨팅으로 최대 $400억 투자</div>
+    <div class="article-title-en">Google to invest up to $40B in Anthropic in cash and compute</div>
+    <div class="article-keypoint">Google, Anthropic에 현금+컴퓨팅 $400억 투자 - Amazon $50억에 대응</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">OpenAI CEO, 총기 난사 용의자 경찰 미신고 건 사과</div>
+    <div class="article-title-en">OpenAI CEO Apologizes for Not Flagging Mass Shooting Suspect to Police</div>
+    <div class="article-keypoint">Altman, 총기 난사 용의자 미신고 사과 - 정부 협력 강화 약속</div>
+    <a class="article-link" href="https://www.wsj.com/us-news/law/openai-ceo-apologizes-for-not-flagging-mass-shooting-suspect-to-police-afa53d1d?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 05:32 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">원자력 발전 투자 붐 - 데이터센터 전력 수요 급증</span>
+    <span class="theme-label-range">Article #23~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">원자력 스타트업 X-energy, 데이터센터 수요로 IPO서 $10억 조달</div>
+    <div class="article-title-en">Nuclear startup X-energy raises $1B in data center-driven IPO</div>
+    <div class="article-keypoint">Amazon 지원 X-energy, 데이터센터 전력 수요로 IPO 20% 상향 조달</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/24/nuclear-startup-x-energy-raises-1b-in-data-center-driven-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 00:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">원자력 발전 IPO 신규 종목 등장, Wall Street 몰려드나?</div>
+    <div class="article-title-en">There’s a new stock for the nuclear-power IPO trade, and Wall Street is piling in. Should you?</div>
+    <div class="article-keypoint">X-energy IPO로 $10억 조달, 상장 후 급등 - 원자력 테마 과열 우려도</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/theres-a-new-stock-for-the-nuclear-power-ipo-trade-and-wall-street-is-piling-in-should-you-b07269fa?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 05:29 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">무역정책 불확실성 - 관세 환급과 소비자 부담 비대칭</span>
+    <span class="theme-label-range">Article #25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">관세로 소비자 가격 상승했으나 환급금은 기업에만</div>
+    <div class="article-title-en">Tariffs Raised Consumers’ Prices, but the Refunds Go Only to Businesses</div>
+    <div class="article-keypoint">위법 관세로 소비자 부담 증가했으나 $1,660억 환급은 기업만 수령</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/04/24/us/politics/companies-consumers-tariff-refunds.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 22:57 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타 금융 및 산업 동향</span>
+    <span class="theme-label-range">Article #26~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">구리·은 광산기업 Lumina, 토론토 IPO로 $297백만 조달</div>
+    <div class="article-title-en">Copper and Silver Miner Lumina’s Toronto IPO Raises $297 Million</div>
+    <div class="article-keypoint">Lumina Metals, 캐나다 IPO로 $297백만 조달 - 구리·은 광산 개발 탄력</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-24/copper-and-silver-miner-lumina-s-toronto-ipo-raises-297-million" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 04:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Federal Reserve, OceanFirst Financial Corp. 인수 신청 승인 발표</div>
+    <div class="article-title-en">Federal Reserve Board announces approval of application by OceanFirst Financial Corp.</div>
+    <div class="article-keypoint">Fed, OceanFirst Financial 인수 승인 - 지역 은행 통합 계속</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/orders20260424a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">단일 경험 후 뇌 재배선하는 새로운 신경가소성 발견</div>
+    <div class="article-title-en">A New Type of Neuroplasticity Rewires the Brain After a Single Experience</div>
+    <div class="article-keypoint">단일 경험으로 뇌 재배선하는 신경가소성 발견 - 학습 이론 재정립</div>
+    <a class="article-link" href="https://www.quantamagazine.org/a-new-type-of-neuroplasticity-rewires-the-brain-after-a-single-experience-20260424/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/24 23:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">AI가 인간 지능을 잠식하고 있다 - 막는 방법은?</div>
+    <div class="article-title-en">AI Is Cannibalizing Human Intelligence. Here’s How to Stop It.</div>
+    <div class="article-keypoint">AI가 인간 지능 잠식 우려 - 신경과학 연구로 대응 방안 모색</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/is-ai-smarter-than-humans-cyborg-956e0f0e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Goldman, ETF 시장조성 복귀하되 '자선 케이스'는 회피</div>
+    <div class="article-title-en">Goldman Is Avoiding Charity Cases In ETF Market-Making Return</div>
+    <div class="article-keypoint">Goldman, ETF 시장조성 복귀하되 성장 가능 펀드만 선별 지원</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-04-24/goldman-sachs-gs-returns-to-etf-market-making-but-only-for-winners" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/25 04:51 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
