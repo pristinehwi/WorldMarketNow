@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-14 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/14 09:04 KST</div>
+    <div class="header-date">2026-04-14</div>
+    <div class="header-headline">미-이란 전쟁 협상 기대로 시장 반등, S&P 500 전쟁 손실 전량 회복</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">미-이란 협상 진전 여부와 호르무즈 봉쇄 실행 여부 - 에너지·금·방산 섹터 방향성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">미-이란 전쟁과 지정학 리스크 프리미엄 완화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">미-이란 전쟁으로 촉발된 시장 하락분을 S&P 500이 전량 회복(1% 상승)하며 협상 기대감이 반영되고 있다. Trump 대통령이 협상 종료 가능성을 시사하며 호르무즈 해협 봉쇄를 추진하는 가운데, Kyle Bass는 미국이 이란의 고농축 우라늄 확보 없이는 철수하지 않을 것이라고 경고했다. 금은 2일 하락 후 소폭 반등했으나 협상 낙관론으로 인플레 우려가 완화되며 상승폭이 제한됐다. 한편 JD Vance 부통령의 중동 순방 실패와 헝가리 Orbán 축출 등 외교적 난제가 중첩되며 협상 불확실성은 여전히 잔존한다. 이란 전쟁으로 인한 에너지 비용 상승이 영국 가계에 £480 추가 부담을 줄 것으로 예상되며 사회적 관세(social tariff) 논의가 시작됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 기술 확산과 리스크 관리 과제</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#15</span>
+    </div>
+    <div class="theme-summary">AI 에이전트 시대가 본격화되며 기술 발전과 리스크 관리가 동시에 부각되고 있다. Goldman Sachs CEO David Solomon은 Anthropic의 Mythos AI 모델 역량을 '초인지(hyper-aware)'하며 사이버 보안 강화를 위해 긴밀히 협력 중이라고 밝혔다. Microsoft는 OpenClaw 유사 에이전트를 기업용으로 개발하며 보안 통제를 강화하는 방향을 택했다. 한편 Sam Altman 자택에 화염병이 투척된 사건 용의자가 체포됐으며, 당국은 그가 CEO 명단이 담긴 '반AI' 문서를 소지했다고 밝혔다. Pentagon은 AI 무기 시스템의 신뢰성 확보가 실전 배치의 전제조건임을 강조하며, 이미 미국이 이란 전쟁에서 13,000개 이상 목표 타격에 AI를 활용했다고 공개했다. Stanford 보고서는 AI 전문가와 일반 대중 간 인식 격차가 확대되며 일자리·의료·경제에 대한 불안이 고조되고 있음을 지적했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Private Credit 시장 안정성 논쟁</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #16~#18</span>
+    </div>
+    <div class="theme-summary">Private credit 시장의 급성장 속에서 리스크와 안정성을 둘러싼 상반된 평가가 제기되고 있다. BOE 총재 Andrew Bailey는 일회성 충격(one-off hits)이 섹터 전반의 신뢰를 위협할 수 있다고 경고하며 규제 당국의 우려를 표명했다. 반면 시장 일각에서는 65% 자본 완충과 10년 만기 구조를 근거로 private credit이 전통 은행보다 안정적이며 'Lehman 모멘트'를 초래하지 않을 것이라는 반론을 제기했다. JPMorgan Asset Management는 private credit이 여전히 프리미엄을 지급하고 있으며, 투자자들이 일정한 수익을 제공하는 자산군으로 이동 중이라고 분석했다. 이는 금리 변동성 속에서 고정 수익 선호 현상이 강화되는 흐름과 맞물린다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Fed 재무 구조 개선 전망</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #19~#20</span>
+    </div>
+    <div class="theme-summary">New York Fed는 연준 SOMA(System Open Market Account) 순이익이 2026년 중 플러스로 전환될 것으로 전망했다. 이는 QT 진행과 보유 자산 수익률 정상화가 결합된 결과로, 연준의 재무 건전성이 회복 국면에 진입했음을 시사한다. 한편 Trump의 Wall Street Journal 명예훼손 소송이 연방법원에서 기각되며 언론 자유 보호가 재확인됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">반도체·테크 섹터 주가 모멘텀</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#23</span>
+    </div>
+    <div class="theme-summary">Intel 주가가 9일간 사상 최대 상승세를 기록하며 밸류에이션 부담에도 불구하고 추가 상승 촉매가 남아있다는 분석이 나왔다. Micron Technology EVP는 143만 달러 규모 주식을 매도했으며, 이는 일반적인 임원 현금화 관행으로 해석된다. Goldman Sachs는 주식 트레이딩 부문에서 분기 최고 실적을 기록했으나, FICC(채권·금리·통화·원자재) 수익은 시장 예상을 하회하며 CEO Solomon이 애널리스트 기대치 설정을 비판했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">원자재·에너지·정치 기타 이슈</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">칠레 신정부는 구리 생산 확대를 가속화하기 위해 인허가 절차를 단축하고 규제를 완화할 계획이라고 밝혔다. 글로벌 구리 공급 타이트 국면에서 주요 생산국의 증산 의지가 확인된 셈이다. 핀란드가 세계 최초 영구 핵폐기물 처리장 개장을 앞두고 있으며, AI 붐으로 인한 전력 수요 급증 속에서 원자력 에너지 부활이 가속화되고 있다. 브라질에서는 '슈링크플레이션'이 소비자 구매력을 압박하며 Lula 대통령의 재선에 위협 요인으로 부상했다. 한편 2022년 선거 쿠데타 미수 사건으로 16년형을 선고받은 브라질 전 정보국장이 미국 이민당국에 구금됐다. Kraken 암호화폐 거래소는 범죄 조직이 일부 고객 데이터 접근권을 주장하며 협박하고 있다고 밝혔다. Uber와 Nuro는 샌프란시스코에서 Lucid 로보택시 프리미엄 서비스 테스트를 시작했으며, Microsoft는 2022년 출시한 Outlook Lite 앱을 다음 달 종료한다고 발표했다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">미-이란 전쟁과 지정학 리스크 프리미엄 완화</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Vance의 최악의 주 - 부통령, Trump 외교정책 두 가지 실패의 얼굴 될 위험</div>
+    <div class="article-title-en">Vance’s bad week: vice-president risks becoming face of two Trump foreign policy failures</div>
+    <div class="article-keypoint">Vance 부통령 외교 악재 주간 - 헝가리 Orbán 축출·이란 협상 실패로 MAGA 목표 차질</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/apr/13/jd-vance-orban-hungary-iran-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 03:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">미국, 이란 우라늄 없이 철수 않을 것 - Bass</div>
+    <div class="article-title-en">US Won’t Leave Without Iran’s Uranium, Bass Says</div>
+    <div class="article-keypoint">Kyle Bass, 이란 고농축 우라늄 확보 없이 미국 철수 없을 것 - 협상 불신 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-13/us-won-t-leave-without-iran-s-uranium-bass-says-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 05:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">금, 미-이란 협상 재개 가능성 평가하며 상승</div>
+    <div class="article-title-en">Gold Rises as Traders Weigh Potential to Revive US-Iran Talks</div>
+    <div class="article-keypoint">금 2일 하락 후 반등, 미-이란 협상 낙관론으로 인플레 우려 완화되며 상승폭 제한</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/gold-steadies-as-traders-weigh-potential-to-revive-us-iran-talks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 07:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">보수당 전 재무장관 Jeremy Hunt, 에너지 요금 지원 '사회적 관세' 제안</div>
+    <div class="article-title-en">Tory ex-chancellor Jeremy Hunt proposes ‘social tariff’ to help less well-off with energy bills</div>
+    <div class="article-keypoint">영국 전 재무장관, 이란전 에너지 비용 £480 상승 대응 '사회적 관세' 제안</div>
+    <a class="article-link" href="https://www.theguardian.com/money/2026/apr/13/middle-east-war-uk-households-poorer-this-year-resolution-foundation-thinktank" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 18:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">미국 주식 상승 지속, 이란 전쟁 손실 전량 회복</div>
+    <div class="article-title-en">US Stocks Extend Gains, Erasing the Losses Caused by Iran War</div>
+    <div class="article-keypoint">S&P 500, 1% 상승으로 이란전 손실 전량 회복 - Trump 협상 종료 기대감 반영</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/stocks-drop-ahead-of-hormuz-blockade-as-earnings-season-begins" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 22:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Netanyahu, 홀로코스트 추모일에 이란에 가한 타격 찬양</div>
+    <div class="article-title-en">Netanyahu hails blow dealt to Iran as Israel commemorates Holocaust</div>
+    <div class="article-keypoint">Netanyahu, 이란 타격을 홀로코스트 방지에 비유 - Natanz가 Auschwitz 되는 것 막았다</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/netanyahu-hails-blow-dealt-to-iran-as-israel-commemorates-holocaust" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 05:16 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 기술 확산과 리스크 관리 과제</span>
+    <span class="theme-label-range">Article #7~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">AI가 우리를 위해 일하려면, 우리를 대신해 생각해서는 안 된다</div>
+    <div class="article-title-en">To Work for Us, AI Must Not Think for Us</div>
+    <div class="article-keypoint">AI의 인간 사고 대체 리스크 경고 - 일자리 상실보다 지식 생산 과정 대체가 더 큰 위협</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-danger-of-thinking-for-us-undercutting-knowledge-generation-by-dani-rodrik-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 00:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Goldman Sachs CEO, Anthropic Mythos AI 리스크 '초인지' 상태</div>
+    <div class="article-title-en">Goldman Sachs chief ‘hyper-aware’ of risks from Anthropic’s Mythos AI</div>
+    <div class="article-keypoint">Goldman CEO, Anthropic Mythos AI 역량 '초인지' 상태로 사이버 보안 협력 강화 중</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/apr/13/goldman-sachs-chief-hyper-aware-risks-anthropics-mythos-ai-david-solomon" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 01:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Microsoft, 또 다른 OpenClaw 유사 에이전트 개발 중</div>
+    <div class="article-title-en">Microsoft is working on yet another OpenClaw-like agent</div>
+    <div class="article-keypoint">Microsoft, OpenClaw 유사 에이전트 개발하되 기업용 보안 통제 강화 방향</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/13/microsoft-is-working-on-yet-another-openclaw-like-agent/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 04:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">OpenAI CEO Sam Altman 자택 화염병 공격 후 남성 기소</div>
+    <div class="article-title-en">Man charged after Molotov cocktail attack on OpenAI CEO Sam Altman’s home</div>
+    <div class="article-keypoint">Sam Altman 자택 화염병 공격 용의자, CEO 명단 담긴 '반AI' 문서 소지</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/man-charged-after-molotov-cocktail-attack-on-openai-ceo-sam-altmans-home-4611576" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 23:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Meta, Mark Zuckerberg AI 버전 제작해 직원들과 소통 추진</div>
+    <div class="article-title-en">Meta creating AI version of Mark Zuckerberg so staff can talk to the boss</div>
+    <div class="article-keypoint">Meta, Zuckerberg AI 클론 개발해 7.9만 직원과 소통 - 사고·어조 학습</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/apr/13/meta-ai-mark-zuckerberg-staff-talk-to-the-boss" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 00:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Pentagon이 AI 전쟁 리스크를 관리하는 방법</div>
+    <div class="article-title-en">How the Pentagon Can Manage the Risks of AI Warfare</div>
+    <div class="article-keypoint">Pentagon, AI 무기 신뢰성 확보 필수 - 이란전 13,000개 목표에 AI 이미 활용</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/04/13/ai-warfare-risks-pentagon-manage-anthropic/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Stanford 보고서, AI 내부자와 일반인 간 격차 확대 강조</div>
+    <div class="article-title-en">Stanford report highlights growing disconnect between AI insiders and everyone else</div>
+    <div class="article-keypoint">Stanford 보고서, AI 전문가-대중 인식 격차 확대 - 일자리·의료·경제 불안 고조</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/13/stanford-report-highlights-growing-disconnect-between-ai-insiders-and-everyone-else/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 03:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Trump, 교황 Leo와 갈등 후 자신을 예수처럼 묘사한 AI 이미지 게시</div>
+    <div class="article-title-en">Trump’s AI image of himself as Jesus-like figure follows feud with Pope Leo</div>
+    <div class="article-keypoint">Trump, 교황 Leo와 갈등 후 자신을 예수처럼 묘사한 AI 이미지 게시</div>
+    <a class="article-link" href="https://www.investing.com/news/politics-news/trump-posts-ai-image-of-himself-as-jesuslike-figure-drawing-outrage-4610883" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 23:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Sam Altman 공격 용의자, CEO 이름 담긴 '반AI' 문서 소지 - 당국</div>
+    <div class="article-title-en">Sam Altman Attack Suspect Had ‘Anti-AI’ Document with CEO Names, Authorities Say</div>
+    <div class="article-keypoint">Sam Altman 공격 용의자, OpenAI SF 본사도 표적 - '반AI' CEO 명단 소지</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/sam-altman-attack-suspect-had-anti-ai-document-with-ceo-names-authorities-say-74ddfe88?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 06:50 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Private Credit 시장 안정성 논쟁</span>
+    <span class="theme-label-range">Article #16~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">일회성 충격이 Private Credit 신뢰 위협 - Bailey 총재 경고</div>
+    <div class="article-title-en">One-Off Hits Threaten Confidence in Private Credit, Bailey Warns</div>
+    <div class="article-keypoint">BOE 총재, private credit 일회성 충격이 섹터 전반 신뢰 위협 가능성 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/one-off-hits-threaten-confidence-in-private-credit-bailey-warns" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 03:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Private Credit, 금융위기 촉발 않을 뿐 아니라 은행보다 안정적일 수도</div>
+    <div class="article-title-en">Private credit not only won’t spark a financial crisis — it may be more stable than your bank</div>
+    <div class="article-keypoint">Private credit, 65% 자본완충·10년 만기로 'Lehman 모멘트' 초래 않을 것</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/private-credit-is-actually-built-to-survive-the-ghosts-of-the-great-financial-crisis-6eaa35d6?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 08:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">JPMorgan Mulvihill: 심리가 Private Credit 타격</div>
+    <div class="article-title-en">JPMorgan's Mulvihill: Sentiment Hitting Private Credit</div>
+    <div class="article-keypoint">JPMorgan, private credit 프리미엄 지속·일정 수익 자산군으로 자금 이동 확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-13/jpmorgan-s-mulvihill-sentiment-hitting-private-credit-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 05:55 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Fed 재무 구조 개선 전망</span>
+    <span class="theme-label-range">Article #19~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">연방판사, Trump의 Wall Street Journal 명예훼손 소송 기각 - Epstein 생일 편지 보도 건</div>
+    <div class="article-title-en">Federal Judge Dismisses Trump's Defamation Lawsuit Against The Wall Street Journal Over Epstein Birthday Letter Report</div>
+    <div class="article-keypoint">연방법원 Trump의 WSJ 명예훼손 소송 기각 - Epstein 서신 보도 언론자유 보호</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/federal-judge-dismisses-trumps-defamation-lawsuit-against-wall-street-journal-over" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 08:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">New York Fed, 순이익 올해 플러스 전환 가능성</div>
+    <div class="article-title-en">New York Fed Says Net Income Could Turn Positive This Year</div>
+    <div class="article-keypoint">NY Fed, SOMA 순이익 2026년 플러스 전환 전망 - QT·수익률 정상화 반영</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/new-york-fed-says-net-income-could-turn-positive-this-year" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 03:26 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">반도체·테크 섹터 주가 모멘텀</span>
+    <span class="theme-label-range">Article #21~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Micron Technology EVP Cordano, 143만 달러 주식 매도</div>
+    <div class="article-title-en">Micron Technology EVP Cordano sells $1.43 million in stock</div>
+    <div class="article-keypoint">Micron EVP, 143만 달러 규모 주식 매도 - 일반적 임원 현금화</div>
+    <a class="article-link" href="https://www.investing.com/news/insider-trading-news/micron-technology-evp-cordano-sells-143-million-in-stock-93CH-4611574" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 23:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Intel 주가 사상 최대 9일 연속 상승 - 더 오를 수 있나?</div>
+    <div class="article-title-en">Intel’s stock just had its best 9-day stretch on record. Can it go even higher?</div>
+    <div class="article-keypoint">Intel 주가 9일간 사상 최대 상승세 - 밸류 부담에도 추가 촉매 대기 중</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/intels-stock-just-had-its-best-9-day-stretch-on-record-can-it-go-even-higher-13893363?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 07:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Goldman 주식 트레이더 최고 실적, FICC 부진</div>
+    <div class="article-title-en">Goldman Stock Traders Set Record as FICC Misses</div>
+    <div class="article-keypoint">Goldman 주식 트레이딩 분기 최고 실적, FICC 부진으로 CEO 애널 기대치 비판</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-13/goldman-stock-traders-set-record-as-ficc-misses-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 05:12 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">원자재·에너지·정치 기타 이슈</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Kraken 암호화폐 거래소, 범죄 조직이 일부 고객 데이터 접근 주장</div>
+    <div class="article-title-en">Kraken Crypto Exchange Says Criminal Group Claims Access to Some Customer Data</div>
+    <div class="article-keypoint">Kraken 거래소, 범죄 조직의 고객 데이터 접근 주장 협박 공개</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/kraken-says-criminal-group-claims-access-to-some-customer-data" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 05:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">칠레 신정부, 타이트한 공급 속 구리 확장 가속 추진</div>
+    <div class="article-title-en">Chile’s New Government Looks to Speed Up Copper Expansion Amid Tight Supply</div>
+    <div class="article-keypoint">칠레 신정부, 구리 생산 확대 가속 - 인허가 단축·규제 완화로 타이트 공급 완화 시도</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/chile-minister-daniel-mas-looks-to-speed-up-copper-output" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 23:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">도피 중이던 브라질 전 정보국장, 미 이민당국에 구금</div>
+    <div class="article-title-en">Fugitive former Brazilian intelligence chief detained by US immigration</div>
+    <div class="article-keypoint">브라질 쿠데타 미수 전 정보국장, 미 이민당국 구금 - 16년형 선고 후 밀입국</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/04/14/fugitive-former-brazilian-intelligence-chief-detained-by-us-immigration_6752384_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 07:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Lula, 브라질 슈링크플레이션 속 Joe Biden 선거 실패 유령과 직면</div>
+    <div class="article-title-en">Lula Faces Ghost of Joe Biden’s Election Failure in Brazil Shrinkflation</div>
+    <div class="article-keypoint">브라질 슈링크플레이션 심화 - Lula 재선 위협, Biden 실패 재현 우려</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-13/brazil-s-lula-faces-ghost-of-biden-s-election-failure" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/13 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">핀란드, 세계 최초 영구 핵폐기물 처리장 개장 임박</div>
+    <div class="article-title-en">Finland Is About to Open the World's First Permanent Nuclear Waste Site</div>
+    <div class="article-keypoint">핀란드 세계 첫 영구 핵폐기물 처리장 개장 임박 - AI 전력 수요로 원전 부활 가속</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Finland-Is-About-to-Open-the-Worlds-First-Permanent-Nuclear-Waste-Site.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Uber와 Nuro, 샌프란시스코서 프리미엄 로보택시 서비스 테스트 시작</div>
+    <div class="article-title-en">Uber and Nuro begin testing premium robotaxi service in San Francisco</div>
+    <div class="article-keypoint">Uber-Nuro, 샌프란시스코서 Lucid 로보택시 프리미엄 서비스 테스트 시작</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/13/uber-nuro-san-francisco-testing-premium-robotaxi-service/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 06:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Microsoft, Outlook Lite 앱 다음 달 공식 종료</div>
+    <div class="article-title-en">Microsoft is officially killing its Outlook Lite app next month</div>
+    <div class="article-keypoint">Microsoft, 2022년 출시 Outlook Lite 앱 다음 달 종료 - 경량 버전 수명 단축</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/13/microsoft-is-officially-killing-its-outlook-lite-app-next-month/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/14 05:59 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>

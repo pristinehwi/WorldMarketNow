@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-23 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/23 07:48 KST</div>
+    <div class="header-date">2026-04-23</div>
+    <div class="header-headline">Fed 의장 인선 절차 본격화 - 통화정책 불확실성 부상</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 인준 청문 이후 Fed 독립성 및 달러정책 방향 - 금리 경로 재평가 압력</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">통화정책 불확실성 - Fed 의장 교체 및 정책 프레임워크 재편</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">Trump 행정부의 Fed 의장 후보 Kevin Warsh가 Bessent-Rubio의 달러 '국가전략' 의제 지원 및 안정적 물가 달성을 최우선으로 언급하며 시장의 주목을 받고 있다. Warsh는 Fed의 커뮤니케이션 프레임워크 전면 재편을 주장하지만 인준 청문에서 구체적 실행 방안은 제시하지 않아 불확실성이 지속되고 있다. 현 의장 Powell은 임기 종료 시 후임 인준 전까지 pro tempore(임시) 체제로 유임할 계획이며, 백악관 경제위원회 의장 Hassett이 이를 지지하고 있다. Fed의 통화정책 운영 체계 현대화 논의가 진행 중이나, 의장 교체 시점과 정책 방향 전환 가능성이 금리 경로 예측에 주요 변수로 작용하고 있다. 시장은 Fed 독립성 및 금리 인하 시기에 대한 재평가 압력에 직면해 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 구조적 성장 - 반도체·클라우드 인프라 투자 확대</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#14</span>
+    </div>
+    <div class="theme-summary">Google Cloud가 Nvidia와 경쟁하기 위해 TPU 신모델 2종을 출시하며 AI 칩 경쟁이 심화되고 있다. 반도체 섹터 지수가 AI 수요 낙관론에 힘입어 사상 최장인 16거래일 연속 상승을 기록했으며, Broadcom은 Google TPU 발표 여파로 미국 역사상 6번째로 특정 시가총액 수준을 달성했다. Musk는 Tesla의 올해 지출 전망을 250억 달러로 상향하며 자율주행 택시·트럭, 로봇, 칩 공장 등 AI 관련 인프라에 '매우 상당한' 투자 증가를 예고했다. OpenAI는 Infosys와 제휴하여 기업용 AI 도구 보급을 확대하고 있으며, Anthropic의 Mythos AI 모델 무단 접근 의혹은 백악관과 기업들의 보안 우려를 증폭시키고 있다. AI 투자 확대는 기술 섹터 밸류에이션 재평가와 자본지출 급증을 동시에 촉발하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">기업 실적 시즌 - 기술주 낙관론과 금융권 신용 리스크</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #15~#19</span>
+    </div>
+    <div class="theme-summary">Tesla가 1분기 주당순이익 41센트로 시장 예상치 34센트를 상회하며 로보틱스·자율주행차 중심 전략 전환이 긍정적 반응을 얻었다. 양호한 현금흐름과 2019년 이후 최대 분기 인도량, Airbus 초과 실적 등이 주가 급등을 견인했다. 반면 Capital One은 부실채권 충당금을 전년 대비 72% 증가시키며 시장 컨센서스를 하회하는 실적을 기록했고, 신용 손실 우려가 금융권 전반으로 확산될 조짐이다. Goldman Sachs는 Boeing의 현금 소진이 예상보다 작고 인도 실적이 개선되며 턴어라운드 모멘텀이 가속화되고 있다고 평가했다. 실적 시즌은 기술주 낙관론과 금융·전통 산업 부문의 신용 리스크 확대라는 이중 구조를 부각시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">지정학적 긴장 재편 - 인도·태평양 동맹 강화와 중동 리스크</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #20~#24</span>
+    </div>
+    <div class="theme-summary">호주 국방장관이 일본을 '전략적 정렬이 가장 큰 국가'로 지목하며 70억 달러 규모의 스텔스 프리깃 공동 생산 계약을 체결, 인도·태평양 지역 안보 구도가 재편되고 있다. 일본 Mitsubishi Heavy Industries가 3척을 건조하고 호주가 8척을 추가 건조하는 이번 합의는 중국 견제를 위한 동맹 심화의 상징으로 평가된다. 한편 이란이 호르무즈 해협에서 선박 3척을 공격하며 중동 긴장이 지속되고 있으나 Trump의 휴전 연장 발언으로 유가는 단기 변동성을 보이고 있다. 취약국 요청에 따라 러시아산 원유 제재 면제가 연장되었으며, 미국은 석유제품 수출 사상 최고치와 전략비축유 대규모 방출로 에너지 시장 영향력을 확대하고 있다. 지정학적 긴장은 에너지·방산 섹터 프리미엄과 동맹 재편 수혜주에 차별적 영향을 주고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">기업 전략 전환 - IPO·M&A 구조 변화와 자본 재배분</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #25~#27</span>
+    </div>
+    <div class="theme-summary">SpaceX가 20억 달러 펀딩 라운드 논의를 중단하고 대신 100억 달러 '협력 수수료'와 600억 달러 인수 경로를 제시받아 IPO 전략을 전면 재검토하고 있다. Musk는 SpaceX의 목표를 화성 도달에서 IPO 준비로 전환하며 자본시장 접근 방식을 다변화하고 있다. 한국 증시는 정부 주도 기업지배구조 개선과 개인투자자 급증으로 단기 주주환원 압력이 강화되며 기존 재투자 중심 전략에서 배당·자사주 매입 확대로 전환 중이다. Trump 가족의 World Liberty Financial은 최대 후원자인 암호화폐 억만장자 Justin Sun으로부터 사기 혐의로 소송을 당하며 정치·비즈니스 경계에서의 법적 리스크가 부각되고 있다. 기업들의 자본 재배분 전략 변화는 섹터별 밸류에이션 격차와 주주 행동주의 압력을 증폭시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">정책 불확실성 - 관세 집행 및 암호화폐 규제</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #28~#29</span>
+    </div>
+    <div class="theme-summary">Trump 행정부가 기업들의 관세 환급 노력에 대해 입장을 밝히며 관세 정책 집행 방식이 주목받고 있다. 미국 세관당국이 이번 주 온라인 관세 환급 절차를 개시하며 기업들의 비용 회수 가능성이 제기되고 있으나, 정책 일관성에 대한 불확실성은 여전하다. 이란 휴전 연장 발언 이후 위험자산 선호가 강화되며 비트코인으로 자본이 유입, 80,000달러 돌파 가능성이 제기되고 있다. 복수 채널을 통한 자본 유입이 이전 달리 급격한 반전 가능성을 낮추고 랠리 지속 모멘텀을 강화하고 있다는 분석이다. 관세 및 암호화폐 규제 불확실성은 무역 민감 섹터와 디지털 자산 시장의 변동성 요인으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #30</span>
+    </div>
+    <div class="theme-summary">특정 테마로 분류하기 어려운 주요 동향을 포함합니다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">통화정책 불확실성 - Fed 의장 교체 및 정책 프레임워크 재편</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Hassett, Powell 의장의 'Pro Tempore' 유임 지지 밝혀</div>
+    <div class="article-title-en">Hassett Says He Supports Fed Chair Powell Staying On ‘Pro Tempore’</div>
+    <div class="article-keypoint">Hassett이 Powell의 pro tempore 유임 지지 - 의장 교체 공백 최소화 시도</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-22/hassett-says-he-supports-powell-staying-on-pro-tempore-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 06:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Warsh, Fed가 Bessent-Rubio의 달러 '국가전략' 의제 지원 원해</div>
+    <div class="article-title-en">Warsh Wants Fed to Back Bessent-Rubio ‘Statecraft’ Agenda for the Dollar</div>
+    <div class="article-keypoint">Warsh, 달러 국가전략 지원 및 안정물가 우선 천명 - 통화정책 방향 재평가</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-04-22/warsh-wants-fed-to-back-bessent-rubio-statecraft-agenda-for-the-dollar" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 20:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">JPMorgan의 Berro, Fed 의장 후보 Warsh 논평</div>
+    <div class="article-title-en">JPMorgan's Berro Discusses Fed Chair Nominee Warsh</div>
+    <div class="article-keypoint">Warsh 청문에서 Fed 프레임워크 전면 개편 주장, 구체안 부재로 불확실성 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-22/jpmorgan-s-berro-discusses-fed-chair-nominee-warsh-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 21:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Christopher J Waller: 21세기 Federal Reserve 운영 현대화</div>
+    <div class="article-title-en">Christopher J Waller: Modernising Federal Reserve operations in the 21st century</div>
+    <div class="article-keypoint">Waller의 Fed 운영 현대화 논의 - 정책 커뮤니케이션 체계 변화 가능성</div>
+    <a class="article-link" href="https://www.bis.org/review/r260422k.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 16:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Federal Reserve 이사회, First Financial Bank 前 직원 제재 조치 발표</div>
+    <div class="article-title-en">Federal Reserve Board issues enforcement action with former employee of First Financial Bank</div>
+    <div class="article-keypoint">Fed, 前 First Financial Bank 직원 제재 조치 - 규제 집행 지속</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/enforcement20260422a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Hassett, Powell의 'Pro Tempore' 유임 해석 지지</div>
+    <div class="article-title-en">Hassett Backs Powell Interpretation on Staying On ‘Pro Tempore’</div>
+    <div class="article-keypoint">Hassett, Powell의 임기 종료 후 pro tempore 해석 지지 재확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-22/hassett-backs-powell-interpretation-on-staying-on-pro-tempore" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 06:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Trump의 Fed 의장 지명, 대통령에게 기대 성과 안겨주지 못할 전망</div>
+    <div class="article-title-en">Why Trump’s pick for Fed chair will not bring home the bank for the president</div>
+    <div class="article-keypoint">Warsh의 Fed 의장 지명, 금리 인하 기대 약화 및 독립성 논쟁 촉발 전망</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/apr/22/trump-fed-chair-kevin-warsh-interest-rate-cut" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 18:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 구조적 성장 - 반도체·클라우드 인프라 투자 확대</span>
+    <span class="theme-label-range">Article #8~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">AI가 선진국 부채 위기를 해결할 수 있을까?</div>
+    <div class="article-title-en">Will AI Solve Rich Countries’ Debt Woes?</div>
+    <div class="article-keypoint">AI가 선진국 부채 해결 가능성 제기되나 리스크 과소평가 우려 - 재정 비용 증폭 가능</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-potential-revenue-gains-may-not-offset-other-harms-and-costs-by-kenneth-rogoff-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 23:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Google Cloud, Nvidia 경쟁 위해 신형 AI 칩 2종 출시</div>
+    <div class="article-title-en">Google Cloud launches two new AI chips to compete with Nvidia</div>
+    <div class="article-keypoint">Google, Nvidia 경쟁 위해 신형 TPU 2종 출시 - AI 칩 경쟁 심화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/22/google-cloud-next-new-tpu-ai-chips-compete-with-nvidia/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 03:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Anthropic, Mythos AI 모델 무단 접근 가능성 조사</div>
+    <div class="article-title-en">Anthropic Probes Possible Unauthorized Access to Mythos AI Model</div>
+    <div class="article-keypoint">Anthropic의 Mythos AI 모델 무단 접근 의혹 - 백악관·기업 보안 우려 증폭</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/anthropic-probes-possible-unauthorized-access-to-mythos-ai-model-3da1ee20?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 22:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Google, 신규 AI 컴퓨팅 물결 위한 특화 칩 공개</div>
+    <div class="article-title-en">Google Introduces Specialized Chip for New Wave of AI Computing</div>
+    <div class="article-keypoint">Google, AI 컴퓨팅 특화 신형 칩 출시 - 속도·효율 경쟁 본격화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/google-tpux-inference-chip-7930f2d0?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 00:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Tesla, Musk의 AI 투자 집중으로 지출 전망 250억 달러 상향</div>
+    <div class="article-title-en">Tesla boosts spending forecast to $25bn as Musk doubles down on AI bet</div>
+    <div class="article-keypoint">Tesla, 지출 전망 250억 달러로 상향 - AI·자율주행 인프라 집중 투자</div>
+    <a class="article-link" href="https://www.ft.com/content/7ce83108-9f2d-48b4-8ce1-28865045bd67" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">반도체 주식, AI 낙관론에 사상 최장 16거래일 연속 랠리</div>
+    <div class="article-title-en">Chip Stocks Rally for Record 16th Straight Day on AI Optimism</div>
+    <div class="article-keypoint">반도체 지수 사상 최장 16거래일 연속 상승 - AI 수요 낙관론 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-22/chipmakers-on-track-for-longest-ever-rally-amid-ai-optimism" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 23:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">OpenAI, Infosys와 제휴로 더 많은 기업에 AI 도구 공급</div>
+    <div class="article-title-en">OpenAI teams up with Infosys to bring AI tools to more businesses</div>
+    <div class="article-keypoint">OpenAI-Infosys 제휴로 기업용 AI 도구 보급 확대 - 소프트웨어 현대화 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/22/openai-teams-up-with-infosys-to-bring-ai-tools-to-more-businesses/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 23:22 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">기업 실적 시즌 - 기술주 낙관론과 금융권 신용 리스크</span>
+    <span class="theme-label-range">Article #15~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Tesla, Musk의 AI·로봇 전환 속 실적 예상 상회</div>
+    <div class="article-title-en">Tesla beats earnings expectations as Musk pivots automaker to AI and robots</div>
+    <div class="article-keypoint">Tesla 1Q EPS 41센트로 예상 34센트 상회, AI·로보틱스 전환 긍정 평가</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/apr/22/tesla-first-quarter-report-earnings" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 06:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Tesla 실적, 로보틱스·자율주행차 집중 속 예상 상회</div>
+    <div class="article-title-en">Tesla’s Earnings Beat Expectations Amid Focus on Robotics, Driverless Cars</div>
+    <div class="article-keypoint">Tesla 1Q 실적 예상 상회로 시간외 급등 - 로보틱스·자율주행 집중 전략 주효</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-22/tesla-earnings-beat-expectations-amid-focus-on-robotics-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 05:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">'만반의 준비': Goldman, Boeing 턴어라운드 모멘텀 개선 평가</div>
+    <div class="article-title-en">"All Systems Go": Goldman Sees Improvement As Boeing Turnaround Gains Momo</div>
+    <div class="article-keypoint">Goldman, Boeing 현금소진 축소·인도 개선으로 턴어라운드 모멘텀 강화 평가</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/all-systems-go-boeing-turnaround-gains-momo-goldman-sees-improvement" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 02:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Tesla 1분기 실적 추정치 상회로 주가 상승</div>
+    <div class="article-title-en">Tesla 1Q Earnings Beat Estimates Sending Share Higher </div>
+    <div class="article-keypoint">Tesla 1Q EPS 41센트로 추정치 상회, 시간외 급등 - 인도량 2019년 이후 최대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-22/tesla-1q-earnings-beat-estimates-sending-share-higher-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 05:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Capital One, 부실채권 충당금 증가로 실적 컨센서스 하회</div>
+    <div class="article-title-en">Capital One increases provision for bad-debt expenses as earnings miss Wall Street consensus</div>
+    <div class="article-keypoint">Capital One, 부실채권 충당금 72% 급증으로 실적 부진 - 신용 리스크 확산 우려</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/capital-one-increases-provision-for-bad-debt-expenses-as-earnings-miss-wall-street-consensus-842d3c98?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 06:27 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">지정학적 긴장 재편 - 인도·태평양 동맹 강화와 중동 리스크</span>
+    <span class="theme-label-range">Article #20~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">미국 유대인들의 Netanyahu 문제</div>
+    <div class="article-title-en">American Jews’ Netanyahu Problem</div>
+    <div class="article-keypoint">Netanyahu 정책이 美 유대인 사회 양극화 심화 - 정치·사회적 압력 증가</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/netanyahu-policies-contributing-to-rising-antisemitism-in-the-us-by-steven-simon-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 19:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">디커플링과 한국의 신자본주의</div>
+    <div class="article-title-en">Decoupling and South Korea’s New Capitalism</div>
+    <div class="article-keypoint">한국 증시 급등, 정부 개혁과 개인투자자 급증으로 배당·환원 압력 강화</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/south-korea-soaring-stock-market-reflects-changing-investment-patterns-by-keun-lee-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 20:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">George Friedman, 호주와 일본이 태평양의 미래인 이유</div>
+    <div class="article-title-en">George Friedman on Why Australia and Japan are the Future of the Pacific</div>
+    <div class="article-keypoint">호주, 일본을 '최대 전략 동맹국'으로 규정하며 70억 달러 프리깃 공동 생산</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/george-friedman-on-why-australia-and-japan-are-the-future-of-the-pacific/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 06:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">취약국 요청 후 러시아산 원유 제재 면제 연장 - Bessent</div>
+    <div class="article-title-en">Russian oil sanctions waiver extended after requests from vulnerable countries, says Bessent</div>
+    <div class="article-keypoint">취약국 요청으로 러시아산 원유 제재 면제 연장 - Bessent 공개</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/iran-russian-oil-waivers-extended-after-requests-from-vulnerable-countries-says-bessent" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 00:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">WTI 상승 연장, 美 석유제품 수출 사상 최고·대규모 전략비축유 방출·생산 감소</div>
+    <div class="article-title-en">WTI Extends Gains As US Oil Product Exports Hit Record Highs, Huge SPR Release, Production Dips</div>
+    <div class="article-keypoint">WTI 상승 연장, 美 석유제품 수출 사상 최고·전략비축유 대규모 방출·생산 소폭 감소</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/wti-extends-gains-us-oil-product-exports-hit-record-highs-huge-spr-release-production-dips" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 23:40 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">기업 전략 전환 - IPO·M&A 구조 변화와 자본 재배분</span>
+    <span class="theme-label-range">Article #25~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">SpaceX, 20억 달러 펀딩 대신 600억 달러 인수 제안으로 선회</div>
+    <div class="article-title-en">How SpaceX preempted a $2B fundraise with a $60B buyout offer</div>
+    <div class="article-keypoint">SpaceX, 20억 달러 펀딩 중단 후 600억 달러 인수 제안 수용 검토 - IPO 전략 전환</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/22/how-spacex-preempted-a-2b-fundraise-with-a-60b-buyout-offer/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 04:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">암호화폐 억만장자 Justin Sun, Trump 가족의 World Liberty Financial 고소</div>
+    <div class="article-title-en">Crypto billionaire Justin Sun sues Trump family’s World Liberty Financial</div>
+    <div class="article-keypoint">Justin Sun, Trump 가족 World Liberty Financial 사기 혐의 소송 제기</div>
+    <a class="article-link" href="https://www.ft.com/content/d8ba5daa-2af8-4242-b875-e4ebb4d9dbb8" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 03:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Musk의 SpaceX, IPO 앞두고 목표 전환</div>
+    <div class="article-title-en">Musk’s SpaceX Goals Shift Ahead of Its I.P.O.</div>
+    <div class="article-keypoint">Musk, SpaceX IPO 준비로 목표 전환 - 화성 도달에서 자본시장 접근 우선</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/04/22/technology/elon-musk-spacex-ipo-goals.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 23:56 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">정책 불확실성 - 관세 집행 및 암호화폐 규제</span>
+    <span class="theme-label-range">Article #28~#29</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Trump, 기업들의 관세 환급 노력에 입장 표명</div>
+    <div class="article-title-en">Trump Weighs In on Companies’ Efforts to Recoup Tariff Payments</div>
+    <div class="article-keypoint">Trump, 관세 환급 노력 기업에 입장 표명 - 세관 온라인 환급 절차 개시</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-04-22/trump-and-tariff-refunds" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 20:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">이란 휴전이 비트코인 투자 심리 부양 - 80,000달러 돌파 가능성</div>
+    <div class="article-title-en">The Iran cease-fire has boosted investors’ appetite for bitcoin. Here’s why it could break past $80,000 soon.</div>
+    <div class="article-keypoint">이란 휴전 연장으로 비트코인 랠리, 80,000달러 돌파 가능성 - 복수 채널 자본 유입</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-iran-cease-fire-has-boosted-investors-appetite-for-bitcoin-heres-why-it-could-break-past-80-000-soon-29c08c3e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 06:37 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Broadcom, 미국 역사상 6번째 기업으로 이정표 달성</div>
+    <div class="article-title-en">Broadcom just became the sixth company in U.S. history to achieve this feat</div>
+    <div class="article-keypoint">Broadcom, Google TPU 발표 여파로 미국 역사상 6번째 시총 이정표 달성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/broadcom-just-became-the-sixth-company-in-u-s-history-to-achieve-this-feat-beb7b10d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/23 06:20 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
