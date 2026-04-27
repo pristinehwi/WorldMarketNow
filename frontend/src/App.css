@@ -1316,11 +1316,11 @@ body {
    App.css 하단에 추가할 것
    ============================================================ */
 
-/* ── 오버레이 ── */
+   /* ── 오버레이 ── */
 .ac-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.80);
   z-index: 1100;
   display: flex;
   align-items: center;
@@ -1332,14 +1332,14 @@ body {
 /* ── 패널 ── */
 .ac-panel {
   background: #0a0a1a;
-  border: 1px solid #2a2a4a;
+  border: 1px solid #3a3a5a;
   border-radius: 14px;
   width: 100%;
-  max-width: 820px;
+  max-width: 1020px;
   max-height: 88vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 12px 60px rgba(0, 0, 20, 0.8);
+  box-shadow: 0 12px 60px rgba(0, 0, 20, 0.8), 0 0 0 1px #2a2a4a;
   overflow: hidden;
   animation: acIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1355,8 +1355,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid #1a1a2e;
+  border-bottom: 1px solid #2a2a4a;
   flex-shrink: 0;
+  background: #0c0c20;
 }
 
 .ac-title {
@@ -1422,7 +1423,7 @@ body {
   gap: 14px;
   padding: 8px 20px;
   background: #080814;
-  border-bottom: 1px solid #1a1a2e;
+  border-bottom: 1px solid #2a2a4a;
   font-size: 11px;
   flex-shrink: 0;
   flex-wrap: wrap;
@@ -1456,14 +1457,15 @@ body {
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  border-bottom: 1px solid #1a1a2e;
+  border-bottom: 1px solid #2a2a4a;
+  background: #0c0c1e;
   flex-shrink: 0;
 }
 
 .ac-date-select {
   flex: 1;
   background: #0e0e22;
-  border: 1px solid #2a2a4a;
+  border: 1px solid #3a3a5a;
   border-radius: 6px;
   color: #c8c8e0;
   font-size: 12px;
@@ -1473,7 +1475,7 @@ body {
   transition: border-color 0.15s;
 }
 
-.ac-date-select:hover { border-color: #4a4a7a; }
+.ac-date-select:hover { border-color: #5a5a8a; }
 .ac-date-select:focus { border-color: #5b8dee; }
 
 .ac-session-badge {
@@ -1481,7 +1483,7 @@ body {
   font-weight: 700;
   color: #4d96ff;
   background: #0e1e3a;
-  border: 1px solid #4d96ff33;
+  border: 1px solid #4d96ff44;
   border-radius: 3px;
   padding: 2px 6px;
   white-space: nowrap;
@@ -1568,30 +1570,34 @@ body {
 .ac-diff-new  { background: #0a1a10; color: #52b788; border: 1px solid #52b78833; }
 .ac-diff-gone { background: #1a0a0a; color: #ff6060; border: 1px solid #ff606033; }
 
-/* ── 중앙 구분선 ── */
+/* ── 중앙 구분선 (강화) ── */
 .ac-divider {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 36px;
+  width: 40px;
   flex-shrink: 0;
   gap: 6px;
   padding: 20px 0;
+  background: #080812;
+  border-left: 1px solid #2a2a4a;
+  border-right: 1px solid #2a2a4a;
 }
 
 .ac-divider-line {
   flex: 1;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, #2a2a4a 30%, #2a2a4a 70%, transparent);
+  width: 2px;
+  background: linear-gradient(180deg, transparent, #4a4a7a 20%, #4a4a7a 80%, transparent);
 }
 
 .ac-divider-vs {
   font-size: 10px;
   font-weight: 700;
-  color: #3a3a5a;
-  letter-spacing: 1px;
+  color: #6a6a9a;
+  letter-spacing: 2px;
   writing-mode: vertical-rl;
+  text-shadow: 0 0 8px #4d96ff44;
 }
 
 /* ── 하단 인사이트 ── */
@@ -1600,7 +1606,7 @@ body {
   align-items: center;
   gap: 10px;
   padding: 10px 20px;
-  border-top: 1px solid #1a1a2e;
+  border-top: 1px solid #2a2a4a;
   background: #080814;
   flex-shrink: 0;
 }
@@ -1621,10 +1627,16 @@ body {
 
 /* ── 모바일 대응 ── */
 @media (max-width: 768px) {
+  .ac-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
   .ac-panel {
     max-width: 100%;
     max-height: 92vh;
-    border-radius: 10px;
+    border-radius: 14px 14px 0 0;
+    border-bottom: none;
   }
 
   .ac-body {
@@ -1632,25 +1644,58 @@ body {
     overflow-y: auto;
   }
 
+  /* 모바일: 구분선을 가로 바로 전환 */
   .ac-divider {
     flex-direction: row;
     width: 100%;
-    height: 28px;
+    height: 32px;
     padding: 0 20px;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #2a2a4a;
+    border-bottom: 1px solid #2a2a4a;
+    background: #080812;
   }
 
   .ac-divider-line {
     flex: 1;
     width: auto;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #2a2a4a 30%, #2a2a4a 70%, transparent);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #4a4a7a 20%, #4a4a7a 80%, transparent);
   }
 
   .ac-divider-vs {
     writing-mode: horizontal-tb;
+    padding: 0 10px;
   }
 
+  /* 모바일: DAG 높이 확보 */
   .ac-dag-area {
-    min-height: 260px;
+    min-height: 300px;
+    max-height: 360px;
+  }
+
+  /* 모바일: 날짜 선택 드롭다운 전체 너비 */
+  .ac-side-header {
+    padding: 10px 12px;
+  }
+
+  .ac-date-select {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  /* 모바일: 스레드 칩 스크롤 */
+  .ac-thread-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    padding-bottom: 4px;
+  }
+
+  .ac-thread-chip {
+    flex-shrink: 0;
+    min-width: 100px;
   }
 }
