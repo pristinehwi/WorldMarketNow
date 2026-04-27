@@ -472,6 +472,8 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
   const [selectedNode, setSelectedNode] = useState(null);
   const [miniChartNode, setMiniChartNode] = useState(null);
   const [miniChartPos, setMiniChartPos] = useState({ x: 0, y: 0 });
+  const [hoveredNode, setHoveredNode] = useState(null);
+  const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
   const animFrameRef = useRef(null);
   const pulseAnimsRef = useRef([]);
 
@@ -958,12 +960,22 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
       });
 
       // hover: 확대 + 글로우
-      g.on('mouseenter', function() {
+      g.on('mouseenter', function(event) {
         d3.select(this).select('rect')
           .transition().duration(150)
           .attr('x', -(nodeW / 2 + 3)).attr('y', -(nodeH / 2 + 3))
           .attr('width', nodeW + 6).attr('height', nodeH + 6)
           .attr('filter', 'url(#glow)');
+
+        // 호버 툴팁: related_news 있는 개념 노드만 표시 (PC only)
+        if (node.related_news && node.related_news.length > 0) {
+          const svgRect = svgRef.current.getBoundingClientRect();
+          const transform = d3.zoomTransform(svgRef.current);
+          const screenX = transform.x + pos.x * transform.k + svgRect.left;
+          const screenY = transform.y + pos.y * transform.k + svgRect.top;
+          setHoveredNode(node);
+          setHoverPos({ x: screenX, y: screenY });
+        }
 
         // hover 시 연결 엣지 재펄스 (A)
         if (!activeChain) {
@@ -1014,6 +1026,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
           .attr('x', -nodeW / 2).attr('y', -nodeH / 2)
           .attr('width', nodeW).attr('height', nodeH)
           .attr('filter', null);
+        setHoveredNode(null);
       });
 
       // activeEvent 타겟 노드 펄스
@@ -1081,6 +1094,29 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
             prices={prices}
             onClose={() => setMiniChartNode(null)}
           />
+        )}
+
+        {/* 호버 툴팁: related_news PC only */}
+        {hoveredNode && !miniChartNode && hoveredNode.related_news?.length > 0 && (
+          <div
+            className="node-hover-tooltip"
+            style={{
+              position: 'fixed',
+              left: hoverPos.x + 12,
+              top: hoverPos.y - 8,
+              pointerEvents: 'none',
+              zIndex: 50,
+            }}
+          >
+            {hoveredNode.related_news.map((news, i) => (
+              <div key={i} className="node-hover-tooltip-item">
+                {news.source && (
+                  <span className="node-hover-tooltip-source">[{news.source}]</span>
+                )}
+                <span className="node-hover-tooltip-title">{news.title}</span>
+              </div>
+            ))}
+          </div>
         )}
       </div>
 
