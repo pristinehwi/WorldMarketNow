@@ -4,6 +4,7 @@ import HeadlineZone from './components/HeadlineZone';
 import DagGraph from './components/DagGraph';
 import Timeline from './components/Timeline';
 import SidePanel from './components/SidePanel';
+import ArchiveCompare from './components/ArchiveCompare';
 import useMarketData from './hooks/useMarketData';
 
 // ── 브리핑 아카이브 패널 ──
@@ -59,6 +60,7 @@ function App() {
   const [mobileTab, setMobileTab] = useState('dag');
   const [showMobilePanel, setShowMobilePanel] = useState(false);
   const [showBriefing, setShowBriefing] = useState(false);
+  const [showCompare, setShowCompare] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -70,7 +72,7 @@ function App() {
     if (data?.threads?.length > 0 && !selectedThread) {
       setSelectedThread(data.threads[0]);
     }
-  }, [data]);
+  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleTimeEventSelect = (event) => {
     setActiveTimeEvent(event);
@@ -173,6 +175,11 @@ function App() {
             📰 Daily Intelligence Archive
           </button>
         </div>
+        <div className="briefing-btn-wrap">
+          <button className="briefing-btn" onClick={() => setShowCompare(true)}>
+            ⏱ 시간축 비교
+          </button>
+        </div>
 
         <div className="built-by-mobile">
           built by <span className="built-by-name" onClick={() => {
@@ -181,6 +188,7 @@ function App() {
         </div>
 
         {showBriefing && <BriefingPanel onClose={() => setShowBriefing(false)} />}
+        {showCompare && <ArchiveCompare onClose={() => setShowCompare(false)} />}
       </div>
     );
   }
@@ -219,13 +227,21 @@ function App() {
           />
         </div>
       </div>
+
       <div className="briefing-btn-wrap-pc">
         <button className="briefing-btn" onClick={() => setShowBriefing(true)}>
           📰 Daily Intelligence Archive
         </button>
       </div>
+      <div className="briefing-btn-wrap-pc" style={{ bottom: 68 }}>
+        <button className="briefing-btn" onClick={() => setShowCompare(true)}>
+          ⏱ 시간축 비교
+        </button>
+      </div>
+
       <BuiltBy />
       {showBriefing && <BriefingPanel onClose={() => setShowBriefing(false)} />}
+      {showCompare && <ArchiveCompare onClose={() => setShowCompare(false)} />}
     </div>
   );
 }

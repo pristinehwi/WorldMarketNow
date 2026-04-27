@@ -77,9 +77,29 @@ const ETF_FULLNAME = {
 function MiniChart({ node, thread, prices, onClose }) {
   const canvasRef = useRef(null);
 
-  // 노드 ticker 추출 (label 괄호 안)
-  const tickerMatch = (node.label || '').match(/\(([A-Z^0-9]+)\)/);
-  const nodeTicker = tickerMatch ? tickerMatch[1] : null;
+  // 노드 ticker 추출 (label 괄호 안) : 20260426까지의 기존 코드
+  //const tickerMatch = (node.label || '').match(/\(([A-Z^0-9]+)\)/);
+  //const nodeTicker = tickerMatch ? tickerMatch[1] : null;
+
+  // 노드 : 20260427 신규 구현
+  const extractTicker = (label, prices) => {
+  if (!label) return null;
+  // 1) 괄호 안 추출: "EWY(한국ETF)" → 'EWY' 먼저, 'XSD' 같은 비매칭은 제외
+  const parenMatches = label.match(/\(([A-Z][A-Z0-9]{1,5})\)/g) || [];
+  for (const m of parenMatches) {
+    const t = m.slice(1, -1);
+    if (prices?.[t]) return t;
+  }
+  // 2) label 자체가 순수 티커인지 체크: "EWT", "SOXX", "TLT" 등
+  const cleanLabel = label.replace(/\s/g, '').toUpperCase();
+  if (prices?.[cleanLabel]) return cleanLabel;
+  // 3) label 첫 번째 단어가 티커
+  const firstWord = label.split(/[\s(]/)[0].toUpperCase();
+  if (prices?.[firstWord]) return firstWord;
+  return null;
+};
+const nodeTicker = extractTicker(node.label, prices);
+
 
   // frequency 기반 변동률 키
   const freq = thread?.frequency || 'NOW';
@@ -541,9 +561,13 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
         if (valueW > 180) { valueW = 180; valueLines = Math.ceil(valueW / 160); }
       }
     }
-    const pad = Math.round((mobile ? 60 : 40) * scale);
-    const nodeW = Math.max(Math.round(120 * scale), maxLabelW + pad, valueW + pad);
-    const nodeH = Math.max(Math.round(46 * scale), labelLines.length * Math.round(15 * scale) + valueLines * Math.round(14 * scale) + Math.round(16 * scale));
+    // 모바일에서 label 줄 수가 많을수록 패딩을 더 넉넉하게
+    const basePad = mobile ? 70 : 44;
+    const labelLinePad = Math.max(0, (labelLines.length - 2) * 8); // 줄 수 초과분 추가 패딩
+    const pad = Math.round((basePad + labelLinePad) * scale);
+    const nodeW = Math.max(Math.round(130 * scale), maxLabelW + pad, valueW + pad);
+    // nodeH: label줄 + value줄 + 여유 패딩 (28로 상향)
+    const nodeH = Math.max(Math.round(50 * scale), labelLines.length * Math.round(15 * scale) + valueLines * Math.round(14 * scale) + Math.round(28 * scale));
     return { nodeW, nodeH, fs, scale };
   };
 
@@ -818,7 +842,8 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
       const label = node.label || '';
       const words = label.split(' ');
       const { fs = 11, scale: sc = 1.0 } = nodeSizes[node.id] || {};
-      const lineHeight = Math.round(15 * sc);
+      // lineHeight: 폰트 크기 기준으로 계산 (fs * 1.45 → 겹침 방지)
+      const lineHeight = Math.round(fs * 1.45);
 
       // value 줄 수 미리 계산
       let valueLineCount = 0;
@@ -832,7 +857,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
           valueLineCount = 1;
         }
       }
-      const valueLH = Math.round(13 * sc);
+      const valueLH = Math.round(fs * 1.3);
       const totalTextH = words.length * lineHeight + valueLineCount * valueLH;
       const startY = -(totalTextH / 2) + lineHeight / 2;
 
@@ -865,7 +890,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
           const priceLine = cleanParen > -1 ? cleanValue.slice(0, cleanParen).trim() : cleanValue.slice(0, cleanArrow > -1 ? undefined : undefined).trim();
           const pctPart = hasParen ? node.value.slice(parenIdx).trim() : '';
           const vfs = Math.round((fs - 1) * sc);
-          const vLineH = Math.round(13 * sc);
+          const vLineH = Math.round(fs * 1.3);
           const dateLineH = (baseDate && currDate) ? vLineH : 0;
           const labelEndY = startY + (words.length - 1) * lineHeight + lineHeight / 2;
 

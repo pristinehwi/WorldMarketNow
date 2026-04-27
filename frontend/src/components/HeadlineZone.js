@@ -1,61 +1,131 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layerSummary, generatedAt }) {
+const COLOR_CYCLE = [
+  '#bf5fff', // 형광보라
+  '#00aaff', // 형광파랑
+  '#00ff99', // 형광초록
+  '#ffe033', // 형광노랑
+  '#f0f0ff', // 형광흰
+];
+
+function HeadlineZone({ headline, headlines, threads, selectedThread, onThreadSelect, layerSummary, dataAsOf, generatedAt }) {
+
   const [displayText, setDisplayText] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
+  const [charColors, setCharColors]   = useState([]);
+
+  const phaseRef         = useRef('typing');
+  const indexRef         = useRef(0);
+  const holdCountRef     = useRef(0);
+  const colorIndexRef    = useRef(0);
+  const penPosRef        = useRef(0);
+  const penFrameRef      = useRef(0);
+  const headlineIndexRef = useRef(0); // 현재 몇 번째 headline인지
+
+  const HOLD_FRAMES  = 50; // 3초 유지
+  const PEN_INTERVAL = 2;  // 글자당 120ms
+
+  // NOW 스레드 headline 목록 결정
+  // headlines 배열 있으면 사용, 없으면 headline 단일값 폴백
+  const nowThreads = threads
+    ? threads.filter(t => t.frequency === 'NOW' || t.frequency === 'OVERNIGHT')
+        .sort((a, b) => (a.priority || 9) - (b.priority || 9))
+    : [];
+
+  const headlineList = (() => {
+    if (headlines && headlines.length > 0) return headlines;
+    if (headline) return [headline];
+    return [];
+  })();
 
   useEffect(() => {
-    if (!headline) return;
-    let i = 0;
-    let deleting = false;
-    let pauseCount = 0;
-    const PAUSE_FRAMES = 30; // 완성 후 잠시 대기 (30 * 60ms = 1.8초)
+    if (!headlineList.length) return;
+
+    // 초기화
+    phaseRef.current         = 'typing';
+    indexRef.current         = 0;
+    holdCountRef.current     = 0;
+    colorIndexRef.current    = 0;
+    penPosRef.current        = 0;
+    penFrameRef.current      = 0;
+    headlineIndexRef.current = 0;
 
     setDisplayText('');
-    setIsTyping(true);
+    setCharColors([]);
 
     const timer = setInterval(() => {
-      if (!deleting) {
-        // 타이핑 중
-        if (i < headline.length) {
-          setDisplayText(headline.slice(0, i + 1));
-          i++;
+      const phase        = phaseRef.current;
+      const currentHeadline = headlineList[headlineIndexRef.current % headlineList.length];
+
+      if (phase === 'typing') {
+        const i = indexRef.current;
+        if (i < currentHeadline.length) {
+          const next = currentHeadline.slice(0, i + 1);
+          setDisplayText(next);
+          setCharColors(Array(next.length).fill('#f0f0ff'));
+          indexRef.current = i + 1;
         } else {
-          // 완성 후 대기
-          pauseCount++;
-          if (pauseCount >= PAUSE_FRAMES) {
-            deleting = true;
-            pauseCount = 0;
-          }
+          phaseRef.current     = 'hold';
+          holdCountRef.current = 0;
         }
-      } else {
-        // 지우는 중
-        if (i > 0) {
-          i--;
-          setDisplayText(headline.slice(0, i));
-        } else {
-          // 다 지운 후 잠깐 대기 후 다시 시작
-          pauseCount++;
-          if (pauseCount >= 10) {
-            deleting = false;
-            pauseCount = 0;
+
+      } else if (phase === 'hold') {
+        holdCountRef.current += 1;
+        if (holdCountRef.current >= HOLD_FRAMES) {
+          // hold 끝 → 펜칠 다음 색상 시작
+          colorIndexRef.current = (colorIndexRef.current + 1) % COLOR_CYCLE.length;
+          penPosRef.current     = 0;
+          penFrameRef.current   = 0;
+          phaseRef.current      = 'pen';
+        }
+
+      } else if (phase === 'pen') {
+        penFrameRef.current += 1;
+        if (penFrameRef.current >= PEN_INTERVAL) {
+          penFrameRef.current = 0;
+          const pos      = penPosRef.current;
+          const newColor = COLOR_CYCLE[colorIndexRef.current];
+
+          if (pos < currentHeadline.length) {
+            setCharColors(prev => {
+              const next = [...prev];
+              next[pos]  = newColor;
+              return next;
+            });
+            penPosRef.current = pos + 1;
+          } else {
+            // 펜칠 완료 → 다음 headline으로 교체
+            headlineIndexRef.current += 1;
+            const nextHeadline = headlineList[headlineIndexRef.current % headlineList.length];
+
+            // 새 headline 타이핑 시작
+            indexRef.current     = 0;
+            penPosRef.current    = 0;
+            penFrameRef.current  = 0;
+            holdCountRef.current = 0;
+            phaseRef.current     = 'typing';
+            setDisplayText('');
+            setCharColors(Array(nextHeadline.length).fill('#f0f0ff'));
           }
         }
       }
     }, 60);
-    return () => clearInterval(timer);
-  }, [headline]);
 
-  const formatTime = (iso) => {
-    if (!iso) return '';
-    const d = new Date(iso);
-    return d.toLocaleString('ko-KR', {
-      timeZone: 'Asia/Seoul',
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+    return () => clearInterval(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [headline, headlines]);
+
+  // Data as of 표시 (PC/모바일 분기)
+  const isMobile = window.innerWidth <= 768;
+  const formatDataAsOf = () => {
+    if (dataAsOf) {
+      if (isMobile && dataAsOf.display_mobile) return dataAsOf.display_mobile;
+      if (dataAsOf.display) return dataAsOf.display;
+    }
+    if (!generatedAt) return '';
+    const d = new Date(generatedAt);
+    const h = String(d.getUTCHours() + 9).padStart(2, '0');
+    const m = String(d.getUTCMinutes()).padStart(2, '0');
+    return `${d.getUTCMonth()+1}/${d.getUTCDate()} ${h}:${m} KST`;
   };
 
   const freqOrder = { 'NOW': 0, 'OVERNIGHT': 0, 'WEEKLY': 1, 'MONTHLY': 2 };
@@ -88,22 +158,41 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
       })
     : [];
 
+  const renderHeadline = () => {
+    if (!displayText) return null;
+    return [...displayText].map((char, i) => (
+      <span
+        key={i}
+        style={{
+          color: charColors[i] || '#f0f0ff',
+          transition: 'color 0.15s ease',
+          textShadow: charColors[i] && charColors[i] !== '#f0f0ff'
+            ? `0 0 14px ${charColors[i]}` : 'none',
+        }}
+      >
+        {char}
+      </span>
+    ));
+  };
+
   return (
     <div className="headline-zone">
-      {/* 상단 메타 정보 */}
+      {/* 상단 메타 */}
       <div className="headline-meta-row">
-        <div className="generated-at">Last Refresh Time : {formatTime(generatedAt)}</div>
+        <div className="generated-at">
+          Data as of&nbsp;&nbsp;<span className="data-as-of-value">{formatDataAsOf()}</span>
+        </div>
         <div className="live-indicator">
           <span className="live-dot" />
           <span className="live-text">LIVE</span>
         </div>
       </div>
 
-      {/* 헤드라인 + 배경 레이어 */}
+      {/* 헤드라인 — 두 줄 고정 높이 */}
       <div className="headline-main">
         <div className="headline-text">
-          {displayText}
-          {isTyping && <span className="cursor">|</span>}
+          {renderHeadline()}
+          {phaseRef.current === 'typing' && <span className="cursor">|</span>}
         </div>
 
         {layerSummary && (
@@ -114,13 +203,12 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
         )}
       </div>
 
-      {/* 구분선 */}
       <div className="headline-divider" />
 
-      {/* 스레드 탭 카드 */}
+      {/* 스레드 탭 */}
       <div className="thread-thumbnails">
         {sortedThreads.map((thread, idx) => {
-          const color = frequencyColor(thread.frequency);
+          const color    = frequencyColor(thread.frequency);
           const isActive = selectedThread?.id === thread.id;
 
           return (
@@ -135,9 +223,7 @@ function HeadlineZone({ headline, threads, selectedThread, onThreadSelect, layer
                 transformOrigin: 'bottom center',
                 zIndex: isActive ? 10 : 1,
                 background: isActive ? `${color}18` : 'transparent',
-                border: isActive
-                  ? `1px solid ${color}`
-                  : `1px solid ${color}44`,
+                border: isActive ? `1px solid ${color}` : `1px solid ${color}44`,
                 borderBottom: 'none',
               }}
             >

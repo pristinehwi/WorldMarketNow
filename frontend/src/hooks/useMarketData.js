@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const DATA_URL    = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/latest.json';
-const PRICES_URL  = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/prices.json';
+const DATA_URL   = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/latest.json';
+const PRICES_URL = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/prices.json';
 
 function useMarketData() {
-  const [data, setData] = useState(null);
+  const [data, setData]       = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError]     = useState(null);
 
   const fetchData = async () => {
     try {
@@ -15,12 +15,20 @@ function useMarketData() {
       const t = Date.now();
       const [res, pricesRes] = await Promise.all([
         axios.get(`${DATA_URL}?t=${t}`),
-        axios.get(`${PRICES_URL}?t=${t}`).catch(() => ({ data: {} })) // prices.json 없어도 graceful
+        axios.get(`${PRICES_URL}?t=${t}`).catch(() => ({ data: {} }))
       ]);
+
+      const raw = res.data;
+
+      // data_as_of: GAS가 계산한 값 그대로 사용
+      // 없으면 generated_at으로 폴백
+      const dataAsOf = raw.data_as_of || null;
+
       setData({
-        ...res.data,
-        prices:  pricesRes.data.prices  || {},
-        indices: pricesRes.data.indices || {},
+        ...raw,
+        prices:    pricesRes.data.prices  || {},
+        indices:   pricesRes.data.indices || {},
+        dataAsOf,  // { timestamp_iso, display, timezone }
       });
       setError(null);
     } catch (e) {
