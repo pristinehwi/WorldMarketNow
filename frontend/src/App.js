@@ -102,16 +102,15 @@ function App() {
   );
   if (!data) return null;
 
-  // ── 공통 HeadlineZone props ──
   const headlineProps = {
-    headline:      data.headline,
-    headlines:     data.headlines,
-    threads:       data.threads,
+    headline:       data.headline,
+    headlines:      data.headlines,
+    threads:        data.threads,
     selectedThread,
     onThreadSelect: handleThreadSelect,
-    layerSummary:  data.layer_summary,
-    dataAsOf:      data.dataAsOf,
-    generatedAt:   data.generated_at,
+    layerSummary:   data.layer_summary,
+    dataAsOf:       data.dataAsOf,
+    generatedAt:    data.generated_at,
   };
 
   // ── 모바일 레이아웃 ──
@@ -188,7 +187,12 @@ function App() {
         </div>
 
         {showBriefing && <BriefingPanel onClose={() => setShowBriefing(false)} />}
-        {showCompare && <ArchiveCompare onClose={() => setShowCompare(false)} />}
+        {showCompare && (
+          <ArchiveCompare
+            onClose={() => setShowCompare(false)}
+            prices={data.prices}
+          />
+        )}
       </div>
     );
   }
@@ -241,7 +245,12 @@ function App() {
 
       <BuiltBy />
       {showBriefing && <BriefingPanel onClose={() => setShowBriefing(false)} />}
-      {showCompare && <ArchiveCompare onClose={() => setShowCompare(false)} />}
+      {showCompare && (
+        <ArchiveCompare
+          onClose={() => setShowCompare(false)}
+          prices={data.prices}
+        />
+      )}
     </div>
   );
 }

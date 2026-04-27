@@ -1312,390 +1312,335 @@ body {
 
 
 /* ============================================================
-   ArchiveCompare ? DAG 시간축 비교 뷰
-   App.css 하단에 추가할 것
+   ArchiveCompare v3 — fullscreen DAG 시간축 비교 뷰
+   App.css 하단의 기존 ac- 섹션 전체를 이걸로 교체할 것
    ============================================================ */
 
-   /* ── 오버레이 ── */
-.ac-overlay {
+/* ── fullscreen 레이어 ── */
+.acp-fullscreen {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.80);
   z-index: 1100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  backdrop-filter: blur(4px);
-}
-
-/* ── 패널 ── */
-.ac-panel {
-  background: #0a0a1a;
-  border: 1px solid #3a3a5a;
-  border-radius: 14px;
-  width: 100%;
-  max-width: 1020px;
-  max-height: 88vh;
+  background: #080810;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 12px 60px rgba(0, 0, 20, 0.8), 0 0 0 1px #2a2a4a;
-  overflow: hidden;
-  animation: acIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: acpIn 0.2s ease;
 }
 
-@keyframes acIn {
-  from { opacity: 0; transform: scale(0.93); }
-  to   { opacity: 1; transform: scale(1); }
+@keyframes acpIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* ── 헤더 ── */
-.ac-header {
+/* ── 상단 바 ── */
+.acp-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: 10px 20px;
+  background: #0c0c1e;
   border-bottom: 1px solid #2a2a4a;
   flex-shrink: 0;
-  background: #0c0c20;
+  height: 48px;
 }
 
-.ac-title {
+.acp-topbar-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+}
+
+.acp-topbar-icon { font-size: 16px; }
+
+.acp-topbar-title {
   font-size: 14px;
   font-weight: 700;
   color: #a8d4ff;
   letter-spacing: 0.3px;
 }
 
-.ac-title-icon { font-size: 16px; }
-
-.ac-header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.ac-diff-btn {
-  padding: 4px 12px;
-  border-radius: 4px;
-  border: 1px solid #3a3a5a;
-  background: #0e0e22;
-  color: #6a6a8a;
+.acp-topbar-sub {
   font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  letter-spacing: 0.5px;
-  transition: all 0.15s;
-}
-
-.ac-diff-btn.active {
-  border-color: #52b788;
-  color: #52b788;
-  background: #0a1a10;
-  box-shadow: 0 0 8px #52b78844;
-}
-
-.ac-diff-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.ac-close {
-  background: none;
-  border: none;
   color: #4a4a6a;
-  font-size: 16px;
+  padding: 2px 8px;
+  background: #0e0e22;
+  border-radius: 3px;
+  border: 1px solid #2a2a4a;
+}
+
+.acp-topbar-close {
+  padding: 6px 14px;
+  background: #0e0e22;
+  border: 1px solid #3a3a5a;
+  border-radius: 6px;
+  color: #8888aa;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
   transition: all 0.15s;
+  letter-spacing: 0.2px;
 }
 
-.ac-close:hover { color: #e8e8f8; background: #1e1e30; }
-
-/* ── Diff 범례 ── */
-.ac-diff-legend {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 8px 20px;
-  background: #080814;
-  border-bottom: 1px solid #2a2a4a;
-  font-size: 11px;
-  flex-shrink: 0;
-  flex-wrap: wrap;
+.acp-topbar-close:hover {
+  background: #1a1a32;
+  border-color: #5b8dee;
+  color: #e8e8f8;
 }
 
-.ac-legend-item { display: flex; align-items: center; gap: 4px; }
-.ac-legend-common { color: #4d96ff; }
-.ac-legend-new    { color: #52b788; }
-.ac-legend-gone   { color: #ff6060; }
-.ac-legend-count  { color: #6a6a8a; margin-left: auto; font-size: 10px; }
-
-/* ── 바디 ── */
-.ac-body {
+/* ── 본문 (좌우 패널 + 구분선) ── */
+.acp-body {
   display: flex;
   flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 
-/* ── 사이드 패널 ── */
-.ac-side {
+/* ── 단일 패널 ── */
+.acp-pane {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
   overflow: hidden;
 }
 
-.ac-side-header {
+/* ── 패널 헤더 (날짜 선택) ── */
+.acp-pane-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  border-bottom: 1px solid #2a2a4a;
-  background: #0c0c1e;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #0a0a18;
+  border-bottom: 1px solid #1e1e32;
   flex-shrink: 0;
 }
 
-.ac-date-select {
+.acp-date-select {
   flex: 1;
   background: #0e0e22;
   border: 1px solid #3a3a5a;
   border-radius: 6px;
   color: #c8c8e0;
-  font-size: 12px;
-  padding: 6px 10px;
+  font-size: 13px;
+  padding: 7px 12px;
   cursor: pointer;
   outline: none;
   transition: border-color 0.15s;
 }
 
-.ac-date-select:hover { border-color: #5a5a8a; }
-.ac-date-select:focus { border-color: #5b8dee; }
+.acp-date-select:hover { border-color: #5a5a8a; }
+.acp-date-select:focus { border-color: #5b8dee; }
 
-.ac-session-badge {
-  font-size: 9px;
-  font-weight: 700;
-  color: #4d96ff;
-  background: #0e1e3a;
-  border: 1px solid #4d96ff44;
-  border-radius: 3px;
-  padding: 2px 6px;
+.acp-meta {
+  font-size: 10px;
+  color: #5a5a7a;
   white-space: nowrap;
-  letter-spacing: 0.3px;
 }
 
-/* ── DAG 영역 ── */
-.ac-dag-area {
-  flex: 1;
-  min-height: 0;
+/* ── 스레드 탭 ── */
+.acp-thread-tabs {
   display: flex;
-  flex-direction: column;
-  padding: 12px;
-  overflow-y: auto;
-}
-
-.ac-loading {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #4a4a6a;
-  font-size: 13px;
-}
-
-.ac-placeholder {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #2a2a3a;
-  font-size: 13px;
-}
-
-/* ── 스레드 칩 목록 ── */
-.ac-thread-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 10px;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
   flex-shrink: 0;
+  border-bottom: 1px solid #1e1e32;
+  background: #080812;
 }
 
-.ac-thread-chip {
+.acp-thread-tabs::-webkit-scrollbar { display: none; }
+
+.acp-thread-tab {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 8px;
-  border-radius: 4px;
-  background: #0c0c1a;
-  border-left: 2px solid #2a2a4a;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  min-width: 90px;
+  text-align: left;
 }
 
-.ac-thread-chip.freq-now     { border-left-color: #ff4d4d; }
-.ac-thread-chip.freq-weekly  { border-left-color: #c9a227; }
-.ac-thread-chip.freq-monthly { border-left-color: #52b788; }
+.acp-thread-tab:hover {
+  background: #0e0e22;
+}
 
-.ac-chip-freq {
+.acp-tab-freq {
   font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #6a6a8a;
-  flex-shrink: 0;
+  letter-spacing: 0.8px;
 }
 
-.ac-chip-title {
+.acp-tab-title {
   font-size: 11px;
-  color: #c0c0d8;
+  font-weight: 500;
+  color: inherit;
+}
+
+/* ── DAG 존 ── */
+.acp-dag-zone {
+  flex: 1;
+  min-height: 0;
+  position: relative;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-/* ── Diff 태그 ── */
-.ac-diff-tags {
-  margin-top: 8px;
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-size: 10px;
-  line-height: 1.6;
-  flex-shrink: 0;
+/* DagGraph 내부 패딩 축소 */
+.acp-dag-zone .dag-graph {
+  padding: 12px 16px;
 }
 
-.ac-diff-new  { background: #0a1a10; color: #52b788; border: 1px solid #52b78833; }
-.ac-diff-gone { background: #1a0a0a; color: #ff6060; border: 1px solid #ff606033; }
+.acp-dag-zone .dag-header {
+  margin-bottom: 8px;
+}
 
-/* ── 중앙 구분선 (강화) ── */
-.ac-divider {
+/* ── 상태 표시 (로딩/placeholder) ── */
+.acp-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  gap: 12px;
+  height: 100%;
+  color: #3a3a5a;
+  font-size: 13px;
+}
+
+.acp-loading-full {
+  flex: 1;
+  color: #4a4a6a;
+}
+
+.acp-placeholder {
+  color: #2a2a3a;
+  font-size: 14px;
+}
+
+.acp-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #1e1e30;
+  border-top-color: #5b8dee;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ── 중앙 구분선 ── */
+.acp-divider {
+  width: 28px;
   flex-shrink: 0;
-  gap: 6px;
-  padding: 20px 0;
-  background: #080812;
+  display: flex;
+  align-items: stretch;
+  background: #060610;
   border-left: 1px solid #2a2a4a;
   border-right: 1px solid #2a2a4a;
 }
 
-.ac-divider-line {
-  flex: 1;
-  width: 2px;
-  background: linear-gradient(180deg, transparent, #4a4a7a 20%, #4a4a7a 80%, transparent);
-}
-
-.ac-divider-vs {
-  font-size: 10px;
-  font-weight: 700;
-  color: #6a6a9a;
-  letter-spacing: 2px;
-  writing-mode: vertical-rl;
-  text-shadow: 0 0 8px #4d96ff44;
-}
-
-/* ── 하단 인사이트 ── */
-.ac-insight {
+.acp-divider-inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
-  border-top: 1px solid #2a2a4a;
-  background: #080814;
-  flex-shrink: 0;
+  justify-content: center;
+  flex: 1;
+  gap: 8px;
+  padding: 20px 0;
 }
 
-.ac-insight-label {
+.acp-divider-line {
+  flex: 1;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    #3a3a6a 20%,
+    #4a4aaa 50%,
+    #3a3a6a 80%,
+    transparent 100%
+  );
+}
+
+.acp-divider-vs {
   font-size: 9px;
   font-weight: 700;
-  color: #52b788;
-  letter-spacing: 0.8px;
-  flex-shrink: 0;
+  color: #5a5a9a;
+  letter-spacing: 2px;
+  writing-mode: vertical-rl;
+  text-shadow: 0 0 10px #5b8dee66;
 }
 
-.ac-insight-text {
-  font-size: 11px;
-  color: #8888aa;
-  line-height: 1.5;
-}
-
-/* ── 모바일 대응 ── */
+/* ── 모바일: 상하 배치로 전환 ── */
 @media (max-width: 768px) {
-  .ac-overlay {
-    padding: 0;
-    align-items: flex-end;
+  .acp-topbar {
+    padding: 8px 14px;
+    height: 44px;
   }
 
-  .ac-panel {
-    max-width: 100%;
-    max-height: 92vh;
-    border-radius: 14px 14px 0 0;
-    border-bottom: none;
+  .acp-topbar-title { font-size: 13px; }
+  .acp-topbar-sub { display: none; }
+
+  .acp-topbar-close {
+    font-size: 11px;
+    padding: 5px 10px;
   }
 
-  .ac-body {
+  .acp-body {
     flex-direction: column;
     overflow-y: auto;
   }
 
-  /* 모바일: 구분선을 가로 바로 전환 */
-  .ac-divider {
-    flex-direction: row;
+  /* 모바일: 구분선 가로로 전환 */
+  .acp-divider {
     width: 100%;
-    height: 32px;
-    padding: 0 20px;
+    height: 24px;
     border-left: none;
     border-right: none;
     border-top: 1px solid #2a2a4a;
     border-bottom: 1px solid #2a2a4a;
-    background: #080812;
+    flex-shrink: 0;
   }
 
-  .ac-divider-line {
+  .acp-divider-inner {
+    flex-direction: row;
+    padding: 0 20px;
+  }
+
+  .acp-divider-line {
     flex: 1;
     width: auto;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #4a4a7a 20%, #4a4a7a 80%, transparent);
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      #3a3a6a 20%,
+      #4a4aaa 50%,
+      #3a3a6a 80%,
+      transparent 100%
+    );
   }
 
-  .ac-divider-vs {
+  .acp-divider-vs {
     writing-mode: horizontal-tb;
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
-  /* 모바일: DAG 높이 확보 */
-  .ac-dag-area {
-    min-height: 300px;
-    max-height: 360px;
+  /* 모바일: 각 패널 절반 높이 */
+  .acp-pane {
+    height: 50vh;
+    flex: none;
   }
 
-  /* 모바일: 날짜 선택 드롭다운 전체 너비 */
-  .ac-side-header {
-    padding: 10px 12px;
+  .acp-dag-zone {
+    min-height: 280px;
   }
 
-  .ac-date-select {
-    font-size: 13px;
-    padding: 8px 10px;
-  }
-
-  /* 모바일: 스레드 칩 스크롤 */
-  .ac-thread-list {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 6px;
-    padding-bottom: 4px;
-  }
-
-  .ac-thread-chip {
-    flex-shrink: 0;
-    min-width: 100px;
+  /* 모바일: 스레드 탭 작게 */
+  .acp-thread-tab {
+    min-width: 70px;
+    padding: 5px 8px;
   }
 }
