@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-22 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/22 07:48 KST</div>
+    <div class="header-date">2026-04-22</div>
+    <div class="header-headline">Warsh 인준청문 - Fed 독립성 논란과 Trump 압력 우려</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 인준 표결 향방 및 Fed 수사 지속 여부 - 통화정책 독립성 신뢰도 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">통화정책 독립성 불확실성</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#8</span>
+    </div>
+    <div class="theme-summary">Trump의 Fed 의장 지명자 Kevin Warsh가 상원 인준청문회에서 독립성 유지를 약속했으나, 민주당은 Trump의 '꼭두각시'가 될 것이라는 우려를 제기했다. Warsh는 Trump로부터 금리 인하 약속 요구를 받은 적이 없다고 증언했으며, 인플레 통제에 확고한 의지를 표명했다. 한편 Trump 행정부는 현 Powell 의장에 대한 수사를 강화하고 있어 Fed에 대한 정치적 압력이 가시화되고 있다. 공화당 상원의원 일부는 형사 수사 대신 의회 조사로 전환하면 Warsh 지명에 찬성할 의향을 보이는 등, 인준 표결 결과는 여전히 불확실한 상황이다. Fed 운영 현대화 논의와 함께 중앙은행 독립성을 둘러싼 구조적 긴장이 고조되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 인프라 투자 순환 구조 심화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #9~#15</span>
+    </div>
+    <div class="theme-summary">Anthropic이 AWS에 1,000억 달러 규모의 AI 인프라 투자를 발표하며 순환 투자(circular financing) 구조가 재점화되었다. Anthropic의 새로운 사이버보안 모델 Claude Mythos Preview는 주요 OS와 브라우저의 취약점 발견 능력으로 주목받았으나, OpenAI CEO Sam Altman은 이를 '공포 마케팅'으로 비판했다. Trump 행정부는 Anthropic에 대한 국방부 블랙리스트 해제 가능성을 시사하며 유화적 태도를 보이고 있다. OpenAI는 AI 코딩 도구 Codex의 주간 활성 사용자가 2주 만에 300만에서 400만으로 증가했다고 밝히며 상용화를 위한 컨설턴트 채용에 나섰다. AI 칩 수요는 한국과 대만의 수출 급증(한국 칩 수출 183% 증가)으로 확인되며 공급망 전반에 걸친 구조적 성장이 지속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Fed 운영 구조조정 논의</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #16~#18</span>
+    </div>
+    <div class="theme-summary">Fed 이사 Christopher Waller가 중앙은행 운영 구조의 대대적 개편을 주장하며, 12개 지역 연방준비은행 간 합의 중심 체계를 탈피하고 핵심 기능을 중앙 집중화해야 한다고 밝혔다. 이는 21세기형 Fed 운영 현대화를 위한 것으로, 의사결정 효율성 제고가 목적이다. Waller는 별도 연설에서 연속적인 일시적 충격들에 대한 통화정책 대응 경험을 공유하며 정책 프레임워크에 대한 재검토 필요성을 시사했다. 이러한 구조조정 논의는 Warsh 지명과 맞물려 Fed의 향후 운영 방향성에 대한 불확실성을 가중시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">관세 정책 불확실성과 리테일 섹터 영향</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #19</span>
+    </div>
+    <div class="theme-summary">미국 정부가 월요일부터 관세 환급 청구 포털을 개설하며, Walmart와 Target 등 주요 리테일러들이 수십억 달러 규모의 환급을 받을 전망이다. 이는 Trump 행정부의 관세 정책 조정과 맞물려 소매 섹터에 단기 유동성 개선 효과를 가져올 것으로 예상된다. 관세 환급 규모와 속도는 리테일 기업들의 재고 관리 및 가격 정책에 직접적 영향을 미칠 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학적 리스크와 국제 질서 재편</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #20~#23</span>
+    </div>
+    <div class="theme-summary">Trump가 이란과의 휴전을 연장했으나 평화 협상은 교착 상태에 빠지며 금 가격은 이틀간 하락세를 유지했다. 호르무즈 해협에 발묶인 선박들을 대상으로 이란 당국을 사칭한 사기꾼들이 암호화폐를 요구하는 사건이 발생하며 중동 긴장이 지속되고 있다. 한국 통일부 장관이 북한 의심 핵시설을 공개 언급한 이후 미국이 한국과의 위성정보 공유를 부분 제한하며 동맹 간 정보 협력에 균열이 발생했다. 2차 세계대전 이후 유지되던 국제 경제 질서가 미국의 리더십 공백 속에서 종료되고 있으며, 중견국들이 새로운 체제 구축에 나서야 한다는 분석이 제기되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기술 섹터 기업별 모멘텀</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#28</span>
+    </div>
+    <div class="theme-summary">Intel 주가가 최소 46년 만에 최강 월간 상승률을 기록하며 회의론자들조차 입장을 바꿔 실적 발표 이틀 앞두고 두 건의 애널리스트 업그레이드가 나왔다. Tesla는 실적 발표를 앞두고 투자자들의 관심이 당기 수치보다 미래 전략에 집중될 전망이다. Goldman은 중국의 로보택시 차량이 2026년 거의 3배 증가할 것으로 전망하며, 자율주행이 2030년대 미국 도로를 재편할 상세 로드맵을 제시했다. SpaceX가 AI 코딩 스타트업 Cursor를 600억 달러에 인수할 옵션을 보유하고 있다고 밝혔다. 중국 CATL은 6분 충전으로 1,500km 주행 가능한 전기차 배터리를 공개하며 BYD와의 배터리 기술 경쟁을 가속화하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #29~#30</span>
+    </div>
+    <div class="theme-summary">특정 테마로 분류하기 어려운 주요 동향을 포함합니다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">통화정책 독립성 불확실성</span>
+    <span class="theme-label-range">Article #1~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Fed 의장 지명자 Kevin Warsh, Fed는 '본연의 역할'에 충실해야 독립성 유지</div>
+    <div class="article-title-en">Chair nominee Kevin Warsh says Fed must ‘stay in its lane’ to maintain independence</div>
+    <div class="article-keypoint">Warsh, 상원 청문회서 Fed 독립성 약속했으나 인플레 집중·노동시장 언급 1회 그쳐</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/04/20/kevin-warsh-fed-confirmation-senate.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 21:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Kevin Warsh, Trump의 '꼭두각시' 비난 받으며 상원 청문회 - 영상</div>
+    <div class="article-title-en">Kevin Warsh accused of being Trump's 'sock puppet' as senators grill Fed chair nominee – video</div>
+    <div class="article-keypoint">Warren 상원의원, Warsh가 Trump 꼭두각시 될 것 우려 - Fed 독립성 논란 고조</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/video/2026/apr/21/kevin-warsh-accused-of-being-trumps-sock-puppet-as-senators-grill-fed-chair-nominee-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 05:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Trump의 Fed 공격, 자충수로 작용</div>
+    <div class="article-title-en">Trump’s Self-Defeating Attacks on the Fed</div>
+    <div class="article-keypoint">Trump, Powell 수사 철회 대신 강화 - Fed 현장 급습으로 정치적 압력 가시화</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-must-stop-investigation-of-powell-to-ensure-new-fed-chair-by-michael-r-strain-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 21:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Kevin Warsh: Fed 금리 인하 압박할 Trump의 이상적 선택</div>
+    <div class="article-title-en">Kevin Warsh: Trump’s ideal choice to push Fed to cut interest rates</div>
+    <div class="article-keypoint">Warsh, 금리 인하 압력 우려 속 상원 인준청문회 - Fed 독립성이 최대 쟁점</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/apr/21/kevin-warsh-trump-federal-reserve" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Tillis, 의회가 Fed 조사 추가 시 Warsh 표결 지지 시사</div>
+    <div class="article-title-en">Tillis Signals Open to Warsh Vote If Congress Adds Fed Probe</div>
+    <div class="article-keypoint">공화당 Tillis, Fed 수사를 의회 조사로 전환 시 Warsh 지명 지지 시사</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-21/tillis-signals-openness-to-warsh-vote-if-congress-adds-fed-probe" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 04:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump의 Fed 지명자 Kevin Warsh, 상원 검증대 오르다</div>
+    <div class="article-title-en">Kevin Warsh, Trump's Fed nominee, faces Senate scrutiny</div>
+    <div class="article-keypoint">Warsh, 상원서 Trump로부터 독립 행동 약속 - 인준 전망은 여전히 불확실</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/04/21/kevin-warsh-trump-s-fed-nominee-faces-senate-scrutiny_6752686_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 05:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Warsh, Trump가 금리 약속 요구한 적 없다고 밝혀</div>
+    <div class="article-title-en">Warsh Says Trump Never Asked Him to Commit on Rates</div>
+    <div class="article-keypoint">Warsh, Trump가 금리 약속 요구한 적 없다고 증언 - 독립성 논란 해소 시도</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/live-blog/2026-04-21/fed-chair-nominee-kevin-warsh-s-confirmation-hearing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 21:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Warsh, 대통령의 꼭두각시 '절대 아니다'고 밝혀</div>
+    <div class="article-title-en">Warsh Says He’ll ‘Absolutely Not’ Be President’s Sock Puppet</div>
+    <div class="article-keypoint">Warsh, 상원서 대통령 꼭두각시 아니라고 강조 - Fed 독립 행동 재확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-21/warsh-says-he-will-absolutely-not-be-president-s-sock-puppet-mo8rt6pg" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 00:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 인프라 투자 순환 구조 심화</span>
+    <span class="theme-label-range">Article #9~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">ChatGPT는 2025년 얘기 - 2026년 투자자를 위한 진짜 AI 금맥은 여기</div>
+    <div class="article-title-en">ChatGPT is so 2025 — here are the real AI gold mines for investors in 2026</div>
+    <div class="article-keypoint">AI 투자 주목 영역이 ChatGPT에서 국방·헬스케어·에이전틱스로 이동 중</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-chatbot-era-is-over-these-3-sectors-are-the-real-ai-gold-mines-for-2026-002372c7?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 06:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">AI '순환 투자' 귀환: Anthropic, Amazon 딜로 AWS에 1,000억 달러 지출 예정</div>
+    <div class="article-title-en">AI "Circle Jerk" Returns: Anthropic To Spend $100 Billion On AWS In Amazon Deal</div>
+    <div class="article-keypoint">Anthropic, AWS에 1,000억 달러 투자 약속 - AI 순환 투자 구조 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/ai-circle-jerk-returns-anthropic-spend-100-billion-aws-amazon-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">글로벌 AI 위협 도래</div>
+    <div class="article-title-en">The Global AI Threat Has Arrived</div>
+    <div class="article-keypoint">Anthropic Claude Mythos, 주요 OS·브라우저 취약점 발견 - 사이버 위협 확대</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/anthropic-mythos-could-cause-global-disruption-requires-us-china-diplomacy-by-s-alex-yang-and-angela-huyue-zhang-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Trump, Anthropic '호전 중'이며 국방부와 거래 가능성 열려 있다</div>
+    <div class="article-title-en">Trump says Anthropic is 'shaping up,' open to deal with Pentagon</div>
+    <div class="article-keypoint">Trump, Anthropic 긍정 평가하며 국방부 블랙리스트 해제 가능성 시사</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/trump-says-anthropic-is-shaping-up-open-to-deal-with-pentagon" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 22:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Sam Altman, Anthropic 사이버 모델 Mythos에 그늘: '공포 마케팅'</div>
+    <div class="article-title-en">Sam Altman throws shade at Anthropic’s cyber model, Mythos: ‘fear-based marketing’</div>
+    <div class="article-keypoint">Altman, Anthropic 사이버 모델을 공포 마케팅으로 비판 - AI 업체 경쟁 격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/21/sam-altman-throws-shade-at-anthropics-cyber-model-mythos-fear-based-marketing/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 03:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">OpenAI, Codex 판매 위해 컨설턴트와 협력 중</div>
+    <div class="article-title-en">OpenAI Is Working With Consultants to Sell Codex</div>
+    <div class="article-keypoint">OpenAI, Codex 주간 활성 사용자 2주 만에 300만→400만 - 상용화 본격화</div>
+    <a class="article-link" href="https://www.wsj.com/cio-journal/openai-is-working-with-consultants-to-sell-codex-f355b1b9?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 20:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">한국·대만 수출 급증, AI 장비 수요 속에서</div>
+    <div class="article-title-en">Exports From South Korea and Taiwan Surge Amid Demand for AI Gear</div>
+    <div class="article-keypoint">한국 칩 수출 183% 급증 - AI 장비 수요로 에너지 공급 난관 속 회복력 입증</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-04-21/exports-from-taiwan-and-south-korea-remain-robust" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 20:08 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Fed 운영 구조조정 논의</span>
+    <span class="theme-label-range">Article #16~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Waller, 21세기 Federal Reserve 운영 현대화</div>
+    <div class="article-title-en">Waller, Modernizing Federal Reserve Operations in the 21st Century</div>
+    <div class="article-keypoint">Waller 이사, Fed 운영 현대화 위해 지역연은 중심 구조 탈피·중앙집중화 제안</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/waller20260421a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 03:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Fed Waller, 중앙은행 운영 개편 촉구</div>
+    <div class="article-title-en">Fed’s Waller Calls for Shakeup of Central Bank’s Operations</div>
+    <div class="article-keypoint">Waller, Fed 12개 지역연은 합의 체계 탈피해 핵심 기능 중앙집중화 주장</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-21/fed-s-waller-calls-for-shakeup-of-central-bank-s-operations" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 03:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Christopher J Waller: 연이은 일시적 충격들</div>
+    <div class="article-title-en">Christopher J Waller: One transitory shock after another</div>
+    <div class="article-keypoint">Waller, 연속 일시적 충격 대응 경험 공유 - 통화정책 프레임워크 재검토 시사</div>
+    <a class="article-link" href="https://www.bis.org/review/r260420f.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 21:07 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">관세 정책 불확실성과 리테일 섹터 영향</span>
+    <span class="theme-label-range">Article #19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">관세 환급 월요일 시작. 이들 리테일러가 큰 수혜</div>
+    <div class="article-title-en">Tariff refunds begin on Monday. These retailers are due big paydays</div>
+    <div class="article-keypoint">월요일 관세 환급 청구 개시 - Walmart·Target 등 수십억 달러 환급 전망</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/04/20/tariff-refunds-begin-on-monday-these-retailers-are-due-big-paydays.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 21:31 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학적 리스크와 국제 질서 재편</span>
+    <span class="theme-label-range">Article #20~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump 이후의 세계</div>
+    <div class="article-title-en">The World After Trump</div>
+    <div class="article-keypoint">2차대전 후 국제 경제질서 종료 - 미국 리더십 공백 속 중견국 역할론 부상</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/middle-powers-should-establish-credible-alternative-to-decaying-us-led-order-by-george-papaconstantinou-and-jean-pisani-ferry-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 20:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">미국, 장관이 의심 핵시설 공개 언급 후 한국과 정보 공유 제한</div>
+    <div class="article-title-en">US ‘restricts intelligence sharing with South Korea’ after minister identified suspected nuclear site</div>
+    <div class="article-keypoint">한국 장관 북핵시설 공개 언급 후 美, 위성정보 공유 부분 제한 - 동맹 균열</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/apr/21/us-reportedly-restricts-south-korea-intelligence-sharing-after-minister-identified-suspected-nuclear-site" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 18:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">호르무즈 해협 발묶인 선박 대상 사기꾼들 암호화폐 요구 - 보도</div>
+    <div class="article-title-en">Scammers Demand Crypto From Stranded Ships In Strait Of Hormuz: Report</div>
+    <div class="article-keypoint">호르무즈 해협 발묶인 선박 대상 이란 사칭 암호화폐 사기 - 중동 혼란 지속</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/scammers-demand-crypto-stranded-ships-strait-hormuz-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Trump, 이란 휴전 연장하며 금 가격 안정세 - 평화 협상은 교착</div>
+    <div class="article-title-en">Gold Steadies as Trump Extends Iran Ceasefire, Peace Talks Stall</div>
+    <div class="article-keypoint">Trump, 이란 휴전 연장했으나 평화협상 교착 - 금 가격 이틀간 하락세</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-21/gold-steadies-as-trump-extends-iran-ceasefire-peace-talks-stall" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 07:22 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기술 섹터 기업별 모멘텀</span>
+    <span class="theme-label-range">Article #24~#28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Tesla 실적 발표 시 투자자들이 진짜 주목할 것</div>
+    <div class="article-title-en">Here’s what will really matter to Tesla investors when the company reports earnings</div>
+    <div class="article-keypoint">Tesla 실적 발표, 당기 수치보다 미래 전략 스토리에 투자자 관심 집중 전망</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/heres-what-will-really-matter-to-tesla-investors-when-it-reports-earnings-ba621f85?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 05:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">중국 로보택시 차량, 2026년 거의 3배 증가 전망 - Goldman</div>
+    <div class="article-title-en">China's Robotaxi Fleet to Nearly Triple in 2026, Goldman Says</div>
+    <div class="article-keypoint">Goldman, 중국 로보택시 2026년 3배 증가 전망 - AI가 미래 수익 구조 재편</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Chinas-Robotaxi-Fleet-to-Nearly-Triple-in-2026-Goldman-Says.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">SpaceX, 스타트업 Cursor를 600억 달러에 인수할 옵션 보유</div>
+    <div class="article-title-en">Spacex says it has option to acquire startup Cursor for $60 billion</div>
+    <div class="article-keypoint">SpaceX, AI 코딩 스타트업 Cursor 600억 달러 인수 옵션 보유 공개</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/spacex-says-it-has-option-to-acquire-startup-cursor-for-60-billion-4627875" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 22:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Intel 주가 너무 강해서 회의론자들조차 입장 바꿔</div>
+    <div class="article-title-en">Intel’s stock has been so strong that even skeptics have changed their minds</div>
+    <div class="article-keypoint">Intel 주가 46년 만에 최강 월간 상승 - 실적 앞두고 애널리스트 업그레이드 잇따라</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/intels-stock-has-been-so-strong-that-even-skeptics-have-changed-their-minds-5e9f6e92?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/22 05:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">CATL, 신형 전기차 배터리로 6분 충전·1,500km 주행 주장</div>
+    <div class="article-title-en">CATL claims 6-minute charge and 1,500km range for new electric vehicle batteries</div>
+    <div class="article-keypoint">CATL, 6분 충전·1,500km 주행 배터리 공개 - BYD와 기술 경쟁 가속화</div>
+    <a class="article-link" href="https://www.ft.com/content/1773de37-2595-4d9f-9536-dbe03ff1f8d3" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 22:32 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #29~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Peter Kažimír: 통화정책의 변혁, 통합, 그리고 새로운 국면</div>
+    <div class="article-title-en">Peter Ka&#382;imír: Transformation, integration and the new frontier of monetary policy</div>
+    <div class="article-keypoint">ECB 이사 Kažimír, 통화정책 새 국면과 유럽 경제 통합 과제 연설</div>
+    <a class="article-link" href="https://www.bis.org/review/r260420a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 19:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Joachim Nagel: 이미 여기 있지만 아직 어디에나 있지는 않은 - 인공지능의 경제적 영향 형성</div>
+    <div class="article-title-en">Joachim Nagel: Already here, not yet everywhere - shaping the economic impact of artificial intelligence</div>
+    <div class="article-keypoint">Bundesbank 총재 Nagel, AI가 이미 도래했으나 경제 영향은 아직 미미 진단</div>
+    <a class="article-link" href="https://www.bis.org/review/r260421a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/21 17:01 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>

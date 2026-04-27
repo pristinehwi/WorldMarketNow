@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-20 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/20 07:49 KST</div>
+    <div class="header-date">2026-04-20</div>
+    <div class="header-headline">이란 긴장 재확대로 유가 급등, S&P 500은 7천 돌파</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh Fed 의장 인준청문회(4/21)와 호르무즈 봉쇄 지속 여부가 통화·에너지 가격 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">통화정책 불확실성 - Warsh 인준과 Fed 향방</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#3</span>
+    </div>
+    <div class="theme-summary">Kevin Warsh의 Fed 의장 인준청문회가 4월 21일 상원은행위원회에서 예정되어 있으며, 채권시장은 이란 갈등 종료 기대보다 Warsh 청문회를 다음 촉매로 주목하고 있다. Trump 행정부의 Fed 의장 지명이 향후 통화정책 방향에 미칠 영향에 대한 불확실성이 지속되고 있다. 옵션 트레이더들은 이란 전쟁 우려에서 실적 시즌 중심으로 초점을 전환하며, 거시 리스크보다 개별 기업 실적에 집중하는 모습이다. 채권 트레이더들은 이란 갈등 완화에 낙관적이지만, Warsh 인준 과정이 금리 전망의 주요 변수로 부상했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">에너지 가격 상방 압력 - 중동 지정학 리스크</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #4~#8</span>
+    </div>
+    <div class="theme-summary">이란과의 긴장이 재확대되면서 주말 호르무즈 해협이 다시 폐쇄되고 유가는 7% 반등했다. 미군이 이란 국적 컨테이너선을 나포하는 등 해상 봉쇄가 강화되며 에너지 공급망 불확실성이 고조되고 있다. 시장은 S&P 500이 7천을 돌파한 랠리에도 불구하고 주말 이란 관련 전개로 인해 다시 불확실성에 대비하고 있다. 이란은 미국과의 협상 참여 계획이 없다고 밝혀 긴장 완화 기대가 후퇴했다. Trump 행정부는 이란 인프라 파괴를 위협하며 압박을 지속하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 기술 섹터 구조적 성장</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #9~#13</span>
+    </div>
+    <div class="theme-summary">OpenAI가 최근 인수를 통해 회사의 두 가지 주요 실존적 문제 해결을 시도하고 있으며, Cerebras가 IPO를 준비하는 등 AI 칩 제조사들의 공개 상장 움직임이 가속화되고 있다. SpaceX, Anthropic, OpenAI의 대규모 IPO 물결이 예상되는 가운데, Anthropic의 Mythos AI 도구가 미국 국가안보국(NSA)에서 광범위하게 사용되고 있다는 보도가 나왔다. Intel은 AI 시장 변화로 혜택을 받고 있지만 주가가 이미 3배 상승한 상태에서 턴어라운드는 아직 완성되지 않았다. ChatGPT 사용 흔적을 텍스트의 em dash로 식별할 수 있다는 분석이 나오는 등 AI 도구 활용 검증 이슈도 부각되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">주식시장 강세 모멘텀 지속</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #14~#15</span>
+    </div>
+    <div class="theme-summary">S&P 500이 3주간의 랠리 끝에 7천을 돌파하며 사상 최고치를 경신했다. 시장은 이란 전쟁이 종료에 가까워지는지 여부와 무관하게 더 이상 우려하지 않는 분위기다. 주말 이란 관련 전개로 미국 주식 선물은 급락했으나, 투자자들은 토리드 주식 반등을 놓칠 것에 대한 우려(FOMO)로 전환했다. 옵션 트레이더들은 거시 리스크에서 개별 종목으로 초점을 이동하며 기업 실적 시즌에 집중하고 있다. 헤지펀드들은 인재 유치 경쟁이 극에 달하며 경쟁사 간 '인터셉션 트레이드'로 보수가 더욱 급등하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">원자재·방산 공급망 재편</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #16~#20</span>
+    </div>
+    <div class="theme-summary">Kazakhstan가 전략 비축량 계획을 가속화하며 2020년 이래 지속된 우라늄 공급-수요 불균형이 악화되고 있다. 수십 년간 정치를 피해온 세계 최대 원자재 트레이더들이 Trump와 가까워지며 거래 규칙이 변화하고 있다. Trump 행정부는 IMF와 World Bank에 대한 입장을 완화하며 미국 이익에 유용하다고 판단하고 있다. Palantir는 포용성을 비난하고 '서구' 수호자로 자리매김하며 ICE와 협력을 강화하는 등 이념적 성향을 강화했다. 북한 사절이 러시아가 점령한 우크라이나 지역 관리와 회담을 가지며 한반도 긴장도 고조되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #21~#30</span>
+    </div>
+    <div class="theme-summary">프랑스 문헌학 교수가 2016년 스스로 만든 '문헌학 금메달'을 수상했다가 루마니아 기자들의 조사로 사기가 드러났다. 1970-80년대 파리 나이트라이프의 전설적 클럽 Bus Palladium이 5성급 호텔, 바, 레스토랑을 결합해 4월 재개장했다. 세계 양배추 요리 챔피언십에 서울, 도쿄, 런던 등지에서 선발된 7명의 요리사가 참가했다. Eli Lilly가 암 바이오텍 Kelonia Therapeutics를 20억 달러 이상에 인수하는 협상을 진행 중이며 월요일 발표 가능성이 있다. 아이오와대 캠퍼스에서 총격 사건으로 다수가 부상했으나 아직 체포자는 없다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">통화정책 불확실성 - Warsh 인준과 Fed 향방</span>
+    <span class="theme-label-range">Article #1~#3</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Fed 의장 지명자 Kevin Warsh 인준청문회에서 예상되는 것</div>
+    <div class="article-title-en">What to Expect From Fed Chair Nominee Kevin Warsh's Confirmation Hearing</div>
+    <div class="article-keypoint">Warsh Fed 의장 인준청문회(4/21) 앞두고 채권시장은 통화정책 방향성 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-19/what-to-expect-from-fed-chair-nom-kevin-warsh-s-hearing-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 21:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">국채 시장의 다음 촉매는 Kevin Warsh</div>
+    <div class="article-title-en">Next Catalyst for Treasury Bonds Is Named Kevin Warsh</div>
+    <div class="article-keypoint">Warsh 인준청문회가 이란 갈등보다 채권시장 다음 촉매로 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-19/kevin-warsh-fed-hearings-will-be-treasury-bonds-next-catalyst" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">토리드 주식 랠리 쫓는 옵션 트레이더들, 실적 시즌에 초점</div>
+    <div class="article-title-en">Option Traders Chasing Torrid Stock Rally Turn Focus to Earnings</div>
+    <div class="article-keypoint">옵션 트레이더, 이란 우려 → FOMO 전환하며 실적 시즌 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-19/option-traders-chasing-torrid-stock-rally-turn-focus-to-earnings" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 23:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">에너지 가격 상방 압력 - 중동 지정학 리스크</span>
+    <span class="theme-label-range">Article #4~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">주말 이란 사태로 미 주식선물 급락, 유가 급등하며 불확실성 재점화</div>
+    <div class="article-title-en">U.S. stock futures tumble, oil surges as this weekend’s Iran developments rekindle uncertainty</div>
+    <div class="article-keypoint">주말 이란 긴장 재확대로 미 주식선물 급락, 3주 랠리 후 불확실성 재부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/investors-brace-for-renewed-volatility-after-this-weekends-iran-developments-4b707c11?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 07:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">호르무즈 해협 재폐쇄로 유가 7% 반등</div>
+    <div class="article-title-en">Oil prices rebound 7% as Strait of Hormuz is closed again</div>
+    <div class="article-keypoint">호르무즈 해협 재폐쇄로 유가 7% 반등 - 공급망 리스크 프리미엄 급등</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/oil-prices-rebound-7-as-strait-of-hormuz-is-closed-again-4622262" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 22:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">미군, 이란 국적 컨테이너선 나포했다고 Trump 밝혀</div>
+    <div class="article-title-en">US military seized Iranian-flagged container ship, Trump says</div>
+    <div class="article-keypoint">미군, 호르무즈 해협 봉쇄 시도한 이란 국적 컨테이너선 나포</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/apr/19/trump-us-seizes-iran-flagged-cargo-ship" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 06:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Starmer, Trump의 '소심하고 치졸한' 모욕에 흔들리지 않을 것</div>
+    <div class="article-title-en">Starmer will not be swayed by Trump’s ‘small and petty’ insults, says Lammy</div>
+    <div class="article-keypoint">영국 부총리, Trump의 Starmer 모욕은 '소심하고 치졸' - 이란 참전 압박 거부</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/apr/19/starmer-will-not-be-swayed-by-trumps-small-and-petty-insults-says-lammy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">이란, 미국과 협상 참여 '계획 없다'고 국영매체 보도</div>
+    <div class="article-title-en">Tehran has ‘no plans to participate’ in talks with US, state media reports</div>
+    <div class="article-keypoint">이란, 미국과 협상 참여 계획 없다고 국영매체 보도 - 긴장 완화 기대 후퇴</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/apr/19/trumps-sends-delegation-to-pakistan-for-possible-new-round-of-iran-war-talks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 05:44 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 기술 섹터 구조적 성장</span>
+    <span class="theme-label-range">Article #9~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">미 보안기관, 블랙리스트에도 Anthropic Mythos 사용 중</div>
+    <div class="article-title-en">US security agency is using Anthropic’s Mythos despite blacklist, report says</div>
+    <div class="article-keypoint">NSA가 블랙리스트 우려에도 Anthropic Mythos AI 광범위 사용 - 보안 딜레마</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-security-agency-is-using-anthropics-mythos-despite-blacklist-report-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 04:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">OpenAI의 실존적 질문들</div>
+    <div class="article-title-en">OpenAI’s existential questions</div>
+    <div class="article-keypoint">OpenAI, 인수 통해 두 가지 실존적 문제 해결 시도 - 지속가능성 의문 지속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/19/openais-existential-questions/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 06:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">AI 칩 제조사 Cerebras, 기술주 IPO 물결 속 상장 신청</div>
+    <div class="article-title-en">Cerebras, an A.I. Chip Maker, Files to Go Public as Tech Offerings Ramp Up</div>
+    <div class="article-keypoint">AI 칩 제조사 Cerebras IPO 신청 - SpaceX·Anthropic·OpenAI 대규모 상장 물결</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/04/17/technology/cerebras-public-offering-ai.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Intel은 진전 중이나 아직 위기 벗어나지 못해</div>
+    <div class="article-title-en">Intel Is Making Progress. But It Isn’t Out of the Woods Yet.</div>
+    <div class="article-keypoint">Intel 주가 3배 상승했으나 AI 턴어라운드는 미완 - 추가 상승 여력 제한적</div>
+    <a class="article-link" href="https://www.wsj.com/finance/stocks/intel-is-making-progress-but-it-isnt-out-of-the-woods-yet-f69c78d6?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 18:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">대시 기호가 ChatGPT 사용을 드러낼 때</div>
+    <div class="article-title-en">When dashes give away ChatGPT usage</div>
+    <div class="article-keypoint">텍스트 내 em dash로 ChatGPT 사용 흔적 식별 가능 - AI 검증 이슈 부각</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/m-le-mag/article/2026/04/19/when-dashes-give-away-chatgpt-usage_6752585_117.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 19:57 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">주식시장 강세 모멘텀 지속</span>
+    <span class="theme-label-range">Article #14~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">S&P 500, 대규모 반등 랠리로 7천 돌파. 상승 지속 가능한 이유</div>
+    <div class="article-title-en">The S&P 500 has blown past 7,000 in an epic comeback rally. Here’s why it can keep going.</div>
+    <div class="article-keypoint">S&P 500, 7천 돌파 후에도 상승 지속 전망 - 이란 리스크 무시하는 시장 심리</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-s-p-500-blowed-past-7-000-in-an-epic-comeback-rally-heres-why-it-can-keep-going-higher-632d6a38?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 05:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">헤지펀드 보수, 새로운 트레이더 스카우트 전략으로 더욱 급등</div>
+    <div class="article-title-en">Hedge Fund Pay Spirals Even Higher in New Trader-Poaching Strategy</div>
+    <div class="article-keypoint">헤지펀드 보수 급등, 경쟁사 간 '인터셉션 트레이드'로 인재 쟁탈전 격화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/features/2026-04-19/hedge-funds-frenzied-job-market-sends-pay-spiraling-higher" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 06:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">원자재·방산 공급망 재편</span>
+    <span class="theme-label-range">Article #16~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Kazakhstan 전략비축 계획으로 우라늄 공급 부족 악화</div>
+    <div class="article-title-en">Uranium Supply Crunch Worsens Amid Kazakhstan’s Plan For Strategic Reserve</div>
+    <div class="article-keypoint">Kazakhstan 전략비축 가속화로 우라늄 공급 부족 심화 - 2020년 이후 구조적 불균형</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/uranium-supply-crunch-worsens-amid-kazakhstans-plan-strategic-reserve" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">엄청난 도발: 러시아 임명 우크라이나 관리, 북한 사절과 회담</div>
+    <div class="article-title-en">Huge Provocation: Russia-Installed Official In Ukraine Hosts Talks With North Korean Envoy</div>
+    <div class="article-keypoint">북한 사절, 러시아 점령 우크라이나서 회담 - 키이우·워싱턴에 도발</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/huge-provocation-russia-installed-official-ukraine-hosts-talks-north-korean-envoy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 20:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Palantir, 포용성과 '퇴행적' 문화 비난하는 미니 성명 발표</div>
+    <div class="article-title-en">Palantir posts mini-manifesto denouncing inclusivity and ‘regressive’ cultures</div>
+    <div class="article-keypoint">Palantir, 포용성 비난 성명 발표하며 ICE 협력·서구 수호 이념 강화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/19/palantir-posts-mini-manifesto-denouncing-regressive-and-harmful-cultures/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">오랫동안 정치 회피해온 원자재 트레이더들, Trump에 접근</div>
+    <div class="article-title-en">After Long Avoiding Politics, Commodity Traders Cozy Up to Trump</div>
+    <div class="article-keypoint">원자재 트레이더들, 수십 년 정치 회피 깨고 Trump와 밀착 - 거래 규칙 변화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-19/after-long-avoiding-politics-commodity-traders-cosy-up-to-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 03:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump 행정부, IMF·World Bank에 우호적 전환 - 글로벌 기구에 드문 지지</div>
+    <div class="article-title-en">Trump administration warms to IMF and World Bank, in rare nod to global bodies</div>
+    <div class="article-keypoint">Trump 행정부, IMF·World Bank에 우호적 전환 - 미국 이익 부합 판단</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/04/19/trump-imf-world-bank-criticism/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 19:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #21~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">속임수의 금메달: 한 교수가 허공에서 국제 학술상을 만들어낸 방법</div>
+    <div class="article-title-en">The gold medal for deception: How a professor created an international award out of thin air</div>
+    <div class="article-keypoint">루마니아 기자 조사로 프랑스 교수의 자작 국제학술상 사기 드러나</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/m-le-mag/article/2026/04/19/the-gold-medal-for-deception-how-a-professor-created-an-international-award-out-of-thin-air_6752586_117.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 20:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">전설적인 Pigalle 나이트클럽 Bus Palladium, 로큰롤 정신 되찾다</div>
+    <div class="article-title-en">Legendary Pigalle nightclub Bus Palladium reclaims its rock-and-roll spirit</div>
+    <div class="article-keypoint">파리 전설의 나이트클럽 Bus Palladium, 5성급 호텔 복합시설로 재탄생</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/lifestyle/article/2026/04/19/legendary-pigalle-nightclub-bus-palladium-reclaims-its-rock-and-roll-spirit_6752583_37.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 19:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Blue Origin, 재사용 New Glenn 로켓 부스터 첫 착륙 성공으로 SpaceX 경쟁 격화</div>
+    <div class="article-title-en">Blue Origin marks first landing of reused New Glenn rocket booster, ratcheting up SpaceX rivalry</div>
+    <div class="article-keypoint">Blue Origin, New Glenn 재사용 부스터 첫 착륙 성공 - SpaceX 경쟁 본격화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/blue-origin-achieves-first-landing-of-reused-new-glenn-rocket-booster" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 21:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">양배추 요리 세계 챔피언십에 최고 요리 인재 집결</div>
+    <div class="article-title-en">Stuffed Cabbage World Championship brings together top culinary talent</div>
+    <div class="article-keypoint">세계 양배추 요리 챔피언십에 서울 등 7개국 셰프 참가</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/lifestyle/article/2026/04/19/stuffed-cabbage-world-championship-brings-together-top-culinary-talent_6752584_37.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 19:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Obama와 Mamdani, 뉴욕 유치원생들과 독서·노래하며 첫 만남</div>
+    <div class="article-title-en">Obama and Mamdani read and sing with New York preschoolers in first meeting</div>
+    <div class="article-keypoint">Obama와 뉴욕 시장 Mamdani, 브롱크스 보육센터서 첫 만남</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/apr/19/obama-mamdani-first-meeting-new-york-childcare" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 01:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">사모신용이 금융위기 위협이 아닌 이유</div>
+    <div class="article-title-en">Why Private Credit Is Not a Financial Crisis Threat</div>
+    <div class="article-keypoint">사모신용 1조 달러 규모 성장에도 금융위기 위협 아니라는 분석</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-19/why-private-credit-is-not-a-financial-crisis-threat-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 23:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">아이오와대 캠퍼스 총격으로 '다수' 부상</div>
+    <div class="article-title-en">‘Multiple’ injured in University of Iowa campus shooting: US police</div>
+    <div class="article-keypoint">아이오와대 캠퍼스 총격으로 다수 부상, 용의자 미체포</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/multiple-injured-in-university-of-iowa-campus-shooting-us-police" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 20:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Lilly, Kelonia Therapeutics 20억 달러 이상 인수 막바지 협상 중</div>
+    <div class="article-title-en">Lilly in advanced talks to acquire Kelonia Therapeutics for over $2 billion, WSJ says</div>
+    <div class="article-keypoint">Eli Lilly, Kelonia Therapeutics 20억 달러 인수 협상 막바지 - 월요일 발표 가능</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/eli-lilly-in-advanced-talks-to-acquire-kelonia-therapeutics-for-over-2-billion-wsj-says-4622253" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 22:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">BOJ의 매파적 힌트로 금리인상 가능성 유지</div>
+    <div class="article-title-en">BOJ’s hawkish hints keep rate hike on the cards</div>
+    <div class="article-keypoint">BOJ, 매파적 힌트 지속하며 추가 금리인상 가능성 열어둬</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/bojs-hawkish-hints-keep-rate-hike-on-the-cards-4622252" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/19 21:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Eli Lilly, 암 바이오텍 인수 임박</div>
+    <div class="article-title-en">Eli Lilly Nears Deal for Cancer Biotech</div>
+    <div class="article-keypoint">Eli Lilly, 암 바이오텍 Kelonia 인수 임박 - 월요일 발표 전망</div>
+    <a class="article-link" href="https://www.wsj.com/tech/biotech/eli-lilly-nears-deal-for-cancer-biotech-db07be72?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/20 06:20 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
