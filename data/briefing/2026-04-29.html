@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-29 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/29 07:47 KST</div>
+    <div class="header-date">2026-04-29</div>
+    <div class="header-headline">OpenAI 독점 해제와 실적 둔화 - AI 밸류에이션 재평가</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">빅테크 실적 발표 앞두고 AI 투자 ROI 검증 국면 - 반도체·클라우드 주가 변곡점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 밸류에이션 재평가 압력</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#13</span>
+    </div>
+    <div class="theme-summary">OpenAI가 Microsoft 독점 계약을 해소하고 Amazon AWS와 파트너십을 확대하면서 AI 생태계 경쟁 구도가 재편되고 있다. OpenAI는 IPO를 앞두고 매출 및 사용자 목표를 달성하지 못했으며, CFO와 이사회가 성장 둔화 속 대규모 데이터센터 투자에 의문을 제기하고 있다. Elon Musk와 Sam Altman 간 재판이 시작되면서 OpenAI의 비영리 사명 포기 논란이 법적 쟁점으로 부각됐다. S&P 500이 사상 최고점에서 하락하며 반도체 및 빅테크 주가가 급락했고, AI 우려가 월스트리트로 확산되면서 주요 기업 실적 발표를 앞두고 긴장감이 고조되고 있다. 메모리 병목 현상을 해결하려는 칩 스타트업의 등장은 현재 AI 인프라의 구조적 한계를 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">빅테크 전략 재조정과 클라우드 경쟁 심화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #14~#18</span>
+    </div>
+    <div class="theme-summary">Microsoft는 OpenAI 독점권 포기 이후 소프트웨어 중심 내러티브로 투자자 관점을 재설정해야 할 시점에 도달했다. Amazon은 OpenAI와의 새 계약 체결 직후 에이전트 서비스를 포함한 모델 제공을 즉각 시작하며 클라우드 AI 경쟁에서 공격적 행보를 보이고 있다. Bloom Energy는 Oracle과의 계약 확대로 AI 인프라 수요 급증의 수혜를 입고 있으며, Nvidia 연계 데이터센터는 정크본드로 45억9천만 달러를 조달하며 AI 인프라 투자 붐을 재확인했다. Google은 Anthropic이 국방부 계약을 거부한 후 Pentagon과 AI 계약을 확대하며 국가안보 시장 공략을 강화하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Trump 관세 정책의 법적 역전과 기업 대응</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #19~#22</span>
+    </div>
+    <div class="theme-summary">대법원이 Trump의 긴급 관세를 위헌으로 판결한 후 1,660억 달러 규모의 관세 환급 절차가 진행 중이지만, 새로운 온라인 포털을 통한 승인률은 현재 15%에 불과해 절차상 혼란이 계속되고 있다. GM은 5억 달러의 관세 환급을 예상하며 2026년 실적 전망을 상향 조정했다. Trump 행정부의 규제 완화 기조는 연준 내부의 이념적 분열로 인해 지연되고 있으며, Kevin Warsh의 연준 의장 지명에도 난관이 예상된다. Trump 브랜드 원자력 프로젝트의 주가 급락과 기업 내부 갈등은 AI 붐의 지속가능성에 대한 의문을 제기하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">지정학적 긴장과 동맹 재편 압력</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #23~#25</span>
+    </div>
+    <div class="theme-summary">Trump 행정부의 예측 불가능성 속에서 한국은 미국과 중국 사이에서 취약한 균형외교를 이어가고 있으며, 수출 중심 경제와 에너지 안보를 동시에 지켜야 하는 이중 압박에 직면했다. Trump는 5월 시진핑과의 정상회담을 앞두고 관계 안정화를 시도하지만, 손자병법의 교훈을 이해하지 못해 협상이 실패할 가능성이 제기되고 있다. 중국은 Meta의 AI 인수를 국가안보를 이유로 무산시켰으며, 이는 베이징의 기술 통제 우선순위 변화를 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">암호화폐의 AI 대체투자 가능성</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #26</span>
+    </div>
+    <div class="theme-summary">AI 투자가 금융시장에서 가장 혼잡한 거래 중 하나가 되면서, 현재 약세장에 있는 비트코인이 AI 붐을 활용할 수 있는 더 저렴한 대안 투자처로 부상하고 있다. 시장 참여자들은 과열된 AI 직접 투자 대신 암호화폐를 통한 간접 노출을 모색하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #27~#30</span>
+    </div>
+    <div class="theme-summary">Columbia 대학이 4억8천5백만 달러 규모의 과세·면세 채권 발행을 계획하고 있으며, 이는 자본 프로젝트 및 부채 재융자 목적이다. Martin Schlegel의 스위스 통화정책 발언이 있었으나 구체적 내용은 제공되지 않았다. AI 시대에도 물리적 현장, 전문 훈련, 실시간 인간 상호작용이 필요한 5가지 직업군이 고용 시장에서 안정성을 유지하고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 밸류에이션 재평가 압력</span>
+    <span class="theme-label-range">Article #1~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">OpenAI, Microsoft 독점 조건 완화 후 Amazon과 파트너십 확대</div>
+    <div class="article-title-en">OpenAI expands Amazon deal after Microsoft loosens exclusivity terms</div>
+    <div class="article-keypoint">OpenAI, Microsoft 독점 해제 후 AWS 직접 공급 - 클라우드 AI 경쟁 구도 재편</div>
+    <a class="article-link" href="https://www.ft.com/content/f159dd74-56a5-404b-ae54-ab4bab98b2c3" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 03:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">S&P 500 최고점서 하락 - OpenAI 우려로 기술주·반도체 급락</div>
+    <div class="article-title-en">S&amp;P 500 Falls From Peak as OpenAI Fears Drag on Tech, Chipmakers</div>
+    <div class="article-keypoint">S&P 500 최고점서 하락 - OpenAI 우려로 반도체·빅테크 급락</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-28/us-stock-futures-slip-as-report-on-openai-sales-miss-drags-tech" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 20:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Amazon, AWS에서 새 OpenAI 제품 즉시 제공</div>
+    <div class="article-title-en">Amazon is already offering new OpenAI products on AWS</div>
+    <div class="article-keypoint">Amazon, OpenAI 합의 하루 만에 에이전트 서비스 포함 모델 제공 개시</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/28/amazon-is-already-offering-new-openai-products-on-aws/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 04:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Microsoft와 OpenAI 분리, 양사 모두에 도움 될 가능성</div>
+    <div class="article-title-en">Microsoft and OpenAI’s Split May Help Both</div>
+    <div class="article-keypoint">Microsoft-OpenAI 분리가 양사 모두에 긍정적일 가능성 - 중국은 Meta 인수 차단</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/microsoft-and-openais-split-may-help-both-75dcf589?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Elon Musk와 Sam Altman의 OpenAI 충돌, 진짜 쟁점은 무엇인가</div>
+    <div class="article-title-en">What Elon Musk’s Clash With Sam Altman of OpenAI Is Really About</div>
+    <div class="article-keypoint">Musk, Altman을 '자선단체 도둑질' 비난하며 OpenAI 소송 본격화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/04/28/technology/elon-musk-sam-altman-trial.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 18:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">OpenAI 보도에 주식 급락 | 마감 종</div>
+    <div class="article-title-en">Stocks Slump on OpenAI Report | Closing Bell</div>
+    <div class="article-keypoint">OpenAI 보도로 주식시장 급락 - 기술주 중심 매도 압력</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-04-28/stocks-slump-on-openai-report-closing-bell-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 05:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">OpenAI의 Altman이 '자선단체 도둑질', Musk 재판 시작서 주장</div>
+    <div class="article-title-en">OpenAI’s Altman ‘stole a charity’, Musk claims as trial begins</div>
+    <div class="article-keypoint">Musk, 재판서 Altman이 '8,500억 달러 비영리 사명 배신' 주장</div>
+    <a class="article-link" href="https://www.ft.com/content/a6a987e0-fd93-49c5-a161-2e217c3817b8" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 04:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Elon Musk, 재판서 AI 위험 증언 - OpenAI '자선단체 도둑질 시도'</div>
+    <div class="article-title-en">Elon Musk Testifies of AI Risk at Trial, Says OpenAI Tried to ‘Steal’ a Charity</div>
+    <div class="article-keypoint">Musk, OpenAI 재판서 AI 위험 경고 및 영리 전환 비판 증언</div>
+    <a class="article-link" href="https://www.wsj.com/tech/trial-begins-between-elon-musk-and-sam-altman-for-the-future-of-openai-01595967?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 06:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">OpenAI '자선단체 도둑질': Musk 비난으로 블록버스터 AI 재판 개막</div>
+    <div class="article-title-en">OpenAI 'stole a charity': Musk accusations open blockbuster AI trial</div>
+    <div class="article-keypoint">Musk-Altman 재판 시작 - OpenAI의 비영리 약속 위반 여부가 쟁점</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/04/28/openai-stole-a-charity-musk-accusations-open-blockbuster-ai-trial_6752938_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 03:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">OpenAI, IPO 앞두고 핵심 매출·사용자 목표 미달</div>
+    <div class="article-title-en">OpenAI Misses Key Revenue, User Targets in High-Stakes Sprint Toward IPO</div>
+    <div class="article-keypoint">OpenAI, IPO 앞두고 매출·사용자 목표 미달 - 이사회 대규모 투자 의문 제기</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/openai-misses-key-revenue-user-targets-in-high-stakes-sprint-toward-ipo-94a95273?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 02:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">AI 우려 월스트리트 복귀 - 이제 실적 발표 차례</div>
+    <div class="article-title-en">AI Worries Have Returned to Wall Street. Now Come Earnings.</div>
+    <div class="article-keypoint">AI 우려 월스트리트 확산 - 주요 빅테크 실적 발표 앞두고 긴장</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai-worries-have-returned-to-wall-street-now-come-earnings-d680e19c?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">칩 스타트업, AI 메모리 장벽 돌파 목표</div>
+    <div class="article-title-en">Chip Startup Aims to Shatter AI’s Dreaded Memory Wall</div>
+    <div class="article-keypoint">칩 스타트업, AI 메모리 병목 해결 목표 - Google·Meta 출신 창업</div>
+    <a class="article-link" href="https://www.wsj.com/tech/chip-startup-aims-to-shatter-ais-dreaded-memory-wall-b5f4c563?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 18:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Elon Musk-Sam Altman 재판 시작 - 쟁점은 무엇인가</div>
+    <div class="article-title-en">The Elon Musk-Sam Altman trial has just begun. Here’s what’s at stake.</div>
+    <div class="article-keypoint">Musk-Altman 재판 개시 - OpenAI 영리 전환의 적법성 쟁점화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-elon-musk-sam-altman-trial-has-just-begun-heres-whats-at-stake-01df4a4c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 06:28 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">빅테크 전략 재조정과 클라우드 경쟁 심화</span>
+    <span class="theme-label-range">Article #14~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Google, Anthropic 거부 후 Pentagon AI 접근 확대</div>
+    <div class="article-title-en">Google expands Pentagon’s access to its AI after Anthropic’s refusal</div>
+    <div class="article-keypoint">Anthropic 거부 후 Google이 Pentagon AI 계약 확대 - 군사 AI 윤리 논란 재점화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/28/google-expands-pentagons-access-to-its-ai-after-anthropics-refusal/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 03:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Bloom Energy, Oracle 계약으로 AI 파도 타다</div>
+    <div class="article-title-en">Bloom Energy is riding the AI wave with a major lift from Oracle</div>
+    <div class="article-keypoint">Bloom Energy, Oracle 계약으로 AI 인프라 수요 수혜 - 월스트리트 비전 검증</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/bloom-energy-is-riding-the-ai-wave-with-a-major-lift-from-oracle-200109b4?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 07:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Microsoft '리셋' 시점 도래 - 투자자들이 주목해야 할 것</div>
+    <div class="article-title-en">It’s time for a Microsoft ‘reset.’ Here’s what investors should focus on now.</div>
+    <div class="article-keypoint">Microsoft, 클라우드 내러티브 이후 소프트웨어 중심 재설정 필요 시점</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/its-time-for-a-microsoft-reset-heres-what-investors-should-focus-on-now-a5d9e334?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 07:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Nvidia 연계 데이터센터, 정크본드로 45억9천만 달러 조달</div>
+    <div class="article-title-en">Nvidia-Tied Data Center Raises $4.59 Billion From Junk-Bond Sale</div>
+    <div class="article-keypoint">Nvidia 연계 데이터센터, 정크본드로 45억9천만 달러 조달 - AI 인프라 투자 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-28/nvidia-tied-data-center-raises-4-59-billion-from-junk-bond-sale" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 05:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Amazon, 제품 페이지에 AI 기반 음성 Q&A 경험 출시</div>
+    <div class="article-title-en">Amazon launches an AI-powered audio Q&A experience on product pages</div>
+    <div class="article-keypoint">Amazon, 제품 페이지에 AI 기반 음성 Q&A 기능 출시</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/28/amazon-launches-an-ai-powered-audio-qa-experience-on-product-pages/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 03:49 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Trump 관세 정책의 법적 역전과 기업 대응</span>
+    <span class="theme-label-range">Article #19~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">GM, Trump 관세 5억 달러 환급 예상으로 2026년 실적 전망 상향</div>
+    <div class="article-title-en">GM expecting $500m Trump tariff refund, boosting its 2026 earnings outlook</div>
+    <div class="article-keypoint">GM, 대법원 관세 판결로 5억 달러 환급 예상 - 2026년 실적 전망 상향</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/apr/28/general-motors-trump-tariffs-refund" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 01:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">연준 내부 분열이 Trump 월스트리트 규제완화 저해</div>
+    <div class="article-title-en">A split within the Fed impedes Trump’s deregulation of Wall Street</div>
+    <div class="article-keypoint">연준 내부 이념 분열로 Trump 월스트리트 규제완화 지연 - Warsh 지명 난관</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/04/28/fed-divisions-slow-deregulation/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Trump 브랜드 원자력 프로젝트, 투자자 열광 후 폭락</div>
+    <div class="article-title-en">A Trump-branded nuclear power project thrilled investors. Then came the crash.</div>
+    <div class="article-keypoint">Trump 브랜드 원자력 프로젝트 주가 폭락 - AI 붐 지속가능성 의문</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/04/28/ai-power-nuclear-rick-perry/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">관세 환급 절차에서 미국, 현재까지 신청건의 15% 거부</div>
+    <div class="article-title-en">In Tariff Refund Process, US Says 15% of Entries Denied So Far</div>
+    <div class="article-keypoint">관세 환급 포털 승인률 15% 불과 - 1,660억 달러 환급 절차 혼란</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-28/in-tariff-refund-process-us-says-15-of-entries-denied-so-far" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 02:01 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">지정학적 긴장과 동맹 재편 압력</span>
+    <span class="theme-label-range">Article #23~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">한국의 위태로운 균형외교</div>
+    <div class="article-title-en">South Korea’s Precarious Balancing Act</div>
+    <div class="article-keypoint">한국, Trump 불확실성과 중국 부상 사이 수출경제 보호 딜레마 심화</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/can-south-korea-weather-trump-storm-by-anne-o-krueger-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 21:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Donald Trump를 위한 손자병법의 조언</div>
+    <div class="article-title-en">Sun Tzu’s Advice for Donald Trump</div>
+    <div class="article-keypoint">Trump, 5월 시진핑 정상회담 준비 중이나 전략적 이해 부족으로 실패 전망</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/sun-tzu-advice-for-donald-trump-era-china-summit-by-stephen-s-roach-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 20:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">중국, Meta AI 인수 무산시키다</div>
+    <div class="article-title-en">China Pulls the Plug on Meta’s AI Acquisition</div>
+    <div class="article-keypoint">중국, 국가안보 이유로 Meta AI 인수 무산 - 기술 통제 우선순위 변화</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/04/28/china-blocks-ai-meta-manus-deal-national-security/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 06:24 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">암호화폐의 AI 대체투자 가능성</span>
+    <span class="theme-label-range">Article #26</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">약세장 암호화폐 매수가 AI 붐 활용의 저렴한 방법일 수 있는 이유</div>
+    <div class="article-title-en">Why buying crypto in a bear market may be a cheaper way to play the AI boom</div>
+    <div class="article-keypoint">약세장 비트코인이 과열 AI 투자 대비 저렴한 대안 투자처로 부상</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/buying-crypto-in-a-bear-market-is-a-cheaper-way-to-play-the-ai-boom-this-former-tiger-management-executive-says-868096eb?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 06:43 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #27~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Red Hat OpenClaw 관리자, 기업용 Claw 배포 안정성 대폭 강화</div>
+    <div class="article-title-en">Red Hat’s OpenClaw maintainer just made enterprise Claw deployments a lot safer</div>
+    <div class="article-keypoint">OpenClaw AI 에이전트의 기업 대규모 배포 안정성 강화 솔루션 등장</div>
+    <a class="article-link" href="https://techcrunch.com/2026/04/28/red-hats-openclaw-maintainer-just-made-enterprise-claw-deployments-a-lot-safer/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Columbia, 4억8,500만 달러 과세·면세 채권 발행 검토</div>
+    <div class="article-title-en">Columbia Eyes $485 Million Sale of Taxable, Tax-Exempt Bonds</div>
+    <div class="article-keypoint">Columbia 대학, 다음달 4억8,500만 달러 채권 발행 계획</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-28/columbia-university-considers-485-million-bond-sale-for-may" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 23:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Martin Schlegel: 스위스 통화정책 발언</div>
+    <div class="article-title-en">Martin Schlegel: Comments on Swiss monetary policy</div>
+    <div class="article-keypoint">Martin Schlegel의 스위스 통화정책 발언 - 구체적 내용 미상</div>
+    <a class="article-link" href="https://www.bis.org/review/r260428h.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/28 18:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">AI에 안전한 5가지 직업 채용 중 - 급여 수준과 진입 방법</div>
+    <div class="article-title-en">These 5 AI-proof jobs are hiring — here’s how much they pay and how to get them</div>
+    <div class="article-keypoint">물리적 현장·전문 훈련 필요 직업군, AI 시대에도 고용 안정성 유지</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/these-5-ai-proof-jobs-are-hiring-heres-how-much-they-pay-and-how-to-get-them-8ef4b0f7?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 06:17 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
