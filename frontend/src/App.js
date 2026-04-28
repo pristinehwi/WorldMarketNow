@@ -5,6 +5,7 @@ import DagGraph from './components/DagGraph';
 import Timeline from './components/Timeline';
 import SidePanel from './components/SidePanel';
 import ArchiveCompare from './components/ArchiveCompare';
+import EventLog from './components/EventLog';
 import useMarketData from './hooks/useMarketData';
 
 // ── 브리핑 아카이브 패널 ──
@@ -61,6 +62,7 @@ function App() {
   const [showMobilePanel, setShowMobilePanel] = useState(false);
   const [showBriefing, setShowBriefing] = useState(false);
   const [showCompare, setShowCompare] = useState(false);
+  const [showEventLog, setShowEventLog] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -179,6 +181,11 @@ function App() {
             ⏱ 시간축 비교
           </button>
         </div>
+        <div className="briefing-btn-wrap">
+          <button className="briefing-btn" onClick={() => setShowEventLog(true)}>
+            📋 이벤트 로그
+          </button>
+        </div>
 
         <div className="built-by-mobile">
           built by <span className="built-by-name" onClick={() => {
@@ -193,6 +200,7 @@ function App() {
             prices={data.prices}
           />
         )}
+        {showEventLog && <EventLog onClose={() => setShowEventLog(false)} />}
       </div>
     );
   }
@@ -242,6 +250,11 @@ function App() {
           ⏱ 시간축 비교
         </button>
       </div>
+      <div className="briefing-btn-wrap-pc" style={{ bottom: 108 }}>
+        <button className="briefing-btn" onClick={() => setShowEventLog(true)}>
+          📋 이벤트 로그
+        </button>
+      </div>
 
       <BuiltBy />
       {showBriefing && <BriefingPanel onClose={() => setShowBriefing(false)} />}
@@ -251,6 +264,7 @@ function App() {
           prices={data.prices}
         />
       )}
+      {showEventLog && <EventLog onClose={() => setShowEventLog(false)} />}
     </div>
   );
 }
