@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-30 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/04/30 07:48 KST</div>
+    <div class="header-date">2026-04-30</div>
+    <div class="header-headline">Powell 잔류 결정, Fed 내부 분열 심화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 상원 인준 투표 임박, 통화정책 방향성 전환 분기점 도래</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">통화정책 불확실성 - Fed 리더십 전환과 내부 분열</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#13</span>
+    </div>
+    <div class="theme-summary">Jerome Powell 의장이 임기 종료 후에도 Fed 이사로 잔류하겠다고 발표하면서 '그림자 의장' 우려가 제기되고 있다. Kevin Warsh의 차기 의장 지명이 상원 은행위원회를 통과했으나, Bessent 재무장관은 Powell의 잔류를 Fed 규범 위반으로 비판했다. FOMC는 금리 동결을 결정했지만 34년 만에 최다 반대표가 나오며 정책 방향성을 둘러싼 내부 분열이 가시화됐다. Powell은 자신과 Fed에 대한 법적 위협이 계속되는 상황에서 낮은 프로필을 유지하며 건물 리노베이션 같은 잔여 업무를 감독하겠다고 밝혔다. Warsh는 곧 전체 상원 투표를 앞두고 있으며, 그의 취임 후 통화정책 기조 변화가 예상된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 인프라 투자 가속과 수익성 의문</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #14~#20</span>
+    </div>
+    <div class="theme-summary">빅테크 기업들의 AI 인프라 투자가 급격히 확대되면서 자본 효율성에 대한 의문이 커지고 있다. Meta는 1분기 실적 발표에서 높은 부품 가격을 이유로 자본지출(CapEx) 전망을 다시 상향 조정하며 주가가 급락했다. Microsoft는 클라우드 성장세를 유지하며 1~3월 분기 매출 $82.9B를 기록했지만, AI 투자 대비 수익 실현에 대한 의구심은 여전하다. OpenAI CEO Sam Altman의 $500B 규모 Stargate 데이터센터 프로젝트는 유연한 접근 방식으로 파트너들을 불안하게 만들면서도 컴퓨팅 리더십을 강화하고 있다. Elon Musk는 법정에서 OpenAI 초기 투자가 '어리석었다'며 Altman이 비영리 미션에 대해 정직하지 않았다고 증언했다. SpaceX, OpenAI, Anthropic 등 주요 AI 기업들에 대한 투자자들의 베팅 방법이 다양화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">지정학 리스크 - 중동 긴장과 에너지 시장 압력</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #21~#25</span>
+    </div>
+    <div class="theme-summary">미국과 이란 간 호르무즈 해협을 둘러싼 대치가 격화되면서 수요일 원유 가격이 급등했다. Trump 대통령은 King Charles가 이란의 핵무기 보유 금지에 동의한다고 주장하며 외교적 긴장을 고조시켰다. 미국 주식시장은 연준의 금리 동결 결정과 유가 급등, 이란 리스크 속에 혼조세로 마감했다. 이란과 관련된 것으로 알려진 그림자 조직 HAYI가 유대인 시설을 겨냥한 일련의 공격 책임을 주장하면서 보안 우려가 확대되고 있다. 한편 Barclays는 핵에너지 섹터에 대해 강세 입장을 유지하며, 산업이 신념 단계에서 건설 단계로 이행하고 있다고 평가했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Trump 정책 불확실성과 통상 마찰</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #26~#27</span>
+    </div>
+    <div class="theme-summary">Trump 행정부의 정책 방향성을 둘러싼 불확실성이 지속되고 있다. Sun Tzu 전략을 인용한 분석은 Trump가 5월 정상회담에서 시진핑과의 관계 안정화를 목표로 하지만, 일련의 대규모 정책 실수로 성과를 거두기 어려울 것으로 전망했다. 멕시코 Sheinbaum 대통령은 미국 철강 관세 철폐 협상 실패 후 모든 연방 프로젝트에서 자국산 철강 사용을 의무화한다고 발표했다. Trump의 $1M 골드카드 비자 프로그램은 전 세계 부유층의 관심을 끌지 못하고 있으며, 미국 정부 문서에 따르면 단 338명만이 이 신속 거주권 제도에 정식 신청서를 제출했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">OpenAI 법적 리스크 - 캐나다 총격 사건 소송</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #28~#29</span>
+    </div>
+    <div class="theme-summary">British Columbia의 한 중등학교에서 발생한 총격 사건으로 희생된 7명의 유족들이 OpenAI와 CEO를 상대로 과실 소송을 제기했다. 소송은 OpenAI가 용의자의 ChatGPT 사용 행태를 공격 몇 달 전 당국에 신고하지 않은 것에 대한 책임을 묻고 있다. 새로운 소송들은 직원들이 Tumbler Ridge 공격 몇 달 전 회사에 당국 통보를 촉구했다고 주장한다. 이 사건은 AI 기업들의 사용자 행동 모니터링 및 신고 의무에 대한 법적 책임 논란을 촉발시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #30</span>
+    </div>
+    <div class="theme-summary">무한대를 거부하는 초유한주의(Ultrafinitism) 철학이 수학 이단으로 오랫동안 일축되었지만, 수학과 그 너머 영역에서 새로운 통찰을 제공하고 있다는 Quanta Magazine의 수학 철학 탐구 기사가 포함되었다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">통화정책 불확실성 - Fed 리더십 전환과 내부 분열</span>
+    <span class="theme-label-range">Article #1~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Powell, Warsh의 Fed에서 '그림자 의장' 되지 않겠다고 밝혀</div>
+    <div class="article-title-en">Powell Says He Won’t Be a ‘Shadow Chair’ at Warsh’s Fed</div>
+    <div class="article-keypoint">Powell '그림자 의장' 불사 선언 - Warsh 시대 Fed 내부 긴장 고조 예고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/live-blog/2026-04-29/fed-rate-decision-and-powell-news-conference" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 01:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">연방준비제도, FOMC 성명 발표</div>
+    <div class="article-title-en">Federal Reserve issues FOMC statement</div>
+    <div class="article-keypoint">FOMC 금리 동결 유지, 정책성명 발표로 기준금리 현 수준 동결 공식화</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260429a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Powell, Fed 떠나지 않고 Trump 압박에 맞서</div>
+    <div class="article-title-en">Powell won’t leave the Fed, pushing back further against Trump</div>
+    <div class="article-keypoint">Powell Fed 이사 잔류 확정, 법적 위협 지속 속 감독 업무 계속 수행 의지</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/powell-says-hell-stay-at-fed-as-governor-after-his-term-as-chair-ends-in-mid-may-c906c044?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 07:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Warsh, Fed 의장 임명 초기 관문 통과</div>
+    <div class="article-title-en">Warsh Clears an Early Hurdle on Path to Fed Chair</div>
+    <div class="article-keypoint">Warsh 상원 은행위 통과, 전체 표결 임박하며 차기 의장 취임 가시화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/04/29/business/economy/warsh-federal-reserve-chair.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 00:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Bessent, Powell 잔류는 모든 Fed 규범의 '위반'이라고 비판</div>
+    <div class="article-title-en">Bessent Says Powell Staying On Is ‘Violation’ of All Fed Norms</div>
+    <div class="article-keypoint">Bessent, Powell 잔류를 'Fed 규범 위반'으로 비판하며 행정부-중앙은행 긴장 부각</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-29/bessent-says-powell-staying-on-is-violation-of-all-fed-norms" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 06:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Powell, 의장 임기 종료 후에도 Fed 이사로 잔류 밝혀</div>
+    <div class="article-title-en">Powell Says He Will Stay On as Fed Governor After Term as Chair Ends</div>
+    <div class="article-keypoint">Powell, 법적 위협 속 이사직 유지 결정 - 중앙은행 독립성 논쟁 재점화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/04/29/business/economy/powell-fed-stay-governor.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 06:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Powell의 마지막 FOMC, 34년 만에 최다 반대표 속 금리 동결(예상대로)</div>
+    <div class="article-title-en">Powell's Final FOMC Sees Most Dissents In 34 Years As Fed Keeps Rate Unch (As Expected)</div>
+    <div class="article-keypoint">FOMC 반대표 34년 최다 - 통화정책 방향성 놓고 Fed 내부 이견 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/fomc-37" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 04:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Fed 회의, Warsh에게 다가올 어려운 과제 부각</div>
+    <div class="article-title-en">Fed Meeting Underscores Tough Task Ahead for Warsh</div>
+    <div class="article-keypoint">Warsh 취임 앞두고 통화정책 경로 분열 가시화, 향후 기조 전환 불확실성 확대</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/04/29/business/economy/what-to-watch-at-the-federal-reserves-april-meeting.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 07:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">오늘 연방준비제도에서 일어나는 일</div>
+    <div class="article-title-en">What’s happening at the Federal Reserve today.</div>
+    <div class="article-keypoint">연준 당일 FOMC 회의 진행, 금리 결정 및 경제 전망 발표 임박</div>
+    <a class="article-link" href="https://www.nytimes.com/live/2026/04/29/business/federal-reserve-interest-rates/whats-happening-at-the-federal-reserve-today" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 00:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">상원 위원회, Trump의 연방준비제도 의장 지명자 승인</div>
+    <div class="article-title-en">Senate panel advances Trump’s pick for Federal Reserve chief</div>
+    <div class="article-keypoint">공화당 반대 철회로 Warsh 인준 확실시, Trump의 Fed 장악력 강화 전망</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/04/29/trump-federal-reserve-kevin-warsh-committee/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 23:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Powell, Fed에서 이사로 '낮은 프로필' 유지하며 잔류 밝혀</div>
+    <div class="article-title-en">Powell Says He’ll Stay at Fed as Governor With ‘Low Profile’</div>
+    <div class="article-keypoint">Powell 의장직 종료 후에도 이사 잔류, 저자세 유지하며 감독 업무 지속 계획</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-29/powell-says-he-ll-stay-on-as-governor-after-term-as-chair-ends" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 03:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Jerome Powell, Trump 무시하고 중앙은행 금리 동결 유지하며 Fed 이사직 유지</div>
+    <div class="article-title-en">Jerome Powell to stay on Fed board after central bank holds rates steady in defiance of Trump</div>
+    <div class="article-keypoint">Powell, Trump 압박 속 이사직 유지로 건물 리노베이션 등 잔여 업무 감독 지속</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/apr/29/fed-jerome-powell-decision-hold-interest-rate" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 05:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">월가, Powell의 마지막 FOMC 회의에 반응</div>
+    <div class="article-title-en">Wall Street Reacts To Powell's Last FOMC Meeting</div>
+    <div class="article-keypoint">Powell 마지막 FOMC, 반대표 다수 속 금리 인상 장벽 여전히 높다는 시장 반응</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/wall-street-reacts-powells-last-fomc-meeting" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 03:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 인프라 투자 가속과 수익성 의문</span>
+    <span class="theme-label-range">Article #14~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">SpaceX, OpenAI, Anthropic은 이미 공개 기업이다</div>
+    <div class="article-title-en">
+        SpaceX, OpenAI and Anthropic are already public companies
+      </div>
+    <div class="article-keypoint">SpaceX·OpenAI·Anthropic 투자 통로 확대, AI 밸류에이션 논쟁 재점화</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/04/29/spacex-openai-and-anthropic-are-already-public-companies" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 04:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">비트코인, 1년 만에 최고의 월간 성과 - 그러나 소매 투자자는 다른 곳 주목</div>
+    <div class="article-title-en">Bitcoin is having its best month in a year — but the retail crowd is looking elsewhere</div>
+    <div class="article-keypoint">비트코인 1년 만에 최고 월간 상승률 기록, 그러나 소매 투자자는 다른 자산 선호</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/bitcoin-is-having-its-best-month-in-a-year-but-the-retail-crowd-is-looking-elsewhere-d01aa6c1?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 06:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Goldman Sachs와 Bain, AI 마케팅 스타트업에 투자 주도</div>
+    <div class="article-title-en">Goldman Sachs and Bain Lead Investment in AI Marketing Startup</div>
+    <div class="article-keypoint">Goldman Sachs·Bain, AI 마케팅 스타트업 Hightouch $2.75B 밸류로 투자 주도</div>
+    <a class="article-link" href="https://www.wsj.com/cmo-today/goldman-sachs-and-bain-lead-investment-in-ai-marketing-startup-871266b8?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 19:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Microsoft, 강력한 클라우드 성장 보고했지만 AI 수익성 의문 지속</div>
+    <div class="article-title-en">Microsoft Reports Strong Cloud Growth, But Questions About AI Returns Persist</div>
+    <div class="article-keypoint">Microsoft 1~3월 클라우드 매출 $82.9B 시장 예상치 상회, AI 수익성 의문 지속</div>
+    <a class="article-link" href="https://www.wsj.com/business/earnings/microsoft-msft-q3-earnings-report-2026-stock-75b9361b?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 06:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">OpenAI의 $500B 데이터센터 벤처 Stargate, 형태 변화 중</div>
+    <div class="article-title-en">How OpenAI’s $500bn data centre venture Stargate has shifted shape</div>
+    <div class="article-keypoint">OpenAI Stargate $500B 프로젝트, 유연한 접근으로 파트너 불안 속 컴퓨팅 우위 확보</div>
+    <a class="article-link" href="https://www.ft.com/content/664a57e2-dffa-401e-81ad-55129ffb0e89" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Elon Musk, OpenAI 투자가 '어리석었다'고 증언</div>
+    <div class="article-title-en">Elon Musk Testifies He Was a ‘Fool’ to Fund OpenAI</div>
+    <div class="article-keypoint">Musk, OpenAI 초기 투자 '어리석었다' 증언하며 Altman 비영리 미션 위반 주장</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/elon-musk-takes-stand-in-second-day-of-trial-against-openai-59d50fbf?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 04:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Meta, '높은 부품 가격'으로 CapEx 전망 재상향 후 급락</div>
+    <div class="article-title-en">Meta Plunges After Boosting Capex Outlook Again On "Higher Component Pricing"</div>
+    <div class="article-keypoint">Meta, 부품 가격 상승으로 CapEx 전망 재상향 후 주가 급락</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/meta-plunges-after-boosting-capex-outlook-again-higher-component-pricing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 06:14 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">지정학 리스크 - 중동 긴장과 에너지 시장 압력</span>
+    <span class="theme-label-range">Article #21~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Donald Trump를 위한 손자병법 조언</div>
+    <div class="article-title-en">Sun Tzu’s Advice for Donald Trump</div>
+    <div class="article-keypoint">Sun Tzu 전략 인용, Trump의 대중 관계 안정화 시도 실패 가능성 경고</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/sun-tzu-advice-for-donald-trump-era-china-summit-by-stephen-s-roach-2026-04" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 17:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">미국 주식 혼조, 실적 발표 앞두고 원유 급등·Fed 금리 동결</div>
+    <div class="article-title-en">US Stocks Mixed as Oil Jumps, Fed Holds Rates Before Earnings</div>
+    <div class="article-keypoint">미국-이란 호르무즈 대치 격화로 유가 급등, Fed 금리 동결 속 혼조 마감</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-04-29/us-stock-futures-edge-up-on-tech-gains-before-megacap-earnings" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 20:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">King Charles, 이란 핵무기 금지에 동의한다고 Trump 주장</div>
+    <div class="article-title-en">King Charles agrees with me on Iran nuclear weapon ban, claims Trump</div>
+    <div class="article-keypoint">Trump, King Charles의 이란 핵무기 금지 동의 주장으로 외교 긴장 고조</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/apr/29/king-charles-agrees-with-me-on-iran-nuclear-weapon-ban-says-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 16:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Barclays, 핵에너지에 대한 강세 입장 유지</div>
+    <div class="article-title-en">Barclays Maintains Bullish Stance On Nuclear</div>
+    <div class="article-keypoint">Barclays, 핵에너지 섹터 강세 유지하며 신념에서 건설 단계로 전환 평가</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/barclays-maintains-bullish-stance-nuclear" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Golders Green 공격 주장, 이란 연계 그림자 조직의 부상 부각</div>
+    <div class="article-title-en">Golders Green attack claim highlights rise of shadowy Iran-linked group</div>
+    <div class="article-keypoint">이란 연계 HAYI, 유대인 시설 공격 주장으로 보안 우려 확대</div>
+    <a class="article-link" href="https://www.theguardian.com/uk-news/2026/apr/29/golders-green-attack-claim-highlights-rise-of-shadowy-iran-linked-group" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 06:12 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Trump 정책 불확실성과 통상 마찰</span>
+    <span class="theme-label-range">Article #26~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">멕시코, 미국 관세에 대응해 연방 프로젝트에 자국산 철강 사용 의무화</div>
+    <div class="article-title-en">Mexico to require federal projects to use local steel in response to US tariffs</div>
+    <div class="article-keypoint">멕시코, 미국 철강 관세에 맞서 연방 프로젝트 자국산 철강 의무화 대응</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/mexico-to-require-public-projects-use-local-steel-after-us-tariffs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 23:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Trump의 $1M 골드카드 비자, 전 세계 부유층 관심 끌지 못해</div>
+    <div class="article-title-en">Trump’s $1mn gold card visa fails to excite the world’s wealthy</div>
+    <div class="article-keypoint">Trump $1M 골드카드 비자, 338명만 신청하며 부유층 유치 전략 실패</div>
+    <a class="article-link" href="https://www.ft.com/content/30f61f42-3024-4a02-bc13-0aa3823cf2f0" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/30 06:38 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">OpenAI 법적 리스크 - 캐나다 총격 사건 소송</span>
+    <span class="theme-label-range">Article #28~#29</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">유족들, OpenAI가 ChatGPT에서 캐나다 총격범 행동 신고 실패로 소송 제기</div>
+    <div class="article-title-en">Families sue OpenAI over failure to report Canada mass shooter’s behavior on ChatGPT</div>
+    <div class="article-keypoint">캐나다 총격범 ChatGPT 사용 미신고, OpenAI 과실 소송으로 AI 기업 책임 논란</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/apr/29/openai-tumbler-ridge-shooter-chatgpt-lawsuit" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">OpenAI, 총격 용의자의 ChatGPT 사용을 둘러싸고 7개 유족에게 소송당해</div>
+    <div class="article-title-en">OpenAI Sued by Seven Families Over Mass Shooting Suspect’s ChatGPT Use</div>
+    <div class="article-keypoint">OpenAI, 총격범 ChatGPT 활동 사전 신고 과실로 7개 유족 소송 직면</div>
+    <a class="article-link" href="https://www.wsj.com/us-news/openai-sued-by-seven-families-over-mass-shooting-suspects-chatgpt-use-ebf10dc6?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 22:39 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">무한대를 잃음으로써 우리는 무엇을 얻을 수 있는가?</div>
+    <div class="article-title-en">What Can We Gain by Losing Infinity?</div>
+    <div class="article-keypoint">초유한주의 수학 철학, 무한대 개념 거부하며 새로운 수학적 통찰 제공</div>
+    <a class="article-link" href="https://www.quantamagazine.org/what-can-we-gain-by-losing-infinity-20260429/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/04/29 23:50 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
