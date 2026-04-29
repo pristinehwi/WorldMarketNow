@@ -161,6 +161,9 @@ function EventLog({ onClose }) {
                             : ev.headline
                           }
                         </div>
+                        {ev.headline_ko && (
+                          <div className="el-tl-headline-ko">{ev.headline_ko}</div>
+                        )}
                         <div className="el-tl-source">{ev.source}</div>
                       </div>
                     </div>
