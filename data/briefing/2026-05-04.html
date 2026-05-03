@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-04 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/04 07:48 KST</div>
+    <div class="header-date">2026-05-04</div>
+    <div class="header-headline">이란 전쟁 지속과 AI 실적 격차 - 시장 분화 심화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">호르무즈 해협 재개방 여부와 Fed 고위급 발언(금주) - 에너지·금리 민감주 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">에너지 공급 리스크 프리미엄</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">Trump 행정부는 호르무즈 해협에 갇힌 중립국 선박을 위한 'Project Freedom' 계획을 발표하며 유가 하락 압력을 유도했으나, 해협 인근에서 대형 화물선 공격 보고가 들어오는 등 4월 22일 이후 첫 에스컬레이션이 발생했다. OPEC+는 6월 소폭 증산을 발표했지만 이란 전쟁으로 인한 공급 차질을 상쇄하기엔 상징적 수준에 불과하다. Bessent 재무장관은 미국이 이란 석유 산업을 '질식'시키고 있다며 경제 압박 강화를 시사했다. 에너지 수입국의 인플레이션 재점화 우려와 함께 원자력 발전 부활 필요성이 재부각되고 있으며, 중동 군사 인프라가 표적이 될 수 있다는 리스크도 제기됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 투자 사이클 - 실적 격차와 리더십 경쟁</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#14</span>
+    </div>
+    <div class="theme-summary">빅테크 기업들의 최근 실적 발표는 AI 붐이 여전히 강력하지만 승자와 패자가 명확히 갈리고 있음을 보여줬다. S&P 500은 2020년 이후 최고 월간 상승률을 기록했으나, 투자자들은 이제 AI 수혜 기업을 더욱 세밀하게 선별하고 있다. OpenAI는 IPO 준비 과정에서 Sam Altman의 리더십과 기업 전설에 전례 없는 압박을 받고 있으며, Musk와 Altman 간 경쟁도 1주차를 맞았다. Anthropic의 Claude AI 확산으로 동명 인간들이 정체성을 공유하는 흥미로운 현상도 나타났다. 새로운 보고서는 AI가 일자리를 대체하기보다는 재편할 것이라 전망하며, 장기적 구조 변화가 진행 중임을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">통화정책 불확실성과 신용시장 리스크</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #15~#17</span>
+    </div>
+    <div class="theme-summary">금주 채권 트레이더들은 재무부의 향후 3개월 차입 계획 발표, 다수의 Fed 고위급 발언, 그리고 월간 고용지표로 이어지는 빽빽한 일정에 주목하고 있다. Fed 이사 Michael Barr는 프라이빗 크레딧 시장의 스트레스가 '심리적 전염'을 통해 광범위한 신용 경색으로 이어질 수 있다며, 금융 규제 완화 시기가 적절치 않다고 재차 경고했다. 한편 Trump 행정부가 시작한 Powell 의장에 대한 형사 조사는 검사가 중단했으나, Fed 내부 감사 결과에 따라 향후 방향이 결정될 것으로 보인다. Powell 리더십을 둘러싼 정치적 불확실성이 통화정책 신뢰도에 잠재적 리스크로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Trump 행정부 지지율 악화와 동맹 균열</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#21</span>
+    </div>
+    <div class="theme-summary">Trump 대통령의 부정적 평가가 62%로 두 번의 임기를 통틀어 최악을 기록하며, 이란 전쟁 이후 경제 문제와 맞물려 11월 중간선거 6개월 전 정치적 압박이 가중되고 있다. 독일 총리 Merz는 이란 전쟁을 둘러싼 갈등에도 불구하고 Trump와의 협력을 포기하지 않겠다고 밝혔으나, 유럽 동맹 내 긴장은 지속되고 있다. 국무장관 Rubio는 교황 및 Meloni 이탈리아 총리와의 관계 '해빙'을 위해 로마를 방문할 예정이며, 캐나다 총리 Carney는 미국과의 단절 이후 유럽정치공동체 정상회의에 비유럽 국가 최초로 참석해 새로운 동맹 구축에 나선다. 미국의 전통적 외교 네트워크가 재편되는 조짐이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">빅테크 기업 지배구조와 정치적 영향력</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#24</span>
+    </div>
+    <div class="theme-summary">영국 정부의 Starmer 총리 측근 고문이 Google, Meta, Apple 등 미국 빅테크 경영진과 비공개로 16회 회동을 가진 사실이 드러나 '밀실 로비' 우려가 제기됐다. 자율주행 robotaxi 산업에서는 교통 위반 티켓 발부 절차 등 규제 공백이 새로운 쟁점으로 부상하고 있다. Jeff Bezos가 Met Gala의 명예 의장이자 주요 후원자로 나서면서 패션계가 보이콧과 비판에 직면하고 있으며, 억만장자와 문화 산업 간 유착 관계에 대한 논란이 커지고 있다. 빅테크 자본이 정치·문화 영역으로 확장하며 민주적 거버넌스에 대한 구조적 질문이 제기되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">투자 전략과 자산 배분</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #25~#26</span>
+    </div>
+    <div class="theme-summary">Warren Buffett의 후계자 Greg Abel은 Berkshire Hathaway의 막대한 현금 보유에 대한 투자 전략을 명확히 밝히지 않아 투자자들에게 단서를 거의 제공하지 못했다. 은퇴 자산 운용과 관련해 Social Security를 S&P 500에 투자했다면 400만 달러를 확보할 수 있었을 것이라는 주장이 제기되며 제도적 개혁 논의가 재점화되고 있다. 전문가들은 자동 재투자 같은 '게으른' 습관이 은퇴 자산에 20% 보너스를 추가할 수 있다며 장기 투자 원칙을 강조한다. S&P 500의 급등 이후 축하보다는 장기 관점 유지가 중요하다는 조언이 나오고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #27</span>
+    </div>
+    <div class="theme-summary">특정 테마로 분류하기 어려운 주요 동향을 포함합니다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">에너지 공급 리스크 프리미엄</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">우크라이나·이란 전쟁이 원자력 발전 부활을 부인할 수 없는 필수 과제로 만들어</div>
+    <div class="article-title-en">'The wars in Ukraine and Iran have made the revival of nuclear power an undeniable necessity'</div>
+    <div class="article-keypoint">이란·우크라 전쟁이 원자력 부활 필연성 입증 - 군사표적화 리스크는 새로운 변수</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/opinion/article/2026/05/03/the-wars-in-ukraine-and-iran-have-made-the-revival-of-nuclear-power-an-undeniable-necessity_6753084_23.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 00:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Trump, 호르무즈 해협 부분 재개방 계획 발표로 미 증시선물 상승·유가 하락</div>
+    <div class="article-title-en">U.S. stock futures rise, oil falls as Trump touts new plan to partially reopen Strait of Hormuz</div>
+    <div class="article-keypoint">Trump, 호르무즈 부분 재개방 계획 발표로 유가 하락·주가선물 상승 - 단기 리스크 완화 시그널</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/u-s-stock-futures-rise-oil-falls-as-trump-touts-new-plan-to-partially-reopen-strait-of-hormuz-9908f10f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 07:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Bessent, 미국이 이란을 '질식'시키고 있으며 석유산업 삐걱거린다 발언</div>
+    <div class="article-title-en">Bessent Says US Is ‘Suffocating’ Iran With Oil Industry Creaking</div>
+    <div class="article-keypoint">Bessent, 이란 석유산업 '질식' 발언 - 공급 압박 지속으로 유가 상방 압력 유지</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-03/bessent-says-us-is-suffocating-iran-with-oil-industry-creaking" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 00:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">공화당 의원 Kiley: 이란의 핵무기 보유 허용할 수 없어</div>
+    <div class="article-title-en">Rep. Kiley: Iran Cannot Be Allowed To Get A Nuclear Weapon</div>
+    <div class="article-keypoint">공화당 의원, 이란 핵무기 보유 저지 강조 - 의회 내 강경 대응론 우세</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-03/kiley-iran-cannot-be-allowed-to-get-a-nuclear-weapon-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 01:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">OPEC+, 소폭 증산 발표 - 그러나 대부분 상징적 조치인 이유</div>
+    <div class="article-title-en">OPEC+ announces modest boost in oil production. But here’s why it’s a mostly symbolic move.</div>
+    <div class="article-keypoint">OPEC+ 6월 소폭 증산 발표 - 이란 전쟁 공급차질 상쇄엔 상징적 수준</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/opec-announces-modest-boost-in-oil-production-but-heres-why-its-a-mostly-symbolic-move-2bcb4b5b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 04:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump, 호르무즈 억류 선박 호송 'Project Freedom' 발표</div>
+    <div class="article-title-en">Trump announces ‘Project Freedom’ to escort stranded ships from Hormuz</div>
+    <div class="article-keypoint">Trump, 호르무즈 억류 선박 호송 'Project Freedom' 발표 - 에너지 공급로 확보 의지</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/trump-announces-project-freedom-to-escort-stranded-ships-from-hormuz-4654902" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 21:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">호르무즈 인근 대형 화물선 피격 보고 - 4월 22일 이후 첫 에스컬레이션</div>
+    <div class="article-title-en">Large Cargo Ship Near Hormuz Reports Being Attacked, In First Escalation Since April 22</div>
+    <div class="article-keypoint">호르무즈 인근 대형 화물선 피격 보고 - 4월 22일 이후 첫 에스컬레이션으로 긴장 재고조</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/large-cargo-ship-near-hormuz-reports-being-attacked-first-escalation-april-22" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 02:56 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 투자 사이클 - 실적 격차와 리더십 경쟁</span>
+    <span class="theme-label-range">Article #8~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">빅테크 실적, AI 투자 붐의 승자와 패자 분화 보여줘</div>
+    <div class="article-title-en">Big Tech Earnings Show Split Between AI Trade Winners and Losers</div>
+    <div class="article-keypoint">빅테크 실적 호조 속 AI 수혜주 명확히 분화 - 승자·패자 선별 단계 진입</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-03/big-tech-earnings-show-split-between-ai-trade-winners-and-losers" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">'게으른' 백만장자 되기: 이 한 가지 습관이 은퇴자산에 20% 보너스 추가</div>
+    <div class="article-title-en">Become a ‘lazy’ millionaire: This one habit can add a 20% bonus to your retirement</div>
+    <div class="article-keypoint">S&P 500, 2020년 이후 최고 월간 상승 - 자동 재투자로 은퇴자산 20% 증대 가능</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/become-a-lazy-millionaire-this-one-habit-can-add-a-20-bonus-to-your-retirement-cf7d715a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 05:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">AI, 일자리 대체 아닌 재편 예상 - 신규 보고서</div>
+    <div class="article-title-en">AI set to reshape — not replace — global jobs, new report finds</div>
+    <div class="article-keypoint">AI, 일자리 대체 아닌 재편 전망 - 구조적 노동시장 변화 장기 지속</div>
+    <a class="article-link" href="https://www.investing.com/news/technology-news/ai-set-to-reshape--not-replace--global-jobs-new-report-finds-4654906" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 21:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Bloomberg Dispatch: Claude라는 이름을 가진 이상한 시대</div>
+    <div class="article-title-en">Bloomberg Dispatch: It’s a Weird Time to Be Named Claude</div>
+    <div class="article-keypoint">Anthropic의 Claude AI 확산으로 동명 인간들 정체성 공유 현상 - AI 일상 침투 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-03/bloomberg-dispatch-it-s-a-weird-time-to-be-named-claude-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 00:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">오피니언 | ChatGPT에 너무 가까이 가지 마라</div>
+    <div class="article-title-en">Opinion | Don’t Stand So Close to ChatGPT</div>
+    <div class="article-keypoint">ChatGPT 유혹 위험성 지적 - 신탁의무 적용으로 AI 관계 규율 필요</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/dont-stand-so-close-to-chatgpt-44ce3a4b?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 04:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Musk vs. Altman: 1주차</div>
+    <div class="article-title-en">Musk vs. Altman: Week 1</div>
+    <div class="article-keypoint">Musk vs Altman 경쟁 1주차 - OpenAI IPO 준비 과정서 리더십 긴장 고조</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/musk-vs-altman-week-1-6f1d8a8a?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 22:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Sam Altman의 전설, 전례 없는 시험대에</div>
+    <div class="article-title-en">The Lore of Sam Altman Is Being Tested Like Never Before</div>
+    <div class="article-keypoint">OpenAI IPO 준비 속 Sam Altman 리더십 전례없는 시험대 - AI 선두주자 불확실성 증대</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/the-lore-of-sam-altman-is-being-tested-like-never-before-968227ea?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 18:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">통화정책 불확실성과 신용시장 리스크</span>
+    <span class="theme-label-range">Article #15~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">미 검사 Pirro, Fed 감사결과가 Powell 수사 향방 결정할 것</div>
+    <div class="article-title-en">US Attorney Pirro says Fed IG's findings will dictate future of her Powell probe</div>
+    <div class="article-keypoint">Powell 형사조사 중단되나 Fed 내부감사 결과가 향후 수사 재개 여부 결정 - 중앙은행 독립성 리스크</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/us-attorney-pirro-says-fed-igs-findings-will-dictate-future-of-her-powell-probe" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 00:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">채권 트레이더들, 재무부 차입계획·Fed 발언·고용지표에 주목</div>
+    <div class="article-title-en">Bond Traders Look to Treasury Refunding, Fed Speakers and Jobs</div>
+    <div class="article-keypoint">금주 재무부 차입계획·Fed 고위급 발언·고용지표 집중 - 금리 방향성 단서 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-03/bond-traders-look-to-treasury-refunding-fed-speakers-and-jobs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">프라이빗 크레딧, 심리적 전염 촉발 가능성 - Fed Barr 경고</div>
+    <div class="article-title-en">Private Credit Could Spark Psychological Contagion, Barr Warns</div>
+    <div class="article-keypoint">Fed Barr, 프라이빗 크레딧 스트레스가 심리전염 통해 신용경색 촉발 경고 - 규제완화 견제</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-03/private-credit-could-spark-psychological-contagion-barr-warns" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 23:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Trump 행정부 지지율 악화와 동맹 균열</span>
+    <span class="theme-label-range">Article #18~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Trump 부정적 평가 사상 최고치 기록 - 새 여론조사</div>
+    <div class="article-title-en">Trump’s disapproval rating hits record high, new poll shows</div>
+    <div class="article-keypoint">Trump 부정평가 62% 기록 최악 - 이란 전쟁·경제 악재로 중간선거 6개월 앞 압박</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/may/03/trump-disapproval-rating-poll" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Marco Rubio, 로마 방문 예정 - 교황·Meloni와 미국 관계 '해빙' 위해</div>
+    <div class="article-title-en">Marco Rubio to visit Rome, reportedly to ‘thaw’ US relations with Pope and Meloni</div>
+    <div class="article-keypoint">Rubio, 교황·Meloni와 관계 해빙 위해 로마 방문 - 유럽 동맹 복원 시도</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/may/03/marco-rubio-visits-rome-pope-leo-us-italy-relations" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 19:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Merz, 이란 전쟁 갈등에도 'Trump와 협력 포기 안해'</div>
+    <div class="article-title-en">Merz ‘not giving up on working with Trump’ despite Iran war spat</div>
+    <div class="article-keypoint">독일 Merz, 이란 전쟁 갈등에도 Trump 협력 지속 의지 - 대서양 동맹 균열 속 실용외교</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/03/merz-not-giving-up-on-working-with-trump-despite-iran-war-spat" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 05:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">캐나다, Carney의 동맹 구축 일환으로 EPC 정상회의 첫 비유럽 국가 참석</div>
+    <div class="article-title-en">Canada to be first non-European nation at EPC summit as Carney seeks allies</div>
+    <div class="article-keypoint">캐나다 Carney, 유럽정치공동체 정상회의 비유럽국 최초 참석 - 미국 단절 후 동맹 재편</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/03/canada-first-non-european-nation-epc-summit-mark-carney-allies-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 23:57 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">빅테크 기업 지배구조와 정치적 영향력</span>
+    <span class="theme-label-range">Article #22~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">TechCrunch Mobility: robotaxi에 교통 위반 티켓을 어떻게 발부하나?</div>
+    <div class="article-title-en">TechCrunch Mobility: How do you issue a ticket to a robotaxi?</div>
+    <div class="article-keypoint">Robotaxi 교통위반 티켓 발부 절차 공백 - 자율주행 규제 프레임워크 미비 부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/03/techcrunch-mobility-how-do-you-issue-a-ticket-to-a-robotaxi/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 01:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Starmer 고문, 미 빅테크 경영진과 16차례 비공개 회동</div>
+    <div class="article-title-en">Starmer adviser held 16 undisclosed meetings with top US tech bosses</div>
+    <div class="article-keypoint">영국 Starmer 측근, 빅테크 경영진과 비공개 16회 회동 - 밀실 로비 의혹 제기</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/may/03/starmer-adviser-varun-chandra-undisclosed-meetings-us-tech-bosses" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">패션계의 파우스트 계약: Jeff Bezos의 Met Gala 후원이 치른 높은 대가</div>
+    <div class="article-title-en">Fashion’s Faustian pact: the high cost of Jeff Bezos’s Met Gala patronage</div>
+    <div class="article-keypoint">Bezos의 Met Gala 후원, 보이콧과 비판 직면 - 억만장자-문화산업 유착 논란</div>
+    <a class="article-link" href="https://www.theguardian.com/fashion/2026/may/03/met-gala-jeff-bezos-art-fashion-new-york" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/03 23:22 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">투자 전략과 자산 배분</span>
+    <span class="theme-label-range">Article #25~#26</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Greg Abel, Berkshire 현금 보유 전략에 대한 의문 남겨</div>
+    <div class="article-title-en">Greg Abel leaves unanswered questions about Berkshire’s war chest</div>
+    <div class="article-keypoint">Buffett 후계자 Abel, Berkshire 현금 전략 불투명 - 시장 최대 자본 배치처 방향성 공백</div>
+    <a class="article-link" href="https://www.ft.com/content/ab525fb8-6de1-4f2d-b37f-52f23ad48eac" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 05:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Social Security를 S&P 500에 투자했다면 400만 달러 - 제도 개혁 논쟁</div>
+    <div class="article-title-en">‘The numbers don’t lie’: If I had invested my Social Security in the S&P 500 I’d have $4 million. Is the system broken?</div>
+    <div class="article-keypoint">Social Security를 S&P 500 투자 시 400만 달러 확보 가능 - 제도 개혁 논쟁 재점화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-numbers-dont-lie-if-i-had-invested-my-social-security-in-the-s-p-500-id-have-4-million-is-the-system-broken-d41b1779?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 06:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">정치 전문가들의 오스카상인가 민주주의 위협인가? 캔버라 예산 모금행사 시즌</div>
+    <div class="article-title-en">The ‘Oscars for political nerds’ or a threat to democracy? Grab a ticket, it’s Canberra’s budget fundraiser season</div>
+    <div class="article-keypoint">호주 정당, 예산안 발표 야간 수천달러 모금 행사 논란 - 민주주의 vs 정치자금 딜레마</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/may/04/federal-budget-season-canberra-fundraising-oscars-for-politcal-nerds" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 00:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
