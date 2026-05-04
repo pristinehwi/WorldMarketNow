@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-05 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/05 07:48 KST</div>
+    <div class="header-date">2026-05-05</div>
+    <div class="header-headline">AI 인프라 경쟁 격화 - 기업용 서비스 확대 본격화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Trump 유럽車 25% 관세 발동 여부와 Iran 핵시설 피해 평가 - 무역·에너지 이중 불확실성</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">기업 AI 인프라 투자 및 경쟁 구도 재편</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#11</span>
+    </div>
+    <div class="theme-summary">Anthropic과 OpenAI가 각각 Goldman Sachs, Blackstone 등 월가 자산운용사들과 기업용 AI 서비스 공급을 위한 합작법인을 출범시키며, AI 인프라의 상업화가 본격 가속화되고 있다. Anthropic은 15억 달러 규모 합작투자를 발표했으며, FIS와는 금융범죄 탐지용 AI 에이전트 개발 파트너십을 체결했다. OpenAI는 Cerebras와의 긴밀한 협력을 바탕으로 266억 달러 이상 가치평가가 예상되는 IPO를 추진 중이며, Musk와의 소송전에서는 Musk가 합의를 요구하며 협박성 메시지를 보낸 정황이 공개됐다. Palantir는 사상 최고 매출 증가율을 기록하며 미국 시장 수요 폭발을 확인했고, ON Semiconductor는 AI 데이터센터 수요가 실적 회복을 견인하고 있다고 밝혔다. 한편 SpaceX는 데이터센터를 궤도상에 배치하는 프로젝트를 추진 중이며, Musk는 Twitter 주식 매입 관련 SEC 소송을 150만 달러 합의금으로 종결했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">통화정책 신뢰성 및 디지털 화폐 인프라 경쟁</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #12~#18</span>
+    </div>
+    <div class="theme-summary">Fed의 Powell 의장이 Trump 행정부의 '무자비한' 금리인하 압박에도 불구하고 임기 후에도 이사로 남기로 결정하며, 전직 뉴욕 연은 총재 Dudley는 이것이 시장과 대중에 안정성 신호를 보낸다고 평가했다. ECB는 2025년 연례보고서를 통해 디지털 자산과 토큰화가 결제 효율성과 통화정책 전달경로에 미치는 영향을 분석하며, 중앙은행의 적극적 대응 필요성을 강조했다. 미국은 브라질의 즉시결제 플랫폼 Pix에 대해 경고를 발하며, 통화 주권의 기반이 환율이나 준비통화가 아닌 결제 인프라로 이동하고 있음을 부각시켰다. Fed는 상업용부동산(CRE) 시장의 '에버그리닝(부실 연장)' 문제에 관한 연구논문을 발표했으며, ECB 이사회는 초과지급준비금 보수 관련 결정을 개정했다. Circle 등 스테이블코인 관련 주식은 Clarity Act 법안 진전으로 상승세를 보였다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Trump 관세정책 불확실성 재부상</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #19~#21</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 5월 1일 유럽산 자동차 및 트럭에 대한 25% 관세 부과 의사를 밝히면서, 지난여름 협상된 Turnberry 무역협정의 한계가 다시 드러났다. EU 재무장관들은 보복 옵션을 검토하겠다고 밝혔으나 자제를 촉구하는 입장도 함께 표명했다. 이번 관세 위협은 유럽 자동차산업에 직접적 타격을 줄 전망이며, 작년 합의의 신뢰성을 훼손하며 대서양 간 무역 긴장을 재점화시키고 있다. Trump 행정부의 개인화되고 불투명한 '크로니 외교'는 미국의 신뢰성과 국익 일관성을 저해한다는 비판이 제기되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">이란 지정학 리스크 및 중동 에너지 공급 불확실성</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #22~#25</span>
+    </div>
+    <div class="theme-summary">Trump 행정부가 이란의 호르무즈 해협 봉쇄를 뚫기 위한 'Project Freedom' 군사작전을 발동하며 중동 긴장이 극적으로 고조됐다. 미국 정보당국 평가에 따르면, 지난 여름 미-이스라엘 공격 이후 이란이 핵무기 제조에 필요한 시간은 약 1년으로 추정되며, 최근 공격으로 인한 핵시설 추가 피해는 제한적인 것으로 분석됐다. Bessent 재무장관은 Trump-시진핑 정상회담을 앞두고 중국이 이란 문제에 외교적으로 개입할 것을 촉구했다. Morgan Stanley는 이란 공급 차질을 근거로 Westlake Chemical 목표주가를 상향 조정했으며, 원유 가격 변동성이 FRED 데이터에서도 확인되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">물류·전자상거래 구조변화 압력</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #26</span>
+    </div>
+    <div class="theme-summary">Amazon이 제3자 물류서비스 확대를 발표하며 소포 운송 및 항공화물 업계의 '분수령'으로 작용하고 있다. 이는 FedEx와 UPS뿐 아니라 트럭 운송업체 및 제3자 중개업체에도 직접적 경쟁압력을 가하며, 관련 운송주들이 일제히 급락했다. Amazon의 물류 인프라 통합 및 독립 사업화는 전자상거래 밸류체인 전반의 수익성 구도를 재편할 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">미국 국내정책 및 경제 불확실성</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #27~#28</span>
+    </div>
+    <div class="theme-summary">2025년 중반 시행된 연방정부의 새로운 근로 요건 이후 SNAP(푸드스탬프) 등록자가 급격히 감소하며 복지정책 긴축 효과가 가시화되고 있다. 한편 인도를 대상으로 한 경제정책 불확실성 지수가 집계되며, 신흥시장 정책 리스크에 대한 모니터링이 강화되고 있다. 미국의 예금계좌 금리 동향 및 석유 순수출 전환 등 구조적 변화도 FRED 블로그를 통해 추적되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #29~#30</span>
+    </div>
+    <div class="theme-summary">특정 테마로 분류하기 어려운 주요 동향을 포함합니다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">기업 AI 인프라 투자 및 경쟁 구도 재편</span>
+    <span class="theme-label-range">Article #1~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Anthropic과 OpenAI, 기업용 AI 서비스 합작법인 출범</div>
+    <div class="article-title-en">Anthropic and OpenAI are both launching joint ventures for enterprise AI services</div>
+    <div class="article-keypoint">Anthropic·OpenAI 모두 월가와 기업용 AI 합작 출범 - 상용화 경쟁 본격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 00:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Anthropic, Goldman·Blackstone 포함 15억 달러 합작투자 발표</div>
+    <div class="article-title-en">Anthropic Enters $1.5 Billion Joint Venture That Includes Goldman, Blackstone</div>
+    <div class="article-keypoint">Anthropic, Goldman·Blackstone 등과 15억 달러 합작 발표 - 월가 AI 진출 가속</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/anthropic-enters-15-billion-joint-venture-includes-goldman-blackstone" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 23:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Palantir, 사상 최고 매출 성장 기록하며 'AI 슬롭' 비판</div>
+    <div class="article-title-en">Palantir posts its fastest revenue growth ever while calling out ‘AI slop’</div>
+    <div class="article-keypoint">Palantir, 사상 최고 매출 증가율 기록 - 미국 시장 AI 수요 폭발 확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/palantir-posts-its-fastest-revenue-growth-ever-while-calling-out-ai-slop-03108298?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 06:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Anthropic과 FIS, 은행 금융범죄 단속용 AI 에이전트 개발</div>
+    <div class="article-title-en">Anthropic and FIS Are Building an AI Agent to Help Banks Police Financial Crimes</div>
+    <div class="article-keypoint">Anthropic·FIS, 은행 금융범죄 탐지용 AI 에이전트 공동 개발 착수</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/anthropic-and-fis-are-building-an-ai-agent-to-help-banks-police-financial-crimes-5a0be5a8?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 07:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Elon Musk, 합의 요구 후 Greg Brockman·Sam Altman에 불길한 문자 발송, OpenAI 주장</div>
+    <div class="article-title-en">Elon Musk sent ominous texts to Greg Brockman, Sam Altman after asking for a settlement, OpenAI claims</div>
+    <div class="article-keypoint">Musk, OpenAI 합의 요구하며 협박성 메시지 발송 - 소송전 이면 갈등 노출</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/04/elon-musk-sent-ominous-texts-to-greg-brockman-sam-altman-after-asking-for-a-settlement-openai-claims/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 01:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">OpenAI 재판에서 Elon Musk의 유일한 AI 전문가 증인, AGI 군비경쟁 우려</div>
+    <div class="article-title-en">Elon Musk’s only AI expert witness at the OpenAI trial fears an AGI arms race</div>
+    <div class="article-keypoint">OpenAI 소송 전문가 증인, AGI 군비경쟁 우려하며 정부 규제 필요성 주장</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/04/elon-musks-only-expert-witness-at-the-openai-trial-fears-an-agi-arms-race/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 01:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">OpenAI의 긴밀한 파트너 Cerebras, 블록버스터 IPO 궤도 진입</div>
+    <div class="article-title-en">OpenAI’s cozy partner Cerebras is on track for a blockbuster IPO</div>
+    <div class="article-keypoint">OpenAI 파트너 Cerebras, 266억 달러 이상 가치평가 IPO 추진 중</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/04/openais-cozy-partner-cerebras-is-on-track-for-a-blockbuster-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 06:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Anthropic, 월가 금융사들과 15억 달러 합작법인 공개</div>
+    <div class="article-title-en">Anthropic Unveils $1.5 Billion Joint Venture With Wall Street Firms</div>
+    <div class="article-keypoint">Anthropic, Goldman·Blackstone·H&F 각 3억 달러 투자 15억 달러 합작 출범</div>
+    <a class="article-link" href="https://www.wsj.com/business/deals/anthropic-nears-1-5-billion-joint-venture-with-wall-street-firms-8f5448ee?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 22:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SpaceX, 데이터센터를 궤도에 올리려 한다. 필요한 것은 무엇인가.</div>
+    <div class="article-title-en">SpaceX Wants to Blast Data Centers Into Orbit. Here’s What It May Take.</div>
+    <div class="article-keypoint">SpaceX, 궤도상 데이터센터 배치 프로젝트 추진 - 기술·비용 장벽 분석 주목</div>
+    <a class="article-link" href="https://www.wsj.com/tech/spacex-wants-to-blast-data-centers-into-orbit-heres-what-it-may-take-adf6140a?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Elon Musk, Twitter 소송 합의로 가벼운 처벌에 그쳐</div>
+    <div class="article-title-en">Elon Musk gets just a slap on the wrist as he settles Twitter lawsuit</div>
+    <div class="article-keypoint">Musk, Twitter 주식 매입 관련 SEC 소송 150만 달러로 합의 종결</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/elon-musk-gets-just-a-slap-on-the-wrist-as-he-settles-twitter-lawsuit-77952e76?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 06:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">SEC, Twitter 주식 매입 관련 Elon Musk 소송 합의</div>
+    <div class="article-title-en">SEC to Settle Lawsuit Against Elon Musk Over Twitter Share Purchases</div>
+    <div class="article-keypoint">SEC, Musk의 Twitter 지분 공시 지연 소송 합의 - 150만 달러 제재에 그쳐</div>
+    <a class="article-link" href="https://www.wsj.com/finance/regulation/sec-settles-lawsuit-against-elon-musk-over-twitter-share-purchases-0d7dc1c0?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 06:42 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">통화정책 신뢰성 및 디지털 화폐 인프라 경쟁</span>
+    <span class="theme-label-range">Article #12~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">FEDS 논문: 상업용부동산 에버그리닝 - 연장인가 수정인가?</div>
+    <div class="article-title-en">FEDS Paper: Pretend or Amend? On Evergreening in CRE</div>
+    <div class="article-keypoint">Fed CRE 부실 연장 실태 연구 공개 - 은행권 자산건전성 리스크 재부각</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/pretend-or-amend-on-evergreening-in-cre.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 03:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Luis de Guindos: ECB 2025 연례보고서, 유럽의회 경제통화위원회 발표</div>
+    <div class="article-title-en"> Luis de Guindos: Presentation of the ECB Annual Report 2025 to the Committee on Economic and Monetary Affairs of the European Parliament</div>
+    <div class="article-keypoint">ECB 부총재 8년 임기 마지막 보고, 디지털 자산이 통화정책에 미치는 영향 강조</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp260504_1~c7601bf295.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">통화 인프라를 둘러싼 지정학적 전쟁</div>
+    <div class="article-title-en">The Geopolitical Battle Over Monetary Infrastructure</div>
+    <div class="article-keypoint">브라질 Pix 플랫폼 견제 - 통화 주권이 결제 인프라로 이동하는 구조적 변화</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/monetary-sovereignty-now-about-infrastructure-brazil-pix-cbdc-by-camila-villard-duran-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 21:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Piero Cipollone: 디지털 자산, 결제 효율성과 통화정책</div>
+    <div class="article-title-en"> Piero Cipollone: Digital assets, payment efficiency and monetary policy </div>
+    <div class="article-keypoint">ECB 이사회, 디지털 자산이 결제 효율성과 통화정책 전달에 미치는 영향 분석</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp260504~3e75e8b138.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 20:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Dudley, Fed에 대한 '무자비한' 공격 후 Powell 잔류 지지</div>
+    <div class="article-title-en">Dudley Backs Powell Staying On After ‘Merciless’ Attacks on Fed</div>
+    <div class="article-keypoint">Powell, Trump 압박에도 Fed 이사 잔류 결정 - 통화정책 독립성 신호 강화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-04/dudley-backs-powell-staying-on-after-merciless-attacks-on-fed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 22:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Circle, 스테이블코인 법안 진전으로 암호화폐 주식 상승 주도</div>
+    <div class="article-title-en">Circle leads crypto stocks higher as stablecoin deal puts critical bill back in play</div>
+    <div class="article-keypoint">Circle 등 스테이블코인 주 상승 - Clarity Act 진전으로 규제 불확실성 완화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/bitcoin-busted-through-80-000-for-the-first-time-since-january-heres-the-crucial-level-it-needs-to-hold-right-now-038c252f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 06:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">ECB 이사회의 결정사항(금리 결정 외 추가사항)</div>
+    <div class="article-title-en"> Decisions taken by the Governing Council of the ECB (in addition to decisions setting interest rates)</div>
+    <div class="article-keypoint">ECB, 초과지급준비금 보수 관련 결정 개정 - 유동성 관리정책 미세조정</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/govcdec/otherdec/2026/html/ecb.gc260504~07dc9bac72.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 22:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Trump 관세정책 불확실성 재부상</span>
+    <span class="theme-label-range">Article #19~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">EU, Trump 자동차 관세 채택 시 보복 검토하나 자제 촉구</div>
+    <div class="article-title-en">EU Vows Action If Trump Adopts Car Tariffs, But Urges Restraint</div>
+    <div class="article-keypoint">EU, Trump 유럽車 25% 관세 위협에 보복 검토하되 자제 당부 - 협상 교착 재현 우려</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-04/eu-vows-action-if-trump-adopts-car-tariffs-but-urges-restraint" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 22:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump의 크로니 외교가 치르는 높은 대가</div>
+    <div class="article-title-en">The High Cost of Trump’s Crony Diplomacy</div>
+    <div class="article-keypoint">Trump의 개인화·불투명 외교, 미국 신뢰 및 국익 일관성 훼손 비판 고조</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-crony-diplomacy-will-undermine-us-global-power-in-the-long-term-by-brahma-chellaney-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 18:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Trump의 유럽 자동차산업 재위협, Turnberry 합의 더욱 훼손</div>
+    <div class="article-title-en">Trump's renewed threats against the European automotive industry further undermine the Turnberry deal</div>
+    <div class="article-keypoint">Trump, 유럽車 25% 관세 재위협 - Turnberry 합의 신뢰성 훼손 심화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/05/05/trump-s-renewed-threats-against-the-european-automotive-industry-further-undermine-the-turnberry-deal_6753126_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 07:18 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">이란 지정학 리스크 및 중동 에너지 공급 불확실성</span>
+    <span class="theme-label-range">Article #22~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Donald Trump, 이란 호르무즈 해협 봉쇄 돌파 위해 군함 파견</div>
+    <div class="article-title-en">Donald Trump sends warships to break Iran’s strait of Hormuz blockade</div>
+    <div class="article-keypoint">Trump, 호르무즈 해협 봉쇄 돌파 작전 발동 - 중동 에너지 리스크 급상승</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/04/shipping-bosses-nervous-trump-plan-to-guide-vessels-strait-of-hormuz-iran" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 04:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">美 정보당국, 이란 핵 프로그램에 대한 신규 피해 제한적 평가 - 소식통</div>
+    <div class="article-title-en">US intelligence indicates limited new damage to Iran's nuclear program, sources say</div>
+    <div class="article-keypoint">美 정보당국, 이란 핵무기 제조 시한 여전히 약 1년 - 추가 피해 제한적 평가</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/us-intelligence-indicates-limited-new-damage-to-irans-nuclear-program-sources-say" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 05:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Bessent, Trump-시진핑 정상회담 앞두고 중국에 이란 외교 촉구</div>
+    <div class="article-title-en">Bessent urges China to step up diplomacy on Iran ahead of Trump-Xi summit</div>
+    <div class="article-keypoint">Bessent, Trump-시진핑 회담 앞두고 중국의 이란 외교 개입 촉구</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/bessent-urges-china-to-step-up-diplomacy-on-iran-ahead-of-trump-xi-summit" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 23:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Morgan Stanley, 이란 공급 차질 근거로 Westlake Chemical 목표주가 상향</div>
+    <div class="article-title-en">Morgan Stanley raises Westlake Chemical price target on Iran supply disruption</div>
+    <div class="article-keypoint">Morgan Stanley, 이란 공급 차질 근거로 Westlake Chemical 목표가 상향</div>
+    <a class="article-link" href="https://www.investing.com/news/analyst-ratings/morgan-stanley-raises-westlake-chemical-price-target-on-iran-supply-disruption-93CH-4657650" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 22:41 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">물류·전자상거래 구조변화 압력</span>
+    <span class="theme-label-range">Article #26</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">FedEx·UPS 주가 급락, Amazon 물류 진출이 '분수령'</div>
+    <div class="article-title-en">FedEx, UPS Shares Sink on ‘Watershed’ Amazon Logistics Move</div>
+    <div class="article-keypoint">Amazon 물류 독립사업 확대 발표, FedEx·UPS 직격탄 - 운송주 일제 급락</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-04/fedex-ups-shares-tumble-on-amazon-s-watershed-logistics-move" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 23:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">미국 국내정책 및 경제 불확실성</span>
+    <span class="theme-label-range">Article #27~#28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">인도의 경제정책 불확실성과 총경제 활동</div>
+    <div class="article-title-en">Economic policy uncertainty and aggregate economic activity in India</div>
+    <div class="article-keypoint">인도 경제정책 불확실성 지수 집계 - 신흥시장 정책 리스크 모니터링 강화</div>
+    <a class="article-link" href="https://fredblog.stlouisfed.org/2026/05/economic-policy-uncertainty-and-aggregate-economic-activity-in-india/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">새로운 연방 근로요건 이후 복지 등록 급감</div>
+    <div class="article-title-en">Welfare Enrollment Drops Sharply Following New Federal Work Requirements</div>
+    <div class="article-keypoint">미 연방정부 근로요건 강화 후 SNAP 등록자 급감 - 복지정책 긴축 가시화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/welfare-enrollment-drops-sharply-following-new-federal-work-requirements" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 04:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #29~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">AMD 실적 앞두고 주가 급등, 그러나 애널리스트는 문제 지적</div>
+    <div class="article-title-en">AMD’s stock has surged ahead of earnings, but this analyst sees a problem ahead</div>
+    <div class="article-keypoint">AMD 실적 전 주가 급등에도 자체 생산 없어 CPU 수혜 제한적 전망</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/amds-stock-has-surged-ahead-of-earnings-but-this-analyst-sees-a-problem-ahead-2876dc39?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 06:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">ON Semiconductor 2026년 1분기 발표자료: AI 데이터센터 급증이 회복 견인</div>
+    <div class="article-title-en">ON Semiconductor Q1 2026 slides: AI data center surge drives recovery</div>
+    <div class="article-keypoint">ON Semiconductor, AI 데이터센터 수요 급증으로 실적 회복세 확인</div>
+    <a class="article-link" href="https://www.investing.com/news/company-news/on-semiconductor-q1-2026-slides-ai-data-center-surge-drives-recovery-93CH-4657646" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/04 22:38 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
