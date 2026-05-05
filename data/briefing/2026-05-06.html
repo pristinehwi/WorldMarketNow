@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-06 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/06 07:48 KST</div>
+    <div class="header-date">2026-05-06</div>
+    <div class="header-headline">반도체·AI 섹터 급등으로 美증시 사상최고 경신</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 차기 Fed 의장 체제 금리인상 가능성과 메모리 공급망 정책이 반도체 랠리 지속 여부 결정</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">통화정책 불확실성 재부상</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">차기 Fed 의장 후보 Warsh 체제에서 다음 정책 변화가 금리인하가 아닌 인상일 수 있다는 관측이 채권시장에 부상하고 있다. 2026년 1분기 최근 대졸자 실업률이 높은 수준을 유지하고 있어 노동시장 냉각 신호가 있음에도, 금리인상 베팅이 확대되는 것은 통화정책 방향성에 대한 불확실성을 반영한다. Powell 의장은 트럼프 행정부의 압력 속에서도 Fed 독립성을 수호한 것으로 평가받으며 퇴임을 앞두고 있다. Bowman 부의장은 소비자 사기가 금융시스템에 대한 위험을 증가시키고 있으며 거의 모든 사기가 은행계좌와 연결되어 있다고 경고했다. ECB의 Lane 이사는 기후변화가 통화정책에 미치는 영향을 다루며, 2023~2025년이 기록상 가장 더운 해였음을 확인하며 극한 기후 사건의 빈도 증가를 지적했다. 스테이블코인이 국제 통화·금융시스템에 미치는 영향에 대한 논의도 진행 중이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">반도체·메모리 섹터 구조적 재평가</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#13</span>
+    </div>
+    <div class="theme-summary">메모리 칩 가격 급등과 공급 부족 속에 트럼프 행정부가 공급망 연합을 통해 메모리 칩 부족 완화에 나서고 있다. Micron 주가는 메모리 시장이 과거의 극심한 호황-불황 사이클을 벗어날 수 있다는 IDC 분석으로 급등했으며, 이번에는 다르다는 평가가 나온다. AMD는 실적 발표 후 초기 급락에서 반등해 사상최고치를 경신했으며, Intel은 Apple과의 파트너십 기대감으로 Oracle 시가총액을 추월하고 2000년 최고치 근접을 노리고 있다. 반도체·메모리주 랠리가 미 증시를 화요일 사상최고 종가로 견인했으며, 미-이란 휴전 지속도 심리 개선에 기여했다. Nvidia가 투자한 RadixArk는 AI 컴퓨팅의 메모리 효율성을 높이는 솔루션으로 4억 달러 밸류에이션에 1억 달러를 조달했다. AI 컴퓨팅이 메모리 집약적 특성으로 인해 메모리 수요가 구조적으로 증가하는 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">생성AI 경쟁 격화와 엔터프라이즈 확장</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #14~#21</span>
+    </div>
+    <div class="theme-summary">OpenAI는 법률, 의료, 금융 등 민감 영역에서 환각 현상을 줄인 GPT-5.5 Instant를 ChatGPT 기본 모델로 출시하며 저지연 성능을 유지했다. Anthropic은 금융서비스 기업을 위한 새로운 AI 에이전트를 출시하며 IPO를 향한 기업 매출 성장을 가속화하고 있다. Meta는 OpenAI 유사의 고급 '에이전트형' AI 어시스턴트를 소비자용으로 개발 중이며, 미성년자 식별을 위해 키와 골격 구조를 분석하는 AI 비전 시스템을 특정 국가에서 가동했다. Google, Microsoft, xAI는 국가안보 관련 역량과 위험 평가를 위해 안전장치가 제거된 초기 AI 모델을 미국 정부와 공유하기로 합의했다. Etsy는 ChatGPT 내 네이티브 앱을 출시해 대화형 쇼핑 경험을 제공하며 AI 전략을 확대했다. Klaviyo는 AI 투입으로 1분기 실적 예상을 상회하고 마진은 사상최고를 기록했으며, Musk와 OpenAI 간 법정 공방이 격화되는 가운데 Sam Altman이 다음 주 증언 예정이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">빅테크 밸류에이션 재평가와 실적 엇갈림</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #22~#27</span>
+    </div>
+    <div class="theme-summary">Amazon 주가는 2% 상승만으로 시가총액 3조 달러 클럽 진입이 가능한 상황이며, 역사상 네 번째 기업이 될 전망이다. Palantir는 호실적에도 주가가 하락했는데, 분석가들은 국제 상업 부문의 부진과 높은 밸류에이션이 오차 여지를 남기지 않는다고 지적했다. PayPal은 6월 분기 가이던스가 기대에 못 미쳐 주가가 하락했으며, 최근 분기 모멘텀에도 불구하고 월가를 실망시켰다. Prudential Financial은 1분기 이익이 월가 예상을 상회하며 Andy Sullivan CEO에 대한 압박을 완화했지만, 일본 시장에서의 판매 중단 문제를 여전히 안고 있다. 크립토 투자가 냉각되는 가운데 a16z crypto는 22억 달러 규모 펀드를 조성하며 AI가 아닌 암호화폐에 집중하겠다는 의지를 보였다. 캐나다 금 광산업체 Goldquest Mining은 도미니카공화국이 대규모 시위 여파로 Romero 금광 프로젝트 운영을 중단시키자 이번 주 두 번째로 거래 정지됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">금융시스템 리스크와 규제 이슈</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #28</span>
+    </div>
+    <div class="theme-summary">Bowman Fed 부의장은 소비자 사기와 스캠이 금융시스템에 대한 위험을 증가시키고 있으며, 거의 모든 사기가 은행계좌와 연결되어 있다고 강조하며 조율된 대응의 필요성을 제기했다. 스테이블코인이 국제 통화 및 금융시스템에 미치는 영향에 대한 논의가 진행되고 있으며, 금융 혁신과 시스템 안정성 간 균형이 과제로 부상했다. Bowman은 별도 연설에서 금융시스템 내 인공지능의 역할에 대해서도 다루며 기술 혁신이 규제 프레임워크에 미치는 함의를 검토했다. 이는 AI 및 암호화폐 기술이 금융 인프라에 통합되면서 시스템 리스크와 소비자 보호에 대한 규제 당국의 우려가 커지고 있음을 반영한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #29~#30</span>
+    </div>
+    <div class="theme-summary">인도는 급속히 도시화되고 있으나 열악한 공공서비스, 약한 지방정부, 규제되지 않는 무분별한 확장이 생산성 성장을 저해하고 있다. 해결책은 지방정부 권한 강화, 행정 효율성 개선, 조율 강화를 통한 거주 가능한 도시 구축에 있다. 한 휠체어 사용자는 아파트 엘리베이터가 16일간 고장나 호텔 비용을 보상받지 못한 채 법적 대응을 고민하고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">통화정책 불확실성 재부상</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Bowman 부의장, 소비자 사기 방어를 위한 조율된 접근</div>
+    <div class="article-title-en">Bowman, A Coordinated Approach to Consumer Fraud Protection</div>
+    <div class="article-keypoint">Bowman 부의장, 소비자 사기가 은행계좌 연동되며 금융시스템 위험 증가 경고</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/bowman20260505a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">최근 대졸자 실업률 높은 수준 유지, NY Fed 발표</div>
+    <div class="article-title-en">Unemployment for Recent College Grads Remains High, NY Fed Says</div>
+    <div class="article-keypoint">2026년 1분기 미국 최근 대졸자 실업률 고수준 지속 - 노동시장 냉각 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-05/unemployment-for-recent-college-grads-remains-high-ny-fed-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 22:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Jerome Powell의 최고의 순간</div>
+    <div class="article-title-en">Jerome Powell’s Finest Hour</div>
+    <div class="article-keypoint">Powell 의장, 트럼프 압력 속 Fed 독립성 수호로 역사적 평가 받으며 퇴임 임박</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/jerome-powell-will-be-remembered-for-defending-us-institutions-by-desmond-lachman-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 20:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">스테이블코인이 국제 통화 및 금융시스템에 미치는 영향</div>
+    <div class="article-title-en">The impact of stablecoins on the international monetary and financial system</div>
+    <div class="article-keypoint">스테이블코인의 국제 통화·금융시스템 영향 논의 본격화 - 규제 프레임워크 과제</div>
+    <a class="article-link" href="https://www.bis.org/publ/bppdf/bispap170.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 17:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Philip R. Lane: 기후변화와 통화정책</div>
+    <div class="article-title-en"> Philip R. Lane: Climate change and monetary policy </div>
+    <div class="article-keypoint">ECB Lane 이사, 2023~2025년 역대 최고 기온 기록하며 기후변화의 통화정책 영향 강조</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp260505_1~2e47b4c747.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 00:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">트레이더들, Warsh Fed가 인하 전 금리인상 가능성에 베팅 확대</div>
+    <div class="article-title-en">Traders Ramp Up Bets Warsh’s Fed Could Hike Rates Before Cutting</div>
+    <div class="article-keypoint">Warsh 차기 Fed 의장 체제서 다음 정책변화가 인하 아닌 인상 가능성에 채권 베팅 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-05/traders-ramp-up-bets-warsh-s-fed-could-hike-rates-before-cutting" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 05:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Fed의 Bowman, 소비자 사기가 금융시스템 위험 제기</div>
+    <div class="article-title-en">Fed’s Bowman Says Consumer Fraud Poses Risks to Financial System</div>
+    <div class="article-keypoint">Bowman Fed 부의장, 거의 모든 소비자 사기가 은행계좌 연동돼 금융시스템 위험 증대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-05/fed-s-bowman-says-consumer-fraud-poses-risks-to-financial-system" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 23:12 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">반도체·메모리 섹터 구조적 재평가</span>
+    <span class="theme-label-range">Article #8~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Micron 주가 급등, 새 보고서가 약세론에 찬물 - '이번엔 다르다'</div>
+    <div class="article-title-en">Micron’s stock soars as new report throws cold water on the bear case: ‘This time is different.’</div>
+    <div class="article-keypoint">IDC, 메모리 시장 호황-불황 사이클 탈피 가능 분석으로 Micron 급등 - 이번엔 다르다</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microns-stock-soars-as-new-report-throws-cold-water-on-the-bear-case-this-time-is-different-b5a5cc18?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 07:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Intel 시가총액 Oracle 추월하며 주가 폭등</div>
+    <div class="article-title-en">Intel is now worth more than Oracle as its stock explodes higher</div>
+    <div class="article-keypoint">Intel, Apple 파트너십 기대감으로 Oracle 시총 추월하며 2000년 최고치 근접</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/intel-is-now-worth-more-than-oracle-as-its-stock-explodes-higher-7d9bfe3d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 07:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">AMD 실적 발표 후 급락 반전해 사상최고 경신</div>
+    <div class="article-title-en">AMD Dumps & Pumps (To New Record High) After Beat-And-Raise</div>
+    <div class="article-keypoint">AMD, 실적 발표 후 초기 급락 반전해 사상최고 경신 - 매출 102.5억달러로 예상 상회</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/amd-dumps-pumps-new-record-high-after-beat-and-raise" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 05:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">트럼프 행정부, 메모리 칩 부족과 가격 급등 완화 위한 공급망 연합 추진</div>
+    <div class="article-title-en">Trump Admin Working To Ease Memory Chip Crunch And Soaring Prices With Supply Chain Coalition</div>
+    <div class="article-keypoint">트럼프 행정부, 메모리 칩 공급 부족과 가격 급등 완화 위한 공급망 연합 추진</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/trump-admin-working-ease-memory-chip-crunch-and-soaring-prices-supply-chain-coalition" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">미 증시 사상최고 종가, 반도체 랠리가 견인</div>
+    <div class="article-title-en">US Stocks Close at Record High, Powered by Rallying Chipmakers</div>
+    <div class="article-keypoint">미 증시 화요일 사상최고 종가 경신 - 반도체·메모리주 랠리와 미-이란 휴전 지속 호재</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-05/us-stock-futures-rise-with-eyes-on-iran-ceasefire-amd-results" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 20:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">AI 컴퓨팅은 메모리 집약적, Nvidia 투자 스타트업이 해법 제시</div>
+    <div class="article-title-en">AI Computing Is a Memory Hog. An Nvidia-Backed Startup Has an Answer.</div>
+    <div class="article-keypoint">Nvidia 투자 RadixArk, AI 컴퓨팅 메모리 효율 솔루션으로 4억달러 밸류에 1억달러 조달</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/ai-computing-is-a-memory-hog-an-nvidia-backed-startup-has-an-answer-383a5710?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">생성AI 경쟁 격화와 엔터프라이즈 확장</span>
+    <span class="theme-label-range">Article #14~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">OpenAI, ChatGPT 새 기본 모델 GPT-5.5 Instant 출시</div>
+    <div class="article-title-en">OpenAI releases GPT-5.5 Instant, a new default model for ChatGPT</div>
+    <div class="article-keypoint">OpenAI, 법률·의료·금융 환각 감소한 GPT-5.5 Instant 출시로 ChatGPT 기본모델 교체</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/05/openai-releases-gpt-5-5-instant-a-new-default-model-for-chatgpt/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Anthropic, 금융서비스 기업용 새 AI 에이전트 출시</div>
+    <div class="article-title-en">Anthropic Releases New AI Agents for Financial Services Firms</div>
+    <div class="article-keypoint">Anthropic, 금융서비스 AI 에이전트 출시로 IPO 향한 기업 매출 성장 본격화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/anthropic-releases-new-ai-agents-for-financial-services-firms-e2829b37?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 02:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Meta, 소비자용 고급 '에이전트형' AI 어시스턴트 개발 계획</div>
+    <div class="article-title-en">Meta plans advanced ‘agentic’ AI assistant for consumers</div>
+    <div class="article-keypoint">Meta, OpenAI 유사 고급 에이전트형 AI 어시스턴트 소비자용 개발 중 - 일상 업무 수행</div>
+    <a class="article-link" href="https://www.ft.com/content/5b48360c-53f2-444a-80a8-f7034750fd62" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 04:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Klaviyo 2026년 1분기 슬라이드: AI 투입이 실적 견인, 마진 사상최고</div>
+    <div class="article-title-en">Klaviyo Q1 2026 slides: AI push drives beat, margins hit record high</div>
+    <div class="article-keypoint">Klaviyo, AI 투입으로 1분기 실적 예상치 상회하며 마진 사상최고 기록</div>
+    <a class="article-link" href="https://www.investing.com/news/company-news/klaviyo-q1-2026-slides-ai-push-drives-beat-margins-hit-record-high-93CH-4661437" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 22:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Musk '나를 때리려 했다', OpenAI 임원 법정 증언</div>
+    <div class="article-title-en">Musk ‘was going to hit me,’ OpenAI executive says at trial</div>
+    <div class="article-keypoint">Musk-OpenAI 법정 공방 격화, Sam Altman 다음 주 증언 예정 - Musk 폭력 위협 주장</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/musk-was-going-to-hit-me-openai-executive-says-at-trial" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Meta, 미성년자 식별 위해 키와 골격 구조 분석 AI 활용</div>
+    <div class="article-title-en">Meta will use AI to analyze height and bone structure to identify if users are underage</div>
+    <div class="article-keypoint">Meta, 키·골격 분석 AI로 미성년자 식별 시스템 특정 국가 가동 - 확대 추진</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/05/meta-will-use-ai-to-analyze-height-and-bone-structure-to-identify-if-users-are-underage/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 23:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Etsy, AI 전략 지속하며 ChatGPT 내 앱 출시</div>
+    <div class="article-title-en">Etsy launches its app within ChatGPT as it continues its AI push</div>
+    <div class="article-keypoint">Etsy, ChatGPT 내 네이티브 앱 출시로 대화형 쇼핑 경험 제공하며 AI 전략 확대</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/05/etsy-launches-its-app-within-chatgpt-as-it-continues-its-ai-push/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 00:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Google, Microsoft, xAI, 초기 AI 모델을 미국과 공유 합의</div>
+    <div class="article-title-en">Google, Microsoft and xAI Agree to Share Early AI Models With U.S.</div>
+    <div class="article-keypoint">Google·Microsoft·xAI, 국가안보 평가 위해 안전장치 제거 AI 모델 미 정부 공유 합의</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/google-microsoft-and-xai-agree-to-share-early-ai-models-with-u-s-f95a88d1?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 22:02 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">빅테크 밸류에이션 재평가와 실적 엇갈림</span>
+    <span class="theme-label-range">Article #22~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Palantir 주가 호실적에도 하락, 월가의 지적 사항들</div>
+    <div class="article-title-en">Palantir’s stock falls despite upbeat earnings. Here are Wall Street’s quibbles.</div>
+    <div class="article-keypoint">Palantir 호실적에도 주가 하락 - 국제 상업 부진과 높은 밸류에이션이 부담</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/palantirs-stock-falls-despite-upbeat-earnings-here-are-wall-streets-quibbles-4ba334e5?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 07:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">캐나다 금 광산업체, 프로젝트 중단으로 재차 거래 정지</div>
+    <div class="article-title-en">Canadian Gold Miner Halts Trading Again as Project Blocked</div>
+    <div class="article-keypoint">캐나다 Goldquest, 도미니카 Romero 금광 시위로 운영 중단되며 이번 주 2차 거래 정지</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-05/dominican-republic-protests-derail-canadian-gold-mining-project" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 21:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Prudential 이익 증가, 일본 판매 중단 문제 지속 중에도</div>
+    <div class="article-title-en">Prudential Profit Rises Even as Firm Grapples With Japan Pause</div>
+    <div class="article-keypoint">Prudential 1분기 이익 월가 예상 상회로 Sullivan CEO 압박 완화, 일본 판매 중단 여전</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-05/prudential-profit-rises-even-as-firm-grapples-with-japan-pause" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 06:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Amazon 주가 상승세로 독점 클럽 진입 임박</div>
+    <div class="article-title-en">Amazon’s stock has come alive, setting the company up to join an exclusive club</div>
+    <div class="article-keypoint">Amazon 시총 3조달러 진입 2% 앞 - 역사상 다섯 번째 기업 달성 임박</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/amazons-stock-has-come-alive-setting-the-company-up-to-join-an-exclusive-club-cb9e35b9?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 07:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">PayPal 실적 후 주가 하락, 월가를 불안하게 만든 것은</div>
+    <div class="article-title-en">PayPal’s stock falls after earnings. Here’s what’s spooking Wall Street.</div>
+    <div class="article-keypoint">PayPal 6월분기 가이던스 부진으로 주가 하락 - 최근 모멘텀에도 월가 실망</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/paypals-stock-rallies-after-first-earnings-report-of-the-new-era-heres-what-to-know-4310d291?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 07:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">암호화폐 냉각 속 a16z crypto 22억달러 펀드 조성</div>
+    <div class="article-title-en">As crypto cools, a16z crypto raises a $2.2B fund</div>
+    <div class="article-keypoint">크립토 냉각 속 a16z crypto 22억달러 펀드 조성 - AI 아닌 암호화폐 집중 의지</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/05/as-crypto-cools-a16zcrypto-raises-a-2-2b-fund/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 06:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">금융시스템 리스크와 규제 이슈</span>
+    <span class="theme-label-range">Article #28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Michelle W Bowman: 금융시스템 내 인공지능</div>
+    <div class="article-title-en">Michelle W Bowman: Artificial intelligence in the financial system</div>
+    <div class="article-keypoint">Bowman 부의장, 금융시스템 내 AI 역할 논의하며 기술혁신의 규제 함의 검토</div>
+    <a class="article-link" href="https://www.bis.org/review/r260504b.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/05 21:44 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #29~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">거주 가능한 도시가 인도 성장의 열쇠</div>
+    <div class="article-title-en">Livable Cities Are the Key to India’s Growth</div>
+    <div class="article-keypoint">인도 도시화 가속되나 열악한 공공서비스와 거버넌스가 생산성 성장 저해</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/how-india-can-build-livable-cities-by-shishir-gupta-et-al-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 01:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">휠체어 사용자, 16일간 엘리베이터 고장으로 호텔 비용 미보상, 법적 대응 가능한가</div>
+    <div class="article-title-en">I use a wheelchair and my apartment elevator has been broken for 16 days. I haven’t been reimbursed for my hotel. Do I have a legal case?</div>
+    <div class="article-keypoint">휠체어 사용자, 16일간 엘리베이터 고장으로 호텔 비용 미보상 법적 대응 검토</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/i-use-a-wheelchair-and-my-apartment-elevator-has-been-broken-for-16-days-i-havent-been-reimbursed-for-my-hotel-do-i-have-a-legal-case-6c3894bf?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 06:58 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
