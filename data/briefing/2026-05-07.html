@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-07 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/07 07:48 KST</div>
+    <div class="header-date">2026-05-07</div>
+    <div class="header-headline">AI 인프라 투자 가속과 통화정책 긴축 지속 압력</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Goolsbee의 생산성·인플레 경고가 금리인하 기대를 억제하며 기술주 밸류에이션 분기점 형성</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">통화정책 긴축 지속 압력과 중앙은행 커뮤니케이션</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">Fed의 Powell 의장이 임기 종료 후에도 이사회에 남으며 중앙은행 독립성 방어자로서의 레거시 구축을 시도하고 있다. 시카고 연은 Goolsbee 총재는 생산성 증가가 때로 인플레이션을 상승시킬 수 있다며 성급한 금리인하에 반대 입장을 명확히 했다. ECB는 유럽의회에 연차보고서를 제출하며 통화정책 전달경로와 캐리 트레이드의 역할을 분석하고 있다. 저소득 가구가 유가 상승으로 소비를 줄이고 있다는 뉴욕 연은 연구는 물가 압력이 불균등하게 전달되고 있음을 시사한다. 이는 중앙은행들이 금리 경로 결정에서 생산성, 인플레, 분배 효과를 동시에 고려해야 하는 복잡한 국면에 있음을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 인프라 투자 경쟁과 기술 섹터 구조적 성장</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#15</span>
+    </div>
+    <div class="theme-summary">SpaceX가 텍사스에 최대 1,190억 달러 규모의 차세대 반도체 제조시설 'Terafab'을 건설하고 Anthropic에 데이터센터 용량을 임대하며 AI 인프라 수직계열화에 나섰다. DeepSeek는 Tencent 등의 투자로 기업가치 450억 달러에 근접하며 중국 AI 스타트업의 가치 급등세가 지속되고 있다. Genesis AI는 1억 500만 달러 시드 투자 후 로봇공학용 AI 모델을 공개하며 풀스택 역량을 과시했다. 그러나 Microsoft의 데이터센터 확장이 청정에너지 목표와 충돌하고, 금융안정위원회는 사모신용이 AI 붐을 뒷받침하다 급격한 조정 시 상당한 손실 가능성을 경고했다. AI가 기술 격차를 완화할 수 있다는 연구가 나왔지만, 기업과 정부의 적극적 개입이 필요하다는 조건이 붙었다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">OpenAI 지배구조 갈등과 빅테크 리더십 논란</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #16~#20</span>
+    </div>
+    <div class="theme-summary">Musk와 Altman의 OpenAI 지배구조 분쟁이 법정에서 구체적으로 드러났다. Musk의 측근이자 OpenAI 전 이사 Shivon Zilis는 Musk가 Tesla로 OpenAI를 인수하려 했으며, 이것이 결별의 핵심 원인이었다고 증언했다. Greg Brockman의 증언도 공개되며 두 억만장자 간 치열한 협상 과정이 드러났다. 한편 Zuckerberg의 AI 분신 'Multi Mark' 활용은 진정한 리더십 회피라는 비판을 받고 있다. Trump 행정부가 AI 모델의 공개 전 감독 강화를 포함한 공격적 규제를 검토 중이라는 보도는 빅테크의 자율적 AI 개발 환경에 제동을 걸 가능성을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">중동 지정학 리스크와 에너지 시장 변동성</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #21~#24</span>
+    </div>
+    <div class="theme-summary">미국-이란 평화협정 기대감이 반복적으로 부상하며 원유 가격은 저점 대비 반등을 유지하고 있으나 여전히 변동성이 크다. WTI는 미국 연료 수출이 사상 최고치를 기록하고 생산이 소폭 감소하는 가운데 전략비축유(SPR) 대규모 방출이 있었음에도 반등분을 유지했다. 이란 전쟁이 이스라엘의 핵 모호성 정책을 잠식하고 있으며, 미 하원 민주당 의원 30명이 이스라엘 핵무기 프로그램의 공식 인정을 촉구했다. 교황 Leo는 Trump가 이란 전쟁에 대한 교황의 입장이 가톨릭 신자를 위험에 빠뜨린다고 비난한 후 핵무기 지지 주장을 거부했다. 금 타이밍 지표가 바닥을 찍어 역사적으로 강한 랠리가 예상되는 것은 지정학 리스크 헤지 수요가 극단적 비관에서 반전할 시점임을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">미국 주식시장 사상최고치 경신과 실적 개선</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #25~#27</span>
+    </div>
+    <div class="theme-summary">미국 주식시장이 이란 전쟁 종료 기대와 AMD의 낙관적 전망에 힘입어 이틀 연속 사상최고치를 경신했다. AMD를 비롯한 칩메이커의 강세는 AI 수요 지속을 확인시켰다. MetLife는 사모펀드 포트폴리오 수익 개선으로 1분기 실적이 월가 예상을 상회했다. Fortinet는 복잡해지는 위협 환경이 사이버보안 수요를 견인하며 AI 대체 우려를 불식시키고 실적 후 주가가 급등했다. Berkshire Hathaway와 SoftBank가 상반된 미래 비전을 대표하는 가운데 둘 중 하나만 살아남을 것이라는 분석이 나왔다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">러시아·지정학 균형 변화</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #28~#29</span>
+    </div>
+    <div class="theme-summary">Putin이 이란 전쟁에서 승자로 평가받는 시점에 Trump와 90분 통화를 먼저 요청한 것은 약점의 신호일 수 있다는 분석이 나왔다. George Friedman은 Putin에게 시간이 부족하다고 경고했다. 미국·프랑스 혁명 이후 민주주의는 지역 정치에 뿌리를 둘 때 가장 꾸준히 성장했으며, 러시아의 진정한 민주주의를 원한다면 지역 민주주의부터 회복시켜야 한다는 주장이 제기됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #30</span>
+    </div>
+    <div class="theme-summary">특정 테마로 분류하기 어려운 주요 동향을 포함합니다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">통화정책 긴축 지속 압력과 중앙은행 커뮤니케이션</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Jerome Powell의 엇갈린 레거시</div>
+    <div class="article-title-en">Jerome Powell’s Mixed Legacy</div>
+    <div class="article-keypoint">Powell 의장 이사직 유지로 Fed 독립성 방어 레거시 구축 시도, 정책 비판 회피 가능성</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/powell-legacy-fed-defender-but-also-policy-mistakes-by-mohamed-a-el-erian-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 19:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Luis de Guindos: 유럽의회 경제통화위원회에 ECB 연차보고서 2025 발표</div>
+    <div class="article-title-en">Luis de Guindos: Presentation of the European Central Bank Annual Report 2025 to the Committee on Economic and Monetary Affairs of the European Parliament </div>
+    <div class="article-keypoint">ECB, 유럽의회에 연차보고서 제출하며 통화정책 전달경로와 AI·레포 리스크 점검</div>
+    <a class="article-link" href="https://www.bis.org/review/r260505b.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 21:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">통화정책의 환율 전달: 통화 캐리 트레이드의 역할</div>
+    <div class="article-title-en">Monetary policy transmission to exchange rates: the role of currency carry trades </div>
+    <div class="article-keypoint">통화정책이 캐리 트레이드를 통해 환율에 전달되는 경로 분석 - 자본흐름 변동성 주목</div>
+    <a class="article-link" href="https://www.bis.org/publ/bisbull124.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Fed Goolsbee, 생산성 증가 선행 금리인하 경고</div>
+    <div class="article-title-en">Fed’s Goolsbee Warns Against Front-Running Productivity Growth</div>
+    <div class="article-keypoint">Fed Goolsbee, 생산성 증가가 인플레 유발 가능하다며 성급한 금리인하 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-06/fed-s-goolsbee-warns-against-front-running-productivity-growth" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">유가 급등이 저소득 가구에 더 큰 타격 - 뉴욕 연은 연구</div>
+    <div class="article-title-en">Surging gas prices are hitting lower-income households harder, New York Fed study shows</div>
+    <div class="article-keypoint">뉴욕 연은, 저소득층이 유가 상승으로 소비 축소 - 물가 압력 불균등 전달 확인</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/05/06/surging-gas-prices-are-hurting-lower-income-households-harder-study-shows.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 04:27 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 인프라 투자 경쟁과 기술 섹터 구조적 성장</span>
+    <span class="theme-label-range">Article #6~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">SpaceX, Anthropic에 데이터센터 용량 임대</div>
+    <div class="article-title-en">SpaceX to rent data centre capacity to Anthropic</div>
+    <div class="article-keypoint">SpaceX, Anthropic에 데이터센터 임대하며 AI 인프라 수직계열화 본격화</div>
+    <a class="article-link" href="https://www.ft.com/content/aa0239b8-0d57-4dc8-8c1a-ed7ac4d689fb" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 07:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">AI가 기술 격차를 민주화할 것인가?</div>
+    <div class="article-title-en">Will AI Democratize Skills?</div>
+    <div class="article-keypoint">AI가 저학력층의 실행 제약 완화하나 인적자본 역할은 여전 - 기업·정부 개입 필수</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-can-close-performance-gap-between-higher-and-lower-educated-workers-by-maria-lombardi-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 20:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Fortinet 주가 급등, 실적이 AI 대체 우려 불식</div>
+    <div class="article-title-en">Fortinet’s stock rockets higher as earnings help dispel fears of AI disruption</div>
+    <div class="article-keypoint">Fortinet, 복잡한 위협 환경으로 사이버보안 수요 증가 - AI 대체 우려 불식</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/fortinets-stock-rockets-as-earnings-help-dispel-fears-of-ai-disruption-8a8f0107?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 05:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SpaceX, 텍사스에 최대 1,190억 달러 규모 'Terafab' 칩 공장 건설 가능성</div>
+    <div class="article-title-en">SpaceX may spend up to $119B on ‘Terafab’ chip factory in Texas</div>
+    <div class="article-keypoint">SpaceX, 텍사스에 최대 1,190억 달러 규모 차세대 반도체 공장 건설 계획</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/06/spacex-may-spend-up-to-119-billion-on-terafab-chip-factory-in-texas/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 02:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Blue Energy & GE Vernova, AI 전력용 가스-원자력 연계 발전소 추진</div>
+    <div class="article-title-en">Blue Energy & GE Vernova Bet On Gas Bridge-To-Nuclear For AI Power</div>
+    <div class="article-keypoint">Blue Energy·GE Vernova, AI 전력용 세계 최초 가스+원자력 복합발전소 텍사스 건설</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/blue-energy-and-ge-vernova-bet-gas-bridge-nuclear-ai-power" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 03:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Khosla 투자 로봇공학 스타트업 Genesis AI, 풀스택 전환 데모 공개</div>
+    <div class="article-title-en">Khosla-backed robotics startup Genesis AI has gone full stack, demo shows</div>
+    <div class="article-keypoint">Genesis AI, 1억500만 달러 시드 후 로봇공학 AI 모델 공개 - 풀스택 역량 과시</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/06/khosla-backed-robotics-startup-genesis-ai-has-gone-full-stack-demo-shows/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 00:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Microsoft의 AI 데이터센터 추진, 청정에너지 목표와 충돌</div>
+    <div class="article-title-en">Microsoft’s AI data center push is colliding with its clean power goals</div>
+    <div class="article-keypoint">Microsoft, AI 데이터센터 확장이 청정에너지 목표와 충돌 - ESG 공약 이행 리스크</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/06/microsofts-ai-data-center-push-is-colliding-with-its-clean-power-goals/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 04:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">중국 AI 스타트업 DeepSeek, 기업가치 450억 달러 근접</div>
+    <div class="article-title-en">Chinese AI start-up DeepSeek nears $45bn valuation</div>
+    <div class="article-keypoint">DeepSeek, Tencent 등 투자로 기업가치 450억 달러 근접 - 중국 AI 밸류에이션 급등</div>
+    <a class="article-link" href="https://www.ft.com/content/daaf2e0a-4a0d-4d7c-a85b-445480f6b9c7" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 14:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">글로벌 금융 감시기구, AI 붐 뒷받침하는 사모신용 산업 경고</div>
+    <div class="article-title-en">Global finance watchdog warns over private credit industry fuelling AI boom</div>
+    <div class="article-keypoint">금융안정위원회, 사모신용의 AI 붐 뒷받침이 급격한 조정 시 상당 손실 초래 경고</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/may/06/global-finance-watchdog-warns-over-private-credit-industry-fuelling-ai-boom" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 15:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Modi·Lam 회담, 인도·베트남 AI·국방 협력 심화</div>
+    <div class="article-title-en">Modi, Lam Meet as India and Vietnam Deepen AI, Defense Ties</div>
+    <div class="article-keypoint">인도·베트남, AI·국방 협력 강화 합의 - 중동 긴장 속 양국 파트너십 심화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-06/modi-lam-to-meet-as-india-and-vietnam-deepen-ai-defense-ties" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 13:59 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">OpenAI 지배구조 갈등과 빅테크 리더십 논란</span>
+    <span class="theme-label-range">Article #16~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Musk, OpenAI 결별 전 Altman에게 Tesla 역할 제안 시도</div>
+    <div class="article-title-en">Musk tried to recruit Altman for role at Tesla before falling out at OpenAI</div>
+    <div class="article-keypoint">Musk, OpenAI 결별 전 Tesla 인수 시도했다는 법정 증언 - 지배구조 갈등 핵심 드러나</div>
+    <a class="article-link" href="https://www.ft.com/content/c93ba0c9-caec-4707-8f27-a1abb8de115e" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 07:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Elon Musk, Tesla의 OpenAI 인수 원했다 - 연인이 법정 증언</div>
+    <div class="article-title-en">Elon Musk Wanted Tesla to Take Over OpenAI, Romantic Partner Testifies in Court</div>
+    <div class="article-keypoint">Shivon Zilis, Musk가 OpenAI를 Tesla로 통합하려던 시도 증언 - 억만장자 갈등 배경 공개</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/elon-musks-romantic-partner-testifies-about-her-role-on-openais-board-1fc6d89b?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 06:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Zuckerberg의 'Multi Mark' AI 분신, Meta 주주에게 큰 경고 신호</div>
+    <div class="article-title-en">Zuckerberg’s ‘Multi Mark’ AI clone is a huge red flag for Meta shareholders</div>
+    <div class="article-keypoint">Zuckerberg의 AI 분신 활용, 진정한 리더십 회피라는 비판 - Meta 거버넌스 우려</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/zuckerbergs-multi-mark-ai-clone-is-a-huge-red-flag-for-meta-shareholders-53e58b30?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 06:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Greg Brockman이 밝힌 Elon Musk의 OpenAI 탈퇴 과정</div>
+    <div class="article-title-en">How Elon Musk left OpenAI, according to Greg Brockman</div>
+    <div class="article-keypoint">Greg Brockman, Musk의 OpenAI 탈퇴 과정 공개 - 스타트업 지배권 협상 드러나</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/06/how-elon-musk-left-openai-according-to-greg-brockman/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 03:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump 행정부의 AI 규제 '충격적 전환' 어디까지 갈 것인가</div>
+    <div class="article-title-en">Here’s how far the Trump administration’s ‘startling turn’ on AI regulation might go</div>
+    <div class="article-keypoint">Trump 행정부, AI 모델 공개 전 감독 강화 등 공격적 규제 검토 - 빅테크 자율성 제약</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/heres-how-far-the-trump-administrations-startling-turn-on-ai-regulation-might-go-15ce46be?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 05:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">중동 지정학 리스크와 에너지 시장 변동성</span>
+    <span class="theme-label-range">Article #21~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">교황 Leo, Trump 맹비난 후 핵무기 지지 주장 거부</div>
+    <div class="article-title-en">Pope Leo rejects claim he supports nuclear weapons after Trump tirade</div>
+    <div class="article-keypoint">교황 Leo, Trump의 이란 전쟁 입장 비난 후 핵무기 지지 주장 명확히 거부</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/06/pope-leo-rejects-claim-he-supports-nuclear-weapons-trump-tirade-iran-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 01:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">금 타이밍 지표 바닥 도달 - 역사적으로 강한 랠리 다음 단계</div>
+    <div class="article-title-en">This gold-timing indicator just hit a bottom — and history says a strong rally is next</div>
+    <div class="article-keypoint">금 타이밍 지표 바닥 도달 - 역사적으로 극단적 비관 후 강한 랠리 패턴</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/this-gold-timing-indicator-just-hit-a-bottom-and-history-says-a-strong-rally-is-next-f39c8768?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 05:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">WTI, 미국 연료 수출 사상최고·생산 감소·대규모 SPR 방출 속 반등분 유지</div>
+    <div class="article-title-en">WTI Holds Rebound Gains As US Fuel Exports Hit Record High, Production Dips, Huge SPR Drain</div>
+    <div class="article-keypoint">WTI, 미 연료 수출 사상최고·생산 감소·대규모 SPR 방출 속 반등분 유지</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/wti-xxxx-us-oil-exports-hit-record-100mm-barrels-last-week-huge-spr-drain" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 23:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">이란 전쟁이 이스라엘의 핵 모호성 정책을 잠식하고 있다</div>
+    <div class="article-title-en">The Iran War Is Eroding Israel’s Nuclear Ambiguity</div>
+    <div class="article-keypoint">이란 전쟁이 이스라엘 핵 모호성 정책 잠식 - 미 의원들 공식 인정 촉구</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/05/06/iran-war-trump-netanyahu-israel-nuclear-weapons/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 04:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">미국 주식시장 사상최고치 경신과 실적 개선</span>
+    <span class="theme-label-range">Article #25~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">MetLife, 사모펀드 수익 개선으로 실적 예상치 상회</div>
+    <div class="article-title-en">MetLife’s Improved PE Returns Lift Earnings Above Expectations</div>
+    <div class="article-keypoint">MetLife, 사모펀드 수익 개선으로 1분기 실적 월가 예상치 상회 - 대체투자 성과 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-06/metlife-s-improved-pe-returns-lift-earnings-above-expectations" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 05:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Berkshire Hathaway와 SoftBank 중 하나만 살아남을 수 있다</div>
+    <div class="article-title-en">
+        Only one of Berkshire Hathaway and SoftBank can survive
+      </div>
+    <div class="article-keypoint">Berkshire와 SoftBank, 상반된 미래 비전 대결 - 둘 중 하나만 살아남을 것</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/05/06/only-one-of-berkshire-hathaway-and-softbank-can-survive" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 05:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">미국 증시, 전쟁 종료 기대와 AMD 전망에 사상최고치 경신</div>
+    <div class="article-title-en">US Stocks Set Record High on Hopes for End to War, AMD Forecast</div>
+    <div class="article-keypoint">미 증시 이틀 연속 사상최고치 - 이란 전쟁 종료 기대와 AMD 낙관 전망 견인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-06/us-futures-jump-as-oil-sinks-amd-soars-on-ai-spending-deluge" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 20:09 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">러시아·지정학 균형 변화</span>
+    <span class="theme-label-range">Article #28~#29</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Putin, 러시아 지역 민주주의 회복 과제에 직면해야</div>
+    <div class="article-title-en">Putin Should Be Challenged to Restore Local Democracy in Russia</div>
+    <div class="article-keypoint">미국·프랑스 이후 민주주의는 지역 정치 기반 시 성장 - 러시아 민주화 시작점 제시</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/russia-democracy-at-local-government-level-can-spread-upward-by-roger-myerson-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 23:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">George Friedman, Putin에게 시간이 부족한 이유</div>
+    <div class="article-title-en">George Friedman on Why Putin is Running Out of Time</div>
+    <div class="article-keypoint">Putin, 이란 전쟁 승자 평가 속 Trump와 통화 먼저 요청 - 시간 압박 신호 가능성</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/george-friedman-on-why-putin-is-running-out-of-time/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/07 06:14 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">CPMI-IOSCO, 초기증거금 이행 지원 업데이트된 지침 및 공시 협의안 발표</div>
+    <div class="article-title-en">CPMI-IOSCO publishes for consultation updated guidance and public disclosures to support the implementation of initial margin proposals</div>
+    <div class="article-keypoint">CPMI-IOSCO, 초기증거금 이행 지원 업데이트된 지침 및 공시 협의안 발표</div>
+    <a class="article-link" href="https://www.bis.org/press/p260506.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/06 22:25 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
