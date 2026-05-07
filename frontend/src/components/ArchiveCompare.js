@@ -148,7 +148,59 @@ function ComparePane({ paneId, dateMap, dates, selectedDate, onDateChange, other
 }
 
 // ── 메인 컴포넌트
+// ── 브리핑 아카이브 탭 ──────────────────────────────────────
+const BRIEFING_INDEX = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/briefing/index.json';
+
+function BriefingTab() {
+  const [index, setIndex]   = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${BRIEFING_INDEX}?t=${Date.now()}`)
+      .then(r => r.json())
+      .then(data => { setIndex(Array.isArray(data) ? data : []); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const openBriefing = (file) => {
+    window.open(`https://pristinehwi.github.io/WorldMarketNow/${file}`, '_blank');
+  };
+
+  if (loading) return (
+    <div className="acp-state acp-loading-full">
+      <div className="acp-spinner" />
+      <span>브리핑 목록 로딩 중...</span>
+    </div>
+  );
+
+  if (!index || index.length === 0) return (
+    <div className="acp-state">
+      <span style={{ color: '#3a3a5a', fontSize: 13 }}>브리핑 아카이브가 없습니다.</span>
+    </div>
+  );
+
+  return (
+    <div className="briefing-tab-list">
+      {[...index].reverse().map(item => (
+        <div
+          key={item.date}
+          className="briefing-tab-item"
+          onClick={() => openBriefing(item.file)}
+        >
+          <div className="briefing-tab-date">{item.date}</div>
+          <div className="briefing-tab-headline">{item.headline_theme}</div>
+          {item.today_watch && (
+            <div className="briefing-tab-watch">{item.today_watch}</div>
+          )}
+          <div className="briefing-tab-arrow">↗</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function ArchiveCompare({ onClose, prices, embedded }) {
+  const [archiveSubTab, setArchiveSubTab] = useState('compare'); // 'compare' | 'briefing'
   const [dateMap, setDateMap] = useState({});
   const [dates, setDates]     = useState([]);
   const [loading, setLoading] = useState(true);
@@ -188,9 +240,13 @@ export default function ArchiveCompare({ onClose, prices, embedded }) {
       {/* 상단 바 */}
       <div className="acp-topbar">
         <div className="acp-topbar-left">
-          <span className="acp-topbar-icon">⏱</span>
-          <span className="acp-topbar-title">시간축 비교</span>
-          {dates.length > 0 && (
+          <span className="acp-topbar-icon">
+            {archiveSubTab === 'compare' ? '⏱' : '📰'}
+          </span>
+          <span className="acp-topbar-title">
+            {archiveSubTab === 'compare' ? '시간축 비교' : '브리핑 아카이브'}
+          </span>
+          {archiveSubTab === 'compare' && dates.length > 0 && (
             <span className="acp-topbar-sub">{dates.length}개 스냅샷 로드됨</span>
           )}
         </div>
@@ -201,8 +257,28 @@ export default function ArchiveCompare({ onClose, prices, embedded }) {
         )}
       </div>
 
+      {/* 서브탭 */}
+      <div className="acp-sub-tabs">
+        <button
+          className={`acp-sub-tab ${archiveSubTab === 'compare' ? 'active' : ''}`}
+          onClick={() => setArchiveSubTab('compare')}
+        >
+          ⏱ 시간축 비교
+        </button>
+        <button
+          className={`acp-sub-tab ${archiveSubTab === 'briefing' ? 'active' : ''}`}
+          onClick={() => setArchiveSubTab('briefing')}
+        >
+          📰 Daily Intelligence
+        </button>
+      </div>
+
       {/* 본문 */}
-      {loading ? (
+      {archiveSubTab === 'briefing' ? (
+        <div className="acp-briefing-zone">
+          <BriefingTab />
+        </div>
+      ) : loading ? (
         <div className="acp-state acp-loading-full">
           <div className="acp-spinner" />
           <span>아카이브 목록 로딩 중...</span>
