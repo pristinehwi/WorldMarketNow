@@ -11,7 +11,7 @@ const CATEGORY_COLOR = {
 
 const CATEGORIES = ['전체', '중앙은행', '정치', '빅테크', '기업', '매크로', '테크'];
 
-function EventLog({ onClose }) {
+function EventLog({ onClose, embedded }) {
   const [events, setEvents]       = useState([]);
   const [loading, setLoading]     = useState(true);
   const [search, setSearch]       = useState('');
@@ -55,9 +55,8 @@ function EventLog({ onClose }) {
   });
   const entityList = Object.values(entityLatest).sort((a, b) => b.date.localeCompare(a.date));
 
-  return (
-    <div className="el-overlay" onClick={onClose}>
-      <div className="el-panel" onClick={e => e.stopPropagation()}>
+  const panel = (
+    <div className={embedded ? 'el-panel el-panel--embedded' : 'el-panel'} onClick={e => e.stopPropagation()}>
 
         {/* ── 헤더 ── */}
         <div className="el-header">
@@ -66,7 +65,7 @@ function EventLog({ onClose }) {
             이벤트 로그
             {!loading && <span className="el-count">{events.length}개</span>}
           </div>
-          <button className="el-close" onClick={onClose}>✕</button>
+          {!embedded && <button className="el-close" onClick={onClose}>✕</button>}
         </div>
 
         {/* ── 검색 + 카테고리 ── */}
@@ -174,6 +173,12 @@ function EventLog({ onClose }) {
           )}
         </div>
       </div>
+  );
+
+  if (embedded) return panel;
+  return (
+    <div className="el-overlay" onClick={onClose}>
+      {panel}
     </div>
   );
 }

@@ -148,7 +148,7 @@ function ComparePane({ paneId, dateMap, dates, selectedDate, onDateChange, other
 }
 
 // ── 메인 컴포넌트
-export default function ArchiveCompare({ onClose, prices }) {
+export default function ArchiveCompare({ onClose, prices, embedded }) {
   const [dateMap, setDateMap] = useState({});
   const [dates, setDates]     = useState([]);
   const [loading, setLoading] = useState(true);
@@ -175,15 +175,16 @@ export default function ArchiveCompare({ onClose, prices }) {
       .catch(() => setLoading(false));
   }, []);
 
-  // ESC 키로 닫기
+  // ESC 키로 닫기 (overlay 모드만)
   useEffect(() => {
-    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    if (embedded) return;
+    const handler = (e) => { if (e.key === 'Escape' && onClose) onClose(); };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [onClose]);
+  }, [onClose, embedded]);
 
-  return (
-    <div className="acp-fullscreen">
+  const inner = (
+    <div className={embedded ? 'acp-fullscreen acp-fullscreen--embedded' : 'acp-fullscreen'}>
       {/* 상단 바 */}
       <div className="acp-topbar">
         <div className="acp-topbar-left">
@@ -193,9 +194,11 @@ export default function ArchiveCompare({ onClose, prices }) {
             <span className="acp-topbar-sub">{dates.length}개 스냅샷 로드됨</span>
           )}
         </div>
-        <button className="acp-topbar-close" onClick={onClose}>
-          ✕ 닫기 (ESC)
-        </button>
+        {!embedded && (
+          <button className="acp-topbar-close" onClick={onClose}>
+            ✕ 닫기 (ESC)
+          </button>
+        )}
       </div>
 
       {/* 본문 */}
@@ -238,4 +241,6 @@ export default function ArchiveCompare({ onClose, prices }) {
       )}
     </div>
   );
+
+  return inner;
 }
