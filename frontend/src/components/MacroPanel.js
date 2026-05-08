@@ -26,18 +26,19 @@ const COUNTRY_FLAG  = { US: '🇺🇸', KR: '🇰🇷', JP: '🇯🇵', DE: '�
 
 // ── 유틸 ──────────────────────────────────────────────────
 const fmt  = (v, d = 3) => v != null ? parseFloat(v).toFixed(d) + '%' : '—';
-const fmtT = (v) => v != null ? (v / 1e6).toFixed(2) + 'T' : '—';
+const fmtT = (v) => v != null ? '$' + (v / 1e6).toFixed(2) + 'T' : '—';
 const fmtRRP = (v) => {
   if (v == null) return '—';
-  if (v < 0.1) return `${(v * 1000).toFixed(0)}M`;
-  return `${v.toFixed(2)}B`;
+  if (v < 0.1) return `$${(v * 1000).toFixed(0)}M`;
+  return `$${v.toFixed(2)}B`;
 };
 const fmtChg = (v) => {
   if (v == null) return null;
   const abs = Math.abs(v);
-  if (abs >= 1e6) return `${v > 0 ? '+' : ''}${(v / 1e6).toFixed(3)}T`;
-  if (abs >= 1e3) return `${v > 0 ? '+' : ''}${(v / 1e3).toFixed(1)}B`;
-  return `${v > 0 ? '+' : ''}${v.toFixed(0)}M`;
+  const sign = v > 0 ? '+' : '';
+  if (abs >= 1e6) return `${sign}$${(v / 1e6).toFixed(3)}T`;
+  if (abs >= 1e3) return `${sign}$${(v / 1e3).toFixed(1)}B`;
+  return `${sign}$${v.toFixed(0)}M`;
 };
 
 function DeltaBadge({ now, prev }) {
@@ -150,14 +151,14 @@ function CombinedCurveChart({
             <line x1={PAD_L} y1={y} x2={width - PAD_R} y2={y}
               stroke={C.borderDim} strokeWidth={0.5} />
             <text x={PAD_L - 5} y={y + 3.5} fill={C.textDim}
-              fontSize={10} textAnchor="end">{v.toFixed(2)}</text>
+              fontSize={9} textAnchor="end">{v.toFixed(2)}</text>
           </g>
         );
       })}
       {/* X축 레이블 */}
       {TENOR_LABELS.map((lbl, i) => (
         <text key={lbl} x={cx(i)} y={height - 8}
-          fill={C.textDim} fontSize={11} textAnchor="middle" fontWeight={500}>{lbl}</text>
+          fill={C.textDim} fontSize={9} textAnchor="middle" fontWeight={600}>{lbl}</text>
       ))}
       {/* 과거 커브 */}
       {showUS && usPast && (
@@ -229,7 +230,7 @@ function SpreadGauge({ label, value, range = [-2, 3], color }) {
   );
 }
 
-// ── 연준 유동성 미니 차트 (시작/끝 날짜 포함) ──────────────
+// ── 연준 유동성 미니 차트 ──────────────────────────────────
 function FedMiniChart({ history, color, width = 220, height = 52 }) {
   if (!history?.length) return null;
   const data = history.slice(-26);
@@ -238,7 +239,7 @@ function FedMiniChart({ history, color, width = 220, height = 52 }) {
   const minV = Math.min(...vals);
   const range = maxV - minV || 1;
 
-  const PAD_L = 4, PAD_R = 4, PAD_T = 4, PAD_B = 14;
+  const PAD_L = 4, PAD_R = 4, PAD_T = 4, PAD_B = 16;
   const W = width - PAD_L - PAD_R;
   const H = height - PAD_T - PAD_B;
 
@@ -246,74 +247,156 @@ function FedMiniChart({ history, color, width = 220, height = 52 }) {
   const cy = (v) => PAD_T + H - ((v - minV) / range) * H;
   const d  = data.map((h, i) => `${i === 0 ? 'M' : 'L'}${cx(i).toFixed(1)},${cy(h.value).toFixed(1)}`).join(' ');
 
-  const startDate = data[0]?.date?.slice(2, 7);   // "YY-MM"
+  const startDate = data[0]?.date?.slice(2, 7);
   const endDate   = data[data.length - 1]?.date?.slice(2, 7);
 
   return (
     <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height: 52 }}>
-      <path d={d} fill="none" stroke={color} strokeWidth={1.5} opacity={0.85} />
+      <path d={d} fill="none" stroke={color} strokeWidth={1.5} opacity={0.9} />
       <circle cx={cx(data.length - 1)} cy={cy(vals[vals.length - 1])} r={2.5} fill={color} />
       {startDate && (
-        <text x={PAD_L} y={height - 2} fill={C.textFaint} fontSize={7.5}>{startDate}</text>
+        <text x={PAD_L} y={height - 2} fill="#a0a0d0" fontSize={9}>{startDate}</text>
       )}
       {endDate && (
-        <text x={width - PAD_R} y={height - 2} fill={C.textFaint} fontSize={7.5} textAnchor="end">{endDate}</text>
+        <text x={width - PAD_R} y={height - 2} fill="#a0a0d0" fontSize={9} textAnchor="end">{endDate}</text>
       )}
     </svg>
   );
 }
 
-// ── 글로벌 10Y 바 차트 ────────────────────────────────────
-function GlobalBarChart({ series, width = 400, height = 140 }) {
-  const points = Object.entries(series)
-    .filter(([, v]) => !v.error && v.latest?.value)
-    .sort((a, b) => b[1].latest.value - a[1].latest.value)
-    .map(([country, info]) => ({
-      country, value: info.latest.value, color: COUNTRY_COLOR[country] || '#888'
-    }));
+// ── 순유동성 히스토리 계산 ─────────────────────────────────
+function calcNetLiqHistory(walclH, tgaH, rrpH) {
+  if (!walclH?.length || !tgaH?.length) return null;
+  const tgaMap = Object.fromEntries(tgaH.map(h => [h.date, h.value]));
+  const rrpByWk = {};
+  if (rrpH) {
+    rrpH.forEach(h => {
+      const wk = h.date.slice(0, 7);
+      if (!rrpByWk[wk] || h.date > rrpByWk[wk].date) rrpByWk[wk] = h;
+    });
+  }
+  return walclH.map(w => {
+    const tga = tgaMap[w.date];
+    if (tga == null) return null;
+    const rrpBillions = rrpByWk[w.date.slice(0, 7)]?.value ?? 0;
+    const rrpMillions = rrpBillions * 1000;
+    return { date: w.date, value: w.value - tga - rrpMillions };
+  }).filter(Boolean);
+}
 
-  if (!points.length) return <div className="mp-chart-empty">데이터 없음</div>;
+// ── 스프레드 미니 라인차트 ─────────────────────────────────
+function SpreadMiniChart({ s10History, s2History, color, width = 160, height = 36 }) {
+  if (!s10History?.length || !s2History?.length) return null;
+  const s2Map = Object.fromEntries(s2History.map(h => [h.date, h.value]));
+  const spreads = s10History
+    .map(h => ({ date: h.date, value: s2Map[h.date] != null ? h.value - s2Map[h.date] : null }))
+    .filter(h => h.value != null)
+    .slice(-45);
+  if (spreads.length < 3) return null;
 
-  const maxV = Math.max(...points.map(p => p.value)) * 1.08;
-  const minV = Math.max(0, Math.min(...points.map(p => p.value)) * 0.92);
+  const vals = spreads.map(s => s.value);
+  const maxV = Math.max(...vals) + 0.1;
+  const minV = Math.min(...vals) - 0.1;
   const range = maxV - minV || 1;
-
-  const PAD_L = 8, PAD_R = 8, PAD_T = 8, PAD_B = 32;
-  const W = width - PAD_L - PAD_R;
-  const H = height - PAD_T - PAD_B;
-  const barW = Math.floor(W / points.length) - 10;
-  const barX = (i) => PAD_L + i * (W / points.length) + 5;
-  const barH = (v) => Math.max(4, ((v - minV) / range) * H);
-  const barY = (v) => PAD_T + H - barH(v);
+  const PAD = 4;
+  const W = width - PAD * 2;
+  const H = height - PAD * 2;
+  const cx = (i) => PAD + (i / (spreads.length - 1)) * W;
+  const cy = (v) => PAD + H - ((v - minV) / range) * H;
+  const d  = spreads.map((s, i) => `${i === 0 ? 'M' : 'L'}${cx(i).toFixed(1)},${cy(s.value).toFixed(1)}`).join(' ');
+  const zeroY = cy(0);
 
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height: 'auto' }}>
-      {[0.25, 0.5, 0.75, 1].map(r => {
-        const y = PAD_T + H - r * H;
-        const v = (minV + r * range).toFixed(2);
+    <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height }}>
+      {zeroY >= PAD && zeroY <= height - PAD && (
+        <line x1={PAD} y1={zeroY} x2={width - PAD} y2={zeroY}
+          stroke="#3a3a5a" strokeWidth={0.5} strokeDasharray="3 2" />
+      )}
+      <path d={d} fill="none" stroke={color} strokeWidth={1.2} opacity={0.85} />
+      <circle cx={cx(spreads.length - 1)} cy={cy(vals[vals.length - 1])} r={2} fill={color} />
+    </svg>
+  );
+}
+
+// ── 글로벌 10Y 수평바 ─────────────────────────────────────
+const GLOBAL_ORDER = ['GB', 'US', 'KR', 'DE', 'JP'];
+
+function GlobalHorizontalChart({ series }) {
+  const entries = GLOBAL_ORDER
+    .map(c => series[c])
+    .filter(v => v && !v.error && v.latest?.value);
+  if (!entries.length) return <div className="mp-chart-empty">데이터 없음</div>;
+
+  const maxVal    = Math.max(...entries.map(e => e.latest.value));
+  const prevDate  = entries[0]?.history?.slice(-2, -1)[0]?.date?.slice(0, 7);
+  const currDate  = entries[0]?.latest?.date?.slice(0, 7);
+
+  return (
+    <div className="mp-global-horiz">
+      <div className="mp-global-compare-header">
+        <span className="mp-global-ch-curr">{currDate}</span>
+        <span style={{ flex: 1 }} />
+        {prevDate && <span className="mp-global-ch-prev">vs {prevDate}</span>}
+        <span className="mp-global-ch-us">vs 미국</span>
+        <span className="mp-global-ch-pr">vs 기준금리</span>
+      </div>
+
+      {entries.map(info => {
+        const color  = COUNTRY_COLOR[info.country] || '#888';
+        const barPct = (info.latest.value / (maxVal * 1.08)) * 100;
+        const prev   = info.history?.slice(-2, -1)[0]?.value;
+        const chg    = prev != null ? info.latest.value - prev : null;
+
         return (
-          <g key={r}>
-            <line x1={PAD_L} y1={y} x2={width - PAD_R} y2={y}
-              stroke={C.borderDim} strokeWidth={0.5} />
-            <text x={PAD_L - 2} y={y + 3} fill={C.textFaint} fontSize={8} textAnchor="end">{v}</text>
-          </g>
+          <div key={info.country} className="mp-global-hrow">
+            <div className="mp-global-hcountry">
+              <span style={{ fontSize: 15 }}>{COUNTRY_FLAG[info.country]}</span>
+              <span style={{ fontSize: 12, fontWeight: 600, color }}>{info.label}</span>
+            </div>
+            <div className="mp-global-hbar-wrap">
+              <div className="mp-global-hbar-track">
+                <div className="mp-global-hbar-fill" style={{ width: `${barPct}%`, background: color }} />
+              </div>
+              <span className="mp-global-hval" style={{ color }}>{fmt(info.latest.value, 3)}</span>
+            </div>
+            <div className="mp-global-hchg">
+              {chg != null
+                ? <span style={{ color: chg > 0 ? C.up : C.dn, fontSize: 11, fontWeight: 600 }}>
+                    {chg > 0 ? '▲' : '▼'} {Math.abs(chg).toFixed(2)}
+                  </span>
+                : <span style={{ color: C.textFaint }}>—</span>}
+            </div>
+            <div className="mp-global-hvs">
+              {info.vs_us != null
+                ? <span style={{
+                    color: info.country === 'US' ? C.textFaint : info.vs_us > 0 ? C.up : C.dn,
+                    fontSize: 11, fontWeight: 600,
+                  }}>
+                    {info.country === 'US' ? '—' : (info.vs_us > 0 ? '+' : '') + info.vs_us.toFixed(2)}
+                  </span>
+                : <span style={{ color: C.textFaint }}>—</span>}
+            </div>
+            <div className="mp-global-hpr">
+              {info.vs_policy != null
+                ? <div>
+                    <span style={{
+                      color: info.vs_policy > 0 ? C.dn : C.up,
+                      fontSize: 11, fontWeight: 600,
+                    }}>
+                      {info.vs_policy > 0 ? '+' : ''}{info.vs_policy.toFixed(2)}
+                    </span>
+                    {info.policy_rate && (
+                      <div style={{ fontSize: 9, color: C.textFaint }}>
+                        PR {info.policy_rate.value.toFixed(2)}%
+                      </div>
+                    )}
+                  </div>
+                : <span style={{ color: C.textFaint }}>—</span>}
+            </div>
+          </div>
         );
       })}
-      {points.map((p, i) => (
-        <g key={p.country}>
-          <rect x={barX(i)} y={barY(p.value)} width={barW} height={barH(p.value)}
-            fill={p.color} opacity={0.75} rx={2} />
-          <text x={barX(i) + barW / 2} y={barY(p.value) - 5}
-            fill={p.color} fontSize={9.5} textAnchor="middle" fontWeight={600}>
-            {p.value.toFixed(2)}
-          </text>
-          <text x={barX(i) + barW / 2} y={height - 16}
-            fill={C.textMid} fontSize={11} textAnchor="middle">{COUNTRY_FLAG[p.country]}</text>
-          <text x={barX(i) + barW / 2} y={height - 4}
-            fill={C.textDim} fontSize={8.5} textAnchor="middle">{p.country}</text>
-        </g>
-      ))}
-    </svg>
+    </div>
   );
 }
 
@@ -445,12 +528,25 @@ export default function MacroPanel({ yieldCurve, fedBalance }) {
               })()
             }
 
-            {/* 스프레드 게이지 */}
+            {/* 스프레드 게이지 + 미니차트 */}
             {usCurve?.spreads && (
               <div className="mp-spread-row">
-                <SpreadGauge label="미국 10Y-2Y" value={usCurve.spreads['2Y10Y']?.value} range={[-2, 3]} color={C.us} />
-                <SpreadGauge label="미국 10Y-3M" value={usCurve.spreads['3M10Y']?.value} range={[-2, 3]} color={C.us} />
-                <SpreadGauge label="버터플라이" value={usCurve.spreads.butterfly?.value} range={[-1, 1]} color={C.neutral} />
+                {[
+                  { label: '미국 10Y-2Y', key: '2Y10Y', s2key: 'DGS2',   range: [-2, 3], color: C.us },
+                  { label: '미국 10Y-3M', key: '3M10Y', s2key: 'DGS3MO', range: [-2, 3], color: C.us },
+                  { label: '버터플라이',  key: 'butterfly', s2key: null,  range: [-1, 1], color: C.neutral },
+                ].map(({ label, key, s2key, range, color }) => (
+                  <div key={key} className="mp-gauge-wrap">
+                    <SpreadGauge label={label} value={usCurve.spreads[key]?.value} range={range} color={color} />
+                    {s2key && usCurve.series?.DGS10?.history && usCurve.series?.[s2key]?.history && (
+                      <SpreadMiniChart
+                        s10History={usCurve.series.DGS10.history}
+                        s2History={usCurve.series[s2key].history}
+                        color={color}
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
             )}
           </>
@@ -458,44 +554,14 @@ export default function MacroPanel({ yieldCurve, fedBalance }) {
 
         {/* 글로벌 10Y */}
         {curveView === 'global' && global10y && (
-          <>
-            <div className="mp-global-meta">
-              공통 기준월: <span style={{ color: C.neutral }}>{globalLatestDate || '—'}</span>
-              <span style={{ color: C.textFaint, marginLeft: 8, fontSize: 10 }}>OECD 월별 · 약 2개월 지연</span>
-            </div>
-            <div className="mp-chart-box">
-              <GlobalBarChart series={global10y.series} />
-            </div>
-            <div className="mp-global-table">
-              {Object.entries(global10y.series)
-                .filter(([, v]) => !v.error && v.latest)
-                .sort((a, b) => b[1].latest.value - a[1].latest.value)
-                .map(([country, info]) => {
-                  const color = COUNTRY_COLOR[country] || '#888';
-                  const prev = info.history?.slice(-2, -1)[0]?.value;
-                  return (
-                    <div key={country} className="mp-global-row">
-                      <span style={{ fontSize: 15 }}>{COUNTRY_FLAG[country] || ''}</span>
-                      <span style={{ fontSize: 13, fontWeight: 500, color }}>{info.label}</span>
-                      <span style={{ fontSize: 14, fontWeight: 700, color }}>{fmt(info.latest.value)}</span>
-                      <span style={{ fontSize: 10, color: C.textDim }}>{info.latest.date?.slice(0, 7)}</span>
-                      {prev && (
-                        <span style={{ fontSize: 10, color: info.latest.value > prev ? C.up : C.dn }}>
-                          {info.latest.value > prev ? '▲' : '▼'} {Math.abs(info.latest.value - prev).toFixed(2)}
-                        </span>
-                      )}
-                    </div>
-                  );
-                })}
-            </div>
-          </>
+          <GlobalHorizontalChart series={global10y.series} />
         )}
       </div>
 
       {/* ── 섹션 2: 하단 2컬럼 ── */}
       <div className="mp-bottom-row">
 
-        {/* 실질금리 */}
+        {/* 금리 지표 */}
         <div className="mp-card">
           <div className="mp-card-title">금리 지표 (미국)</div>
           {usCurve?.series && (
@@ -536,19 +602,29 @@ export default function MacroPanel({ yieldCurve, fedBalance }) {
                 )}
               </div>
 
-              {netLiq && (
-                <div className="mp-fed-item">
-                  <div className="mp-fed-label">순유동성</div>
-                  <div className="mp-fed-val" style={{ color: C.kr }}>{fmtT(netLiq.value)}</div>
-                  <div className="mp-fed-formula">WALCL − TGA − RRP</div>
-                  {tga?.latest && rrp?.latest && (
-                    <div className="mp-fed-detail">
-                      TGA {fmtT(tga.latest.value)}<br />
-                      RRP {fmtRRP(rrp.latest.value)}
+              {(() => {
+                const netLiqHistory = calcNetLiqHistory(
+                  walcl.history,
+                  tga?.history,
+                  rrp?.history,
+                );
+                const netLiqLatest = netLiqHistory?.[netLiqHistory.length - 1]?.value;
+                return (
+                  <div className="mp-fed-item">
+                    <div className="mp-fed-label">순유동성</div>
+                    <div className="mp-fed-val" style={{ color: C.kr }}>
+                      {netLiqLatest ? fmtT(netLiqLatest) : fmtT(netLiq?.value)}
                     </div>
-                  )}
-                </div>
-              )}
+                    {netLiqHistory && <FedMiniChart history={netLiqHistory} color={C.kr} />}
+                    <div className="mp-fed-formula">WALCL − TGA − RRP</div>
+                    {tga?.latest && rrp?.latest && (
+                      <div className="mp-fed-detail">
+                        TGA {fmtT(tga.latest.value)} · RRP {fmtRRP(rrp.latest.value)}
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
 
               {resv?.latest && (
                 <div className="mp-fed-item">
