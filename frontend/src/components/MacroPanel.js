@@ -404,29 +404,100 @@ function GlobalHorizontalChart({ series }) {
 const SIM_TENOR_KEYS = ['DGS1', 'DGS2', 'DGS5', 'DGS10', 'DGS20', 'DGS30'];
 const SIM_TENOR_LBLS = ['1Y',   '2Y',   '5Y',   '10Y',   '20Y',   '30Y'  ];
 
-function MovementBar({ value, maxAbs = 0.5 }) {
-  const pct   = Math.min(100, (Math.abs(value) / maxAbs) * 50);
-  const isUp  = value > 0;
-  const color = isUp ? C.up : C.dn;
+// ── 예상 커브 SVG 차트 ─────────────────────────────────────
+function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height = 160 }) {
+  // currentLevels: { '1Y': 3.73, '2Y': 3.87, ... }
+  // fwd1m / fwd3m: { 'DGS1': { change: 0.39 }, ... }
+
+  const current = SIM_TENOR_LBLS.map(lbl => currentLevels[lbl] ?? null);
+
+  const predicted1m = SIM_TENOR_KEYS.map((k, i) => {
+    const base = currentLevels[SIM_TENOR_LBLS[i]];
+    const chg  = fwd1m?.[k]?.change;
+    return base != null && chg != null ? base + chg : null;
+  });
+
+  const predicted3m = SIM_TENOR_KEYS.map((k, i) => {
+    const base = currentLevels[SIM_TENOR_LBLS[i]];
+    const chg  = fwd3m?.[k]?.change;
+    return base != null && chg != null ? base + chg : null;
+  });
+
+  const allVals = [...current, ...predicted1m, ...predicted3m].filter(v => v != null);
+  if (!allVals.length) return <div className="mp-chart-empty">데이터 없음</div>;
+
+  const maxV = Math.max(...allVals) + 0.2;
+  const minV = Math.max(0, Math.min(...allVals) - 0.2);
+  const range = maxV - minV || 1;
+
+  const PAD_L = 38, PAD_R = 12, PAD_T = 20, PAD_B = 24;
+  const W = width - PAD_L - PAD_R;
+  const H = height - PAD_T - PAD_B;
+
+  const cx = (i) => PAD_L + (i / (SIM_TENOR_LBLS.length - 1)) * W;
+  const cy = (v) => PAD_T + H - ((v - minV) / range) * H;
+
+  const pathD = (vals) => {
+    const pts = vals.map((v, i) => v != null ? [cx(i), cy(v)] : null).filter(Boolean);
+    if (pts.length < 2) return '';
+    return pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+  };
+
+  const gridVals = Array.from({ length: 5 }, (_, i) => minV + (i / 4) * range);
+
+  const curves = [
+    { vals: current,    color: C.us,     label: '현재',    dash: false,   dotR: 3   },
+    { vals: predicted1m, color: C.neutral, label: '1M 예상', dash: '6 3',  dotR: 2.5 },
+    { vals: predicted3m, color: C.up,      label: '3M 예상', dash: '3 3',  dotR: 2.5 },
+  ].filter(c => c.vals.some(v => v != null));
+
   return (
-    <div className="sim-bar-wrap">
-      <div className="sim-bar-track">
-        <div className="sim-bar-center" />
-        <div className="sim-bar-fill" style={{
-          width:      `${pct}%`,
-          left:       isUp ? '50%' : `${50 - pct}%`,
-          background: color,
-        }} />
-      </div>
-      <span className="sim-bar-val" style={{ color }}>
-        {value > 0 ? '+' : ''}{value.toFixed(2)}
-      </span>
-    </div>
+    <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height: 'auto' }}>
+      {/* 그리드 */}
+      {gridVals.map((v, i) => (
+        <g key={i}>
+          <line x1={PAD_L} y1={cy(v)} x2={width - PAD_R} y2={cy(v)}
+            stroke={C.borderDim} strokeWidth={0.5} />
+          <text x={PAD_L - 4} y={cy(v) + 3.5} fill={C.textFaint}
+            fontSize={9} textAnchor="end">{v.toFixed(2)}</text>
+        </g>
+      ))}
+      {/* X축 레이블 */}
+      {SIM_TENOR_LBLS.map((lbl, i) => (
+        <text key={lbl} x={cx(i)} y={height - 6}
+          fill={C.textDim} fontSize={9} textAnchor="middle" fontWeight={600}>{lbl}</text>
+      ))}
+      {/* 커브 선 */}
+      {curves.map(c => (
+        <path key={c.label} d={pathD(c.vals)} fill="none"
+          stroke={c.color} strokeWidth={c.dash ? 1.5 : 2}
+          strokeDasharray={c.dash || undefined}
+          opacity={c.dash ? 0.75 : 1} />
+      ))}
+      {/* 포인트 */}
+      {curves.map(c =>
+        c.vals.map((v, i) => v != null ? (
+          <circle key={`${c.label}-${i}`}
+            cx={cx(i)} cy={cy(v)} r={c.dotR}
+            fill={c.color} opacity={c.dash ? 0.8 : 1} />
+        ) : null)
+      )}
+      {/* 범례 */}
+      {curves.map((c, i) => (
+        <g key={c.label} transform={`translate(${PAD_L + i * 90}, 8)`}>
+          <line x1={0} y1={0} x2={16} y2={0}
+            stroke={c.color} strokeWidth={c.dash ? 1.5 : 2}
+            strokeDasharray={c.dash || undefined} />
+          <text x={20} y={3.5} fill={c.color} fontSize={9}>{c.label}</text>
+        </g>
+      ))}
+    </svg>
   );
 }
 
-function CurveSimilarityPanel({ similarity }) {
-  const [activePeriod, setActivePeriod] = useState('1m');
+function CurveSimilarityPanel({ similarity, usCurve }) {
+  const [activePeriod,  setActivePeriod]  = useState('1m');
+  const [activeMatch,   setActiveMatch]   = useState(0);
 
   if (!similarity) {
     return (
@@ -439,27 +510,34 @@ function CurveSimilarityPanel({ similarity }) {
     );
   }
 
-  const data = similarity[activePeriod];
+  const data    = similarity[activePeriod];
   if (!data) return null;
 
-  const vec      = data.current_vector || {};
-  const matches  = data.matches || [];
-  const insight  = data.insight;
-  const maxAbs   = Math.max(0.1, ...Object.values(vec).map(Math.abs));
+  const matches = data.matches || [];
+  const insight = data.insight;
+  const match   = matches[activeMatch];
+
+  // 현재 커브 레벨 (us_curve.series에서 추출)
+  const currentLevels = {};
+  SIM_TENOR_KEYS.forEach((k, i) => {
+    const val = usCurve?.series?.[k]?.latest?.value;
+    if (val != null) currentLevels[SIM_TENOR_LBLS[i]] = val;
+  });
 
   return (
     <div className="sim-root">
-      {/* 기간 탭 */}
+
+      {/* ── 헤더: 기간 탭 + 패턴명 ── */}
       <div className="sim-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <span className="sim-title">
             {insight?.pattern_description || '커브 패턴 분석'}
           </span>
           <div className="mp-tab-group mp-tab-group--sm">
-            {[{ id: '1m', label: '1개월 무브먼트' }, { id: '3m', label: '3개월 무브먼트' }].map(o => (
+            {[{ id: '1m', label: '1M 무브먼트' }, { id: '3m', label: '3M 무브먼트' }].map(o => (
               <button key={o.id}
                 className={`mp-tab ${activePeriod === o.id ? 'active' : ''}`}
-                onClick={() => setActivePeriod(o.id)}>
+                onClick={() => { setActivePeriod(o.id); setActiveMatch(0); }}>
                 {o.label}
               </button>
             ))}
@@ -472,94 +550,70 @@ function CurveSimilarityPanel({ similarity }) {
         )}
       </div>
 
-      {/* 현재 무브먼트 벡터 */}
-      <div className="sim-current">
-        <div className="sim-current-label">현재 {data.label} 커브 변화 (%p)</div>
-        <div className="sim-vector-grid">
-          {SIM_TENOR_LBLS.map((lbl, i) => {
-            const key = SIM_TENOR_KEYS[i];
-            const val = vec[lbl] ?? vec[key] ?? null;
-            return (
-              <div key={lbl} className="sim-vector-item">
-                <span className="sim-tenor-lbl">{lbl}</span>
-                {val != null
-                  ? <MovementBar value={val} maxAbs={maxAbs} />
-                  : <span style={{ color: C.textFaint }}>—</span>
-                }
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 유사 시점 */}
-      {matches.length === 0 ? (
-        <div className="sim-no-match">유사도 70% 이상 시점 없음 (현재 패턴이 역사적으로 드문 경우)</div>
-      ) : (
-        <div className="sim-matches">
+      {/* ── 유사 시점 선택 탭 ── */}
+      {matches.length > 0 && (
+        <div className="sim-match-tabs">
           {matches.map((m, idx) => {
-            const insightMatch = insight?.matches?.[idx];
-            const fwd1m = m.forward_1m || {};
-            const fwd3m = m.forward_3m || {};
-            const fwdMaxAbs = Math.max(0.1,
-              ...Object.values(fwd1m).map(v => Math.abs(v.change || 0)),
-              ...Object.values(fwd3m).map(v => Math.abs(v.change || 0)),
-            );
-
+            const im = insight?.matches?.[idx];
             return (
-              <div key={m.date} className="sim-match-card">
-                <div className="sim-match-header">
-                  <span className="sim-match-rank">#{idx + 1}</span>
-                  <span className="sim-match-date">{m.date}</span>
-                  <span className="sim-match-sim"
-                    style={{ color: m.similarity > 0.9 ? C.kr : m.similarity > 0.8 ? C.neutral : C.textDim }}>
-                    유사도 {(m.similarity * 100).toFixed(1)}%
-                  </span>
-                  {insightMatch?.context && (
-                    <span className="sim-match-context">{insightMatch.context}</span>
-                  )}
-                </div>
-
-                {/* 이후 커브 변화 — 2열 */}
-                <div className="sim-forward-grid">
-                  <div className="sim-forward-col">
-                    <div className="sim-forward-label">이후 1개월</div>
-                    {insightMatch?.after_1m_summary && (
-                      <div className="sim-forward-summary">{insightMatch.after_1m_summary}</div>
-                    )}
-                    {SIM_TENOR_LBLS.map((lbl, i) => {
-                      const v = fwd1m[SIM_TENOR_KEYS[i]];
-                      return v ? (
-                        <div key={lbl} className="sim-fwd-item">
-                          <span className="sim-tenor-lbl">{lbl}</span>
-                          <MovementBar value={v.change} maxAbs={fwdMaxAbs} />
-                        </div>
-                      ) : null;
-                    })}
-                  </div>
-                  <div className="sim-forward-col">
-                    <div className="sim-forward-label">이후 3개월</div>
-                    {insightMatch?.after_3m_summary && (
-                      <div className="sim-forward-summary">{insightMatch.after_3m_summary}</div>
-                    )}
-                    {SIM_TENOR_LBLS.map((lbl, i) => {
-                      const v = fwd3m[SIM_TENOR_KEYS[i]];
-                      return v ? (
-                        <div key={lbl} className="sim-fwd-item">
-                          <span className="sim-tenor-lbl">{lbl}</span>
-                          <MovementBar value={v.change} maxAbs={fwdMaxAbs} />
-                        </div>
-                      ) : null;
-                    })}
-                  </div>
-                </div>
-              </div>
+              <button key={m.date}
+                className={`sim-match-tab ${activeMatch === idx ? 'active' : ''}`}
+                onClick={() => setActiveMatch(idx)}>
+                <span className="sim-mt-rank">#{idx + 1}</span>
+                <span className="sim-mt-date">{m.date}</span>
+                <span className="sim-mt-sim"
+                  style={{ color: m.similarity > 0.9 ? C.kr : C.neutral }}>
+                  {(m.similarity * 100).toFixed(0)}%
+                </span>
+                {im?.context && (
+                  <span className="sim-mt-ctx">{im.context}</span>
+                )}
+              </button>
             );
           })}
         </div>
       )}
 
-      {/* Sonnet 시사점 */}
+      {/* ── 예상 커브 차트 ── */}
+      {match && (
+        <>
+          <div className="mp-chart-box">
+            <SimilarityCurveChart
+              currentLevels={currentLevels}
+              fwd1m={match.forward_1m}
+              fwd3m={match.forward_3m}
+            />
+          </div>
+
+          {/* 요약 텍스트 */}
+          <div className="sim-fwd-summary-row">
+            {insight?.matches?.[activeMatch]?.after_1m_summary && (
+              <div className="sim-fwd-summary-item">
+                <span style={{ color: C.neutral, fontSize: 10, fontWeight: 700 }}>1M 예상</span>
+                <span style={{ color: C.textMid, fontSize: 11 }}>
+                  {insight.matches[activeMatch].after_1m_summary}
+                </span>
+              </div>
+            )}
+            {insight?.matches?.[activeMatch]?.after_3m_summary && (
+              <div className="sim-fwd-summary-item">
+                <span style={{ color: C.up, fontSize: 10, fontWeight: 700 }}>3M 예상</span>
+                <span style={{ color: C.textMid, fontSize: 11 }}>
+                  {insight.matches[activeMatch].after_3m_summary}
+                </span>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+
+      {matches.length === 0 && (
+        <div className="sim-no-match">
+          유사도 70% 이상 시점 없음 — 현재 패턴이 역사적으로 드문 경우
+        </div>
+      )}
+
+      {/* ── Sonnet 시사점 ── */}
       {insight?.implication && (
         <div className="sim-implication">
           <span className="sim-impl-label">◎ 채권운용 시사점</span>
@@ -821,7 +875,7 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
             20년 history 대비 · 매일 06:30 KST 갱신
           </span>
         </div>
-        <CurveSimilarityPanel similarity={curveSimilarity} />
+        <CurveSimilarityPanel similarity={curveSimilarity} usCurve={usCurve} />
       </div>
 
     </div>
