@@ -213,6 +213,7 @@ function App() {
           <MacroPanel
             yieldCurve={data.yield_curve}
             fedBalance={data.fed_balance}
+            curveSimilarity={data.curve_similarity}
           />
         )}
 
@@ -331,6 +332,7 @@ function App() {
           <MacroPanel
             yieldCurve={data.yield_curve}
             fedBalance={data.fed_balance}
+            curveSimilarity={data.curve_similarity}
           />
         </div>
       )}

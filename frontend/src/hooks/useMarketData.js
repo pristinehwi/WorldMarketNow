@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const DATA_URL        = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/latest.json';
-const PRICES_URL      = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/prices.json';
-const YIELD_CURVE_URL = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/yield_curve.json';
-const FED_BALANCE_URL = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/fed_balance.json';
+const DATA_URL          = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/latest.json';
+const PRICES_URL        = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/prices.json';
+const YIELD_CURVE_URL   = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/yield_curve.json';
+const FED_BALANCE_URL   = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/fed_balance.json';
+const CURVE_SIM_URL     = 'https://raw.githubusercontent.com/pristinehwi/WorldMarketNow/main/data/curve_similarity.json';
 
 function useMarketData() {
   const [data, setData]       = useState(null);
@@ -15,11 +16,12 @@ function useMarketData() {
     try {
       setLoading(true);
       const t = Date.now();
-      const [res, pricesRes, yieldRes, fedRes] = await Promise.all([
+      const [res, pricesRes, yieldRes, fedRes, simRes] = await Promise.all([
         axios.get(`${DATA_URL}?t=${t}`),
         axios.get(`${PRICES_URL}?t=${t}`).catch(() => ({ data: {} })),
         axios.get(`${YIELD_CURVE_URL}?t=${t}`).catch(() => ({ data: {} })),
         axios.get(`${FED_BALANCE_URL}?t=${t}`).catch(() => ({ data: {} })),
+        axios.get(`${CURVE_SIM_URL}?t=${t}`).catch(() => ({ data: {} })),
       ]);
 
       const raw = res.data;
@@ -30,10 +32,11 @@ function useMarketData() {
 
       setData({
         ...raw,
-        prices:      pricesRes.data.prices    || {},
-        indices:     pricesRes.data.indices   || {},
-        yield_curve: yieldRes.data.yield_curve || null,
-        fed_balance: fedRes.data.fed_balance   || null,
+        prices:           pricesRes.data.prices      || {},
+        indices:          pricesRes.data.indices     || {},
+        yield_curve:      yieldRes.data.yield_curve  || null,
+        fed_balance:      fedRes.data.fed_balance    || null,
+        curve_similarity: simRes.data.similarity     || null,
         dataAsOf,
       });
       setError(null);
