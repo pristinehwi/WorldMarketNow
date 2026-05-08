@@ -6,6 +6,7 @@ import Timeline from './components/Timeline';
 import SidePanel from './components/SidePanel';
 import ArchiveCompare from './components/ArchiveCompare';
 import EventLog from './components/EventLog';
+import MacroPanel from './components/MacroPanel';
 import useMarketData from './hooks/useMarketData';
 
 // ── 탭 상수 ──
@@ -58,22 +59,6 @@ function BriefingPanel({ onClose }) {
               )}
             </div>
           ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── 매크로·금리 탭 Placeholder ──
-function MacroPanel() {
-  return (
-    <div className="macro-placeholder">
-      <div className="macro-placeholder-inner">
-        <div className="macro-placeholder-icon">◎</div>
-        <div className="macro-placeholder-title">매크로·금리 패널</div>
-        <div className="macro-placeholder-desc">
-          수익률 커브 · 실질금리 분해 · 연준 유동성<br />
-          데이터 파이프라인 연결 후 활성화됩니다
         </div>
       </div>
     </div>
@@ -224,7 +209,12 @@ function App() {
           </>
         )}
 
-        {activeTab === 'macro' && <MacroPanel />}
+        {activeTab === 'macro' && (
+          <MacroPanel
+            yieldCurve={data.yield_curve}
+            fedBalance={data.fed_balance}
+          />
+        )}
 
         {activeTab === 'event' && (
           <div className="tab-fullscreen">
@@ -338,7 +328,10 @@ function App() {
       {/* 매크로·금리 탭 */}
       {activeTab === 'macro' && (
         <div className="tab-page">
-          <MacroPanel />
+          <MacroPanel
+            yieldCurve={data.yield_curve}
+            fedBalance={data.fed_balance}
+          />
         </div>
       )}
 
