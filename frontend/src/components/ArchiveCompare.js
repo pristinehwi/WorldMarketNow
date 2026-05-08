@@ -181,7 +181,9 @@ function BriefingTab() {
 
   return (
     <div className="briefing-tab-list">
-      {[...index].reverse().map(item => (
+      {[...index]
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .map(item => (
         <div
           key={item.date}
           className="briefing-tab-item"
