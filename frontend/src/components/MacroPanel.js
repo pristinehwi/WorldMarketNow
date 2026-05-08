@@ -8,17 +8,17 @@ const C = {
   border:    '#2a2a48',
   borderDim: '#1a1a32',
   text:      '#f0f0ff',
-  textMid:   '#b0b0d8',
-  textDim:   '#7070a8',
-  textFaint: '#4a4a78',
-  up:        '#d85a30',
-  dn:        '#3a7fd8',
-  neutral:   '#c9a227',
-  us:        '#5b8dee',
-  kr:        '#52b788',
-  jp:        '#bf5fff',
-  de:        '#c9a227',
-  gb:        '#ff6b6b',
+  textMid:   '#c8c8f0',
+  textDim:   '#a0a0d0',
+  textFaint: '#7070a8',
+  up:        '#e06040',
+  dn:        '#4a8fe8',
+  neutral:   '#e0b030',
+  us:        '#6a9eff',
+  kr:        '#5ecf95',
+  jp:        '#cc70ff',
+  de:        '#e0b030',
+  gb:        '#ff7878',
 };
 
 const COUNTRY_COLOR = { US: C.us, KR: C.kr, JP: C.jp, DE: C.de, GB: C.gb };
@@ -68,8 +68,8 @@ const US_KEY_MAP = {
 function CombinedCurveChart({
   usSeries, krSeries,
   showUS, showKR,
-  comparePeriod,   // 'none' | '1w' | '2w' | '1m' | '3m'
-  width = 520, height = 200,
+  comparePeriod,
+  width = 520, height = 130,
 }) {
   if (!usSeries && !krSeries) return <div className="mp-chart-empty">데이터 없음</div>;
 
@@ -150,14 +150,14 @@ function CombinedCurveChart({
             <line x1={PAD_L} y1={y} x2={width - PAD_R} y2={y}
               stroke={C.borderDim} strokeWidth={0.5} />
             <text x={PAD_L - 5} y={y + 3.5} fill={C.textDim}
-              fontSize={8.5} textAnchor="end">{v.toFixed(2)}</text>
+              fontSize={10} textAnchor="end">{v.toFixed(2)}</text>
           </g>
         );
       })}
       {/* X축 레이블 */}
       {TENOR_LABELS.map((lbl, i) => (
         <text key={lbl} x={cx(i)} y={height - 8}
-          fill={C.textDim} fontSize={9} textAnchor="middle">{lbl}</text>
+          fill={C.textDim} fontSize={11} textAnchor="middle" fontWeight={500}>{lbl}</text>
       ))}
       {/* 과거 커브 */}
       {showUS && usPast && (
