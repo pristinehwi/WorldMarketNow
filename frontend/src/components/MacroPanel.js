@@ -446,9 +446,9 @@ function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height
   const gridVals = Array.from({ length: 5 }, (_, i) => minV + (i / 4) * range);
 
   const curves = [
-    { vals: current,    color: C.us,     label: '현재',    dash: false,   dotR: 3   },
-    { vals: predicted1m, color: C.neutral, label: '1M 예상', dash: '6 3',  dotR: 2.5 },
-    { vals: predicted3m, color: C.up,      label: '3M 예상', dash: '3 3',  dotR: 2.5 },
+    { vals: current,     color: C.us,      label: '🇺🇸 현재',    dash: false,  dotR: 3   },
+    { vals: predicted1m, color: C.neutral, label: '1M 예상',     dash: '6 3',  dotR: 2.5 },
+    { vals: predicted3m, color: C.up,      label: '3M 예상',     dash: '3 3',  dotR: 2.5 },
   ].filter(c => c.vals.some(v => v != null));
 
   return (
@@ -548,6 +548,11 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
             {data.computed_at.slice(0, 10)} 기준
           </span>
         )}
+      </div>
+
+      {/* 판정 기준 안내 */}
+      <div style={{ fontSize: 10, color: C.textFaint, marginBottom: 6 }}>
+        🇺🇸 미국 국채 수익률 커브(1Y·2Y·5Y·10Y·20Y·30Y)의 {data.label} 무브먼트 벡터 기준 코사인 유사도
       </div>
 
       {/* ── 유사 시점 선택 탭 ── */}
@@ -870,7 +875,7 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
       {/* ── 섹션 3: 커브 유사도 검색 ── */}
       <div className="mp-section--card" style={{ marginTop: 14 }}>
         <div className="mp-section-header">
-          <span className="mp-section-title">커브 패턴 유사도 검색</span>
+          <span className="mp-section-title">🇺🇸 미국 커브 무브먼트 유사도 검색</span>
           <span style={{ fontSize: 10, color: C.textFaint }}>
             20년 history 대비 · 매일 06:30 KST 갱신
           </span>
