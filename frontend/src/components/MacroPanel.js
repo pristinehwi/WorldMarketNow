@@ -25,7 +25,16 @@ const COUNTRY_FLAG  = { US: '🇺🇸', KR: '🇰🇷', JP: '🇯🇵', DE: '�
 
 // ── 유틸 ──────────────────────────────────────────────────
 const fmt = (v, d = 3) => v != null ? parseFloat(v).toFixed(d) + '%' : '—';
-const fmtT = (v) => v != null ? (v / 1e6).toFixed(2) + 'T' : '—'; // millions → trillions
+
+// millions_usd → T 표시 (WALCL, WSHOMCB, WRESBAL, WTREGEN)
+const fmtT = (v) => v != null ? (v / 1e6).toFixed(2) + 'T' : '—';
+
+// RRPONTSYD는 billions_usd 단위 — B 표시
+const fmtRRP = (v) => {
+  if (v == null) return '—';
+  if (v < 1) return `${(v * 1000).toFixed(0)}M`;
+  return `${v.toFixed(1)}B`;
+};
 
 function DeltaBadge({ now, prev, unit = '%' }) {
   if (now == null || prev == null) return null;
@@ -511,7 +520,7 @@ export default function MacroPanel({ yieldCurve, fedBalance }) {
                   <div className="mp-fed-formula">WALCL − TGA − RRP</div>
                   {tga?.latest && rrp?.latest && (
                     <div className="mp-fed-detail">
-                      TGA {fmtT(tga.latest.value)} · RRP {(rrp.latest.value / 1000).toFixed(1)}B
+                      TGA {fmtT(tga.latest.value)} · RRP {fmtRRP(rrp.latest.value)}
                     </div>
                   )}
                 </div>
