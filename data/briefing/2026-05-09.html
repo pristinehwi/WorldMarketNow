@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-09 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/09 07:48 KST</div>
+    <div class="header-date">2026-05-09</div>
+    <div class="header-headline">반도체·AI 인프라 투자 급증, 미국 증시 사상최고 경신</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Intel·AMD 급등 지속성 및 TSMC 성장 둔화 신호가 반도체 랠리 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">기술 섹터 구조적 성장 - AI 인프라 투자 확대</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#8</span>
+    </div>
+    <div class="theme-summary">반도체 섹터가 AI 데이터센터 수요 낙관론에 힘입어 급등세를 기록했다. AMD와 Micron이 강세를 보였고, Intel은 Apple과의 칩 제조 계약 체결로 사상최고가를 경신하며 20% 가까이 급등했다. Nvidia는 AI 인프라 확장을 위해 IREN에 최대 21억 달러 투자 계획을 발표하며 칩 판매를 넘어 직접 인프라 투자로 영역을 확대했다. AI 칩메이커 Cerebras는 수요 증가로 IPO 가격 범위 상향을 검토 중이다. 다만 TSMC의 4월 매출 증가율이 6개월 만에 최저를 기록하며 지속 성장 가능성에 일부 의문이 제기됐다. Three Mile Island 원전이 AI의 막대한 전력 수요를 충당하기 위해 재가동을 준비 중이며, Cloudflare는 AI 효율성 향상으로 1,100개 일자리를 감축하면서도 매출 최고치를 달성했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">미국 증시 사상최고 경신 - 고용·실적 모멘텀</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #9~#11</span>
+    </div>
+    <div class="theme-summary">미국 증시가 금요일 이번 주 세 번째로 사상최고치를 경신했다. 반도체주 강세, 견조한 고용지표, 그리고 호르무즈 해협 인근 충돌에도 불구하고 유지되는 미국-이란 휴전이 동력을 제공했다. 노동시장 강건함은 에너지 쇼크에도 불구하고 세계 최대 경제의 회복력을 뒷받침한다는 해석을 강화했다. 견조한 성장이 기업 실적을 계속 견인할 것이라는 기대가 주가 상승을 이끌었다. 금은 단기 기술적 중요 수준을 돌파하며 이란 분쟁 이후 부진했던 모멘텀을 회복할 조짐을 보였다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">통화정책 불확실성 - Fed 금리 경로 재평가</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#15</span>
+    </div>
+    <div class="theme-summary">연준이 금리 인하 근거를 빠르게 상실하고 있다는 분석이 제기됐다. 금요일 고용 보고서는 중앙은행의 주요 우려가 점점 감당하기 어려워지는 생계비 부담으로 이동했음을 시사했다. 시카고 연은 총재 Goolsbee는 현재 모든 금리 옵션이 테이블 위에 있다고 언급하며 정책 경로의 불확실성을 강조했다. 보스턴 연은 총재 Collins는 인플레이션, 이란 분쟁의 경제적 여파, Kevin Warsh의 지명이 중앙은행에 미칠 영향을 논의했다. 연준은 최근 몇 달간 일부 대형 펀드들이 투자자 환매를 차단한 후 프라이빗 크레딧 환매 요청으로 인한 안정성 리스크를 '제한적이고 관리 가능'하다고 평가했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">디지털 자산·금융 인프라 혁신</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #16~#18</span>
+    </div>
+    <div class="theme-summary">스테이블코인 시장이 6년 전 100억 달러 미만에서 현재 3,000억 달러 이상으로 급성장하며 정책 논의의 중심으로 빠르게 이동했다. ECB 총재 Lagarde는 시장의 90% 가까이를 Tether와 Circle 두 발행사가 장악하고 있으며 압도적으로 달러 표시라고 지적했다. 연준 Cook 이사는 토큰화가 금융 시스템에 미치는 영향에 대한 견해를 발표했다. 한편 스위스 암호화폐 캠페인 활동가들은 중앙은행의 Bitcoin 보유 의무화 국민투표를 위한 서명 수집에 실패하며 제안을 포기했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Trump 행정부 정책 및 법적 분쟁</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #19~#22</span>
+    </div>
+    <div class="theme-summary">법원이 다시 한번 Trump 행정부의 관세 조치를 기각하며 행정부 권한 남용에 회의적 시각을 유지했다. 백악관 국가경제위원회 위원장 Hassett는 투자자 Gundlach의 미국 국채 구조조정 시나리오를 디폴트에 해당한다며 단호히 거부했다. Trump 대통령은 이란으로부터 고농축 우라늄 제거에는 성공하지 못했지만 금요일 베네수엘라 카라카스 원자로에서 13.5kg의 우라늄을 확보했다고 미 에너지부가 발표했다. 이는 테헤란이 보유한 408kg에 비해 극히 일부에 불과하다. Elon Musk와 OpenAI 간 법정 공방이 스타트업 리더들 간 긴장을 드러내고 억만장자의 동기에 대한 의문을 제기했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">항공우주·방산 및 기타 산업 동향</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #23~#25</span>
+    </div>
+    <div class="theme-summary">Applied Aerospace & Defense가 미국 IPO를 신청하며 올해 후반 예상되는 SpaceX 상장을 앞두고 우주·방산 기업들의 공개 시장 진출 러시에 합류했다. IT 근로자 실업률이 4월 3.8%로 소폭 상승하며 기술 기업들의 AI 주도 구조조정 속에서 취업 시장이 여전히 불투명한 상황이다. 기업의 연령차별이 경험 있는 인력을 버리는 근시안적 사고이며 AI로도 해결할 수 없는 주주 가치 파괴라는 지적이 제기됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #26~#30</span>
+    </div>
+    <div class="theme-summary">특정 테마로 분류하기 어려운 주요 동향을 포함합니다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">기술 섹터 구조적 성장 - AI 인프라 투자 확대</span>
+    <span class="theme-label-range">Article #1~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">AMD, Micron 주가 급등 - 반도체 섹터 아웃퍼폼 기록</div>
+    <div class="article-title-en">AMD, Micron shares surge on a big day for chip-sector outperformance</div>
+    <div class="article-keypoint">AI 데이터센터 낙관론 복귀로 AMD·Micron 급등, 반도체 섹터 모멘텀 전환</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/amd-micron-shares-surge-on-a-big-day-for-chip-sector-outperformance-fe2d5306?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 06:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Intel, Apple 칩 제조 계약으로 사상최고가 급등 - 백악관 압력 배경</div>
+    <div class="article-title-en">Intel Jumps To Record High On Deal To Make Chips For Apple, Following White House Pressure</div>
+    <div class="article-keypoint">Intel, Apple 칩 제조 계약으로 사상최고가 20% 급등 - 백악관 압력 배경</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/intel-jumps-record-high-deal-make-chips-apple-following-white-house-pressure" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 02:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Nvidia, AI 인프라 확장 위해 IREN에 21억 달러 투자</div>
+    <div class="article-title-en">Nvidia Bets $2.1 Billion On IREN To Expand AI Infrastructure</div>
+    <div class="article-keypoint">Nvidia, AI 인프라 확장 위해 IREN에 최대 21억 달러 투자 - 칩 판매 넘어 직접 투자</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/nvidia-bets-21-billion-iren-expand-ai-infrastructure" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">미국 최악 핵 사고 현장 Three Mile Island, AI 붐으로 재가동</div>
+    <div class="article-title-en">America’s Most Infamous Nuclear Site Returns to Fuel the AI Boom</div>
+    <div class="article-keypoint">Three Mile Island 원전 재가동 추진, Microsoft 계약으로 AI 전력 수요 충당</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-08/america-s-most-infamous-nuclear-site-returns-to-fuel-ai-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 05:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">AI 칩메이커 Cerebras, IPO 가격 범위 상향 계획</div>
+    <div class="article-title-en">AI Chipmaker Cerebras Is Said to Plan Raising IPO Price Range</div>
+    <div class="article-keypoint">AI 칩메이커 Cerebras, 수요 증가로 IPO 가격 범위 상향 검토</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-08/ai-chipmaker-cerebras-is-said-to-plan-raising-ipo-price-range" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 03:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Cloudflare, AI로 1,100개 일자리 불필요해져도 매출 최고 경신</div>
+    <div class="article-title-en">Cloudflare says AI made 1,100 jobs obsolete, even as revenue hit a record high</div>
+    <div class="article-keypoint">Cloudflare, AI 효율화로 1,100명 감축에도 매출 최고 - 대규모 구조조정 첫 단행</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/08/cloudflare-says-ai-made-1100-jobs-obsolete-even-as-revenue-hit-a-record-high/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 03:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Apple-Intel, 예비 칩 제조 합의 도달</div>
+    <div class="article-title-en">Apple, Intel Have Reached Preliminary Chip-Making Agreement</div>
+    <div class="article-keypoint">Apple-Intel 예비 칩 제조 합의, Trump 행정부 중재로 성사</div>
+    <a class="article-link" href="https://www.wsj.com/tech/apple-intel-have-reached-preliminary-chip-making-agreement-69eb9370?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 01:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">TSMC 4월 매출 성장률 6개월 만에 최저</div>
+    <div class="article-title-en">Taiwan Semiconductor April Sales Grow At Slowest Pace In 6 Months</div>
+    <div class="article-keypoint">TSMC 4월 매출 증가율 6개월 만에 최저 - 반도체 성장 지속성 의문</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/taiwan-semi-april-sales-grow-slowest-pace-6-months" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 03:40 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">미국 증시 사상최고 경신 - 고용·실적 모멘텀</span>
+    <span class="theme-label-range">Article #9~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">금, 주요 추세선 돌파 복귀 - 추가 상승 가능성은?</div>
+    <div class="article-title-en">Gold has climbed back above a key trend line. Are more gains on the way?</div>
+    <div class="article-keypoint">금 가격 주요 추세선 돌파, 이란 분쟁 후 부진 탈피 조짐</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/gold-has-climbed-back-above-a-key-trend-line-are-more-gains-on-the-way-6627e0f5?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 06:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">미국 증시 사상최고 경신 - 반도체 강세와 고용지표 호조</div>
+    <div class="article-title-en">US Stocks Set Record High as Chip Stocks Roar, Payrolls Beat</div>
+    <div class="article-keypoint">미국 증시 이번 주 세 번째 사상최고 - 반도체·고용·이란 휴전 유지 호재</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-08/us-futures-rise-as-chip-stocks-rally-iran-ceasefire-holds" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/08 20:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">고용지표 호조에 증시 사상최고 경신, 반도체 급등</div>
+    <div class="article-title-en">Stocks Hit Record High on Jobs as Chipmakers Surge</div>
+    <div class="article-keypoint">견조한 고용지표로 증시 사상최고 - 에너지 쇼크 속 경제 회복력 입증</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-08/stocks-hit-record-high-on-jobs-as-chipmakers-surge-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 05:12 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">통화정책 불확실성 - Fed 금리 경로 재평가</span>
+    <span class="theme-label-range">Article #12~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">보스턴 연은 총재, FOMC 반대 의견과 Kevin Warsh 지명 논의</div>
+    <div class="article-title-en">Boston Fed President on FOMC Dissent and Kevin Warsh’s Nomination</div>
+    <div class="article-keypoint">보스턴 연은 Collins, Warsh 지명과 이란 여파 속 FOMC 정책 방향 논의</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-08/boston-fed-president-on-fomc-dissent-and-kevin-warsh-s-nomination" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 04:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">연준, 금리 인하 근거 빠르게 상실 중</div>
+    <div class="article-title-en">The Federal Reserve is quickly running out of reasons to cut interest rates</div>
+    <div class="article-keypoint">금요일 고용지표 견조, 연준 금리 인하 근거 약화 - 생계비 부담 주요 우려로</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/05/08/the-federal-reserve-is-quickly-running-out-of-reasons-to-cut-interest-rates.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 06:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Fed, 프라이빗 크레딧 환매를 '관리 가능한' 리스크로 평가</div>
+    <div class="article-title-en">Fed Sees Private Credit Redemptions as ‘Manageable’ Risks</div>
+    <div class="article-keypoint">Fed, 프라이빗 크레딧 환매 리스크 '제한적' 평가 - 대형 펀드 환매 차단 후속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-08/fed-calls-risks-tied-to-private-credit-redemptions-manageable" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">연준 Goolsbee, 모든 금리 옵션이 테이블 위에</div>
+    <div class="article-title-en">Fed’s Goolsbee Says All Interest-Rate Options Are On The Table</div>
+    <div class="article-keypoint">시카고 연은 Goolsbee, 모든 금리 옵션 테이블 위 - 정책 경로 불확실성 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-08/fed-s-goolsbee-says-all-interest-rate-options-are-on-the-table" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 04:04 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">디지털 자산·금융 인프라 혁신</span>
+    <span class="theme-label-range">Article #16~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Cook 이사, 토큰화와 금융시스템 영향에 대한 견해 발표</div>
+    <div class="article-title-en">Cook, Perspectives on Tokenization and Implications for the Financial System</div>
+    <div class="article-keypoint">Fed Cook 이사, 토큰화의 금융시스템 영향 연설 - 디지털 자산 규제 신호</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/cook20260508a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/08 18:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Christine Lagarde: 스테이블코인과 화폐의 미래 - 기능과 수단 분리</div>
+    <div class="article-title-en"> Christine Lagarde: Stablecoins and the future of money: separating functions from instruments</div>
+    <div class="article-keypoint">ECB Lagarde, 스테이블코인 3,000억 달러 돌파 - Tether·Circle 90% 장악</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp260508~dd909fbed1.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/08 16:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">스위스 중앙은행 Bitcoin 보유 의무화 캠페인 실패 - Reuters</div>
+    <div class="article-title-en">Bitcoin Campaign to Force SNB Holdings Has Failed, Reuters Says</div>
+    <div class="article-keypoint">스위스 Bitcoin 보유 의무화 국민투표 서명 부족으로 무산</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-08/bitcoin-campaign-to-force-snb-holdings-has-failed-reuters-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 00:09 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Trump 행정부 정책 및 법적 분쟁</span>
+    <span class="theme-label-range">Article #19~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Trump 관세, 법원서 또다시 기각</div>
+    <div class="article-title-en">Trump’s Tariffs Just Got Struck Down in Court—Again</div>
+    <div class="article-keypoint">법원, Trump 관세 조치 재차 기각 - 행정부 권한 남용 견제 지속</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/05/08/trump-tariffs-united-states-court-international-trade-section-122-ruling/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 01:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Musk vs OpenAI 재판 현황 정리</div>
+    <div class="article-title-en">What’s Happened So Far at the Musk v. OpenAI Trial</div>
+    <div class="article-keypoint">Musk vs OpenAI 재판, 스타트업 리더 긴장과 억만장자 동기 의문 부각</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/05/08/business/dealbook/musk-openai-trial.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/08 20:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">이란 좌절한 Trump, 결국 베네수엘라서 고농축 우라늄 확보</div>
+    <div class="article-title-en">Frustrated by Iran, Trump at last seizes enriched uranium – but from Venezuela</div>
+    <div class="article-keypoint">Trump, 이란 아닌 베네수엘라서 13.5kg 고농축 우라늄 확보 - 테헤란 408kg 대비 소량</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/08/venezuela-enriched-uranium-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 02:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Hassett, Gundlach 국채 아이디어에 절대 불가 답변</div>
+    <div class="article-title-en">Hassett, Asked on Gundlach Debt Idea, Says Not in Million Years</div>
+    <div class="article-keypoint">백악관 Hassett, Gundlach 국채 구조조정안 디폴트 해당 - 단호히 거부</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-08/hassett-asked-on-gundlach-debt-idea-says-not-in-million-years" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/08 23:21 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">항공우주·방산 및 기타 산업 동향</span>
+    <span class="theme-label-range">Article #23~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">기술직 실업률 4월 3.8% 상승, AI 주도 해고 지속</div>
+    <div class="article-title-en">Tech Unemployment Ticks Up to 3.8% in April Amid AI-Driven Layoffs</div>
+    <div class="article-keypoint">IT 실업률 4월 3.8% 상승, AI 주도 구조조정 속 취업시장 불투명</div>
+    <a class="article-link" href="https://www.wsj.com/cio-journal/tech-unemployment-ticks-up-to-3-8-in-april-amid-ai-driven-layoffs-214b0ca4?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 06:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Applied Aerospace, IPO 신청 - SpaceX 상장 전 우주기업 러시</div>
+    <div class="article-title-en">Applied Aerospace Files for IPO, Joining Pre-SpaceX Rush</div>
+    <div class="article-keypoint">Applied Aerospace IPO 신청, SpaceX 상장 앞두고 우주·방산 기업 공개 시장 러시</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-08/applied-aerospace-files-for-ipo-joining-pre-spacex-rush" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 04:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">연령차별은 기업 자해 행위 - 미국 '두뇌 유출'로 주주 수십억 달러 손실</div>
+    <div class="article-title-en">Ageism is corporate self-sabotage — America’s ‘brain drain’ is costing shareholders billions</div>
+    <div class="article-keypoint">기업 연령차별, AI로 해결 안 되는 근시안적 주주 가치 파괴</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/ageism-is-still-an-acceptable-bias-among-employers-and-its-costing-shareholders-billions-aa308465?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 05:39 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #26~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">연준, Columbia Bank MHC 및 Columbia Financial 관련 신청 승인 발표</div>
+    <div class="article-title-en">Federal Reserve Board announces approval of related applications by Columbia Bank MHC, and Columbia Financial, Inc.</div>
+    <div class="article-keypoint">Fed, Columbia Bank 관련 신청 승인 - 일상적 규제 절차</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/orders20260508a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Anthropic의 'Perfect Wingman', OpenAI와의 경쟁 주도</div>
+    <div class="article-title-en">Meet Anthropic’s ‘Perfect Wingman’ for Its Race Against OpenAI</div>
+    <div class="article-keypoint">Anthropic의 Krishna Rao, OpenAI 경쟁 속 폭발적 성장과 컴퓨팅 제약 관리</div>
+    <a class="article-link" href="https://www.wsj.com/business/anthropic-openai-ai-krishna-rao-claude-cfo-7960de49?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Intel 주가, Apple 파트너십 기대감에 전례 없는 성과 달성</div>
+    <div class="article-title-en">Intel’s stock achieves a never-before-seen feat as Apple enthusiasm builds</div>
+    <div class="article-keypoint">Intel, Apple 제조 파트너십으로 14% 급등 - 사업 전환 모멘텀</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/intels-stock-could-achieve-a-never-before-seen-feat-as-apple-enthusiasm-builds-edd94237?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 05:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">프라이빗 크레딧 '성장통' 겪는 중 - Aronov</div>
+    <div class="article-title-en">Private Credit Going Through 'Growing Pains': Aronov</div>
+    <div class="article-keypoint">JPMorgan, 프라이빗 크레딧 '성장통' 겪는 중 - 대안 고정수익 전략 논의</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-08/private-credit-going-through-growing-pains-aronov-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 03:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Rebel Wilson, '환상적 거짓말쟁이'로 법정서 지목 - 명예훼손 소송</div>
+    <div class="article-title-en">Rebel Wilson is a ‘fantastical liar’ who ‘made up terrible allegations against multiple people’, court told</div>
+    <div class="article-keypoint">Rebel Wilson 명예훼손 소송 - 거시경제·금융·지정학 무관 연예 뉴스</div>
+    <a class="article-link" href="https://www.theguardian.com/film/2026/may/08/rebel-wilson-fantastical-liar-court-told-defamation-case-ntwnfb" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/08 15:06 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
