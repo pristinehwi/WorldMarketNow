@@ -135,8 +135,8 @@ function CombinedCurveChart({
 
   // 범례
   const legends = [
-    showUS && { color: C.us,  label: '미국 (현재)', dash: false },
-    showUS && usPast && comparePeriod !== 'none' && { color: C.us, label: `미국 ${periodLabel(comparePeriod)} 전`, dash: true },
+    showUS && { color: C.us,  label: 'US (현재)', dash: false },
+    showUS && usPast && comparePeriod !== 'none' && { color: C.us, label: `US ${periodLabel(comparePeriod)} 전`, dash: true },
     showKR && { color: C.kr,  label: '한국 (현재)', dash: false },
     showKR && krPast && comparePeriod !== 'none' && { color: C.kr, label: `한국 ${periodLabel(comparePeriod)} 전`, dash: true },
   ].filter(Boolean);
@@ -151,14 +151,14 @@ function CombinedCurveChart({
             <line x1={PAD_L} y1={y} x2={width - PAD_R} y2={y}
               stroke={C.borderDim} strokeWidth={0.5} />
             <text x={PAD_L - 5} y={y + 3.5} fill={C.textDim}
-              fontSize={9} textAnchor="end">{v.toFixed(2)}</text>
+              fontSize={7.5} textAnchor="end">{v.toFixed(2)}</text>
           </g>
         );
       })}
       {/* X축 레이블 */}
       {TENOR_LABELS.map((lbl, i) => (
         <text key={lbl} x={cx(i)} y={height - 8}
-          fill={C.textDim} fontSize={9} textAnchor="middle" fontWeight={600}>{lbl}</text>
+          fill={C.textDim} fontSize={7.5} textAnchor="middle" fontWeight={500}>{lbl}</text>
       ))}
       {/* 과거 커브 */}
       {showUS && usPast && (
@@ -255,10 +255,10 @@ function FedMiniChart({ history, color, width = 220, height = 52 }) {
       <path d={d} fill="none" stroke={color} strokeWidth={1.5} opacity={0.9} />
       <circle cx={cx(data.length - 1)} cy={cy(vals[vals.length - 1])} r={2.5} fill={color} />
       {startDate && (
-        <text x={PAD_L} y={height - 2} fill="#a0a0d0" fontSize={9}>{startDate}</text>
+        <text x={PAD_L} y={height - 2} fill="#a0a0d0" fontSize={7.5}>{startDate}</text>
       )}
       {endDate && (
-        <text x={width - PAD_R} y={height - 2} fill="#a0a0d0" fontSize={9} textAnchor="end">{endDate}</text>
+        <text x={width - PAD_R} y={height - 2} fill="#a0a0d0" fontSize={7.5} textAnchor="end">{endDate}</text>
       )}
     </svg>
   );
@@ -446,7 +446,7 @@ function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height
   const gridVals = Array.from({ length: 5 }, (_, i) => minV + (i / 4) * range);
 
   const curves = [
-    { vals: current,     color: C.us,      label: '🇺🇸 현재',    dash: false,  dotR: 3   },
+    { vals: current,     color: C.us,      label: 'US 현재',    dash: false,  dotR: 3   },
     { vals: predicted1m, color: C.neutral, label: '1M 예상',     dash: '6 3',  dotR: 2.5 },
     { vals: predicted3m, color: C.up,      label: '3M 예상',     dash: '3 3',  dotR: 2.5 },
   ].filter(c => c.vals.some(v => v != null));
@@ -459,13 +459,13 @@ function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height
           <line x1={PAD_L} y1={cy(v)} x2={width - PAD_R} y2={cy(v)}
             stroke={C.borderDim} strokeWidth={0.5} />
           <text x={PAD_L - 4} y={cy(v) + 3.5} fill={C.textFaint}
-            fontSize={8} textAnchor="end">{v.toFixed(2)}</text>
+            fontSize={6.5} textAnchor="end">{v.toFixed(2)}</text>
         </g>
       ))}
       {/* X축 레이블 */}
       {SIM_TENOR_LBLS.map((lbl, i) => (
         <text key={lbl} x={cx(i)} y={height - 6}
-          fill={C.textDim} fontSize={8} textAnchor="middle" fontWeight={400}>{lbl}</text>
+          fill={C.textDim} fontSize={6.5} textAnchor="middle" fontWeight={400}>{lbl}</text>
       ))}
       {/* 커브 선 */}
       {curves.map(c => (
@@ -702,7 +702,7 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
       {/* ── 섹션 1: 커브 유사도 (메인) ── */}
       <div className="mp-section--card">
         <div className="mp-section-header">
-          <span className="mp-section-title">🇺🇸 미국 커브 무브먼트 유사도 검색</span>
+          <span className="mp-sim-main-title">미국 금리 커브 움직임에 기반한 근 미래 유망 시나리오 진단</span>
           <span style={{ fontSize: 10, color: C.textFaint }}>
             20년 history 대비 · 매일 06:30 KST 갱신
           </span>
@@ -735,7 +735,7 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
                   className={`mp-toggle ${showUS ? 'active' : ''}`}
                   style={showUS ? { borderColor: C.us, color: C.us, background: `${C.us}18` } : {}}
                   onClick={() => setShowUS(v => !v)}>
-                  🇺🇸 미국
+                  🇺🇸 US
                 </button>
                 <button
                   className={`mp-toggle ${showKR ? 'active' : ''}`}
@@ -786,7 +786,7 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
                       {diff >= 0 ? '+' : ''}{diff}%p
                     </span>
                     <span className="mp-kus-detail">
-                      🇰🇷 {kr10.toFixed(3)}% · 🇺🇸 {us10.toFixed(3)}%
+                      🇰🇷 KR {kr10.toFixed(3)}% · 🇺🇸 US {us10.toFixed(3)}%
                     </span>
                   </div>
                 );
