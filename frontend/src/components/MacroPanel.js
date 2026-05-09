@@ -496,8 +496,9 @@ function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height
 }
 
 function CurveSimilarityPanel({ similarity, usCurve }) {
-  const [activePeriod,  setActivePeriod]  = useState('1m');
-  const [activeMatch,   setActiveMatch]   = useState(0);
+  const [activePeriod, setActivePeriod] = useState('1m'); // 유사 시점 탐색 기간
+  const [activeMatch,  setActiveMatch]  = useState(0);
+  const [tableView,    setTableView]    = useState('1m'); // 수치 표시 기간 (독립)
 
   if (!similarity) {
     return (
@@ -554,7 +555,7 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
             {insight?.pattern_description || '커브 패턴 분석'}
           </span>
           <div className="mp-tab-group mp-tab-group--sm">
-            {[{ id: '1m', label: 'fwd 1M 변화 예상' }, { id: '3m', label: 'fwd 3M 변화 예상' }].map(o => (
+            {[{ id: '1m', label: '1M 무브먼트 탐색' }, { id: '3m', label: '3M 무브먼트 탐색' }].map(o => (
               <button key={o.id}
                 className={`mp-tab ${activePeriod === o.id ? 'active' : ''}`}
                 onClick={() => { setActivePeriod(o.id); setActiveMatch(0); }}>
@@ -608,8 +609,8 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
                 <div className="mp-tab-group mp-tab-group--sm">
                   {[{ id: '1m', label: 'fwd 1M' }, { id: '3m', label: 'fwd 3M' }].map(o => (
                     <button key={o.id}
-                      className={`mp-tab ${activePeriod === o.id ? 'active' : ''}`}
-                      onClick={() => { setActivePeriod(o.id); setActiveMatch(0); }}>
+                      className={`mp-tab ${tableView === o.id ? 'active' : ''}`}
+                      onClick={() => setTableView(o.id)}>
                       {o.label}
                     </button>
                   ))}
@@ -626,7 +627,7 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
               </div>
               {/* 개별 시점 행 */}
               {matches.map((m, idx) => {
-                const fwd = activePeriod === '1m' ? m.forward_1m : m.forward_3m;
+                const fwd = tableView === '1m' ? m.forward_1m : m.forward_3m;
                 const end1m = m.forward_1m?.[SIM_TENOR_KEYS[0]]?.end_date?.slice(2, 10) || '';
                 const end3m = m.forward_3m?.[SIM_TENOR_KEYS[0]]?.end_date?.slice(2, 10) || '';
                 return (
@@ -653,7 +654,7 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
               })}
               {/* 평균 행 */}
               {(() => {
-                const avgFwd = activePeriod === '1m' ? avgFwd1m : avgFwd3m;
+                const avgFwd = tableView === '1m' ? avgFwd1m : avgFwd3m;
                 return (
                   <div className="sim-tbl-row sim-tbl-row--avg">
                     <span className="sim-tbl-label" style={{ color: C.neutral, fontWeight: 700 }}>평균</span>
