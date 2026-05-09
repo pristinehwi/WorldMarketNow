@@ -843,7 +843,7 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
       {/* ── 섹션 1: 커브 유사도 (메인) ── */}
       <div className="mp-section--card">
         <div className="mp-section-header">
-          <span className="mp-sim-main-title">미국 금리 커브 움직임에 기반한 근 미래 유망 시나리오 진단</span>
+          <span className="mp-sim-main-title">미국 금리 커브 움직임에 기반한 AI 유사시점 포착</span>
           <span style={{ fontSize: 10, color: C.textFaint }}>
             20년 history 대비 · 매일 06:30 KST 갱신
           </span>
@@ -1042,6 +1042,30 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
                   }}>
                     {resv.latest.value < 3000000 ? '⚠ 임계 수준 접근' : '정상 수준'}
                   </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Sonnet 연준 유동성 진단 ── */}
+          {fedBalance?.insight && (
+            <div className="mp-fed-insight">
+              <div className="mp-fed-insight-status">
+                <span className="mp-fed-insight-dot" />
+                {fedBalance.insight.status}
+              </div>
+              {fedBalance.insight.diagnosis && (
+                <div className="mp-fed-insight-text">{fedBalance.insight.diagnosis}</div>
+              )}
+              {fedBalance.insight.trend && (
+                <div className="mp-fed-insight-text" style={{ color: C.textDim }}>
+                  {fedBalance.insight.trend}
+                </div>
+              )}
+              {fedBalance.insight.bond_implication && (
+                <div className="mp-fed-insight-impl">
+                  <span style={{ color: C.kr, fontWeight: 700, fontSize: 10 }}>◎ 채권 시사점</span>
+                  <span>{fedBalance.insight.bond_implication}</span>
                 </div>
               )}
             </div>
