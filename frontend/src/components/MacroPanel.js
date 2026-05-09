@@ -618,7 +618,8 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
               {/* 헤더 행 */}
               <div className="sim-tbl-row sim-tbl-row--head">
                 <span className="sim-tbl-label">시점</span>
-                <span className="sim-tbl-label" style={{ fontSize: 9, color: '#7070a8' }}>→ 기준일</span>
+                <span className="sim-tbl-date">+1M</span>
+                <span className="sim-tbl-date">+3M</span>
                 {SIM_TENOR_LBLS.map(lbl => (
                   <span key={lbl} className="sim-tbl-val">{lbl}</span>
                 ))}
@@ -626,15 +627,15 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
               {/* 개별 시점 행 */}
               {matches.map((m, idx) => {
                 const fwd = activePeriod === '1m' ? m.forward_1m : m.forward_3m;
-                const endDate = fwd?.[SIM_TENOR_KEYS[0]]?.end_date || '';
+                const end1m = m.forward_1m?.[SIM_TENOR_KEYS[0]]?.end_date?.slice(2, 10) || '';
+                const end3m = m.forward_3m?.[SIM_TENOR_KEYS[0]]?.end_date?.slice(2, 10) || '';
                 return (
                   <div key={m.date} className="sim-tbl-row">
                     <span className="sim-tbl-label" style={{ color: '#ff8c00', fontWeight: 700 }}>
-                      #{idx + 1} {m.date.slice(2, 7)}
+                      #{idx + 1} {m.date.slice(2, 10)}
                     </span>
-                    <span className="sim-tbl-label" style={{ fontSize: 9, color: C.textDim }}>
-                      {endDate.slice(2, 10)}
-                    </span>
+                    <span className="sim-tbl-date" style={{ color: C.neutral }}>{end1m}</span>
+                    <span className="sim-tbl-date" style={{ color: C.up }}>{end3m}</span>
                     {SIM_TENOR_KEYS.map(k => {
                       const chg = fwd?.[k]?.change;
                       return (
@@ -655,7 +656,8 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
                 return (
                   <div className="sim-tbl-row sim-tbl-row--avg">
                     <span className="sim-tbl-label" style={{ color: C.neutral, fontWeight: 700 }}>평균</span>
-                    <span className="sim-tbl-label"></span>
+                    <span className="sim-tbl-date"></span>
+                    <span className="sim-tbl-date"></span>
                     {SIM_TENOR_KEYS.map(k => {
                       const chg = avgFwd?.[k]?.change;
                       return (

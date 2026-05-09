@@ -2886,8 +2886,8 @@ body {
 /* ── 평균 커브 + 수치 테이블 2열 레이아웃 ── */
 .sim-main-layout {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 16px;
   align-items: start;
   margin-bottom: 10px;
 }
@@ -2898,9 +2898,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 3px;
-  min-width: 320px;
-  max-width: 380px;
-  flex-shrink: 0;
+  width: 100%;
 }
 .sim-fwd-table-header {
   display: flex;
@@ -2911,11 +2909,11 @@ body {
 }
 .sim-tbl-row {
   display: grid;
-  grid-template-columns: 72px 56px repeat(6, 1fr);
-  gap: 4px;
+  grid-template-columns: 64px 56px 56px repeat(6, 1fr);
+  gap: 3px;
   padding: 4px 6px;
   border-radius: 4px;
-  font-size: 10.5px;
+  font-size: 10px;
 }
 .sim-tbl-row--head {
   background: #0a0a1c;
@@ -2933,24 +2931,29 @@ body {
   background: #0d0d20;
 }
 .sim-tbl-label {
-  font-size: 10px;
+  font-size: 9.5px;
   color: #9090c8;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.sim-tbl-date {
+  font-size: 9px;
+  color: #8080b8;
+  white-space: nowrap;
+}
 .sim-tbl-val {
   text-align: right;
-  font-size: 10.5px;
+  font-size: 10px;
   font-variant-numeric: tabular-nums;
 }
 .sim-tbl-row--head .sim-tbl-label,
-.sim-tbl-row--head .sim-tbl-val {
+.sim-tbl-row--head .sim-tbl-val,
+.sim-tbl-row--head .sim-tbl-date {
   color: #7070a8;
   font-weight: 600;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .sim-main-layout { grid-template-columns: 1fr; }
-  .sim-fwd-table { max-width: 100%; min-width: 0; }
 }
