@@ -1,5 +1,5 @@
-# 지금 세계는 (WorldMarketNow) — 개발 진도 현황 v10.0
-> 마지막 업데이트: 2026-05-09 (개발_12 세션 완료)
+# 지금 세계는 (WorldMarketNow) — 개발 진도 현황 v10.1
+> 마지막 업데이트: 2026-05-09 (개발_12 세션 완료 — 후반부 반영)
 > 다음 세션 시작 시 이 파일을 Claude에게 전달할 것.
 
 ---
@@ -40,7 +40,7 @@
 |--------|------|------|------|
 | `data_collector.gs` | 가격/뉴스/거시/BOK/지수 + 수익률 커브 + 글로벌 기준금리 수집 | v4.9 | ✅ |
 | `claude_api.gs` | 3콜 Claude API 아키텍처 | v5.0 | ✅ |
-| `github_push.gs` | GitHub push + archive cleanup + 이벤트 로그 번역/누적 + curve_similarity | v2.6 | ✅ |
+| `github_push.gs` | GitHub push + archive cleanup + 이벤트 로그 번역/누적 + curve_similarity + fed_insight | v2.7 | ✅ |
 | `curve_similarity.gs` | 커브 무브먼트 유사도 계산 + Sonnet 해석 | v1.0 | ✅ (신규) |
 
 ### Claude API 아키텍처
@@ -51,6 +51,7 @@
 | 2번 | Haiku (`claude-haiku-4-5-20251001`) | 최종 확정 + 브리핑 생성 | 6000 |
 | 번역 | Haiku | 이벤트 로그 헤드라인 배치 번역 | 2000 |
 | 유사도 해석 | Sonnet | 커브 무브먼트 유사도 + 채권 시사점 | 4000 |
+| 연준 진단 | Sonnet | 연준 대차대조표 현황 진단 + 채권 시사점 | 600 |
 
 ### 트리거 현황
 | 함수 | 유형 | 시간 | 상태 |
@@ -270,26 +271,39 @@ frontend/src/
 - [x] `curve_similarity.gs` v1.0 신규
   - 코사인 유사도 기반 커브 무브먼트 유사 시점 탐색
   - 1M + 3M 두 기간, 상위 3개 시점
-  - Sonnet 해석 (max_tokens 4000) — 상세 필드 구조
+  - Sonnet 해석 (max_tokens 4000) — `why_similar` / `macro_context` / `after_1m_detail` / `after_3m_detail` / `bond_lesson` / `current_implication`
   - `data_as_of` 필드 추가 (데이터 기준일 명시)
-- [x] `github_push.gs` v2.5→v2.6
+- [x] `github_push.gs` v2.6→v2.7
   - `pushYieldCurveAndFedBalance()`: yield_curve 130일 trim + kr_curve + curve_similarity
+  - `generateFedInsight()` 신규: 연준 대차대조표 Sonnet 진단 — status/diagnosis/trend/bond_implication
+  - `fed_balance.json`에 `insight` 필드 포함
   - curve_similarity: **KST 06:00~08:00 윈도우에만 실행** (하루 1회)
+  - RRP 단위 버그 수정: `RRPONTSYD`는 billions_usd — 프롬프트에 B USD 단위로 전달
   - `runPipeline()`: 블랙아웃 체크 후 sleep(60000) → Sonnet 호출 순서 수정
 - [x] **트리거 변경**: 6시간 → **1시간** 단위
 
 #### 프론트엔드
 - [x] `App.js` v2.0: 5탭 네비게이션 (PC 상단탭/모바일 하단탭)
-  - 기존 floating 버튼 전부 제거
-  - MacroPanel/AboutPanel placeholder → MacroPanel 실구현
-- [x] `App.css`: 탭바 + MacroPanel v3 + 유사도 패널 스타일
-- [x] `EventLog.js`: `embedded` prop 추가 (overlay 제거)
-- [x] `ArchiveCompare.js`: `embedded` prop + 브리핑 서브탭 (📰 Daily Intelligence, 최신순)
-- [x] `MacroPanel.js` v4.0 신규 (전체 구현)
-  - 섹션 1: 커브 무브먼트 유사도 패널 (메인)
-  - 섹션 2: 수익률 커브 (한/미/글로벌)
+- [x] `MacroPanel.js` v4.0 전체 구현
+  - 섹션 1: 커브 무브먼트 유사도 패널 (메인 최상단)
+    - 타이틀: "미국 금리 커브 움직임에 기반한 AI 유사시점 포착" (형광연두)
+    - 1M/3M 무브먼트 탐색 탭 (`activePeriod`) — 유사 시점 자체가 바뀜
+    - fwd 1M/3M 수치 전환 탭 (`tableView`) — 탐색 기간과 독립 state
+    - 3개 유사 시점 평균 예상 커브 차트 + 수치 테이블 2열 배치
+    - 수치 테이블: 각 시점 +1M/+3M end_date 고정 표시 + 테너별 변화량 + 평균 행
+    - 탐색 기준 설명 박스 (보라 좌측 경계선)
+    - 판정 기준 안내 (형광보라색)
+    - 개별 유사 시점 탭 → 예상 커브 + 상세 설명 카드
+  - 섹션 2: 수익률 커브 (max-width 700px)
+    - 한/미 커브 통합 뷰 (US/KR 토글)
+    - 비교 기간: 단독/+1주/+2주/+1M/+3M
+    - 글로벌 10Y: 수평바 UI + vs 전월 / vs 미국 / vs 기준금리
   - 섹션 3: 금리 지표 + 연준 유동성
+    - 총자산/순유동성/은행준비금 미니차트
+    - **Sonnet 연준 진단 박스** (파란 좌측 경계선) — status/diagnosis/trend/채권 시사점
 - [x] `useMarketData.js`: yield_curve + fed_balance + curve_similarity fetch 추가
+  - `fed_balance.insight` 매핑 수정 (`fedRes.data.insight` → `fed_balance.insight`)
+- [x] `App.css`: 전체 텍스트 가독성 개선, 유사도 패널 CSS, 연준 진단 CSS
 
 ---
 
@@ -342,9 +356,15 @@ frontend/src/
 
 ### 🔵 장기 (8월~9월)
 - [ ] **커브 유사도 고도화** — 인터벌 AI 결정 + 경로 유사도(DTW) 도입
-  - 현재 delta 벡터 → 경로(path) 전체 비교로 전환
-  - 인터벌 길이를 Sonnet이 시장 상황 보고 결정하는 구조
+  - 현재: delta 벡터만 비교 (시작-끝 차이)
+  - 한계: 동일 delta라도 경로가 다른 패턴 구별 불가
+    - 예: "꾸준한 상승 +0.15%p" vs "급등 후 하락하여 결과적 +0.15%p"
+  - 방향1: Sonnet이 시장 상황 보고 인터벌 결정 + DTW 경로 유사도
+  - 방향2: 인터벌 1개로 통합 (현재 1M/3M 두 가지 → AI가 최적 인터벌 판단)
   - 데이터 요건: 90일 주별 커브 스냅샷 수집 구조 필요
+- [ ] **연준 유동성 진단 고도화** — 현재 ①번(현황 진단) 완료, ②③번 미구현
+  - ②번: 6개월 추세 기반 QT 종료 시점 추정 (weekly history 확장 필요)
+  - ③번: 순유동성 + 커브 스프레드 종합 → 채권 포지션 시사점 (커브 유사도와 연동)
 - [ ] **모바일 DAG 가독성** — 노드 크기, 폰트, 레이아웃 최적화
 - [ ] **접근 제한** — 초대제 또는 기관 이메일 도메인
 - [ ] **발표용 시나리오** — "AI가 이걸 맞췄다" 스토리 발굴
@@ -359,11 +379,12 @@ frontend/src/
 
 완료 (개발_12):
   - data_collector.gs v4.9 (수익률 커브 20년 + 한국 커브 + 글로벌 기준금리)
-  - curve_similarity.gs v1.0 (커브 무브먼트 유사도 + Sonnet 해석)
-  - github_push.gs v2.6 (curve_similarity 06~08시 윈도우, 트리거 1시간)
-  - MacroPanel.js v4.0 (유사도 패널 메인 + 수익률 커브 + 연준 유동성)
+  - curve_similarity.gs v1.0 (커브 무브먼트 유사도 + Sonnet 상세 해석)
+  - github_push.gs v2.7 (curve_similarity 06~08시 윈도우, fed_insight 신규, RRP 단위 수정)
+  - MacroPanel.js v4.0 (유사도 패널 메인 + 수익률 커브 + 연준 유동성 + Sonnet 진단)
+  - useMarketData.js (fed_balance.insight 매핑 수정)
   - App.js v2.0 (5탭 네비게이션)
-  - ArchiveCompare 브리핑 서브탭
+  - 트리거 1시간 단위로 변경
 
 다음 우선순위:
   1. Morning Mailing 모델 교체 (claude-sonnet-4-5 → claude-sonnet-4-6, Retirement 6/15)
