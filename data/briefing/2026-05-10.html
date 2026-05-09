@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-10 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/10 07:50 KST</div>
+    <div class="header-date">2026-05-10</div>
+    <div class="header-headline">중동 충돌 격화와 공급망 쇼크 압력 동시 부상</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">호르무즈 해협 안정 여부와 이란 보복 범위 - 에너지·인플레이션 연쇄 충격 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">중동 지정학 리스크와 에너지 공급망 압력</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">미국이 이란 유조선 4척을 타격했다는 보도가 나온 가운데, 영국과 프랑스는 호르무즈 해협 통과 선박 호송 임무를 위한 군사 계획을 구체화하고 있다. 카타르 LNG 탱커가 전쟁 발발 후 처음으로 해협을 통과하면서 에너지 수송로의 안정성이 시장의 주요 관심사로 부상했다. 중동 긴장 고조는 페르시아만 공급 쇼크 시나리오로 이어질 가능성을 높이고 있으며, 이는 글로벌 에너지 가격 상승과 인플레이션 압력으로 직결될 수 있다. 이스라엘은 이란 전쟁을 위해 이라크에 비밀 기지를 건설하고 방어했다는 WSJ 보도도 나왔으며, 러시아는 이란에 전자 방해 우회 가능한 수천 대의 첨단 드론을 제공하고 미군 공격 훈련을 제공하는 방안을 검토했다는 정보가 유출됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 투자 과열과 기술 섹터 구조적 압력</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#11</span>
+    </div>
+    <div class="theme-summary">Nvidia가 올해 이미 AI 분야 주식 투자에 400억 달러를 약정하면서 AI 생태계 전반에 대한 자본 유입이 지속되고 있다. 그러나 Goldman은 AI가 소비자 물가를 상승시키는 세 가지 주요 경로를 지적하며 인플레이션 압력 요인으로 부각시켰다. Palantir의 경우 CEO Alex Karp가 AI 모델의 '슬롭(slop)'을 비판하고 있지만, 투자자와 일부 직원들은 회사가 범용 AI 모델에 사업을 빼앗길 실질적 위협을 인식하고 있다. Musk와 OpenAI의 법정 대결이 Oakland 법원에서 진행되며 억만장자들 간 긴장이 가시화되고, 사이버보안 주식은 AI 리스크의 순수혜자로 평가받고 있다. AI 버블 붕괴 가능성에 대한 우려가 제기되는 가운데, 기술 섹터 내부의 경쟁 구도와 수익성 압박이 동시에 진행되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">통화정책 전환과 스태그플레이션 우려</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12</span>
+    </div>
+    <div class="theme-summary">페르시아만 공급 쇼크와 Warsh Fed의 만남이 스태그플레이션 시나리오를 촉발할 수 있다는 분석이 제기됐다. 공급 측면 인플레이션 압력이 부상하는 가운데 Fed의 정책 대응 여력이 제한될 경우, AI 버블 붕괴와 맞물려 경제 성장 둔화와 물가 상승이 동시에 진행될 가능성이 커지고 있다. 이란 전쟁이 촉발한 에너지 가격 상승은 수입국의 인플레이션에 직접 전이되며, 이는 중앙은행의 긴축 딜레마를 심화시킬 수 있다. 중국은 지방정부 부채 리스크 완화 노력을 강화하겠다고 밝혔으나 글로벌 환경의 도전 속에서 성장 지원과 부채 관리 사이의 균형이 과제로 남아 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Trump 관세 정책과 통상 재편</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #13~#15</span>
+    </div>
+    <div class="theme-summary">Trump 대통령의 관세 정책이 반복적으로 재조정되고 있으며, 일부는 불법 판결을 받아 수정되고 있다. 캐나다 총리 Mark Carney는 특정 산업에서 미국 및 멕시코와의 무역 연계 강화에 개방적 입장을 보이며 대륙 내 경제 번영 증대 의지를 표명했다. Trump-시진핑 정상회담이 이란 전쟁으로 연기됐다가 다시 일정에 오르면서, 2025년의 격렬한 관세 전쟁과 대립 이후 양국 관계 역학이 재편되고 있다. 관세 정책의 불확실성은 글로벌 공급망 재편과 기업 투자 결정에 지속적인 영향을 미치고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">러시아-우크라이나 전쟁 완화 조짐과 지정학 재배치</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #16~#18</span>
+    </div>
+    <div class="theme-summary">Putin 대통령이 러시아-우크라이나 전쟁이 종결 국면에 접어들고 있다고 언급하며 휴전 가능성이 부각되고 있다. Putin은 5월 9일 전승기념일을 위한 하루 휴전만을 원하고 있으며, 실제 전쟁 종결 의지에 대한 의문이 제기되는 가운데 Trump-Putin 회담의 의미가 재조명되고 있다. 토요일 모스크바 붉은 광장의 전승기념일 퍼레이드는 다시 한 번 축소된 규모로 진행됐으며 휴전이 유지되고 있다. 유럽 국가들은 중동으로 군사 자원을 재배치하기 시작하면서, 지정학적 긴장의 중심축이 동유럽에서 중동으로 이동하는 조짐을 보이고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기업 실적 호조와 시장 낙관론 지속</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #19~#21</span>
+    </div>
+    <div class="theme-summary">이란 전쟁이 미국 증시 랠리를 탈선시키고 기업 전망에 부담을 줄 것이란 우려에도 불구하고, 실제로는 예상을 크게 상회하는 실적 시즌이 월가 강세론자들에게 새로운 모멘텀을 제공하고 있다. 기업 이익이 전망치를 압도하며 기록적인 주가 상승을 견인하고 있다. 미 재무부 장관 Bessent는 비영리단체의 '다크 머니' 단속에 나서며 IRS가 Form 990 양식 개정을 계획하고 있다고 발표했다. 원자재 슈퍼사이클 논리가 시장 전반에 확산되고 있으나, 이는 동시에 강세론의 주요 리스크 요인으로도 작용할 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #22~#30</span>
+    </div>
+    <div class="theme-summary">특정 테마로 분류하기 어려운 주요 동향을 포함합니다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">중동 지정학 리스크와 에너지 공급망 압력</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">영국, 호르무즈 임무 앞두고 중동에 군함 파견</div>
+    <div class="article-title-en">Britain sending warship to Middle East ahead of Hormuz mission</div>
+    <div class="article-keypoint">영국-프랑스, 호르무즈 해협 선박 호송 군사 임무 구체화 - 에너지 수송로 안정성 주시</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/britain-sending-warship-to-middle-east-ahead-of-hormuz-mission" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 22:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">영국, 잠재적 호르무즈 임무 위해 중동으로 군함 이동</div>
+    <div class="article-title-en">UK Moves Warship to Middle East for Potential Hormuz Mission</div>
+    <div class="article-keypoint">영국, 중동에 군함 배치로 호르무즈 임무 대비 - 안정적 휴전 후 유럽 주도 호송 계획</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-09/uk-moves-warship-to-middle-east-for-potential-hormuz-mission" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">추가 '경고 타격'? 미국, 카타르 LNG 탱커가 해협 통과하는 동안 이란 유조선 4척 타격 보도</div>
+    <div class="article-title-en">More "Love Taps"? US Reportedly Struck 4 Iranian Tankers As Qatari LNG Tanker Traverses Strait</div>
+    <div class="article-keypoint">미국, 호르무즈 통과 시도 이란 유조선 4척 타격 보도 - 중동 긴장 직접 충돌로 격화</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/qatari-lng-tanker-transits-hormuz-us-awaits-irans-response-peace-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 02:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">정보 유출: 러시아, 미군과 싸울 전자방해 불가능 드론 이란 제공 검토</div>
+    <div class="article-title-en">Intel Leak: Russia Mulled Giving Iran Un-Jammable Drones To Fight US Forces</div>
+    <div class="article-keypoint">러시아, 이란에 전자방해 우회 드론 수천 대 제공 및 미군 공격 훈련 검토 정보 유출</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/intel-leak-russia-mulled-giving-iran-un-jammable-drones-fight-us-forces" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 20:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">이스라엘, 이란 전쟁 대비 이라크 내 비밀 기지 건설 및 방어 - WSJ 보도</div>
+    <div class="article-title-en">Israel built and defended a secret base in Iraq for Iran war, WSJ reports</div>
+    <div class="article-keypoint">이스라엘, 이란 전쟁 대비 이라크 내 비밀 기지 건설 및 방어 - WSJ 보도</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/israel-built-and-defended-a-secret-base-in-iraq-for-iran-war-wsj-reports-4674731" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 21:18 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 투자 과열과 기술 섹터 구조적 압력</span>
+    <span class="theme-label-range">Article #6~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">페르시아만 공급 쇼크와 Warsh Fed의 만남: 스태그플레이션과 다가오는 AI 버블 붕괴</div>
+    <div class="article-title-en">When The Persian Gulf Supply Shock Meets The Warsh Fed: Stagflation & The Coming AI Bubble Bust</div>
+    <div class="article-keypoint">페르시아만 공급 쇼크와 Fed 정책 충돌 시 스태그플레이션과 AI 버블 붕괴 동시 도래 경고</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/when-persian-gulf-supply-shock-meets-warsh-fed-stagflation-coming-ai-bubble-bust" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Goldman, AI가 소비자 물가를 상승시키는 세 가지 주요 경로 지적</div>
+    <div class="article-title-en">Goldman flags three key ways in which AI is boosting consumer prices</div>
+    <div class="article-keypoint">Goldman, AI가 소비자 물가 상승시키는 3대 경로 지적 - 인플레이션 압력 요인 부각</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/goldman-flags-three-key-ways-in-which-ai-is-boosting-consumer-prices-4674732" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 21:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">사이버보안 주식이 AI 리스크의 순수혜자가 될 이유</div>
+    <div class="article-title-en">Why cybersecurity stocks will be net beneficiaries of the AI risks</div>
+    <div class="article-keypoint">사이버보안 주식, AI 리스크의 순수혜자로 평가 - 방어적 기술 섹터 재조명</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/why-cybersecurity-stocks-will-be-net-beneficiaries-of-the-ai-risks-4674733" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 21:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Musk-OpenAI 재판에서 목격한 것: 속 좁은 억만장자들, 시위, 엄격한 판사</div>
+    <div class="article-title-en">What I saw at the Musk-OpenAI trial: petty billionaires, protests and a stern judge</div>
+    <div class="article-keypoint">Musk-OpenAI 법정 대결 Oakland에서 진행 - 억만장자 간 AI 주도권 다툼 가시화</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/may/09/elon-musk-sam-altman-openai-trial" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Nvidia, 올해 이미 AI 주식 거래에 400억 달러 약정</div>
+    <div class="article-title-en">Nvidia has already committed $40B to equity AI deals this year</div>
+    <div class="article-keypoint">Nvidia, 올해 AI 분야 주식 투자에 이미 400억 달러 약정 - 생태계 자본 유입 지속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/09/nvidia-has-already-committed-40b-to-equity-ai-deals-this-year/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 23:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Palantir에게 AI는 제품이자 샌드백, 그리고 문제다</div>
+    <div class="article-title-en">For Palantir, AI Is a Product, a Punching Bag—and a Problem</div>
+    <div class="article-keypoint">Palantir CEO, AI '슬롭' 비판하지만 범용 모델에 사업 잠식 위협 직면</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/for-palantir-ai-is-a-product-a-punching-bagand-a-problem-a4cfea77?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 01:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">통화정책 전환과 스태그플레이션 우려</span>
+    <span class="theme-label-range">Article #12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">중국, 지방정부 부채 완화 노력 강화 다짐</div>
+    <div class="article-title-en">China Vows to Advance Efforts to Defuse Local Government Debt</div>
+    <div class="article-keypoint">중국, 지방정부 부채 리스크 완화 노력 강화 천명 - 도전적 글로벌 환경 속 성장 지원</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-09/china-vows-to-advance-efforts-to-defuse-local-government-debt" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 21:25 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Trump 관세 정책과 통상 재편</span>
+    <span class="theme-label-range">Article #13~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">어떤 Trump 관세가 시행 중이고, 추진 중이며, 불법 판결 받았는가</div>
+    <div class="article-title-en">Which Trump Tariffs Are in Place, in the Works or Ruled Illegal</div>
+    <div class="article-keypoint">Trump 관세 반복 조정, 일부 불법 판결로 수정 - 정책 불확실성 지속</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/05/09/business/economy/trump-tariff-timeline.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 18:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Carney, 미국·멕시코와 심화된 무역 관계에 개방 의사 시사</div>
+    <div class="article-title-en">Carney Signals Openness to Deeper Trade Ties With US and Mexico</div>
+    <div class="article-keypoint">캐나다 Carney 총리, 미국·멕시코와 특정 산업 무역 심화 개방 의사 - 대륙 경제 통합 모색</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-09/carney-signals-openness-to-deeper-trade-ties-with-us-and-mexico" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 05:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">'친구가 되고 싶어서가 아니다': Trump-시진핑 정상회담에서 예상할 것에 대한 Brilliant의 견해</div>
+    <div class="article-title-en">‘It’s Not Because They Want to Be Friends’: Brilliant on What to Expect From the Trump-Xi Summit</div>
+    <div class="article-keypoint">Trump-시진핑 정상회담 재추진 - 이란 전쟁 후 양국 역학 변화 속 관세 이후 관계 재정립</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-09/what-to-expect-from-the-trump-xi-summit-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 21:04 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">러시아-우크라이나 전쟁 완화 조짐과 지정학 재배치</span>
+    <span class="theme-label-range">Article #16~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Putin, 러시아-우크라이나 전쟁이 종결 국면에 접어들고 있다고 발언</div>
+    <div class="article-title-en">Putin says he thinks Russia-Ukraine war is coming to an end</div>
+    <div class="article-keypoint">Putin, 러시아-우크라이나 전쟁 종결 국면 언급 - 휴전 가능성 부각</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/putin-says-he-thinks-russiaukraine-war-is-coming-to-an-end-4674730" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 20:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">George가 답하는 질문들: Trump-Putin 회담의 의미</div>
+    <div class="article-title-en">George Answers Your Questions: The Significance of the Trump-Putin Talks</div>
+    <div class="article-keypoint">Trump-Putin 회담의 의미 재조명 - Putin의 5월 9일 하루 휴전 요구와 전쟁 종결 의지 의문</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/george-answers-your-questions-the-significance-of-the-trump-putin-talks/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Putin, 휴전 유지 속 축소된 전승기념일 퍼레이드에서 NATO 공격성 비판</div>
+    <div class="article-title-en">Putin Rips NATO Aggression At Scaled-Down Victory Day Parade As Ceasefire Holds</div>
+    <div class="article-keypoint">Putin, 축소된 전승기념일 퍼레이드에서 NATO 공격성 비판 - 휴전 유지 중</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/putin-rips-nato-aggression-scaled-down-victory-day-parade-ceasefire-holds" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 01:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기업 실적 호조와 시장 낙관론 지속</span>
+    <span class="theme-label-range">Article #19~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">"사기 은폐의 시대를 끝낸다": Bessent, 비영리단체 다크 머니 단속 나서</div>
+    <div class="article-title-en">We're "Ending The Days Of Hiding Fraud": Bessent Goes After Dark Money In Nonprofits </div>
+    <div class="article-keypoint">Bessent 재무장관, 비영리단체 다크 머니 단속 선언 - IRS Form 990 개정 추진</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/ending-days-hiding-fraud-bessent-goes-after-dark-money-nonprofits" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">전망 압도한 실적 호황이 기록적 증시 랠리 견인</div>
+    <div class="article-title-en">Earnings Bonanza That Trounced Forecasts Fuels Record Stocks Run</div>
+    <div class="article-keypoint">이란 전쟁 우려 속 예상 압도 실적 시즌이 기록적 증시 상승 견인 - 강세론 모멘텀 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-09/earnings-bonanza-that-no-one-saw-coming-fuels-stocks-record-run" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">원자재 슈퍼사이클: 강세론의 적</div>
+    <div class="article-title-en">Commodity Supercycle: The Enemy Of The Bull Thesis</div>
+    <div class="article-keypoint">원자재 슈퍼사이클 논리 확산되지만 동시에 강세론의 주요 적으로 부상 - 모순적 시장 심리</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/commodity-supercycle-enemy-bull-thesis" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 06:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">나는 신용카드 부채의 노예였다, 그러다 해고됐고 인생을 역전시켰다. 방법은 이렇다.</div>
+    <div class="article-title-en">I was a slave to credit-card debt, then I got laid off and turned my life around. Here’s how I did it.</div>
+    <div class="article-keypoint">신용카드 부채 노예였던 해고자의 자산 10% 증가 사례 - 개인 재무 관리 교훈</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/americans-love-their-rose-colored-glasses-i-was-a-slave-to-credit-card-debt-then-i-got-laid-off-and-turned-my-life-around-32ba4d4c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 04:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Trump 공항 브랜딩 계약, 가족에게 새로운 수익 경로 열어</div>
+    <div class="article-title-en">Trump airport branding deal opens new route to profit for family</div>
+    <div class="article-keypoint">Trump, 플로리다 공항 브랜딩 계약으로 가족 수익 경로 신설 - 라이선싱·상품화 통제권 확보</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/may/09/trump-airport-branding-profit-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">암호화폐 업계, 약세장 한복판에서 랩댄스 파티 개최</div>
+    <div class="article-title-en">Crypto Industry Throws Lap-Dance Party in Middle of Bear Market</div>
+    <div class="article-keypoint">암호화폐 업계, 약세장 한복판에서 Miami 클럽 랩댄스 파티 개최 - 산업 과시 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-09/crypto-industry-throws-lap-dance-party-in-middle-of-bear-market" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">멸종복원 Dire Wolf 번식 준비 완료; 생명과학 기업 다중 프로젝트 추진</div>
+    <div class="article-title-en">De-Extinct Dire Wolves Ready To Breed; Bioscience Company Pushes Forward Multiple Projects</div>
+    <div class="article-keypoint">멸종 Dire Wolf 번식 준비 완료 - 생명과학 기업 다중 프로젝트 추진</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/de-extinct-dire-wolves-ready-breed-bioscience-company-pushes-forward-multiple-projects" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 00:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">'서로를 꽤 심하게 망쳤다': Netanyahu-Trump 동맹 내 긴장 표면화</div>
+    <div class="article-title-en">‘They have screwed each other pretty badly’: tensions emerge in Netanyahu-Trump alliance</div>
+    <div class="article-keypoint">Netanyahu-Trump 동맹 내 긴장 표면화 - 미국, 이스라엘과 사전 협의 중단 보도</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/09/tensions-emerge-bejamin-netanyahu-donald-trump-alliance" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 15:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Elon Musk, X 플랫폼 조사하는 프랑스 검찰에 격렬 반응</div>
+    <div class="article-title-en">Elon Musk rants at French prosecutors probing his X platform</div>
+    <div class="article-keypoint">Musk, 프랑스 검찰의 X 플랫폼 조사에 격렬 반응 - 규제 압력 가시화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/elon-musk-rants-at-french-prosecutors-probing-his-x-platform" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 23:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Daniel Dae Kim, 다큐 시리즈로 한국 문화를 글로벌화하다</div>
+    <div class="article-title-en">Daniel Dae Kim Make Korean Culture Global in Docuseries</div>
+    <div class="article-keypoint">Daniel Dae Kim, 한국 문화의 글로벌 확산 다큐 시리즈 제작 - 'K-Everything' 현상 조명</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-09/daniel-dae-kim-make-korean-culture-global-in-docuseries-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/09 23:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Pentagon UFO 파일에서 나온 5가지 하이라이트</div>
+    <div class="article-title-en">5 Highlights From The Pentagon's UFO Files</div>
+    <div class="article-keypoint">Pentagon UFO 파일 5대 하이라이트 공개 - Apollo 11 달 근처 밝은 물체 목격 포함</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/5-highlights-pentagons-ufo-files" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 01:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Starmer, 사임 압력 완화 위해 Gordon Brown과 Harriet Harman 영입</div>
+    <div class="article-title-en">Starmer brings in Gordon Brown and Harriet Harman to ease pressure on him to resign</div>
+    <div class="article-keypoint">Starmer, 사임 압력 완화 위해 Gordon Brown·Harriet Harman 영입 - 글로벌 금융 자문 강화</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/may/09/starmer-brings-gordon-brown-harriet-harman-ease-pressure-resign" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 00:12 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
