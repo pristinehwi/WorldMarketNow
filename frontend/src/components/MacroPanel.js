@@ -566,12 +566,8 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
                 onClick={() => setActiveMatch(idx)}>
                 <span className="sim-mt-rank">#{idx + 1}</span>
                 <span className="sim-mt-date">{m.date}</span>
-                <span className="sim-mt-sim"
-                  style={{ color: m.similarity > 0.9 ? C.kr : C.neutral }}>
-                  {(m.similarity * 100).toFixed(0)}%
-                </span>
-                {im?.context && (
-                  <span className="sim-mt-ctx">{im.context}</span>
+                {im?.macro_context && (
+                  <span className="sim-mt-ctx">{im.macro_context?.slice(0, 40)}</span>
                 )}
               </button>
             );
@@ -590,25 +586,52 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
             />
           </div>
 
-          {/* 요약 텍스트 */}
-          <div className="sim-fwd-summary-row">
-            {insight?.matches?.[activeMatch]?.after_1m_summary && (
-              <div className="sim-fwd-summary-item">
-                <span style={{ color: C.neutral, fontSize: 10, fontWeight: 700 }}>1M 예상</span>
-                <span style={{ color: C.textMid, fontSize: 11 }}>
-                  {insight.matches[activeMatch].after_1m_summary}
-                </span>
+          {/* 상세 설명 카드 */}
+          {insight?.matches?.[activeMatch] && (() => {
+            const im = insight.matches[activeMatch];
+            return (
+              <div className="sim-detail-card">
+                {im.why_similar && (
+                  <div className="sim-detail-block">
+                    <div className="sim-detail-label">◈ 유사성 근거</div>
+                    <div className="sim-detail-text">{im.why_similar}</div>
+                  </div>
+                )}
+                {im.macro_context && (
+                  <div className="sim-detail-block">
+                    <div className="sim-detail-label">◈ 당시 매크로 배경</div>
+                    <div className="sim-detail-text">{im.macro_context}</div>
+                  </div>
+                )}
+                <div className="sim-detail-fwd-row">
+                  {im.after_1m_detail && (
+                    <div className="sim-detail-block sim-detail-block--half">
+                      <div className="sim-detail-label" style={{ color: C.neutral }}>
+                        ◈ 이후 1개월 실제 변화
+                      </div>
+                      <div className="sim-detail-text">{im.after_1m_detail}</div>
+                    </div>
+                  )}
+                  {im.after_3m_detail && (
+                    <div className="sim-detail-block sim-detail-block--half">
+                      <div className="sim-detail-label" style={{ color: C.up }}>
+                        ◈ 이후 3개월 실제 변화
+                      </div>
+                      <div className="sim-detail-text">{im.after_3m_detail}</div>
+                    </div>
+                  )}
+                </div>
+                {im.bond_lesson && (
+                  <div className="sim-detail-block">
+                    <div className="sim-detail-label" style={{ color: C.kr }}>
+                      ◈ 채권운용 교훈
+                    </div>
+                    <div className="sim-detail-text">{im.bond_lesson}</div>
+                  </div>
+                )}
               </div>
-            )}
-            {insight?.matches?.[activeMatch]?.after_3m_summary && (
-              <div className="sim-fwd-summary-item">
-                <span style={{ color: C.up, fontSize: 10, fontWeight: 700 }}>3M 예상</span>
-                <span style={{ color: C.textMid, fontSize: 11 }}>
-                  {insight.matches[activeMatch].after_3m_summary}
-                </span>
-              </div>
-            )}
-          </div>
+            );
+          })()}
         </>
       )}
 
@@ -618,11 +641,13 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
         </div>
       )}
 
-      {/* ── Sonnet 시사점 ── */}
-      {insight?.implication && (
+      {/* ── 종합 시사점 ── */}
+      {(insight?.current_implication || insight?.implication) && (
         <div className="sim-implication">
-          <span className="sim-impl-label">◎ 채권운용 시사점</span>
-          <span className="sim-impl-text">{insight.implication}</span>
+          <span className="sim-impl-label">◎ 종합 채권운용 시사점</span>
+          <span className="sim-impl-text">
+            {insight.current_implication || insight.implication}
+          </span>
         </div>
       )}
     </div>
@@ -674,7 +699,18 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
         </span>
       </div>
 
-      {/* ── 섹션 1: 수익률 커브 ── */}
+      {/* ── 섹션 1: 커브 유사도 (메인) ── */}
+      <div className="mp-section--card">
+        <div className="mp-section-header">
+          <span className="mp-section-title">🇺🇸 미국 커브 무브먼트 유사도 검색</span>
+          <span style={{ fontSize: 10, color: C.textFaint }}>
+            20년 history 대비 · 매일 06:30 KST 갱신
+          </span>
+        </div>
+        <CurveSimilarityPanel similarity={curveSimilarity} usCurve={usCurve} />
+      </div>
+
+      {/* ── 섹션 2: 수익률 커브 ── */}
       <div className="mp-section mp-section--card">
         <div className="mp-section-header">
           <span className="mp-section-title">수익률 커브</span>
@@ -870,17 +906,6 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
             </div>
           )}
         </div>
-      </div>
-
-      {/* ── 섹션 3: 커브 유사도 검색 ── */}
-      <div className="mp-section--card" style={{ marginTop: 14 }}>
-        <div className="mp-section-header">
-          <span className="mp-section-title">🇺🇸 미국 커브 무브먼트 유사도 검색</span>
-          <span style={{ fontSize: 10, color: C.textFaint }}>
-            20년 history 대비 · 매일 06:30 KST 갱신
-          </span>
-        </div>
-        <CurveSimilarityPanel similarity={curveSimilarity} usCurve={usCurve} />
       </div>
 
     </div>
