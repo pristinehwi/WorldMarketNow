@@ -610,7 +610,14 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
             {/* 우: 만기별 수치 테이블 */}
             <div className="sim-fwd-table">
               <div className="sim-fwd-table-header">
-                <span style={{ color: C.textDim, fontSize: 10, fontWeight: 600 }}>테너별 변화량 (%p)</span>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: C.textMid, marginBottom: 2 }}>
+                    AI가 포착한 과거 유사 시점 — 직후 금리 변화 요약
+                  </div>
+                  <div style={{ fontSize: 9, color: C.textFaint }}>
+                    fwd 1M / fwd 3M 탭으로 전환
+                  </div>
+                </div>
                 <div className="mp-tab-group mp-tab-group--sm">
                   {[{ id: '1m', label: 'fwd 1M' }, { id: '3m', label: 'fwd 3M' }].map(o => (
                     <button key={o.id}
