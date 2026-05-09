@@ -70,7 +70,7 @@ function CombinedCurveChart({
   usSeries, krSeries,
   showUS, showKR,
   comparePeriod,
-  width = 520, height = 140,
+  width = 520, height = 110,
 }) {
   if (!usSeries && !krSeries) return <div className="mp-chart-empty">데이터 없음</div>;
 
@@ -562,7 +562,7 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
       </div>
 
       {/* 판정 기준 안내 */}
-      <div style={{ fontSize: 10, color: C.textFaint, marginBottom: 6 }}>
+      <div style={{ fontSize: 10, color: '#bf5fff', marginBottom: 6, textShadow: '0 0 8px #bf5fff66' }}>
         🇺🇸 미국 국채 수익률 커브(1Y·2Y·5Y·10Y·20Y·30Y)의 {data.label} 무브먼트 벡터 기준 코사인 유사도
       </div>
 
@@ -746,13 +746,13 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
                   className={`mp-toggle ${showUS ? 'active' : ''}`}
                   style={showUS ? { borderColor: C.us, color: C.us, background: `${C.us}18` } : {}}
                   onClick={() => setShowUS(v => !v)}>
-                  🇺🇸 US
+                  US
                 </button>
                 <button
                   className={`mp-toggle ${showKR ? 'active' : ''}`}
                   style={showKR ? { borderColor: C.kr, color: C.kr, background: `${C.kr}18` } : {}}
                   onClick={() => setShowKR(v => !v)}>
-                  🇰🇷 한국
+                  KR
                 </button>
               </div>
               {/* 비교 기간 */}
