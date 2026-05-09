@@ -35,7 +35,9 @@ function useMarketData() {
         prices:           pricesRes.data.prices      || {},
         indices:          pricesRes.data.indices     || {},
         yield_curve:      yieldRes.data.yield_curve  || null,
-        fed_balance:      fedRes.data.fed_balance    || null,
+        fed_balance:      fedRes.data.fed_balance
+          ? { ...fedRes.data.fed_balance, insight: fedRes.data.insight || null }
+          : null,
         curve_similarity: simRes.data.similarity     || null,
         dataAsOf,
       });
