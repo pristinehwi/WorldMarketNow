@@ -631,8 +631,9 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
                 const end3m = m.forward_3m?.[SIM_TENOR_KEYS[0]]?.end_date?.slice(2, 10) || '';
                 return (
                   <div key={m.date} className="sim-tbl-row">
-                    <span className="sim-tbl-label" style={{ color: '#ff8c00', fontWeight: 700 }}>
-                      #{idx + 1} {m.date.slice(2, 10)}
+                    <span className="sim-tbl-label">
+                      <span style={{ color: '#f0f0ff', fontWeight: 700 }}>#{idx + 1}</span>
+                      <span style={{ color: '#ff8c00', fontWeight: 700 }}> {m.date.slice(2, 10)}</span>
                     </span>
                     <span className="sim-tbl-date" style={{ color: C.neutral }}>{end1m}</span>
                     <span className="sim-tbl-date" style={{ color: C.up }}>{end3m}</span>
