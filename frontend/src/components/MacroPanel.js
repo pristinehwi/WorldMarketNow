@@ -708,7 +708,7 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
                 <span className="sim-mt-rank">#{idx + 1}</span>
                 <span className="sim-mt-date">{m.date}</span>
                 {im?.macro_context && (
-                  <span className="sim-mt-ctx">{im.macro_context?.slice(0, 40)}</span>
+                  <span className="sim-mt-ctx">{im.macro_context?.slice(0, 60)}</span>
                 )}
               </button>
             );
