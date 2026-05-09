@@ -70,7 +70,7 @@ function CombinedCurveChart({
   usSeries, krSeries,
   showUS, showKR,
   comparePeriod,
-  width = 520, height = 130,
+  width = 520, height = 140,
 }) {
   if (!usSeries && !krSeries) return <div className="mp-chart-empty">데이터 없음</div>;
 
@@ -405,7 +405,7 @@ const SIM_TENOR_KEYS = ['DGS1', 'DGS2', 'DGS5', 'DGS10', 'DGS20', 'DGS30'];
 const SIM_TENOR_LBLS = ['1Y',   '2Y',   '5Y',   '10Y',   '20Y',   '30Y'  ];
 
 // ── 예상 커브 SVG 차트 ─────────────────────────────────────
-function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height = 110 }) {
+function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height = 140 }) {
   // currentLevels: { '1Y': 3.73, '2Y': 3.87, ... }
   // fwd1m / fwd3m: { 'DGS1': { change: 0.39 }, ... }
 
@@ -544,9 +544,20 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
           </div>
         </div>
         {data.computed_at && (
-          <span style={{ fontSize: 9, color: C.textFaint }}>
-            {data.computed_at.slice(0, 10)} 기준
-          </span>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
+            {data.data_as_of && (
+              <span style={{ fontSize: 9, color: C.textFaint }}>
+                데이터 기준: {data.data_as_of}
+              </span>
+            )}
+            <span style={{ fontSize: 9, color: C.textFaint }}>
+              갱신: {(() => {
+                const d = new Date(data.computed_at);
+                const kst = new Date(d.getTime() + 9 * 60 * 60 * 1000);
+                return `${kst.toISOString().slice(0, 10)} ${kst.toISOString().slice(11, 16)} KST`;
+              })()}
+            </span>
+          </div>
         )}
       </div>
 
