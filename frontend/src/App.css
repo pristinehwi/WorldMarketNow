@@ -2781,18 +2781,22 @@ body {
   border-left: 3px solid #6a9eff;
 }
 .sim-mt-rank {
-  font-size: 10px;
-  color: #c0c0f0;
-  background: #14142a;
-  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ff8c00;
+  background: #ff8c0018;
+  border: 1px solid #ff8c0044;
+  padding: 2px 7px;
   border-radius: 4px;
   flex-shrink: 0;
+  text-shadow: 0 0 8px #ff8c0066;
 }
 .sim-mt-date {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  color: #d0d0f0;
+  color: #ff8c00;
   flex-shrink: 0;
+  text-shadow: 0 0 8px #ff8c0066;
 }
 .sim-mt-sim {
   font-size: 11px;
@@ -2801,7 +2805,7 @@ body {
 }
 .sim-mt-ctx {
   font-size: 11px;
-  color: #c0c0e8;
+  color: #d8d8f8;
   flex: 1;
 }
 .sim-fwd-summary-row {
@@ -2877,4 +2881,76 @@ body {
   color: #aaff44;
   letter-spacing: 0.02em;
   text-shadow: 0 0 12px #aaff4466;
+}
+
+/* ── 평균 커브 + 수치 테이블 2열 레이아웃 ── */
+.sim-main-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 10px;
+}
+.sim-chart-box--main {
+  min-width: 0;
+}
+.sim-fwd-table {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 320px;
+  max-width: 380px;
+  flex-shrink: 0;
+}
+.sim-fwd-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+.sim-tbl-row {
+  display: grid;
+  grid-template-columns: 72px 56px repeat(6, 1fr);
+  gap: 4px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 10.5px;
+}
+.sim-tbl-row--head {
+  background: #0a0a1c;
+  border-bottom: 1px solid #2a2a48;
+  padding-bottom: 6px;
+  margin-bottom: 2px;
+}
+.sim-tbl-row--avg {
+  background: #0d0d22;
+  border-top: 1px solid #2a2a48;
+  margin-top: 2px;
+  padding-top: 6px;
+}
+.sim-tbl-row:hover:not(.sim-tbl-row--head):not(.sim-tbl-row--avg) {
+  background: #0d0d20;
+}
+.sim-tbl-label {
+  font-size: 10px;
+  color: #9090c8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sim-tbl-val {
+  text-align: right;
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+}
+.sim-tbl-row--head .sim-tbl-label,
+.sim-tbl-row--head .sim-tbl-val {
+  color: #7070a8;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .sim-main-layout { grid-template-columns: 1fr; }
+  .sim-fwd-table { max-width: 100%; min-width: 0; }
 }

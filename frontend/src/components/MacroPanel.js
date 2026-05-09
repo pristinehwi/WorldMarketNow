@@ -405,7 +405,7 @@ const SIM_TENOR_KEYS = ['DGS1', 'DGS2', 'DGS5', 'DGS10', 'DGS20', 'DGS30'];
 const SIM_TENOR_LBLS = ['1Y',   '2Y',   '5Y',   '10Y',   '20Y',   '30Y'  ];
 
 // ── 예상 커브 SVG 차트 ─────────────────────────────────────
-function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height = 140 }) {
+function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height = 200 }) {
   // currentLevels: { '1Y': 3.73, '2Y': 3.87, ... }
   // fwd1m / fwd3m: { 'DGS1': { change: 0.39 }, ... }
 
@@ -517,12 +517,32 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
   const insight = data.insight;
   const match   = matches[activeMatch];
 
-  // 현재 커브 레벨 (us_curve.series에서 추출)
+  // 현재 커브 레벨
   const currentLevels = {};
   SIM_TENOR_KEYS.forEach((k, i) => {
     const val = usCurve?.series?.[k]?.latest?.value;
     if (val != null) currentLevels[SIM_TENOR_LBLS[i]] = val;
   });
+
+  // 3개 유사 시점 평균 예상 커브
+  const avgFwd1m = (() => {
+    if (!matches.length) return null;
+    const result = {};
+    SIM_TENOR_KEYS.forEach(k => {
+      const vals = matches.map(m => m.forward_1m?.[k]?.change).filter(v => v != null);
+      if (vals.length) result[k] = { change: parseFloat((vals.reduce((a,b) => a+b, 0) / vals.length).toFixed(3)) };
+    });
+    return Object.keys(result).length ? result : null;
+  })();
+  const avgFwd3m = (() => {
+    if (!matches.length) return null;
+    const result = {};
+    SIM_TENOR_KEYS.forEach(k => {
+      const vals = matches.map(m => m.forward_3m?.[k]?.change).filter(v => v != null);
+      if (vals.length) result[k] = { change: parseFloat((vals.reduce((a,b) => a+b, 0) / vals.length).toFixed(3)) };
+    });
+    return Object.keys(result).length ? result : null;
+  })();
 
   return (
     <div className="sim-root">
@@ -534,7 +554,7 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
             {insight?.pattern_description || '커브 패턴 분석'}
           </span>
           <div className="mp-tab-group mp-tab-group--sm">
-            {[{ id: '1m', label: '1M 무브먼트' }, { id: '3m', label: '3M 무브먼트' }].map(o => (
+            {[{ id: '1m', label: 'fwd 1M 변화 예상' }, { id: '3m', label: 'fwd 3M 변화 예상' }].map(o => (
               <button key={o.id}
                 className={`mp-tab ${activePeriod === o.id ? 'active' : ''}`}
                 onClick={() => { setActivePeriod(o.id); setActiveMatch(0); }}>
@@ -562,11 +582,105 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
       </div>
 
       {/* 판정 기준 안내 */}
-      <div style={{ fontSize: 10, color: '#bf5fff', marginBottom: 6, textShadow: '0 0 8px #bf5fff66' }}>
+      <div style={{ fontSize: 10, color: '#bf5fff', marginBottom: 8, textShadow: '0 0 8px #bf5fff66' }}>
         🇺🇸 미국 국채 수익률 커브(1Y·2Y·5Y·10Y·20Y·30Y)의 {data.label} 무브먼트 벡터 기준 코사인 유사도
       </div>
 
+      {/* ── 평균 예상 커브 (메인) + 우측 수치 테이블 ── */}
+      {matches.length > 0 && avgFwd1m && (
+        <>
+          <div style={{ fontSize: 10, color: C.textDim, marginBottom: 6, fontWeight: 600 }}>
+            ◈ 유사 시점 {matches.length}개 평균 예상 커브
+          </div>
+          <div className="sim-main-layout">
+            {/* 좌: 커브 차트 */}
+            <div className="sim-chart-box sim-chart-box--main">
+              <SimilarityCurveChart
+                currentLevels={currentLevels}
+                fwd1m={avgFwd1m}
+                fwd3m={avgFwd3m}
+              />
+            </div>
+            {/* 우: 만기별 수치 테이블 */}
+            <div className="sim-fwd-table">
+              <div className="sim-fwd-table-header">
+                <span style={{ color: C.textDim, fontSize: 10, fontWeight: 600 }}>테너별 변화량 (%p)</span>
+                <div className="mp-tab-group mp-tab-group--sm">
+                  {[{ id: '1m', label: 'fwd 1M' }, { id: '3m', label: 'fwd 3M' }].map(o => (
+                    <button key={o.id}
+                      className={`mp-tab ${activePeriod === o.id ? 'active' : ''}`}
+                      onClick={() => { setActivePeriod(o.id); setActiveMatch(0); }}>
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* 헤더 행 */}
+              <div className="sim-tbl-row sim-tbl-row--head">
+                <span className="sim-tbl-label">시점</span>
+                <span className="sim-tbl-label" style={{ fontSize: 9, color: '#7070a8' }}>→ 기준일</span>
+                {SIM_TENOR_LBLS.map(lbl => (
+                  <span key={lbl} className="sim-tbl-val">{lbl}</span>
+                ))}
+              </div>
+              {/* 개별 시점 행 */}
+              {matches.map((m, idx) => {
+                const fwd = activePeriod === '1m' ? m.forward_1m : m.forward_3m;
+                const endDate = fwd?.[SIM_TENOR_KEYS[0]]?.end_date || '';
+                return (
+                  <div key={m.date} className="sim-tbl-row">
+                    <span className="sim-tbl-label" style={{ color: '#ff8c00', fontWeight: 700 }}>
+                      #{idx + 1} {m.date.slice(2, 7)}
+                    </span>
+                    <span className="sim-tbl-label" style={{ fontSize: 9, color: C.textDim }}>
+                      {endDate.slice(2, 10)}
+                    </span>
+                    {SIM_TENOR_KEYS.map(k => {
+                      const chg = fwd?.[k]?.change;
+                      return (
+                        <span key={k} className="sim-tbl-val" style={{
+                          color: chg == null ? C.textFaint : chg > 0 ? C.up : chg < 0 ? C.dn : C.textDim,
+                          fontWeight: 600,
+                        }}>
+                          {chg == null ? '—' : (chg > 0 ? '+' : '') + chg.toFixed(2)}
+                        </span>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              {/* 평균 행 */}
+              {(() => {
+                const avgFwd = activePeriod === '1m' ? avgFwd1m : avgFwd3m;
+                return (
+                  <div className="sim-tbl-row sim-tbl-row--avg">
+                    <span className="sim-tbl-label" style={{ color: C.neutral, fontWeight: 700 }}>평균</span>
+                    <span className="sim-tbl-label"></span>
+                    {SIM_TENOR_KEYS.map(k => {
+                      const chg = avgFwd?.[k]?.change;
+                      return (
+                        <span key={k} className="sim-tbl-val" style={{
+                          color: chg == null ? C.textFaint : chg > 0 ? C.up : chg < 0 ? C.dn : C.textDim,
+                          fontWeight: 700,
+                        }}>
+                          {chg == null ? '—' : (chg > 0 ? '+' : '') + chg.toFixed(2)}
+                        </span>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+            </div>
+          </div>
+        </>
+      )}
+
       {/* ── 유사 시점 선택 탭 ── */}
+      {matches.length > 0 && (
+        <div style={{ fontSize: 10, color: C.textDim, margin: '8px 0 4px', fontWeight: 600 }}>
+          ◈ 개별 유사 시점 상세
+        </div>
+      )}
       {matches.length > 0 && (
         <div className="sim-match-tabs">
           {matches.map((m, idx) => {
@@ -722,7 +836,7 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
       </div>
 
       {/* ── 섹션 2: 수익률 커브 ── */}
-      <div className="mp-section mp-section--card">
+      <div className="mp-section mp-section--card" style={{ maxWidth: 700 }}>
         <div className="mp-section-header">
           <span className="mp-section-title">수익률 커브</span>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -797,7 +911,7 @@ export default function MacroPanel({ yieldCurve, fedBalance, curveSimilarity }) 
                       {diff >= 0 ? '+' : ''}{diff}%p
                     </span>
                     <span className="mp-kus-detail">
-                      🇰🇷 KR {kr10.toFixed(3)}% · 🇺🇸 US {us10.toFixed(3)}%
+                      KR {kr10.toFixed(3)}% · US {us10.toFixed(3)}%
                     </span>
                   </div>
                 );
