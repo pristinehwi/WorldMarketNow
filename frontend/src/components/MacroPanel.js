@@ -8,14 +8,14 @@ const C = {
   border:    '#2a2a48',
   borderDim: '#1a1a32',
   text:      '#f0f0ff',
-  textMid:   '#c8c8f0',
-  textDim:   '#a0a0d0',
-  textFaint: '#7070a8',
+  textMid:   '#e0e0ff',
+  textDim:   '#c0c0e8',
+  textFaint: '#9090c8',
   up:        '#e06040',
   dn:        '#4a8fe8',
   neutral:   '#e0b030',
-  us:        '#6a9eff',
-  kr:        '#5ecf95',
+  us:        '#6aabff',
+  kr:        '#5ed898',
   jp:        '#cc70ff',
   de:        '#e0b030',
   gb:        '#ff7878',
@@ -405,7 +405,7 @@ const SIM_TENOR_KEYS = ['DGS1', 'DGS2', 'DGS5', 'DGS10', 'DGS20', 'DGS30'];
 const SIM_TENOR_LBLS = ['1Y',   '2Y',   '5Y',   '10Y',   '20Y',   '30Y'  ];
 
 // ── 예상 커브 SVG 차트 ─────────────────────────────────────
-function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height = 160 }) {
+function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height = 110 }) {
   // currentLevels: { '1Y': 3.73, '2Y': 3.87, ... }
   // fwd1m / fwd3m: { 'DGS1': { change: 0.39 }, ... }
 
@@ -459,13 +459,13 @@ function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height
           <line x1={PAD_L} y1={cy(v)} x2={width - PAD_R} y2={cy(v)}
             stroke={C.borderDim} strokeWidth={0.5} />
           <text x={PAD_L - 4} y={cy(v) + 3.5} fill={C.textFaint}
-            fontSize={9} textAnchor="end">{v.toFixed(2)}</text>
+            fontSize={8} textAnchor="end">{v.toFixed(2)}</text>
         </g>
       ))}
       {/* X축 레이블 */}
       {SIM_TENOR_LBLS.map((lbl, i) => (
         <text key={lbl} x={cx(i)} y={height - 6}
-          fill={C.textDim} fontSize={9} textAnchor="middle" fontWeight={600}>{lbl}</text>
+          fill={C.textDim} fontSize={8} textAnchor="middle" fontWeight={400}>{lbl}</text>
       ))}
       {/* 커브 선 */}
       {curves.map(c => (
@@ -488,7 +488,7 @@ function SimilarityCurveChart({ currentLevels, fwd1m, fwd3m, width = 520, height
           <line x1={0} y1={0} x2={16} y2={0}
             stroke={c.color} strokeWidth={c.dash ? 1.5 : 2}
             strokeDasharray={c.dash || undefined} />
-          <text x={20} y={3.5} fill={c.color} fontSize={9}>{c.label}</text>
+          <text x={20} y={3.5} fill={c.color} fontSize={8}>{c.label}</text>
         </g>
       ))}
     </svg>
@@ -578,7 +578,7 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
       {/* ── 예상 커브 차트 ── */}
       {match && (
         <>
-          <div className="mp-chart-box">
+          <div className="sim-chart-box">
             <SimilarityCurveChart
               currentLevels={currentLevels}
               fwd1m={match.forward_1m}
