@@ -583,8 +583,13 @@ function CurveSimilarityPanel({ similarity, usCurve }) {
       </div>
 
       {/* 판정 기준 안내 */}
-      <div style={{ fontSize: 10, color: '#bf5fff', marginBottom: 8, textShadow: '0 0 8px #bf5fff66' }}>
+      <div style={{ fontSize: 10, color: '#bf5fff', marginBottom: 6, textShadow: '0 0 8px #bf5fff66' }}>
         🇺🇸 미국 국채 수익률 커브(1Y·2Y·5Y·10Y·20Y·30Y)의 {data.label} 무브먼트 벡터 기준 코사인 유사도
+      </div>
+
+      {/* 탐색 기준 친절 설명 */}
+      <div className="sim-search-basis">
+        아래 유사 시점들은 <strong>최근 {activePeriod === '1m' ? '1개월' : '3개월'}간</strong> 테너별 금리 커브의 변화 패턴과 역사적으로 가장 유사했던 시점을 20년 데이터에서 AI가 포착한 것입니다.
       </div>
 
       {/* ── 평균 예상 커브 (메인) + 우측 수치 테이블 ── */}
