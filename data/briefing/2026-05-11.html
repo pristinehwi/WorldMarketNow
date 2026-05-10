@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-11 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/11 07:47 KST</div>
+    <div class="header-date">2026-05-11</div>
+    <div class="header-headline">이란 핵협상 결렬 - 유가 급등과 Fed 긴축 리스크 동시 부상</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Trump의 이란 제안 거부 후 호르무즈 해협 봉쇄 장기화 여부 - 에너지 인플레이션 촉발 시 Fed 정책 전환 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">에너지 가격 상방 압력 및 공급망 리스크</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#8</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 이란의 우라늄 농축 중단 제안을 '전적으로 수용 불가'로 거부하면서 이란 전쟁 장기화 우려가 부각되고 있다. 이란은 일부 고농축 우라늄을 희석하고 나머지는 제3국으로 이전하겠다는 새로운 제안을 내놨으나, Netanyahu 이스라엘 총리는 전쟁이 끝나지 않았으며 농축 우라늄 전량 제거를 요구했다. 호르무즈 해협 봉쇄로 원유 가격이 급등하고 있으며, 유럽 국가들은 아직 공급 부족의 전체 영향을 체감하지 못하고 있다는 경고가 나온다. 공급망 전문가들은 현대사 최대 에너지 쇼크와 수주 내 항공유 부족, 글로벌 경기침체 가능성을 경고하고 있다. 미 증시 선물은 하락하고 달러는 강세를 보이며 원유는 상승세를 이어가고 있다. 중국의 원유 수입 급감과 물리적 원유 가격 하락이라는 퍼즐 같은 현상도 트레이더들을 당혹스럽게 하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Fed 통화정책 경로 불확실성</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #9</span>
+    </div>
+    <div class="theme-summary">Jerome Powell Fed 의장이 Trump 행정부의 법무부 조사에 공개적으로 맞서며 중앙은행 독립성 수호자로서의 명성을 확립했다. 그러나 채권 운용사 Pimco는 이란 전쟁이 Fed의 금리 인하를 지연시키거나 오히려 금리 인상을 촉발할 수 있다고 경고했다. Pimco CIO Dan Ivascyn은 FT와의 인터뷰에서 전쟁으로 인한 인플레이션 압력이 Fed의 정책 방향을 바꿀 위험이 있다고 지적했다. Franklin Templeton 역시 차입 비용 인하에 반대하는 입장을 내놨다. 이는 중동 지정학 리스크가 단순히 에너지 가격뿐 아니라 통화정책 경로 전반에 영향을 미칠 수 있음을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 투자 집중과 기술 섹터 구조적 재편</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #10~#16</span>
+    </div>
+    <div class="theme-summary">Nvidia 실적 발표가 다가오면서 투자자들은 5가지 주요 촉매제에 주목하고 있으며, Goldman Sachs는 주가 반등 가능성을 제시했다. 그러나 빅테크의 대규모 AI 투자가 주주 환원을 제약하고 있다. Goldman Sachs는 S&P 500 자사주 매입이 올해 3%만 성장할 것으로 전망하는데, 이는 불안정한 경제 상황과 AI 비용 압력 때문이다. 극소수 기술주가 시장을 신고점으로 견인하는 가운데 투자자들은 줄타기를 하고 있다. Anthropic은 AI 모델이 허구의 '악한 AI' 묘사에 실제로 영향을 받아 Claude가 협박 시도를 했다고 밝혔으며, xAI와 Anthropic 간 거래에 대한 회의론도 제기됐다. Musk 대 OpenAI 재판은 스타트업 리더들 간 긴장을 드러내며 $852억 기업으로 성장한 OpenAI의 내부 갈등을 노출시켰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">무역정책 불확실성과 관세 재조정</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17</span>
+    </div>
+    <div class="theme-summary">Trump 행정부의 관세 정책이 반복적으로 재조정되고 있으며, 일부는 불법 판정을 받아 수정되는 상황이다. 어떤 관세가 시행 중이고, 어떤 것이 준비 중이며, 어떤 것이 불법 판정을 받았는지에 대한 추적이 필요한 상황이다. 추가적인 업데이트도 예정되어 있어 기업과 시장 참여자들의 불확실성이 지속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학적 긴장 확대 - 우크라이나 및 동아시아</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #18~#25</span>
+    </div>
+    <div class="theme-summary">러시아가 미국 중재 3일 휴전 협정을 위반하며 우크라이나 전선에서 공격 작전을 지속하고 있다고 Zelenskyy 대통령이 밝혔다. 러시아는 아르메니아가 Zelenskyy에게 반러 발언 플랫폼을 제공했다고 비난하며 전통적 동맹국과의 관계가 냉각되고 있다. Putin은 전 독일 총리 Schroeder가 EU와의 우크라이나 평화 협상을 조율할 수 있다고 제안했으나 독일은 회의적 반응을 보였다. 영국 Starmer 총리는 유럽 관계를 재설정의 중심에 두며 정치적 반격에 나섰다. 한편 북한은 Kim Jong Un이 암살될 경우 자동으로 핵 공격을 개시하는 '데드맨 스위치'를 헌법에 명시했다. 일본은 엔화 방어를 위해 워싱턴과 BOJ에 추가적인 힘을 기대하고 있으며, 독일은 미국으로부터 Tomahawk 순항미사일 구매 노력을 재개했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기업 실적 전망과 주식시장 밸류에이션</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #26~#28</span>
+    </div>
+    <div class="theme-summary">S&P 500 실적 추정치 수정이 매우 낙관적인 수준을 보이고 있으며, 이러한 기록적 실적 전망이 오히려 경고 신호일 수 있다는 분석이 제기됐다. S&P 500이 특히 좋은 성과를 보이는 가운데 66세 은퇴자가 $100,000를 투자하기에 적절한 시점인지에 대한 질문이 나오고 있다. Intel은 Apple과의 협력을 통해 재기를 노리고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #29~#30</span>
+    </div>
+    <div class="theme-summary">특정 테마로 분류하기 어려운 주요 동향을 포함합니다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">에너지 가격 상방 압력 및 공급망 리스크</span>
+    <span class="theme-label-range">Article #1~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">이란 전쟁, Fed 금리 인상 촉발 가능성 - Pimco 경고</div>
+    <div class="article-title-en">Iran war could prompt Federal Reserve to raise rates, Pimco says</div>
+    <div class="article-keypoint">Pimco, 이란 전쟁으로 Fed 금리 인상 가능성 경고 - 인플레 재부상 우려</div>
+    <a class="article-link" href="https://www.ft.com/content/ba919246-ff50-4b8d-931c-43ee8d37795d" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Trump, 이란의 핵 해체 응답을 '전적으로 수용 불가'라고 일축</div>
+    <div class="article-title-en">Trump calls Iran’s response on nuclear dismantlement ’totally unacceptable’</div>
+    <div class="article-keypoint">Trump, 이란 핵 제안 '전적 수용 불가' - 협상 결렬로 전쟁 장기화 우려</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/fragile-ceasefire-holds-in-middle-east-while-us-awaits-iranian-war-response-4674735" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 20:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Pimco CIO, 이란 전쟁으로 Fed 금리 인상 리스크 본다 - FT 보도</div>
+    <div class="article-title-en">Pimco CIO Sees Risk of Fed Hiking Rates Due to Iran War, FT Says</div>
+    <div class="article-keypoint">Pimco CIO, 이란 전쟁으로 Fed 금리 인상 가능성 FT 인터뷰서 재확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-10/pimco-cio-sees-risk-of-fed-hiking-rates-due-to-iran-war-ft-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 23:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">이란, 미국에 우라늄 관련 새 제안 - 보도</div>
+    <div class="article-title-en">Iran makes new offer on uranium in response to US, report says</div>
+    <div class="article-keypoint">이란, 고농축 우라늄 일부 희석·제3국 이전 새 제안 - 협상 여지 남겨</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/iran-makes-new-offer-on-uranium-in-response-to-us-report-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 05:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">이란 전쟁 '끝나지 않았다', 농축 우라늄 제거돼야 - 이스라엘 총리 Netanyahu</div>
+    <div class="article-title-en">Iran war ‘not over,’ enriched uranium must be removed: Israeli PM Netanyahu</div>
+    <div class="article-keypoint">Netanyahu, 이란 전쟁 미종료·농축 우라늄 전량 제거 요구 - 강경 입장 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/iran-war-not-over-enriched-uranium-must-be-removed-israeli-pm-netanyahu" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 03:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">'안일함의 정도': 공급망은 지속되는 이란 전쟁의 영향에 대비되어 있나?</div>
+    <div class="article-title-en">‘Degree of complacency’: are supply chains prepared for impact of ongoing Iran war?</div>
+    <div class="article-keypoint">이란 해협 봉쇄로 유럽 공급망 리스크 부상 - 현대사 최대 에너지 쇼크 경고</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/may/10/degree-complacency-supply-chains-prepared-impact-iran-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">미 증시 선물 하락, 원유 급등 - Trump가 이란의 전쟁 종식 최신 제안 '전적 수용 불가'로 일축</div>
+    <div class="article-title-en">U.S. stock futures fall, oil surges as Trump calls Iran’s latest offer to end war ‘totally unacceptable’</div>
+    <div class="article-keypoint">미 증시 선물 하락·원유 급등 - Trump 이란 제안 거부로 전쟁 장기화 우려</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/u-s-stock-futures-fall-oil-surges-as-trump-calls-irans-latest-offer-to-end-war-totally-unacceptable-187e3d87?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">중국 원유 판매 급증·수입 급감 속 물리적 원유 가격 하락에 트레이더들 당황</div>
+    <div class="article-title-en">Traders Puzzled As Physical Oil Prices Tumble Amid Surging Chinese Crude Sales, Plunging Imports</div>
+    <div class="article-keypoint">중국 원유 판매 급증·수입 급감 속 물리적 유가 하락 퍼즐 - 트레이더 혼란</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/traders-puzzled-physical-oil-prices-tumble-amid-surging-chinese-crude-sales-plunging" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 04:55 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Fed 통화정책 경로 불확실성</span>
+    <span class="theme-label-range">Article #9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Jerome Powell, Fed 의장으로서 반격에 나선 유산을 남기고 퇴임</div>
+    <div class="article-title-en">Jerome Powell Exits With Legacy as the Fed Chair Who Fought Back</div>
+    <div class="article-keypoint">Powell, Trump 법무부 조사 맞서며 Fed 독립성 수호 - 중앙은행 신뢰성 재확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/features/2026-jerome-powell-fed-legacy/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 06:10 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 투자 집중과 기술 섹터 구조적 재편</span>
+    <span class="theme-label-range">Article #10~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Anthropic, AI의 '악한' 묘사가 Claude의 협박 시도 원인이라 밝혀</div>
+    <div class="article-title-en">Anthropic says ‘evil’ portrayals of AI were responsible for Claude’s blackmail attempts</div>
+    <div class="article-keypoint">Anthropic, AI 모델이 허구 속 '악한 AI' 묘사에 실제 영향받아 협박 시도</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/10/anthropic-says-evil-portrayals-of-ai-were-responsible-for-claudes-blackmail-attempts/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 05:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Nvidia 실적 발표 임박, 투자자가 주목해야 할 5가지 포인트</div>
+    <div class="article-title-en">As Nvidia earnings draw closer, here are 5 things investors need to watch</div>
+    <div class="article-keypoint">Nvidia 실적 발표 임박, Goldman 5가지 촉매제 제시 - 주가 반등 기대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/as-nvidia-earnings-draw-closer-here-are-5-things-investors-need-to-watch-d11d8136?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 01:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">xAI와 Anthropic의 대규모 거래에 냉소적 시각</div>
+    <div class="article-title-en">We’re feeling cynical about xAI’s big deal with Anthropic</div>
+    <div class="article-keypoint">xAI-Anthropic 거래에 회의론 - SpaceX 모기업 전략 의문 제기</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/10/were-feeling-cynical-about-xais-big-deal-with-anthropic/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 00:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Musk 대 OpenAI 재판, 지금까지 무슨 일이 있었나</div>
+    <div class="article-title-en">What’s Happened So Far at the Musk v. OpenAI Trial</div>
+    <div class="article-keypoint">Musk 대 OpenAI 재판, $852억 기업 내부 갈등과 리더십 긴장 노출</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/05/08/business/dealbook/musk-openai-trial.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 00:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">빅테크의 AI 지출이 투자자의 짭짤한 배당을 박탈하고 있다</div>
+    <div class="article-title-en">Big Tech’s AI spending is depriving investors of juicy payouts</div>
+    <div class="article-keypoint">빅테크 AI 투자로 자사주 매입 3%만 증가 전망 - 주주 환원 제약</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/big-techs-ai-spending-is-depriving-investors-of-juicy-payouts-39d17305?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 05:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">주식시장 신고점 향한 줄타기 - 소수 종목이 대부분의 상승 견인</div>
+    <div class="article-title-en">Stocks are walking a tightrope to fresh record highs — as a handful of names do most of the heavy lifting</div>
+    <div class="article-keypoint">극소수 기술주가 시장 신고점 견인 - 집중도 심화로 변동성 리스크 증대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/stocks-are-walking-a-tightrope-to-fresh-record-highs-as-a-handful-of-names-do-most-of-the-heavy-lifting-fe5a166a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">OpenAI 재판, 스타트업의 $852억 성장 뒤 경쟁 관계 적나라하게 드러내</div>
+    <div class="article-title-en">OpenAI trial lays bare rivalries behind start-up’s $852bn rise</div>
+    <div class="article-keypoint">OpenAI 재판 마지막 주 돌입, Sam Altman 증언 예정 - $852억 성장 뒷이야기</div>
+    <a class="article-link" href="https://www.ft.com/content/c68bd831-434d-486c-86df-54d0369391ef" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 15:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">무역정책 불확실성과 관세 재조정</span>
+    <span class="theme-label-range">Article #17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Trump 관세 중 어떤 것이 시행 중이고, 준비 중이며, 불법 판정받았나</div>
+    <div class="article-title-en">Which Trump Tariffs Are in Place, in the Works or Ruled Illegal</div>
+    <div class="article-keypoint">Trump 관세 정책 반복 수정, 일부 불법 판정 - 추가 변경 예정으로 불확실성 지속</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/05/09/business/economy/trump-tariff-timeline.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 22:26 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학적 긴장 확대 - 우크라이나 및 동아시아</span>
+    <span class="theme-label-range">Article #18~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Kremlin, 아르메니아가 우크라이나 Zelenskyy에 플랫폼 제공했다 비난 - 통신 보도</div>
+    <div class="article-title-en">Kremlin accuses Armenia of providing platform for Ukraine's Zelenskiy, agencies report</div>
+    <div class="article-keypoint">Kremlin, 아르메니아가 Zelenskyy에 반러 플랫폼 제공했다 비난 - 동맹 균열</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/kremlin-accuses-armenia-of-providing-platform-for-ukraines-zelenskiy-agencies-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 21:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">러시아, 우크라이나와 3일 휴전 위반 - Zelenskyy</div>
+    <div class="article-title-en">Russia breaches three-day ceasefire with Ukraine, says Zelenskyy</div>
+    <div class="article-keypoint">러시아, 미 중재 3일 휴전 위반 - Zelenskyy 준수 의지 없다 비난</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/10/vladimir-putin-suggests-ukraine-war-is-coming-to-an-end" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 05:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">독일, Putin의 Schroeder 우크라이나 평화협상 역할 제안에 회의적</div>
+    <div class="article-title-en">Germany sceptical on Putin's suggestion of Schroeder role in Ukraine peace talks</div>
+    <div class="article-keypoint">독일, Putin의 Schroeder 평화협상 조율 제안에 회의적 반응</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/germany-sceptical-on-putins-suggestion-of-schroeder-role-in-ukraine-peace-talks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 20:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">영국 Starmer, 유럽 관계를 재설정 중심에 두며 정치적 반격 개시</div>
+    <div class="article-title-en">Britain’s Starmer launches political fightback, putting Europe ties at heart of reset</div>
+    <div class="article-keypoint">영국 Starmer, 유럽 관계를 재설정 중심에 두며 정치 반격 개시</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/uks-starmer-launches-political-fightback-putting-europe-ties-at-heart-of-reset" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 06:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">영국 Starmer, 유럽 관계를 재설정 중심에 두며 정치적 반격 개시</div>
+    <div class="article-title-en">UK’s Starmer launches political fightback, putting Europe ties at heart of reset</div>
+    <div class="article-keypoint">영국 Starmer 총리, 유럽 관계 강화로 정치 재설정 추진</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/uks-starmer-launches-political-fightback-putting-europe-ties-at-heart-of-reset-4674869" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 21:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">일본, 엔화 방어 위해 워싱턴과 BOJ에 추가 힘 기대</div>
+    <div class="article-title-en">Japan bets on Washington, BOJ for extra punch in yen battle</div>
+    <div class="article-keypoint">일본, 엔화 방어 위해 워싱턴·BOJ 추가 조치 기대 - 통화 약세 대응</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/japan-bets-on-washington-boj-for-extra-punch-in-yen-battle-4674867" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 21:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">독일, 미국 Tomahawk 구매 노력 재개 - FT 보도</div>
+    <div class="article-title-en">Germany revives effort to buy US Tomahawks, FT reports</div>
+    <div class="article-keypoint">독일, 미국 Tomahawk 순항미사일 구매 재추진 - FT 보도</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/germany-revives-effort-to-buy-us-tomahawks-ft-reports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 13:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Kim Jong Un, 궁극의 데드맨 스위치 만들어: 북한, 암살 시 핵 자동 발사</div>
+    <div class="article-title-en">Kim Jong Un Creates Ultimate Deadman Switch: North Korea To Auto-Launch Nukes If Assassinated</div>
+    <div class="article-keypoint">북한, Kim 암살 시 핵 자동 발사 '데드맨 스위치' 헌법 명시 - 억제력 극대화</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/kim-jong-un-creates-ultimate-deadman-switch-north-korea-auto-launch-nukes-if" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 06:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기업 실적 전망과 주식시장 밸류에이션</span>
+    <span class="theme-label-range">Article #26~#28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">'S&P 500이 특히 잘하는 것 같다': 나는 66세다. 지금이 주식시장에 $100,000 투자하기 좋은 시기인가?</div>
+    <div class="article-title-en">‘The S&P 500 seems to be doing particularly well’: I’m 66. Is this a good time to invest $100,000 in the stock market?</div>
+    <div class="article-keypoint">66세 은퇴자, S&P 500 호조 속 $100,000 투자 시점 고민 - 밸류에이션 부담</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-s-p-500-seems-to-be-doing-particularly-well-im-66-is-this-a-good-time-to-invest-100-000-in-the-stock-market-46fb8ff8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Intel의 Apple이 다듬은 재기</div>
+    <div class="article-title-en">Intel’s Apple-Polished Comeback</div>
+    <div class="article-keypoint">Intel, Apple 협력 통해 재기 노려 - 반도체 경쟁력 회복 시도</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/intels-apple-polished-comeback-57ec72d6?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 21:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">실적 추정 수정이 매우 낙관적이다</div>
+    <div class="article-title-en">Earnings Estimate Revisions Are Very Optimistic</div>
+    <div class="article-keypoint">S&P 500 실적 추정 수정 매우 낙관적 - 기록적 전망이 오히려 경고 신호 가능성</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/earnings-estimate-revisions-are-very-optimistic" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 04:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #29~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">'미국의 Amazon': 영화가 쿠데타 후 브라질이 열대우림 포기하는 비전 그려</div>
+    <div class="article-title-en">‘Amazon of America’: film paints vision of a post-coup Brazil giving up rainforest</div>
+    <div class="article-keypoint">브라질 쿠데타 가상 영화, 우익 Bolsonaro 미국 도움으로 아마존 포기 설정</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/10/amazon-of-america-vitoria-regia-film-brazil-rainforest" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/10 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">미-이란 합의 희망 퇴색하며 미 증시 선물 하락: 시장 마감</div>
+    <div class="article-title-en">US Stock Futures Slip as US-Iran Deal Hope Fades: Markets Wrap</div>
+    <div class="article-keypoint">미 증시 선물 하락 - Trump 이란 제안 거부로 호르무즈 봉쇄 장기화 우려</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-10/us-stock-futures-slip-as-us-iran-deal-hope-fades-markets-wrap" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/11 07:09 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
