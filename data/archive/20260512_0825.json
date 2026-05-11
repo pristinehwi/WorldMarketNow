@@ -1,0 +1,395 @@
+{
+  "threads": [
+    {
+      "id": "thread_001",
+      "title": "Fed인하기대 후퇴",
+      "priority": 1,
+      "frequency": "NOW",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "Fed인하기대후퇴",
+          "value": "금리인하 근거 소진",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            {
+              "title": "Fed, 금리인하 근거 빠르게 소진",
+              "source": "CNBC",
+              "time": "15:30"
+            }
+          ]
+        },
+        {
+          "id": "n2",
+          "label": "실질금리(DFII10)",
+          "value": "1.96->1.93 (-3bp)",
+          "source": "layer_T0_macro",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n3",
+          "label": "장기국채ETF(TLT)",
+          "value": "05/08 $86.08->05/11 $85.56 (-0.6%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n4",
+          "label": "신흥국ETF(EEM)",
+          "value": "05/08 $67.91->05/11 $67.89 (-0.04%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n5",
+          "label": "KOSPI",
+          "value": "05/11 $7822.24 (0.0%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "15:30",
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "실증",
+          "mechanism": "Fed 인하 기대 후퇴가 실질금리 하방압력 완화로 반영"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "label": "채권압박",
+          "mechanism": "실질금리 고착화가 장기국채 밸류에이션을 구조적 압박"
+        },
+        {
+          "from": "n1",
+          "to": "n4",
+          "label": "EM이탈",
+          "mechanism": "Fed 완화 지연으로 달러 유동성 축소되어 신흥국 자금 이탈"
+        },
+        {
+          "from": "n4",
+          "to": "n5",
+          "label": "한국전이",
+          "mechanism": "신흥국 전반 압박이 한국 시장으로 전이되어 외국인 이탈 압력"
+        }
+      ],
+      "korea_terminal_node": "n5",
+      "briefing": "Fed 금리인하 근거 소진 우려가 실질금리 고착화 전망으로 확산. 장기국채 밸류에이션 압박과 신흥국 자금 이탈 동시 진행으로 한국은 외국인 포지션 축소 압력 직면.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n5->n1 (한국 외국인 이탈 → Fed 인하 기대 추가 후퇴)",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n4->n5",
+        "fragileReason": "신흥국 전반 압박이 한국으로의 전이는 상대적 펀더멘털과 밸류에이션에 따라 선별적 반응 가능",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "원/달러 환율",
+          "via": "외국인 이탈과 달러 유동성 축소가 원화 약세 압력으로 직결",
+          "lag_days": 1
+        },
+        {
+          "to": "한국 금융주",
+          "via": "실질금리 고착화가 순이자마진 개선 기대를 통해 은행주 재평가 유도",
+          "lag_days": 5
+        }
+      ],
+      "_warnings": [
+        "[한국 종착 비율] 4/4 (50% 초과)"
+      ]
+    },
+    {
+      "id": "thread_002",
+      "title": "AI인프라 투자가속",
+      "priority": 2,
+      "frequency": "NOW",
+      "nodes": [
+        {
+          "id": "n6",
+          "label": "AI인프라집중투자",
+          "value": "TSMC 3nm 독점 확산",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            {
+              "title": "AI 붐, TSMC 차세대 공정 독점에 집중",
+              "source": "WSJ",
+              "time": "09:30"
+            },
+            {
+              "title": "OpenAI 직원 보상 급증, AI 붐 지속성 입증",
+              "source": "WSJ",
+              "time": "01:00"
+            }
+          ]
+        },
+        {
+          "id": "n7",
+          "label": "반도체ETF(SOXX)",
+          "value": "05/08 $520.35->05/11 $532.76 (+2.39%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n8",
+          "label": "나스닥ETF(QQQ)",
+          "value": "05/08 $711.22->05/11 $713.29 (+0.29%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n9",
+          "label": "KOSDAQ",
+          "value": "05/11 $1207.72 (+0.71%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "15:30",
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n6",
+          "to": "n7",
+          "label": "실증",
+          "mechanism": "AI 인프라 투자 가속이 반도체 업체들의 급격한 수요 확대로 직결"
+        },
+        {
+          "from": "n6",
+          "to": "n8",
+          "label": "실증",
+          "mechanism": "TSMC 독점과 OpenAI 붐이 나스닥 테크주 밸류에이션 재평가 견인"
+        },
+        {
+          "from": "n8",
+          "to": "n9",
+          "label": "전이",
+          "mechanism": "미국 테크 강세가 한국 테크 중심 코스닥으로 파급되어 상승 모멘텀"
+        }
+      ],
+      "korea_terminal_node": "n9",
+      "briefing": "TSMC 차세대 공정 독점과 OpenAI 인재 쟁탈전이 AI 투자 가속화의 구조적 지속성 입증. 반도체 ETF 급등과 나스닥 강세가 한국 테크 중심 코스닥 상승으로 전이.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n9->n6 (코스닥 상승 → AI 투자 가속 기대 강화)",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n6->n7",
+        "fragileReason": "AI 인프라 투자가 실제 반도체 수요로 이어지는 시차와 불확실성이 존재",
+        "alternativePath": "n6->n8->n9 (AI 투자 → 테크주 밸류에이션 → 코스닥 전이)"
+      },
+      "missingHops": [
+        {
+          "to": "메모리 반도체 현물가",
+          "via": "AI 인프라 투자 급증이 DRAM/NAND 현물 수급 타이트닝을 통해 가격 상승 견인",
+          "lag_days": 7
+        },
+        {
+          "to": "전력/유틸리티주",
+          "via": "AI 데이터센터 전력 소비 급증이 전력 공급업체들의 수익성 개선으로 연결",
+          "lag_days": 14
+        }
+      ],
+      "_warnings": [
+        "[?? 복합신호 B안] thread=thread_002 \"나스닥ETF(QQQ)\"(up)->\"KOSDAQ\"(up) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
+      ]
+    },
+    {
+      "id": "thread_003",
+      "title": "이란제재 에너지충격",
+      "priority": 3,
+      "frequency": "WEEKLY",
+      "nodes": [
+        {
+          "id": "n10",
+          "label": "이란원유제재강화",
+          "value": "중국 우회거래 차단",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            {
+              "title": "미국, 이란-중국 원유거래 제재 강화",
+              "source": "재무부",
+              "time": null
+            }
+          ]
+        },
+        {
+          "id": "n11",
+          "label": "원유ETF(USO)",
+          "value": "05/05 $144.17->05/11 $138.66 (-3.61%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n12",
+          "label": "에너지섹터(XLE)",
+          "value": "05/05 $59.45->05/11 $57.17 (-3.82%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n13",
+          "label": "수입인플레구조화",
+          "value": "원유 95% 수입의존",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n14",
+          "label": "원달러환율",
+          "value": "1472.4원 (약세압력)",
+          "source": "layer_T0_macro",
+          "timestamp": null,
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n10",
+          "to": "n11",
+          "label": "실증",
+          "mechanism": "이란 제재 강화로 글로벌 원유 공급 축소 우려가 가격 변동성 확대"
+        },
+        {
+          "from": "n11",
+          "to": "n12",
+          "label": "섹터전이",
+          "mechanism": "원유 가격 불안정이 에너지 섹터 전반의 밸류에이션 압박으로 확산"
+        },
+        {
+          "from": "n10",
+          "to": "n13",
+          "label": "한국전이",
+          "mechanism": "원유 95%+ 수입 의존 구조로 에너지 제재가 직접적 수입비 급등"
+        },
+        {
+          "from": "n13",
+          "to": "n14",
+          "label": "실증",
+          "mechanism": "에너지 수입비 급증이 무역수지 악화를 통해 원화 약세 압력 가중"
+        }
+      ],
+      "korea_terminal_node": "n14",
+      "briefing": "미국의 이란-중국 원유거래 제재 강화로 글로벌 에너지 공급 제약 심화. 한국은 95% 이상 원유 수입 의존 구조로 수입 인플레이션이 원화 약세 압력을 가중.",
+      "_warnings": [
+        "[T0 내부 직접 인과] thread=thread_003 \"원유ETF(USO)\"->\"에너지섹터(XLE)\" ? 공통원인 노드로 분기 필요",
+        "[?? 복합신호 B안] thread=thread_003 \"원유ETF(USO)\"(down)->\"에너지섹터(XLE)\"(down) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
+      ]
+    },
+    {
+      "id": "thread_004",
+      "title": "고실질금리 체제고착",
+      "priority": 4,
+      "frequency": "MONTHLY",
+      "nodes": [
+        {
+          "id": "n15",
+          "label": "Fed완화여력제약",
+          "value": "완화 정당성 축소",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n16",
+          "label": "성장주ETF(IWF)",
+          "value": "04/11 $123.67->05/11 $123.52 (-0.12%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n17",
+          "label": "가치주ETF(IWD)",
+          "value": "04/11 $233.88->05/11 $234.63 (+0.32%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n18",
+          "label": "EM밸류압박",
+          "value": "신흥국 할인율 확대",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n19",
+          "label": "한국ETF(EWY)",
+          "value": "04/10 $65.42->05/11 $71.28 (+9.01%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n15",
+          "to": "n16",
+          "label": "성장주압박",
+          "mechanism": "고실질금리 환경에서 높은 할인율이 성장주 밸류에이션을 구조적 압박"
+        },
+        {
+          "from": "n15",
+          "to": "n17",
+          "label": "가치주선호",
+          "mechanism": "금리 상승 환경에서 배당 수익률과 자산 가치가 상대적으로 유리"
+        },
+        {
+          "from": "n15",
+          "to": "n18",
+          "label": "EM압박",
+          "mechanism": "구조적 고실질금리가 신흥국 리스크 프리미엄을 지속적으로 확대"
+        },
+        {
+          "from": "n18",
+          "to": "n19",
+          "label": "한국반영",
+          "mechanism": "EM 밸류에이션 압박이 한국 자본시장의 장기 포지셔닝 재조정 압력으로 작용"
+        }
+      ],
+      "korea_terminal_node": "n19",
+      "briefing": "Fed 완화 정책 여력 제약으로 구조적 고실질금리 체제 고착화. 성장주 대비 가치주 선호와 신흥국 밸류에이션 압박이 한국 자본시장의 재조정 압력을 가중."
+    }
+  ],
+  "headlines": [
+    "Fed인하기대 후퇴, 한국 외인 이탈 압박",
+    "AI인프라 투자가속, 코스닥 테크 강세"
+  ],
+  "layer_summary": {
+    "layer1": "전일 미국: 반도체(+2.39%) AI붐 지속 / 당일 아시아: 코스닥(+0.71%) 테크 강세",
+    "layer2": "Fed 인하 기대 후퇴가 신흥국 자금 이탈 신호로 한국 시장 전이, AI 인프라 투자 가속화는 코스닥 상승 견인",
+    "layer3": "고실질금리 고착화로 성장주 압박 대비 가치주 선호 확대, 에너지 제재로 인한 원화 약세 압력 동시 진행"
+  },
+  "macro_regime_note": "고실질금리 평탄커브 리스크온 환경에서 Fed 정책 여력 제약이 신흥국 밸류에이션 압박으로 작용하는 한편, AI 투자 가속화가 기술주 강세로 부분 상쇄되는 이중 효과.",
+  "generated_at": "2026-05-11T23:25:16.217Z",
+  "data_as_of": {
+    "timestamp_iso": "2026-05-11T23:25:16.215Z",
+    "display": "5/11 19:25 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "5/11 19:25 뉴욕",
+    "timezone": "America/New_York"
+  },
+  "meta": {
+    "generated_at": "2026-05-11T23:25:16.217Z",
+    "elapsed_sec": 288,
+    "market_status": [],
+    "is_weekend": false,
+    "data_note": "전일 미국 장 마감 기준 ETF 데이터 및 당일 아시아/유럽 지수 확정"
+  }
+}
