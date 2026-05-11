@@ -467,7 +467,7 @@ const nodeTicker = extractTicker(node.label, prices);
 }
 
 // ── DAG 메인 ────────────────────────────────────────────────
-function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel }) {
+function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, edgeStats }) {
   const svgRef = useRef(null);
   const [selectedNode, setSelectedNode] = useState(null);
   const [miniChartNode, setMiniChartNode] = useState(null);
@@ -679,6 +679,20 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
     pulseGrad.append('stop').attr('offset', '100%').attr('stop-color', '#4d96ff').attr('stop-opacity', '0');
 
     ['arrow', 'arrow-active', 'arrow-dim'].forEach((id, idx) => {
+    defs.append('marker')
+      .attr('id', 'arrow-fragile')
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', 8).attr('refY', 0)
+      .attr('markerWidth', 6).attr('markerHeight', 6)
+      .attr('orient', 'auto')
+      .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', '#f59e0b');
+    defs.append('marker')
+      .attr('id', 'arrow-missing')
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', 8).attr('refY', 0)
+      .attr('markerWidth', 5).attr('markerHeight', 5)
+      .attr('orient', 'auto')
+      .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', '#6366f1');
       const colors = ['#4d96ff', '#7bb8ff', '#1e1e2e'];
       defs.append('marker')
         .attr('id', id)
@@ -691,6 +705,16 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
 
     // ── B: 스레드 전환 애니메이션 — 노드들이 아래서 올라오며 페이드인 ──
     const threadKey = thread.id || thread.title;
+
+    // ── edge_stats 맵 준비 (label: "fromLabel→toLabel" → realizationRate) ──
+    const edgeStatMap = {};
+    if (edgeStats?.edge_stats) {
+      Object.entries(edgeStats.edge_stats).forEach(([k, v]) => {
+        edgeStatMap[k] = v;
+      });
+    }
+    // chainFragility: 가장 취약한 엣지 (from→to 형태)
+    const fragileEdgeKey = thread.chainFragility?.fragileEdge || null;
 
     // ── edges 그리기 ──
     const edgeGroups = []; // 펄스 대상: 화면에 보이는 모든 edge
@@ -707,10 +731,38 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
         .attr('y1', src.y)
         .attr('x2', tgt.x - (nodeSizes[edge.to]?.nodeW ?? 88) / 2)
         .attr('y2', tgt.y)
-        .attr('stroke', isActive ? '#4d96ff' : '#1e1e2e')
-        .attr('stroke-width', isActive ? 1.8 : 1)
+        // fragile 엣지 판정 (from→to 또는 노드 label 기반)
+        const edgeKey = `${edge.from}→${edge.to}`;
+        const edgeLabelKey = (() => {
+          const fn = nodes.find(n => n.id === edge.from);
+          const tn = nodes.find(n => n.id === edge.to);
+          return fn && tn ? `${fn.label}→${tn.label}` : null;
+        })();
+        const isFragile = fragileEdgeKey && (
+          fragileEdgeKey === edgeKey ||
+          fragileEdgeKey === edgeLabelKey ||
+          (edgeLabelKey && fragileEdgeKey.includes(edgeLabelKey.slice(0,6)))
+        );
+        // edge_stats 두께 결정
+        const statEntry = edgeLabelKey ? (edgeStatMap[edgeLabelKey] || null) : null;
+        const realizationRate = statEntry?.realizationRate ?? null;
+        const edgeStrokeW = (() => {
+          if (!isActive) return 1;
+          if (isFragile) return 2.2;
+          if (realizationRate !== null) {
+            if (realizationRate >= 0.8) return 3.0;
+            if (realizationRate >= 0.6) return 2.2;
+            if (realizationRate < 0.4)  return 1.0;
+          }
+          return 1.8;
+        })();
+        const edgeStroke = isFragile ? '#f59e0b' : (isActive ? '#4d96ff' : '#1e1e2e');
+
+        .attr('stroke', edgeStroke)
+        .attr('stroke-width', edgeStrokeW)
         .attr('stroke-opacity', 0)
-        .attr('marker-end', isActive ? 'url(#arrow)' : 'url(#arrow-dim)');
+        .attr('marker-end', isFragile ? 'url(#arrow-fragile)' : (isActive ? 'url(#arrow)' : 'url(#arrow-dim)'))
+        .attr('stroke-dasharray', isFragile ? '6,3' : null)
 
       lineEl.transition()
         .delay(ei * 40 + 100)
@@ -731,7 +783,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
           .attr('text-anchor', 'middle')
           .attr('font-size', `${edgeLabelFs}px`)
           .attr('font-weight', '600')
-          .attr('fill', isActive ? '#d8d8ff' : '#3a3a5a')
+          .attr('fill', isFragile ? '#f59e0b' : (isActive ? '#d8d8ff' : '#3a3a5a'))
           .attr('stroke', '#080810')
           .attr('stroke-width', '3')
           .attr('paint-order', 'stroke')
@@ -1055,6 +1107,76 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
         pulseAnimsRef.current.push(tid);
       }
     });
+
+    // ── missingHops: 미실현 파급 경로 점선 엣지 ──
+    const missingLayer = zoomGroup.append('g').attr('class', 'missing-hop-layer');
+    const missingHops = thread.missingHops || [];
+    missingHops.forEach((hop, hi) => {
+      // "to" 노드를 현재 노드 풀에서 찾기 (없으면 가상 위치)
+      const sourceNode = nodes[nodes.length - 1]; // 마지막 노드에서 출발
+      if (!sourceNode) return;
+      const src = nodePos[sourceNode.id];
+      if (!src) return;
+      // 가상 목적지: 오른쪽 끝에 배치
+      const vx = src.x + (nodeSizes[sourceNode.id]?.nodeW ?? 88) / 2 + 80;
+      const vy = src.y + (hi - missingHops.length / 2) * 30;
+
+      missingLayer.append('line')
+        .attr('x1', src.x + (nodeSizes[sourceNode.id]?.nodeW ?? 88) / 2)
+        .attr('y1', src.y)
+        .attr('x2', vx)
+        .attr('y2', vy)
+        .attr('stroke', '#6366f1')
+        .attr('stroke-width', 1.2)
+        .attr('stroke-dasharray', '5,4')
+        .attr('stroke-opacity', 0)
+        .attr('marker-end', 'url(#arrow-missing)')
+        .transition().delay(hi * 80 + 600).duration(400)
+        .attr('stroke-opacity', 0.55);
+
+      // 레이블
+      missingLayer.append('text')
+        .attr('x', vx + 4)
+        .attr('y', vy)
+        .attr('font-size', '9px')
+        .attr('fill', '#6366f1')
+        .attr('dominant-baseline', 'middle')
+        .style('opacity', 0)
+        .text(`→ ${hop.to || ''}`)
+        .transition().delay(hi * 80 + 700).duration(300)
+        .style('opacity', 0.75);
+    });
+
+    // ── feedbackRisk: 피드백 루프 경고 배지 ──
+    const fbRisk = thread.feedbackRisk;
+    if (fbRisk?.hasFeedback && fbRisk.riskLevel === 'high') {
+      // 첫 번째 노드에 경고 오버레이
+      const firstNode = nodes[0];
+      if (firstNode && nodePos[firstNode.id]) {
+        const fp = nodePos[firstNode.id];
+        const { nodeW, nodeH } = nodeSizes[firstNode.id] || { nodeW: 88, nodeH: 36 };
+        nodeLayer.append('rect')
+          .attr('x', fp.x - nodeW / 2 - 4)
+          .attr('y', fp.y - nodeH / 2 - 4)
+          .attr('width', nodeW + 8)
+          .attr('height', nodeH + 8)
+          .attr('rx', 12).attr('ry', 12)
+          .attr('fill', 'none')
+          .attr('stroke', '#ef4444')
+          .attr('stroke-width', 1.5)
+          .attr('stroke-dasharray', '4,2')
+          .style('opacity', 0.6)
+          .style('pointer-events', 'none');
+        nodeLayer.append('text')
+          .attr('x', fp.x + nodeW / 2 + 2)
+          .attr('y', fp.y - nodeH / 2 - 2)
+          .attr('font-size', '9px')
+          .attr('fill', '#ef4444')
+          .text('⟳ 피드백루프')
+          .style('pointer-events', 'none');
+      }
+    }
+
   };
 
   return (
@@ -1064,6 +1186,45 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel })
           <span className="dag-title">{thread?.title}</span>
         </div>
         <span className="dag-briefing">{thread?.briefing}</span>
+
+      {/* rootCause 표시 */}
+      {thread?.rootCause?.trigger && (
+        <div className="dag-rootcause-bar">
+          <span className="dag-rootcause-icon">⚡</span>
+          <span className="dag-rootcause-trigger">{thread.rootCause.trigger}</span>
+          {thread.rootCause.why && (
+            <span className="dag-rootcause-why">{thread.rootCause.why}</span>
+          )}
+        </div>
+      )}
+
+      {/* chainFragility 취약 링크 경고 */}
+      {thread?.chainFragility?.fragileEdge && (
+        <div className="dag-fragile-bar">
+          <span className="dag-fragile-icon">⚠</span>
+          <span className="dag-fragile-text">
+            취약 링크: {thread.chainFragility.fragileEdge}
+            {thread.chainFragility.fragileReason && ` — ${thread.chainFragility.fragileReason}`}
+          </span>
+        </div>
+      )}
+
+      {/* verification 배지 */}
+      {thread?.verification?.overallVerdict && (() => {
+        const cfg = {
+          CONFIRMED:    { icon: '✅', color: '#22c55e', label: '예측 실현' },
+          PARTIAL:      { icon: '⚠️', color: '#f59e0b', label: '부분 실현' },
+          REVERSED:     { icon: '❌', color: '#ef4444', label: '예측 반전' },
+          INCONCLUSIVE: { icon: '❓', color: '#6b7280', label: '판단 불가' },
+        }[thread.verification.overallVerdict];
+        return cfg ? (
+          <span className="dag-verification-badge" style={{ color: cfg.color }}>
+            {cfg.icon} {cfg.label}
+            {thread.verification.daysLater && ` (D+${thread.verification.daysLater})`}
+          </span>
+        ) : null;
+      })()}
+
       </div>
 
       {activeTimeEvent && (

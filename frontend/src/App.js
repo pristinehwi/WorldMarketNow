@@ -189,6 +189,7 @@ function App() {
                   onNodeClick={(node) => setActiveTimeEvent(node)}
                   onOpenPanel={() => setShowMobilePanel(true)}
                   containerH={dagContainerH}
+                  edgeStats={data.edgeStats}
                 />
               </div>
             )}
@@ -303,6 +304,7 @@ function App() {
                 onNodeClick={(node) => { setActiveTimeEvent(node); setShowPanel(true); }}
                 onOpenPanel={() => setShowPanel(true)}
                 containerH={dagContainerH}
+                edgeStats={data.edgeStats}
               />
             </div>
             {selectedThread && showPanel && (
