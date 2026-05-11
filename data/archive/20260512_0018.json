@@ -1,0 +1,271 @@
+{
+  "threads": [
+    {
+      "id": "thread_001",
+      "title": "AI메모리 슈퍼사이클",
+      "priority": 1,
+      "frequency": "NOW",
+      "nodes": [
+        {
+          "id": "n_ai",
+          "label": "AI메모리 확장",
+          "value": "마이크론 실적 호조로 메모리 업사이클 확신",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            "Micron's stock soars toward fresh highs as a 'virtuous cycle' for memory unfolds"
+          ]
+        },
+        {
+          "id": "soxx",
+          "label": "반도체ETF(SOXX)",
+          "value": "[05/07] $462→[05/08] $528 (+5.67%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": "00:17",
+          "related_news": []
+        },
+        {
+          "id": "kospi",
+          "label": "KOSPI",
+          "value": "[05/10] $7502→[05/11] $7822 (+4.32%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "15:30",
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n_ai",
+          "to": "soxx",
+          "label": "메모리 랠리",
+          "mechanism": "마이크론 실적 호조"
+        },
+        {
+          "from": "soxx",
+          "to": "kospi",
+          "label": "글로벌 동조",
+          "mechanism": "미국 반도체주 급등"
+        }
+      ],
+      "korea_terminal_node": "kospi",
+      "briefing": "마이크론 실적 호조로 메모리 반도체 업사이클 확신이 확산되며 SOXX가 5.67% 급등했습니다. 이는 삼성전자, SK하이닉스 등 한국 메모리 반도체 기업들에게 직접적인 수혜 신호로 해석되며, KOSPI가 4.32% 상승하는 강력한 동조상승을 견인했습니다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "soxx→kospi→soxx",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n_ai→soxx",
+        "fragileReason": "AI 투자 심리 변동성이 극도로 높아 단일 실적 미스로도 급반전 가능",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "xlk",
+          "via": "반도체 랠리가 기술주 전반으로 확산되어 나스닥 기술주 ETF 상승",
+          "lag_days": 1
+        },
+        {
+          "to": "tlt",
+          "via": "반도체 호황으로 인플레이션 우려 증가하여 장기채 매도압력 발생",
+          "lag_days": 3
+        }
+      ],
+      "_warnings": [
+        "[?? ���ս�ȣ B��] thread=thread_001 \"반도체ETF(SOXX)\"(up)��\"KOSPI\"(up) ? ������ �ڻ� ���� ����. ������� ��� ����."
+      ]
+    },
+    {
+      "id": "thread_002",
+      "title": "신흥국 자금유입",
+      "priority": 2,
+      "frequency": "NOW",
+      "nodes": [
+        {
+          "id": "n_roff",
+          "label": "글로벌리스크온",
+          "value": "신용환경 개선과 달러약세 동반",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "uup",
+          "label": "달러인덱스ETF(UUP)",
+          "value": "[05/07] $27.4→[05/08] $27.4 (-0.26%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": "00:17",
+          "related_news": []
+        },
+        {
+          "id": "eem",
+          "label": "신흥국ETF(EEM)",
+          "value": "[05/07] $66.6→[05/08] $68.0 (+2.03%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": "00:17",
+          "related_news": []
+        },
+        {
+          "id": "hyg",
+          "label": "하이일드채ETF(HYG)",
+          "value": "[05/07] $79.8→[05/08] $80.1 (+0.35%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": "00:17",
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n_roff",
+          "to": "uup",
+          "label": "달러약세",
+          "mechanism": "리스크온 환경"
+        },
+        {
+          "from": "uup",
+          "to": "eem",
+          "label": "신흥국 유입",
+          "mechanism": "달러 약화"
+        },
+        {
+          "from": "eem",
+          "to": "hyg",
+          "label": "신용확산",
+          "mechanism": "신흥국 자산 선호"
+        }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "글로벌 리스크온 환경이 본격화되며 달러약세(UUP -0.26%)와 함께 EEM이 2.03% 상승했습니다. 신흥국으로의 자금유입 가속화가 확인되면서 HYG 상승으로 신용스프레드 축소가 진행 중입니다.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n_roff→uup",
+        "fragileReason": "연준 정책 변화나 지정학적 위기 시 리스크온 환경이 즉시 반전될 수 있음",
+        "alternativePath": "n_roff→eem (직접적 리스크 선호도 증가)"
+      },
+      "missingHops": [
+        {
+          "to": "vwo",
+          "via": "달러 약세로 신흥국 주식 ETF로 자금이 유입되어 추가 상승",
+          "lag_days": 2
+        },
+        {
+          "to": "gld",
+          "via": "달러 약화로 금 투자 수요가 증가하여 금가격 상승 압력",
+          "lag_days": 1
+        }
+      ],
+      "_warnings": [
+        "[T0 ���� ���� �ΰ�] thread=thread_002 \"달러인덱스ETF(UUP)\"��\"신흥국ETF(EEM)\" ? ������� ���� �б� �ʿ�",
+        "[T0 ���� ���� �ΰ�] thread=thread_002 \"신흥국ETF(EEM)\"��\"하이일드채ETF(HYG)\" ? ������� ���� �б� �ʿ�",
+        "[?? ���ս�ȣ B��] thread=thread_002 \"신흥국ETF(EEM)\"(up)��\"하이일드채ETF(HYG)\"(up) ? ������ �ڻ� ���� ����. ������� ��� ����."
+      ]
+    },
+    {
+      "id": "thread_003",
+      "title": "구리 공급충격",
+      "priority": 3,
+      "frequency": "NOW",
+      "nodes": [
+        {
+          "id": "n_geo",
+          "label": "지정학적 리스크",
+          "value": "호르무즈 해협 봉쇄 우려 확산",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            "A 'race against time': Hormuz closure could push Brent to $150 a barrel by summer"
+          ]
+        },
+        {
+          "id": "copx",
+          "label": "구리광업ETF(COPX)",
+          "value": "[05/07] $84.9→[05/08] $88.4 (+4.07%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": "00:17",
+          "related_news": []
+        },
+        {
+          "id": "xli",
+          "label": "산업재섹터ETF(XLI)",
+          "value": "[05/07] $173.2→[05/08] $174.3 (+0.65%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": "00:17",
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n_geo",
+          "to": "copx",
+          "label": "구리급등",
+          "mechanism": "공급망 차질"
+        },
+        {
+          "from": "copx",
+          "to": "xli",
+          "label": "비용압력",
+          "mechanism": "원자재 인상"
+        }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "중동 긴장 고조로 호르무즈 해협 봉쇄 우려가 확산되며 COPX가 4.07% 급등했습니다. 구리 공급망 차질 우려가 산업재 섹터 XLI(+0.65%) 전반의 원자재 인플레 압력으로 이어지고 있습니다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "copx→xli→copx",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n_geo→copx",
+        "fragileReason": "지정학적 위기는 정치적 해결로 급속히 완화될 수 있어 구리 프리미엄 소멸 위험",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "fcx",
+          "via": "구리 가격 급등으로 프리포트맥모란 등 구리 생산기업 주가 직접 상승",
+          "lag_days": 0
+        },
+        {
+          "to": "spy",
+          "via": "산업재 비용 상승이 기업 마진 압박으로 이어져 S&P500 하락압력 발생",
+          "lag_days": 5
+        }
+      ],
+      "_warnings": [
+        "[T0 ���� ���� �ΰ�] thread=thread_003 \"구리광업ETF(COPX)\"��\"산업재섹터ETF(XLI)\" ? ������� ���� �б� �ʿ�",
+        "[?? ���ս�ȣ B��] thread=thread_003 \"구리광업ETF(COPX)\"(up)��\"산업재섹터ETF(XLI)\"(up) ? ������ �ڻ� ���� ����. ������� ��� ����."
+      ]
+    }
+  ],
+  "headlines": [
+    "AI메모리 붐 재점화, 한국 반도체 동조랠리",
+    "달러약세에 신흥국 자금유입 가속",
+    "중동 긴장으로 구리 공급충격 우려"
+  ],
+  "layer_summary": {
+    "layer1": "미국 야간: SOXX +5.67% AI메모리 랠리 / 아시아 오늘: KOSPI +4.32% 반도체주 급등",
+    "layer2": "마이크론 실적 호조로 메모리 업사이클 확신, 글로벌 리스크온 환경에서 테크섹터 부활"
+  },
+  "macro_regime_note": "실질금리 1.96% 적정선 유지, 신용스프레드 축소로 리스크선호 환경 강화. ECB-Fed 정책 안정성으로 글로벌 유동성 우호적",
+  "generated_at": "2026-05-11T15:18:27.628Z",
+  "data_as_of": {
+    "timestamp_iso": "2026-05-11T15:18:27.551Z",
+    "display": "5/11 11:18 [ ���� ���� �ð� ]",
+    "display_mobile": "5/11 11:18 ����",
+    "timezone": "America/New_York"
+  },
+  "meta": {
+    "generated_at": "2026-05-11T15:18:27.628Z",
+    "elapsed_sec": 240,
+    "market_status": [
+      "유럽(DAX/CAC/FTSE)",
+      "미국(S&P500/NASDAQ)"
+    ],
+    "is_weekend": false,
+    "data_note": "미국 현재 거래중, 한국/일본 전날 종가"
+  }
+}
