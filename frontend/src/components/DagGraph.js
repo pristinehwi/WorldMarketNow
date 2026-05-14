@@ -726,12 +726,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
         ? activeChain.has(edge.from) && activeChain.has(edge.to)
         : true;
 
-      const lineEl = edgeLayer.append('line')
-        .attr('x1', src.x + (nodeSizes[edge.from]?.nodeW ?? 88) / 2)
-        .attr('y1', src.y)
-        .attr('x2', tgt.x - (nodeSizes[edge.to]?.nodeW ?? 88) / 2)
-        .attr('y2', tgt.y)
-        // fragile 엣지 판정 (from→to 또는 노드 label 기반)
+      // fragile 엣지 판정
         const edgeKey = `${edge.from}→${edge.to}`;
         const edgeLabelKey = (() => {
           const fn = nodes.find(n => n.id === edge.from);
@@ -758,6 +753,11 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
         })();
         const edgeStroke = isFragile ? '#f59e0b' : (isActive ? '#4d96ff' : '#1e1e2e');
 
+        const lineEl = edgeLayer.append('line')
+        .attr('x1', src.x + (nodeSizes[edge.from]?.nodeW ?? 88) / 2)
+        .attr('y1', src.y)
+        .attr('x2', tgt.x - (nodeSizes[edge.to]?.nodeW ?? 88) / 2)
+        .attr('y2', tgt.y)
         .attr('stroke', edgeStroke)
         .attr('stroke-width', edgeStrokeW)
         .attr('stroke-opacity', 0)
