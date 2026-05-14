@@ -209,7 +209,7 @@ const nodeTicker = extractTicker(node.label, prices);
         ctx.font = 'bold 11px Inter';
         ctx.fillStyle = '#4a4a6a';
         ctx.textAlign = 'center';
-        ctx.fillText('···', cx, zeroY + 4);
+        ctx.fillText('...', cx, zeroY + 4);
         return;
       }
 
@@ -476,12 +476,27 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
   const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
   const animFrameRef = useRef(null);
   const pulseAnimsRef = useRef([]);
+  const [showPinchHint, setShowPinchHint] = React.useState(false);
 
   // 스레드 전환 시 미니차트 닫기
   useEffect(() => {
     setSelectedNode(null);
     setMiniChartNode(null);
   }, [thread]);
+
+  // 모바일 핀치 힌트 — 최초 1회
+  useEffect(() => {
+    const isMobile = window.innerWidth < 600;
+    if (!isMobile) return;
+    const seen = localStorage.getItem('wmn_pinch_hint_seen');
+    if (seen) return;
+    setShowPinchHint(true);
+    const t = setTimeout(() => {
+      setShowPinchHint(false);
+      localStorage.setItem('wmn_pinch_hint_seen', '1');
+    }, 500);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     if (!thread || !svgRef.current) return;
@@ -559,17 +574,20 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
         );
         valueLines = pctPart ? 3 : 2;
       } else {
-        valueW = estimateTextWidth(value, fs - 1);
-        if (valueW > 180) { valueW = 180; valueLines = Math.ceil(valueW / 160); }
+        // 개념 노드: 긴 텍스트를 최대 너비 140px 기준으로 줄 수 계산
+        const maxConceptW = Math.round(140 * scale);
+        valueW = Math.min(estimateTextWidth(value, fs - 1), maxConceptW);
+        valueLines = Math.ceil(estimateTextWidth(value, fs - 1) / maxConceptW);
+        valueLines = Math.max(1, Math.min(valueLines, 4)); // 최대 4줄
       }
     }
     // 모바일에서 label 줄 수가 많을수록 패딩을 더 넉넉하게
     const basePad = mobile ? 70 : 44;
-    const labelLinePad = Math.max(0, (labelLines.length - 2) * 8); // 줄 수 초과분 추가 패딩
+    const labelLinePad = Math.max(0, (labelLines.length - 2) * 8);
     const pad = Math.round((basePad + labelLinePad) * scale);
     const nodeW = Math.max(Math.round(130 * scale), maxLabelW + pad, valueW + pad);
-    // nodeH: label줄 + value줄 + 여유 패딩 (28로 상향)
-    const nodeH = Math.max(Math.round(50 * scale), labelLines.length * Math.round(15 * scale) + valueLines * Math.round(14 * scale) + Math.round(28 * scale));
+    // nodeH: label줄 + value줄 + 여유 패딩
+    const nodeH = Math.max(Math.round(50 * scale), labelLines.length * Math.round(15 * scale) + valueLines * Math.round(15 * scale) + Math.round(32 * scale));
     return { nodeW, nodeH, fs, scale };
   };
 
@@ -617,9 +635,24 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
 
     const zoomGroup = svg.append('g').attr('class', 'zoom-group');
     const zoom = d3.zoom()
-      .scaleExtent([0.3, 3])
+      .scaleExtent([0.25, 4])
       .on('zoom', (event) => zoomGroup.attr('transform', event.transform));
     svg.call(zoom);
+
+    // bbox 기반 초기 fit (모바일) — 노드 렌더 완료 후 실행
+    const applyInitialFit = () => {
+      if (!isMobileView) return;
+      try {
+        const bbox = zoomGroup.node().getBBox();
+        if (!bbox || bbox.width === 0) return;
+        const scaleX = containerW / (bbox.width  + 40);
+        const scaleY = containerH / (bbox.height + 40);
+        const fitScale = Math.max(0.45, Math.min(scaleX, scaleY, 1.0));
+        const tx = (containerW - bbox.width  * fitScale) / 2 - bbox.x * fitScale;
+        const ty = (containerH - bbox.height * fitScale) / 2 - bbox.y * fitScale;
+        svg.call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(fitScale));
+      } catch(e) { /* bbox 계산 실패 시 무시 */ }
+    };
 
 
     // 레이어 순서: edge → pulse → node (pulse가 노드에 가려지지 않게)
@@ -893,104 +926,100 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
         .attr('stroke', strokeColor)
         .attr('stroke-width', strokeW);
 
-      const label = node.label || '';
-      const words = label.split(' ');
-      const { fs = 11, scale: sc = 1.0 } = nodeSizes[node.id] || {};
-      // lineHeight: 폰트 크기 기준으로 계산 (fs * 1.45 → 겹침 방지)
-      const lineHeight = Math.round(fs * 1.45);
+      // foreignObject로 노드 텍스트 렌더링 (자동 줄바꿈 지원)
+      const { nodeW, nodeH, fs = 11 } = nodeSizes[node.id] || calcNodeSize(node.label, node.value);
+      const isConcept = node.source === 'concept';
 
-      // value 줄 수 미리 계산
-      let valueLineCount = 0;
-      if (node.value) {
+      // 가격 노드 value 파싱
+      let dateStr = '', priceLine = '', pctPart = '', valueColor = '#52b788';
+      if (node.value && !isConcept) {
         const hasArrow = node.value.indexOf('→') > -1;
-        const hasParen = node.value.lastIndexOf('(') > node.value.indexOf('→');
-        const hasDate = /\[\d+\/\d+\]/.test(node.value);
         if (hasArrow) {
-          valueLineCount = (hasDate ? 1 : 0) + 1 + (hasParen ? 1 : 0);
+          const dateMatch = node.value.match(/\[(\d+\/\d+)\][^→]*→[^[]*\[(\d+\/\d+)\]/);
+          if (dateMatch) dateStr = `${dateMatch[1]} → ${dateMatch[2]}`;
+          const cleanValue = node.value.replace(/\[\d+\/\d+\]\s*/g, '');
+          const cleanParen = cleanValue.lastIndexOf('(');
+          priceLine = cleanParen > -1 ? cleanValue.slice(0, cleanParen).trim() : cleanValue;
+          const parenIdx = node.value.lastIndexOf('(');
+          pctPart = parenIdx > node.value.indexOf('→') ? node.value.slice(parenIdx).trim() : '';
+          valueColor = pctPart.startsWith('(-') ? '#ff6060' : '#52b788';
         } else {
-          valueLineCount = 1;
+          priceLine = node.value;
         }
       }
-      const valueLH = Math.round(fs * 1.3);
-      const totalTextH = words.length * lineHeight + valueLineCount * valueLH;
-      const startY = -(totalTextH / 2) + lineHeight / 2;
 
-      words.forEach((word, i) => {
-        g.append('text')
-          .attr('y', startY + i * lineHeight)
-          .attr('text-anchor', 'middle')
-          .attr('dominant-baseline', 'middle')
-          .attr('font-size', `${fs}px`)
-          .attr('fill', isTarget ? '#6bcb77' : (isInChain ? '#f0f0ff' : '#555'))
-          .text(word);
-      });
+      const labelColor  = isTarget ? '#6bcb77' : (isInChain ? '#f0f0ff' : '#888');
+      const conceptValColor = isInChain ? '#9090c0' : '#5a5a7a';
 
+      const fo = g.append('foreignObject')
+        .attr('x', -nodeW / 2)
+        .attr('y', -nodeH / 2)
+        .attr('width', nodeW)
+        .attr('height', nodeH);
+
+      const div = fo.append('xhtml:div')
+        .style('width', '100%')
+        .style('height', '100%')
+        .style('display', 'flex')
+        .style('flex-direction', 'column')
+        .style('align-items', 'center')
+        .style('justify-content', 'center')
+        .style('box-sizing', 'border-box')
+        .style('padding', '4px 6px')
+        .style('overflow', 'hidden')
+        .style('text-align', 'center');
+
+      // label
+      div.append('xhtml:div')
+        .style('font-size', `${fs}px`)
+        .style('font-weight', '600')
+        .style('color', labelColor)
+        .style('word-break', 'keep-all')
+        .style('overflow-wrap', 'break-word')
+        .style('line-height', '1.35')
+        .style('width', '100%')
+        .text(node.label || '');
+
+      // value
       if (node.value) {
-        const arrowIdx = node.value.indexOf('→');
-        const parenIdx = node.value.lastIndexOf('(');
-        const hasArrow = arrowIdx > -1;
-        const hasParen = parenIdx > -1 && parenIdx > arrowIdx;
-
-        if (hasArrow) {
-          // 날짜 파싱: [4/8] $127.19→[4/9] $140.07 (+10.13%)
-          const dateMatch = node.value.match(/\[(\d+\/\d+)\][^→]*→[^[]*\[(\d+\/\d+)\]/);
-          const baseDate = dateMatch ? dateMatch[1] : null;
-          const currDate = dateMatch ? dateMatch[2] : null;
-
-          // 가격만 추출 (날짜 제거)
-          const cleanValue = node.value.replace(/\[\d+\/\d+\]\s*/g, '');
-          const cleanArrow = cleanValue.indexOf('→');
-          const cleanParen = cleanValue.lastIndexOf('(');
-          const priceLine = cleanParen > -1 ? cleanValue.slice(0, cleanParen).trim() : cleanValue.slice(0, cleanArrow > -1 ? undefined : undefined).trim();
-          const pctPart = hasParen ? node.value.slice(parenIdx).trim() : '';
-          const vfs = Math.round((fs - 1) * sc);
-          const vLineH = Math.round(fs * 1.3);
-          const dateLineH = (baseDate && currDate) ? vLineH : 0;
-          const labelEndY = startY + (words.length - 1) * lineHeight + lineHeight / 2;
-
-          const valueColor = pctPart.startsWith('(-') ? '#ff6060' : '#52b788';
-
-          // 날짜 표시 (형광빨강)
-          if (baseDate && currDate) {
-            g.append('text')
-              .attr('y', labelEndY + vLineH * 0.6)
-              .attr('text-anchor', 'middle')
-              .attr('dominant-baseline', 'middle')
-              .attr('font-size', `${Math.round((fs - 2) * sc)}px`)
-              .attr('fill', '#ff4466')
-              .text(`${baseDate} → ${currDate}`);
+        if (isConcept) {
+          // 개념 노드: 자동 줄바꿈
+          div.append('xhtml:div')
+            .style('font-size', `${Math.max(8, fs - 2)}px`)
+            .style('color', conceptValColor)
+            .style('word-break', 'keep-all')
+            .style('overflow-wrap', 'break-word')
+            .style('line-height', '1.3')
+            .style('margin-top', '3px')
+            .style('width', '100%')
+            .text(node.value);
+        } else {
+          // 가격 노드: 날짜 / 가격 / 변동률 분리
+          if (dateStr) {
+            div.append('xhtml:div')
+              .style('font-size', `${Math.max(8, fs - 2)}px`)
+              .style('color', '#ff4466')
+              .style('line-height', '1.2')
+              .style('margin-top', '2px')
+              .text(dateStr);
           }
-
-          // 가격 한 줄
-          g.append('text')
-            .attr('y', labelEndY + vLineH * 0.6 + dateLineH)
-            .attr('text-anchor', 'middle')
-            .attr('dominant-baseline', 'middle')
-            .attr('font-size', `${vfs}px`)
-            .attr('fill', isInChain ? '#b0b0cc' : '#2a2a3a')
-            .text(priceLine);
-
-          // 변동률
+          if (priceLine) {
+            div.append('xhtml:div')
+              .style('font-size', `${Math.max(8, fs - 1)}px`)
+              .style('color', isInChain ? '#b0b0cc' : '#666')
+              .style('line-height', '1.2')
+              .style('margin-top', '1px')
+              .text(priceLine);
+          }
           if (pctPart) {
-            g.append('text')
-              .attr('y', labelEndY + vLineH * 0.6 + dateLineH + vLineH)
-              .attr('text-anchor', 'middle')
-              .attr('dominant-baseline', 'middle')
-              .attr('font-size', `${Math.round(fs * sc)}px`)
-              .attr('font-weight', '700')
-              .attr('fill', isTarget ? '#6bcb77' : (isInChain ? valueColor : '#2a2a3a'))
+            div.append('xhtml:div')
+              .style('font-size', `${fs}px`)
+              .style('font-weight', '700')
+              .style('color', isTarget ? '#6bcb77' : (isInChain ? valueColor : '#888'))
+              .style('line-height', '1.2')
+              .style('margin-top', '1px')
               .text(pctPart);
           }
-        } else {
-          const valueColor = node.value.startsWith('-') ? '#ff6060' : '#52b788';
-          g.append('text')
-            .attr('y', startY + words.length * lineHeight)
-            .attr('text-anchor', 'middle')
-            .attr('dominant-baseline', 'middle')
-            .attr('font-size', `${Math.round((fs - 1) * sc)}px`)
-            .attr('font-weight', '700')
-            .attr('fill', isTarget ? '#6bcb77' : (isInChain ? valueColor : '#2a2a3a'))
-            .text(node.value);
         }
       }
 
@@ -1177,6 +1206,8 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
       }
     }
 
+    // bbox fit 적용 (노드 렌더 완료 후)
+    applyInitialFit();
   };
 
   return (
@@ -1246,6 +1277,32 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
 
       <div style={{ position: 'relative', flex: 1, minHeight: 0 }}>
         <svg ref={svgRef} style={{ width: '100%', height: '100%' }} />
+
+        {/* 모바일 핀치 힌트 */}
+        {showPinchHint && (
+          <div style={{
+            position: 'absolute', inset: 0,
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center',
+            pointerEvents: 'none', zIndex: 20,
+          }}>
+            <div style={{
+              background: 'rgba(10,10,20,0.82)',
+              borderRadius: 16, padding: '18px 28px',
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'center', gap: 10,
+              animation: 'wmn-pinch 0.5s ease-in-out',
+            }}>
+              <div style={{ fontSize: 36, letterSpacing: 8 }}>🤏</div>
+              <div style={{
+                color: '#c8c8e0', fontSize: 13, fontWeight: 600,
+                letterSpacing: 0.5, textAlign: 'center',
+              }}>
+                핀치로 확대 · 드래그로 이동
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* C: 미니 차트 팝업 */}
         {miniChartNode && (
