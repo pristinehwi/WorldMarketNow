@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-17 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/17 07:47 KST</div>
+    <div class="header-date">2026-05-17</div>
+    <div class="header-headline">Trump 중국 방문과 Fed 의장 교체 동시 진행</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Trump-Xi 정상회담 결과와 Kevin Warsh Fed 의장 취임 후 첫 통화정책 방향 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">통화정책 불확실성 - Fed 리더십 전환기</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#2</span>
+    </div>
+    <div class="theme-summary">Kevin Warsh가 공식적으로 차기 Fed 의장으로 확정되었으나, 글로벌 금융시장에서 최악의 타이밍에 최악의 직무를 맡게 되었다는 평가가 나온다. AI 붐과 인플레이션 압력, 지정학적 긴장이 교차하는 시점에서 새 의장은 통화정책 정상화와 시장 안정이라는 이중 과제에 직면했다. 한편 미 재무부는 러시아산 해상 원유에 대한 제재 면제를 연장하지 않기로 결정해 에너지 시장에 추가 변수를 제공했다. 통화정책 방향성에 대한 불확실성이 커지면서 금리 민감 자산과 달러 강세 지속 여부가 초점이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 인프라 투자 경쟁 심화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #3~#6</span>
+    </div>
+    <div class="theme-summary">Big Tech의 7000억 달러 규모 AI 에너지 인프라 투자 경쟁이 본격화되면서 GE Vernova, Bloom Energy 등 전력 인프라 기업들이 새로운 게이트키퍼로 부상하고 있다. Cerebras Systems는 80억 달러 밸류에이션으로 2026년 최대 기술 IPO를 달성했지만, 초창기 월 800만 달러를 소진하며 불가능해 보이는 칩 개발로 사망 직전까지 갔던 과거가 공개되었다. OpenAI는 공동창업자 Greg Brockman을 제품 전략 책임자로 임명하며 ChatGPT와 Codex 통합을 추진 중이다. AI 골드러시의 수혜자와 낙오자가 명확히 구분되는 가운데, 기술 산업 내부에서조차 현재 AI 붐에 대한 회의적 분위기가 확산되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">반도체 섹터 구조적 재편</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #7~#8</span>
+    </div>
+    <div class="theme-summary">SK Hynix가 시가총액 1조 달러 달성을 목전에 두고 한국 두 번째 기업으로 부상할 전망이다. 그러나 한국 증시는 금요일 KOSPI가 6% 급락하며 국가 리스크 프리미엄이 확대되었고, 삼성전자와 한국 노조 간 파업 위협이 메모리 칩 팹 운영 차질 우려를 키우면서 협상이 재개되었다. 글로벌 반도체 공급망의 한국 집중도가 높은 상황에서 노사 갈등과 지정학적 긴장이 맞물리면 공급 차질 리스크가 실물 경제로 전이될 가능성이 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">미중 관계 재조정 국면</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #9~#11</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 이란 전쟁과 AI 경쟁 통제를 배경으로 미중 관계 안정화를 목표로 베이징 정상회담을 진행 중이며, Jensen Huang과 Elon Musk 등 기술 CEO들이 동행했다. Trump는 Xi 주석이 이란의 해협 개방에 동의했다고 밝혔으나 중국 측의 공식 확인은 없는 상태다. Putin은 Trump의 베이징 방문 직후인 5월 19~20일 중국을 방문해 '무제한 파트너십'을 과시할 예정이다. 미중 기술 패권 경쟁과 이란 사태가 교차하면서 글로벌 공급망과 에너지 안보에 대한 재조정 압력이 커지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">기술 기업 지배구조 갈등</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #12~#14</span>
+    </div>
+    <div class="theme-summary">Elon Musk와 Sam Altman 간 OpenAI를 둘러싼 법정 공방이 '자선단체 도용' 혐의를 중심으로 9인 배심원단 심리에 들어갔다. 두 억만장자 간의 치부가 공개되는 법정 드라마가 진행 중이다. 한편 Musk는 Christopher Nolan 감독이 Helen of Troy 역에 Lupita Nyong'o를 캐스팅한 것을 비판하며 다양성 요건 준수를 위한 결정이라 주장해 논란을 일으켰다. BlackRock은 SpaceX IPO에 수십억 달러 규모 투자를 검토 중인 것으로 보도되었다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">지정학 및 정책 변화</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #15~#19</span>
+    </div>
+    <div class="theme-summary">국방장관 Hegseth가 폴란드로 예정된 4000명 병력 배치를 전격 취소하면서 Pentagon이 사전 통보 없이 당황한 것으로 전해졌다. Trump 행정부의 유럽 주둔 미군 감축이 예상보다 신속하게 진행될 가능성이 제기된다. 인도는 사상 최저치로 하락한 루피 방어를 위해 은 수입 규제를 강화하며 외환보유고 보존 조치를 단행했다. 영국에서는 전 장관 Streeting가 Starmer 대체 경선 출마 의사를 밝혔고, 브라질에서는 Lula 대통령과 Flavio Bolsonaro 상원의원이 10월 결선투표에서 동률을 기록했다는 여론조사 결과가 나왔다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#3a3a2a;border-bottom:1px solid #6a6a4a;">
+      <span class="theme-title" style="color:#e8e8a8;">기타</span>
+      <span class="theme-range" style="color:#e8e8a8;">Article #20~#22</span>
+    </div>
+    <div class="theme-summary">32세 아버지가 낮은 초봉, 팬데믹, 주택시장 위기, 대학원, 두 자녀 양육에도 불구하고 9년 만에 백만장자가 된 5가지 재테크 전략이 소개되었다. Amazon이 구형 Kindle 지원을 종료하면서 사용자들이 탈옥을 통해 기기를 계속 사용하려는 시도가 증가하고 있으나 리스크가 존재한다. ArXiv는 대형언어모델에 전적으로 의존한 논문 저자에 대해 1년간 게재 금지 조치를 강화하고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">통화정책 불확실성 - Fed 리더십 전환기</span>
+    <span class="theme-label-range">Article #1~#2</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Kevin Warsh 신임 Fed 의장의 불가능한 임무</div>
+    <div class="article-title-en">New Fed Chair Kevin Warsh's Job Is Impossible</div>
+    <div class="article-keypoint">Kevin Warsh Fed 의장 취임 - AI 붐과 인플레 압력 교차점에서 통화정책 운신 폭 제한</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/new-fed-chair-kevin-warshs-job-impossible" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">미 재무부, 러시아 해상 원유 제재 면제 연장 불허</div>
+    <div class="article-title-en">US Treasury allows sanctions waiver on Russian seaborne oil to lapse</div>
+    <div class="article-keypoint">미 재무부, 러시아 해상 원유 제재 면제 연장 불허 - 에너지 시장 공급 변수 추가</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/us-treasury-allows-sanctions-waiver-on-russian-seaborne-oil-to-lapse-4694484" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 19:06 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 인프라 투자 경쟁 심화</span>
+    <span class="theme-label-range">Article #3~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">전력 부문의 Nvidia들을 만나다 - Big Tech의 7000억 달러 AI 에너지 투자에서 승리하는 5개 종목</div>
+    <div class="article-title-en">Meet the Nvidias of power — 5 stocks winning Big Tech’s $700 billion AI energy grab</div>
+    <div class="article-keypoint">Big Tech 7000억 달러 AI 전력 인프라 투자 - GE Vernova 등 새로운 게이트키퍼 부상</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/meet-the-nvidias-of-power-5-stocks-winning-big-techs-700-billion-ai-energy-grab-9226157a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 01:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">AI 골드러시의 승자와 패자</div>
+    <div class="article-title-en">The haves and have nots of the AI gold rush</div>
+    <div class="article-keypoint">AI 붐 내부 회의론 확산 - 기술업계 내부에서도 현재 과열 우려 목소리</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/16/the-haves-and-have-nots-of-the-ai-gold-rush/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 05:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">600억 달러 AI 칩 다크호스 Cerebras, 초창기 월 800만 달러 소진하며 사망 직전까지 갔었다</div>
+    <div class="article-title-en">$60B AI chip darling Cerebras almost died early on, burning $8M a month</div>
+    <div class="article-keypoint">Cerebras 80억 달러 밸류 IPO 성공 - 초창기 월 800만 달러 소진 위기 극복 스토리</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/16/60b-ai-chip-darling-cerebras-almost-died-early-on-burning-8m-a-month/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">OpenAI 공동창업자 Greg Brockman, 제품 전략 책임 맡아</div>
+    <div class="article-title-en">OpenAI co-founder Greg Brockman takes charge of product strategy</div>
+    <div class="article-keypoint">OpenAI, Greg Brockman 제품전략 책임 임명 - ChatGPT·Codex 통합 추진</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/16/openai-co-founder-greg-brockman-reportedly-takes-charge-of-product-strategy/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 00:33 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">반도체 섹터 구조적 재편</span>
+    <span class="theme-label-range">Article #7~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">SK Hynix, 한국 두 번째 시총 1조 달러 기업 등극 임박</div>
+    <div class="article-title-en">SK Hynix is set to become the 2nd Korean company to hit $1 trln market cap</div>
+    <div class="article-keypoint">SK Hynix 시총 1조 달러 임박 - 한국 두 번째 기업으로 메모리 반도체 슈퍼사이클 수혜</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/sk-hynix-is-set-to-become-the-2nd-korean-company-to-hit-1-trln-market-cap-4694482" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 17:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">삼성과 한국 노조 협상 재개 - 파업 위협이 메모리 칩 팹 차질 우려</div>
+    <div class="article-title-en">Samsung, South Korean Union Resume Talks As Strike Threat Risks Disrupting Memory Chip Fabs</div>
+    <div class="article-keypoint">삼성-노조 협상 재개 - 파업 위협이 메모리 칩 팹 가동에 미칠 공급망 리스크 주목</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/samsung-south-korean-union-resume-talks-strike-threat-risks-disrupting-memory-chip-fabs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 22:55 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">미중 관계 재조정 국면</span>
+    <span class="theme-label-range">Article #9~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Trump, Xi 주석이 이란의 해협 개방에 동의했다고 밝혀 - 그러나 중국의 개입 신호는 없어</div>
+    <div class="article-title-en">Trump says Xi agrees Iran must open strait, but no sign China will weigh in</div>
+    <div class="article-keypoint">Trump, Xi 주석과 이란 해협 개방 합의 주장 - 중국 측 공식 확인 부재로 실효성 불투명</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/trump-says-xi-agrees-iran-must-open-strait-china-says-war-shouldnt-have-started-4694428" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 19:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Putin, Trump 방중 직후 중국 방문 예정 - '무제한 파트너십' 과시</div>
+    <div class="article-title-en">Putin To Visit China Just Days After Trump's Beijing, Demonstrating 'No Limits' Partnership</div>
+    <div class="article-keypoint">Putin, Trump 방중 직후 중국 방문 - 5월 19~20일 '무제한 파트너십' 과시 예정</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/putin-visit-china-just-days-after-trumps-beijing-trip-demonstrate-no-limits" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">기술 CEO들, Trump 중국 방문에 동행</div>
+    <div class="article-title-en">Tech Chiefs Accompany Trump on China Trip</div>
+    <div class="article-keypoint">Trump, 기술 CEO 대동 베이징 정상회담 - AI 패권·이란 사태 배경 미중 관계 재조정</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-16/tech-chiefs-accompany-trump-on-china-trip-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 21:57 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">기술 기업 지배구조 갈등</span>
+    <span class="theme-label-range">Article #12~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">BlackRock, SpaceX IPO에 수십억 달러 투자 검토 중 - the Information 보도</div>
+    <div class="article-title-en">BlackRock weighs multibillion-dollar investment in SpaceX IPO, the Information reports</div>
+    <div class="article-keypoint">BlackRock, SpaceX IPO 수십억 달러 투자 검토 - 민간 우주산업 밸류에이션 재평가 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/blackrock-weighs-multibilliondollar-investment-in-spacex-ipo-the-information-reports-4694472" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 17:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Elon Musk와 Sam Altman의 민망한 법정 드라마에서 우리가 배운 것</div>
+    <div class="article-title-en">What we learned from the cringey courtroom drama between Elon Musk and Sam Altman</div>
+    <div class="article-keypoint">Musk vs Altman 법정 공방 본격화 - '자선단체 도용' 혐의로 9인 배심원단 심리</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/may/16/what-we-learned-elon-musk-sam-altman" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Elon Musk, Christopher Nolan의 Helen of Troy 역 Lupita Nyong'o 캐스팅 비판</div>
+    <div class="article-title-en">Elon Musk criticizes Christopher Nolan for casting Lupita Nyong'o as Helen of Troy</div>
+    <div class="article-keypoint">Musk, Nolan 감독 캐스팅 비판 논란 - 다양성 정책 반발로 문화 전쟁 재점화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/05/16/elon-musk-criticizes-christopher-nolan-for-casting-lupita-nyong-o-as-helen-of-troy_6753518_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 01:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">지정학 및 정책 변화</span>
+    <span class="theme-label-range">Article #15~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">인도, 루피 방어 조치의 일환으로 은 수입 규제 강화</div>
+    <div class="article-title-en">India Tightens Silver Import Rules Amid Measures to Defend Rupee</div>
+    <div class="article-keypoint">인도, 은 수입 규제 강화 - 루피 사상 최저 방어 위해 외환보유고 보존 총력</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-16/india-tightens-silver-import-rules-amid-measures-to-defend-rupee" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 23:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Ray Dalio의 중국 언급, 그리고 Whitney Tilson이 Mamdani-Griffin 갈등에 대해 의견 제시</div>
+    <div class="article-title-en"><strong>Ray Dalio Talks about China, and Whitney Tilson Weighs in on Mamdani’s Feud With Griffin</strong></div>
+    <div class="article-keypoint">Ray Dalio 중국 언급, Mamdani-Griffin 갈등 격화 - 헤지펀드 업계 내부 긴장 고조</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-05-16/dalio-talks-about-china-and-whitney-tilson-weighs-in-on-mamdani-s-griffin-feud" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Pentagon '당황' - Hegseth, 폴란드 4000명 병력 배치 전격 취소</div>
+    <div class="article-title-en">Pentagon 'Blindsided' As Hegseth Pulls Plug On 4,000-Troop Deployment To Poland</div>
+    <div class="article-keypoint">Hegseth, 폴란드 4000명 배치 전격 취소 - Pentagon 사전 통보 없이 유럽 미군 감축 가속화</div>
+    <a class="article-link" href="https://www.zerohedge.com/military/pentagon-blindsided-hegseth-pulls-plug-4000-troop-deployment-poland" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 21:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">전 장관 Streeting, 영국 Starmer 대체 경선 출마 의사 밝혀</div>
+    <div class="article-title-en">Former minister Streeting says he will stand in any contest to replace UK’s Starmer</div>
+    <div class="article-keypoint">전 장관 Streeting, 영국 Starmer 대체 경선 출마 의사 - 노동당 내부 리더십 균열 조짐</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/former-minister-streeting-says-he-will-stand-in-any-contest-to-replace-uks-starmer-4694467" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 17:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">브라질 Lula, Datafolha 여론조사에서 상원의원 Flavio Bolsonaro와 결선투표 동률</div>
+    <div class="article-title-en">Brazil's Lula tied with Senator Flavio Bolsonaro in second-round in Datafolha poll</div>
+    <div class="article-keypoint">브라질 Lula-Bolsonaro 결선 동률 - 10월 대선 향배 불투명, 정치 불확실성 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/brazils-lula-tied-with-senator-flavio-bolsonaro-in-second-round-in-datafolha-poll" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 02:13 KST</div>
+  </div>
+  <div class="theme-label" style="background:#3a3a2a;border:1px solid #6a6a4a;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #20~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">32세 아버지를 9년 만에 백만장자로 만든 5가지 재테크 전략</div>
+    <div class="article-title-en">5 money moves that made this 32-year-old dad a millionaire in just 9 years</div>
+    <div class="article-keypoint">32세에 백만장자 된 5가지 재테크 전략 - 팬데믹과 주택위기 속 자산축적 사례</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/5-money-moves-that-made-this-32-year-old-dad-a-millionaire-in-just-9-years-3725c0ed?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 03:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Amazon의 지원 종료로 사용자들 구형 Kindle 탈옥으로 눈 돌려</div>
+    <div class="article-title-en">Users turn to jailbreaking their older Kindles as Amazon ends support</div>
+    <div class="article-keypoint">구형 Kindle 지원 종료로 탈옥 시도 증가 - 디지털 소유권 논쟁 재점화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/16/users-turn-to-jailbreaking-their-older-kindles-as-amazon-ends-support/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">논문 저장소 ArXiv, AI가 모든 작업을 수행한 저자에게 1년 게재 금지 부과</div>
+    <div class="article-title-en">Research repository ArXiv will ban authors for a year if they let AI do all the work</div>
+    <div class="article-keypoint">ArXiv, AI 전면 의존 논문 1년 게재금지 - 대형언어모델 무분별 사용 단속 강화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/16/research-repository-arxiv-will-ban-authors-for-a-year-if-they-let-ai-do-all-the-work/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/17 03:54 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
