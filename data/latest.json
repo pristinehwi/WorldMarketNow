@@ -2,41 +2,43 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Fed 인사 불확실성",
+      "title": "중동 유가충격",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "Fed인사불확실성",
-          "value": "Powell 임시체제 혼선",
+          "label": "중동유가급등",
+          "value": "지정학적 리스크 프리미엄",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Fed Names Powell Chair Pro Tempore Until Warsh Sworn In",
-            "5 moments that defined Jerome Powell's Federal Reserve"
+            {
+              "source": "Investing.com",
+              "title": "Oil touches 2-week high after drone attack on UAE nuclear power plant"
+            }
           ]
         },
         {
           "id": "n2",
-          "label": "달러프리미엄확대",
-          "value": "정책불확실성 달러수요",
-          "source": "concept",
+          "label": "원유ETF(USO)",
+          "value": "05/14 $143.0→05/15 $148.2 (+3.66%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "달러인덱스(UUP)",
-          "value": "05/14 $27.63→05/15 $27.77 (+0.52%)",
+          "label": "에너지섹터(XLE)",
+          "value": "05/14 $58.1→05/15 $59.4 (+2.36%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "외국인자금이탈",
-          "value": "달러강세 신흥국회피",
+          "label": "글로벌리스크오프",
+          "value": "지정학적 불안정",
           "source": "concept",
           "timestamp": null,
           "related_news": []
@@ -44,17 +46,25 @@
         {
           "id": "n5",
           "label": "신흥국ETF(EEM)",
-          "value": "05/14 $67.40→05/15 $65.07 (-3.46%)",
+          "value": "05/14 $67.4→05/15 $65.1 (-3.43%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n6",
+          "label": "금ETF(GLD)",
+          "value": "05/14 $427.2→05/15 $417.3 (-2.32%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n7",
           "label": "KOSPI",
-          "value": "05/15 -6.12%",
+          "value": "05/15 $7493→05/18 $7532 (+0.52%)",
           "source": "layer_T1_asia_today",
-          "timestamp": "15:30",
+          "timestamp": null,
           "related_news": []
         }
       ],
@@ -62,202 +72,218 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "정책혼선",
-          "mechanism": "Fed 임시체제가 달러 안전자산 선호도 확대"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
           "label": "실증",
-          "mechanism": "달러 프리미엄 확대가 UUP 상승으로 반영"
+          "mechanism": "UAE 드론 공격 뉴스가 WTI 유가 급등으로 반영"
         },
         {
-          "from": "n2",
+          "from": "n1",
+          "to": "n3",
+          "label": "섹터수혜",
+          "mechanism": "유가 상승이 에너지 기업 수익성 개선 기대로 전이"
+        },
+        {
+          "from": "n1",
           "to": "n4",
-          "label": "자금흐름",
-          "mechanism": "달러강세로 신흥국 자본유출 압력 증가"
+          "label": "전이",
+          "mechanism": "지정학적 충격이 글로벌 위험회피 심리로 확산"
         },
         {
           "from": "n4",
           "to": "n5",
           "label": "실증",
-          "mechanism": "신흥국 자금이탈이 EEM 급락으로 현실화"
+          "mechanism": "리스크오프 모드가 신흥국 자산 이탈로 나타남"
         },
         {
           "from": "n4",
           "to": "n6",
-          "label": "한국반영",
-          "mechanism": "외인 자금이탈이 KOSPI 하락 압력으로 전이"
-        }
-      ],
-      "korea_terminal_node": "n6",
-      "briefing": "외국인 자금이탈이 핵심 공통원인입니다. Powell 임시 의장 체제 발표로 Fed 정책 불확실성이 달러 안전자산 선호를 강화하고, 이는 신흥국 자본 유출 압력으로 확산되고 있습니다. 한국 증시는 외인 매도 압력에 직면하여 -6.12% 급락했습니다.",
-      "_warnings": [
-        "[한국 종착 비율] 2/3 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n2->n4->n6->n2 (달러강세→신흥국유출→한국약세→달러수요증가)",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "Fed 인사 불확실성이 실제 정책 변화 없이도 달러 프리미엄을 창출한다는 심리적 연결고리가 과도하게 단순화됨",
-        "alternativePath": "n1->금리변동성확대->n2"
-      },
-      "missingHops": [
-        {
-          "to": "JPY 약세",
-          "via": "달러강세가 엔캐리트레이드 재개로 이어져 JPY 추가 약세 유발",
-          "lag_days": 3
+          "label": "달러강세상쇄",
+          "mechanism": "달러강세 압력이 금 안전자산 수요를 상쇄"
         },
         {
-          "to": "국고채 10년물",
-          "via": "외인 자금이탈로 국내 채권시장 유동성 경색이 장기금리 상승 압력 조성",
-          "lag_days": 5
+          "from": "n4",
+          "to": "n7",
+          "label": "급등후조정",
+          "mechanism": "전일 리스크오프 압력 대비 당일 완화 반영"
         }
+      ],
+      "korea_terminal_node": "n7",
+      "briefing": "UAE 원전 드론 공격으로 유가 3.7% 급등, 글로벌 리스크오프 심화. 신흥국 자산 이탈(EEM -3.4%)로 KOSPI는 전일 충격 대비 완화 반등(+0.5%), 금은 달러강세에 조정(-2.3%).",
+      "_warnings": [
+        "[한국 종착 비율] 3/3 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "미중회담 지정학 리스크",
+      "title": "달러강세신흥국",
       "priority": 2,
       "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "n7",
-          "label": "미중회담실패",
-          "value": "중동중재 성과없이 종료",
+          "id": "w1",
+          "label": "Fed리더십교체",
+          "value": "Warsh 매파기조 전환",
           "source": "concept",
           "timestamp": null,
-          "related_news": []
+          "related_news": [
+            {
+              "source": "Reuters",
+              "title": "Kevin Warsh nomination signals hawkish shift in Fed policy direction"
+            }
+          ]
         },
         {
-          "id": "n8",
-          "label": "에너지안보우려",
-          "value": "호르무즈봉쇄 지속우려",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n9",
-          "label": "원유ETF(USO)",
-          "value": "05/11 $138.66→05/15 $148.23 (+6.88%)",
+          "id": "w2",
+          "label": "장기국채(TLT)",
+          "value": "05/11 $85.6→05/15 $83.7 (-2.22%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n10",
-          "label": "글로벌리스크오프",
-          "value": "지정학 리스크 증시압박",
+          "id": "w3",
+          "label": "달러강세기조",
+          "value": "매파 전환 구조화",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n11",
-          "label": "하이일드ETF(HYG)",
-          "value": "05/11 $79.98→05/15 $79.46 (-0.63%)",
+          "id": "w4",
+          "label": "달러ETF(UUP)",
+          "value": "05/11 $27.4→05/15 $27.8 (+1.54%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n12",
-          "label": "장기채권(TLT)",
-          "value": "05/11 $85.56→05/15 $83.66 (-2.22%)",
+          "id": "w5",
+          "label": "유로화약세(FXE)",
+          "value": "05/11 $108.7→05/15 $107.3 (-1.32%)",
           "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w6",
+          "label": "외국인이탈",
+          "value": "신흥국자본유출구조",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w7",
+          "label": "KOSPI",
+          "value": "주간 -1.45% 조정",
+          "source": "layer_T1_asia_today",
           "timestamp": null,
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n7",
-          "to": "n8",
-          "label": "중재실패",
-          "mechanism": "미중 정상회담 실패로 중동 리스크 해소 기대감 소멸"
+          "from": "w1",
+          "to": "w2",
+          "label": "금리상승",
+          "mechanism": "매파 기조 기대가 장기금리 상승 압력으로 작용"
         },
         {
-          "from": "n8",
-          "to": "n9",
+          "from": "w1",
+          "to": "w3",
+          "label": "정책기조",
+          "mechanism": "Warsh 매파 성향이 달러 강세 구조적 지지 요인"
+        },
+        {
+          "from": "w3",
+          "to": "w4",
           "label": "실증",
-          "mechanism": "에너지 공급 불안정이 원유 가격 상승으로 반영"
+          "mechanism": "Fed 매파 전환 기대가 달러 지수 상승으로 반영"
         },
         {
-          "from": "n8",
-          "to": "n10",
-          "label": "파급효과",
-          "mechanism": "지정학적 리스크가 글로벌 리스크오프 심리로 확산"
+          "from": "w3",
+          "to": "w5",
+          "label": "상대약세",
+          "mechanism": "달러 강세 기조가 유로화 약세 압력으로 전이"
         },
         {
-          "from": "n10",
-          "to": "n11",
+          "from": "w3",
+          "to": "w6",
+          "label": "구조전환",
+          "mechanism": "달러 강세가 신흥국 자본 유출 압력 구조화"
+        },
+        {
+          "from": "w6",
+          "to": "w7",
           "label": "실증",
-          "mechanism": "리스크오프로 하이일드 회사채 수요 감소"
-        },
-        {
-          "from": "n10",
-          "to": "n12",
-          "label": "실증",
-          "mechanism": "리스크오프가 장기채권 매도 압력으로 전환"
+          "mechanism": "외국인 이탈 압력이 KOSPI 주간 조정으로 나타남"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "글로벌 리스크오프가 지정학적 리스크의 공통원인입니다. 미중 정상회담의 중동 중재 실패로 에너지 안보 우려가 심화되며 원유(USO) +6.88%로 급등합니다. 이는 신용시장과 채권시장에 광범위한 조정 압력을 가하고 있으며, 하이일드(HYG)와 장기채권(TLT)이 동시에 약세를 기록했습니다."
+      "korea_terminal_node": "w7",
+      "briefing": "달러강세 기조(공통원인)가 신흥국 자본 이탈을 구조화. Warsh Fed 의장 내정으로 매파 기조 전환 기대되며 장기국채 2.2% 하락, 달러 1.5% 강세. KOSPI 주간 1.5% 조정으로 외국인 이탈 압력 반영."
     },
     {
       "id": "thread_003",
-      "title": "고실질금리 체제정착",
+      "title": "AI인프라투자",
       "priority": 3,
       "frequency": "MONTHLY",
       "nodes": [
         {
-          "id": "n13",
-          "label": "구조적고실질금리",
-          "value": "실질금리 2.0% 상회",
+          "id": "m1",
+          "label": "AI투자붐",
+          "value": "7000억달러 생태계",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            {
+              "source": "Reuters",
+              "title": "Big Tech AI infrastructure investment reaches $700B as competition intensifies"
+            }
+          ]
+        },
+        {
+          "id": "m2",
+          "label": "메모리반도체",
+          "value": "HBM수요급증",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n14",
-          "label": "실질금리10Y",
-          "value": "1.99 → 2.0 (+0.01)",
-          "source": "layer_T0_macro",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n15",
-          "label": "성장주밸류압박",
-          "value": "할인율상승 성장주약세",
+          "id": "m3",
+          "label": "테크센티멘트",
+          "value": "AI인프라확산",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n16",
-          "label": "성장주ETF(IWF)",
-          "value": "04/16 → 05/15 (-1.21%)",
+          "id": "m4",
+          "label": "반도체ETF(SOXX)",
+          "value": "04/16 $405.9→05/15 $508.5 (+25.27%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n17",
-          "label": "한국구조적취약성",
-          "value": "수출의존 반도체집중",
+          "id": "m5",
+          "label": "나스닥ETF(QQQ)",
+          "value": "04/16 $640.5→05/15 $708.9 (+10.69%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "m6",
+          "label": "한국반도체",
+          "value": "HBM점유 95%",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n18",
+          "id": "m7",
           "label": "한국ETF(EWY)",
-          "value": "04/16 $147.47→05/15 $178.86 (+21.4%)",
+          "value": "04/16 $147.5→05/15 $178.9 (+21.29%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
@@ -265,62 +291,70 @@
       ],
       "edges": [
         {
-          "from": "n13",
-          "to": "n14",
+          "from": "m1",
+          "to": "m2",
+          "label": "수요창출",
+          "mechanism": "AI 데이터센터 투자가 HBM·DRAM 수요 급증으로 전이"
+        },
+        {
+          "from": "m1",
+          "to": "m3",
+          "label": "센티확산",
+          "mechanism": "AI 인프라 투자 붐이 테크 전반 센티멘트로 확산"
+        },
+        {
+          "from": "m2",
+          "to": "m4",
           "label": "실증",
-          "mechanism": "구조적 고실질금리 체제가 DFII10 상승으로 현실화"
+          "mechanism": "메모리 반도체 수급 개선이 섹터 ETF 급등으로 반영"
         },
         {
-          "from": "n13",
-          "to": "n15",
-          "label": "밸류압박",
-          "mechanism": "고실질금리가 성장주 장기 현금흐름 할인율 상승"
-        },
-        {
-          "from": "n15",
-          "to": "n16",
+          "from": "m3",
+          "to": "m5",
           "label": "실증",
-          "mechanism": "밸류에이션 압박이 성장주 ETF 조정으로 반영"
+          "mechanism": "테크 센티멘트 개선이 나스닥 대형주 상승으로 나타남"
         },
         {
-          "from": "n15",
-          "to": "n17",
-          "label": "구조적영향",
-          "mechanism": "성장주 압박이 수출 의존적 한국 경제 취약성 부각"
+          "from": "m2",
+          "to": "m6",
+          "label": "독점강화",
+          "mechanism": "HBM 수요 급증이 한국 기업 독점 지위 강화"
         },
         {
-          "from": "n17",
-          "to": "n18",
+          "from": "m6",
+          "to": "m7",
           "label": "실증",
-          "mechanism": "구조적 취약성에도 불구하고 단기 반등 지속"
+          "mechanism": "메모리 독점 수혜가 한국 ETF 월간 21% 급등으로 반영"
         }
       ],
-      "korea_terminal_node": "n18",
-      "briefing": "Fed 중성금리 상향으로 구조적 고실질금리 체제(DFII10 2.0%)가 정착되며 성장주 밸류에이션 압박이 심화되고 있습니다(IWF -1.21%). 수출 의존적 반도체 집중 구조의 한국 경제 취약성이 부각되나, 단기적으로는 인공지능 수요 확대로 반도체 업사이클 지속이 예상됩니다."
+      "korea_terminal_node": "m7",
+      "briefing": "AI 인프라 투자(공통원인)가 메모리 반도체 수요와 테크 센티멘트 동시 확대. 삼성·하이닉스 HBM 독점 지위 강화로 반도체 ETF 25% 급등, 한국 ETF도 월간 21% 상승으로 구조적 수혜 뚜렷."
     }
   ],
   "headlines": [
-    "외국인 자금이탈로 KOSPI 급락"
+    "중동유가급등 리스크오프 신흥국압박"
   ],
   "layer_summary": {
-    "layer1": "전일 미국 달러강세(UUP +0.52%)와 원유 급등(USO +6.88%) 속에서 신흥국 자본유출 압력 가중 / 당일 아시아 KOSPI -6.12% 급락으로 외인 이탈 우려 현실화",
-    "layer2": "Fed 정책 불확실성→달러안전자산 선호 강화→신흥국 자금유출 신호가 아시아 시장에 리스크오프 신호로 전달",
-    "layer3": "KOSPI 급락과 동시에 글로벌 리스크오프(HYG, TLT 약세) 동반 진행, 고실질금리 체제 정착으로 성장주 밸류 압박 지속"
+    "layer1": "전일 미국 전 섹터 동반 하락·VIX 급등 / 당일 아시아 혼조(KOSPI 소폭반등, KOSDAQ 약세)",
+    "layer2": "달러강세(UUP +0.54%) 지속으로 신흥국 자본이탈 구조화",
+    "layer3": "고실질금리·평탄커브 레짐 하 성장주 압박 속 유가충격과 달러강세 복합작용"
   },
-  "macro_regime_note": "고실질금리 체제 하 달러강세 신흥국 압박이 지정학적 리스크와 겹쳐 KOSPI 외국인 매도를 가속화했으며, 리스크온 크레딧 환경 전제가 통상적 신뢰도를 상실한 상태입니다.",
-  "generated_at": "2026-05-15T22:18:57.652Z",
+  "macro_regime_note": "고실질금리 레짐이 성장주(테크, 반도체) 상승력을 제약하면서 유가충격과 달러강세의 신흥국 압박이 심화되는 구조.",
+  "generated_at": "2026-05-18T03:18:48.057Z",
   "data_as_of": {
-    "timestamp_iso": "2026-05-15T22:18:57.611Z",
-    "display": "5/15 18:18 [ 뉴욕 현지 시각 ]",
-    "display_mobile": "5/15 18:18 뉴욕",
-    "timezone": "America/New_York"
+    "timestamp_iso": "2026-05-18T03:18:48.055Z",
+    "display": "5/18 12:18 [ KST +0900 ]",
+    "display_mobile": "5/18 12:18 KST",
+    "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-05-15T22:18:57.652Z",
-    "elapsed_sec": 271,
-    "market_status": [],
-    "is_weekend": true,
-    "data_note": "주말 장외 시간, 전일 미국 장 마감 데이터 기준"
-  },
-  "deep_analysis_at": "2026-05-15T22:25:07.634Z"
+    "generated_at": "2026-05-18T03:18:48.057Z",
+    "elapsed_sec": 261,
+    "market_status": [
+      "한국",
+      "일본"
+    ],
+    "is_weekend": false,
+    "data_note": "전일 미국장 급락(-1.2~1.5%) 후 아시아 혼조세"
+  }
 }
