@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-16 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/16 07:48 KST</div>
+    <div class="header-date">2026-05-16</div>
+    <div class="header-headline">Fed 의장 교체기 통화정책 불확실성 심화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 신임 Fed 의장 취임 임박, 채권시장 불안 속 통화정책 스탠스 전환 여부 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Fed 리더십 전환과 통화정책 불확실성</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#9</span>
+    </div>
+    <div class="theme-summary">Jerome Powell이 Kevin Warsh 신임 의장 취임 전까지 임시 의장(chair pro tempore)으로 지명되었다. Warsh는 매파 성향으로 알려져 있으나 Trump 압력 속 정책 일관성 유지 여부가 불확실한 상황이다. 최근 미국 경제 데이터는 물가 압력을 시사하며 Fed의 향후 금리 인상 가능성이 제기되고 있다. 달러화는 3월 초 이후 최고 주간 상승률을 기록했으며, 채권시장은 인플레이션 우려로 동요하고 있다. SocGen은 수익률 급등이 Warsh의 초기 시험대가 될 것이라 경고했다. Fed 독립성이 Trump 시대 위협받고 있다는 분석도 제기되며, 중앙은행 신뢰성이 정치적 압력과 충돌하는 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Berkshire의 항공·에너지 포트폴리오 재편</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #10~#13</span>
+    </div>
+    <div class="theme-summary">Warren Buffett 후계자 Greg Abel이 Delta Airlines에 28억 달러 규모 신규 투자를 단행했다. Buffett이 2020년 팬데믹 당시 항공주를 전량 청산했던 것과 대조적인 행보다. 같은 분기 Berkshire는 Chevron 주식 약 80억 달러어치를 매각하며 유가 급등 국면에서 차익실현을 단행했다. 반면 일부 헤지펀드는 Delta, American, United 등 3대 항공사 전량 청산 후 Amazon과 Uber로 갈아탔다. 항공 산업은 연료비 급등 압력에 직면해 있으나, Berkshire는 업황 회복과 Delta의 펀더멘털 개선에 베팅하는 것으로 해석된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 인프라 투자 가속과 기술 섹터 자본 집중</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #14~#20</span>
+    </div>
+    <div class="theme-summary">Anthropic이 추가로 300억 달러 자금 조달을 추진 중이며, AI 선도 기업들이 벤처캐피털 투자의 압도적 다수를 흡수하고 있다. OpenAI는 개인 금융용 ChatGPT를 출시하며 은행 계좌 연동 기능을 제공, 소비자 금융 영역으로 확장 중이다. Bill Ackman의 Pershing Square는 Microsoft AI 역량이 저평가됐다며 신규 포지션을 공개했다. SpaceX는 빠르면 수요일 IPO 공개 신청을 계획 중이며 Nasdaq 상장과 SPCX 티커를 선택, 6월 11일 가격 책정을 목표로 한다. 한편 OpenAI는 평판·인격 문제를 둘러싼 고액 소송의 최종 변론 단계에 있으며, MIT는 Trump 행정부의 대학 타겟팅으로 연방 연구 자금과 대학원 등록이 급감했다고 경고했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">원자력 수요 확대와 원자재 공급 격차</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #21~#23</span>
+    </div>
+    <div class="theme-summary">Goldman Sachs는 소형모듈원자로(SMR)를 원자력 모델에 추가하며 우라늄 수요가 17% 상승할 것으로 전망했다. 원자력은 가장 청정하고 신뢰성 높은 녹색 에너지원으로서 구축 모멘텀이 지속 확대 중이다. 캐나다 Bruce Power 등 북미 지역의 신규 원자로 프로젝트와 MoU 체결 소식이 이어지고 있다. 그러나 우라늄 공급 격차는 오히려 악화되고 있어 가격 상방 압력이 구조적으로 지속될 전망이다. 헤지펀드들은 구리에 대한 강세 포지션을 5개월래 최고 수준으로 확대했으며, Comex 구리 가격은 사상 최고치를 경신했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학 리스크와 Trump 외교의 시장 영향</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #24~#27</span>
+    </div>
+    <div class="theme-summary">Trump-Xi 정상회담이 베이징에서 열렸으나 호르무즈 해협 재개방 등 핵심 현안에서 가시적 성과를 내지 못했다. 회담이 지속적 미중 무역 휴전과 호르무즈 해협 경로를 제시할 경우 세계 경제의 테일 리스크 감소 효과가 기대됐으나, 실망감이 시장에 반영되며 주식과 채권이 동반 매도됐다. 2022년형 인플레이션 문제 재발 우려가 부상하고 있으며, 일각에서는 Trump의 이란 분쟁 대응 전환 가능성도 제기된다. 유로존 지정학 리스크 측정과 전이 경로에 대한 연구도 진행 중이다. Xi Jinping 집권의 역사적 필연성과 마오식 전체주의로의 회귀를 분석한 서적들이 주목받고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #28~#30</span>
+    </div>
+    <div class="theme-summary">Rubin 천문대가 마천루 크기 소행성, 초신성 실패, 성간 방문자 추적을 시작하며 빅데이터 천문학 시대가 본격 개막했다. 26세 창업자가 BlackRock과 Goldman의 ETF를 가격 경쟁력으로 공략하는 Corgi 사례가 주목받고 있다. Tesla는 원격 조종자가 관여한 Robotaxi 충돌 사고 2건을 공개하며 상용화 과정의 난관을 드러냈다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Fed 리더십 전환과 통화정책 불확실성</span>
+    <span class="theme-label-range">Article #1~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Federal Reserve, Jerome H. Powell을 임시 의장으로 지명 - Kevin M. Warsh 신임 의장 취임 시까지 직무 수행</div>
+    <div class="article-title-en">Federal Reserve Board names Jerome H. Powell as chair pro tempore; Powell will serve as chair pro tempore until Kevin M. Warsh is sworn in as the new chair</div>
+    <div class="article-keypoint">Powell 임시 의장 지명, Warsh 취임 임박 - Fed 리더십 전환기 통화정책 방향성 불확실</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/other20260515a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Fed, Warsh 취임 때까지 Powell을 임시 의장으로 지명</div>
+    <div class="article-title-en">Fed Names Powell Chair Pro Tempore Until Warsh Sworn In</div>
+    <div class="article-keypoint">Powell, Warsh 취임 전까지 임시 의장 - Fed 의장 공백 최소화 위한 과도기 조치</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-15/fed-says-powell-will-be-chair-pro-tempore-until-warsh-sworn-in" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 06:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Jerome Powell의 Federal Reserve를 정의한 5가지 순간</div>
+    <div class="article-title-en">5 moments that defined Jerome Powell’s Federal Reserve</div>
+    <div class="article-keypoint">Powell의 Fed 의장 8년 회고 - 팬데믹 금리 인하와 대통령 압력 대응 등 핵심 순간</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/05/15/jerome-powell-legacy-5-moments-that-defined-his-fed-tenure/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/15 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Collum: Fed 의장 Warsh는 통제된 해체를 위해 선택됐나?</div>
+    <div class="article-title-en">Collum: Was Fed Chair Warsh Chosen For A Controlled Demolition?</div>
+    <div class="article-keypoint">Warsh, 매파 성향 vs Trump 압력 딜레마 - 신임 Fed 의장의 정책 독립성 시험대</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/collum-was-fed-chair-warsh-chosen-controlled-demolition" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 02:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Federal Reserve, Stephen M. Calk 2025 Trust 신청 승인 발표</div>
+    <div class="article-title-en"> Federal Reserve Board announces approval of application by the Stephen M. Calk 2025 Trust</div>
+    <div class="article-keypoint">Fed, Stephen M. Calk 2025 Trust 신청 승인 - 금융 규제 관련 행정 절차</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/orders20260515a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 05:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump의 Fed 이사 지명자들, Powell 임시 의장 조건에 반대</div>
+    <div class="article-title-en">Trump Fed nominees oppose terms of keeping Powell as temporary chair</div>
+    <div class="article-keypoint">Trump 지명 Fed 이사 후보, Powell 임시 의장 조건 반대 - 리더십 전환 갈등 표면화</div>
+    <a class="article-link" href="https://www.ft.com/content/9baac6fa-a302-4621-bc71-23a60e704703" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 07:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Trump 시대 Federal Reserve 독립성이 실오라기에 매달려</div>
+    <div class="article-title-en">The Federal Reserve’s independence is hanging by a thread in the age of Trump</div>
+    <div class="article-keypoint">Trump 시대 Fed 독립성 위협 - 정치적 압력과 중앙은행 신뢰성 충돌 국면</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/may/15/federal-reserve-independence-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/15 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">달러화, Fed 금리 인상 전망에 3월 초 이후 최고 주간 상승</div>
+    <div class="article-title-en">Dollar Notches Best Week Since Early March on Fed Hike View</div>
+    <div class="article-keypoint">달러화, 3월 초 이후 최고 주간 상승률 - 미국 물가 압력 속 Fed 금리 인상 전망 반영</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-15/dollar-rallies-toward-best-week-since-march-on-fed-hike-view" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/15 17:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SocGen, 수익률 '통제 불능' 전환으로 Warsh 큰 시험 직면</div>
+    <div class="article-title-en">SocGen Says Warsh Faces Big Test With Yields Turning ‘Unhinged’</div>
+    <div class="article-keypoint">SocGen, Warsh 초기 시험대는 채권 수익률 급등 - 인플레 공포 속 시장 불안 심화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-15/socgen-says-warsh-faces-big-test-with-yields-turning-unhinged" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/15 23:10 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Berkshire의 항공·에너지 포트폴리오 재편</span>
+    <span class="theme-label-range">Article #10~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Berkshire의 Abel, Warren Buffett 일부 선택 회의적 전환하며 Delta에 대규모 베팅</div>
+    <div class="article-title-en">Berkshire’s Abel sours on some of Warren Buffett’s picks, while betting big on Delta</div>
+    <div class="article-keypoint">Berkshire, Delta에 28억 달러 투자 - Buffett 2020년 항공주 청산과 대조적 행보</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/berkshires-abel-sours-on-some-of-warren-buffetts-picks-while-betting-big-on-delta-7ad679f7?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 06:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Berkshire, Delta Airlines 26억 달러 지분 확보</div>
+    <div class="article-title-en">Berkshire Amasses $2.6 Billion Stake in Delta Airlines</div>
+    <div class="article-keypoint">Berkshire, Delta 26억 달러 지분 확보 - 항공 업종 재진입, 팬데믹 이후 업황 회복 베팅</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-15/berkshire-boosts-alphabet-exits-amazon-in-ceo-s-first-quarter" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 05:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">이 헤지펀드, 항공 업계 연료비 급등 속 '빅3' 항공주 전량 매각</div>
+    <div class="article-title-en">This hedge fund just dumped the ‘big three’ airline stocks, as the industry faces soaring fuel costs</div>
+    <div class="article-keypoint">Appaloosa, 3대 항공사 전량 청산 - 연료비 급등 속 Amazon·Uber로 포트폴리오 이동</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/this-hedge-fund-just-dumped-the-big-three-airline-stocks-as-the-industry-faces-soaring-fuel-costs-4ae4f9ba?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 06:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Berkshire, 가격 급등 속 Chevron 주식 80억 달러어치 매각</div>
+    <div class="article-title-en">Berkshire Sold $8 Billion of Chevron Shares as Prices Soared</div>
+    <div class="article-keypoint">Berkshire, Chevron 80억 달러어치 매각 - 유가 급등 국면서 차익 실현</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-15/berkshire-sold-8-billion-of-chevron-shares-as-prices-soared" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 07:06 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 인프라 투자 가속과 기술 섹터 자본 집중</span>
+    <span class="theme-label-range">Article #14~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">OpenAI, 개인금융용 ChatGPT 출시 - 은행 계좌 연동 가능</div>
+    <div class="article-title-en">OpenAI launches ChatGPT for personal finance, will let you connect bank accounts</div>
+    <div class="article-keypoint">OpenAI, 은행 계좌 연동 개인금융 ChatGPT 출시 - AI 소비자 금융 확장 본격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/15/openai-launches-chatgpt-for-personal-finance-will-let-you-connect-bank-accounts/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">SpaceX, 빠르면 수요일 공개 IPO 신청 계획</div>
+    <div class="article-title-en">SpaceX Said to Plan Public IPO Filing as Soon as Wednesday</div>
+    <div class="article-keypoint">SpaceX, 빠르면 수요일 IPO 공개 신청 - Nasdaq 상장·SPCX 티커, 6월 11일 가격 책정 목표</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-15/spacex-picks-nasdaq-as-listing-venue-for-ipo-reuters" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 03:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Anthropic, AI 연구소들이 VC 투자 대부분 흡수하며 300억 달러 추가 조달</div>
+    <div class="article-title-en">Anthropic Raising $30 Billion More as AI Labs Absorb Majority of VC Funding</div>
+    <div class="article-keypoint">Anthropic, 300억 달러 추가 조달 - AI 선도 기업들의 VC 투자 압도적 집중</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/anthropic-raising-30-billion-more-as-ai-labs-absorb-majority-of-vc-funding-d26128d7?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 00:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">SpaceX, Mega IPO 위해 Nasdaq과 'SPCX' 티커 선택한 것으로 전해져</div>
+    <div class="article-title-en">SpaceX Reportedly Chooses Nasdaq And "SPCX" Ticker For Mega IPO </div>
+    <div class="article-keypoint">SpaceX, Nasdaq·SPCX 티커 선택 - 6월 12일 상장 목표, Mega IPO 구체화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/spacex-reportedly-chooses-nasdaq-and-spcx-ticker-mega-ipo" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 04:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Bill Ackman의 Pershing Square, Microsoft AI 역량에 베팅하며 신규 지분 확보</div>
+    <div class="article-title-en">Bill Ackman’s Pershing Square Bets on Microsoft’s AI Ambitions With New Stake</div>
+    <div class="article-keypoint">Bill Ackman, Microsoft AI 저평가 판단 신규 투자 - Pershing Square 지분 금요일 공시 예정</div>
+    <a class="article-link" href="https://www.wsj.com/finance/investing/ackman-says-pershing-square-has-taken-new-stake-in-microsoft-b68120d9?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">고액 OpenAI 재판 최종 변론, 평판과 인격에 집중</div>
+    <div class="article-title-en">Closing Arguments In High-Stakes OpenAI Trial Focus On Reputation, Character</div>
+    <div class="article-keypoint">OpenAI 고액 소송 최종 변론 - 평판·인격 쟁점, 기업 이미지 리스크 부각</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/closing-arguments-high-stakes-openai-trial-focus-reputation-character" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 07:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">MIT, 자금·대학원 등록 감소로 인한 손실 경고</div>
+    <div class="article-title-en">MIT Warns of Loss From Funding, Grad Enrollment Drops</div>
+    <div class="article-keypoint">MIT, 연방 연구 자금·대학원 등록 급감 경고 - Trump 행정부 대학 타겟팅 영향</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-15/mit-warns-of-loss-from-funding-grad-enrollment-drops-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 03:27 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">원자력 수요 확대와 원자재 공급 격차</span>
+    <span class="theme-label-range">Article #21~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Goldman, SMR을 원자력 모델에 추가하며 우라늄 수요 17% 상승 전망</div>
+    <div class="article-title-en">Goldman Adds SMRs to Nuclear Model, Sees 17% Upside in Uranium Demand</div>
+    <div class="article-keypoint">Goldman, SMR 추가로 우라늄 수요 17% 상승 전망 - 원자력 확대 모멘텀 지속</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Goldman-Adds-SMRs-to-Nuclear-Model-Sees-17-Upside-in-Uranium-Demand.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">우라늄 공급 격차 악화: 원자력 뉴스 라운드업</div>
+    <div class="article-title-en">Uranium Gap Worsens: Nuclear News Roundup</div>
+    <div class="article-keypoint">우라늄 공급 격차 악화 - 신규 원자로 진행에도 구조적 가격 상방 압력 지속</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/uranium-supply-gap-worsens-goldman-accounts-smr-growth" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 04:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">헤지펀드, 구리 강세 베팅 5개월래 최고 수준으로 확대</div>
+    <div class="article-title-en">Hedge Funds Boost Bullish Copper Wagers to Five-Month High</div>
+    <div class="article-keypoint">헤지펀드, 구리 강세 포지션 5개월래 최고 - Comex 구리 사상 최고가 경신 전</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-15/hedge-funds-boost-bullish-copper-wagers-to-five-month-high" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 05:19 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학 리스크와 Trump 외교의 시장 영향</span>
+    <span class="theme-label-range">Article #24~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Trump-Xi 정상회담 이후 세계 경제</div>
+    <div class="article-title-en">The World Economy After the Trump-Xi Summit</div>
+    <div class="article-keypoint">Trump-Xi 회담, 무역 휴전·호르무즈 해협 재개 기대 - 테일 리스크 감소 가능성</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-xi-summit-offers-some-clarity-for-the-world-economy-by-shang-jin-wei-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 01:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Xi Jinping은 필연이었나?</div>
+    <div class="article-title-en">Was Xi Jinping Inevitable?</div>
+    <div class="article-keypoint">Xi Jinping 집권 필연성 분석 - 마오식 전체주의 회귀의 구조적 배경 조명</div>
+    <a class="article-link" href="https://www.project-syndicate.org/onpoint/china-totalitarian-turn-under-xi-jinping-no-historical-accident-by-steve-tsang-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/15 18:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Trump 중국 방문 호르무즈 해협 재개 실패하며 주식·채권 매도세</div>
+    <div class="article-title-en">Stocks and bonds get swept up in a selloff, as Trump’s China visit fails to pry open the Strait of Hormuz</div>
+    <div class="article-keypoint">Trump 중국 방문 성과 미흡, 주식·채권 동반 하락 - 2022년형 인플레 재발 우려 부상</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/stocks-tumble-bond-rout-deepens-as-trumps-china-visit-fails-to-reopen-strait-of-hormuz-8501c294?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 05:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">유로존의 지정학 리스크: 측정과 전이</div>
+    <div class="article-title-en">Geopolitical risk in the euro area: measurement and transmission</div>
+    <div class="article-keypoint">유로존 지정학 리스크 측정·전이 경로 연구 - 정책 대응 프레임워크 구축 시도</div>
+    <a class="article-link" href="https://www.bis.org/publ/work1348.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/15 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #28~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Rubin, 마천루 크기 소행성, 초신성 실패, 성간 방문자 추적</div>
+    <div class="article-title-en">Rubin Tracks Skyscraper-Size Asteroids, Failed Supernovas, and Interstellar Visitors</div>
+    <div class="article-keypoint">Rubin 천문대, 빅데이터 천문학 시대 개막 - 소행성·초신성·성간 물체 추적 본격화</div>
+    <a class="article-link" href="https://www.quantamagazine.org/rubin-tracks-skyscraper-size-asteroids-failed-supernovas-and-interstellar-visitors-20260515/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/15 22:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">BlackRock과 Goldman ETF를 저가 공략하는 26세 창업자를 만나다</div>
+    <div class="article-title-en">Meet The 26-Year-Old Undercutting BlackRock and Goldman ETFs</div>
+    <div class="article-keypoint">26세 창업자 Corgi, BlackRock·Goldman ETF 도전 - 가격 경쟁력으로 대형사 공략</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-05-15/corgi-strategies-takes-on-blackrock-blk-and-goldman-gs-etfs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 05:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Tesla, 원격 조종자 관련 Robotaxi 충돌 2건 공개</div>
+    <div class="article-title-en">Tesla reveals two Robotaxi crashes involving teleoperators</div>
+    <div class="article-keypoint">Tesla, 원격 조종 Robotaxi 충돌 2건 공개 - 상용화 확대 과정 난관 노출</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/15/tesla-reveals-two-robotaxi-crashes-involving-teleoperators/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/16 02:13 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
