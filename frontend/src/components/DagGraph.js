@@ -898,7 +898,7 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
       const chainIndex = orderedChain ? orderedChain.indexOf(node.id) : -1;
       const animDelay = chainIndex >= 0 ? chainIndex * 180 : 0;
 
-      const { nodeW, nodeH } = nodeSizes[node.id] || calcNodeSize(node.label, node.value);
+      const { nodeW, nodeH, fs = 11 } = nodeSizes[node.id] || calcNodeSize(node.label, node.value);
       const rx = 10;
 
       const strokeColor = isTarget ? '#6bcb77' : (isKorea ? '#ff6b6b' : (isInChain ? '#4d96ff' : '#3a3a5a'));
@@ -927,7 +927,6 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
         .attr('stroke-width', strokeW);
 
       // foreignObject로 노드 텍스트 렌더링 (자동 줄바꿈 지원)
-      const { nodeW, nodeH, fs = 11 } = nodeSizes[node.id] || calcNodeSize(node.label, node.value);
       const isConcept = node.source === 'concept';
 
       // 가격 노드 value 파싱
