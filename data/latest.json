@@ -2,71 +2,63 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Warsh 의장 지명 불확실성",
+      "title": "연준 의장 교체 불확실성",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "Warsh의장지명",
-          "value": "Trump Fed 의장 교체",
+          "label": "연준의장교체",
+          "value": "Warsh 취임 불확실성",
           "source": "concept",
           "timestamp": null,
           "related_news": [
             {
-              "title": "Kevin Warsh to be sworn in as Federal Reserve chair on Friday",
-              "source": "CNBC"
+              "source": "Fed",
+              "title": "Federal Reserve Board names Jerome H. Powell as chair pro tempore"
             },
             {
-              "title": "Trump says he'll let Warsh 'do what he wants to do' with interest rates",
-              "source": "MarketWatch"
+              "source": "CNBC",
+              "title": "Kevin Warsh to be sworn in as Federal Reserve chair on Friday"
             }
           ]
         },
         {
           "id": "n2",
-          "label": "정책불확실성",
-          "value": "Fed 정책방향 예측곤란",
+          "label": "달러강세",
+          "value": "불확실성 하 안전자산 선호",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "달러강세압력",
-          "value": "안전자산 달러 수요확대",
-          "source": "concept",
+          "label": "달러지수ETF(UUP)",
+          "value": "05/18 $27.70→05/19 $27.79 (+0.32%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "달러인덱스ETF(UUP)",
-          "value": "05/18 $27.71→05/19 $27.79 (0.31%)",
+          "label": "신흥국ETF(EEM)",
+          "value": "05/18 $64.94→05/19 $64.26 (-1.05%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": "04:00",
+          "timestamp": null,
           "related_news": []
         },
         {
           "id": "n5",
           "label": "외국인자금이탈",
-          "value": "EM 투자자금 선진국 회귀",
+          "value": "신흥국 자금 유출 압력",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n6",
-          "label": "신흥국ETF(EEM)",
-          "value": "05/18 $64.94→05/19 $64.26 (-1.05%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": "04:00",
-          "related_news": []
-        },
-        {
-          "id": "n7",
           "label": "KOSPI",
-          "value": "05/18 $7,507→05/19 $7,272 (-3.25%)",
+          "value": "05/19 7271.95→05/20 7208.95 (-0.86%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -76,136 +68,91 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "정책혼재",
-          "mechanism": "새 Fed 의장 정책 스탠스 모호로 시장 불확실성 급증"
+          "label": "불확실성",
+          "mechanism": "의장 교체 과도기 통화정책 혼선으로 달러 안전자산 선호 강화"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "안전자산",
-          "mechanism": "정책 예측 곤란으로 안전자산 달러 수요 증가"
+          "label": "실증",
+          "mechanism": "달러강세 심리가 달러인덱스 ETF 상승으로 반영"
         },
         {
-          "from": "n3",
+          "from": "n2",
+          "to": "n5",
+          "label": "파급",
+          "mechanism": "달러강세와 안전자산 선호가 신흥국 자금 이탈 압력 조성"
+        },
+        {
+          "from": "n5",
           "to": "n4",
           "label": "실증",
-          "mechanism": "달러강세압력이 달러인덱스ETF 상승으로 직접 반영"
-        },
-        {
-          "from": "n3",
-          "to": "n5",
-          "label": "자금이탈",
-          "mechanism": "달러강세로 신흥국 달러표시 부채부담 가중"
+          "mechanism": "신흥국 자금 이탈이 신흥국 ETF 하락으로 직접 반영"
         },
         {
           "from": "n5",
           "to": "n6",
-          "label": "실증",
-          "mechanism": "EM 자금이탈이 신흥국ETF 매도압력으로 직접 연결"
-        },
-        {
-          "from": "n5",
-          "to": "n7",
-          "label": "실증",
-          "mechanism": "외국인 의존도 30% 한국이 우선적 매도 타겟"
+          "label": "전이",
+          "mechanism": "외국인 자금 이탈 압력이 KOSPI 하락 압박으로 전이"
         }
       ],
-      "korea_terminal_node": "n7",
-      "briefing": "공통원인: 정책불확실성이 달러강세(UUP +0.31%)와 신흥국 자금이탈(EEM -1.05%)을 동시에 촉발. Warsh 의장 지명으로 Fed 정책 방향성 모호해지며 안전자산 달러 수요 급증. 외국인 의존도 높은 한국은 우선적 매도 타겟으로 KOSPI 3.25% 급락.",
+      "korea_terminal_node": "n6",
+      "briefing": "공통원인 '외국인자금이탈'이 KOSPI 약세를 주도. Kevin Warsh 연준 신임 의장 취임 불확실성으로 달러강세(UUP +0.32%)가 신흥국 자금 유출 압박을 가중시키며, EEM -1.05% 동반 하락과 함께 KOSPI -0.86% 외인매도 압력 고조.",
       "_warnings": [
         "[한국 종착 비율] 3/3 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n3->n5->n7->n3 (달러강세→EM자금이탈→한국매도→달러수요증가)",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "Warsh 지명 불확실성이 해소되면 정책혼재 우려가 급속히 완화되어 전체 인과사슬이 단절됨",
-        "alternativePath": null
-      },
-      "missingHops": [
-        {
-          "to": "장기국채금리",
-          "via": "Fed 정책 불확실성이 장기금리 변동성 확대로 이어져 채권시장 혼란 야기",
-          "lag_days": 3
-        },
-        {
-          "to": "원/달러환율",
-          "via": "한국 외국인 매도압력과 달러강세가 결합하여 원화 추가 약세압력 증폭",
-          "lag_days": 1
-        }
       ]
     },
     {
       "id": "thread_002",
-      "title": "고실질금리 성장주압박",
+      "title": "AI 인재 쟁탈전 심화",
       "priority": 2,
       "frequency": "WEEKLY",
       "nodes": [
         {
           "id": "w1",
-          "label": "실질금리상승",
-          "value": "05/13 2.10→05/19 2.13 (+0.03%p)",
-          "source": "layer_T0_macro",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "w2",
-          "label": "성장주밸류압박",
-          "value": "고할인율로 미래가치 하락",
+          "label": "AI인재쟁탈전",
+          "value": "빅테크 핵심 인재 영입 경쟁",
           "source": "concept",
           "timestamp": null,
           "related_news": [
             {
-              "title": "Higher real rates pressure high-growth tech valuations amid Fed policy uncertainty",
-              "source": "Reuters"
+              "source": "WSJ",
+              "title": "Andrej Karpathy, Tesla Alum and OpenAI Co-Founder, Joins Anthropic"
+            },
+            {
+              "source": "WSJ",
+              "title": "Google Unveils New Gemini AI Agent for Personal Tasks"
             }
           ]
         },
         {
+          "id": "w2",
+          "label": "AI수요확대",
+          "value": "HBM·고성능칩 수요 급증",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
           "id": "w3",
-          "label": "혁신성장ETF(ARKK)",
-          "value": "05/13 $78.05→05/19 $73.84 (-5.37%)",
+          "label": "반도체ETF(SOXX)",
+          "value": "05/13 $528.29→05/19 $496.74 (-5.97%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": "04:00",
+          "timestamp": null,
           "related_news": []
         },
         {
           "id": "w4",
-          "label": "러셀성장ETF(IWF)",
-          "value": "05/13 $123.07→05/19 $122.13 (-0.83%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": "04:00",
+          "label": "한국반도체특화",
+          "value": "HBM 시장 지배력 강화",
+          "source": "concept",
+          "timestamp": null,
           "related_news": []
         },
         {
           "id": "w5",
-          "label": "달러자금비용상승",
-          "value": "글로벌 달러조달 압박",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "w6",
-          "label": "한국테크집중도",
-          "value": "KOSPI IT비중 25% 취약",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": [
-            {
-              "title": "Korean tech sector concentration raises structural vulnerability to global growth repricing",
-              "source": "Bloomberg"
-            }
-          ]
-        },
-        {
-          "id": "w7",
-          "label": "KOSDAQ",
-          "value": "05/18 $1,110→05/19 $1,084 (-2.41%)",
+          "label": "KOSPI",
+          "value": "05/13 7957.92→05/19 7271.95 (-8.62%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -215,103 +162,96 @@
         {
           "from": "w1",
           "to": "w2",
-          "label": "할인율증가",
-          "mechanism": "실질금리 상승으로 미래현금흐름 할인율 높아져"
+          "label": "경쟁심화",
+          "mechanism": "핵심 인재 이동이 AI 개발 가속화로 반도체 수요 급증 견인"
         },
         {
           "from": "w2",
           "to": "w3",
           "label": "실증",
-          "mechanism": "성장주 밸류압박이 혁신성장ETF 급락으로 반영"
+          "mechanism": "AI 수요 기대감이 반도체 섹터 ETF 성과로 반영되나 단기 조정 중"
         },
         {
           "from": "w2",
           "to": "w4",
-          "label": "실증",
-          "mechanism": "고PER 성장주 집중된 러셀성장ETF 조정압력"
+          "label": "특화",
+          "mechanism": "AI 반도체 수요 급증이 HBM 특화 한국 기업들의 중기 우위 강화"
         },
         {
-          "from": "w1",
+          "from": "w4",
           "to": "w5",
-          "label": "자금비용",
-          "mechanism": "미국 실질금리가 글로벌 달러조달 기준점 역할"
-        },
-        {
-          "from": "w2",
-          "to": "w6",
-          "label": "구조취약",
-          "mechanism": "글로벌 성장주 조정이 테크 비중 높은 한국 집중타격"
-        },
-        {
-          "from": "w6",
-          "to": "w7",
-          "label": "실증",
-          "mechanism": "테크 집중된 KOSDAQ이 성장주 조정에 더 민감"
+          "label": "전이",
+          "mechanism": "HBM 수요 우위가 삼성·SK하이닉스 기반 KOSPI 중기 상승 동력 제공"
         }
       ],
-      "korea_terminal_node": "w7",
-      "briefing": "공통원인: 고실질금리(2.10→2.13)가 글로벌 성장주 밸류 압박을 촉발. ARKK 5.37%, IWF 0.83% 하락으로 성장주 조정 확산 중. 테크 비중 25% 극집중된 한국은 구조적 취약성으로 KOSDAQ 2.41% 추가 조정."
+      "korea_terminal_node": "w5",
+      "briefing": "Anthropic Tesla 출신 인재 영입과 Google AI 에이전트 출시로 빅테크 AI 경쟁이 심화되며 HBM·고성능칩 수요 급증 기대감 확산. SOXX -5.97% 단기 조정에도 불구하고, 삼성·SK하이닉스의 HBM 지배력 강화는 KOSPI -8.62% 약세 국면에서 중장기 반등 모멘텀으로 작용 전망."
     },
     {
       "id": "thread_003",
-      "title": "글로벌 통화질서 재편",
+      "title": "고실질금리 구조적 압박",
       "priority": 3,
       "frequency": "MONTHLY",
       "nodes": [
         {
           "id": "m1",
-          "label": "통화정책체제전환",
-          "value": "Fed 정치화 구조변화",
-          "source": "concept",
+          "label": "고실질금리체제",
+          "value": "DFII10 2.10→2.13bp (+3bp)",
+          "source": "layer_T0_macro",
           "timestamp": null,
-          "related_news": []
+          "related_news": [
+            {
+              "source": "Fed",
+              "title": "Federal Reserve maintains neutral stance amid stable inflation"
+            }
+          ]
         },
         {
           "id": "m2",
-          "label": "달러패권재정의",
-          "value": "기축통화 선택적 활용",
+          "label": "성장주밸류압박",
+          "value": "할인율 상승으로 밸류에이션 재평가",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "m3",
-          "label": "자본흐름구조변화",
-          "value": "안전자산 기준 다변화",
-          "source": "concept",
+          "label": "혁신성장ETF(ARKK)",
+          "value": "04/20 $79.32→05/19 $73.84 (-6.88%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "m4",
-          "label": "글로벌주식ETF(ACWI)",
-          "value": "04/20 $150.41→05/19 $153.15 (1.82%)",
+          "label": "Russell성장ETF(IWF)",
+          "value": "04/20 $245.50→05/19 $229.95 (-6.31%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": "04:00",
+          "timestamp": null,
           "related_news": []
         },
         {
           "id": "m5",
-          "label": "한국대외의존성",
-          "value": "수출+외인투자 70% 극취약",
+          "label": "글로벌유동성수축",
+          "value": "신흥국 자본유입 둔화 진행",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "m6",
-          "label": "정책대응공간축소",
-          "value": "통화·재정정책 제약심화",
-          "source": "concept",
+          "label": "신흥국ETF(EEM)",
+          "value": "04/20 $63.18→05/19 $64.26 (+1.71%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "m7",
-          "label": "한국ETF(EWY)",
-          "value": "04/20 $150.09→05/19 $174.02 (16.04%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": "04:00",
+          "label": "KOSPI",
+          "value": "04/20 7693.13→05/19 7271.95 (-5.48%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "15:30",
           "related_news": []
         }
       ],
@@ -319,66 +259,65 @@
         {
           "from": "m1",
           "to": "m2",
-          "label": "달러정치화",
-          "mechanism": "Fed 정치화로 달러정책이 미국 국익 우선 수단화"
+          "label": "밸류압박",
+          "mechanism": "고실질금리 3bp 상승이 성장주 미래현금흐름 할인율 구조적 상승 초래"
         },
         {
           "from": "m2",
           "to": "m3",
-          "label": "기준재편",
-          "mechanism": "달러 기축지위 불확실성으로 포트폴리오 배분기준 재평가"
+          "label": "실증",
+          "mechanism": "성장주 밸류에이션 압박이 혁신성장 ETF -6.88% 급락으로 반영"
         },
         {
-          "from": "m3",
+          "from": "m2",
           "to": "m4",
           "label": "실증",
-          "mechanism": "글로벌 자본배분 변화가 전세계 주식시장 재평가 촉발"
+          "mechanism": "고실질금리 체제가 Russell 성장주 -6.31% 구조적 약세 초래"
         },
         {
-          "from": "m3",
+          "from": "m1",
           "to": "m5",
-          "label": "충격집중",
-          "mechanism": "자본배분 구조변화가 대외의존도 높은 국가에 집중타격"
+          "label": "유동성",
+          "mechanism": "고실질금리 상승이 달러 유동성 공급 제약으로 신흥국 자본유입 둔화"
         },
         {
           "from": "m5",
           "to": "m6",
-          "label": "정책제약",
-          "mechanism": "대외의존성으로 통화·재정정책 모두 외환시장 압박받아"
+          "label": "제약",
+          "mechanism": "유동성 수축에도 EEM은 상대 강세이나 신흥국 유입 둔화 압박 지속"
         },
         {
-          "from": "m6",
+          "from": "m5",
           "to": "m7",
-          "label": "실증",
-          "mechanism": "정책여력 축소가 한국 자본시장 구조적 변동성으로 반영"
+          "label": "전이",
+          "mechanism": "글로벌 유동성 수축이 KOSPI -5.48% 월간 약세로 장기 조정 압력 지속"
         }
       ],
       "korea_terminal_node": "m7",
-      "briefing": "공통원인: Trump-Warsh 체제로 Fed 독립성 약화와 달러패권 재정의 착수. ACWI 월간 1.82% 상승에도 불구하고 글로벌 자본배분 기준 근본변화로 대외의존도 70% 극고도의 한국은 정책여력 축소와 구조적 변동성 확대(EWY 월간 16.04% 상승에도 당일 조정 심화)."
+      "briefing": "연준 중립 스탠스 하 고실질금리(DFII10 +3bp) 구조적 고착화로 성장주 밸류에이션 재평가 진행. ARKK -6.88%, IWF -6.31% 동반 급락이 이를 실증하며, 신흥국 자본유입 둔화(EEM 상대 강세에도 유입 제약)와 함께 KOSPI -5.48% 월간 낙폭으로 장기 조정 압력 가중."
     }
   ],
   "headlines": [
-    "Warsh 지명 충격, KOSPI 3%대 급락"
+    "달러강세·외국인이탈 KOSPI 약세 주도"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 달러강세·EM이탈(UUP↑ EEM↓) / 당일 아시아: 한국 집중조정(KOSPI -3.25%)",
-    "layer2": "정책불확실성이 달러강세와 신흥국 자금이탈을 동시에 촉발하며 외국인 의존도 높은 한국으로 수렴",
-    "layer3": "고실질금리와 성장주 밸류압박이 테크 비중 높은 KOSDAQ 추가조정 초래하며 이중 조정 국면"
+    "layer1": "전일 미국: 연준 의장 교체 불확실성으로 달러강세(UUP +0.32%), 신흥국 자금 이탈(EEM -1.05%) / 당일 아시아: KOSPI -0.86% 외인매도 가중",
+    "layer2": "주간: AI 인재 쟁탈전 심화로 반도체 수요 기대감(SOXX -5.97% 단기 조정) 대비, 한국 HBM 지배력 강화로 중기 상승 모멘텀 형성",
+    "layer3": "월간: 고실질금리 체제 고착(DFII10 +3bp)으로 성장주 구조적 압박(ARKK -6.88%, IWF -6.31%), 글로벌 유동성 수축 진행 중 KOSPI -5.48% 낙폭"
   },
-  "macro_regime_note": "고실질금리 체제 속 달러강세 신흥국 압박 레짐이 정책불확실성으로 심화되며 대외의존적 한국이 이중 조정 타겟화.",
-  "generated_at": "2026-05-19T22:19:02.985Z",
+  "macro_regime_note": "고실질금리·정상곡선·리스크온 혼합 레짐에서 연준 불확실성이 달러강세 신호를 강화시키며, 신흥국 자금 이탈 메커니즘이 KOSPI 약세를 배가하는 지배 요인으로 작동.",
+  "generated_at": "2026-05-20T07:46:22.644Z",
   "data_as_of": {
-    "timestamp_iso": "2026-05-19T22:19:02.978Z",
-    "display": "5/19 18:19 [ 뉴욕 현지 시각 ]",
-    "display_mobile": "5/19 18:19 뉴욕",
-    "timezone": "America/New_York"
+    "timestamp_iso": "2026-05-20T07:46:22.640Z",
+    "display": "5/20 16:46 [ KST +0900 ]",
+    "display_mobile": "5/20 16:46 KST",
+    "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-05-19T22:19:02.985Z",
-    "elapsed_sec": 276,
+    "generated_at": "2026-05-20T07:46:22.644Z",
+    "elapsed_sec": 166,
     "market_status": [],
     "is_weekend": false,
-    "data_note": "전일 미국 장 마감 데이터 기준, 당일 아시아/유럽 장 데이터 포함"
-  },
-  "deep_analysis_at": "2026-05-19T22:25:22.354Z"
+    "data_note": "전 시장 마감, T0(전일 미국) → T1(당일 아시아/유럽) 인과 분석"
+  }
 }
