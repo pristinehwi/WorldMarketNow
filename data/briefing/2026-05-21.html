@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-21 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/21 07:48 KST</div>
+    <div class="header-date">2026-05-21</div>
+    <div class="header-headline">FOMC 의사록 확인 - 매파 분열 심화로 Warsh 완화 전환 난항</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Nvidia 실적 호조에도 주가 무반응 - AI 고평가 경계감과 SpaceX IPO 수급 충격 동시 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">4월 FOMC 의사록: 매파 분열 확인과 Warsh 체제의 딜레마</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">4월 28~29일 FOMC 의사록이 공개되며 위원회 내 깊은 견해 차이가 공식 확인됐다. '다수(majority)'는 추가 인상이 적절할 수 있다고 봤고, '다수(many)'는 완화 편향 문구 삭제를 지지하는 등 매파 기조가 우세함이 드러났다. 차기 의장 Warsh는 완화 전환 의지가 있더라도 위원회 내 저항이 상당해 정책 선회가 쉽지 않은 상황이다. Fed는 별도로 결제계좌 신설 방안에 대한 공개 의견 수렴을 개시했으며, Barr 이사는 소비자 금융건전성 지표를 주제로 발언해 금융안정 측면에서도 시선이 분산되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SpaceX IPO: $2조 밸류에이션과 xAI 손실이 만드는 시장 구조 변화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#9</span>
+    </div>
+    <div class="theme-summary">SpaceX가 Nasdaq에 'SPCX' 티커로 IPO를 신청하며 목표 밸류에이션 $2조 이상, 공모 규모 최대 $750억이라는 역대급 딜이 공식화됐다. IPO 자료에는 xAI가 2025년 $64억 손실을 기록했음이 처음으로 공개됐으며, 2025년 설비투자는 AI·우주선 수요로 $207억에 달한다. Anthropic이 xAI에 컴퓨팅 비용으로 월 $12.5억을 지급하기로 한 계약도 공개되어 AI 인프라 단가의 실체가 드러났다. 오프쇼어 크립토 플랫폼에서 IPO 전 SpaceX 지분 거래가 이미 활발히 이루어지고 있어, 전통 월가를 우회하는 새로운 가격 발견 메커니즘이 형성되고 있다. Musk 측근 Antonio Gracias는 7.3% 지분으로 수십억 달러 차익을 앞두고 있어 Musk 생태계 내 부의 집중도 부각된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 패권: Nvidia 실적 정점론 vs. Anthropic·Google의 수익화 가속</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #10~#13</span>
+    </div>
+    <div class="theme-summary">Nvidia가 1분기 매출 $820억으로 어닝 서프라이즈를 기록하고 주주환원 $800억 이상 계획을 발표했음에도 주가가 거의 움직이지 않아, AI 반도체 사이클 정점에 대한 시장의 경계감이 선명하게 드러났다. 반면 Anthropic은 6월 분기 매출 $109억(+130% YoY) 전망과 첫 흑자 달성 가능성을 제시하며 AI 소프트웨어 레이어의 수익화가 본격화되고 있음을 시사한다. Google은 Gemini 기반 AI 통합으로 '조용한' 수익화 전략이 실제로 작동하고 있다는 평가가 나오고 있으며, OpenAI를 제치고 소비자 AI 왕좌를 탈환하는 조짐이 보인다. Samsung·TSMC 등 하드웨어 공급망도 AI 붐의 수혜를 받고 있으나 실질 분배 구조에 대한 의문이 제기된다. Meta는 AI 전환 비용 상쇄를 위해 약 8,000명(전체의 10%)을 감원하며 AI 시대 빅테크의 구조조정 압력이 가시화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 투자 거품 경고와 기업 AI 도입의 실물 파급</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #14~#17</span>
+    </div>
+    <div class="theme-summary">생성형 AI 도구가 다수 영역에서 인간을 능가하고 있음에도, AI 기업들의 부채성 자금 조달 확대와 시장의 과열 반응이 조정 리스크를 높이고 있다는 냉정한 분석이 나왔다. Andrew Ng이 투자한 IrisGo는 데스크톱 행동 학습 기반의 AI 비서로, 엔터프라이즈 AI 도입의 저변이 빠르게 확대되고 있음을 보여준다. Bristol-Myers Squibb이 Anthropic의 Claude를 임직원 3만 명에 배포하며 생명과학 분야로의 AI 침투가 가속화되고 있다. Appalachian 지역에서 300년치 이상의 리튬 자원 가능성이 확인돼, AI 인프라의 배터리 공급망 독립성 논의가 새 국면을 맞이하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">글로벌 금융규제·원자재·통화정책의 복합 긴장</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #18~#22</span>
+    </div>
+    <div class="theme-summary">바젤위원회는 ICT 리스크 관리 보고서 공개 및 암호자산·유동성 리스크 원칙 업데이트 작업을 진행하며 글로벌 금융안정 규제 프레임이 디지털 자산을 향해 조여들고 있음을 확인했다. 유로존 증권금융·OTC 파생상품 시장(SESFOD) 3월 설문에서는 신용조건이 소폭 완화됐으나 조달금리와 스프레드는 오히려 상승해 유동성 개선과 비용 압박이 동시에 진행 중인 복합 국면이 관찰된다. Codelco는 칠레 3개 구리 광산 통합을 통해 $20억 비용절감·수익개선을 추진하며 AI·전기화 수요 대응을 위한 공급 구조 재편에 나섰다. UAE의 OPEC 탈퇴로 사우디 주도의 걸프 질서가 흔들리며 중동 내 경쟁 심화와 원유 공급 분절화 우려가 부상하고 있다. 인도 RBI 총재 Malhotra는 불확실성 고조 시대의 통화정책 방향을 논하며 신흥국 중앙은행의 독립성과 정책 여력에 대한 관심을 환기시켰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #23~#30</span>
+    </div>
+    <div class="theme-summary">Trump의 IRS 소송 취하 및 $17.76억 규모 '반무기화 기금' 설립은 행정부의 세금 정책 권한 행사 방식에 대한 법적·정치적 논쟁을 촉발한다. Nvidia의 실적 서프라이즈와 무관하게 시장이 무반응을 보인 것과 맥락을 같이하여, AI 섹터 전반에 걸쳐 '좋은 뉴스가 이미 반영됐다'는 인식이 확산되고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">4월 FOMC 의사록: 매파 분열 확인과 Warsh 체제의 딜레마</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Warsh, 험난한 출발 예고 - FOMC 의사록에서 완화 편향에 반대하는 깊은 분열 확인</div>
+    <div class="article-title-en">Warsh Faces Uphill Battle As FOMC Minutes Show Deeply-Divided Fed Against Easing Bias</div>
+    <div class="article-keypoint">FOMC 의사록서 매파 다수 확인 - Warsh 완화 전환 시 위원회 저항 불가피</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/fomc-38" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 03:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Fed, '결제계좌' 신설 제안에 대한 공개 의견 수렴 요청</div>
+    <div class="article-title-en">Federal Reserve Board requests public comment on a proposal to establish a "payment account," which legally eligible financial institutions could use for the specific purpose of clearing and settling their payments</div>
+    <div class="article-keypoint">Fed, 결제계좌 신설 공개 의견 수렴 개시 - 지급결제 인프라 재편 신호탄</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/other20260520a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Barr 이사, 금융건강 지표 측정 관련 발언</div>
+    <div class="article-title-en">Barr, Measuring Financial Health</div>
+    <div class="article-keypoint">Barr 이사 소비자 금융건전성 발언 - Fed 금융안정 모니터링 지속 강조</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/barr20260520a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 22:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">2026년 4월 28~29일 연방공개시장위원회 의사록</div>
+    <div class="article-title-en">Minutes of the Federal Open Market Committee, April 28-29, 2026</div>
+    <div class="article-keypoint">4월 28~29일 FOMC 의사록 공개 - 위원회 내 완화·인상 견해 분열 공식 기록</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260520a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 03:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SpaceX IPO: $2조 밸류에이션과 xAI 손실이 만드는 시장 구조 변화</span>
+    <span class="theme-label-range">Article #5~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">투자자들, 오프쇼어 크립토 플랫폼서 SpaceX IPO 전 선취매 기회 포착</div>
+    <div class="article-title-en">Investors are flocking to an offshore crypto platform for an early shot at trading the SpaceX IPO</div>
+    <div class="article-keypoint">오프쇼어 크립토 플랫폼서 SpaceX IPO 전 거래 개시 - 월가 우회 가격 발견</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/investors-are-flocking-to-an-offshore-crypto-platform-for-an-early-shot-at-trading-the-spacex-ipo-4ec49f10?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 07:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">SpaceX의 2025년 설비투자 $207억, AI와 우주선 수요가 주도</div>
+    <div class="article-title-en">SpaceX’s $20.7 Billion in 2025 CapEx Fueled by AI, Spacecraft</div>
+    <div class="article-keypoint">SpaceX 2025년 설비투자 $207억 - AI·우주선 수요가 민간 CapEx 역대 최대 견인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/live-blog/2026-05-20/spacex-files-publicly-for-ipo-toplive" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">xAI, 지난해 $64억 손실 - SpaceX IPO 자료가 보여주는 끝나지 않은 지출</div>
+    <div class="article-title-en">xAI burned $6.4B last year. SpaceX’s IPO filing shows why the spending is far from over</div>
+    <div class="article-keypoint">xAI 2025년 $64억 손실 최초 공개 - Musk AI 야망의 실제 비용 구조 노출</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/20/xai-burned-6-4b-last-year-spacexs-ipo-filing-shows-why-the-spending-is-far-from-over/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 07:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX, Nasdaq에 'SPCX' 티커로 IPO 신청</div>
+    <div class="article-title-en">SpaceX Files for IPO on Nasdaq Under SPCX Symbol</div>
+    <div class="article-keypoint">SpaceX, Nasdaq 'SPCX'로 IPO 신청 - 밸류에이션 $2조·공모 $750억 역대급</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-20/spacex-files-for-ipo-on-nasdaq-under-spcx-symbol-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 06:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Musk의 동맹 Antonio Gracias, SpaceX 베팅으로 수십억 달러 차익 예상</div>
+    <div class="article-title-en">Musk Ally Antonio Gracias Stands to Make Billions Off SpaceX Bet</div>
+    <div class="article-keypoint">Musk 측근 Gracias, SpaceX 7.3% 지분 - IPO시 수십억 달러 차익 확정</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-20/musk-ally-antonio-gracias-stands-to-make-billions-off-spacex-bet" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 07:17 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 패권: Nvidia 실적 정점론 vs. Anthropic·Google의 수익화 가속</span>
+    <span class="theme-label-range">Article #10~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Google, 소비자 AI 왕좌에서 OpenAI를 끌어내리다</div>
+    <div class="article-title-en">
+        Google is dethroning OpenAI as the king of consumer AI
+      </div>
+    <div class="article-keypoint">Google, 소비자 AI에서 OpenAI 추월 조짐 - Gemini 월 수경 토큰 처리</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/05/20/google-is-dethroning-openai-as-the-king-of-consumer-ai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 05:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Samsung·TSMC, 역사적 AI 주가 급등 이후 현실 점검 국면</div>
+    <div class="article-title-en">Samsung, TSMC Spur Reality Check After Historic AI Stock Boom</div>
+    <div class="article-keypoint">Samsung·TSMC, AI 붐 수혜에도 실질 분배 불균형 논란 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/graphics/2026-samsung-tsmc-ai-rally/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Meta, AI 전환 가속하며 수천 명 대규모 감원 시작</div>
+    <div class="article-title-en">Meta Begins Laying Off Thousands of Employees as It Transforms Around AI</div>
+    <div class="article-keypoint">Meta, AI 전환 비용 상쇄 위해 8,000명(10%) 감원 - 빅테크 구조조정 가시화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/meta-begins-laying-off-thousands-of-employees-as-it-transforms-around-ai-3c31a9eb?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 06:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">폭발적 성장이 Anthropic을 사상 첫 흑자 분기로 이끌 전망</div>
+    <div class="article-title-en">Mind-Blowing Growth Is About to Propel Anthropic Into Its First Profitable Quarter</div>
+    <div class="article-keypoint">Anthropic, 6월 분기 매출 $109억(+130%) 전망 - 첫 흑자 달성 가능성 제시</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/mind-blowing-growth-is-about-to-propel-anthropic-into-its-first-profitable-quarter-7edbf2f4?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 05:54 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 투자 거품 경고와 기업 AI 도입의 실물 파급</span>
+    <span class="theme-label-range">Article #14~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Andrew Ng이 투자한 스타트업 IrisGo, 당신이 몰랐던 AI 데스크톱 비서로 부상</div>
+    <div class="article-title-en">IrisGo, a startup backed by Andrew Ng, looks to become the AI desktop buddy you never knew you needed</div>
+    <div class="article-keypoint">Andrew Ng 투자 IrisGo, 데스크톱 AI 비서 출시 - 엔터프라이즈 AI 저변 확대</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/20/irisgo-a-startup-backed-by-andrew-ng-looks-to-become-the-ai-desktop-buddy-you-never-knew-you-needed/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 04:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">AI 열풍에 찬물 - 시장 흥분이 과도할 수 있다</div>
+    <div class="article-title-en">A Cold Shower for the AI Mania</div>
+    <div class="article-keypoint">AI 기업 부채성 자금 조달 확대 - 시장 과열 경고와 조정 리스크 부각</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-mania-ignoring-risks-compute-shortages-model-plateau-political-backlash-by-raghuram-g-rajan-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 00:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">애팔래치아 지역, 미국 배터리 공급망 독립의 열쇠 쥘 수 있다</div>
+    <div class="article-title-en">Appalachian Region Could Hold Key to U.S. Battery Supply Chain Independence</div>
+    <div class="article-keypoint">Appalachian서 300년치 리튬 매장 가능성 - 미국 배터리 공급망 독립성 기회</div>
+    <a class="article-link" href="https://oilprice.com/Metals/Commodities/Appalachian-Region-Could-Hold-Key-to-US-Battery-Supply-Chain-Independence.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Bristol-Myers Squibb, Anthropic의 Claude를 임직원 3만 명에 도입</div>
+    <div class="article-title-en">Bristol-Myers Squibb Brings Anthropic’s Claude to 30,000 of Its Staff</div>
+    <div class="article-keypoint">BMS, Anthropic Claude 3만 명 배포 - 생명과학 분야 AI 엔터프라이즈 침투 가속</div>
+    <a class="article-link" href="https://www.wsj.com/cio-journal/bristol-myers-squibb-brings-anthropics-claude-to-30-000-of-its-staff-27baafbc?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 19:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">글로벌 금융규제·원자재·통화정책의 복합 긴장</span>
+    <span class="theme-label-range">Article #18~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Codelco, 칠레 구리 광산 통합으로 $20억 이익 창출 기대</div>
+    <div class="article-title-en">Codelco Eyes $2 Billion Gain From Unifying Copper Mines in Chile</div>
+    <div class="article-keypoint">Codelco, 광산 3개 통합으로 $20억 비용·수익 개선 추진 - 구리 공급 효율화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-20/codelco-eyes-2-billion-gain-from-unifying-copper-mines-in-chile" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 06:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">바젤위원회, ICT 리스크 관리 보고서 발간 합의 및 암호자산·유동성 리스크 원칙 검토 진행</div>
+    <div class="article-title-en">Basel Committee agrees to publish report on information and communication technology risk management, progresses cryptoasset targeted review, considers targeted updates on liquidity risk principles</div>
+    <div class="article-keypoint">바젤위원회, 암호자산·유동성 리스크 규제 업데이트 진행 - 글로벌 금융규제 조임</div>
+    <a class="article-link" href="https://www.bis.org/press/p260520.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Sanjay Malhotra: 불확실성이 고조된 시대의 통화정책</div>
+    <div class="article-title-en">Sanjay Malhotra: Monetary policy in a time of heightened uncertainty</div>
+    <div class="article-keypoint">RBI 총재 Malhotra, 불확실성 시대 통화정책 방향 제시 - 신흥국 정책 여력 주목</div>
+    <a class="article-link" href="https://www.bis.org/review/r260520b.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 16:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">2026년 3월 유로화 증권금융·OTC 파생상품 시장 신용조건 설문(SESFOD) 결과 발표</div>
+    <div class="article-title-en"> Results of the March 2026 survey on credit terms and conditions in euro-denominated securities financing and OTC derivatives markets (SESFOD)</div>
+    <div class="article-keypoint">유로존 OTC·증권금융 신용조건 소폭 완화, 조달금리 상승 - 복합 유동성 국면</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr260520~feb373ad0d.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">OPEC 이후 걸프의 새로운 질서</div>
+    <div class="article-title-en">The Gulf’s Post-OPEC Order</div>
+    <div class="article-keypoint">UAE OPEC 탈퇴로 걸프 원유 질서 분절화 - 중동 내 경쟁 심화 리스크</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/uae-is-betting-on-a-post-saudi-gulf-by-rabah-arezki-and-tarik-m-yousef-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 18:22 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #23~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Anthropic, xAI에 컴퓨팅 비용으로 월 $12.5억 지급 계약</div>
+    <div class="article-title-en">Anthropic will pay xAI $1.25B per month for compute</div>
+    <div class="article-keypoint">Anthropic, xAI에 컴퓨팅 비용 월 $12.5억 지급 - AI 인프라 단가 실체 공개</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/20/anthropic-will-pay-xai-1-25-billion-per-month-for-compute/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 06:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">FOMC 의사록 프리뷰: Powell의 마지막 매파 발언 속 '완화 편향' 반대 내용 주목</div>
+    <div class="article-title-en">FOMC Minutes Preview: Look For "Easing Bias" Dissent Details Inside Powell's Hawkish Swan Song</div>
+    <div class="article-keypoint">4월 FOMC 의사록 공개 앞두고 매파 기조 예고 - Powell 마지막 메시지 주목</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/fomc-minutes-preview-look-easing-bias-dissent-details-inside-powells-hawkish-swan-song" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 01:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Trump의 IRS 소송 극적 종결 - 수년간 분석될 세법 쟁점 남겨</div>
+    <div class="article-title-en">The ‘stunning’ end to Trump’s case against the IRS raises tax-law questions that will be analyzed for years</div>
+    <div class="article-keypoint">Trump IRS 소송 취하·$17.76억 기금 설립 - 행정부 세정 권한 행사 논란</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-stunning-end-to-trumps-case-against-the-irs-raises-tax-law-questions-that-will-be-analyzed-for-years-abe2bf79?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 07:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Nvidia, 폭발적 칩 판매로 또 다시 분기 최대 실적 달성</div>
+    <div class="article-title-en">Nvidia Rides Blistering Chip Sales to Another Record Quarter</div>
+    <div class="article-keypoint">Nvidia 1분기 매출 $820억 기록 - AI 에이전트·데이터센터 수요 최대치</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/nvidia-nvda-1st-quarter-earnings-report-2026-stock-c2bb9c1c?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 07:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Nvidia, AI 붐 수혜로 주주환원 $800억 이상 계획 발표</div>
+    <div class="article-title-en">Nvidia to return more than $80bn to shareholders as it reaps rewards of AI boom</div>
+    <div class="article-keypoint">Nvidia 주주환원 $800억+ 발표에도 주가 무반응 - AI 사이클 정점 경계감</div>
+    <a class="article-link" href="https://www.ft.com/content/a7aa26d1-1bad-407f-8bff-4ae491cb8ce0" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 06:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Nvidia, 대규모 어닝 서프라이즈와 견조한 가이던스에도 주가 보합</div>
+    <div class="article-title-en">Nvidia Unchanged Despite Big Earnings Beat And Solid Guidance </div>
+    <div class="article-keypoint">Nvidia 어닝 서프라이즈에도 주가 보합 - 시장 기대 이미 반영 시사</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/nvidia-unchanged-despite-big-earnings-beat-and-solid-guidance" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 05:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Trump이 자기 자신을 고소한 이유</div>
+    <div class="article-title-en">Why Trump Sued Himself</div>
+    <div class="article-keypoint">Trump, IRS 소송 취하 대가 $17.76억 기금 - 세법 해석 논쟁 수년간 지속 예고</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-antiweaponization-fund-demonstrates-impunity-by-stephen-holmes-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 21:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Google, AI 경쟁에서 뒤처지나? '밋밋한' 전략이 오히려 통할 수 있는 이유</div>
+    <div class="article-title-en">Has Google lost its AI edge? How its ‘unexciting’ strategy could actually pay off.</div>
+    <div class="article-keypoint">Google Gemini, '조용한 수익화' 전략이 실제 작동 - OpenAI 대비 경쟁력 재평가</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/has-google-lost-its-ai-edge-how-its-unexciting-strategy-could-actually-pay-off-c897b81c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 05:27 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
