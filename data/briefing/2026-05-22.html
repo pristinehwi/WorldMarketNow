@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-22 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/22 07:50 KST</div>
+    <div class="header-date">2026-05-22</div>
+    <div class="header-headline">SpaceX IPO 공식화 - 역대 최대 상장 임박</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">이란 핵 협상 결렬 및 WTI $100 돌파 지속 여부 - 에너지·지정학 리스크 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">SpaceX IPO: 역대 최대 상장이 만드는 시장 구조 재편 압력</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">SpaceX가 IPO 계획을 공식화하면서 역대 최대 규모 상장 가능성이 가시화됐고, 패시브 투자자들이 수천억 달러 규모의 기존 보유 주식을 매도해야 하는 구조적 수급 충격이 부각되고 있다. Elon Musk는 50% 이상의 의결권을 보유해 상장 후에도 군주적 지배력을 유지하며, 최대 수혜자는 Musk 본인과 그의 측근 소수로 집중된다. 한편 xAI 부문은 지난 분기 $8억1800만 매출에도 불구하고 $24억7000만의 영업손실을 기록해 SpaceX의 현금을 빠르게 소진 중이며, 이는 IPO 밸류에이션 산정에 핵심 리스크로 작용한다. Goldman Sachs가 Morgan Stanley의 Michael Grimes를 제치고 주관사 주도권을 확보했으며, OpenAI·Anthropic IPO와 맞물려 월가 전반의 대형 기술주 트레이딩 재편이 예고된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">이란 핵 협상 결렬과 WTI $100 돌파 - 중동 리스크 프리미엄 재점화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#11</span>
+    </div>
+    <div class="theme-summary">이란 핵 협상이 우라늄 농축 문제로 교착 상태에 빠지면서 WTI가 2.2% 급등해 $100.40, Brent는 1.8% 올라 $106.90을 기록하며 유가에 지정학 리스크 프리미엄이 본격 반영되고 있다. Al Arabiya의 '합의 타결' 오보와 즉각 정정, 이란 대통령의 '절대 물러서지 않겠다'는 발언이 협상 불확실성을 극대화했다. Trump는 이란으로부터 고농축 우라늄 약 400kg을 회수하겠다고 공언했으며, 이는 이란과의 추가 충돌 가능성을 시사한다. 러시아의 핵 실전 훈련 동시 진행과 미국의 이란 공격을 국제법 위반으로 보는 시각이 겹치면서 지정학적 리스크 프리미엄이 에너지·방산 섹터 전반으로 확산될 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 인프라 한계와 칩 공급망 긴장 - Nvidia 만능론의 균열</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#17</span>
+    </div>
+    <div class="theme-summary">Nvidia가 칩 공급 능력을 확보했음에도 빅테크의 신용 프리미엄 상승, 전력망 한계, 미중 무역갈등이라는 구조적 병목은 해소하지 못한다는 분석이 부각되며 AI 인프라 낙관론에 균열이 생기고 있다. AMD는 대만 칩 산업에 $100억 이상을 투자해 고성능 컴퓨팅 역량을 강화하겠다고 발표했으며, BT는 AI 데이터센터의 메모리 칩 독점으로 스마트폰 가격 인상이 불가피하다고 경고했다. Waymo는 공사 구간 및 침수 도로에서 로보택시 운행이 잇따라 중단되면서 자율주행 상용화의 기술적 한계가 재확인됐다. Trump 행정부는 AI 과잉규제 우려를 이유로 AI 관련 행정명령을 연기했으며, 런던 시장 Khan은 Metropolitan Police의 Palantir와의 £5000만 AI 계약을 전격 차단해 공공 AI 도입을 둘러싼 정치적 갈등이 심화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">미국 실물경제 시그널 혼조 - 제조업 4년 고점 vs. 서비스 동반 부진</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#21</span>
+    </div>
+    <div class="theme-summary">미국 PMI에서 제조업이 4년 최고치를 기록한 반면 서비스업은 동반 침체하는 극단적 혼조가 나타났고, 이는 관세 충격이 업종별로 비대칭적으로 전이되고 있음을 시사한다. 주간 실업급여 청구건수는 209,000건으로 거의 변화 없어 노동시장은 여전히 견고하지만, Musk 등 CEO들이 Trump의 방중 순방에 동행해 대중 무역 장벽 해소를 요청하는 등 기업들의 공급망 불확실성은 지속되고 있다. 일본과 유럽 PMI 동반 부진 속에 미국만 제조업에서 상대적 강세를 보이는 구도는 달러 강세 재료로 작용할 수 있으나, 서비스 위축이 소비 둔화로 이어질 경우 연준의 정책 딜레마를 심화시킬 수 있다. 10년물 국채 금리 벤치마크 측정 방식에 대한 논의가 재부각되며 채권시장 신호 해석의 복잡성도 높아지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">중국 인구·구조 위기와 트럼프의 그린란드·지정학 행보</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#25</span>
+    </div>
+    <div class="theme-summary">중국의 수십 년간 잘못된 경제정책이 인구 절벽을 초래했으며, 세계 공장으로서의 위상 유지에 필요한 인력을 스스로 공급할 수 없는 구조적 함정에 빠졌다는 진단이 나왔다. Trump 행정부는 그린란드 영토 야욕을 포기하지 않고 신규 영사관을 개설했으며, NATO 동맹국들의 불안이 지속되는 가운데 현지 주민들의 반미 시위가 이어지고 있다. EU에서는 Google·Meta·TikTok이 금융 사기 처리 미흡으로 소비자 단체 제소에 직면하는 등 빅테크에 대한 규제 압력이 다각화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #26~#30</span>
+    </div>
+    <div class="theme-summary">Fed는 Commerce Bank 전직 직원에 대한 집행 조치를 발표했다. NYC 시장 Mamdani는 월드컵 $50 티켓 프로그램을 발표했으며 티켓 가격이 60일 새 22% 하락했다. Quince Therapeutics는 Nasdaq 상장 요건을 재충족했다. 개인 재무 관련 칼럼 및 Aramco 공급망 노동자 안전 문제 보도도 포함됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">SpaceX IPO: 역대 최대 상장이 만드는 시장 구조 재편 압력</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">'신속 편입' SpaceX·OpenAI·Anthropic IPO, 월가 트레이딩 광풍 점화 전망</div>
+    <div class="article-title-en">‘Fast entry’ SpaceX, OpenAI and Anthropic IPOs to ignite Wall St trading frenzy</div>
+    <div class="article-keypoint">SpaceX·OpenAI·Anthropic IPO 동시 추진 - 패시브 펀드 수조 달러 수급 충격 예고</div>
+    <a class="article-link" href="https://www.ft.com/content/970b1bab-ca00-4ea1-8964-a59ea431de6e" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 02:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Elon Musk의 xAI가 SpaceX 현금을 갉아먹고 있지만 성과는 미미</div>
+    <div class="article-title-en">Elon Musk’s xAI is draining SpaceX’s cash, with little to show for it</div>
+    <div class="article-keypoint">xAI, 분기 매출 $8.2억에 영업손실 $24.7억 - SpaceX 현금 잠식 가속화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/elon-musks-xai-is-draining-spacexs-cash-with-little-to-show-for-it-9517874d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 04:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Goldman Sachs, SpaceX IPO에서 Morgan Stanley의 Michael Grimes 입지 잠식</div>
+    <div class="article-title-en">Goldman Sachs eclipses Morgan Stanley’s Michael Grimes on SpaceX IPO</div>
+    <div class="article-keypoint">Goldman Sachs, SpaceX IPO 주관사 주도권 확보 - Morgan Stanley 입지 약화</div>
+    <a class="article-link" href="https://www.ft.com/content/10cecc4e-dbce-477d-9f10-068581c6e650" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 02:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">SpaceX IPO 최대 수혜자는 누구? 대부분 Elon과 그의 측근</div>
+    <div class="article-title-en">Who will benefit most from SpaceX IPO? Mostly Elon — and a few from his inner circle</div>
+    <div class="article-keypoint">SpaceX IPO에서 Musk 측근 소수가 최대 수혜 - 지배구조 집중 리스크 부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/21/who-will-benefit-most-from-spacex-ipo-mostly-elon-and-a-few-from-his-inner-circle/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 06:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">SpaceX IPO에 대해 알아야 할 것들</div>
+    <div class="article-title-en">What to Know About the SpaceX IPO</div>
+    <div class="article-keypoint">SpaceX IPO 공식화, xAI 손실 등 리스크 노출로 밸류에이션 불확실성 상존</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-21/spacex-ipo-ai-plans-starlink-growth-and-risks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 06:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">'테크노킹'은 잊어라: SpaceX에서 Elon Musk는 진짜 왕이 된다</div>
+    <div class="article-title-en">Forget ‘TechnoKing’: Elon Musk will really be king at SpaceX</div>
+    <div class="article-keypoint">Musk, SpaceX 상장 후 의결권 50% 이상 유지 - 타 창업자 대비 전례 없는 지배력</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/21/forget-technoking-elon-musk-will-really-be-king-at-spacex/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 04:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">이란 핵 협상 결렬과 WTI $100 돌파 - 중동 리스크 프리미엄 재점화</span>
+    <span class="theme-label-range">Article #7~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Trump의 이란 전쟁은 침략 범죄인가?</div>
+    <div class="article-title-en">Is Trump’s Iran War a Crime of Aggression?</div>
+    <div class="article-keypoint">미국의 이란 공격, UN 헌장 위반 여부 논쟁 - 법적 책임 불확실성 고조</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/is-trump-iran-war-crime-of-aggression-by-lawrence-douglas-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 01:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">'조작된' 중동 언론 보도 속 협상 타결 없어 - Trump는 핵 문제 압박, 이란 대통령은 '물러서지 않겠다'</div>
+    <div class="article-title-en">No Deal Reached, Amid 'Fabricated' Mideast Media Reports; Trump Presses Nuclear Issue & Iran President Says 'Won't Back Down'</div>
+    <div class="article-keypoint">이란 핵 협상 '합의' 오보 즉각 정정 - 시장 변동성 촉발 가능한 허위 정보 리스크</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/ayatollah-orders-highly-enriched-uranium-remain-iran-stymying-trumps-basis-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 05:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">'훈련은 신호를 보내기 위한 것': 러시아, 벨라루스와 함께 육해공 대규모 핵 훈련 실시</div>
+    <div class="article-title-en">"Drills Are Intended To Send A Signal": Russia Holds Massive Nuclear Drills On Land, Sea And Air Alongside Belarus</div>
+    <div class="article-keypoint">러시아·벨라루스 핵 실전 훈련 - 핵 리스크 프리미엄 재부각</div>
+    <a class="article-link" href="https://www.zerohedge.com/military/drills-are-intended-send-signal-russia-holds-massive-nuclear-drills-land-sea-and-air" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">이란이 우라늄 레드라인 설정하며 유가 상승</div>
+    <div class="article-title-en">Oil Prices Rise As Iran Draws Red Line on Uranium</div>
+    <div class="article-keypoint">WTI $100.40·Brent $106.90 돌파 - 이란 우라늄 협상 결렬이 유가 급등 촉매</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Rise-As-Iran-Draws-Red-Line-on-Uranium.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 02:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Trump, 이란으로부터 우라늄 회수 공언</div>
+    <div class="article-title-en">Trump vows US will retrieve uranium from Iran</div>
+    <div class="article-keypoint">Trump, 이란 고농축 우라늄 400kg 회수 공언 - 협상 결렬 시 군사적 충돌 리스크 상승</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/trump-vows-u-s-will-retrieve-uranium-from-iran" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 01:34 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 인프라 한계와 칩 공급망 긴장 - Nvidia 만능론의 균열</span>
+    <span class="theme-label-range">Article #12~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Nvidia가 칩을 공급해도 빅테크의 신용·전력망 위기는 해결 불가</div>
+    <div class="article-title-en">Nvidia can deliver chips — but it can’t buy Big Tech out of its credit and power-grid crisis</div>
+    <div class="article-keypoint">Nvidia 칩 공급 확대에도 신용 프리미엄·전력망 한계로 빅테크 AI 투자 병목 지속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidia-can-deliver-chips-but-it-cant-buy-big-tech-out-of-its-credit-and-power-grid-crisis-9c114e62?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 07:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">AMD, 대만 칩 산업에 $100억 이상 투자 발표</div>
+    <div class="article-title-en">AMD to Invest More Than $10 Billion in Taiwan’s Chip Industry</div>
+    <div class="article-keypoint">AMD, 대만 칩 산업에 $100억 이상 투자 - AI 인프라 공급망 다변화 가속</div>
+    <a class="article-link" href="https://www.wsj.com/tech/amd-to-invest-more-than-10-billion-in-taiwans-chip-industry-28081fb7?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 17:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Sadiq Khan, Palantir와의 £5000만 AI 계약 차단으로 Metropolitan Police와 갈등</div>
+    <div class="article-title-en">Sadiq Khan sparks row with Met after blocking £50m AI deal with Palantir</div>
+    <div class="article-keypoint">Khan, Met Police의 Palantir £5000만 AI 계약 차단 - 공공 AI 도입 정치 리스크 현실화</div>
+    <a class="article-link" href="https://www.theguardian.com/uk-news/2026/may/21/london-mayor-sadiq-khan-blocks-met-police-deal-with-palantir" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 03:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump, 과잉규제 우려로 AI 행정명령 연기</div>
+    <div class="article-title-en">Trump Postpones AI Order Because of Concerns About Overregulation</div>
+    <div class="article-keypoint">Trump, AI 규제 행정명령 연기 - 과잉규제 우려로 AI 산업 육성 기조 유지</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/trump-executive-order-ai-advanced-models-57bcc955?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 05:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">BT, AI 붐으로 인한 칩 부족으로 스마트폰 가격 인상 경고</div>
+    <div class="article-title-en">BT warns of smartphone price rises due to chip shortages from AI boom</div>
+    <div class="article-keypoint">BT, AI 칩 수급 경쟁이 스마트폰 가격 인상 야기 - 소비자 인플레 전이 경로 확인</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/may/21/bt-smartphone-price-rises-chip-shortages-ai-boom" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 23:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Waymo, 공사 구간에서 로보택시 운행 어려움으로 고속도로 서비스 중단</div>
+    <div class="article-title-en">Waymo halts freeway rides after robotaxis struggle in construction zones</div>
+    <div class="article-keypoint">Waymo, 공사 구간·침수 도로 운행 중단 - 자율주행 상용화 기술 한계 재확인</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/21/waymo-halts-freeway-rides-after-robotaxis-struggle-in-construction-zones/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 06:13 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">미국 실물경제 시그널 혼조 - 제조업 4년 고점 vs. 서비스 동반 부진</span>
+    <span class="theme-label-range">Article #18~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Elon Musk 등 CEO들, Trump의 방중 순방에 동행해 규제 해소 요청</div>
+    <div class="article-title-en">Elon Musk and Other CEOs on Trump’s Trip to China Sought Relief</div>
+    <div class="article-keypoint">Musk 등 CEO 방중 동행 - 대중 공급망 규제 완화 로비 본격화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/05/21/business/economy/trump-china-trip-ceos-tesla-musk.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 07:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">벤치마크 차입 비용은 어떻게 측정되는가: 10년물 국채 금리 심층 분석</div>
+    <div class="article-title-en">How are benchmark borrowing costs measured? : A close look into the 10-year Treasury yield</div>
+    <div class="article-keypoint">10년물 국채 벤치마크 측정 논의 재부상 - 채권시장 신호 해석 복잡성 증가</div>
+    <a class="article-link" href="https://fredblog.stlouisfed.org/2026/05/how-are-benchmark-borrowing-costs-measured/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">미국 주간 실업급여 청구건수 209,000건으로 소폭 변동</div>
+    <div class="article-title-en">US Jobless Claims Were Little Changed at 209,000 Last Week</div>
+    <div class="article-keypoint">주간 실업급여 청구 209,000건 - 노동시장 견고, Fed 금리 인하 명분 여전히 약해</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-21/us-jobless-claims-were-little-changed-at-209-000-last-week" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 21:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">미국 PMI 세계 선두 - 제조업 4년 최고치, 서비스업은 부진</div>
+    <div class="article-title-en">US PMIs Lead The World As Manufacturing Tops 4-Year Highs, Services Sink </div>
+    <div class="article-keypoint">미국 제조업 PMI 4년 최고 vs. 서비스 하락 - 관세 비대칭 충격 가시화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/us-pmis-lead-world-manufacturing-tops-4-year-highs-services-sink" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 22:54 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">중국 인구·구조 위기와 트럼프의 그린란드·지정학 행보</span>
+    <span class="theme-label-range">Article #22~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">중국 청년들은 왜 분노하는가?</div>
+    <div class="article-title-en">Why Are China’s Young People Fed Up?</div>
+    <div class="article-keypoint">중국 청년 실업·저출생 구조화 - 세계 공장 지속 가능성에 장기 의문</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/china-demographic-reckoning-lying-flat-youth-unemployment-low-family-formation-by-yi-fuxian-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 22:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">그린란드 주민들, 미국 외교관이 신규 영사관 개설하는 가운데 Trump에 반대 시위</div>
+    <div class="article-title-en">Greenlanders demonstrate against Trump as US diplomats open new consulate</div>
+    <div class="article-keypoint">미국 그린란드 영사관 개설에 현지 주민 시위 - NATO 동맹 긴장 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/greenlanders-demonstrate-against-trump-as-us-diplomats-open-new-consulate" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 04:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Google·Meta·TikTok, 금융 사기 처리 방식 관련 EU 소비자 단체 제소에 직면</div>
+    <div class="article-title-en">Google, Meta, TikTok face EU consumer complaints about handling of financial scams</div>
+    <div class="article-keypoint">EU, Google·Meta·TikTok 금융 사기 방치 소비자 제소 - 빅테크 규제 리스크 다각화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/google-meta-tiktok-face-eu-consumer-complaints-about-handling-of-financial-scams" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 22:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Trump, 그린란드 포기 의사 없어</div>
+    <div class="article-title-en">Trump Hasn’t Given Up on Greenland</div>
+    <div class="article-keypoint">Trump, 그린란드 포기 의사 없음 - NATO 동맹 결속 약화 지정학 리스크 지속</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/05/21/trump-greenland-nato-ben-gvir-israel-gaza-qatar/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #26~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">연방준비제도이사회, Commerce Bank 전직 직원에 집행 조치 발표</div>
+    <div class="article-title-en">Federal Reserve Board issues enforcement action with former employee of Commerce Bank</div>
+    <div class="article-keypoint">Fed, Commerce Bank 전 직원 집행 조치 - 규제 실효성 점검 신호</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/enforcement20260521a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">'행복을 가져다주지 않을 것': 62세 독신 자산가 독자에게 드리는 조언</div>
+    <div class="article-title-en">‘It will not bring you happiness’: I have advice for your single, childless 62-year-old multimillionaire reader</div>
+    <div class="article-keypoint">개인 재무 칼럼 - 시장 직접 연관성 낮음</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/it-will-not-bring-you-happiness-i-have-advice-for-your-single-childless-62-year-old-multimillionaire-reader-1cb6a09f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">NYC 시장 Mamdani, 월드컵 $50 티켓 프로그램 발표: '뉴욕에서 라떼 다섯 잔 값'</div>
+    <div class="article-title-en">NYC’s Mamdani boasts new $50 World Cup ticket program: ‘That is five lattes in New York City!’</div>
+    <div class="article-keypoint">월드컵 티켓 22% 하락, $50 프로그램 발표 - 소비 접근성 이슈</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nycs-mamdani-boasts-new-50-world-cup-ticket-program-that-is-five-lattes-in-new-york-city-4ebba812?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 05:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">'Aramco는 우리의 땀과 피를 팔고 있다': 월드컵 스폰서 공급망 노동자들이 안전 위험에 노출됐다는 보고서</div>
+    <div class="article-title-en">‘Aramco is selling our sweat and blood’: workers in World Cup sponsor’s supply chain faced safety risks, report finds</div>
+    <div class="article-keypoint">Aramco 공급망 이주노동자 안전사고 무보상 - ESG 리스크 및 공급망 책임 이슈</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/may/21/aramco-migrant-workers-oil-firm-supply-chain-fairsquare" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 15:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Quince Therapeutics, Nasdaq 상장 요건 재충족</div>
+    <div class="article-title-en">Quince Therapeutics regains compliance with Nasdaq listing requirements</div>
+    <div class="article-keypoint">Quince Therapeutics, Nasdaq 상장 요건 재충족 - 바이오 소형주 퇴출 리스크 해소</div>
+    <a class="article-link" href="https://www.investing.com/news/sec-filings/quince-therapeutics-regains-compliance-with-nasdaq-listing-requirements-93CH-4705523" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/21 22:30 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
