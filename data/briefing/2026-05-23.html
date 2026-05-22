@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-23 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/23 07:50 KST</div>
+    <div class="header-date">2026-05-23</div>
+    <div class="header-headline">Warsh Fed 의장 취임 - 역대 최강 매파 체제 출범</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 취임 후 첫 정책 신호 및 Waller의 금리 인상·인하 동등 가능성 발언 - 채권·달러 포지션 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Warsh 취임과 Fed 권력 재편 - 최강 매파 체제가 시장에 던지는 압력</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">오늘 가장 새롭게 부각된 변화는 Kevin Warsh가 공식 취임 선서를 마치고 FOMC 만장일치로 의장에 선출되며 Fed 권력 이양이 현실화된 것이다. Warsh는 20년 만에 가장 매파적인 Fed 의장 후보로 평가받으며, 월가 출신으로서 수십 년 만의 최대 규모 중앙은행 개혁을 예고하고 있다. 같은 날 Governor Waller는 이란 전쟁발 에너지 충격이 물가를 자극하는 상황에서 다음 금리 이동 방향이 인상과 인하 모두 50:50이라고 발언해 시장 불확실성을 증폭시켰다. 아울러 FEDS 논문은 Fed의 커뮤니케이션 전략 자체가 얼마나 정교하게 설계되는지를 분석하며, Warsh 체제 하에서 포워드 가이던스 방식이 달라질 수 있음을 시사한다. 새 의장이 직면한 딜레마는 오일 쇼크발 인플레와 성장 둔화 리스크 사이에서 수요 억제냐 강세장 보호냐를 선택해야 한다는 점으로, 채권·달러·위험자산 전반의 포지션 재편 압력이 커지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SpaceX IPO와 $28조 TAM - 역대급 상장이 재편하는 자본시장 구조</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#10</span>
+    </div>
+    <div class="theme-summary">SpaceX가 S-1을 제출하며 $28조 총유효시장(TAM)을 제시하고 마스 식민지 개척까지 포함한 사업 목표를 공식화했다. 파일링에는 36페이지 분량의 리스크 요인이 포함되어 있으며, 보수주의적 밸류에이션에도 불구하고 투자자들에게는 상당한 '믿음의 도약'을 요구한다. Starship의 새 버전 발사 성공은 Starlink 확장과 AI 위성 사업의 기술적 토대를 실증하며 IPO 내러티브를 강화했다. 한편 Elon Musk의 수퍼보팅 주식 구조와 텍사스 주법의 조합은 그가 상장 이후에도 경영권을 철저히 통제할 수 있음을 확인시키며 거버넌스 리스크를 내포한다. 역대 최대 규모 상장이 현실화될 경우 유동성 흡수 효과로 인해 여타 성장주·IPO 파이프라인에 대한 자본 재배분 압력이 불가피할 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">이란 전쟁·에너지 쇼크 - 지정학 리스크 프리미엄의 다중 전이</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#13</span>
+    </div>
+    <div class="theme-summary">이란이 농축우라늄 인도 요구를 받아들일 경우 '합의 없다'고 공식 선언하며 핵 협상이 사실상 결렬 국면에 진입했다. 이란 전쟁 리스크는 에너지 가격 급등으로 직결되며, Waller 발언에서도 '이란 전쟁발 에너지 충격'이 Fed 금리 경로 불확실성의 주요 원인으로 명시됐다. 석유 기업들의 전쟁 특수 수익은 단기 이익을 제공하지만, 에너지 수입국의 인플레이션 전이와 클린에너지 전환 가속화라는 이중 압력도 동시에 야기하고 있다. 한편 대만 무기 거래가 중국 압박과 이란 전쟁 관련 재고 우려로 보류되며, 지정학 긴장이 방산 공급망과 동아시아 안보 구도까지 복합적으로 교란하고 있다. 이란發 공급 차질이 지속될 경우 글로벌 인플레이션 경로 재설정 가능성이 높아진다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">반도체·첨단기술 투자 재편 - 칩 관세 카드와 양자컴퓨팅의 부상</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #14~#16</span>
+    </div>
+    <div class="theme-summary">트럼프 행정부가 국내 반도체 제조 촉진을 위해 수입 칩에 대한 관세 부과를 검토 중이며, 무역대표부 대표는 즉각적 부과 계획은 없다면서도 가능성을 열어뒀다. 이는 AI 인프라 수요와 맞물려 글로벌 반도체 공급망 재편 속도를 높이는 정책 변수로 작용한다. IBM은 양자컴퓨팅이 과학소설 영역을 벗어나 현실화되는 데 근본적 장애물이 없다고 선언하며, 차세대 컴퓨팅 패러다임 전환에서 주요 수혜주로 부상하고 있다. 한편 3D 프린팅 구리 플레이트 기술이 데이터센터 냉각 에너지를 97% 절감할 수 있다는 연구 결과는, AI 인프라의 에너지 소비 문제를 소재·제조 혁신으로 해결하려는 새로운 접근을 제시한다. 칩 관세 현실화 시 AI 인프라 투자 비용 상승과 공급망 재편이 동시에 진행될 가능성에 시장이 주목해야 한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">미국·글로벌 금융시장 밸류에이션 경고 - 금리·신용·자산가격의 균열</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #17~#21</span>
+    </div>
+    <div class="theme-summary">10년물 국채 수익률이 연중 최고치인 4.60%에 도달하며 금리 상승에 대한 시장의 서사와 실제 데이터 간 괴리가 재조명되고 있다. 버핏 지표가 230%의 극단적 밸류에이션 격차를 경고하며 현재 강세장이 에너지 위기, 금리 압박 등 복합 리스크에 취약하다는 분석이 제기됐다. 사모크레딧 시장의 부실 우려가 사모펀드 포트폴리오로 전이되고 있으며, 하위 채권자가 가장 큰 손실 위험에 노출된 구조적 문제가 확인됐다. ECB는 기업 파산 건수 급증과 낮은 부실채권 수준 사이의 괴리를 포함한 유로존 금융안정성 취약 요인을 5월 Financial Stability Review에서 공식 경고했다. Nasdaq의 Bitcoin 지수 옵션 상장 승인은 디지털 자산과 전통 금융의 통합이 가속화되는 또 다른 신호로, 위험선호 자산 전반의 밸류에이션 논쟁을 심화시킨다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #22~#30</span>
+    </div>
+    <div class="theme-summary">영국 경제는 G7 최고 성장률을 기록했다는 발표 직후 지표 악화가 겹치며 Starmer 정부의 경제 홍보 전략이 역풍을 맞았다. 인도는 폭염에 따른 냉방 수요 급증으로 전력 수요가 역대 최고치를 경신하며 석탄 발전 의존도가 재확대됐다. 미국의 대쿠바 압박이 카스트로 대통령 기소 및 국무장관 대국민 연설로 격화되며 중남미 지정학 긴장이 고조되고 있다. 이탈리아에서는 무솔리니를 연상시키는 Meloni 반대 광고가 정치적 논란을 일으켰고, 뉴욕시의 연방 이민 단속 건수가 Trump 취임 후 70% 이상 급증한 것으로 감사 결과 확인됐다. Meta는 Reddit 유사 커뮤니티 앱 'Forum'을 조용히 출시하며 소셜 플랫폼 경쟁에 새로운 변수를 추가했고, 케인즈·민스키 경제학의 불확실성 논의는 현재 복합 리스크 환경과 맞닿아 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Warsh 취임과 Fed 권력 재편 - 최강 매파 체제가 시장에 던지는 압력</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">FEDS 논문: Fed의 미세 조율 - 거친 성명과 예측적 기자회견</div>
+    <div class="article-title-en">FEDS Paper: The Fed's Fine-Tune: Coarse Statements and Predictive Pressers</div>
+    <div class="article-keypoint">Fed 커뮤니케이션 정교화 연구 - Warsh 체제서 포워드 가이던스 방식 변화 가능성</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/the-feds-fine-tune-coarse-statements-and-predictive-pressers.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Kevin Warsh, Fed 의장 및 이사회 멤버로 취임 선서 - FOMC 만장일치로 의장 선출</div>
+    <div class="article-title-en">Kevin Warsh takes oath of office as chairman and a member of the Board of Governors of the Federal Reserve System, and the Federal Open Market Committee unanimously selects Warsh as its chairman</div>
+    <div class="article-keypoint">Warsh, FOMC 만장일치로 의장 선출 - 수십 년 만의 최대 Fed 개혁 공식 출범</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/other20260522a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 05:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Kevin Warsh, Trump 경제 역풍 속 Fed 의장으로 공식 취임</div>
+    <div class="article-title-en">Kevin Warsh sworn in as Fed chair as Trump faces backlash over economy</div>
+    <div class="article-keypoint">Warsh 취임, 물가·성장 딜레마 속 매파 리더십이 시장 변동성 확대 요인으로 부상</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/may/22/trump-not-focused-on-economy-poll" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Waller, 정책 리스크의 변화</div>
+    <div class="article-title-en">Waller, Policy Risks Have Changed</div>
+    <div class="article-keypoint">Waller, 이란 에너지 쇼크 배경으로 금리 인상·인하 확률 50:50 제시 - 방향성 리셋</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/waller20260522a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Warsh, 20년 만에 가장 매파적인 Fed 의장 후보 - Desai 분석</div>
+    <div class="article-title-en">Warsh Most Hawkish Fed Nominee in 20 Years: Desai </div>
+    <div class="article-keypoint">Warsh, 20년 만에 가장 매파적 의장으로 평가 - 채권시장 장기금리 상승 압력 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-22/warsh-most-hawkish-fed-nominee-in-20-yrs-desai-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 04:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">오일 쇼크와 Fed '저주'의 충돌: Kevin Warsh 취임이 포트폴리오에 미치는 의미</div>
+    <div class="article-title-en">The oil shock meets the Fed ‘curse’: What Kevin Warsh means for your portfolio</div>
+    <div class="article-keypoint">Warsh 취임과 오일 쇼크 동시 직면 - 수요 억제 vs. 강세장 보호의 구조적 딜레마</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-new-fed-chair-curse-and-100-plus-oil-are-already-testing-kevin-warsh-and-the-stock-market-718b919d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 05:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Waller, 이란 전쟁 에너지 쇼크 속 금리 인상 또는 인하 확률 동일 시사</div>
+    <div class="article-title-en">Waller Sees Even Odds for Rate Hike or Cut as Next Fed Move</div>
+    <div class="article-keypoint">Waller, 이란 전쟁발 에너지 쇼크로 금리 인상 가능성 50% - 긴축 재개 시나리오 현실화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-22/fed-s-waller-says-next-move-as-likely-to-be-rate-hike-as-cut" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 23:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SpaceX IPO와 $28조 TAM - 역대급 상장이 재편하는 자본시장 구조</span>
+    <span class="theme-label-range">Article #8~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX, 미래를 결정할 400피트 로켓 발사</div>
+    <div class="article-title-en">SpaceX Launches 400-Foot Rocket That Will Help Define Its Future</div>
+    <div class="article-keypoint">Starship 신형 발사 성공 - SpaceX IPO 내러티브 강화 및 AI 위성 사업 현실화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/spacex-launches-400-foot-rocket-that-will-help-define-its-future-e3cdcc2e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 07:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SpaceX, 상장 추진 - 그 수치를 납득하려면 약간의 믿음이 필요하다</div>
+    <div class="article-title-en">SpaceX files to go public, and the math requires a little faith</div>
+    <div class="article-keypoint">SpaceX S-1 제출, TAM $28조·화성 식민지 포함 - 역대급 IPO가 자본시장 흡수 압력</div>
+    <a class="article-link" href="https://techcrunch.com/video/spacex-files-to-go-public-and-the-math-requires-a-little-faith/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 23:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">수퍼보팅 주식이 SpaceX에 대한 Musk의 철통 지배력을 강화하는 구조</div>
+    <div class="article-title-en">How Supervoting Shares Tighten Musk’s Iron Grip on SpaceX</div>
+    <div class="article-keypoint">Musk 수퍼보팅 구조로 SpaceX 상장 후에도 지배권 유지 - 거버넌스 리스크 내재</div>
+    <a class="article-link" href="https://www.wsj.com/business/how-spacexs-ipo-cements-elon-musks-grip-on-the-company-90ef1ddd?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 22:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">이란 전쟁·에너지 쇼크 - 지정학 리스크 프리미엄의 다중 전이</span>
+    <span class="theme-label-range">Article #11~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">이란, 미국이 농축우라늄 인도 요구 고집하면 '합의 없다' 선언</div>
+    <div class="article-title-en">Iran Says 'No Deal' Will Materialize If US Insists On Enriched Uranium Handover</div>
+    <div class="article-keypoint">이란, 농축우라늄 인도 요구 시 합의 없다 선언 - 핵 협상 결렬로 에너지 리스크 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/pakistani-army-chief-travels-tehran-rubio-touts-sligh-progress-talks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 02:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">대형 석유사의 전쟁 특수, 예상 밖의 긍정적 측면도 있을 수 있다</div>
+    <div class="article-title-en">Big oil’s war profits may have a silver lining after all</div>
+    <div class="article-keypoint">이란 전쟁發 오일 급등, 석유 기업 특수와 클린에너지 전환 가속이라는 이중 효과</div>
+    <a class="article-link" href="https://www.theguardian.com/environment/2026/may/21/big-oils-war-profits-may-have-a-silver-lining-after-all" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 15:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">대만 무기 거래 보류 - 중국 압박 속 국방부는 이란 전쟁 재고 우려 이유로 제시</div>
+    <div class="article-title-en">Taiwan Arms Deal Put On Ice Amid China Pressure, But Pentagon Cites Iran War Stockpile Concerns</div>
+    <div class="article-keypoint">대만 무기 거래 보류, 중국 압박+이란 재고 우려 - 인도태평양 안보 공백 리스크 확대</div>
+    <a class="article-link" href="https://www.zerohedge.com/military/taiwan-arms-deal-put-ice-amid-china-pressure-pentagon-cites-iran-war-stockpile-concerns" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 01:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">반도체·첨단기술 투자 재편 - 칩 관세 카드와 양자컴퓨팅의 부상</span>
+    <span class="theme-label-range">Article #14~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">미국, 국내 성장 촉진 위해 칩 관세 검토 중 - 무역대표부 대표 발언</div>
+    <div class="article-title-en">US Weighs Chip Tariffs to Spur Domestic Growth, Trade Chief Says</div>
+    <div class="article-keypoint">수입 칩 관세 검토 지속 - 현실화 시 AI 인프라 비용 상승 및 공급망 재편 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-22/us-weighs-chip-tariffs-to-spur-domestic-growth-trade-chief-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 06:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">IBM, 양자컴퓨팅이 공상과학 영역을 벗어나는 대형 수혜주로 부상 가능</div>
+    <div class="article-title-en">IBM could be a big winner as quantum computing moves out of the science-fiction realm</div>
+    <div class="article-keypoint">IBM, 양자컴퓨팅 상용화 근본 장애 없다 선언 - AI 이후 차세대 컴퓨팅 투자 촉발</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/ibm-could-be-a-big-winner-as-quantum-computing-moves-out-of-the-science-fiction-realm-1eb74952?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 04:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">3D 프린팅 구리 플레이트, 데이터센터 냉각 에너지 97% 절감 가능성 제시</div>
+    <div class="article-title-en">3D-Printed Copper Plates Could Cut Data Center Cooling Energy Use by 97%</div>
+    <div class="article-keypoint">3D 프린팅 구리 냉각판, 데이터센터 에너지 97% 절감 가능 - AI 인프라 비용 혁신 신호</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/3D-Printed-Copper-Plates-Could-Cut-Data-Center-Cooling-Energy-Use-by-97.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 05:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">미국·글로벌 금융시장 밸류에이션 경고 - 금리·신용·자산가격의 균열</span>
+    <span class="theme-label-range">Article #17~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">사모크레딧 우려된다면 이보다 더 위험한 투자는 지금 당장 피하라</div>
+    <div class="article-title-en">Worried about private credit? Stay away from this even riskier investment right now.</div>
+    <div class="article-keypoint">사모크레딧 부실 우려, 사모펀드 포트폴리오로 전이 - 하위 투자자 손실 위험 증대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/worried-about-private-credit-stay-away-from-this-even-riskier-investment-right-now-bfb79b43?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 05:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">ECB 정책결정이사회 결정 사항 (금리 결정 외)</div>
+    <div class="article-title-en"> Decisions taken by the Governing Council of the ECB (in addition to decisions setting interest rates)</div>
+    <div class="article-keypoint">ECB, 기업 파산 급증과 낮은 부실채권의 괴리를 금융안정 취약 요인으로 공식 경고</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/govcdec/otherdec/2026/html/ecb.gc260522~a4812a8f23.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Nasdaq, SEC로부터 Bitcoin 지수 옵션 상장 승인 획득</div>
+    <div class="article-title-en">Nasdaq Gets Approval From SEC to List Bitcoin Index Options</div>
+    <div class="article-keypoint">Nasdaq, Bitcoin 지수 옵션 상장 SEC 승인 - 디지털 자산과 전통 금융 통합 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-22/nasdaq-bitcoin-index-options-granted-approval-by-sec" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 05:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">'버핏 지표'가 시장 천장을 경고한다 - 주가가 허상 위에 달리고 있다는 8가지 신호</div>
+    <div class="article-title-en">‘Buffett Indicator’ warns of a market top — 8 crucial signs that stocks are running on fumes</div>
+    <div class="article-keypoint">버핏 지표 230% 극단치 경고 - 에너지 위기·금리 압박 속 강세장 취약성 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/buffett-indicator-warns-of-a-market-top-8-crucial-signs-that-stocks-are-running-on-fumes-12e4b4d8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 05:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">금리 상승: 왜 그 서사가 데이터 앞에서 무너지는가</div>
+    <div class="article-title-en">Rising Interest Rates: Why The Narrative Fails Against The Data</div>
+    <div class="article-keypoint">10년물 수익률 4.60% 연중 최고 - 금리 상승 내러티브와 실제 데이터 간 괴리 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/rising-interest-rates-why-narrative-fails-against-data" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 01:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">쿠바 위기: George Friedman이 분석하는 미국 압박의 귀환</div>
+    <div class="article-title-en">Crisis in Cuba: George Friedman on the Return of US Pressure</div>
+    <div class="article-keypoint">미국, 쿠바 대통령 기소 및 국무장관 직접 메시지 - 중남미 압박 지정학 리스크 고조</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/crisis-in-cuba-george-friedman-on-the-return-of-us-pressure/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 03:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">케인즈, 민스키, 그리고 불확실성의 경제학</div>
+    <div class="article-title-en">Keynes, Minsky, and the Economics of Uncertainty</div>
+    <div class="article-keypoint">케인즈·민스키 불확실성 경제학 - 현재 복합 리스크 환경의 이론적 경고 재조명</div>
+    <a class="article-link" href="https://www.project-syndicate.org/onpoint/keynes-minsky-economic-uncertainty-investment-and-bubbles-by-william-h-janeway-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 17:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">감사 결과, Trump 귀환 후 뉴욕시 연방 이민 단속 70% 이상 급증</div>
+    <div class="article-title-en">Audit finds over 70% increase in federal immigration arrests in NYC under Trump</div>
+    <div class="article-keypoint">뉴욕시 연방 이민 단속 70% 이상 급증 - Trump 귀환 후 이민 정책 강도 확인</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/audit-finds-over-70-increase-in-federal-immigration-arrests-in-nyc-under-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 07:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Trump 정보국장 15개월의 격동 - 이례적 행보의 마침표</div>
+    <div class="article-title-en">The turbulent 15 months of Trump’s unlikely US intelligence director</div>
+    <div class="article-keypoint">Tulsi Gabbard 정보국장 사임 - 트럼프 행정부 안보 라인 15개월 만에 교체</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/may/22/tulsi-gabbard-intelligence-director" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 07:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">영국 경제, Starmer가 자랑할 이유를 찾은 바로 그 순간 악화 조짐</div>
+    <div class="article-title-en">Britain’s Economy Turns Sour Just as Starmer Had a Reason to Brag</div>
+    <div class="article-keypoint">영국 G7 최고 성장률 직후 지표 악화 - Starmer 경제 홍보 역풍으로 정책 신뢰 하락</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-22/britain-s-economy-turns-sour-just-as-starmer-had-a-reason-to-brag" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">백악관과 국방부, ReElement 희토류 $8천만 딜을 놓고 충돌</div>
+    <div class="article-title-en">White House And Pentagon Clash Over $80M ReElement Critical Minerals Deal</div>
+    <div class="article-keypoint">백악관-국방부, 희토류 정제 $8천만 딜 충돌 - 핵심광물 공급망 정책 혼선 노출</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/white-house-and-pentagon-clash-over-critical-minerals-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 01:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">무솔리니 테마 Meloni 반대 광고, 이탈리아 정치권 논란 촉발</div>
+    <div class="article-title-en">Mussolini-themed ads against Meloni spark political row in Italy</div>
+    <div class="article-keypoint">무솔리니 테마 Meloni 반대 광고 - 이탈리아 극우 정치 논란 및 유럽 정치 리스크</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/mussolini-themed-ads-against-meloni-spark-political-row-in-italy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 22:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">인도 전력 수요, 폭염에 따른 석탄 사용 증가로 역대 최고치 경신</div>
+    <div class="article-title-en">India's Power Demand Hits Record High As Heat Drives Coal Use</div>
+    <div class="article-keypoint">인도 전력 수요 역대 최고치 경신 - 폭염·석탄 의존 확대로 에너지 전환 속도 제약</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/indias-power-demand-hits-record-high-heat-drives-coal-use" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 02:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Meta, Reddit 유사 신규 앱 'Forum' 조용히 출시</div>
+    <div class="article-title-en">Meta quietly launches a new Reddit-like app called Forum</div>
+    <div class="article-keypoint">Meta 'Forum' 앱 출시 - Reddit 경쟁 진입으로 소셜 플랫폼 광고 시장 재편 가능성</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/22/meta-quietly-launches-a-new-reddit-like-app-called-forum/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/22 23:24 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
