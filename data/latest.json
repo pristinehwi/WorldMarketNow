@@ -2,32 +2,34 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Fed인사불확실성",
+      "title": "Fed 과도체제 불안",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "Fed인사불확실성",
-          "value": "Powell임시연장 정책연속성우려",
+          "label": "Fed 과도체제",
+          "value": "Powell 과도의장 취임",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Federal Reserve Board names Jerome H. Powell as chair pro tempore",
-            "Stephen I. Miran submits his resignation as a member of the Federal Reserve Board"
+            {
+              "title": "Federal Reserve Board names Jerome H. Powell as chair pro tempore",
+              "source": "Fed"
+            }
           ]
         },
         {
           "id": "n2",
-          "label": "달러강세압력",
-          "value": "불확실성으로 안전자산 선호",
+          "label": "달러 조달긴장",
+          "value": "펀딩 프리미염 상승 압력",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "달러지수ETF(UUP)",
+          "label": "달러인덱스(UUP)",
           "value": "$27.72→$27.73 (+0.04%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
@@ -35,8 +37,8 @@
         },
         {
           "id": "n4",
-          "label": "신흥국자금이탈",
-          "value": "Fed정책 불확실성 리스크회피",
+          "label": "신흥국 압박",
+          "value": "달러강세 자본유출 압력",
           "source": "concept",
           "timestamp": null,
           "related_news": []
@@ -51,8 +53,8 @@
         },
         {
           "id": "n6",
-          "label": "외국인유입반전",
-          "value": "Fed불확실성 한국자산 매력도하락",
+          "label": "외국인 이탈",
+          "value": "한국 시장 자금 이탈 우려",
           "source": "concept",
           "timestamp": null,
           "related_news": []
@@ -60,7 +62,7 @@
         {
           "id": "n7",
           "label": "KOSPI",
-          "value": "$7209.54→$7815.59 (+8.42%)",
+          "value": "$7815.31→$7837.19 (+0.28%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -70,129 +72,101 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "정책모호",
-          "mechanism": "Fed 의장직 교체로 통화정책 방향성 불확실성 증가"
+          "label": "정책불안",
+          "mechanism": "과도의장 체제가 통화정책 일관성 우려로 달러 펀딩 긴장 유발"
         },
         {
           "from": "n2",
           "to": "n3",
           "label": "실증",
-          "mechanism": "달러 안전자산 수요가 달러인덱스 상승 압력으로 반영"
+          "mechanism": "달러 조달 긴장이 달러인덱스 강세로 반영"
         },
         {
           "from": "n2",
           "to": "n4",
-          "label": "자금이동",
-          "mechanism": "달러강세 압력이 신흥국 자산 매도 유인으로 작용"
+          "label": "전이",
+          "mechanism": "달러 조달비용 상승이 신흥국 자본 유출 압력 증대"
         },
         {
           "from": "n4",
           "to": "n5",
           "label": "실증",
-          "mechanism": "신흥국 리스크 회피 심리가 EEM 매도 압력으로 나타남"
+          "mechanism": "신흥국 압박이 신흥국 ETF 변동성으로 나타남"
         },
         {
           "from": "n4",
           "to": "n6",
-          "label": "한국파급",
-          "mechanism": "글로벌 신흥국 리스크 회피가 한국 시장에도 전이"
+          "label": "파급",
+          "mechanism": "글로벌 신흥국 압박이 한국 외국인 투자자금 이탈 우려로 확산"
         },
         {
           "from": "n6",
           "to": "n7",
-          "label": "급등후조정",
-          "mechanism": "전일 급등 후 Fed 불확실성 영향에도 당일 반도체 수혜로 추가 상승"
+          "label": "실증",
+          "mechanism": "외국인 이탈 우려 속에서도 KOSPI는 소폭 상승으로 버티는 상황"
         }
       ],
       "korea_terminal_node": "n7",
-      "briefing": "Powell 임시의장 연장으로 Fed 정책 연속성 우려 부각, 달러강세→신흥국 자금이탈 메커니즘 작동. 다만 KOSPI는 당일 AI 반도체 수혜가 이를 상쇄해 8.4% 급등으로 마감.",
+      "briefing": "Powell 과도의장 체제 발표로 Fed 정책 연속성 우려가 달러 펀딩 긴장을 유발했습니다. 달러강세와 신흥국 압박 속에서도 KOSPI는 소폭 상승을 기록했으나 외국인 자금 이탈 리스크는 잠재되어 있습니다.",
       "_warnings": [
-        "[한국 종착 비율] 2/3 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n2->n3->n2",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "Fed 인사 불확실성이 정책 모호성으로 직결되는 단일 경로에 과도하게 의존",
-        "alternativePath": null
-      },
-      "missingHops": [
-        {
-          "to": "국채선물",
-          "via": "Fed 불확실성이 장기금리 변동성 확대를 통해 채권선물 거래량 급증",
-          "lag_days": 1
-        },
-        {
-          "to": "원/달러환율",
-          "via": "달러강세 압력이 한국 외환시장에서 원화약세 압력으로 직접 전이",
-          "lag_days": 0
-        }
+        "[한국 종착 비율] 4/4 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "테크IPO밸류상승",
+      "title": "테크IPO 열기확산",
       "priority": 2,
-      "frequency": "WEEKLY",
+      "frequency": "NOW",
       "nodes": [
         {
-          "id": "w1",
-          "label": "테크IPO러시",
-          "value": "SpaceX OpenAI 동시상장준비",
+          "id": "n8",
+          "label": "AI IPO 테마",
+          "value": "대형 IPO 투자심리 자극",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "SpaceX, OpenAI and Anthropic Race to Go Public",
-            "Musk's SpaceX Reveals Its Finances for the First Time as It Readies for IPO"
+            {
+              "title": "SpaceX, OpenAI and Anthropic Race to Go Public",
+              "source": "NYT Dealbook"
+            }
           ]
         },
         {
-          "id": "w2",
-          "label": "AI수요확대",
-          "value": "IPO열풍 AI생태계 투자확대",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "w3",
+          "id": "n9",
           "label": "반도체ETF(SOXX)",
-          "value": "05/15 $508.52→05/21 $524.71 (+3.18%)",
+          "value": "$520.25→$524.71 (+0.85%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "w4",
-          "label": "테크섹터ETF(XLK)",
-          "value": "05/15 $177.15→05/21 $178.60 (+0.82%)",
+          "id": "n10",
+          "label": "테크섹터(XLK)",
+          "value": "$177.15→$178.60 (+0.82%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "w5",
-          "label": "나스닥ETF(QQQ)",
-          "value": "05/15 $708.93→05/21 $714.51 (+0.79%)",
+          "id": "n11",
+          "label": "성장주(ARKK)",
+          "value": "$75.84→$76.62 (+1.03%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "w6",
-          "label": "K반도체수혜",
-          "value": "글로벌 AI수요 메모리 특수",
+          "id": "n12",
+          "label": "한국 테크 수혜",
+          "value": "글로벌 테마 연관성 부각",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "w7",
-          "label": "KOSPI",
-          "value": "$7209.54→$7815.59 (+8.42%)",
+          "id": "n13",
+          "label": "KOSDAQ",
+          "value": "$1105.95→$1159.29 (+4.82%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -200,159 +174,245 @@
       ],
       "edges": [
         {
-          "from": "w1",
-          "to": "w2",
-          "label": "투자확산",
-          "mechanism": "대형 테크 IPO 준비가 AI 생태계 전반 투자 매력도 증가로 확산"
+          "from": "n8",
+          "to": "n9",
+          "label": "실증",
+          "mechanism": "AI IPO 테마가 반도체 ETF 상승으로 직접 반영"
         },
         {
-          "from": "w2",
-          "to": "w3",
-          "label": "메모리수혜",
-          "mechanism": "AI 수요 확대가 HBM·DRAM 반도체 ETF 상승으로 직접 반영"
+          "from": "n8",
+          "to": "n10",
+          "label": "실증",
+          "mechanism": "테크 IPO 열기가 대형 테크섹터 ETF 상승 견인"
         },
         {
-          "from": "w2",
-          "to": "w4",
-          "label": "섹터밸류",
-          "mechanism": "AI 투자 확대가 대형 테크 섹터 밸류에이션 상승으로 연결"
+          "from": "n8",
+          "to": "n11",
+          "label": "실증",
+          "mechanism": "혁신기업 IPO 기대감이 성장주 ETF로 파급"
         },
         {
-          "from": "w2",
-          "to": "w5",
-          "label": "나스닥프리",
-          "mechanism": "테크 IPO 열풍이 나스닥 대형주 프리미엄 확산으로 전이"
+          "from": "n8",
+          "to": "n12",
+          "label": "연관",
+          "mechanism": "글로벌 AI 테마 부상이 삼성전자 등 한국 테크주 재평가 기대"
         },
         {
-          "from": "w2",
-          "to": "w6",
-          "label": "한국수혜",
-          "mechanism": "글로벌 AI 수요 확대가 한국 메모리 반도체 수혜로 연결"
-        },
-        {
-          "from": "w6",
-          "to": "w7",
-          "label": "삼성중심",
-          "mechanism": "AI 반도체 수혜 기대가 삼성전자 중심 KOSPI 급등으로 실증"
+          "from": "n12",
+          "to": "n13",
+          "label": "실증",
+          "mechanism": "한국 테크 기업 재평가 기대감이 KOSDAQ 급등으로 구현"
         }
       ],
-      "korea_terminal_node": "w7",
-      "briefing": "AI수요확대가 공통원인: SpaceX·OpenAI IPO 열풍으로 글로벌 테크 밸류에이션 리레이팅 가속화. 반도체·테크 ETF 동반 상승, 한국 메모리 반도체 수혜로 삼성 중심 KOSPI 주도적 급등 견인."
+      "korea_terminal_node": "n13",
+      "briefing": "SpaceX·OpenAI 등 대형 테크 IPO 계획이 AI 수요 테마를 자극하며 SOXX(+0.85%), XLK(+0.82%), ARKK(+1.03%) 등이 동반 상승했습니다. 글로벌 테크 열기가 한국 시장으로 전이되어 KOSDAQ이 4.82% 급등을 기록했습니다."
     },
     {
       "id": "thread_003",
-      "title": "중동에너지리스크",
-      "priority": 3,
-      "frequency": "MONTHLY",
+      "title": "Fed 보드 재편과",
+      "priority": 1,
+      "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "m1",
-          "label": "이란핵긴장고조",
-          "value": "우라늄농축 레드라인 선언",
+          "id": "n14",
+          "label": "Fed 보드 재편",
+          "value": "의사결정 구조 전면 개편",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "m2",
-          "label": "에너지공급위기",
-          "value": "호르무즈봉쇄 글로벌리스크 구조화",
+          "id": "n15",
+          "label": "금리경로 불확실",
+          "value": "정책 가이던스 재조정",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "m3",
-          "label": "원유ETF(USO)",
-          "value": "04/22 $129.40→05/21 $142.54 (+10.2%)",
+          "id": "n16",
+          "label": "장기국채(TLT)",
+          "value": "$83.66→$84.22 (+0.67%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "m4",
-          "label": "에너지섹터ETF(XLE)",
-          "value": "04/22 $56.54→05/21 $59.13 (+4.58%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "m5",
-          "label": "인플레이션압력",
-          "value": "에너지비용 구조적 상승",
+          "id": "n17",
+          "label": "달러 패러다임",
+          "value": "글로벌 유동성 재편",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "m6",
-          "label": "금ETF(GLD)",
-          "value": "04/22 $435.26→05/21 $416.99 (-4.21%)",
+          "id": "n18",
+          "label": "달러인덱스(UUP)",
+          "value": "$27.77→$27.73 (-0.11%)",
           "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n19",
+          "label": "한은 정책딜레마",
+          "value": "독립성vs환율안정 긴장",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "m1",
-          "to": "m2",
-          "label": "공급차단",
-          "mechanism": "이란 핵 긴장이 호르무즈 해협 봉쇄 가능성으로 에스컬레이션"
+          "from": "n14",
+          "to": "n15",
+          "label": "정책전환",
+          "mechanism": "Fed 보드 개편이 중장기 통화정책 경로 재검토 압력 가중"
         },
         {
-          "from": "m2",
-          "to": "m3",
-          "label": "가격상승",
-          "mechanism": "공급 차단 우려가 원유 가격 월간 10% 상승으로 반영"
+          "from": "n15",
+          "to": "n16",
+          "label": "실증",
+          "mechanism": "금리 불확실성이 장기국채 변동성 확대로 나타남"
         },
         {
-          "from": "m2",
-          "to": "m4",
-          "label": "섹터강세",
-          "mechanism": "에너지 공급 위기가 에너지 섹터 주가 상승으로 연결"
+          "from": "n15",
+          "to": "n17",
+          "label": "구조변화",
+          "mechanism": "Fed 정책 변화 가능성이 글로벌 달러 공급 패턴 재편 촉발"
         },
         {
-          "from": "m2",
-          "to": "m5",
-          "label": "인플레전환",
-          "mechanism": "에너지 공급 위기가 글로벌 인플레이션 구조적 상승 압력으로 전환"
+          "from": "n17",
+          "to": "n18",
+          "label": "실증",
+          "mechanism": "달러 패러다임 변화 우려가 달러인덱스 약세로 일부 반영"
         },
         {
-          "from": "m5",
-          "to": "m6",
-          "label": "역설약세",
-          "mechanism": "인플레 압력 상승에도 Fed 불확실성으로 금 월간 하락"
+          "from": "n17",
+          "to": "n19",
+          "label": "파급",
+          "mechanism": "글로벌 통화정책 재편이 한은의 정책 자율성 제약 증대"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "이란 우라늄 레드라인·호르무즈 봉쇄 리스크로 중동 지정학 구조적 긴장 심화. 원유 월간 10% 상승, 에너지 공급망 취약성 노출로 글로벌 인플레이션 압력 구조화. Fed 불확실성 속 금은 오히려 월간 하락세."
+      "korea_terminal_node": "n19",
+      "briefing": "Fed 보드 개편이 중장기 통화정책 경로 재검토 압력을 가중시키고 있습니다. 정책 불확실성이 장기국채 변동성을 확대하며 글로벌 달러 유동성 패턴 재편을 촉발하고 있으며, 이는 한국은행의 정책 독립성과 환율 안정 간 딜레마를 심화시킬 전망입니다."
+    },
+    {
+      "id": "thread_004",
+      "title": "AI규제완화 패러다임",
+      "priority": 1,
+      "frequency": "MONTHLY",
+      "nodes": [
+        {
+          "id": "n20",
+          "label": "AI 규제철회",
+          "value": "혁신 장벽 제거 정책",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n21",
+          "label": "기술패권 경쟁",
+          "value": "미국 AI 우위 확보전략",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n22",
+          "label": "반도체ETF(SOXX)",
+          "value": "$431.77→$524.71 (+21.53%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n23",
+          "label": "나스닥100(QQQ)",
+          "value": "$655.11→$714.51 (+9.07%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n24",
+          "label": "AI칩 공급망",
+          "value": "인프라 수요 급증",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n25",
+          "label": "한국AI 생태계",
+          "value": "반도체 구조적 성장기회",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n20",
+          "to": "n21",
+          "label": "전략전환",
+          "mechanism": "AI 규제 완화가 중국과의 기술 패권 경쟁 우위 확보 수단으로 활용"
+        },
+        {
+          "from": "n21",
+          "to": "n22",
+          "label": "실증",
+          "mechanism": "기술 패권 경쟁이 AI칩 수요 급증으로 반도체 ETF 월간 21% 급등"
+        },
+        {
+          "from": "n21",
+          "to": "n23",
+          "label": "실증",
+          "mechanism": "AI 우위 확보 전략이 테크 플랫폼 기업 중심 나스닥 상승 견인"
+        },
+        {
+          "from": "n21",
+          "to": "n24",
+          "label": "구조변화",
+          "mechanism": "기술 패권 경쟁이 AI 컴퓨팅 인프라 글로벌 공급망 재편 촉발"
+        },
+        {
+          "from": "n24",
+          "to": "n25",
+          "label": "파급",
+          "mechanism": "글로벌 AI 공급망 재편이 삼성·하이닉스 등 메모리 반도체 중장기 성장 견인"
+        }
+      ],
+      "korea_terminal_node": "n25",
+      "briefing": "트럼프 행정부의 AI 규제 완화가 미중 기술패권 경쟁의 전환점을 만들고 있습니다. 반도체 ETF가 월간 21% 급등하며 AI칩 수요 폭증을 반영했고, 글로벌 AI 공급망 재편이 삼성전자·SK하이닉스 등 한국 AI 생태계의 구조적 성장 기회를 제공하고 있습니다."
     }
   ],
   "headlines": [
-    "Fed불확실성·반도체수혜 KOSPI 8% 급등",
-    "SpaceX·OpenAI IPO 열풍 테크밸류 리레이팅"
+    "Fed 과도체제 속 신흥국 압박",
+    "AI IPO 테마 KOSDAQ 4.82%"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 테크·반도체 IPO 열풍 지속 / 당일 아시아: KOSPI 8.42% 급등",
-    "layer2": "미국 테크 IPO 랠리·반도체 수혜 신호가 KOSPI 반도체 섹터 주도 급등으로 수렴",
-    "layer3": "AI 수요확대 공통 신호가 반도체·테크 동반 강세로 글로벌 리스크온 심화, KOSPI 장중 플러스로 마감"
+    "layer1": "전일 미국: 테크IPO 테마로 SOXX +0.85%, XLK +0.82% / 당일 아시아: KOSDAQ +4.82% 급등",
+    "layer2": "AI칩 수요 확대 신호가 한국 반도체주 재평가로 전이",
+    "layer3": "KOSDAQ 급등주도 vs KOSPI 방어 형세 속 외국인 이탈 리스크 잠재"
   },
-  "macro_regime_note": "고실질금리·리스크온 병존 레짐에서 글로벌 테크 IPO 열풍이 AI 수요확대 공통원인으로 작동해 성장주 랠리를 견인하되, Fed 불확실성은 신흥국 자금이탈 압력으로는 미약하게만 반영.",
-  "generated_at": "2026-05-21T22:46:16.189Z",
+  "macro_regime_note": "고실질금리 하 선별적 리스크온 레짐이 테크 테마 선호를 강화하며 KOSDAQ 급등을 견인한 반면, Fed 과도체제 불안이 외국인 자금의 신흥국 이탈 우려를 지속시키고 있습니다.",
+  "generated_at": "2026-05-22T03:46:06.977Z",
   "data_as_of": {
-    "timestamp_iso": "2026-05-21T22:46:16.124Z",
-    "display": "5/21 18:46 [ 뉴욕 현지 시각 ]",
-    "display_mobile": "5/21 18:46 뉴욕",
-    "timezone": "America/New_York"
+    "timestamp_iso": "2026-05-22T03:46:06.974Z",
+    "display": "5/22 12:46 [ KST +0900 ]",
+    "display_mobile": "5/22 12:46 KST",
+    "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-05-21T22:46:16.189Z",
-    "elapsed_sec": 176,
-    "market_status": [],
+    "generated_at": "2026-05-22T03:46:06.977Z",
+    "elapsed_sec": 190,
+    "market_status": [
+      "한국(KOSPI/KOSDAQ)",
+      "일본(닛케이)"
+    ],
     "is_weekend": false,
-    "data_note": "전일 미국장 마감 확정, 당일 아시아/유럽장 마감 확정"
-  },
-  "deep_analysis_at": "2026-05-21T22:52:06.740Z"
+    "data_note": "전일 미국장 마감 후 당일 아시아장 진행중. EWY는 KOSPI보다 시간적 후행으로 역방향 인과 금지"
+  }
 }
