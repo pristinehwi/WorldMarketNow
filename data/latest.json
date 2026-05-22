@@ -110,6 +110,28 @@
       "briefing": "Powell 과도의장 체제 발표로 Fed 정책 연속성 우려가 달러 펀딩 긴장을 유발했습니다. 달러강세와 신흥국 압박 속에서도 KOSPI는 소폭 상승을 기록했으나 외국인 자금 이탈 리스크는 잠재되어 있습니다.",
       "_warnings": [
         "[한국 종착 비율] 4/4 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n6->n7->n6",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n2->n4",
+        "fragileReason": "달러 조달비용과 신흥국 자본유출 연결고리가 Fed 실제 정책변화 없이는 약화될 수 있음",
+        "alternativePath": "n1->금리선물 변동성->n4"
+      },
+      "missingHops": [
+        {
+          "to": "원달러 환율",
+          "via": "외국인 투자자금 이탈 우려가 원화 약세 압력으로 직접 전이",
+          "lag_days": 1
+        },
+        {
+          "to": "국채 10년물",
+          "via": "Fed 정책불안이 한국 장기금리 상승 압력으로 파급",
+          "lag_days": 3
+        }
       ]
     },
     {
@@ -205,7 +227,29 @@
         }
       ],
       "korea_terminal_node": "n13",
-      "briefing": "SpaceX·OpenAI 등 대형 테크 IPO 계획이 AI 수요 테마를 자극하며 SOXX(+0.85%), XLK(+0.82%), ARKK(+1.03%) 등이 동반 상승했습니다. 글로벌 테크 열기가 한국 시장으로 전이되어 KOSDAQ이 4.82% 급등을 기록했습니다."
+      "briefing": "SpaceX·OpenAI 등 대형 테크 IPO 계획이 AI 수요 테마를 자극하며 SOXX(+0.85%), XLK(+0.82%), ARKK(+1.03%) 등이 동반 상승했습니다. 글로벌 테크 열기가 한국 시장으로 전이되어 KOSDAQ이 4.82% 급등을 기록했습니다.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n8->n12",
+        "fragileReason": "글로벌 AI 테마와 한국 테크주 재평가 연결이 실제 기업 실적 개선 없이는 지속가능성 부족",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "코스닥150 선물",
+          "via": "KOSDAQ 급등이 파생상품 시장 포지션 조정 압력으로 확산",
+          "lag_days": 1
+        },
+        {
+          "to": "반도체 관련주",
+          "via": "AI IPO 열기가 메모리·시스템반도체 개별주 재평가로 심화",
+          "lag_days": 2
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -414,5 +458,6 @@
     ],
     "is_weekend": false,
     "data_note": "전일 미국장 마감 후 당일 아시아장 진행중. EWY는 KOSPI보다 시간적 후행으로 역방향 인과 금지"
-  }
+  },
+  "deep_analysis_at": "2026-05-22T03:51:32.476Z"
 }
