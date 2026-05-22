@@ -82,6 +82,28 @@
       "briefing": "테크 센티멘트 개선이 공통 동인으로 작용하며, 미국 반도체(SOXX +0.85%)·나스닥(QQQ +0.19%) 상승 후 당일 코스닥 +4.99% 급등으로 전이. 스페이스X·오픈AI IPO 발표로 AI 투자 테마 재부각.",
       "_warnings": [
         "[한국 종착 비율] 2/3 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "메가 IPO 발표 취소나 실망스러운 내용 공개시 전체 테크 랠리 동력 소멸",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "VIX",
+          "via": "테크 센티멘트 개선이 위험자산 선호도 증가로 변동성 지수 하락 압박",
+          "lag_days": 1
+        },
+        {
+          "to": "TLT",
+          "via": "테크 랠리 지속시 성장주 매력도 증가로 안전자산 국채 수요 감소",
+          "lag_days": 3
+        }
       ]
     },
     {
@@ -242,7 +264,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "달러강세 압력이 공통 동인으로 작용하며 원자재 약세 지속. 고실질금리(DFII10 2.13%) 체제에서 달러강세(UUP +0.04%)가 금(GLD -0.11%)·원유(USO -1.16%) 등 비수익자산의 기회비용을 상승시켜 가격 하락."
+      "briefing": "달러강세 압력이 공통 동인으로 작용하며 원자재 약세 지속. 고실질금리(DFII10 2.13%) 체제에서 달러강세(UUP +0.04%)가 금(GLD -0.11%)·원유(USO -1.16%) 등 비수익자산의 기회비용을 상승시켜 가격 하락.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "c2->c4->c2",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "c1->c2",
+        "fragileReason": "연준 정책 피벗 시그널 발생시 실질금리 하락으로 달러강세 동력 즉시 약화",
+        "alternativePath": "지정학적 리스크를 통한 안전자산 달러 수요"
+      },
+      "missingHops": [
+        {
+          "to": "신흥국 통화",
+          "via": "달러 강세가 캐리트레이드 청산 압력으로 신흥국 통화 약세 심화",
+          "lag_days": 2
+        },
+        {
+          "to": "리츠(REITs)",
+          "via": "고실질금리 환경이 부동산 할인율 상승으로 리츠 밸류에이션 압박",
+          "lag_days": 5
+        }
+      ]
     }
   ],
   "headlines": [
@@ -268,5 +312,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전일 미국 장 마감 확정, 당일 아시아/유럽 장 마감"
-  }
+  },
+  "deep_analysis_at": "2026-05-22T07:56:02.716Z"
 }
