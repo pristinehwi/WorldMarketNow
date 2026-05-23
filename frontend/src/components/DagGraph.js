@@ -932,15 +932,23 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
       // 가격 노드 value 파싱
       let dateStr = '', priceLine = '', pctPart = '', valueColor = '#52b788';
       if (node.value && !isConcept) {
-        const hasArrow = node.value.indexOf('→') > -1;
-        if (hasArrow) {
-          const dateMatch = node.value.match(/\[(\d+\/\d+)\][^→]*→[^[]*\[(\d+\/\d+)\]/);
-          if (dateMatch) dateStr = `${dateMatch[1]} → ${dateMatch[2]}`;
+        // → 와 -> 두 형식 모두 지원 (COMMON_RULES 변환 이후 -> 사용)
+        const arrowChar = node.value.indexOf('->') > -1 ? '->' : (node.value.indexOf('→') > -1 ? '→' : null);
+        if (arrowChar) {
+          // 날짜 파싱: [MM/DD] $prev->[MM/DD] $current 또는 → 형식
+          const dateRegex = arrowChar === '->'
+            ? /\[(\d+\/\d+)\][^-]*->[^[]*\[(\d+\/\d+)\]/
+            : /\[(\d+\/\d+)\][^→]*→[^[]*\[(\d+\/\d+)\]/;
+          const dateMatch = node.value.match(dateRegex);
+          if (dateMatch) dateStr = `${dateMatch[1]} -> ${dateMatch[2]}`;
           const cleanValue = node.value.replace(/\[\d+\/\d+\]\s*/g, '');
           const cleanParen = cleanValue.lastIndexOf('(');
           priceLine = cleanParen > -1 ? cleanValue.slice(0, cleanParen).trim() : cleanValue;
           const parenIdx = node.value.lastIndexOf('(');
-          pctPart = parenIdx > node.value.indexOf('→') ? node.value.slice(parenIdx).trim() : '';
+          const arrowIdx = arrowChar === '->'
+            ? node.value.indexOf('->')
+            : node.value.indexOf('→');
+          pctPart = parenIdx > arrowIdx ? node.value.slice(parenIdx).trim() : '';
           valueColor = pctPart.startsWith('(-') ? '#ff6060' : '#52b788';
         } else {
           priceLine = node.value;
