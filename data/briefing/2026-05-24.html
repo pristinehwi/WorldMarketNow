@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-24 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/24 07:47 KST</div>
+    <div class="header-date">2026-05-24</div>
+    <div class="header-headline">이란 핵 협상 교착 - 전쟁 지속과 페트로달러 충격 가시화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">이란 핵 협상 MOU 타결 여부(수일 내) - 에너지·중동 리스크 프리미엄 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">이란 핵 협상 교착과 중동 전쟁의 복합 충격 전이</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">Trump가 이란과의 협상이 '대체로 타결됐다'고 발언했지만, 이란 외무부는 농축우라늄 인도 요구 시 '합의 없음'을 선언하며 협상이 사실상 교착 상태에 빠졌다. 이란이 미국 MQ-9 리퍼 드론 함대의 20%($10억 상당)를 격파했다는 보고가 나오는 한편, Ivanka Trump 암살 기도 주장까지 더해지며 분쟁 리스크가 다층적으로 확대되고 있다. 특히 걸프 산유국들이 전쟁 비용으로 재정을 소진하면서 글로벌 금융시장을 떠받쳐 온 페트로달러 재투자 흐름이 약화될 위험이 부각됐다. 이스라엘은 미국의 대이란 교섭에서 동등한 파트너에서 하청 역할로 격하된 상황이며, Netanyahu는 협상 주도권을 사실상 상실했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Warsh Fed 체제 전환 - 금리 인하 불가 트랩과 채권시장 압박</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#10</span>
+    </div>
+    <div class="theme-summary">Kevin Warsh가 Fed 의장에 취임하는 시점은 공급 충격과 무역전쟁이 중첩된 스태그플레이션 환경으로, 그가 구상하던 '파괴적 개혁자' 역할을 수행할 여지가 사실상 봉쇄돼 있다. 관세발 인플레이션이 지속되는 한 금리 인하를 원해도 단행할 수 없는 구조적 함정에 빠진 상태로, 채권시장에는 지속적인 상방 압력이 가해질 전망이다. 금리 상승 국면에서 채권 투자자들이 듀레이션 중립 전략으로 헤지하는 방법이 주목받는 등, 시장 참여자들은 고금리 장기화에 대비한 포트폴리오 재조정에 나서고 있다. Trump의 3,711건 주식 거래 공개로 연방 정책과 개인 투자 간의 이해충돌 논란도 정치적 불확실성을 가중시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI·우주 IPO 트리플 레이스 - SpaceX·OpenAI·Anthropic의 자본시장 쟁탈전</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#14</span>
+    </div>
+    <div class="theme-summary">SpaceX, OpenAI, Anthropic이 거의 동시에 IPO 또는 상장을 추진하며 AI 붐의 자본 흡수력 한계를 시험하는 국면이 본격화됐다. SpaceX는 최신 Starship 시험 비행에서 모의 위성 배치에 성공했으나 부스터가 통제 불능으로 분리되는 등 기술 리스크도 병존한다. 핵 스타트업 Deep Fission도 $1억5,700만 규모 IPO를 추진하며 AI 데이터센터 전력 수요를 겨냥한 소형 원자로 붐에 편승하고 있으나 투자자 신뢰 확보가 과제다. Elon Musk의 xAI는 천문학적 손실을 내고 있으며, Musk가 지구 태양광을 포기하고 천연가스와 궤도 데이터센터에 집중하는 에너지 전략 전환은 ESG 관점에서 새로운 논란을 낳고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Nvidia 공급망 균열과 AI 인프라 버블 경고</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#17</span>
+    </div>
+    <div class="theme-summary">Nvidia는 칩을 공급할 수 있지만 빅테크의 신용 프리미엄 상승, 전력망 한계, 대중 무역전쟁 혼란이라는 3중 구조적 장벽을 해소할 수 없다는 분석이 나왔다. CEO Jensen Huang이 Super Micro Computer에 '컴플라이언스 강화'를 공개 촉구한 것은 AI 칩 밀수 조사 확산에 Nvidia가 다운스트림 리스크를 의식하기 시작했음을 시사하는 이례적 신호다. S&P 500이 향후 2년 내 30% 급락 확률을 내포하고 있으며, Nvidia를 포함한 4개 시장 섹터에서 거품 징후가 포착되고 있다. AI 인프라 투자 과열과 실물 수익화 지연 사이의 간극이 시장 밸류에이션 재조정 압력으로 전환될 리스크가 고조되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">관세·무역 긴장과 우크라이나 전장 변수</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #18~#23</span>
+    </div>
+    <div class="theme-summary">미국 기업들이 관세 환급 혜택을 받으면서도 Trump의 눈치를 보며 공개적으로 언급을 꺼리는 '조용한 관세 환급 경쟁'이 진행 중이며, 이는 기업 이익과 인플레이션 경로에 조용한 변수로 작용하고 있다. 우크라이나가 러시아군의 블랙마켓 Starlink 단말기를 차단해 전선 지휘통제를 마비시키고 영토를 탈환했다는 미 국방부 기밀해제 평가가 공개됐다. Zelensky는 러시아가 극초음속 'Oreshnik' 미사일 공격을 준비 중이라고 경고했으며, 이는 유럽 안보 리스크와 방산 섹터 수요에 영향을 미칠 수 있다. 인도-캐나다 FTA 협상 재개와 미국의 베네수엘라 수도 군사 훈련 실시 등 신흥국·중남미 지정학 변수도 복합적으로 부각되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#26</span>
+    </div>
+    <div class="theme-summary">F1 전 세계 챔피언 Alain Prost가 스위스 자택 강도 사건에서 머리 부상을 입었다는 보도가 나왔다. 영국 총리 Starmer가 아스날과 PSG 간 챔피언스리그 결승을 TNT Sports에 무료 중계해달라고 요청했다. 노인 재정 상담 칼럼에서 62세 독신 부유층 독자에게 의미 있는 소비를 권고하는 인생 조언이 게재됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">이란 핵 협상 교착과 중동 전쟁의 복합 충격 전이</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Trump, 호르무즈 해협 재개방 위한 이란 협상 '거의 타결' 주장</div>
+    <div class="article-title-en">Trump claims deal with Iran to reopen Strait of Hormuz ‘largely negotiated’</div>
+    <div class="article-keypoint">Trump '이란 협상 거의 타결' 주장 vs. 이란 '합의 없음' 선언 - 에너지 리스크 프리미엄 재점화</div>
+    <a class="article-link" href="https://www.ft.com/content/a27cc653-71ee-4668-8fcf-562fd7c9b93f" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 06:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">이란 전쟁으로 걸프 부(富)가 소진되며 글로벌 페트로달러 부양 효과 사라진다</div>
+    <div class="article-title-en">The World Loses Petrodollar Stimulus as Iran War Drains Gulf Wealth</div>
+    <div class="article-keypoint">걸프 국가 전쟁 지출 급증으로 페트로달러 글로벌 재투자 흐름 약화 위험 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-05-23/the-world-is-losing-the-gulf-s-petrodollar-stimulus-new-economy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 19:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">이란, 미 국방부 MQ-9 리퍼 드론 함대 20% 격파 - 보도</div>
+    <div class="article-title-en">Iran Destroyed 20% Of Pentagon's MQ-9 Reaper Drone Fleet: Report</div>
+    <div class="article-keypoint">이란, 미국 MQ-9 드론 함대 20%($10억) 격파 - 미국 군사력 소모 리스크 가시화</div>
+    <a class="article-link" href="https://www.zerohedge.com/military/iran-destroyed-20-pentagons-mq-9-reaper-drone-fleet-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Ivanka Trump, IRGC 훈련 테러리스트의 암살 표적이 됐다 - 보도</div>
+    <div class="article-title-en">Ivanka Trump Was Reportedly Targeted For Assassination By IRGC Terrorist</div>
+    <div class="article-keypoint">IRGC 훈련 테러리스트의 Ivanka Trump 암살 기도 보도 - 미·이란 긴장 수위 급상승</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/ivanka-trump-was-reportedly-targeted-assassination-irgc-terrorist" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">한때 이란 전쟁의 공동 조종사였던 Netanyahu, 이제는 단순 승객 신세</div>
+    <div class="article-title-en">Once Trump’s co-pilot against Iran, Netanyahu is now a mere passenger</div>
+    <div class="article-keypoint">Netanyahu, 이란 협상에서 미국의 하청 역할로 격하 - 이스라엘 안보 자율성 약화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/once-trumps-co-pilot-against-iran-netanyahu-is-now-a-mere-passenger" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 16:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">이란 '농축우라늄 인도 요구 시 합의 없다' 선언</div>
+    <div class="article-title-en">Iran Says 'No Deal' Will Materialize If US Insists On Enriched Uranium Handover</div>
+    <div class="article-keypoint">이란 '농축우라늄 인도 요구 시 합의 없음' - 핵 협상 결렬 시 WTI 상방 압력 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/pakistani-army-chief-travels-tehran-rubio-touts-sligh-progress-talks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 16:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">미국과 이란, 종전 협상 진전 보고 - 수일 내 타결 목표</div>
+    <div class="article-title-en">US and Iran report progress on talks ending war, looking to next few days</div>
+    <div class="article-keypoint">이란·미국, 수일 내 MOU 타결 목표 - 협상 성패가 중동 에너지 시장 분기점</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/rubio-says-chance-of-iran-accepting-deal-as-soon-as-may-23" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 23:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Warsh Fed 체제 전환 - 금리 인하 불가 트랩과 채권시장 압박</span>
+    <span class="theme-label-range">Article #8~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Kevin Warsh, 금리 인하를 원해도 인하할 수 없는 함정 속에서 Fed 의장직 맡는다</div>
+    <div class="article-title-en">Kevin Warsh walks into a trap where the Fed can’t cut rates even if it wants to</div>
+    <div class="article-keypoint">Warsh, 스태그플레이션 함정 속 인하 불능 딜레마로 매파 체제 역설 직면</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/kevin-warsh-walks-into-a-trap-where-the-fed-cant-cut-rates-even-if-it-wants-to-8475e97c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 03:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">금리가 오르더라도 포트폴리오를 지키는 채권 전략</div>
+    <div class="article-title-en">This bond strategy can protect your portfolio even if interest rates go up</div>
+    <div class="article-keypoint">듀레이션 중립 채권 전략 부각 - 고금리 장기화 대비 포트폴리오 헤지 수요 증가</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/this-bond-strategy-can-protect-your-portfolio-even-if-interest-rates-go-up-9e9418cb?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 03:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Trump의 3,711건 거래 내역이 가리키는 다중 주식시장 전략</div>
+    <div class="article-title-en">Trump’s 3,711 Trades Point to Multiple Stock-Market Strategies</div>
+    <div class="article-keypoint">Trump 3,711건 주식 거래 공개 - 연방 정책과 개인 투자 이해충돌 논란 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-23/trump-s-3-711-trades-point-to-multiple-strategies-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 23:02 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI·우주 IPO 트리플 레이스 - SpaceX·OpenAI·Anthropic의 자본시장 쟁탈전</span>
+    <span class="theme-label-range">Article #11~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">SpaceX·OpenAI·Anthropic IPO, AI 붐의 한계를 시험한다</div>
+    <div class="article-title-en">SpaceX, OpenAI and Anthropic IPOs set to test limits of AI boom</div>
+    <div class="article-keypoint">SpaceX·OpenAI·Anthropic 동시 IPO 추진, AI 자본시장 흡수력 한계 시험대</div>
+    <a class="article-link" href="https://www.ft.com/content/ae9bb47d-bd1d-473c-b4c5-abae0420cc12" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 17:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">핵 스타트업 Deep Fission, 또다시 IPO 도전 선언 - 투자자 설득이 과제</div>
+    <div class="article-title-en">Nuclear startup Deep Fission says it’s going public, again, and I have questions</div>
+    <div class="article-keypoint">소형 핵 스타트업 Deep Fission, $1.57억 IPO 추진 - AI 전력 수요 겨냥 상장 신뢰성 논란</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/23/nuclear-startup-deep-fission-says-its-going-public-again-and-i-have-questions/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 23:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">SpaceX Starship, 모의 위성 배치 성공적 시험 완료</div>
+    <div class="article-title-en">SpaceX Starship Deploys Mock Satellites in Successful Test</div>
+    <div class="article-keypoint">SpaceX Starship, 모의 위성 배치 성공 - 부스터 분리 실패로 기술 리스크 병존</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-23/spacex-starship-successfully-deploys-mock-satellites-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 21:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Elon Musk, (지구) 태양광을 포기하다</div>
+    <div class="article-title-en">Elon Musk has given up on solar power (on Earth)</div>
+    <div class="article-keypoint">Musk, 지구 태양광 포기 후 천연가스·궤도 데이터센터 집중 - ESG·에너지 전략 역주행</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/23/elon-musk-has-given-up-on-solar-power-on-earth/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 22:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Nvidia 공급망 균열과 AI 인프라 버블 경고</span>
+    <span class="theme-label-range">Article #15~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Nvidia는 칩을 공급할 수 있지만, 빅테크의 신용·전력망 위기는 해결할 수 없다</div>
+    <div class="article-title-en">Nvidia can deliver chips — but it can’t buy Big Tech out of its credit and power-grid crisis</div>
+    <div class="article-keypoint">Nvidia 칩 공급 지속에도 신용 프리미엄 상승·전력망 위기로 빅테크 구조 한계 노출</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidia-can-deliver-chips-but-it-cant-buy-big-tech-out-of-its-credit-and-power-grid-crisis-9c114e62?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 03:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Nvidia CEO, AI 칩 밀수 조사 속 Super Micro에 '컴플라이언스 강화' 촉구</div>
+    <div class="article-title-en">Nvidia CEO Urges Super Micro To "Enhance Compliance" Amid AI Chip-Smuggling Probe</div>
+    <div class="article-keypoint">Jensen Huang, Super Micro에 '컴플라이언스 강화' 공개 촉구 - 칩 밀수 하방 리스크 인식 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/nvidia-ceo-urges-super-micro-enhance-compliance-amid-ai-chip-smuggling-probe" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">거품이 낀 시장 섹터 4곳 - Nvidia조차 가장 큰 버블이 아니다</div>
+    <div class="article-title-en">These 4 market sectors look frothy — and Nvidia’s isn’t even the biggest bubble</div>
+    <div class="article-keypoint">S&P 500, 향후 2년 내 30% 급락 확률 - Nvidia 포함 4개 섹터 버블 경고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/these-4-market-sectors-look-frothy-and-nvidias-isnt-even-the-biggest-bubble-d740acf7?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 01:52 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">관세·무역 긴장과 우크라이나 전장 변수</span>
+    <span class="theme-label-range">Article #18~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Trump에 찍힐까 눈치 보는 미국 기업들, 조용히 관세 환급 경쟁 참여</div>
+    <div class="article-title-en">US Companies Shamed by Trump Tiptoe Into a Tariff-Refund Race</div>
+    <div class="article-keypoint">미국 기업들, 관세 환급 수혜 침묵 - 트럼프 눈치보기가 인플레 경로 불투명성 가중</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-23/us-companies-shamed-by-trump-tiptoe-into-a-tariff-refund-race" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">우크라이나, 러시아의 블랙마켓 Starlink 단말기 차단 후 영토 탈환</div>
+    <div class="article-title-en">Ukraine Regained Territory After Cutting Russia's Black Market Starlink Terminals</div>
+    <div class="article-keypoint">우크라이나, 러시아 블랙마켓 Starlink 차단으로 전선 지휘 마비·영토 탈환 성공</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/us-intelligence-says-ukraine-regained-territory-after-cutting-russias-black-market" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 01:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Zelensky, 러시아가 극초음속 'Oreshnik' 미사일로 우크라이나 공격 준비 중 경고</div>
+    <div class="article-title-en">Russia preparing strike on Ukraine using hypersonic ‘Oreshnik’ missile, Zelensky says</div>
+    <div class="article-keypoint">러시아 극초음속 Oreshnik 미사일 공격 준비 경고 - 유럽 방산 섹터 리스크 재부상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/russia-preparing-strike-on-ukraine-using-hypersonic-oreshnik-missile-zelenskiy-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">인도 통상장관, FTA 협상 위해 캐나다 방문 - Carney 총리와 회담 예정</div>
+    <div class="article-title-en">India Trade Minister to Visit Canada for FTA Talks, Meet Carney</div>
+    <div class="article-keypoint">인도-캐나다 FTA 협상 5월 25~27일 재개 - 트럼프 관세 충격 속 다자 무역 재편 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-23/india-trade-minister-to-visit-canada-for-fta-talks-meet-carney" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 19:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">미국, 베네수엘라 수도 카라카스 상공 군사 훈련 실시</div>
+    <div class="article-title-en">US conducts military drill over Venezuelan capital Caracas</div>
+    <div class="article-keypoint">미국, 베네수엘라 수도 카라카스 상공 군사 훈련 - 중남미 지정학 압박 수위 상승</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/us-conducts-military-drill-over-venezuelan-capital-caracas-4708090" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Trump의 압박에도 쿠바는 베네수엘라의 전철을 밟지 않을 수 있다</div>
+    <div class="article-title-en">Despite Trump’s pressure, Cuba may not turn out like Venezuela</div>
+    <div class="article-keypoint">쿠바, 베네수엘라식 붕괴 시나리오 저항력 보유 - 트럼프 압박에도 구조적 차별화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/explainer-despite-trumps-pressure-cuba-may-not-turn-out-like-venezuela" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 19:10 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#26</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">'행복을 가져다주지 않을 것': 62세 독신 억만장자 독자에게 전하는 조언</div>
+    <div class="article-title-en">‘It will not bring you happiness’: I have advice for your single, childless 62-year-old multimillionaire reader</div>
+    <div class="article-keypoint">62세 독신 부유층 재정 조언 - 시장 무관 라이프스타일 칼럼</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/it-will-not-bring-you-happiness-i-have-advice-for-your-single-childless-62-year-old-multimillionaire-reader-1cb6a09f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">F1 전 세계 챔피언 Alain Prost, 스위스 자택 강도 사건으로 부상 보도</div>
+    <div class="article-title-en">Former F1 world champion Alain Prost reportedly injured in robbery at Swiss home</div>
+    <div class="article-keypoint">F1 챔피언 Alain Prost, 스위스 자택 강도로 부상 - 시장 무관 사건</div>
+    <a class="article-link" href="https://www.theguardian.com/sport/2026/may/23/f1-world-champion-alain-prost-injured-robbery-switzerland" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/23 21:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Starmer, TNT Sports에 챔피언스리그 결승 무료 중계 요청</div>
+    <div class="article-title-en">Starmer asks TNT Sports to make Champions League final free to view</div>
+    <div class="article-keypoint">Starmer, 챔피언스리그 결승 무료 중계 요청 - 영국 공공 방송 접근권 정치 이슈화</div>
+    <a class="article-link" href="https://www.theguardian.com/football/2026/may/23/starmer-tnt-sports-champion-league-final-free-arsenal-paris-saint-germain" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/24 01:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
