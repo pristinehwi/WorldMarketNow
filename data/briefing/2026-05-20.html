@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-20 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/20 07:48 KST</div>
+    <div class="header-date">2026-05-20</div>
+    <div class="header-headline">Warsh Fed 의장 취임, 채권시장 동시 급등 압박</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 취임 후 첫 Fed 행보 및 국채 금리 추가 상승 여부 - 금리 민감 자산 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Fed 권력 이양: Warsh 취임과 채권시장 압박</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">Kevin Warsh가 이번 주 금요일 Federal Reserve 의장으로 공식 취임하면서, 취임 직전 국채 금리가 수년래 최고 수준으로 급등하는 이중 압박이 부각됐다. Trump는 기존의 강압적 금리 인하 요구에서 한발 물러서 Warsh에게 금리 결정 재량을 주겠다고 발언했으나, 이는 Fed 독립성 논란의 연장선에서 시장이 예의주시해온 신호다. Warsh는 인하를 요구하는 백악관과 동결 기조를 유지하려는 FOMC 동료들, 그리고 급등하는 채권 시장이라는 삼중 압박 속에 취임하게 됐다. 국채 수익률 상승은 재정 우려와 맞물려 Warsh의 초기 정책 신뢰도 형성에 핵심 시험대가 될 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 패권 경쟁: 인재·투자·기업 간 역학 재편</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#15</span>
+    </div>
+    <div class="theme-summary">Karpathy가 Tesla·OpenAI를 거쳐 Anthropic의 프리트레이닝 팀에 합류하면서 AI 최상위 인재 쟁탈전이 새로운 국면을 맞았다. OpenAI는 Musk와의 법적 분쟁에서 Altman이 사실상 승리하며 지배구조 논란을 일단락지었고, 이는 OpenAI의 영리화 전환 경로를 더욱 가속할 가능성이 높다. Google은 IO 2026에서 Gemini 앱의 전면 개편, AI 에이전트, 오디오 스마트 글라스 등을 공개하며 ChatGPT·Claude와의 정면 경쟁을 선언했다. SoftBank의 OpenAI에 대한 600억 달러 이상 집중 베팅에 대한 내부 우려도 커지고 있어, AI 투자 거품 논쟁이 동시에 진행 중이다. Berkshire의 Macy's 투자는 AI 버블에 대한 반사적 경고로 해석되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">지정학 리스크: 이란 핵 협상·중동 긴장 고조</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #16~#21</span>
+    </div>
+    <div class="theme-summary">Trump가 이란에 '2~3일 내 협상 타결 또는 강력 타격'을 경고하면서 중동 군사 긴장이 최고조에 달했다. JD Vance 부통령도 군사 옵션이 '준비 완료' 상태임을 확인했고, 이란은 '새로운 전선 개설'로 맞대응을 예고했다. UAE 핵발전소 인근에 드론 공격이 가해져 외부 전력 공급이 차단되고 비상 발전기가 가동되는 사태가 발생, 전시 핵시설 안전 우려가 현실화됐다. Bessent 재무장관은 동맹국들에 이란 자금 네트워크 차단 강화를 촉구하며 제재 목록 재검토를 선언했고, Putin의 베이징 방문에서 러중 간 40여 개 협정 체결이 예정돼 지정학적 블록화가 심화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 인프라·신흥시장·산업 파급 효과</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #22~#26</span>
+    </div>
+    <div class="theme-summary">AI 인프라 확장이 금속·광물 수요를 통해 신흥국 통화 강세 요인으로 작용할 것이라는 Barclays의 분석이 제시됐다. Google과 Blackstone의 클라우드 합작법인 설립 소식은 CoreWeave 등 독립 AI 인프라 업체에 경쟁 심화 신호로 해석되며 CoreWeave 주가가 하락했다. 한국 개인투자자들의 마진 부채가 급증하며 '버블 붕괴 위험을 감수하더라도 랠리를 놓치지 않겠다'는 투기적 심리가 확산되고 있어 신흥시장 내 과열 경보가 켜졌다. SpaceX IPO 가능성이 가시화되면서 월가의 우주 산업 투자 경쟁도 점화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">무역·관세·통화 정책 긴장</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #27~#28</span>
+    </div>
+    <div class="theme-summary">EU 의회가 중국산 저가 철강에 대응하기 위한 고율 관세 법안을 채택했으며, 7월 1일 발효를 앞두고 있다. 사우디아라비아와의 미국 핵 협력 협정이 엄격한 비확산 안전장치 없이 체결됐다는 비판이 의회에서 제기되며 지정학적 리스크와 에너지 외교의 교차점이 부각됐다. Shein의 Everlane 인수 보도는 관세 및 가격 경쟁 압박이 지속가능 패션 브랜드까지 잠식하고 있음을 보여주는 구조적 신호다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #29~#30</span>
+    </div>
+    <div class="theme-summary">뉴욕시장 Mamdani가 시 소유 식료품점 신규 부지를 발표했으며, 이는 민주사회주의 정책 의제의 일환이다. 새로운 암호화폐 기반 '선구매-나중 결제' 카드 모델이 도박 문화의 일상 소비 침투 사례로 비판받고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Fed 권력 이양: Warsh 취임과 채권시장 압박</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Trump, Warsh에게 금리 결정 재량 부여 시사 - Fed 감시자들이 우려해온 발언</div>
+    <div class="article-title-en">Trump says he’ll let Warsh ‘do what he wants to do’ with interest rates. It’s a remark that Fed watchers have been bracing for.</div>
+    <div class="article-keypoint">Trump, Warsh에 금리 재량 부여 시사 - Fed 독립성 논란 국면 전환 가능성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trump-says-hell-let-warsh-do-what-he-wants-to-do-with-interest-rates-its-a-remark-that-fed-watchers-have-been-bracing-for-2b014504?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 05:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Kevin Warsh, 금요일 Federal Reserve 의장으로 공식 취임 예정</div>
+    <div class="article-title-en">Kevin Warsh to be sworn in as Federal Reserve chair on Friday</div>
+    <div class="article-keypoint">Warsh, 금요일 Fed 의장 취임 - 정책 방향 첫 신호에 시장 집중</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/05/18/kevin-warsh-trump-federal-reserve-chair.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/19 20:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Warsh Fed 의장 취임 앞두고 채권시장 불안 - 국채 금리 수년래 최고 급등</div>
+    <div class="article-title-en">Bond Markets Give Yippy Vibes Just as Kevin Warsh Is Set to Become Fed Chair</div>
+    <div class="article-keypoint">국채 금리 수년래 최고 급등, Warsh 취임 전날 채권시장 불안 고조</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-05-19/bond-markets-give-yippy-vibes-just-as-kevin-warsh-is-set-to-become-fed-chair" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/19 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">국채 금리 급등, Warsh 신임 Fed 의장에 압박 가중</div>
+    <div class="article-title-en">Surging Bond Yields Add to Pressures Building for Fed’s Warsh</div>
+    <div class="article-keypoint">백악관 인하 압박 + 동료 동결 기조 + 채권 급등, Warsh 삼중 압박 속 취임</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-19/surging-bond-yields-add-to-pressures-building-for-fed-s-warsh" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 03:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">차트가 경고하는 장기 국채 금리 상승 시대의 도래 가능성</div>
+    <div class="article-title-en">These charts offer a warning to the next generation — a new era of higher Treasury yields may be coming</div>
+    <div class="article-keypoint">국채 금리 차트 '페넌트' 패턴, 장기 고금리 시대 진입 가능성 기술적 경고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/these-charts-offer-a-warning-to-the-next-generation-a-new-era-of-higher-rates-may-be-coming-ee913d36?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 06:46 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 패권 경쟁: 인재·투자·기업 간 역학 재편</span>
+    <span class="theme-label-range">Article #6~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Tesla 출신이자 OpenAI 공동창업자 Andrej Karpathy, Anthropic 합류</div>
+    <div class="article-title-en">Andrej Karpathy, Tesla Alum and OpenAI Co-Founder, Joins Anthropic</div>
+    <div class="article-keypoint">AI 최정상 인재 Karpathy, Anthropic 합류로 프리트레이닝 경쟁 구도 재편 가속</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/andrej-karpathy-tesla-alum-and-openai-co-founder-joins-anthropic-c665f51f?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Berkshire, Macy's 투자로 AI 버블 조롱</div>
+    <div class="article-title-en">Berkshire Trolls The AI Bubble By Buying Macy's</div>
+    <div class="article-keypoint">Berkshire의 Macy's 투자, AI 버블 과열에 대한 역발상 경고 메시지로 해석</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/berkshire-trolls-ai-bubble-buying-macys" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 00:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Google, IO 2026에서 Gemini 앱 대폭 업데이트 - ChatGPT·Claude에 정면 도전</div>
+    <div class="article-title-en">Google updates its Gemini app to take on ChatGPT and Claude at IO 2026</div>
+    <div class="article-keypoint">Google IO 2026, Gemini 앱 전면 개편으로 ChatGPT·Claude와 정면 경쟁 선언</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/19/google-updates-its-gemini-app-to-take-on-chatgpt-and-claude-at-io-2026/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 02:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SoftBank 손정의의 OpenAI에 대한 맹목적 베팅, 내부 우려 확대</div>
+    <div class="article-title-en">SoftBank Founder’s Starstruck Bet on OpenAI Raises Concern</div>
+    <div class="article-keypoint">SoftBank, OpenAI에 600억 달러 이상 집중 베팅 - 내부 우려 확대로 AI 버블 논쟁 재점화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/features/2026-05-19/softbank-founder-son-s-devotion-to-openai-s-altman-spooks-some-insiders" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Google, 개인 업무용 새 Gemini AI 에이전트 공개</div>
+    <div class="article-title-en">Google Unveils New Gemini AI Agent for Personal Tasks</div>
+    <div class="article-keypoint">Google, Gemini AI 에이전트 신제품 공개 - AI 범용 플랫폼 전쟁 본격화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/google-unveils-new-gemini-ai-agent-for-personal-tasks-b8093197?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">오피니언 | Anthropic 대 중국</div>
+    <div class="article-title-en">Opinion | Anthropic vs. China</div>
+    <div class="article-keypoint">Anthropic, 국가 안보·AI 금융 버블 우려 교차점에서 전략적 포지셔닝 주목</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/anthropic-vs-china-e1df854d?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 05:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Musk vs Altman: 테크 거물들의 OpenAI 법정 전쟁</div>
+    <div class="article-title-en">Musk v Altman: tech bros at war over OpenAI – The Latest</div>
+    <div class="article-keypoint">Musk-Altman 소송 Altman 승리 - OpenAI 영리화 전환 경로 가속 가능성</div>
+    <a class="article-link" href="https://www.theguardian.com/news/video/2026/may/19/musk-v-altman-tech-bros-at-war-over-openai-the-latest" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 01:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Musk는 Altman이 비영리 단체를 '탈취'했다고 주장했지만, 재판은 그도 유사한 목적을 가졌음을 드러냈다</div>
+    <div class="article-title-en">Elon Musk said Sam Altman “stole” a non-profit — but the trial showed he had similar aims</div>
+    <div class="article-keypoint">Musk-Altman 재판, AI 산업 지배 구조가 소수 남성 엘리트에 집중됨을 재확인</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/19/elon-musk-said-sam-altman-stole-a-non-profit-but-the-trial-showed-he-had-similar-aims/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 05:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Musk와 Altman의 법정 드라마에서 우리는 무엇을 배웠나?</div>
+    <div class="article-title-en">What did we learn from Elon Musk and Sam Altman’s courtroom drama?</div>
+    <div class="article-keypoint">Musk-Altman 법정 드라마, AI 산업 권력 집중 구조의 민낯 노출</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/may/19/what-did-we-learn-from-elon-musk-and-sam-altmans-courtroom-drama" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/19 20:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Google, Meta 따라 IO 2026에서 오디오 기반 스마트 글라스 공개</div>
+    <div class="article-title-en">Google takes a page out of Meta’s book, announces new audio-powered smart glasses at IO 2026</div>
+    <div class="article-keypoint">Google 오디오 스마트 글라스 공개, Meta 레이밴 모델에 정면 도전</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/19/google-takes-a-page-out-of-metas-book-announces-new-audio-powered-smart-glasses-at-io-2026/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 04:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">지정학 리스크: 이란 핵 협상·중동 긴장 고조</span>
+    <span class="theme-label-range">Article #16~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">미국-사우디 핵 협력 협정, 엄격한 비확산 안전장치 결여 - 의회 서한 지적</div>
+    <div class="article-title-en">US nuclear power pact with Saudi Arabia lacks strict guardrails, letter says</div>
+    <div class="article-keypoint">미-사우디 핵 협력 협정, 비확산 안전장치 미흡 논란으로 지정학 리스크 부각</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-nuclear-power-pact-with-saudi-arabia-lacks-strict-guardrails-letter-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 06:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Trump, 시진핑이 이란에 무기를 공급하지 않을 것이라 주장 - 군사 공격 위협 속</div>
+    <div class="article-title-en">Trump claims Xi will not arm Iran as strike threat looms</div>
+    <div class="article-keypoint">Trump, 이란에 2~3일 내 협상 타결 촉구 - 호르무즈 해협 봉쇄 리스크 임박</div>
+    <a class="article-link" href="https://www.ft.com/content/95b98e06-3a04-4cfa-9722-f8bd27a5109b" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 02:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Vance, 이란에 '군사 재개 준비 완료' 경고 - 이란은 '새로운 전선' 개설 경고로 응수</div>
+    <div class="article-title-en">JD Vance says US remains ‘locked and loaded’ to restart military campaign as Iran warns of ‘new fronts’ – as it happened</div>
+    <div class="article-keypoint">Vance '군사 옵션 준비 완료' + 이란 '새 전선 경고' - 중동 확전 리스크 최고조</div>
+    <a class="article-link" href="https://www.theguardian.com/world/live/2026/may/19/us-israel-iran-war-trump-peace-attacks-gulf-allies-strikes-hormuz-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 03:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">UAE 원자로 인근 공격, 전시 핵발전소 안전 우려 재점화</div>
+    <div class="article-title-en">Strike near UAE reactor revives concerns over nuclear plant safety in wartime</div>
+    <div class="article-keypoint">UAE 핵발전소 드론 피격으로 비상발전기 가동 - 전시 핵 안전 리스크 현실화</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/19/strike-near-uae-reactor-concerns-nuclear-plant-safety-iran-war-middle-east" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/19 23:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">데일리 메모: Putin 베이징 방문, 러시아 군사훈련</div>
+    <div class="article-title-en">Daily Memo: Putin in Beijing, Russian Drills</div>
+    <div class="article-keypoint">Putin 베이징 방문, 러중 40개 협정 체결 예정 - 지정학적 블록화 심화</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/daily-memo-putin-in-beijing-russian-drills/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/19 23:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Bessent, 이란 자금 차단 강화 촉구 및 미국 제재 목록 재검토 선언</div>
+    <div class="article-title-en">Bessent urges more disruption to Iran's financing, will review US sanctions list</div>
+    <div class="article-keypoint">Bessent, 이란 제재 목록 재검토 선언 - 금융 제재 네트워크 강화 신호</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/bessent-urges-more-disruption-to-irans-financing-will-review-us-sanctions-list" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/19 22:28 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 인프라·신흥시장·산업 파급 효과</span>
+    <span class="theme-label-range">Article #22~#26</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">지속가능 경제가 미래를 지배한다</div>
+    <div class="article-title-en">Sustainable Economies Will Own the Future</div>
+    <div class="article-keypoint">AI·전쟁 이후 지속가능성 의제가 경제 안보·주권 중심으로 재편되는 구조 변화</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/sustainability-is-key-to-economic-security-future-industrial-competitiveness-by-bruno-bouygues-and-bertrand-badre-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/19 23:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Barclays, AI 인프라 확산이 금속 부국 신흥국 통화 강세 견인할 것</div>
+    <div class="article-title-en">AI Rollout to Boost Metals-Rich EM Currencies, Barclays Says</div>
+    <div class="article-keypoint">AI 인프라 확산이 금속 수요 증가 경로로 신흥국 통화 강세 요인으로 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-19/ai-rollout-to-boost-metals-rich-em-currencies-barclays-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/19 20:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Google 클라우드 합작법인 출범 소식에 CoreWeave 주가 하락 - 경쟁 심화 우려</div>
+    <div class="article-title-en">CoreWeave’s stock falls as new Google cloud venture may signal more competition ahead</div>
+    <div class="article-keypoint">Google-Blackstone 클라우드 합작, CoreWeave 주가 하락 - AI 인프라 경쟁 심화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/coreweaves-stock-falls-as-new-google-cloud-venture-may-signal-more-competition-ahead-7bd7fb30?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 05:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">SpaceX IPO 가시화, 월가의 우주 산업 투자 경쟁 점화</div>
+    <div class="article-title-en">SpaceX Going Public Is Igniting Wall Street’s Own Race to Orbit</div>
+    <div class="article-keypoint">SpaceX IPO 가시화, 월가 우주 산업 차기 수혜주 선점 경쟁 점화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-19/spacex-going-public-is-igniting-wall-street-s-own-race-to-orbit" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">한국 버블 광풍: 개인투자자들, 마진 부채 한도까지 끌어올리며 '완전 붕괴 위험' 감수</div>
+    <div class="article-title-en">Korean Bubble Mania: Retail Investors Max Out On Margin Debt, Choose To "Risk Complete Collapse" Than Miss Stock Rally</div>
+    <div class="article-keypoint">한국 개인투자자 마진 부채 급증, 신흥시장 투기적 버블 조기 경보 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/korean-bubble-mania-retail-investors-max-out-margin-debt-choose-risk-complete-collapse-miss" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">무역·관세·통화 정책 긴장</span>
+    <span class="theme-label-range">Article #27~#28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Shein의 Everlane 인수설, 현대 소비자에게 원칙보다 가격이 우선임을 보여주다</div>
+    <div class="article-title-en">Shein’s reported purchase of Everlane shows that price trumps principles for many shoppers today</div>
+    <div class="article-keypoint">Shein의 Everlane 인수, 관세·가격 압박이 지속가능 패션 브랜드까지 잠식</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/millennial-era-retail-was-supposed-to-have-principles-but-lower-prices-have-won-out-31498633?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 05:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">EU 의회, 중국산 저가 철강 대응 고율 관세 채택</div>
+    <div class="article-title-en">EU Parliament adopts higher tariffs on foreign steel to battle China’s cheap exports</div>
+    <div class="article-keypoint">EU, 중국산 철강 고율 관세 7월 발효 - 무역 보호주의 확산 가속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/eu-parliament-adopts-higher-tariffs-on-foreign-steel-to-battle-chinas-cheap-exports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 01:42 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #29~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">'선구매-나중 결제' 암호화폐 카드 출시 - 일상 소비에 도박 문화 침투 논란</div>
+    <div class="article-title-en">This new ‘buy-now-pay-maybe’ crypto card may refund some of your purchases — but at what cost?</div>
+    <div class="article-keypoint">암호화폐 기반 선구매-후결제 카드, 도박 문화의 일상 소비 침투로 규제 논란</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/buy-now-pay-maybe-this-new-crypto-card-brings-the-casino-to-the-checkout-line-093fbe57?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 04:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Mamdani 뉴욕시장, 시 소유 첫 식료품점 부지 발표</div>
+    <div class="article-title-en">Mamdani Touts First City-Owned Grocery Store</div>
+    <div class="article-keypoint">뉴욕시 소유 식료품점 추진 - 민주사회주의 정책의 도시 경제 실험 주목</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/mamdani-touts-first-city-owned-grocery-store" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/20 06:40 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
