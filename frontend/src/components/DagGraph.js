@@ -932,15 +932,23 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
       // 가격 노드 value 파싱
       let dateStr = '', priceLine = '', pctPart = '', valueColor = '#52b788';
       if (node.value && !isConcept) {
-        const hasArrow = node.value.indexOf('→') > -1;
-        if (hasArrow) {
-          const dateMatch = node.value.match(/\[(\d+\/\d+)\][^→]*→[^[]*\[(\d+\/\d+)\]/);
-          if (dateMatch) dateStr = `${dateMatch[1]} → ${dateMatch[2]}`;
+        // → 와 -> 두 형식 모두 지원 (COMMON_RULES 변환 이후 -> 사용)
+        const arrowChar = node.value.indexOf('->') > -1 ? '->' : (node.value.indexOf('→') > -1 ? '→' : null);
+        if (arrowChar) {
+          // 날짜 파싱: [MM/DD] $prev->[MM/DD] $current 또는 → 형식
+          const dateRegex = arrowChar === '->'
+            ? /\[(\d+\/\d+)\][^-]*->[^[]*\[(\d+\/\d+)\]/
+            : /\[(\d+\/\d+)\][^→]*→[^[]*\[(\d+\/\d+)\]/;
+          const dateMatch = node.value.match(dateRegex);
+          if (dateMatch) dateStr = `${dateMatch[1]} -> ${dateMatch[2]}`;
           const cleanValue = node.value.replace(/\[\d+\/\d+\]\s*/g, '');
           const cleanParen = cleanValue.lastIndexOf('(');
           priceLine = cleanParen > -1 ? cleanValue.slice(0, cleanParen).trim() : cleanValue;
           const parenIdx = node.value.lastIndexOf('(');
-          pctPart = parenIdx > node.value.indexOf('→') ? node.value.slice(parenIdx).trim() : '';
+          const arrowIdx = arrowChar === '->'
+            ? node.value.indexOf('->')
+            : node.value.indexOf('→');
+          pctPart = parenIdx > arrowIdx ? node.value.slice(parenIdx).trim() : '';
           valueColor = pctPart.startsWith('(-') ? '#ff6060' : '#52b788';
         } else {
           priceLine = node.value;
@@ -1154,25 +1162,26 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
         .attr('y1', src.y)
         .attr('x2', vx)
         .attr('y2', vy)
-        .attr('stroke', '#6366f1')
-        .attr('stroke-width', 1.2)
+        .attr('stroke', '#ffe066')
+        .attr('stroke-width', 1.5)
         .attr('stroke-dasharray', '5,4')
         .attr('stroke-opacity', 0)
         .attr('marker-end', 'url(#arrow-missing)')
         .transition().delay(hi * 80 + 600).duration(400)
-        .attr('stroke-opacity', 0.55);
+        .attr('stroke-opacity', 0.85);
 
       // 레이블
       missingLayer.append('text')
         .attr('x', vx + 4)
         .attr('y', vy)
-        .attr('font-size', '9px')
-        .attr('fill', '#6366f1')
+        .attr('font-size', '11px')
+        .attr('font-weight', '600')
+        .attr('fill', '#ffe066')
         .attr('dominant-baseline', 'middle')
         .style('opacity', 0)
-        .text(`→ ${hop.to || ''}`)
+        .text(`-> ${hop.to || ''}`)
         .transition().delay(hi * 80 + 700).duration(300)
-        .style('opacity', 0.75);
+        .style('opacity', 1.0);
     });
 
     // ── feedbackRisk: 피드백 루프 경고 배지 ──
@@ -1191,14 +1200,15 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
           .attr('rx', 12).attr('ry', 12)
           .attr('fill', 'none')
           .attr('stroke', '#ef4444')
-          .attr('stroke-width', 1.5)
-          .attr('stroke-dasharray', '4,2')
-          .style('opacity', 0.6)
+          .attr('stroke-width', 2.5)
+          .attr('stroke-dasharray', '6,3')
+          .style('opacity', 0.85)
           .style('pointer-events', 'none');
         nodeLayer.append('text')
-          .attr('x', fp.x + nodeW / 2 + 2)
-          .attr('y', fp.y - nodeH / 2 - 2)
-          .attr('font-size', '9px')
+          .attr('x', fp.x - nodeW / 2)
+          .attr('y', fp.y - nodeH / 2 - 8)
+          .attr('font-size', '12px')
+          .attr('font-weight', '700')
           .attr('fill', '#ef4444')
           .text('⟳ 피드백루프')
           .style('pointer-events', 'none');
@@ -1233,7 +1243,15 @@ function DagGraph({ thread, activeTimeEvent, prices, onNodeClick, onOpenPanel, e
         <div className="dag-fragile-bar">
           <span className="dag-fragile-icon">⚠</span>
           <span className="dag-fragile-text">
-            취약 링크: {thread.chainFragility.fragileEdge}
+            취약 링크: {(() => {
+              const fe = thread.chainFragility.fragileEdge || '';
+              const ns = thread.nodes || [];
+              return fe.replace(/([a-zA-Z][a-zA-Z0-9_]*)\s*[-\u2192>]{1,2}\s*([a-zA-Z][a-zA-Z0-9_]*)/g, (_, a, b) => {
+                const la = ns.find(n => n.id === a)?.label || a;
+                const lb = ns.find(n => n.id === b)?.label || b;
+                return la + ' -> ' + lb;
+              });
+            })()}
             {thread.chainFragility.fragileReason && ` — ${thread.chainFragility.fragileReason}`}
           </span>
         </div>
