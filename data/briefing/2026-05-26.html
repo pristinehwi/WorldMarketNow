@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-26 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/26 07:48 KST</div>
+    <div class="header-date">2026-05-26</div>
+    <div class="header-headline">미-이란 종전 협상 급진전, WTI 6% 급락</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">이란 협상 최종 타결 여부 및 Hormuz 재개 시점 - 유가·Fed 인하 기대 동시 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">미-이란 협상 급진전: 유가 6% 폭락이 여는 에너지·통화정책 연쇄 반응</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">오늘 가장 두드러진 변화는 미-이란 전쟁 종결 협상이 구체화되면서 WTI 원유 선물이 장중 6% 이상 급락한 것으로, 최근 중동 리스크 프리미엄이 에너지 가격을 지탱하던 흐름과 정반대의 국면이 전개됐다. 호르무즈 해협 재개 가능성이 보도되자 석유 시장은 즉각 반응했고, 주식 선물은 동반 급등했다. 그러나 Trump 대통령이 '서두르지 않는다'고 발언하는 동시에 이란의 농축우라늄 포기 요구를 재확인했고, 미국·이스라엘 전투기가 Bandar Abbas 항구를 공습해 사망자가 발생했다는 보도가 나오면서 협상 타결의 불확실성은 여전히 높다. Netanyahu는 미-이란 평화협상이 이스라엘의 행동반경을 제약할 것을 우려해 헤즈볼라에 대한 고강도 공습을 명령했고, 지정학 리스크는 다층적으로 분산되고 있다. 유가 급락이 지속될 경우 인플레이션 압력 완화로 Fed 금리 인하 논거가 강화될 수 있어, BlackRock은 Warsh 신임 의장 체제에서도 인하를 정당화할 '충분한 요인'이 존재한다고 평가했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SpaceX IPO: 머스크 개인 권력이 역대 최대 공모 흥행의 핵심 변수</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#8</span>
+    </div>
+    <div class="theme-summary">SpaceX가 사상 최대 규모 IPO를 추진하며 일반 투자자를 핵심 동력으로 삼는 전략이 주목받고 있다. 이번 상장은 단순한 자본 조달을 넘어 Elon Musk의 정치·사회적 영향력이 자본시장 구조를 어떻게 시험하는지를 보여주는 사례로 평가된다. 이탈리아에서는 Meloni 연정이 베네치아 시장 선거를 방어하는 등 Musk와 연계된 정치 세력의 존재감이 유럽에서도 확인된다. SpaceX IPO 성공 여부는 기관뿐 아니라 개인 투자자 네트워크 동원력에 달려 있어, 기존 대형 공모와 다른 수요 구조를 형성할 가능성이 크다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 패권 경쟁: 교황 윤리 경고에서 Huawei 제재 돌파까지 - 기술·규제·공급망 동시 압박</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #9~#14</span>
+    </div>
+    <div class="theme-summary">오늘 AI 분야에서 새롭게 부각된 것은 교황 Leo XIV가 첫 회칙을 통해 AI의 '인간 노예화' 위험을 경고하며 Anthropic의 Claude를 교회가 공식 활용하는 아이러니한 구도가 형성된 점이다. 동시에 Meta와 Google 모델의 안전장치가 수분 내 무력화돼 생물무기·악성코드 응답이 가능하다는 실증 사례가 보고되며 AI 거버넌스 공백 문제가 재부각됐다. 공급망 측면에서는 Huawei가 제재 우회 첨단 칩 돌파구를 공개했고, 이에 SMIC 주가가 중국 내 사상 최고치를 기록하며 미국 수출통제 체계에 대한 시장의 신뢰를 흔들었다. S&P 500 비(非)빅테크 493개 기업의 실적 기여도가 5년 만에 최고 수준으로 올라서면서 AI 중심 빅테크 집중에서 이익 성장 저변 확대로의 구조 변화 신호도 감지된다. 산업정책 측면에서는 각국 정부가 AI·첨단산업에 개입하되 결과를 예측하기 어려운 '지향적 즉흥' 방식이 불가피하다는 분석이 제기됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Fed·거시: Warsh 체제 하 인하 논쟁과 채권·주식 시장의 재조정</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#17</span>
+    </div>
+    <div class="theme-summary">BlackRock이 Warsh 신임 Fed 의장 체제에서도 금리 인하를 정당화할 '충분한 요인'이 있다고 밝히면서, 매파 일색으로 예상됐던 Warsh 체제에 대한 시장의 단선적 해석에 균열이 생겼다. 유가 급락이 현실화될 경우 인플레이션 경로가 하향 수정될 수 있어 Fed의 정책 유연성이 예상보다 빠르게 회복될 가능성이 논의된다. 한편 Fed가 30년간 시장 사이클을 '조정'과 '베어마켓'으로 구분해온 방식 자체가 재점검받고 있으며, 한국 채권시장에서는 단기물이 BOK 인상을 과도하게 반영해 매수 기회가 형성됐다는 분석도 나왔다. Trump 대통령의 달러 약세 압박 정책은 중간선거를 앞두고 인플레와 재정 건전성 모두를 악화시킬 수 있어 정책 전환이 필요하다는 경고가 제기됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">에너지 안보와 원자재 구조 변화: 핵에너지 확장·금 매입·구리 리스크</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #18~#21</span>
+    </div>
+    <div class="theme-summary">아시아 에너지 위기를 배경으로 싱가포르가 2027년 IAEA의 핵에너지 도입 타당성 심사를 앞두고 있어 동남아 핵에너지 확산 논의가 본격화되는 신호로 읽힌다. 카자흐스탄의 첫 원전은 Rosatom의 자금 조달 난항으로 추가 지연되며 중앙아시아 에너지 전환의 불확실성이 커지고 있다. 가나 중앙은행은 6월부터 대형 금광 산출량의 30%를 의무 매입(기존 20%)하기로 해 금 시장의 국가 개입 강도가 높아졌다. 칠레 국영 광산 Codelco의 구리 생산량 허위 보고 파장이 노조 보너스 환수 갈등으로 번지며 글로벌 구리 공급망 신뢰도에 추가 부담을 주고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #22~#29</span>
+    </div>
+    <div class="theme-summary">유럽·글로벌 정치 영역에서 다양한 개별 이슈들이 병렬 전개됐다. 키프로스 선거에서 극우 ELAM이 의석을 두 배로 늘리며 유럽 내 극우 세력의 지속적 확산을 보여줬고, Macron이 벨라루스 Lukashenko에게 우크라이나 전쟁 직접 참전을 경고하는 이례적 전화통화가 이뤄졌다. 영국에서는 Starmer 총리에게 인도 법원의 영국 인권활동가 기소 문제 개입을 촉구하는 압력이 가해졌고, 브라질 Lula 대통령은 초기 피부암 진단으로 방사선 치료를 시작해 신흥국 정치 안정성 변수로 부상했다. 이탈리아 증시는 에너지·반도체 랠리에 힘입어 2000년 이후 26년 만에 사상 최고치를 경신했으며, 영국 노동당 정부는 청년 실업 대응 전략의 전면 재설계를 촉구받고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">미-이란 협상 급진전: 유가 6% 폭락이 여는 에너지·통화정책 연쇄 반응</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">미-이스라엘, 이란 Bandar Abbas 항구 공습 보도 - Trump, 농축우라늄 포기 요구</div>
+    <div class="article-title-en">Reports Of Deadly US-Israeli Airstrikes On Iran's Port Of Bandar Abbas As Trump Issues Enriched Uranium Demand</div>
+    <div class="article-keypoint">미-이스라엘 Bandar Abbas 공습 보도 속 Trump 우라늄 포기 요구 - 협상 불확실성 극대화</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/iran-says-us-peace-talks-hit-consensus-many-issues-no-final-deal-yet" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">이란 전쟁 종결 협상 임박 보도에 유가 급락 - Trump '서두르지 않는다' 발언</div>
+    <div class="article-title-en">Oil prices tumble as deal to end Iran war appears close, though Trump says there’s no rush</div>
+    <div class="article-keypoint">미-이란 종전 협상 가시화에 WTI 6% 급락, Hormuz 재개 기대로 주식 선물 동반 급등</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trump-says-theres-no-rush-as-deal-to-end-iran-war-reopen-strait-of-hormuz-appears-close-c60056c0?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 07:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">BlackRock Saigal, Fed 금리 인하 정당화할 '충분한 요인' 존재</div>
+    <div class="article-title-en">BlackRock’s Saigal Sees ‘Sufficient Factors’ to Justify Fed Cut</div>
+    <div class="article-keypoint">BlackRock, Warsh 체제서도 Fed 인하 '충분한 요인' 존재 - 매파 일변도 해석에 균열</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-25/blackrock-says-there-are-sufficient-factors-to-justify-fed-cut-mpkxuynr" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 17:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">호르무즈 해협 재개 가능성 보도에 미국 원유 선물 6% 이상 하락</div>
+    <div class="article-title-en">US crude futures fall over 6% on report of possible Strait of Hormuz reopening</div>
+    <div class="article-keypoint">호르무즈 재개 가능성 보도에 미국 원유 선물 6% 이상 하락, 에너지 지정학 리스크 프리미엄 급격 축소</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/us-crude-futures-fall-over-6-on-report-of-possible-strait-of-hormuz-reopening-4708659" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 22:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">미-이란 평화 협상 진전에 유가 6% 하락</div>
+    <div class="article-title-en">Oil Prices Fall 6% as U.S.-Iran Peace Talks Gain Ground</div>
+    <div class="article-keypoint">Trump 이란 협상 진전 발언에 Brent 6% 이상 하락, 중동 에너지 공급 리스크 프리미엄 급격 완화</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Fall-6-as-US-Iran-Peace-Talks-Gain-Ground.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 21:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Netanyahu, 이스라엘군에 헤즈볼라 공격 강화 명령</div>
+    <div class="article-title-en">Netanyahu orders Israeli military to step up attacks on Hizbollah</div>
+    <div class="article-keypoint">Netanyahu, 헤즈볼라 공습 강화 명령 - 미-이란 협상이 이스라엘 행동반경 제약 우려 반영</div>
+    <a class="article-link" href="https://www.ft.com/content/016e3b6e-5324-4aa9-a82f-74ca56d88107" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 04:56 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SpaceX IPO: 머스크 개인 권력이 역대 최대 공모 흥행의 핵심 변수</span>
+    <span class="theme-label-range">Article #7~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">SpaceX IPO는 중력도 비켜가는 Elon Musk에 대한 베팅</div>
+    <div class="article-title-en">SpaceX’s IPO Is a Bet Gravity Doesn’t Apply to Elon Musk</div>
+    <div class="article-keypoint">SpaceX 역대 최대 IPO, 일반 투자자 동원력이 성패 가르는 핵심 변수로 부상</div>
+    <a class="article-link" href="https://www.wsj.com/tech/spacexs-ipo-is-a-bet-gravity-doesnt-apply-to-elon-musk-f798e814?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 06:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Meloni 연정, 여론조사 뒤엎고 베네치아 시장 선거 승리</div>
+    <div class="article-title-en">Meloni coalition wins Venice mayoral vote, defying polls</div>
+    <div class="article-keypoint">Meloni 연정, 베네치아 시장 선거 방어 성공 - 여론조사 역전으로 이탈리아 우파 결집력 확인</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/meloni-coalition-wins-venice-mayoral-vote-defying-polls" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 03:44 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 패권 경쟁: 교황 윤리 경고에서 Huawei 제재 돌파까지 - 기술·규제·공급망 동시 압박</span>
+    <span class="theme-label-range">Article #9~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">불확실성 시대의 산업정책</div>
+    <div class="article-title-en">Industrial Policy for an Age of Uncertainty</div>
+    <div class="article-keypoint">AI 산업정책, 결과 예측 불가 속 '지향적 즉흥' 개입 불가피 - 정부 리스크 부각</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/industrial-policy-directed-improvisation-not-picking-winners-by-yuen-yuen-ang-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 00:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">교황, AI '노예화' 경고하며 교회는 좌파 성향 Anthropic과 손잡다</div>
+    <div class="article-title-en">Pope Sounds Alarm On AI "Slavery" While Church Aligns With Lefty Anthropic </div>
+    <div class="article-keypoint">교황 Leo XIV, AI '노예화' 경고하며 Anthropic Claude 공식 활용 - 윤리·규제 논쟁 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/pope-sounds-alarm-ai-slavery-while-church-aligns-lefty-anthropic" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 03:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">교황과 Claude에 대한 Guardian 사설: Leo XIV의 AI 회칙, 인간 우선 원칙은 옳다</div>
+    <div class="article-title-en">The Guardian view on the Pope and Claude: Leo XIV’s encyclical on AI is right to put humanity first | Editorial</div>
+    <div class="article-keypoint">교황청, AI 디지털 혁명 규제 촉구 - 인간 존엄 최우선 원칙 천명으로 거버넌스 압력 가중</div>
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/2026/may/25/the-guardian-view-on-the-pope-and-claude-encyclical-on-ai-is-right-to-put-humanity-first" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 02:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Huawei, 제재 우회 칩 돌파 기술 공개 - SMIC 주가 사상 최고치 급등</div>
+    <div class="article-title-en">Huawei Touts Sanctions-Busting Chip Breakthrough, SMIC Shares Erupt </div>
+    <div class="article-keypoint">Huawei 제재 우회 첨단 칩 돌파 공개, SMIC 주가 중국 내 사상 최고치 - 미국 수출통제 신뢰 타격</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/huawei-touts-sanctions-busting-chip-breakthrough-smic-shares-erupt" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 00:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">비주도주들이 S&P 500 이익 성장 5년 만에 최고 속도 이끄는 주역</div>
+    <div class="article-title-en">These underdogs are a big reason why S&P 500 profit growth is the fastest in nearly 5 years</div>
+    <div class="article-keypoint">S&P 500 비빅테크 493개 기업 이익 기여 5년 만에 최고 - AI 집중에서 이익 저변 확대로 구조 전환</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/these-underdogs-are-a-big-reason-s-p-500-profit-growth-is-the-fastest-in-nearly-5-years-4a43f142?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 04:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Meta·Google 모델의 AI 안전장치, 수분 만에 무력화</div>
+    <div class="article-title-en">AI guardrails stripped from Meta and Google models in minutes</div>
+    <div class="article-keypoint">Meta·Google AI 안전장치 수분 내 무력화 실증 - 생물무기·악성코드 응답 가능, 거버넌스 공백 심각</div>
+    <a class="article-link" href="https://www.ft.com/content/5630ed79-a263-41ed-9a1a-321617ae310e" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 17:31 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Fed·거시: Warsh 체제 하 인하 논쟁과 채권·주식 시장의 재조정</span>
+    <span class="theme-label-range">Article #15~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump에게 필요한 정책 전환</div>
+    <div class="article-title-en">The Policy Pivot Trump Needs</div>
+    <div class="article-keypoint">Trump 달러 약세 압박, 중간선거 앞두고 인플레·재정 동반 악화 경고 - 정책 전환 촉구</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-must-stop-assault-on-dollar-and-focus-on-other-policies-by-glenn-hubbard-2026-05" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 20:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">조정 vs. 베어마켓: Fed는 어떻게 시장을 재설계했나</div>
+    <div class="article-title-en">Corrections Vs Bears: How The Fed Rewired The Market</div>
+    <div class="article-keypoint">Fed의 30년 시장 사이클 관리 방식 재점검 - Warsh 체제 전환기 패러다임 변화 논의</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/corrections-vs-bears-how-fed-rewired-market" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 04:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">한국 단기채, BOK 인상 과도 반영 - NH Amundi, 매수 기회 진단</div>
+    <div class="article-title-en">Korea Short-Term Debt Pricing Too Many BOK Hikes, NH Amundi Says</div>
+    <div class="article-keypoint">한국 단기채, BOK 인상 과도 반영으로 매수 기회 형성 - NH Amundi 판단</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-25/korea-short-term-debt-pricing-too-many-bok-hikes-nh-amundi-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 07:23 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">에너지 안보와 원자재 구조 변화: 핵에너지 확장·금 매입·구리 리스크</span>
+    <span class="theme-label-range">Article #18~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">아시아 에너지 위기, 싱가포르를 핵에너지로 밀어붙이다</div>
+    <div class="article-title-en">Asia's Energy Crisis Is Pushing Singapore Toward Nuclear</div>
+    <div class="article-keypoint">싱가포르, 2027년 IAEA 핵에너지 타당성 심사 예정 - 동남아 핵 확산 논의 본격화</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Asias-Energy-Crisis-Is-Pushing-Singapore-Toward-Nuclear.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">가나, 6월부터 대형 금광 산출량의 30% 매입 계획</div>
+    <div class="article-title-en">Ghana to Start Buying 30% of Large Gold Mines’ Ouput From June</div>
+    <div class="article-keypoint">가나 중앙은행, 대형 금광 산출량 의무 매입 30%로 확대(기존 20%) - 금 시장 국가 개입 강화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-25/ghana-to-start-buying-30-of-large-gold-mines-ouput-from-june" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 02:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">카자흐스탄 첫 원전, 추가 지연 직면</div>
+    <div class="article-title-en">Kazakhstan's First Nuclear Plant Faces More Delays</div>
+    <div class="article-keypoint">카자흐스탄 첫 원전, Rosatom 자금난으로 추가 지연 - 중앙아시아 에너지 전환 불확실성 확대</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Kazakhstans-First-Nuclear-Plant-Faces-More-Delays.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Codelco 노조, 허위 보고 파장 확산 속 보너스 환수에 저항 경고</div>
+    <div class="article-title-en">Codelco Union Threatens Protests as Misreporting Fallout Spreads</div>
+    <div class="article-keypoint">Codelco 구리 생산량 허위 보고 파장, 노조 보너스 환수 갈등으로 확산 - 글로벌 구리 공급망 신뢰 훼손</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-25/codelco-union-threatens-protests-as-misreporting-fallout-spreads" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 07:25 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#29</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Golden Dawn에서 영감받은 극우 ELAM, 키프로스 선거에서 약진</div>
+    <div class="article-title-en">Far-right Elam party inspired by Golden Dawn makes gains in Cyprus election</div>
+    <div class="article-keypoint">키프로스 극우 ELAM 의석 2배 확대, 유럽 내 반이민 극우 세력 확산 지속 확인</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/25/far-right-elam-party-inspired-by-golden-dawn-makes-big-gains-in-cyprus-elections" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 00:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">노동당, 청년 실업 해결을 위한 '시스템 리셋' 필요 - 보고서 경고</div>
+    <div class="article-title-en">Labour needs ‘system reset’ to tackle youth unemployment, report to say</div>
+    <div class="article-keypoint">영국 청년 실업 대응 전략 '전면 재설계' 촉구 - 노동당 정부 경제 정책 실패 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/society/2026/may/25/labour-needs-system-reset-to-tackle-youth-unemployment-report-to-say" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Macron, 벨라루스 Lukashenko에 우크라이나 전쟁 직접 참전 경고하는 이례적 전화</div>
+    <div class="article-title-en">In Rare Phone Call, Macron Warns Belarus' Lukashenko Against Directly Joining Ukraine War</div>
+    <div class="article-keypoint">Macron, Lukashenko에 우크라이나 직접 참전 경고 - 2022년 이후 첫 직접 접촉으로 긴장 고조</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/rare-phone-call-macron-warns-belarus-lukashenko-against-directly-joining-ukraine-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 21:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">이탈리아 증시, 에너지·반도체 랠리에 힘입어 26년 만에 사상 최고치</div>
+    <div class="article-title-en">Italian Stocks Hit First Record in 26 Years Led by Energy, Chips</div>
+    <div class="article-keypoint">이탈리아 증시, 에너지·반도체 랠리로 2000년 이후 26년 만에 사상 최고치 경신</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-25/italian-stocks-hit-first-record-in-26-years-led-by-energy-chips" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 20:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Louisiana 주 상원의원, Meta 최대 데이터센터 유치 도운 뒤 인근 토지 매각</div>
+    <div class="article-title-en">A Louisiana state senator helped secure Meta’s largest datacenter. Then he sold the land beside it</div>
+    <div class="article-keypoint">Louisiana 주 상원의원, Meta 데이터센터 인근 토지 매각 - 정치·산업 이해충돌 논란 부상</div>
+    <a class="article-link" href="https://www.theguardian.com/environment/2026/may/25/louisiana-state-senator-jay-morris-meta-datacenter" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Carney, 앨버타 분리주의자들에 Brexit식 후회 경고</div>
+    <div class="article-title-en">Carney warns Alberta separatists of Brexit-style regret</div>
+    <div class="article-keypoint">Carney, 앨버타 분리주의에 Brexit식 후회 경고 - 캐나다 내부 분열 리스크 재부각</div>
+    <a class="article-link" href="https://www.ft.com/content/5c3d12ba-c959-4d84-b0ee-b9258a749cd4" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 06:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Starmer, 인도의 영국 인권활동가 '불공정' 기소에 개입 촉구받아</div>
+    <div class="article-title-en">Starmer urged to intervene in ‘rigged’ Indian prosecution of British human rights activist</div>
+    <div class="article-keypoint">Starmer에 인도 법원의 영국 인권활동가 기소 개입 촉구 - 영-인도 외교 마찰 잠재 리스크</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/may/25/starmer-urged-to-intervene-in-rigged-indian-prosecution-of-british-human-rights-activist" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/26 04:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">브라질 Lula 대통령, 초기 피부암 진단 후 방사선 치료 시작</div>
+    <div class="article-title-en">Brazil's Lula starts radiation after early-stage skin cancer diagnosis</div>
+    <div class="article-keypoint">Lula 초기 피부암 방사선 치료 시작 - 브라질 정치 안정성 및 신흥국 리더십 리스크 변수 부상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/brazils-lula-starts-radiation-after-early-stage-skin-cancer-diagnosis" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/25 23:53 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
