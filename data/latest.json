@@ -98,6 +98,28 @@
       "briefing": "달러강세가 공통원인입니다. Kevin Warsh Fed 의장 취임으로 매파적 정책 기조 전환이 실질금리 상승과 달러 강세 가속화를 촉발했으며, 신흥국 자금 이탈과 원화 약세 압박이 동시에 심화되고 있습니다.",
       "_warnings": [
         "[한국 종착 비율] 4/4 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n4->n7->n2",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "워시 의장 취임이 실제 매파적 정책 전환으로 이어질지 불확실하며 시장 기대와 실제 정책 간 괴리 가능성",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "미국 장기채권 ETF(TLT)",
+          "via": "실질금리 상승 기대가 장기채 가격 하락압력으로 직결",
+          "lag_days": 1
+        },
+        {
+          "to": "금융주 ETF(XLF)",
+          "via": "금리 상승 기대가 은행 순이자마진 개선 기대로 연결",
+          "lag_days": 3
+        }
       ]
     },
     {
@@ -195,7 +217,29 @@
         }
       ],
       "korea_terminal_node": "n14",
-      "briefing": "AI수요확대가 공통원인입니다. 글로벌 AI 인프라 투자 확대가 반도체와 테크섹터 동반 강세를 견인하면서 한국 메모리 반도체 기업들의 수혜 기대가 KOSPI 2.55% 급등을 주도했습니다."
+      "briefing": "AI수요확대가 공통원인입니다. 글로벌 AI 인프라 투자 확대가 반도체와 테크섹터 동반 강세를 견인하면서 한국 메모리 반도체 기업들의 수혜 기대가 KOSPI 2.55% 급등을 주도했습니다.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n8->n9",
+        "fragileReason": "AI 반도체 개별 급등이 전체 테크섹터 강세로 확산되는 연결고리가 약하며 섹터 내 차별화 가능성",
+        "alternativePath": "n10->n11"
+      },
+      "missingHops": [
+        {
+          "to": "전력/유틸리티 ETF(XLU)",
+          "via": "AI 데이터센터 전력 수요 급증이 전력주 수혜로 연결",
+          "lag_days": 5
+        },
+        {
+          "to": "리츠 ETF(VNQ)",
+          "via": "데이터센터 부동산 수요 확대가 특수 리츠 강세로 파급",
+          "lag_days": 7
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -418,5 +462,6 @@
     ],
     "is_weekend": false,
     "data_note": "T0(전일 미국) → T1(당일 아시아) 레이어 분리. 복합신호 2개 감지"
-  }
+  },
+  "deep_analysis_at": "2026-05-26T15:53:27.431Z"
 }
