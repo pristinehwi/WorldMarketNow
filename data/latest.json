@@ -2,59 +2,57 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Fed체제안정",
+      "title": "메모리반도체 급등",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "Fed의장교체",
-          "value": "Kevin Warsh 취임으로 정책연속성",
+          "label": "메모리투자열풍",
+          "value": "마이크론·CXMT 호재",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            {
-              "title": "Kevin Warsh takes oath as Fed chairman",
-              "source": "Fed"
-            }
+            "Micron investors are partying like it's 1987, and the stock still looks pretty cheap",
+            "China Memory-Chip Maker CXMT Clears Shanghai Listing Review"
           ]
         },
         {
           "id": "n2",
-          "label": "신용안정신호",
-          "value": "정책예측가능성 강화로 신용리스크감소",
+          "label": "HBM수급긴축",
+          "value": "AI용 고대역폭",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "하이일드ETF(HYG)",
-          "value": "$79.35→$80.18 (+1.05%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "글로벌리스크온",
+          "value": "신흥국·하이일드 동반상승",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "투자등급채ETF(LQD)",
-          "value": "$107.12→$108.78 (+1.56%)",
+          "label": "반도체ETF(SOXX)",
+          "value": "05/22 $525.6→05/26 $557.8 (+6.1%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n5",
-          "label": "글로벌리스크온",
-          "value": "신용시장안정이 신흥국유입확산",
-          "source": "concept",
+          "label": "신흥국ETF(EEM)",
+          "value": "05/22 $65.7→05/26 $68.3 (+3.9%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n6",
-          "label": "신흥국ETF(EEM)",
-          "value": "$64.26→$68.40 (+6.47%)",
+          "label": "하이일드ETF(HYG)",
+          "value": "05/22 $79.9→05/26 $80.2 (+0.3%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
@@ -62,7 +60,7 @@
         {
           "id": "n7",
           "label": "KOSPI",
-          "value": "$8,045→$8,229 (+2.25%)",
+          "value": "05/27 8055→8228 (+2.3%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -72,304 +70,178 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "정책안정",
-          "mechanism": "신임의장의 중립스탠스가 신용리스크 재평가 촉진"
+          "label": "수급부각",
+          "mechanism": "메모리 투자 열풍이 AI용 HBM 공급 부족을 부각시키며 독점업체 가치 재평가"
         },
         {
-          "from": "n2",
+          "from": "n1",
           "to": "n3",
-          "label": "실증",
-          "mechanism": "신용스프레드 축소가 하이일드채 ETF 상승으로 직접 반영"
+          "label": "리스크온",
+          "mechanism": "메모리 섹터 호재가 전반적인 위험자산 선호도를 높이며 리스크온 확산"
         },
         {
           "from": "n2",
           "to": "n4",
           "label": "실증",
-          "mechanism": "정책불확실성 해소가 투자등급채 수요 증가로 이어짐"
+          "mechanism": "HBM 수급 긴축이 반도체 ETF 급등으로 직접 반영"
         },
         {
-          "from": "n2",
+          "from": "n3",
           "to": "n5",
-          "label": "파급",
-          "mechanism": "미국 신용시장 안정화가 글로벌 유동성 공급 확대로 전이"
+          "label": "실증",
+          "mechanism": "글로벌 리스크온이 신흥국 ETF 상승으로 확인"
         },
         {
-          "from": "n5",
+          "from": "n3",
           "to": "n6",
           "label": "실증",
-          "mechanism": "리스크온 모드가 신흥국 ETF 강세로 직접 구현"
+          "mechanism": "리스크온 분위기가 하이일드 채권 수요 증가로 나타남"
         },
         {
-          "from": "n5",
+          "from": "n3",
           "to": "n7",
-          "label": "한국파급",
-          "mechanism": "글로벌 리스크온이 외국인 한국 매수로 이어져 KOSPI 상승"
+          "label": "자금유입",
+          "mechanism": "글로벌 리스크온이 외국인 자금을 한국 반도체주로 유입시킴"
         }
       ],
       "korea_terminal_node": "n7",
-      "briefing": "Kevin Warsh 신임 Fed 의장 취임이 신용안정신호를 전달하면서 글로벌 리스크온 확산. HYG(+1.05%), LQD(+1.56%) 신용시장 안정화가 신흥국 자금 유입으로 이어져 EEM(+6.47%), KOSPI(+2.25%) 동반 상승.",
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n5->n7->n5",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n2->n5",
-        "fragileReason": "미국 신용시장과 글로벌 유동성 연결고리가 단절시 전체 글로벌 파급효과 차단",
-        "alternativePath": null
-      },
-      "missingHops": [
-        {
-          "to": "달러인덱스",
-          "via": "Fed 정책안정→달러 강세 압력 완화→신흥국 통화 안정",
-          "lag_days": 3
-        },
-        {
-          "to": "원자재ETF",
-          "via": "글로벌 유동성 확대→인플레이션 기대 상승→원자재 수요 증가",
-          "lag_days": 5
-        }
+      "briefing": "글로벌 리스크온이 주도하며 마이크론 실적과 CXMT 상장으로 메모리 투자 열풍이 촉발되고 있습니다. AI용 HBM 수급 부족이 부각되며 한국 반도체의 독점적 지위가 재평가되고, 외국인 자금이 KOSPI로 유입되며 상승세를 견인하고 있습니다.",
+      "_warnings": [
+        "[한국 종착 비율] 2/3 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "AI테크동반",
+      "title": "Fed의장교체 정책",
       "priority": 2,
-      "frequency": "NOW",
-      "nodes": [
-        {
-          "id": "n8",
-          "label": "AI투자재가속",
-          "value": "SpaceX·Capgemini AI확장발표",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": [
-            {
-              "title": "SpaceX's AI Pursuits Accelerate",
-              "source": "WSJ"
-            },
-            {
-              "title": "Capgemini 2028 AI Strategy Plan",
-              "source": "Capgemini"
-            }
-          ]
-        },
-        {
-          "id": "n9",
-          "label": "테크센티멘트",
-          "value": "AI테마 재부각으로 테크 집중매수",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n10",
-          "label": "반도체ETF(SOXX)",
-          "value": "$496.74→$570.09 (+14.77%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n11",
-          "label": "나스닥ETF(QQQ)",
-          "value": "$701.53→$730.28 (+4.10%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n12",
-          "label": "테크섹터ETF(XLK)",
-          "value": "$180.38→$185.14 (+2.63%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        }
-      ],
-      "edges": [
-        {
-          "from": "n8",
-          "to": "n9",
-          "label": "센티멘트",
-          "mechanism": "AI 사업확장 발표가 테크주 전반 상승 모멘텀 확산"
-        },
-        {
-          "from": "n9",
-          "to": "n10",
-          "label": "실증",
-          "mechanism": "AI 수혜 기대가 반도체 ETF 급등으로 직접 반영"
-        },
-        {
-          "from": "n9",
-          "to": "n11",
-          "label": "실증",
-          "mechanism": "테크 센티멘트 확산이 나스닥 ETF 강세로 구현"
-        },
-        {
-          "from": "n9",
-          "to": "n12",
-          "label": "실증",
-          "mechanism": "AI 투자 재가속이 대형 테크섹터 ETF 상승 견인"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "테크센티멘트를 공통원인으로 AI 투자 재가속이 SOXX(+14.77%), QQQ(+4.10%), XLK(+2.63%) 동반 강세로 확산. 민간 AI 사이클 재점화로 반도체 수요 집중.",
-      "feedbackRisk": {
-        "hasFeedback": false,
-        "loop": null,
-        "riskLevel": "low"
-      },
-      "chainFragility": {
-        "fragileEdge": "n8->n9",
-        "fragileReason": "단일 AI 발표 이벤트 의존도가 높아 해당 뉴스 반전시 전체 테크 랠리 붕괴 위험",
-        "alternativePath": "반도체 실적 개선을 통한 직접 경로"
-      },
-      "missingHops": [
-        {
-          "to": "클라우드ETF",
-          "via": "AI 확산→클라우드 인프라 수요 급증→클라우드 서비스 기업 수혜",
-          "lag_days": 7
-        },
-        {
-          "to": "로보틱스ETF",
-          "via": "AI 기술 발전→자동화 솔루션 채택 가속→로보틱스 산업 성장",
-          "lag_days": 14
-        }
-      ]
-    },
-    {
-      "id": "thread_003",
-      "title": "신용사이클전환",
-      "priority": 1,
       "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "n13",
-          "label": "역설적리스크온",
-          "value": "고실질금리에도 신용스프레드축소",
+          "id": "w1",
+          "label": "Warsh의장체제",
+          "value": "Powell→새기조 전환",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n14",
-          "label": "실질금리(DFII10)",
-          "value": "2.18→2.16 (-2bp)",
+          "id": "w2",
+          "label": "정책불확실성",
+          "value": "매파성향 추측으로 모호화",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w3",
+          "label": "달러변동성확대",
+          "value": "자본흐름 교란",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w4",
+          "label": "달러인덱스(UUP)",
+          "value": "05/18 $27.7→05/26 $27.8 (+0.3%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w5",
+          "label": "신흥국ETF(EEM)",
+          "value": "05/19 $64.3→05/26 $68.3 (+6.5%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w6",
+          "label": "원화",
+          "value": "$1501.2 변동성확대",
           "source": "layer_T0_macro",
           "timestamp": null,
           "related_news": []
-        },
-        {
-          "id": "n15",
-          "label": "글로벌성장기대",
-          "value": "신용순환 개선이 실물투자확대 견인",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n16",
-          "label": "구리광산ETF(COPX)",
-          "value": "$79.37→$87.51 (+10.26%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n17",
-          "label": "산업재ETF(XLI)",
-          "value": "$171.8→$174.30 (+1.47%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n18",
-          "label": "글로벌주식(ACWI)",
-          "value": "$153.15→$157.84 (+3.06%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n13",
-          "to": "n14",
-          "label": "실증",
-          "mechanism": "역설적 리스크온이 실질금리 소폭 하락으로 확인"
+          "from": "w1",
+          "to": "w2",
+          "label": "우려확산",
+          "mechanism": "새 의장의 과거 매파 발언이 정책 변화 불확실성을 증폭"
         },
         {
-          "from": "n13",
-          "to": "n15",
-          "label": "전환",
-          "mechanism": "고금리에도 불구한 리스크온이 신용사이클 전환 신호"
+          "from": "w2",
+          "to": "w3",
+          "label": "변동성",
+          "mechanism": "정책 방향성 모호화가 달러 포지션 불확실성을 높임"
         },
         {
-          "from": "n15",
-          "to": "n16",
+          "from": "w3",
+          "to": "w4",
           "label": "실증",
-          "mechanism": "글로벌 성장 기대가 구리 등 산업용 원자재 수요 증가로 반영"
+          "mechanism": "달러 변동성 확대가 달러인덱스 ETF에 반영"
         },
         {
-          "from": "n15",
-          "to": "n17",
-          "label": "실증",
-          "mechanism": "실물 투자 확대 기대가 산업재 섹터 ETF 상승으로 구현"
+          "from": "w2",
+          "to": "w5",
+          "label": "유출우려",
+          "mechanism": "통화정책 긴축 우려가 신흥국 자산 매력도 감소시킴"
         },
         {
-          "from": "n15",
-          "to": "n18",
-          "label": "실증",
-          "mechanism": "신용사이클 전환이 글로벌 주식시장 전반 상승으로 확산"
+          "from": "w3",
+          "to": "w6",
+          "label": "연쇄효과",
+          "mechanism": "달러 변동성이 원화 등 신흥국 통화 불안정성 확대"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "글로벌성장기대를 공통원인으로 고실질금리에도 신용순환 개선신호 지속. COPX(+10.26%), XLI(+1.47%), ACWI(+3.06%) 상승이 실물경제 투자 확대와 신용사이클 전환점을 시사하는 주간 구조적 모멘텀."
+      "korea_terminal_node": "w6",
+      "briefing": "Warsh Fed 의장 체제 출범으로 정책 방향성 불확실성이 확대되며 달러 변동성이 증가하고 있습니다. 신흥국 자산 유출 우려와 함께 원화 변동성도 확대되며 구조적 취약성이 노출되고 있습니다."
     },
     {
-      "id": "thread_004",
-      "title": "Fed패러다임전환",
-      "priority": 1,
+      "id": "thread_003",
+      "title": "미중기술 공급망",
+      "priority": 3,
       "frequency": "MONTHLY",
       "nodes": [
         {
-          "id": "n19",
-          "label": "통화정책패러다임",
-          "value": "Fed의장교체로 장기정책방향성전환",
+          "id": "m1",
+          "label": "기술블록화심화",
+          "value": "미중패권 진영분리",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n20",
-          "label": "글로벌자산재배분",
-          "value": "기관투자자 포트폴리오 재구축가속",
+          "id": "m2",
+          "label": "공급망다변화",
+          "value": "자국내 기술확보정책",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n21",
-          "label": "S&P500ETF(SPY)",
-          "value": "$713.94→$750.59 (+5.13%)",
+          "id": "m3",
+          "label": "한국중간자지위",
+          "value": "양진영 협력필수국가",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "m4",
+          "label": "반도체ETF(SOXX)",
+          "value": "04/24 $461.6→05/26 $557.8 (+20.9%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n22",
-          "label": "30년국채ETF(TLT)",
-          "value": "$86.71→$85.10 (-1.86%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n23",
-          "label": "신흥국주식(EEM)",
-          "value": "$61.24→$68.40 (+11.65%)",
+          "id": "m5",
+          "label": "대만ETF(EWT)",
+          "value": "04/24 $88.1→05/26 $102.7 (+16.6%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
@@ -377,58 +249,58 @@
       ],
       "edges": [
         {
-          "from": "n19",
-          "to": "n20",
-          "label": "체제전환",
-          "mechanism": "Fed 패러다임 변화가 글로벌 기관투자자들의 장기 자산배분 재평가 촉진"
+          "from": "m1",
+          "to": "m2",
+          "label": "대응정책",
+          "mechanism": "기술 블록화가 각국의 핵심 기술 자립화 정책을 촉발"
         },
         {
-          "from": "n20",
-          "to": "n21",
+          "from": "m2",
+          "to": "m3",
+          "label": "지위부각",
+          "mechanism": "공급망 다변화 과정에서 한국의 전략적 중간자 역할이 중요해짐"
+        },
+        {
+          "from": "m1",
+          "to": "m4",
           "label": "실증",
-          "mechanism": "자산재배분 재구축이 미국 주식 ETF 월간 강세로 구현"
+          "mechanism": "기술 패권 경쟁이 반도체 섹터 장기 성장 기대감으로 반영"
         },
         {
-          "from": "n20",
-          "to": "n22",
+          "from": "m2",
+          "to": "m5",
           "label": "실증",
-          "mechanism": "정책 안정성 기대가 장기 채권에서 주식으로의 자금 이동 촉진"
-        },
-        {
-          "from": "n20",
-          "to": "n23",
-          "label": "신흥국파급",
-          "mechanism": "글로벌 자산배분 재구축에서 신흥국 주식이 월간 11.65% 수혜"
+          "mechanism": "공급망 재편에서 대만의 전략적 가치가 ETF 상승으로 나타남"
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "Fed 의장 교체가 장기 통화정책 패러다임 전환을 신호하면서 글로벌 자산배분 재구축 본격화. SPY(+5.13%), TLT(-1.86%) 주식-채권 자금이동 속에서 EEM(+11.65%) 월간 강세로 신흥국 수혜 극대."
+      "briefing": "미중 기술 패권 경쟁이 글로벌 반도체 공급망의 블록화를 심화시키며 각국의 자립화 정책을 촉발하고 있습니다. 한국은 양 진영 모두에게 필수적인 전략적 중간자 지위를 확보하며 중장기 구조적 수혜를 누리고 있습니다."
     }
   ],
   "headlines": [
-    "Fed안정신호·AI반도체 시너지로 KOSPI 강세",
-    "AI테크동반 급등, SOXX 14% 초과 기록",
-    "신용사이클 전환·성장기대로 상품·산업재 집중"
+    "AI반도체 수급 긴축이 글로벌 리스크온 주도"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 신용시장 안정화·AI 테마 강화 / 당일 아시아: KOSPI 상승·KOSDAQ 조정",
-    "layer2": "미국 신용 ETF 안정화와 반도체 급등이 글로벌 리스크온 신호로 전이되어 아시아 주식시장 상승 기여",
-    "layer3": "구리 급등·원유 약세의 상충 속 인플레이션 기대와 성장 우려 교차, 신용사이클 전환점 형성"
+    "layer1": "전일 미국: 반도체 +6.1%, 신흥국 +3.9% / 당일 아시아: KOSPI +2.3%",
+    "layer2": "T0 글로벌 리스크온·메모리반도체 강세가 T1 아시아 외인자금 유입 신호로 전이",
+    "layer3": "KOSPI 상승주도, 신흥국채권·원화 변동성 확대 동반"
   },
-  "macro_regime_note": "고실질금리 레짐 하에서도 신용스프레드 축소와 리스크온 지속이 신용순환 개선 신호로 해석되며 실물투자 기대 부양.",
-  "generated_at": "2026-05-27T07:47:48.868Z",
+  "macro_regime_note": "고실질금리 하 리스크온 국면에서 AI반도체 수급 부족이 성장주 평가 재상향을 정당화하며 신흥국 자산 선호도를 제고하고 있습니다.",
+  "generated_at": "2026-05-27T15:46:31.537Z",
   "data_as_of": {
-    "timestamp_iso": "2026-05-27T07:47:48.857Z",
-    "display": "5/27 16:47 [ KST +0900 ]",
-    "display_mobile": "5/27 16:47 KST",
-    "timezone": "Asia/Seoul"
+    "timestamp_iso": "2026-05-27T15:46:31.518Z",
+    "display": "5/27 11:46 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "5/27 11:46 뉴욕",
+    "timezone": "America/New_York"
   },
   "meta": {
-    "generated_at": "2026-05-27T07:47:48.868Z",
-    "elapsed_sec": 208,
-    "market_status": [],
+    "generated_at": "2026-05-27T15:46:31.537Z",
+    "elapsed_sec": 168,
+    "market_status": [
+      "미국",
+      "유럽"
+    ],
     "is_weekend": false,
-    "data_note": "모든 주요 시장 마감. 전일 미국 데이터(T0)와 당일 아시아/유럽(T1) 확정"
-  },
-  "deep_analysis_at": "2026-05-27T07:54:16.158Z"
+    "data_note": "미국 전일 대폭 상승 신호와 복합 패턴 감지"
+  }
 }
