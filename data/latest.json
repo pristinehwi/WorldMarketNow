@@ -107,7 +107,29 @@
         }
       ],
       "korea_terminal_node": "n7",
-      "briefing": "Kevin Warsh 신임 Fed 의장 취임이 신용안정신호를 전달하면서 글로벌 리스크온 확산. HYG(+1.05%), LQD(+1.56%) 신용시장 안정화가 신흥국 자금 유입으로 이어져 EEM(+6.47%), KOSPI(+2.25%) 동반 상승."
+      "briefing": "Kevin Warsh 신임 Fed 의장 취임이 신용안정신호를 전달하면서 글로벌 리스크온 확산. HYG(+1.05%), LQD(+1.56%) 신용시장 안정화가 신흥국 자금 유입으로 이어져 EEM(+6.47%), KOSPI(+2.25%) 동반 상승.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n5->n7->n5",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n2->n5",
+        "fragileReason": "미국 신용시장과 글로벌 유동성 연결고리가 단절시 전체 글로벌 파급효과 차단",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "달러인덱스",
+          "via": "Fed 정책안정→달러 강세 압력 완화→신흥국 통화 안정",
+          "lag_days": 3
+        },
+        {
+          "to": "원자재ETF",
+          "via": "글로벌 유동성 확대→인플레이션 기대 상승→원자재 수요 증가",
+          "lag_days": 5
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -192,7 +214,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "테크센티멘트를 공통원인으로 AI 투자 재가속이 SOXX(+14.77%), QQQ(+4.10%), XLK(+2.63%) 동반 강세로 확산. 민간 AI 사이클 재점화로 반도체 수요 집중."
+      "briefing": "테크센티멘트를 공통원인으로 AI 투자 재가속이 SOXX(+14.77%), QQQ(+4.10%), XLK(+2.63%) 동반 강세로 확산. 민간 AI 사이클 재점화로 반도체 수요 집중.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n8->n9",
+        "fragileReason": "단일 AI 발표 이벤트 의존도가 높아 해당 뉴스 반전시 전체 테크 랠리 붕괴 위험",
+        "alternativePath": "반도체 실적 개선을 통한 직접 경로"
+      },
+      "missingHops": [
+        {
+          "to": "클라우드ETF",
+          "via": "AI 확산→클라우드 인프라 수요 급증→클라우드 서비스 기업 수혜",
+          "lag_days": 7
+        },
+        {
+          "to": "로보틱스ETF",
+          "via": "AI 기술 발전→자동화 솔루션 채택 가속→로보틱스 산업 성장",
+          "lag_days": 14
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -385,5 +429,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "모든 주요 시장 마감. 전일 미국 데이터(T0)와 당일 아시아/유럽(T1) 확정"
-  }
+  },
+  "deep_analysis_at": "2026-05-27T07:54:16.158Z"
 }
