@@ -119,7 +119,29 @@
         }
       ],
       "korea_terminal_node": "n8",
-      "briefing": "Kevin Warsh Fed 신임 의장 취임으로 매파적 정책 전환 우려가 확산되며 달러강세 압력과 신흥국 자금유출 우려가 부각되고 있다. 외국인 비중이 높은 KOSPI의 자금흐름 민감도가 주목되며, 당일 +2.25% 상승은 이러한 부정적 외부 신호에도 불구한 내수 수급 강세를 시사한다."
+      "briefing": "Kevin Warsh Fed 신임 의장 취임으로 매파적 정책 전환 우려가 확산되며 달러강세 압력과 신흥국 자금유출 우려가 부각되고 있다. 외국인 비중이 높은 KOSPI의 자금흐름 민감도가 주목되며, 당일 +2.25% 상승은 이러한 부정적 외부 신호에도 불구한 내수 수급 강세를 시사한다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n3(달러강세)->n7(한국자본유출)->n1(Fed정책압박)->n3",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "Fed 의장 교체가 실제 정책변화로 이어지지 않을 가능성",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "KRW/USD",
+          "via": "달러강세가 원화약세로 직접 전이되어 환율변동성 확대",
+          "lag_days": 1
+        },
+        {
+          "to": "한국국채",
+          "via": "Fed 매파기조가 한국 금리상승 압력으로 작용하여 국채가격 하락",
+          "lag_days": 3
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -226,7 +248,29 @@
         }
       ],
       "korea_terminal_node": "n15",
-      "briefing": "Amazon의 60억달러 AI칩 거래와 Marvell 실적 호조로 AI 인프라 투자 급가속이 확인됐다. 특히 HBM 메모리 수요 폭증으로 한국 반도체 업체들의 수혜가 확대되며, KOSPI 반도체 비중(20%+) 상승이 지수 당일 +2.25% 상승의 핵심 견인력으로 작용했다."
+      "briefing": "Amazon의 60억달러 AI칩 거래와 Marvell 실적 호조로 AI 인프라 투자 급가속이 확인됐다. 특히 HBM 메모리 수요 폭증으로 한국 반도체 업체들의 수혜가 확대되며, KOSPI 반도체 비중(20%+) 상승이 지수 당일 +2.25% 상승의 핵심 견인력으로 작용했다.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n13->n14",
+        "fragileReason": "개별 반도체 종목 상승이 지수 전체 상승으로 연결되려면 시가총액 비중이 충분해야 함",
+        "alternativePath": "n13->n15 직접경로"
+      },
+      "missingHops": [
+        {
+          "to": "NVIDIA",
+          "via": "HBM 수요 증가가 AI칩 선도업체인 NVIDIA 실적 개선으로 연결",
+          "lag_days": 5
+        },
+        {
+          "to": "반도체장비주",
+          "via": "메모리 생산증설 필요성이 장비투자 확대로 이어져 장비업체 수혜",
+          "lag_days": 14
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -319,7 +363,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "WTI 원유 4.36% 급락으로 에너지 섹터 전반이 조정을 받고 있다. 중동 긴장 완화 기대와 공급 증가 우려가 유가를 압박하면서 인플레이션 기대가 하락하고, 이는 실질금리 하방 압력으로 이어지고 있다. 금의 기회비용 상승은 이러한 거시 신호 전환을 확인해준다."
+      "briefing": "WTI 원유 4.36% 급락으로 에너지 섹터 전반이 조정을 받고 있다. 중동 긴장 완화 기대와 공급 증가 우려가 유가를 압박하면서 인플레이션 기대가 하락하고, 이는 실질금리 하방 압력으로 이어지고 있다. 금의 기회비용 상승은 이러한 거시 신호 전환을 확인해준다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n19(인플레완화)->n20(실질금리하락)->n16(자산가격상승)->n19",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n19->n20",
+        "fragileReason": "유가 하락이 인플레이션 완화로 이어지려면 에너지가 전체 물가에서 차지하는 비중이 충분해야 함",
+        "alternativePath": "n16->n21 직접경로(유가하락->금상승)"
+      },
+      "missingHops": [
+        {
+          "to": "항공주",
+          "via": "유가 급락이 연료비용 절감으로 이어져 항공업계 마진 개선",
+          "lag_days": 2
+        },
+        {
+          "to": "소비재섹터",
+          "via": "유가하락으로 인한 가처분소득 증가가 소비재 수요 확대로 연결",
+          "lag_days": 7
+        }
+      ]
     },
     {
       "id": "thread_004",
@@ -540,5 +606,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전 세계 주요 시장 모두 마감. T0(전일 미국) → T1(당일 아시아/유럽) 레이어 구분 준수"
-  }
+  },
+  "deep_analysis_at": "2026-05-27T22:52:51.930Z"
 }
