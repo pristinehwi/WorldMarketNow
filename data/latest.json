@@ -91,7 +91,29 @@
         }
       ],
       "korea_terminal_node": "n6",
-      "briefing": "Kevin Warsh Fed 신임 의장 취임에 따른 매파기조 전환 우려가 부상했습니다. 실질금리 수준 유지 속 글로벌 유동성 축소 압력이 한국 ETF 하락(-1.24%)으로 선제 반영되며 외국인 자금 이탈 리스크가 대두되고 있습니다."
+      "briefing": "Kevin Warsh Fed 신임 의장 취임에 따른 매파기조 전환 우려가 부상했습니다. 실질금리 수준 유지 속 글로벌 유동성 축소 압력이 한국 ETF 하락(-1.24%)으로 선제 반영되며 외국인 자금 이탈 리스크가 대두되고 있습니다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n6->n1 (한국ETF하락이 Fed 매파정책 정당성 강화로 순환)",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "Fed 의장 개인 성향에만 의존한 정책전환 가정으로 FOMC 집단의사결정 구조 미반영",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "달러인덱스",
+          "via": "미국 실질금리 상승이 달러 강세를 유도하여 신흥국 통화 압박 증폭",
+          "lag_days": 1
+        },
+        {
+          "to": "한국국채10년물",
+          "via": "외국인 한국ETF 이탈이 국내 금리 상승압력으로 전이되며 통화정책 딜레마 심화",
+          "lag_days": 3
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -172,6 +194,28 @@
       "briefing": "원유 급락(-4.4%)으로 글로벌 리스크오프 신호가 전달되면서 반도체 ETF가 월간 23.84% 급등 후 일일 1.07% 조정을 기록했습니다. 테크 섹터의 상대적 강도(+1.63%)가 나스닥 방어선으로 작용하고 있습니다.",
       "_warnings": [
         "[NOW 날짜 간격] thread=thread_002 node=n9 간격=30일"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n7->n8",
+        "fragileReason": "원유가격 단일변수가 글로벌 리스크 센티먼트 전환의 유일한 신호로 과도하게 해석",
+        "alternativePath": "VIX 급등, 신용스프레드 확대 등 다중 리스크 지표 경로"
+      },
+      "missingHops": [
+        {
+          "to": "메모리반도체선물",
+          "via": "반도체ETF 조정압력이 메모리 선물가격 하락으로 선행 반영되며 공급망 재평가 촉발",
+          "lag_days": 2
+        },
+        {
+          "to": "아시아반도체지수",
+          "via": "나스닥 테크랠리 지속이 아시아 반도체 밸류에이션 재평가 압력으로 역전이",
+          "lag_days": 5
+        }
       ]
     },
     {
@@ -356,5 +400,6 @@
     ],
     "is_weekend": false,
     "data_note": "전일 미국ETF(T0) vs 당일 아시아지수(T1) 시간차"
-  }
+  },
+  "deep_analysis_at": "2026-05-28T15:52:57.053Z"
 }
