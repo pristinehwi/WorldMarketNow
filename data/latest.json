@@ -91,7 +91,29 @@
         }
       ],
       "korea_terminal_node": "n6",
-      "briefing": "신임 연준의장 정책 불확실성이 핵심 원인입니다. Kevin Warsh 취임으로 금리정책 방향성이 모호해지면서 채권시장 변동성이 확대되고, 연준정책 변화에 민감한 신흥국 자금이탈 우려가 외국인 포지션 축소로 이어져 KOSPI가 2.90% 급락했습니다."
+      "briefing": "신임 연준의장 정책 불확실성이 핵심 원인입니다. Kevin Warsh 취임으로 금리정책 방향성이 모호해지면서 채권시장 변동성이 확대되고, 연준정책 변화에 민감한 신흥국 자금이탈 우려가 외국인 포지션 축소로 이어져 KOSPI가 2.90% 급락했습니다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2->n4->n6->n2",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n2->n4",
+        "fragileReason": "미국 금리정책 불확실성의 신흥국 전이는 달러강세 등 중간 매개체 없이는 단절 위험 높음",
+        "alternativePath": "n2->달러강세->n4"
+      },
+      "missingHops": [
+        {
+          "to": "VIX",
+          "via": "연준정책 불확실성이 글로벌 변동성 지표 급등으로 확산",
+          "lag_days": 1
+        },
+        {
+          "to": "JPY",
+          "via": "신흥국 자금이탈이 안전자산 수요 증가로 엔화 강세 유발",
+          "lag_days": 3
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -169,7 +191,29 @@
         }
       ],
       "korea_terminal_node": "n11",
-      "briefing": "Synopsys AI칩 설계소프트웨어 수요 급증은 메모리 반도체 수요 확산 신호입니다. 삼성전자·SK하이닉스 중심의 HBM·DRAM 수혜 기대감에도 불구하고 KOSPI는 단기 차익실현 압력으로 조정을 받았습니다."
+      "briefing": "Synopsys AI칩 설계소프트웨어 수요 급증은 메모리 반도체 수요 확산 신호입니다. 삼성전자·SK하이닉스 중심의 HBM·DRAM 수혜 기대감에도 불구하고 KOSPI는 단기 차익실현 압력으로 조정을 받았습니다.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n9->n10",
+        "fragileReason": "메모리 수요에서 테크기업 밸류에이션 반영은 실제 매출 전환 없이는 단절 가능성 존재",
+        "alternativePath": "n9->실제매출증가->n10"
+      },
+      "missingHops": [
+        {
+          "to": "SOX",
+          "via": "AI칩 설계수요 급증이 필라델피아 반도체지수 전반 상승 견인",
+          "lag_days": 2
+        },
+        {
+          "to": "DRAM선물",
+          "via": "고성능 메모리 필수화가 DRAM 현물가격 상승 기대감으로 선물시장 반영",
+          "lag_days": 5
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -367,5 +411,6 @@
     ],
     "is_weekend": false,
     "data_note": "KOSPI -2.9%, KOSDAQ -4.89% 급락. 전일 미국 원유 -4.36% 하락"
-  }
+  },
+  "deep_analysis_at": "2026-05-28T03:53:30.131Z"
 }
