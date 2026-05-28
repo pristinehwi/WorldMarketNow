@@ -118,7 +118,29 @@
         }
       ],
       "korea_terminal_node": "n8",
-      "briefing": "워시 Fed 의장 취임으로 매파적 정책 전환이 시장에 인식되면서 글로벌 리스크오프 신호 발생. 실질금리 상승과 달러 강세 압력 속 외국인 자금이 신흥국(한국 포함)에서 이탈하며 KOSPI 소폭 조정."
+      "briefing": "워시 Fed 의장 취임으로 매파적 정책 전환이 시장에 인식되면서 글로벌 리스크오프 신호 발생. 실질금리 상승과 달러 강세 압력 속 외국인 자금이 신흥국(한국 포함)에서 이탈하며 KOSPI 소폭 조정.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2->n4->n2 (달러강세→금리상승압력 환류)",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "Fed 매파 전환이라는 단일 정책 신호에 전체 스레드가 의존하여 정책 오해석 시 연쇄 붕괴 위험",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "유럽국채",
+          "via": "달러 강세로 유로화 약세 압력이 ECB 매파 정책 기대를 높여 독일국채 금리 상승",
+          "lag_days": 3
+        },
+        {
+          "to": "일본엔화",
+          "via": "미일 금리차 확대로 엔캐리트레이드 재활성화되어 엔화 추가 약세 압력",
+          "lag_days": 2
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -183,7 +205,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "아마존-스노우플레이크 60억달러 AI 칩 계약, 메타 AI 구독서비스 출시 등 빅테크의 생성형 AI 투자 경쟁이 본격화. SOXX 등 반도체 ETF의 강성장 모멘텀이 고실질금리 환경에서 차익실현 압박을 받으며 소폭 조정."
+      "briefing": "아마존-스노우플레이크 60억달러 AI 칩 계약, 메타 AI 구독서비스 출시 등 빅테크의 생성형 AI 투자 경쟁이 본격화. SOXX 등 반도체 ETF의 강성장 모멘텀이 고실질금리 환경에서 차익실현 압박을 받으며 소폭 조정.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n9->n10",
+        "fragileReason": "AI 투자 확대라는 테마성 모멘텀에만 의존하여 투자심리 변화 시 반도체 ETF 급락 가능성",
+        "alternativePath": "n9->n11->n10 (나스닥 경유)"
+      },
+      "missingHops": [
+        {
+          "to": "전력/유틸리티주",
+          "via": "AI 데이터센터 전력 수요 급증이 전력 인프라 투자 테마로 확산",
+          "lag_days": 5
+        },
+        {
+          "to": "구리선물",
+          "via": "AI 인프라 구축을 위한 구리 수요 증가 기대로 원자재 가격 상승 압력",
+          "lag_days": 7
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -390,5 +434,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전일 원유 급락(-4.36%) 후 아시아 조정, KOSDAQ -2.54% 하락"
-  }
+  },
+  "deep_analysis_at": "2026-05-28T07:52:49.169Z"
 }
