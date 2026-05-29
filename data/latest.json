@@ -2,59 +2,76 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "AI밸류 급등",
+      "title": "Fed 의장 교체",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "AI밸류급등",
-          "value": "Anthropic 9,650억달러 밸류로 AI 경쟁 심화",
+          "label": "Fed의장교체",
+          "value": "Kevin Warsh 취임",
           "source": "concept",
           "timestamp": null,
           "related_news": [
             {
-              "source": "WSJ",
-              "title": "Anthropic Rockets to $965B Valuation, Topping OpenAI"
+              "source": "Fed",
+              "title": "Kevin Warsh takes oath of office as chairman",
+              "pubDate": "2026-05-22T20:15:00.000Z"
             }
           ]
         },
         {
           "id": "n2",
-          "label": "테크수요확대",
-          "value": "AI 리더십 경쟁으로 투자 집중",
+          "label": "매파기조전환",
+          "value": "고금리 장기화 신호",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "반도체ETF(SOXX)",
-          "value": "[05/27] $564.96->[05/28] $569.47 (+0.97%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "달러강세압력",
+          "value": "고금리 상대가치 상승",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "테크ETF(XLK)",
-          "value": "[05/27] $184.61->[05/28] $186.85 (+1.31%)",
+          "label": "달러인덱스ETF(UUP)",
+          "value": "[05/28] $27.69->[05/29] $27.66 (-0.14%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n5",
-          "label": "혁신ETF(ARKK)",
-          "value": "[05/27] $77.95->[05/28] $81.01 (+3.94%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "신흥국자금이탈",
+          "value": "달러 상대가치 약화",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n6",
+          "label": "신흥국ETF(EEM)",
+          "value": "[05/28] $68.63->[05/29] $68.60 (-0.04%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n7",
+          "label": "외국인이탈압력",
+          "value": "한국 시장 변동성 우려",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n8",
           "label": "KOSPI",
-          "value": "[05/28] $8,185.62->[05/29] $8,476.15 (+3.55%)",
+          "value": "8181.76->8476.15 (+3.55%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -64,291 +81,239 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "확산",
-          "mechanism": "AI 밸류 경쟁이 테크 섹터 전반으로 투자 심리 확산"
+          "label": "기조전환",
+          "mechanism": "신임 의장의 매파적 성향이 시장에 통화정책 긴축 지속 신호 전달"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "실증",
-          "mechanism": "테크 수요 확대가 AI용 반도체 ETF 상승으로 직접 반영"
-        },
-        {
-          "from": "n2",
-          "to": "n4",
-          "label": "실증",
-          "mechanism": "테크 자금 쏠림이 대형 테크 ETF 급등으로 구현"
-        },
-        {
-          "from": "n2",
-          "to": "n5",
-          "label": "실증",
-          "mechanism": "AI 혁신 기대감이 성장 ETF 강세로 표출"
+          "label": "금리매력",
+          "mechanism": "고금리 기조 기대가 달러 자산 매력도를 높여 달러 강세 압력 증대"
         },
         {
           "from": "n3",
-          "to": "n6",
-          "label": "전이",
-          "mechanism": "미국 반도체 강세가 한국 반도체 중심 KOSPI 상승 견인"
-        }
-      ],
-      "korea_terminal_node": "n6",
-      "briefing": "테크수요확대 공통원인에서 분기된 SOXX·XLK·ARKK 동반 강세→미국 반도체 ETF 상승이 한국 HBM 과점기업 수혜로 전이→KOSPI 3.55% 급등, KOSDAQ 조정은 소형주 수익 실현 반응",
-      "_warnings": [
-        "[?? 복합신호 B안] thread=thread_001 \"반도체ETF(SOXX)\"(up)→\"KOSPI\"(up) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n2->n3->n6->n2",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "AI 밸류 초기 확산 단계 차단 시 전체 테크 섹터 연쇄 반응 중단",
-        "alternativePath": null
-      },
-      "missingHops": [
-        {
-          "to": "NASDAQ 100 ETF",
-          "via": "AI 밸류 급등이 나스닥 지수 상승으로 직접 파급",
-          "lag_days": 1
+          "to": "n4",
+          "label": "실증",
+          "mechanism": "달러강세 압력이 달러인덱스 ETF 움직임에 반영"
         },
         {
-          "to": "달러화",
-          "via": "미국 테크 강세가 달러 유입 증대로 달러 강세 유도",
-          "lag_days": 3
+          "from": "n3",
+          "to": "n5",
+          "label": "자본유출",
+          "mechanism": "달러 강세는 신흥국 자산 상대가치를 하락시켜 자본유출 압력 증가"
+        },
+        {
+          "from": "n5",
+          "to": "n6",
+          "label": "실증",
+          "mechanism": "신흥국 자금이탈이 신흥국 ETF 하락으로 실증"
+        },
+        {
+          "from": "n5",
+          "to": "n7",
+          "label": "전이",
+          "mechanism": "글로벌 자금이탈이 한국 외국인 매도 압력으로 전이"
+        },
+        {
+          "from": "n7",
+          "to": "n8",
+          "label": "급등후조정",
+          "mechanism": "전일 AI 랠리 후 외국인 매도압력 증가에도 한국 주식형펀드 매수로 상승세 유지"
         }
+      ],
+      "korea_terminal_node": "n8",
+      "briefing": "Kevin Warsh Fed 의장 취임으로 달러강세와 신흥국 자금이탈 압력이 동시에 확대되고 있습니다. 이러한 글로벌 자금이탈 공통원인에도 불구하고 KOSPI는 AI 반도체 랠리 모멘텀에 힘입어 3.55% 급등을 기록했습니다.",
+      "_warnings": [
+        "[한국 종착 비율] 2/3 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "중동휴전 리스크온",
+      "title": "AI메모리 패러다임",
       "priority": 2,
-      "frequency": "NOW",
+      "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "n7",
-          "label": "이란휴전기대",
-          "value": "미-이란 휴전협상 진전으로 긴장완화",
+          "id": "w1",
+          "label": "AI메모리혁명",
+          "value": "전략적 가치 초월",
           "source": "concept",
           "timestamp": null,
           "related_news": [
             {
-              "source": "Foreign Policy",
-              "title": "U.S.-Iran Cease-Fire Deal Awaits Trump Approval"
+              "source": "WSJ",
+              "title": "AI Has Made Memory Chips More Valuable Than Oil",
+              "pubDate": "2026-05-29T09:30:00.000Z"
             }
           ]
         },
         {
-          "id": "n8",
-          "label": "글로벌리스크온",
-          "value": "지정학 리스크 감소로 위험자산 선호",
+          "id": "w2",
+          "label": "HBM공급독점화",
+          "value": "소수업체 기술우위",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n9",
-          "label": "원유ETF(USO)",
-          "value": "[05/27] $130.75->[05/28] $130.78 (+0.02%)",
+          "id": "w3",
+          "label": "반도체ETF(SOXX)",
+          "value": "[05/22] $537.33->[05/29] $569.08 (+5.91%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n10",
-          "label": "신흥국ETF(EEM)",
-          "value": "[05/27] $68.38->[05/28] $68.61 (+0.33%)",
+          "id": "w4",
+          "label": "기술주권경쟁",
+          "value": "산업정책 강화 국면",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w5",
+          "label": "한국메모리우위",
+          "value": "삼성·하이닉스 리더십",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w6",
+          "label": "한국ETF(EWY)",
+          "value": "[05/22] $182.03->[05/29] $205.83 (+13.06%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n11",
-          "label": "금ETF(GLD)",
-          "value": "[05/27] $408.44->[05/28] $412.77 (+1.06%)",
-          "source": "layer_T0_us_prev_close",
+          "id": "w7",
+          "label": "반도체재평가",
+          "value": "구조적 고도화",
+          "source": "concept",
           "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w8",
+          "label": "KOSPI",
+          "value": "8181.76->8476.15 (+3.55%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "15:30",
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n7",
-          "to": "n8",
-          "label": "완화",
-          "mechanism": "휴전 기대가 지정학 리스크 프리미엄 축소로 리스크온 전환"
+          "from": "w1",
+          "to": "w2",
+          "label": "공급독점",
+          "mechanism": "AI 메모리의 전략적 중요성 부각이 HBM 공급망의 희소성과 독점적 지위 강화"
         },
         {
-          "from": "n8",
-          "to": "n9",
+          "from": "w2",
+          "to": "w3",
           "label": "실증",
-          "mechanism": "중동 안정화로 원유 공급 우려 해소되어 유가 안정"
+          "mechanism": "HBM 독점화 기대가 반도체 ETF 상승으로 실증"
         },
         {
-          "from": "n8",
-          "to": "n10",
-          "label": "실증",
-          "mechanism": "리스크온 전환으로 신흥국 자산으로 자금 유입"
+          "from": "w2",
+          "to": "w4",
+          "label": "재편가속",
+          "mechanism": "HBM 독점화가 글로벌 반도체 가치사슬의 지정학적 재편을 촉발"
         },
         {
-          "from": "n8",
-          "to": "n11",
+          "from": "w4",
+          "to": "w5",
+          "label": "우위부각",
+          "mechanism": "기술주권 경쟁에서 한국 메모리 기업의 기술 리더십이 경쟁우위로 부각"
+        },
+        {
+          "from": "w5",
+          "to": "w7",
+          "label": "재평가",
+          "mechanism": "메모리 우위가 한국 반도체 섹터의 고부가가치화와 산업구조 업그레이드 견인"
+        },
+        {
+          "from": "w7",
+          "to": "w8",
           "label": "실증",
-          "mechanism": "지정학 불확실성 완화 중에도 금은 안전자산 선호로 상승"
+          "mechanism": "구조적 고도화가 삼성·하이닉스 반도체 재평가와 KOSPI 상승 모멘텀으로 연결"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "미-이란 휴전협상 진전→지정학 리스크 완화→글로벌 리스크온 전환→원유 안정화·신흥국 유입·금 안전자산 수요 지속으로 자산별 차별적 반응, 아시아 닛케이·KOSPI 동반 상승으로 확산",
-      "feedbackRisk": {
-        "hasFeedback": false,
-        "loop": null,
-        "riskLevel": "low"
-      },
-      "chainFragility": {
-        "fragileEdge": "n7->n8",
-        "fragileReason": "휴전 기대감 변화 시 전체 리스크온 흐름 즉시 역전 가능",
-        "alternativePath": "경제지표 개선을 통한 리스크온 전환"
-      },
-      "missingHops": [
-        {
-          "to": "신흥국 통화",
-          "via": "리스크온 환경에서 캐리 트레이드 재개로 신흥국 통화 강세",
-          "lag_days": 2
-        },
-        {
-          "to": "구리 선물",
-          "via": "중동 안정화가 글로벌 공급망 정상화 기대로 산업금속 수요 증가",
-          "lag_days": 5
-        }
-      ]
+      "korea_terminal_node": "w8",
+      "briefing": "AI 메모리 칩의 전략적 가치 부각으로 HBM 공급망 독점화와 글로벌 반도체 재편이 가속화되고 있습니다. 삼성·하이닉스의 기술 리더십이 KOSPI 반도체 섹터의 구조적 재평가 동력을 제공하며, 반도체ETF 주간 +5.91% 상승을 주도하고 있습니다."
     },
     {
       "id": "thread_003",
-      "title": "Fed 매파전환우려",
-      "priority": 1,
-      "frequency": "WEEKLY",
-      "nodes": [
-        {
-          "id": "n12",
-          "label": "Fed의장교체",
-          "value": "Warsh 취임으로 매파 정책 전환 우려",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n13",
-          "label": "글로벌유동성긴축",
-          "value": "달러 정책 강화로 신흥국 압박 예상",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n14",
-          "label": "달러ETF(UUP)",
-          "value": "[05/21] $27.63->[05/28] $27.70 (+0.25%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n15",
-          "label": "신흥국ETF(EEM)",
-          "value": "[05/21] $66.03->[05/28] $68.61 (+3.91%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n16",
-          "label": "장기국채(TLT)",
-          "value": "[05/19] $83.02->[05/28] $85.74 (+2.51%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        }
-      ],
-      "edges": [
-        {
-          "from": "n12",
-          "to": "n13",
-          "label": "예상",
-          "mechanism": "매파 의장 취임이 글로벌 달러 유동성 긴축 우려 확산"
-        },
-        {
-          "from": "n13",
-          "to": "n14",
-          "label": "실증",
-          "mechanism": "달러 강세 정책 기대가 달러 인덱스 ETF 상승 압력"
-        },
-        {
-          "from": "n13",
-          "to": "n15",
-          "label": "역행",
-          "mechanism": "유동성 긴축 우려에도 신흥국은 AI 리스크온으로 단기 상승"
-        },
-        {
-          "from": "n13",
-          "to": "n16",
-          "label": "실증",
-          "mechanism": "매파 우려로 장기 채권 수요 증가해 금리 하락 압력"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "Warsh Fed 의장 취임→매파 정책 우려→글로벌 유동성 긴축 예상→달러 강세 압력·장기채 수요 증가, 그러나 신흥국은 AI 리스크온으로 단기 역행 상승하며 KOSPI 급등세 견인"
-    },
-    {
-      "id": "thread_004",
-      "title": "AI인프라투자체제",
-      "priority": 1,
+      "title": "중동지정학리스크",
+      "priority": 3,
       "frequency": "MONTHLY",
       "nodes": [
         {
-          "id": "n17",
-          "label": "AI경쟁체제화",
-          "value": "국가별 AI 인프라 투자 경쟁 구조화",
+          "id": "m1",
+          "label": "이란핵갈등심화",
+          "value": "중동 지정학적 긴장",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            {
+              "source": "Straits Times",
+              "title": "Iran's strongest card in nuclear talks: its highly enriched uranium",
+              "pubDate": "2026-05-29T18:04:45.000Z"
+            },
+            {
+              "source": "OilPrice",
+              "title": "Multiple Ships Attacked In Strait of Hormuz",
+              "pubDate": "2026-05-29T16:29:00.000Z"
+            }
+          ]
+        },
+        {
+          "id": "m2",
+          "label": "에너지공급위험",
+          "value": "호르무즈 해협 불안",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n18",
-          "label": "반도체공급망재편",
-          "value": "AI 칩 수요로 글로벌 공급망 재구축",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n19",
-          "label": "한국메모리독점",
-          "value": "HBM 시장에서 삼성·하이닉스 지위 강화",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n20",
-          "label": "반도체ETF(SOXX)",
-          "value": "[04/28] $438.71->[05/28] $569.47 (+29.81%)",
+          "id": "m3",
+          "label": "원유ETF(USO)",
+          "value": "[04/29] $150.63->[05/29] $129.09 (-14.31%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n21",
-          "label": "한국ETF(EWY)",
-          "value": "[04/28] $154.37->[05/28] $206.41 (+33.68%)",
+          "id": "m4",
+          "label": "인플레재부상우려",
+          "value": "에너지가격 불안",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "m5",
+          "label": "물가연동국채ETF(TIP)",
+          "value": "[04/29] $111.39->[05/29] $111.21 (-0.16%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n22",
-          "label": "구리ETF(COPX)",
-          "value": "[04/28] $78.69->[05/28] $88.44 (+12.43%)",
+          "id": "m6",
+          "label": "통화정책딜레마",
+          "value": "인플레 vs 성장",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "m7",
+          "label": "미국30년국채ETF(TLT)",
+          "value": "[04/24] $86.71->[05/29] $85.76 (-1.86%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
@@ -356,63 +321,68 @@
       ],
       "edges": [
         {
-          "from": "n17",
-          "to": "n18",
-          "label": "촉발",
-          "mechanism": "AI 경쟁 체제화가 반도체 공급망 구조적 재편 가속화"
+          "from": "m1",
+          "to": "m2",
+          "label": "공급위험",
+          "mechanism": "이란 핵갈등 심화가 호르무즈 해협 봉쇄 위험을 높여 에너지 공급 불안 확산"
         },
         {
-          "from": "n18",
-          "to": "n19",
-          "label": "집중",
-          "mechanism": "공급망 재편에서 HBM 기술 독점 기업으로 수혜 집중"
-        },
-        {
-          "from": "n18",
-          "to": "n20",
+          "from": "m2",
+          "to": "m3",
           "label": "실증",
-          "mechanism": "반도체 공급망 재편이 반도체 ETF 월간 30% 급등으로 반영"
+          "mechanism": "에너지 공급 교란 우려가 원유 ETF 변동성 확대로 실증"
         },
         {
-          "from": "n19",
-          "to": "n21",
-          "label": "실증",
-          "mechanism": "한국 메모리 독점 지위 강화가 한국 ETF 월간 34% 급등으로 구현"
+          "from": "m2",
+          "to": "m4",
+          "label": "인플레부상",
+          "mechanism": "에너지 공급 교란이 유가 상승을 통해 글로벌 인플레이션 압력 재부상"
         },
         {
-          "from": "n17",
-          "to": "n22",
+          "from": "m4",
+          "to": "m5",
           "label": "실증",
-          "mechanism": "AI 인프라 투자 확대가 구리 등 원자재 수요 증가로 연결"
+          "mechanism": "인플레 재부상 우려가 물가연동국채 ETF 움직임에 반영"
+        },
+        {
+          "from": "m4",
+          "to": "m6",
+          "label": "정책딜레마",
+          "mechanism": "인플레 재가속이 주요국 중앙은행의 성장 vs 물가 정책 딜레마 심화"
+        },
+        {
+          "from": "m6",
+          "to": "m7",
+          "label": "실증",
+          "mechanism": "통화정책 딜레마가 장기국채 ETF 하락압력으로 실증"
         }
       ],
-      "korea_terminal_node": "n21",
-      "briefing": "글로벌 AI 경쟁 체제화→반도체 공급망 재편→한국 메모리 독점 지위 강화→반도체 ETF 월 30%, 한국 ETF 월 34%, 구리 ETF 월 12% 상승으로 AI 인프라 투자 사이클 본격화, 5월 말 KOSPI 급등은 이 체계적 상승의 당월 체현"
+      "korea_terminal_node": null,
+      "briefing": "이란 핵갈등과 호르무즈 해협 불안이 글로벌 에너지 공급망 취약성을 노출시키며 인플레이션 재부상 우려를 확산시키고 있습니다. 중앙은행들의 통화정책 딜레마가 심화되며 장기국채 ETF가 월간 -1.86% 하락을 기록했습니다."
     }
   ],
   "headlines": [
-    "AI밸류 급등과 지정학 완화로 글로벌 리스크온",
-    "테크 수요 확대로 한국 반도체 수혜, KOSPI 급등"
+    "Fed 의장 교체, 달러강세 & 반도체 랠리",
+    "AI메모리 혁명이 한국 메모리 우위 강화"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: AI밸류 경쟁 심화로 SOXX·XLK·ARKK 동반 강세, 중동 휴전기대로 리스크온 전환 / 당일 아시아: KOSPI 3.55% 급등, 닛케이 동반 상승",
-    "layer2": "미국 테크 투자 쏠림 + 지정학 리스크 완화 → 글로벌 리스크온 신호 아시아로 전이, 한국 반도체 독점 구조 부각",
-    "layer3": "KOSPI 급등하며 성장주 쏠림, KOSDAQ 차익실현으로 조정, 원화 변동성 제한적—외인 순매수 시나리오 강세"
+    "layer1": "전일 미국: 반도체ETF +5.91%, 원유ETF -14.31% / 당일 아시아: KOSPI +3.55%, 닛케이 혼조",
+    "layer2": "미국 AI 반도체 월간 강세(SOXX +26.4%, XLK +2.23%)가 원유 급락(-1.3%)과 함께 아시아로 인계",
+    "layer3": "KOSPI는 메모리칩 전략적 가치 부각과 외국인 자금이탈 압력 사이에서 순수 기술주 강세로 급등"
   },
-  "macro_regime_note": "고실질금리 하 리스크온 체제에서 AI 인프라 투자 이슈가 성장주 재평가를 촉발했으며, 중동 지정학 완화가 신흥국 자산 매력도를 높여 KOSPI 급등을 가속화.",
-  "generated_at": "2026-05-29T07:46:21.114Z",
+  "macro_regime_note": "고실질금리 & 평탄 커브 기조는 성장주(AI, 메모리 반도체) 집중 강세를 정당화하면서도 신흥국 자금이탈과 달러강세는 보조적 변수로 기능하고 있습니다.",
+  "generated_at": "2026-05-29T22:46:16.271Z",
   "data_as_of": {
-    "timestamp_iso": "2026-05-29T07:46:21.111Z",
-    "display": "5/29 16:46 [ KST +0900 ]",
-    "display_mobile": "5/29 16:46 KST",
-    "timezone": "Asia/Seoul"
+    "timestamp_iso": "2026-05-29T22:46:16.266Z",
+    "display": "5/29 18:46 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "5/29 18:46 뉴욕",
+    "timezone": "America/New_York"
   },
   "meta": {
-    "generated_at": "2026-05-29T07:46:21.114Z",
-    "elapsed_sec": 191,
+    "generated_at": "2026-05-29T22:46:16.271Z",
+    "elapsed_sec": 175,
     "market_status": [],
-    "is_weekend": false,
-    "data_note": "전일 미국(T0) → 당일 아시아(T1) 인과만 허용"
-  },
-  "deep_analysis_at": "2026-05-29T07:52:36.288Z"
+    "is_weekend": true,
+    "data_note": "주말 장외시간. 5월 29일 장중 데이터 기준."
+  }
 }
