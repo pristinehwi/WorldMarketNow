@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-30 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/05/30 07:48 KST</div>
+    <div class="header-date">2026-05-30</div>
+    <div class="header-headline">SpaceX 밸류 논란 속 $10B+ 정부계약 수주 - IPO 구조 압박</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">SpaceX IPO 밸류에이션 진실공방·이란 휴전 연장 협상 향방 - 지정학·자본시장 동시 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">SpaceX IPO 밸류 논란과 우주 섹터 자본시장 재편</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 SpaceX가 Golden Dome($4B)과 Space Force($6.45B) 계약을 동시에 수주하며 IPO 직전 정부 매출 기반을 확고히 한 반면, Bloomberg의 밸류에이션 하향 보도에 Musk가 공개 반박하면서 공시 신뢰성 논란이 점화된 것이다. SpaceX는 이미 2025년 매출의 1/5를 정부계약에서 창출하고 있어, 이번 계약 연속 수주는 IPO 수요 측면에서 강력한 호재로 작용한다. 반면 Musk의 Bloomberg 보도 부인은 S-1 공시와의 정합성 문제를 제기하며 자본시장 구조에 대한 신뢰 리스크를 동반한다. Blue Origin 로켓 폭발 사고는 경쟁사 타격과 동시에 우주 섹터 전반의 리스크 프리미엄을 자극, 관련 주가가 일제히 조정을 받았다. OpenAI의 IPO 준비를 위한 Citi·JPMorgan 추가 선정 논의까지 겹치며, 민간 우주·AI 대형 IPO 레이스가 자본 배분 경쟁을 심화시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Warsh·Bowman 체제 통화정책 - 금리 인하 공간 소멸과 채권시장 압박</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#11</span>
+    </div>
+    <div class="theme-summary">Warsh 신임 Fed 의장과 Bessent 재무장관의 첫 조찬 회동에서 금리 인하는 사실상 의제에서 제외된 것으로 전해지며, 채권시장의 2026 인상 베팅이 실체를 얻고 있다. Bowman 부의장은 '실용적 통화정책 의사결정 프레임워크' 연설을 통해 데이터 의존적 접근을 재확인하되, 완화 전환에 대한 신호는 배제했다. Fed 내부에서는 1968~2020년 대안 시나리오 논문과 뮤추얼펀드 효율성 연구 등 학술 발표가 이어지며 정책 기조 재검토의 학문적 기반을 다지는 흐름이 감지된다. Bank of England Bailey 총재도 이란 전쟁 불확실성을 이유로 금리 인상 서두르지 않겠다고 밝혀, 주요국 중앙은행이 지정학 변수를 통화정책 유보의 명분으로 활용하는 패턴이 확인된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">이란 핵 협상 교착·호르무즈 공격 - 지정학 리스크 프리미엄 다중 전이</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#15</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 것은 Chevron CEO가 이번 주 호르무즈 해협에서 복수의 선박 공격이 발생했음을 직접 확인한 것으로, 이란발 에너지 공급망 리스크가 실물 사건으로 구체화됐다. 미-이란은 휴전 연장 논의 중이나, 이란의 고농축 우라늄 보유가 협상의 핵심 레버리지로 작용하며 타결 전망이 불투명하다. Bessent 재무장관은 협상 진전 여부에 따라 대이란 제재 완화 가능성을 시사했으나, 조건부 발언에 그쳐 시장의 불확실성은 해소되지 않았다. 호르무즈 해협 공격 확인은 유가 변동성 재확대와 에너지 수입국 인플레이션 전이 리스크를 동시에 자극하며, 앞서 나온 유가 6% 급락 흐름과 상충하는 방향성 혼란을 야기하고 있다. Zelensky의 러시아 대규모 공격 임박 경고까지 더해져 복합 지정학 리스크 프리미엄이 여러 자산군에 동시 전이될 가능성이 높아졌다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 수요 폭발 수혜와 균열 - 소프트웨어 랠리·메모리 병목·토큰 비용 폭탄</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #16~#21</span>
+    </div>
+    <div class="theme-summary">오늘 주목할 새로운 각도는 Anthropic의 엔터프라이즈 고객이 단 한 달에 Claude 사용료 $500M을 청구받은 사건으로, AI 토큰 비용의 기업 리스크가 실제 수치로 드러났다. ServiceNow 주가는 5월 한 달간 40% 이상 급등하며 소프트웨어 섹터 전반의 AI 수혜 기대 랠리를 이끌었고, S&P 500 내 AI 관련주들이 5월 상승장을 주도했다. 반면 AI 인프라의 진짜 병목은 컴퓨팅이 아닌 메모리라는 주장을 내세운 한국 스타트업 XCENA가 $135M을 조달하며, 공급망 내 새로운 투자 테마가 형성됐다. Groq는 Nvidia의 $20B 투자 이후 하드웨어에서 AI 인퍼런스 소프트웨어로 전략을 전환하며 $650M 내부 조달에 나서, AI 칩 생태계의 주도권 경쟁이 레이어 이동 중임을 시사한다. Gavin Newsom의 AI 뉴딜 구상 등 정책 개입 움직임도 가시화되며 규제 변수가 산업 구조에 압력을 더하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">핵에너지 민간 자본화 가속 - Newcleo SPAC 상장과 핵연료 사이클 완결 시도</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 것은 유럽의 납냉각 원자로 개발사 Newcleo가 Oklo와 파트너십을 기반으로 $780M 자금력을 갖추고 $2.4B 규모의 SPAC 상장을 완료한 것이다. 이는 단순한 자금 조달을 넘어 '핵연료 사이클 완결(Closing the Nuclear Fuel Cycle)'이라는 실물 목표를 자본시장과 연결한 구조적 이정표로 평가된다. 민간 핵에너지 기업들이 SPAC, 전략적 파트너십, 정부계약을 동시에 활용해 시장 진입 속도를 높이는 패턴이 본격화되고 있으며, AI 데이터센터의 전력 수요 폭발이 이 흐름의 핵심 수요 동력으로 작동하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #23~#30</span>
+    </div>
+    <div class="theme-summary">소매 유통·크립토·정치·사이버보안 등 개별 섹터의 단발성 이슈들이 혼재한다. Gap과 American Eagle은 실적 부진에도 경기 탓을 부인했고, 크립토 파생상품(Kalshi·Coinbase 영구 선물) 미국 출시가 CFTC 승인을 받았다. Microsoft는 보안 연구자 형사고발 위협으로 사이버보안 공개 생태계 논란에 휘말렸으며, Dakota Gold 내부자 매수와 NYC COGE 설립 등 정치·소규모 시장 이슈도 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">SpaceX IPO 밸류 논란과 우주 섹터 자본시장 재편</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">SpaceX, 트럼프 Golden Dome 방어망 위성 구축 계약 $4B 수주</div>
+    <div class="article-title-en">SpaceX Wins $4 Billion Contract for US Golden Dome Satellites</div>
+    <div class="article-keypoint">SpaceX Golden Dome 위성계약 $4B 수주 - IPO 전 정부 매출 기반 강화 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-29/spacex-wins-4b-contract-for-us-golden-dome-satellites-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Blue Origin 로켓 폭발과 SpaceX 밸류에이션 논란 - 우주 관련주 일제히 조정</div>
+    <div class="article-title-en">Space stocks tumble after a Blue Origin rocket explodes and SpaceX’s valuation gets a reality check</div>
+    <div class="article-keypoint">Blue Origin 로켓 폭발로 우주 섹터 주가 전반 조정 - Amazon Leo 일정 차질 우려</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/space-stocks-are-falling-after-a-blue-origin-rocket-explodes-and-spacexs-valuation-gets-a-reality-check-230ae49f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 05:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">SpaceX, IPO 앞두고 Space Force 계약 $6.45B 수주</div>
+    <div class="article-title-en">SpaceX awarded $6.45B in Space Force contracts ahead of IPO</div>
+    <div class="article-keypoint">SpaceX Space Force 계약 $6.45B 수주 - 2025년 매출 1/5가 정부계약, IPO 밸류 방어</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/29/spacex-awarded-6-45b-in-space-force-contracts-ahead-of-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 07:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">OpenAI, IPO 주관 은행 라인업에 Citigroup·JPMorgan 추가 논의</div>
+    <div class="article-title-en">OpenAI Has Discussed Adding Citigroup, JPMorgan to Bank Lineup for IPO</div>
+    <div class="article-keypoint">OpenAI IPO 주관 은행에 Citi·JPMorgan 추가 논의 - 대형 AI IPO 레이스 자본 경쟁 심화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-29/openai-has-discussed-adding-citigroup-jpmorgan-to-bank-lineup-for-ipo" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 04:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Musk, SpaceX IPO 밸류에이션 하향 Bloomberg 보도 '사실 무근' 부인</div>
+    <div class="article-title-en">"False": Musk Denies Bloomberg Report About SpaceX IPO Valuation Drop</div>
+    <div class="article-keypoint">Musk, SpaceX 밸류에이션 하향 Bloomberg 보도 '허위' 반박 - IPO 공시 신뢰성 논란</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/spacex-reportedly-lowers-ipo-valuation-target" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/29 23:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Blue Origin 로켓 폭발, Amazon Leo 위성망 일정을 지연시킬 것인가</div>
+    <div class="article-title-en">Will Blue Origin's Vaporized Rocket Set Back Amazon Leo's Satellite Rollout</div>
+    <div class="article-keypoint">Blue Origin 로켓 폭발로 Amazon Leo·Artemis 일정 동시 차질 우려 확대</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/blue-origins-new-glenn-rocket-explodes-florida-launchpad" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/29 22:08 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Warsh·Bowman 체제 통화정책 - 금리 인하 공간 소멸과 채권시장 압박</span>
+    <span class="theme-label-range">Article #7~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">FEDS 논문: 1968~2020년 Federal Reserve의 대안 시나리오 - 데이터·해석·평가</div>
+    <div class="article-title-en">FEDS Paper: Alternative Scenarios at the Federal Reserve from 1968 to 2020: Data, Interpretation, and Evaluation</div>
+    <div class="article-keypoint">Fed 1968~2020 대안 시나리오 논문 - Warsh 체제 정책 재검토의 학문적 기반 제공</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/alternative-scenarios-at-the-federal-reserve-from-1968-to-2020-data-interpretation-and-evaluation.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 02:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">FEDS 논문: 미국 뮤추얼펀드 산업의 역량과 효율성</div>
+    <div class="article-title-en">FEDS Paper: Skill and Efficiency in the U.S. Mutual Fund Industry</div>
+    <div class="article-keypoint">Fed 뮤추얼펀드 효율성 연구 - 자산운용 규제 논의 재점화 가능성</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/skill-and-efficiency-in-the-us-mutual-fund-industry.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 02:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Bowman 부의장, 실용적 통화정책 의사결정 프레임워크 제시</div>
+    <div class="article-title-en">Bowman, A Framework for Practical Monetary Policy Decision Making</div>
+    <div class="article-keypoint">Bowman 부의장, 실용적 통화정책 프레임 제시 - 완화 전환 신호 부재 확인</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/bowman20260529a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/29 22:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Bessent·Warsh 첫 조찬 회동 - 금리 인하는 의제 밖</div>
+    <div class="article-title-en">The Debut Bessent-Warsh Breakfast Left Fed Rate Cuts Off the Menu</div>
+    <div class="article-keypoint">Warsh·Bessent 첫 조찬, 금리 인하 의제 제외 - 채권시장 2026 인상 베팅에 힘 실려</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-05-29/the-debut-bessent-warsh-breakfast-left-fed-rate-cuts-off-the-menu" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/29 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">BoE Bailey 총재, 이란 전쟁 불확실성 속 금리 인상 서두르지 않겠다고 발언</div>
+    <div class="article-title-en">Bank of England’s Bailey says no rush to raise interest rates amid Iran war uncertainty</div>
+    <div class="article-keypoint">BoE Bailey, 이란 전쟁 불확실성 이유로 금리 인상 서두르지 않겠다고 발언</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/may/29/bank-of-england-bailey-says-no-rush-to-raise-interest-rates-amid-iran-war-uncertainty" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/29 23:25 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">이란 핵 협상 교착·호르무즈 공격 - 지정학 리스크 프리미엄 다중 전이</span>
+    <span class="theme-label-range">Article #12~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">해설: 이란의 핵 협상 최강 카드 - 고농축 우라늄</div>
+    <div class="article-title-en">Explainer-Iran's strongest card in nuclear talks: its highly enriched uranium</div>
+    <div class="article-keypoint">이란 고농축 우라늄이 핵 협상 핵심 레버리지 - 타결 불투명으로 에너지 리스크 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/explainer-irans-strongest-card-in-nuclear-talks-its-highly-enriched-uranium" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 03:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Zelensky, 러시아의 대규모 신규 공격 준비 중 - 정보 입수 경고</div>
+    <div class="article-title-en">Zelensky says Russia is preparing major new attack on Ukraine, cites intelligence</div>
+    <div class="article-keypoint">Zelensky, 러시아 대규모 공격 임박 경고 - 우크라이나 리스크 프리미엄 재점화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelenskiy-says-russia-is-preparing-major-new-attack-on-ukraine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 02:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Bessent, 이란 제재 완화 가능성에 '두고 봐야' 발언</div>
+    <div class="article-title-en">Bessent Says ‘We’ll See’ on Potential Iran Sanctions Relief</div>
+    <div class="article-keypoint">Bessent, 이란 제재 완화 '협상 진전 시 검토' 시사 - 조건부 유화 신호에 시장 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-05-29/bessent-says-we-ll-see-on-iran-sanctions-relief-as-deal-awaits" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 05:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Chevron CEO: 이번 주 호르무즈 해협에서 복수의 선박 공격 발생</div>
+    <div class="article-title-en">Chevron CEO: Multiple Ships Attacked In Strait of Hormuz</div>
+    <div class="article-keypoint">Chevron CEO, 호르무즈 해협 복수 선박 공격 직접 확인 - 에너지 공급망 리스크 실물화</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Chevron-CEO-Multiple-Ships-Attacked-In-Strait-of-Hormuz.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 01:29 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 수요 폭발 수혜와 균열 - 소프트웨어 랠리·메모리 병목·토큰 비용 폭탄</span>
+    <span class="theme-label-range">Article #16~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Nvidia의 $20B 투자 이후 AI 칩 스타트업 Groq, $650M 추가 조달 추진</div>
+    <div class="article-title-en">After Nvidia’s $20B not-acqui-hire, AI chip startup Groq reportedly raising $650M</div>
+    <div class="article-keypoint">Groq, Nvidia 투자 후 하드웨어→AI 인퍼런스 소프트웨어 전환·$650M 조달 추진</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/29/after-nvidias-20b-not-acqui-hire-ai-chip-startup-groq-reportedly-raising-650m/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 02:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">ServiceNow 주가 역대급 월간 급등 - AI 우려 해소로 소프트웨어 섹터 안도 랠리</div>
+    <div class="article-title-en">ServiceNow’s stock soars to a historic month as AI fears fade across software</div>
+    <div class="article-keypoint">ServiceNow 5월 한 달 +40% 급등 - 소프트웨어 AI 수혜 기대 랠리의 대표 수혜주</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/servicenows-stock-soars-toward-historic-month-as-ai-fears-fade-across-software-31854b69?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 06:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">AI 주도 5월 랠리에서 가장 많이 오른 S&P 500 종목들</div>
+    <div class="article-title-en">These S&P 500 stocks soared the most during the AI-driven May rally</div>
+    <div class="article-keypoint">S&P 500 AI 관련주 5월 랠리 주도 - AI 수혜 기대가 지수 상승의 핵심 동력</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/these-s-p-500-stocks-have-soared-the-most-during-the-ai-driven-may-rally-570ad48f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 05:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Amazon의 토큰 극대화 실수가 Claude $500M 미스터리 청구서의 배경?</div>
+    <div class="article-title-en">Was Amazon's Tokenmaxxing Fiasco Behind Claude's $500M Mystery Bill?</div>
+    <div class="article-keypoint">Amazon 고객사 Claude 월 $500M 청구 사태 - 기업 AI 비용 리스크 실수치로 가시화</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/was-amazons-tokenmaxxing-fiasco-behind-claudes-500m-mystery-bill" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 03:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">오피니언 | Gavin Newsom의 AI 뉴딜 구상</div>
+    <div class="article-title-en">Opinion | Gavin Newsom Wants an AI New Deal</div>
+    <div class="article-keypoint">Newsom AI 뉴딜 구상 - 대형 정부 AI 지출 프로그램 논의로 규제·산업 경계 재설정</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/newsom-wants-a-new-ai-new-deal-02e4b0f9?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 06:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">이 칩 스타트업이 $135M 조달한 이유 - AI의 진짜 병목은 컴퓨팅이 아닌 메모리</div>
+    <div class="article-title-en">This chip startup just raised $135M on a bet that AI’s biggest bottleneck isn’t compute — it’s memory</div>
+    <div class="article-keypoint">XCENA $135M 조달 - AI 병목은 컴퓨팅 아닌 메모리, 공급망 투자 테마 이동</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/29/xcena-secures-135m-at-570m-valuation-betting-on-memory-as-ais-real-bottleneck/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/29 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">핵에너지 민간 자본화 가속 - Newcleo SPAC 상장과 핵연료 사이클 완결 시도</span>
+    <span class="theme-label-range">Article #22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">'핵연료 사이클 완결' - Newcleo, $780M 자금력과 Oklo 파트너십으로 $2.4B SPAC 상장</div>
+    <div class="article-title-en">"Closing The Nuclear Fuel Cycle" - Newcleo's $780M War Chest And Oklo Partnership Fuel $2.4B SPAC Debut</div>
+    <div class="article-keypoint">Newcleo $2.4B SPAC 상장·Oklo 파트너십 - 핵연료 사이클 완결 목표 자본시장 연결</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/closing-nuclear-fuel-cycle-newcleos-780m-war-chest-and-oklo-partnership-fuel-24b-spac-debut" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 04:25 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #23~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Gap·American Eagle 주가 급락 - 두 소매기업 모두 경기 탓은 아니라고 해명</div>
+    <div class="article-title-en">Gap and American Eagle shares both get crushed — and neither retailer is blaming the economy</div>
+    <div class="article-keypoint">Gap·American Eagle 실적 부진에도 경기 탓 부인 - 소매 섹터 개별 기업 리스크 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/gap-and-american-eagle-stock-are-both-getting-crushed-and-neither-retailer-is-blaming-the-economy-6290fa6a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 06:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">세계에서 가장 주목받는 크립토 상품, 마침내 미국 출시</div>
+    <div class="article-title-en">One of the hottest crypto products in the world is finally coming to the U.S.</div>
+    <div class="article-keypoint">Kalshi·Coinbase, CFTC 승인으로 미국에 영구 선물 출시 - 크립토 파생 시장 구조 확대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/one-of-the-hottest-crypto-products-in-the-world-is-finally-coming-to-the-u-s-96e9dfa6?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 05:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">NYC 시장 Mamdani, Trump·Musk의 DOGE 본떠 COGE 계획 발표</div>
+    <div class="article-title-en">NYC’s Mamdani Mimics Trump, Musk DOGE With COGE Plan</div>
+    <div class="article-keypoint">NYC COGE 설립 - DOGE 모델 지방정부 확산 움직임</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-05-29/nyc-s-mamdani-mimics-trump-musk-doge-with-coge-plan-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 05:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">반트럼프 연예인들, Freedom 250 행사 출연 잇따라 철회</div>
+    <div class="article-title-en">Anti-Trump Entertainers Bolt From Freedom 250 Celebration</div>
+    <div class="article-keypoint">트럼프 Freedom 250 행사 연예인 이탈 - 정치·문화 이슈, 시장 영향 제한적</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/anti-trump-entertainers-bolt-freedom-250-celebration" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">트럼프, HHS 백신 평가를 연방 지침으로 활용하는 행정명령 서명</div>
+    <div class="article-title-en">Trump signs order to use HHS vaccine assessment as federal guide</div>
+    <div class="article-keypoint">트럼프, HHS 백신 평가를 연방 기준으로 서명 - 보건 정책 규제 변화 주목</div>
+    <a class="article-link" href="https://www.investing.com/news/general-news/trump-signs-order-to-use-hhs-vaccine-assessment-as-federal-guide-4717425" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/29 22:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Dakota Gold 이사 Todd Kenner, 자사주 $100,357 매입</div>
+    <div class="article-title-en">Dakota Gold director Todd Kenner buys $100,357 in company stock</div>
+    <div class="article-keypoint">Dakota Gold 내부자 $100K 매수 - 소규모 금광주 내부자 매입 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/insider-trading-news/dakota-gold-director-todd-kenner-buys-100357-in-company-stock-93CH-4717452" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/29 22:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Farage 해킹 의혹, 본인 신고 없자 Labour당이 보안당국에 직접 제보</div>
+    <div class="article-title-en">Labour reports Farage’s alleged hack to security officials after he fails to do so</div>
+    <div class="article-keypoint">Farage 해킹 의혹 정치 공방 - 러시아 연루설로 영국 사이버 안보 이슈 부상</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/may/29/labour-inquiry-nigel-farage-russia-phone-hack-donation-reform-uk" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 00:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Microsoft, 보안 연구자 형사고발 위협으로 비판 직면</div>
+    <div class="article-title-en">Microsoft under fire for threatening security researcher with criminal investigation</div>
+    <div class="article-keypoint">Microsoft, 보안 연구자 형사고발 위협 - 취약점 공개 생태계 신뢰 훼손 논란</div>
+    <a class="article-link" href="https://techcrunch.com/2026/05/29/microsoft-under-fire-for-threatening-security-researcher-with-criminal-investigation/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/05/30 02:03 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
