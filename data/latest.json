@@ -96,6 +96,28 @@
       "briefing": "테크수요확대 공통원인에서 분기된 SOXX·XLK·ARKK 동반 강세→미국 반도체 ETF 상승이 한국 HBM 과점기업 수혜로 전이→KOSPI 3.55% 급등, KOSDAQ 조정은 소형주 수익 실현 반응",
       "_warnings": [
         "[?? 복합신호 B안] thread=thread_001 \"반도체ETF(SOXX)\"(up)→\"KOSPI\"(up) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2->n3->n6->n2",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "AI 밸류 초기 확산 단계 차단 시 전체 테크 섹터 연쇄 반응 중단",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "NASDAQ 100 ETF",
+          "via": "AI 밸류 급등이 나스닥 지수 상승으로 직접 파급",
+          "lag_days": 1
+        },
+        {
+          "to": "달러화",
+          "via": "미국 테크 강세가 달러 유입 증대로 달러 강세 유도",
+          "lag_days": 3
+        }
       ]
     },
     {
@@ -177,7 +199,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "미-이란 휴전협상 진전→지정학 리스크 완화→글로벌 리스크온 전환→원유 안정화·신흥국 유입·금 안전자산 수요 지속으로 자산별 차별적 반응, 아시아 닛케이·KOSPI 동반 상승으로 확산"
+      "briefing": "미-이란 휴전협상 진전→지정학 리스크 완화→글로벌 리스크온 전환→원유 안정화·신흥국 유입·금 안전자산 수요 지속으로 자산별 차별적 반응, 아시아 닛케이·KOSPI 동반 상승으로 확산",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n7->n8",
+        "fragileReason": "휴전 기대감 변화 시 전체 리스크온 흐름 즉시 역전 가능",
+        "alternativePath": "경제지표 개선을 통한 리스크온 전환"
+      },
+      "missingHops": [
+        {
+          "to": "신흥국 통화",
+          "via": "리스크온 환경에서 캐리 트레이드 재개로 신흥국 통화 강세",
+          "lag_days": 2
+        },
+        {
+          "to": "구리 선물",
+          "via": "중동 안정화가 글로벌 공급망 정상화 기대로 산업금속 수요 증가",
+          "lag_days": 5
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -369,5 +413,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전일 미국(T0) → 당일 아시아(T1) 인과만 허용"
-  }
+  },
+  "deep_analysis_at": "2026-05-29T07:52:36.288Z"
 }
