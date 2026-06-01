@@ -2,41 +2,48 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Fed 의장직 이관 불확실성",
+      "title": "연준의장 체제 전환",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "Fed의장교체",
-          "value": "Powell 임시→Warsh 취임",
+          "label": "연준의장교체",
+          "value": "워시 신임 의장 취임",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Powell warns that politicizing Fed will erode its credibility",
-            "Kevin Warsh takes oath of office as chairman"
+            {
+              "title": "Kevin Warsh takes oath as Fed chairman",
+              "source": "Fed"
+            }
           ]
         },
         {
           "id": "n2",
-          "label": "통화정책불확실성",
-          "value": "새 의장 정책방향 불투명",
+          "label": "정책신뢰도",
+          "value": "통화정책 독립성 우려",
           "source": "concept",
           "timestamp": null,
-          "related_news": []
+          "related_news": [
+            {
+              "title": "Powell warns politicizing Fed erodes credibility",
+              "source": "MarketWatch"
+            }
+          ]
         },
         {
           "id": "n3",
-          "label": "달러변동성확대",
-          "value": "통화정책 예측가능성 저하",
+          "label": "글로벌리스크오프",
+          "value": "안전자산 선호 확산",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "달러인덱스(UUP)",
-          "value": "[05/28] $27.70->[05/29] $27.66 (-0.14%)",
+          "label": "30년국채ETF(TLT)",
+          "value": "[05/28] $85.78->[05/29] $85.76 (+0.02%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
@@ -51,8 +58,16 @@
         },
         {
           "id": "n6",
+          "label": "외국인이탈우려",
+          "value": "한국 등 신흥국 자금압박",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n7",
           "label": "KOSPI",
-          "value": "[05/29] 8,473.05->[06/01] 8,860.87 (+4.54%)",
+          "value": "$8478.73->$8788.38 (+3.68%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -62,106 +77,109 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "불투명성",
-          "mechanism": "의장 교체로 향후 금리정책 방향성 예측 난이도 증가"
+          "label": "정책우려",
+          "mechanism": "신임 의장의 정책 스탠스 불확실성이 시장 신뢰도 하락으로 연결"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "변동성증가",
-          "mechanism": "Fed 정책 불투명으로 달러 프리미엄 변동성 확대"
+          "label": "리스크오프",
+          "mechanism": "정책 신뢰도 하락으로 글로벌 투자자의 안전자산 선호 확산"
         },
         {
           "from": "n3",
           "to": "n4",
           "label": "실증",
-          "mechanism": "달러 불확실성이 UUP ETF 약세로 반영"
+          "mechanism": "리스크오프 심리가 30년 국채 ETF의 안전자산 수요로 반영"
         },
         {
           "from": "n3",
           "to": "n5",
-          "label": "파급",
-          "mechanism": "달러 변동성이 신흥국 자산 흐름에 영향"
+          "label": "실증",
+          "mechanism": "글로벌 리스크오프가 신흥국 ETF 매도 압력으로 나타남"
         },
         {
-          "from": "n4",
+          "from": "n3",
           "to": "n6",
-          "label": "원화강세",
-          "mechanism": "달러 약세로 원화 강세 및 한국 증시 상승"
-        }
-      ],
-      "korea_terminal_node": "n6",
-      "briefing": "Fed 의장직 이관으로 통화정책 불확실성 이슈가 부각되며, 달러 약세(UUP -0.14%)가 원화 강세로 연결되어 KOSPI 4.54% 급등의 배경이 되고 있다. Powell의 독립성 경고가 정책 신뢰도 우려로 작용하면서 달러 변동성이 확대되는 중이다.",
-      "_warnings": [
-        "[한국 종착 비율] 2/2 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n6->n2->n3->n6",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "Fed 의장 교체 시기와 정책 연속성에 대한 시장 해석이 급변할 수 있음",
-        "alternativePath": null
-      },
-      "missingHops": [
-        {
-          "to": "유럽채권(EFA)",
-          "via": "달러 약세시 상대적 매력도로 유럽채권 자금유입 가속화",
-          "lag_days": 3
+          "label": "전이",
+          "mechanism": "글로벌 리스크오프 확산이 신흥국 자금 이탈 우려로 전이"
         },
         {
-          "to": "일본엔(FXY)",
-          "via": "Fed 불확실성이 안전자산 수요 증가로 엔화 강세 유발",
-          "lag_days": 1
+          "from": "n6",
+          "to": "n7",
+          "label": "급등후조정",
+          "mechanism": "외국인 이탈 우려 속에서도 KOSPI는 당일 급등세 지속"
         }
+      ],
+      "korea_terminal_node": "n7",
+      "briefing": "글로벌 리스크오프가 신흥국 자금 이탈 우려를 촉발했으나, 당일 KOSPI는 3.68% 급등하며 이를 일시 상쇄했다. 워시 신임 연준 의장 체제하 정책 신뢰도 약화가 국내 외인 심리에 미치는 영향 모니터링 필요.",
+      "_warnings": [
+        "[한국 종착 비율] 3/3 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "AI칩 규제 메모리수요급증",
-      "priority": 2,
-      "frequency": "NOW",
+      "title": "AI PC 생태계 전환",
+      "priority": 1,
+      "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "n7",
-          "label": "AI칩수출규제",
-          "value": "중국향 Nvidia칩 차단",
+          "id": "n8",
+          "label": "AIPC출시",
+          "value": "엔비디아 AI 특화 PC",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "US takes step to halt Nvidia AI chip shipments to Chinese firms"
+            {
+              "title": "Nvidia introduces AI Agent PCs",
+              "source": "WSJ"
+            }
           ]
         },
         {
-          "id": "n8",
-          "label": "메모리수요급증",
-          "value": "HBM·DRAM 공급망 재편",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
           "id": "n9",
-          "label": "반도체ETF(SOXX)",
-          "value": "[05/28] $569.48->[05/29] $569.08 (-0.07%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "AI수요확대",
+          "value": "특화 하드웨어 패러다임",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n10",
-          "label": "테크섹터(XLK)",
-          "value": "[05/28] $187.85->[05/29] $191.02 (+2.23%)",
+          "label": "반도체ETF(SOXX)",
+          "value": "[05/22] $537.33->[05/29] $569.08 (+5.91%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n11",
+          "label": "테크섹터ETF(XLK)",
+          "value": "[05/28] $187.03->[05/29] $191.02 (+2.23%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n12",
+          "label": "메모리집약화",
+          "value": "HBM·DRAM 수요급증",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n13",
+          "label": "한국반도체우위",
+          "value": "삼성·하이닉스 기술선도",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n14",
           "label": "KOSPI",
-          "value": "[05/29] 8,473.05->[06/01] 8,860.87 (+4.54%)",
+          "value": "[05/26] $8046.52->[06/01] $8788.38 (+9.21%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -169,85 +187,166 @@
       ],
       "edges": [
         {
-          "from": "n7",
-          "to": "n8",
-          "label": "수요전환",
-          "mechanism": "AI칩 공급망 분화로 고성능 메모리 수요 폭증"
-        },
-        {
           "from": "n8",
           "to": "n9",
-          "label": "실증",
-          "mechanism": "반도체 업계 재편 기대감이 SOXX에 반영"
+          "label": "수요전환",
+          "mechanism": "AI PC 출시가 범용 컴퓨팅에서 AI 특화 수요로의 구조적 전환 신호"
         },
         {
-          "from": "n8",
+          "from": "n9",
           "to": "n10",
-          "label": "섹터확산",
-          "mechanism": "AI 메모리 수요가 대형 테크 섹터 전반으로 확산"
+          "label": "실증",
+          "mechanism": "AI 수요 확대가 반도체 ETF 주간 5.91% 상승으로 직접 반영"
         },
         {
-          "from": "n10",
+          "from": "n9",
           "to": "n11",
-          "label": "삼성수혜",
-          "mechanism": "글로벌 메모리 과점 한국 기업 수혜 기대감"
-        }
-      ],
-      "korea_terminal_node": "n11",
-      "briefing": "메모리 수요 급증이 공통 원인으로 작용하며, 반도체와 테크 섹터 동시 강세(XLK +2.23%)가 한국 반도체 기업의 수혜 기대감으로 이어지면서 KOSPI 상승을 견인하고 있다. 미국의 대중 AI칩 규제가 삼성·하이닉스 중심의 글로벌 메모리 확보 기회로 작용 중이다.",
-      "_warnings": [
-        "[?? 복합신호 B안] thread=thread_002 \"테크섹터(XLK)\"(up)→\"KOSPI\"(up) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
-      ],
-      "feedbackRisk": {
-        "hasFeedback": false,
-        "loop": null,
-        "riskLevel": "low"
-      },
-      "chainFragility": {
-        "fragileEdge": "n8->n9",
-        "fragileReason": "SOXX 상승이 단순 기대감 기반이므로 실제 수주 데이터 부재시 급락 위험",
-        "alternativePath": "n8->n10->n11 (삼성전자 개별 펀더멘털 경로)"
-      },
-      "missingHops": [
-        {
-          "to": "구리선물(CPER)",
-          "via": "AI칩 생산 확대로 구리 등 산업금속 수요 급증 예상",
-          "lag_days": 5
+          "label": "실증",
+          "mechanism": "AI 수요 증가가 대형 테크 섹터 주간 강세의 핵심 동력"
         },
         {
-          "to": "대만반도체(TSM)",
-          "via": "메모리 수요 증가가 파운드리 캐파시티 확장 투자로 연결",
-          "lag_days": 7
+          "from": "n9",
+          "to": "n12",
+          "label": "기술진화",
+          "mechanism": "AI 처리 요구사항의 고도화가 메모리 집약적 설계로 전환"
+        },
+        {
+          "from": "n12",
+          "to": "n13",
+          "label": "경쟁우위",
+          "mechanism": "메모리 집약화 추세가 HBM 기술 우위 기업에 구조적 유리성 제공"
+        },
+        {
+          "from": "n13",
+          "to": "n14",
+          "label": "실증",
+          "mechanism": "한국 반도체 기업의 기술적 우위가 KOSPI 주간 9.21% 상승으로 반영"
         }
+      ],
+      "korea_terminal_node": "n14",
+      "briefing": "AI PC 생태계 전환이 메모리 집약적 컴퓨팅으로 패러다임 이동을 주도하며, HBM 기술 우위를 보유한 삼성·하이닉스 수혜 기대감이 KOSPI 주간 9.21% 상승을 견인했다.",
+      "_warnings": [
+        "[WEEKLY 프리퀀시 위반] thread=thread_002 node=n11"
       ]
+    },
+    {
+      "id": "thread_003",
+      "title": "중동갈등 에너지체제",
+      "priority": 2,
+      "frequency": "MONTHLY",
+      "nodes": [
+        {
+          "id": "n15",
+          "label": "중동갈등심화",
+          "value": "이스라엘-레바논 공세",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n16",
+          "label": "에너지공급불안",
+          "value": "페르시아만 루트 위험",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            {
+              "title": "Goldman Sachs: Oil demand destruction offsets supply shocks",
+              "source": "OilPrice"
+            }
+          ]
+        },
+        {
+          "id": "n17",
+          "label": "원유ETF(USO)",
+          "value": "[04/29] $150.63->[05/29] $129.09 (-14.3%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n18",
+          "label": "에너지섹터ETF(XLE)",
+          "value": "[04/29] $59.03->[05/29] $56.29 (-4.64%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n19",
+          "label": "금ETF(GLD)",
+          "value": "[04/29] $417.41->[05/29] $417.12 (-0.07%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n20",
+          "label": "한국에너지취약성",
+          "value": "중동산 원유 70% 의존",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n15",
+          "to": "n16",
+          "label": "공급위험",
+          "mechanism": "중동 갈등 장기화가 호르무즈 해협 등 주요 에너지 루트의 구조적 위험 증대"
+        },
+        {
+          "from": "n16",
+          "to": "n17",
+          "label": "실증",
+          "mechanism": "공급 불안에도 불구하고 글로벌 수요 둔화로 원유 ETF 월간 14.3% 하락"
+        },
+        {
+          "from": "n16",
+          "to": "n18",
+          "label": "실증",
+          "mechanism": "에너지 공급 불안 우려가 에너지 섹터 ETF 월간 조정으로 반영"
+        },
+        {
+          "from": "n16",
+          "to": "n19",
+          "label": "실증",
+          "mechanism": "지정학적 위험 증대에도 불구하고 금 ETF는 월간 보합세 유지"
+        },
+        {
+          "from": "n16",
+          "to": "n20",
+          "label": "취약성",
+          "mechanism": "글로벌 에너지 공급망 불안이 중동 의존도 높은 한국의 구조적 취약성 부각"
+        }
+      ],
+      "korea_terminal_node": "n20",
+      "briefing": "중동 갈등 장기화로 에너지 공급망 구조적 위험이 심화되며, 중동산 원유 의존도 70% 이상인 한국의 에너지 안보 취약성이 중장기 리스크 요인으로 대두되고 있다. 수요 둔화 속에서도 공급 불안 프리미엄 관리 필요."
     }
   ],
   "headlines": [
-    "Fed의장 교체로 달러약세, KOSPI 4.54% 급등",
-    "AI칩규제로 메모리수요폭증, 한국반도체 수혜"
+    "테크 상승세로 KOSPI 급등",
+    "AI PC 전환 추진력 확대"
   ],
   "layer_summary": {
-    "layer1": "미국 전일: Fed 의장직 이관 및 AI칩 규제로 달러약세·테크강세 / 당일 아시아: KOSPI 대형주 중심 4.54% 급등, KOSDAQ 조정",
-    "layer2": "달러약세(UUP -0.14%) → 원화강세, 글로벌 메모리 수요 급증 → 삼성·하이닉스 수혜 기대",
-    "layer3": "시가총액 효과로 KOSPI가 KOSDAQ 조정을 압도하며 외국인 자금 유입 지속"
+    "layer1": "전일 미국: 테크섹터(XLK +2.23%)·반도체(SOXX +5.91%) 강세 + 정책신뢰도 우려 / 당일 아시아: AI 수혜 KOSPI 3.68% 급등",
+    "layer2": "미국 AI 생태계 전환 신호와 정책 불확실성이 한국 증시로 이중 압박 형성",
+    "layer3": "KOSPI 급등 vs KOSDAQ -2.3% 조정: 대형주-중소형주 괴리 구조화"
   },
-  "macro_regime_note": "고실질금리 하에서도 Fed 정책 불확실성으로 인한 달러약세와 메모리 수요 재편 기대감이 선별적 리스크온 심화를 견인하며 한국 증시 대형주 상승 구조를 강화하고 있다.",
-  "generated_at": "2026-06-01T03:46:04.994Z",
+  "macro_regime_note": "고실질금리하 선별적 리스크온 레짐이 유지되면서, AI 특화 수요 확대는 촉매로 작용하고 정책 신뢰도 약화는 신흥국 자금 흐름에 단기 압박을 주고 있다.",
+  "generated_at": "2026-06-01T07:47:57.290Z",
   "data_as_of": {
-    "timestamp_iso": "2026-06-01T03:46:04.988Z",
-    "display": "6/1 12:46 [ KST +0900 ]",
-    "display_mobile": "6/1 12:46 KST",
+    "timestamp_iso": "2026-06-01T07:47:57.228Z",
+    "display": "6/1 16:47 [ KST +0900 ]",
+    "display_mobile": "6/1 16:47 KST",
     "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-06-01T03:46:04.994Z",
-    "elapsed_sec": 174,
-    "market_status": [
-      "한국(KOSPI/KOSDAQ)",
-      "일본(닛케이)"
-    ],
+    "generated_at": "2026-06-01T07:47:57.290Z",
+    "elapsed_sec": 163,
+    "market_status": [],
     "is_weekend": false,
-    "data_note": "KOSPI 4.54% 급등, KOSDAQ 2.29% 하락으로 극명한 대조"
-  },
-  "deep_analysis_at": "2026-06-01T03:52:18.911Z"
+    "data_note": "모든 주요 시장 마감. T0(전일 미국) → T1(당일 아시아/유럽) 인과 방향만 허용."
+  }
 }
