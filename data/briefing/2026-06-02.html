@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-02 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/02 07:49 KST</div>
+    <div class="header-date">2026-06-02</div>
+    <div class="header-headline">Alphabet $800억 자본조달 - AI 인프라 수익화 압박 임계점</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Alphabet $80B 증자·Anthropic IPO 동시 가시화 - AI 자본조달 구조 변화와 희석 리스크 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Alphabet $80B 증자·Anthropic IPO 선제 상장 - AI 수익화 위기가 자본시장을 압박하다</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Alphabet이 AI 인프라 투자를 위해 $80B 규모의 주식 발행(ATM $40B + Berkshire $10B 할인 딜 포함)을 추진한다는 구체적 수치가 공개된 것으로, AI 슈퍼사이클의 핵심 미스터리였던 수익화 경로가 대규모 외부 자본 의존으로 귀결되는 구조임이 드러났다. 동시에 Anthropic은 Claude Opus 4.8 출시 및 $65B 조달로 $900B 밸류에이션을 확보한 직후 기밀 S-1을 SEC에 제출하며 OpenAI보다 IPO 레이스에서 앞서 나갔다. Nvidia는 Microsoft·Dell·HP와 협력해 AI 에이전트 전용 PC 시장($200B CPU 시장)에 진출하며 하드웨어 수요 확장을 가속하고 있다. 반면 구리 수요가 글로벌 공급을 초과한다는 경고가 나오는 등 AI 인프라 확장을 뒷받침할 핵심 원자재 공급망의 병목이 동시에 부각되고 있다. 대규모 희석 부담과 아직 불투명한 수익화 경로 사이의 긴장이 AI 섹터 전반의 밸류에이션 재조정 압력으로 전이될 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">OpenAI·AI 규제 역풍 - 플로리다 소송과 중국 칩 차단이 여는 산업 구조 균열</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#14</span>
+    </div>
+    <div class="theme-summary">플로리다주가 OpenAI와 Sam Altman을 상대로 미성년자 위험 노출 및 총기 사건 연루 혐의로 업계 최초 주(州) 레벨 소송을 제기하며 AI 기업의 법적 리스크가 새로운 국면에 진입했다. 다른 주 검찰도 유사 소송을 예고하고 있어 미국 내 AI 규제 소송전이 연방 차원을 넘어 주 차원으로 분산·확산되는 구조가 형성되고 있다. 동시에 미 상무부는 중국의 첨단 AI 칩 우회 취득을 차단하는 새 가이던스를 발표했으며, 중국 인민해방군이 6년간 Nvidia 제한 칩을 공개 조달 시도했다는 분석 보고서도 공개돼 기술 안보 리스크가 재부각됐다. Meta AI 지원 챗봇이 Instagram 계정 해킹에 악용된 사례까지 더해지며 AI 윤리·보안 취약성에 대한 시장 신뢰가 동시다발적으로 시험받고 있다. AI가 인간의 관계적 맥락을 처리할 역량이 부재하다는 구조적 한계 지적도 병행되며, 규제·보안·기술 삼중 압박이 AI 섹터 프리미엄을 잠식할 가능성이 커지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Warsh Fed 체제 하 AI 인플레이션 변수 - 금리 인하 기대 소멸 경로 구체화</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #15~#18</span>
+    </div>
+    <div class="theme-summary">Apollo의 Torsten Slok이 AI 인프라 구축 초기 단계의 인플레이션 효과를 명시적으로 언급하며 Warsh 신임 Fed 의장의 조기 금리 인하 희망이 구조적으로 차단될 수 있다는 분석을 내놓은 것이 오늘의 새로운 각도다. FEDS 연구 논문은 금융 자유화가 붐과 버블 붕괴로 귀결되는 역사적 패턴을 재조명하며 현재 AI 자본 팽창 사이클에 대한 경계 논리를 제공한다. 가계 시각의 통화정책 전달경로에 관한 연구도 발표되며, 정책 기대 형성이 Top-down이 아닌 Bottom-up으로 형성되는 메커니즘이 주목받고 있다. 전임 Powell 의장은 트럼프의 정치적 간섭이 Fed에 '스트레스 테스트'를 가하고 있다고 경고하며 중앙은행 독립성 훼손 우려를 공개적으로 제기했다. AI 인프라 투자 붐이 공급 측 인플레를 유발하는 동시에 자산 버블 경고까지 병존하는 상황에서, Warsh 체제의 금리 경로는 시장 예상보다 훨씬 좁은 폭으로 설정될 가능성이 높아지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">SpaceX IPO - $2조 밸류 신뢰성과 리테일 접근 구조의 비대칭 압박</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #19~#21</span>
+    </div>
+    <div class="theme-summary">SpaceX IPO가 역대 최대 규모 공모 기록을 향해 가는 가운데, 리테일 투자자들이 공식 경로에서 배제되어 클로즈드 펀드 등 우회 수단을 통해 진입을 시도하는 구조적 불평등이 부각되고 있다. Musk 지분이 50% 미만임에도 약 $2조 밸류에이션이 산정된 근거로 화성 식민지화 등 현실적 타임라인 내 실현 불가능한 프로젝트들이 포함돼 있다는 비판이 제기되며 IPO 신뢰성 논란이 심화되고 있다. S-1 공시에는 데이터센터 냉각을 위한 '상당한' 수자원 필요와 공급 불확실성이 리스크 팩터로 명시돼, AI 인프라 기업으로서의 실물 운영 한계가 드러났다. 우주 섹터 자본시장 재편의 기폭제가 될 이번 IPO는 동시에 머스크 개인 권력 집중에 대한 시장의 구조적 신뢰 리스크를 함께 테스트하게 된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">이스라엘-헤즈볼라 휴전·중동 지정학 - 트럼프 중재와 유가 방향성 분기점</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#25</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령이 이스라엘과 헤즈볼라의 휴전 합의를 주장했으나, 이란이 미국과의 평화 협상을 중단하겠다고 위협하면서 지정학 긴장의 복합 구도가 형성됐다. 이란의 협상 중단 위협은 유가 상승 압력으로 직결되며, 앞선 미-이란 협상 진전에 따른 유가 하락 흐름과 정반대 방향의 충격을 예고한다. 영국 제조업 PMI는 중동 갈등에서 비롯된 공급망 차질과 가격 인상 선제 대응으로 4년 만에 최고 성장률을 기록했으나 이 효과는 단기에 그칠 것으로 전망된다. 팔레스타인 문제와 관련한 미국 내 민주당 분열 역시 지속되고 있어, 중동 지정학이 미국 내정·에너지·금융시장에 동시 파급되는 복합 리스크 구도가 유지되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #26~#30</span>
+    </div>
+    <div class="theme-summary">유럽 핵 억지력 재건의 필요성과 러시아의 카자흐스탄 원전 $16B 딜의 불확실성이 병존하며 핵에너지 지정학의 복잡성이 지속되고 있다. 오스트리아 법원에서 시리아 전직 정보부 고위직에 대한 고문 혐의 재판이 개시됐으며, 영국 경찰 연합 전 대표의 부패 혐의 관련 뉴스도 포함됐다. 개인 재무 관련 기사는 거시경제·금융·지정학·산업·기술과의 직접적 관련성이 낮아 기타로 분류한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Alphabet $80B 증자·Anthropic IPO 선제 상장 - AI 수익화 위기가 자본시장을 압박하다</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Alphabet, AI 설비투자 조달 위해 $800억 규모 주식 발행 - $400억 ATM 오퍼링·Berkshire 할인딜 $100억 포함</div>
+    <div class="article-title-en">Alphabet Raising $80BN In Equity To Fund Capex, Including $40BN ATM Offering And $10BN Deeply Discounted Deal With Berkshire</div>
+    <div class="article-keypoint">Alphabet $80B 증자 - AI 수익화 공백을 외부 자본으로 메우는 구조적 한계 노출</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/alphabet-raising-80bn-equity-fund-capex-including-40bn-atm-offering-and-10bn-deeply" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 07:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Nvidia, Microsoft·Dell·HP AI 에이전트 PC로 $2,000억 CPU 시장 공략</div>
+    <div class="article-title-en">Nvidia chases $200B CPU market with AI agent PCs from Microsoft, Dell, and HP</div>
+    <div class="article-keypoint">Nvidia, $200B CPU 시장 진출로 AI 에이전트 PC 하드웨어 수요 확장 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/01/nvidia-chases-200b-cpu-market-with-ai-agent-pcs-from-microsoft-dell-and-hp/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 06:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Anthropic의 선제 IPO 행보, OpenAI 대비 우위 확대 전망</div>
+    <div class="article-title-en">Anthropic’s First-Mover IPO Edge Set to Widen Lead Over OpenAI</div>
+    <div class="article-keypoint">Anthropic, OpenAI 앞서 기밀 S-1 제출 - AI IPO 레이스 판도 변화 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-01/anthropic-s-first-mover-ipo-edge-set-to-widen-lead-over-openai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Google, AI 인프라 투자를 위해 $800억 조달 추진</div>
+    <div class="article-title-en">Google Seeks to Raise $80 Billion for AI Infrastructure</div>
+    <div class="article-keypoint">Alphabet, Berkshire와 $10B 할인 딜 포함 $80B 조달 - AI 인프라 투자 수익화 압박 임계점</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/google-seeks-to-raise-80-billion-for-ai-infrastructure-05a379be?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 07:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Nvidia, AI 에이전트용 첫 PC 제품군 발표</div>
+    <div class="article-title-en">Nvidia Introduces First PCs Designed for AI Agents</div>
+    <div class="article-keypoint">Nvidia, Dell·Lenovo·HP와 AI 에이전트 전용 PC 출시 - 엣지 AI 하드웨어 시장 본격 개화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/nvidia-unveils-ai-laptops-rtx-spark-47445bcd?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 06:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Anthropic, 프론티어 AI 랩 상장 경쟁 속 기밀 IPO 신청</div>
+    <div class="article-title-en">Anthropic Confidentially Files For IPO As Frontier AI Labs Race To Go Public </div>
+    <div class="article-keypoint">Anthropic $900B 밸류에서 기밀 S-1 제출 - 프론티어 AI 상장 레이스 본격 개막</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/anthropic-confidentially-files-ipo-frontier-ai-labs-race-go-public" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 01:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">구리 수요가 글로벌 공급을 초과하고 있다 - Groves 분석</div>
+    <div class="article-title-en">The Copper Demand is Exceeding The Global Supply Says Groves</div>
+    <div class="article-keypoint">구리 수요, 글로벌 공급 초과 - AI 인프라 확장의 핵심 원자재 병목 리스크 현실화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-01/copper-demand-is-exceeding-the-global-supply-says-groves-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 04:52 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">OpenAI·AI 규제 역풍 - 플로리다 소송과 중국 칩 차단이 여는 산업 구조 균열</span>
+    <span class="theme-label-range">Article #8~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">AI가 놓치고 있는 지능 - 관계적 맥락 처리 능력의 부재</div>
+    <div class="article-title-en">The Intelligence That AI Is Missing</div>
+    <div class="article-keypoint">AI의 관계적 맥락 처리 한계 - 수익화 기대에 반하는 구조적 기술 결함 재부각</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-missing-relational-reasoning-by-anne-marie-slaughter-and-avni-patel-thompson-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/01 21:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">OpenAI의 다음 법적 전선 - 모델 위험성을 주장하는 주(州) 정부들의 소송</div>
+    <div class="article-title-en">OpenAI’s next legal battle is against states who claim its models are dangerous</div>
+    <div class="article-keypoint">플로리다, OpenAI 첫 주(州)급 소송 제기 - AI 법적 리스크의 주 차원 확산 신호탄</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/openais-next-legal-battle-is-against-states-who-claim-its-models-are-dangerous-04b093d7?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 06:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">중국 군, 수년간 Nvidia 칩 확보 시도 - 보고서 공개</div>
+    <div class="article-title-en">Chinese Military Sought Nvidia Chips for Years, Report Says</div>
+    <div class="article-keypoint">PLA 6년간 Nvidia 제한칩 공개 조달 시도 - 미 기술 안보 허점 구체적 증거 공개</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/06/01/business/economy/china-military-nvidia-chips.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/01 23:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">플로리다, OpenAI·Sam Altman 상대로 폭력 사건 연루 혐의 업계 최초 소송 제기</div>
+    <div class="article-title-en">Florida sues OpenAI, Sam Altman, in first-of-its-kind lawsuit over violent incidents</div>
+    <div class="article-keypoint">플로리다, 총기 사건 연루 혐의로 OpenAI·Altman 소송 - AI 형사 책임론 확산 전환점</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/01/florida-sues-openai-sam-altman-in-first-of-its-kind-lawsuit-over-violent-incidents/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 05:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">해커들, Meta AI 지원 챗봇을 속여 Instagram 계정 탈취</div>
+    <div class="article-title-en">Hackers hijacked Instagram accounts by tricking Meta AI support chatbot into granting access</div>
+    <div class="article-keypoint">Meta AI 챗봇 악용 Instagram 해킹 - AI 지원 시스템의 보안 취약성 현실화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/01/hackers-hijacked-instagram-accounts-by-tricking-meta-ai-support-chatbot-into-granting-access/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 03:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">미국, 중국의 첨단 AI 칩 접근 추가 제한 조치 시행</div>
+    <div class="article-title-en">US Moves To Further Restrict China's Access To Advanced AI Chips</div>
+    <div class="article-keypoint">미 상무부 대중 첨단 AI 칩 추가 제한 - 반도체 공급망 지정학 긴장 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/us-moves-further-restrict-chinas-access-advanced-ai-chips" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">학교에서 AI 뇌 퇴화를 막으려면? 한 국가의 답은 무료 ChatGPT 제공</div>
+    <div class="article-title-en">How to Fight AI Brain Rot at School? For One Country, It’s With Free ChatGPT</div>
+    <div class="article-keypoint">국가 주도 ChatGPT 무료 도입 실험 - AI 대규모 교육 효과 첫 데이터 공개</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/estonia-schools-chatgpt-9ff76cc7?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 00:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Warsh Fed 체제 하 AI 인플레이션 변수 - 금리 인하 기대 소멸 경로 구체화</span>
+    <span class="theme-label-range">Article #15~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">FEDS 연구논문: 금융 자유화, 붐 그리고 버블 붕괴</div>
+    <div class="article-title-en">FEDS Paper: Financial Liberalizations, Booms, and Crashes</div>
+    <div class="article-keypoint">금융 자유화 → 붐·버블 붕괴 패턴, 현 AI 자본 팽창 사이클 경계 논거 제공</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/financial-liberalizations-booms-and-crashes.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 05:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">전임 Fed 의장 Jerome Powell, 정치적 간섭에 대한 경고 발신</div>
+    <div class="article-title-en">Ex-Federal Reserve chair Jerome Powell sounds alarm over political interference</div>
+    <div class="article-keypoint">Powell, 트럼프의 Fed 간섭을 '스트레스 테스트'로 규정 - 중앙은행 독립성 훼손 경고 공식화</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/jun/01/federal-reserve-jerome-powell-kennedy-award" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 00:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Apollo Slok: AI가 Warsh의 조기 금리 인하 희망을 꺾을 것</div>
+    <div class="article-title-en">Apollo’s Slok Says AI Will Dash Warsh’s Hopes for Quick Rate Cut</div>
+    <div class="article-keypoint">Apollo Slok: AI 인프라 초기 인플레→Warsh 조기 금리 인하 불가 - 인하 경로 소멸 구체화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-01/apollo-s-slok-says-ai-will-dash-warsh-s-hopes-for-quick-rate-cut" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/01 22:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">가계 시각의 통화정책: 인식, 반응 그리고 전달경로</div>
+    <div class="article-title-en">Monetary policy according to households: perceptions, reactions and channels </div>
+    <div class="article-keypoint">가계 통화정책 인식·반응 연구 - 정책 전달경로의 Bottom-up 메커니즘 재조명</div>
+    <a class="article-link" href="https://www.bis.org/publ/work1354.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/01 18:28 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">SpaceX IPO - $2조 밸류 신뢰성과 리테일 접근 구조의 비대칭 압박</span>
+    <span class="theme-label-range">Article #19~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">SpaceX IPO 접근 차단된 리테일 투자자들, 우회 투자 경로 모색</div>
+    <div class="article-title-en">Retail Traders Shut Out of SpaceX IPO Are Finding Ways In </div>
+    <div class="article-keypoint">SpaceX IPO 리테일 배제 구조 - 우회 투자 급증으로 가격 발견 왜곡 리스크 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-01/retail-traders-shut-out-of-spacex-ipo-finding-ways-in-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 04:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Elon Musk, SpaceX 그리고 부의 환상</div>
+    <div class="article-title-en">Elon Musk, SpaceX and the illusion of wealth</div>
+    <div class="article-keypoint">SpaceX $2조 밸류, 비현실적 프로젝트 가정 기반 - IPO 신뢰성 구조적 도전</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/06/01/elon-musk-spacex-and-the-illusion-of-wealth_6754028_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">수자원 접근성, SpaceX IPO의 새로운 리스크 요인으로 등장</div>
+    <div class="article-title-en">Water access is now a risk factor in SpaceX’s IPO</div>
+    <div class="article-keypoint">SpaceX S-1, 수자원 공급 불확실성 명시 - AI 데이터센터 운영 실물 제약 첫 공식 인정</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/01/water-access-is-now-a-risk-factor-in-spacexs-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 03:19 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">이스라엘-헤즈볼라 휴전·중동 지정학 - 트럼프 중재와 유가 방향성 분기점</span>
+    <span class="theme-label-range">Article #22~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">트럼프 중동 평화를 이끌 수 있는 유일한 인물</div>
+    <div class="article-title-en">The One Man Who Could Give Trump Middle East Peace</div>
+    <div class="article-keypoint">트럼프, 팔레스타인 독립국가 수용 가능성 - 중동 협상 구도의 새 변수로 부상</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/marwan-barghouti-middle-east-peace-needs-credible-palestinian-leader-by-daoud-kuttab-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/01 23:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">트럼프, 이란 위협 이후 이스라엘·헤즈볼라 휴전 합의 주장</div>
+    <div class="article-title-en">Trump claims Israel and Hizbollah agree ceasefire after Iran threats</div>
+    <div class="article-keypoint">트럼프, 이스라엘-헤즈볼라 휴전 주장 - 이란 협상 중단 위협과 맞물려 유가 변동성 재확대</div>
+    <a class="article-link" href="https://www.ft.com/content/a4f1e36d-f3a5-4959-b227-133300f01be1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 07:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">이스라엘 퍼레이드 참석 두고 민주당 분열 - Mamdani, 불참 공약 이행</div>
+    <div class="article-title-en">Democrats split on Israel parade as Mamdani keeps promise to skip event</div>
+    <div class="article-keypoint">NYC 이스라엘 퍼레이드 민주당 분열 - 중동 정책 내 정치 균열 심화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/01/democrats-israel-parade-new-york" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 06:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">영국 제조업 성장 급등, PMI로 본 단기 효과에 그칠 전망</div>
+    <div class="article-title-en">UK Factory Growth Spurt Set to Be Short-Lived, PMI Shows</div>
+    <div class="article-keypoint">영국 제조업 PMI, 중동 공급망 차질 선제 대응으로 4년 최고 - 단기 효과에 그칠 전망</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-01/growth-spurt-for-uk-factories-set-to-be-short-lived-pmi-shows" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/01 17:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #26~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">유럽의 핵 선택지 - 억지력 유지와 확산 방지 사이의 딜레마</div>
+    <div class="article-title-en">Europe’s Nuclear Options</div>
+    <div class="article-keypoint">유럽 핵 억지력 재건 필요성 - 기존 비확산 제도 프레임 와해 우려 고조</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/how-europe-can-achieve-deterrence-without-nuclear-proliferation-by-ana-palacio-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/01 22:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">71세 투자자, 손자녀 태국 방문을 위한 $10,000 주식 매도, 현명한 선택인가</div>
+    <div class="article-title-en">I am 71. Would it be foolish to sell $10,000 in shares to visit my grandchildren in Thailand?</div>
+    <div class="article-keypoint">개인 투자자 자산 인출 의사결정 - 고령 재무 설계의 기회비용 관점</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/i-am-71-and-comfortable-should-i-sell-10-000-in-stock-to-visit-my-grandkids-in-thailand-or-dip-into-my-50-000-savings-16230c6a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 07:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">러시아의 카자흐스탄 $160억 원전 딜, 핵심 세부사항 불투명</div>
+    <div class="article-title-en">Russia's $16 Billion Nuclear Deal With Kazakhstan Lacks One Critical Detail</div>
+    <div class="article-keypoint">러-카자흐 $16B 원전 딜, 완료 시점 불투명 - 러시아 핵 인프라 계약 신뢰성 의문</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Russias-16-Billion-Nuclear-Deal-With-Kazakhstan-Lacks-One-Critical-Detail.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">전 경찰연합 대표, 부패 혐의 무혐의 확신 - 독점 인터뷰</div>
+    <div class="article-title-en">Ex-Police Federation boss confident he will be exonerated of corruption claims</div>
+    <div class="article-keypoint">영국 경찰연합 전 대표 부패 혐의 수사 - 제도 신뢰 훼손 사례</div>
+    <a class="article-link" href="https://www.theguardian.com/uk-news/2026/jun/01/ex-police-federation-boss-confident-he-will-be-exonerated-of-corruption-claims" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 05:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">오스트리아, 시리아 전직 Raqqa 정보부 수장을 고문 혐의로 재판에 넘겨</div>
+    <div class="article-title-en">Austria puts Syrian ex-intelligence chief in Raqqa on trial for torture</div>
+    <div class="article-keypoint">오스트리아, 시리아 전직 정보부 고위직 고문 혐의 재판 개시 - 전쟁범죄 국제사법 진전</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/austria-puts-syrian-ex-intelligence-chief-in-raqqa-on-trial-for-torture" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/02 02:40 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
