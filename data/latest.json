@@ -103,7 +103,29 @@
         }
       ],
       "korea_terminal_node": "n6",
-      "briefing": "알고리즘 과밀화가 핵심 공통원인. 팰로알토 AI 보안 수요 급증 확인에도 투자 우위 상실로 반도체 ETF 급등 후 혁신성장 ETF 조정되며 코스닥 -2.29% 급락."
+      "briefing": "알고리즘 과밀화가 핵심 공통원인. 팰로알토 AI 보안 수요 급증 확인에도 투자 우위 상실로 반도체 ETF 급등 후 혁신성장 ETF 조정되며 코스닥 -2.29% 급락.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2(AI과밀화)->n5(시장집중)->n6(코스닥조정)->n2(AI투자위축)",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n2->n5",
+        "fragileReason": "AI 알고리즘 과밀화와 시장 집중도 심화 간 연결고리가 취약하여 단절 시 전체 전파경로 차단",
+        "alternativePath": "n2->n3(반도체ETF변동성)->시장집중도"
+      },
+      "missingHops": [
+        {
+          "to": "VIX/변동성 ETF",
+          "via": "AI투자 과밀화가 시장 예측가능성 저하로 변동성 지표 급등",
+          "lag_days": 3
+        },
+        {
+          "to": "달러/엔 통화ETF",
+          "via": "테크주 조정이 엔캐리 포지션 청산으로 통화 변동성 확산",
+          "lag_days": 5
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -184,7 +206,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "글로벌리스크오프가 공통원인. 워시 Fed 의장 취임으로 고금리 장기화 기대감이 신흥국 자산에서 안전자산으로 자금 이동 심화. 달러 안정적, 신흥국 소폭 강세도 기조적 약세 지속."
+      "briefing": "글로벌리스크오프가 공통원인. 워시 Fed 의장 취임으로 고금리 장기화 기대감이 신흥국 자산에서 안전자산으로 자금 이동 심화. 달러 안정적, 신흥국 소폭 강세도 기조적 약세 지속.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n7->n8",
+        "fragileReason": "매파 기조가 리스크오프로 전환되는 핵심 연결점으로 시장 해석 변화 시 전체 논리 붕괴",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "원자재/금 ETF",
+          "via": "달러 강세가 원자재 가격 하락 압력으로 작용하여 관련 ETF 조정",
+          "lag_days": 7
+        },
+        {
+          "to": "유럽 은행주 ETF",
+          "via": "고금리 장기화가 유럽 은행권 마진 개선 기대로 자금 유입",
+          "lag_days": 10
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -390,5 +434,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전일 미국장 마감 후 AI관련주 급등, 아시아장 혼재"
-  }
+  },
+  "deep_analysis_at": "2026-06-03T07:53:12.297Z"
 }
