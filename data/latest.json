@@ -84,7 +84,29 @@
         }
       ],
       "korea_terminal_node": "n5",
-      "briefing": "외국인 이탈이라는 공통원인에서 달러강세와 EEM 약세가 동시 발생. Kevin Warsh Fed 의장 취임으로 매파적 정책기조 전환 신호가 확산되며, 달러강세와 신흥국 자본유출 압력이 동반 심화. 외국인 의존도 높은 한국 주식시장도 수급 압력에 노출되며 KOSPI는 소폭 방어."
+      "briefing": "외국인 이탈이라는 공통원인에서 달러강세와 EEM 약세가 동시 발생. Kevin Warsh Fed 의장 취임으로 매파적 정책기조 전환 신호가 확산되며, 달러강세와 신흥국 자본유출 압력이 동반 심화. 외국인 의존도 높은 한국 주식시장도 수급 압력에 노출되며 KOSPI는 소폭 방어.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2->n3->n2 형태",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "새 Fed 의장의 실제 정책 발언이 시장 기대와 상이할 경우 매파 전환 논리가 즉시 붕괴",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "미국 장기채 금리",
+          "via": "매파 전환 기대가 10년물 국채 금리 상승으로 직접 연결되어 글로벌 기준금리 상향 압력 형성",
+          "lag_days": 1
+        },
+        {
+          "to": "일본 엔화",
+          "via": "달러 강세가 엔화 약세를 촉발하며 아시아 통화 전반의 동조 하락 압력으로 확산",
+          "lag_days": 2
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -151,7 +173,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "구리가 $14,000을 돌파하며 원자재 슈퍼사이클 재개 신호를 송출. 차익실현으로 구리광산 ETF는 급등 후 조정받으나, 인플레이션 기대 상승은 지속. 원자재 의존도 높은 한국 제조업 원가 부담 가중 우려."
+      "briefing": "구리가 $14,000을 돌파하며 원자재 슈퍼사이클 재개 신호를 송출. 차익실현으로 구리광산 ETF는 급등 후 조정받으나, 인플레이션 기대 상승은 지속. 원자재 의존도 높은 한국 제조업 원가 부담 가중 우려.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n6->n7",
+        "fragileReason": "구리 급등이 일시적 공급 충격일 경우 인플레이션 기대심리 연결고리가 단절될 위험 존재",
+        "alternativePath": "구리->산업금속 전반 동조상승->제조업 원가 압박"
+      },
+      "missingHops": [
+        {
+          "to": "중국 제조업 PMI",
+          "via": "구리 급등이 중국 제조업 원가 부담 증가로 이어져 PMI 하방 압력을 가중시키는 경로",
+          "lag_days": 30
+        },
+        {
+          "to": "글로벌 중앙은행 매파성향",
+          "via": "원자재 인플레 재점화가 각국 중앙은행의 조기 긴축 재개 압력으로 전환되는 정책 파급효과",
+          "lag_days": 14
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -348,5 +392,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "모든 주요 시장 마감. 전일 미국장 확정 후 아시아/유럽 당일장 결과 반영"
-  }
+  },
+  "deep_analysis_at": "2026-06-03T22:52:27.222Z"
 }
