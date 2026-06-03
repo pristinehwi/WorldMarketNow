@@ -2,55 +2,54 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Fed 의장직 교체",
+      "title": "Fed 의장 교체 충격",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "Warsh 의장취임",
-          "value": "Fed 정책 불확실성",
+          "label": "Warsh의장취임",
+          "value": "매파 정책기조 전환",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Kevin Warsh takes oath of office as chairman and a member of the Board of Governors",
-            "Waller's Push to Shake Up Fed Stirs Fears Over Regional Autonomy"
+            {
+              "source": "Fed",
+              "title": "Kevin Warsh takes oath of office as chairman"
+            }
           ]
         },
         {
           "id": "n2",
-          "label": "글로벌리스크오프",
-          "value": "매파성향 우려 확산",
+          "label": "외국인이탈",
+          "value": "신흥국 자본유출 압력",
           "source": "concept",
           "timestamp": null,
-          "related_news": []
+          "related_news": [
+            {
+              "source": "Bloomberg Econ",
+              "title": "Logan Says Fed May Need to Raise Interest Rates This Year"
+            }
+          ]
         },
         {
           "id": "n3",
-          "label": "신흥국ETF(EEM)",
-          "value": "[06/01] $69.18->[06/02] $69.91 (+1.06%)",
+          "label": "달러인덱스(UUP)",
+          "value": "[06/02] $27.76->[06/03] $27.86 (+0.36%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "하이일드ETF(HYG)",
-          "value": "[06/01] $79.90->[06/02] $79.71 (-0.24%)",
+          "label": "신흥국ETF(EEM)",
+          "value": "[06/02] $70.77->[06/03] $69.92 (-1.21%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n5",
-          "label": "외국인이탈압력",
-          "value": "WGBI 편입시 민감성",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n6",
           "label": "KOSPI",
           "value": "$8788.31->$8801.49 (+0.15%)",
           "source": "layer_T1_asia_today",
@@ -62,271 +61,292 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "우려확산",
-          "mechanism": "새 의장의 매파적 성향 가능성으로 시장 위험회피 심화"
+          "label": "매파전환",
+          "mechanism": "새 Fed 의장의 매파 성향이 신흥국 자금유출 압력으로 전환"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "실증",
-          "mechanism": "글로벌 리스크오프가 신흥국 자산 선호도 하락으로 반영"
+          "label": "달러강세",
+          "mechanism": "매파 기대로 달러 강세 압력이 증대"
         },
         {
           "from": "n2",
           "to": "n4",
-          "label": "실증",
-          "mechanism": "리스크 회피로 하이일드 채권에서 자금 이탈 압력"
+          "label": "EM이탈",
+          "mechanism": "신흥국 자금유출 압력이 EEM 하락으로 직접 반영"
         },
         {
-          "from": "n1",
+          "from": "n2",
           "to": "n5",
-          "label": "전이",
-          "mechanism": "Fed 정책 불확실성이 한국 외국인 투자 변동성 확대"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
-          "label": "실증",
-          "mechanism": "외국인 자금 이탈 압력이 KOSPI 변동성으로 나타남"
+          "label": "한국영향",
+          "mechanism": "글로벌 자금유출 압력이 한국 주식시장에 전달"
         }
       ],
-      "korea_terminal_node": "n6",
-      "briefing": "Kevin Warsh Fed 의장 취임으로 매파적 통화정책 우려가 부상, 글로벌 리스크오프를 촉발했습니다. WGBI 편입으로 외국인 투자가 활성화된 한국 시장은 이러한 글로벌 자금 이탈 압력에 민감하게 반응하며 변동성을 보이고 있습니다.",
-      "_warnings": [
-        "[한국 종착 비율] 3/3 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n6->n5->n1",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "Fed 의장 교체 불확실성이 시장 위험회피로 직결되는 단일 경로에 과도히 의존",
-        "alternativePath": "n1->n5 경로를 통한 한국 시장 직접 영향"
-      },
-      "missingHops": [
-        {
-          "to": "달러/원 환율",
-          "via": "외국인 자금 이탈이 원화 약세 압력으로 전이",
-          "lag_days": 1
-        },
-        {
-          "to": "한국 국채 수익률",
-          "via": "Fed 정책 불확실성이 한국 금리 정책 경직성 확대로 파급",
-          "lag_days": 3
-        }
-      ]
+      "korea_terminal_node": "n5",
+      "briefing": "외국인 이탈이라는 공통원인에서 달러강세와 EEM 약세가 동시 발생. Kevin Warsh Fed 의장 취임으로 매파적 정책기조 전환 신호가 확산되며, 달러강세와 신흥국 자본유출 압력이 동반 심화. 외국인 의존도 높은 한국 주식시장도 수급 압력에 노출되며 KOSPI는 소폭 방어."
     },
     {
       "id": "thread_002",
-      "title": "관세정책 재건",
+      "title": "구리 급등 인플레",
       "priority": 2,
-      "frequency": "WEEKLY",
+      "frequency": "NOW",
       "nodes": [
         {
-          "id": "w1",
-          "label": "관세장벽재건",
-          "value": "60개국 대상 확대",
+          "id": "n6",
+          "label": "구리가격급등",
+          "value": "원자재 슈퍼사이클 재개",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Trump Begins Rebuilding His Tariff Wall, Citing Forced Labor",
-            "U.S. proposes fresh tariffs on 60 economies over forced labor trade practices"
+            {
+              "source": "OilPrice",
+              "title": "Copper Tops $14,000 With Banks Calling for Even More Upside"
+            }
           ]
         },
         {
-          "id": "w2",
-          "label": "인플레압력",
-          "value": "수입비용 상승 우려",
+          "id": "n7",
+          "label": "인플레기대",
+          "value": "원자재 인플레 확산 우려",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "w3",
-          "label": "달러인덱스ETF(UUP)",
-          "value": "[05/18] $27.70->[06/02] $27.86 (+0.25%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "w4",
+          "id": "n8",
           "label": "구리광산ETF(COPX)",
-          "value": "[05/27] $86.09->[06/02] $90.74 (+5.40%)",
+          "value": "[06/02] $93.70->[06/03] $90.25 (-3.67%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "w5",
-          "label": "공급망재편압력",
-          "value": "한국 허브 지위 위험",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "w6",
-          "label": "원달러환율",
-          "value": "1516.4원 (수출채산성)",
-          "source": "layer_T0_macro",
+          "id": "n9",
+          "label": "물가연동국채(TIP)",
+          "value": "[06/02] $109.96->[06/03] $109.77 (-0.17%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "w1",
-          "to": "w2",
-          "label": "비용상승",
-          "mechanism": "관세 확대로 미국 내 수입 상품 가격 상승 압력"
+          "from": "n6",
+          "to": "n7",
+          "label": "인플레압력",
+          "mechanism": "구리 급등이 글로벌 원자재 인플레이션 기대심리를 재점화"
         },
         {
-          "from": "w2",
-          "to": "w3",
-          "label": "실증",
-          "mechanism": "인플레이션 우려로 달러 강세 압력 지속"
+          "from": "n6",
+          "to": "n8",
+          "label": "급등후조정",
+          "mechanism": "구리 급등 이후 차익실현 매물로 광산 ETF 조정"
         },
         {
-          "from": "w1",
-          "to": "w4",
-          "label": "실증",
-          "mechanism": "무역장벽 우려에도 불구하고 원자재 수요 견조함 지속"
-        },
-        {
-          "from": "w1",
-          "to": "w5",
-          "label": "구조변화",
-          "mechanism": "관세 회피 목적 글로벌 공급망 재편으로 중간재 허브 타격"
-        },
-        {
-          "from": "w5",
-          "to": "w6",
-          "label": "실증",
-          "mechanism": "공급망 변화가 한국 수출기업 채산성에 미치는 영향"
+          "from": "n7",
+          "to": "n9",
+          "label": "실질금리",
+          "mechanism": "인플레 기대 상승이 물가연동국채 수요에 영향"
         }
       ],
-      "korea_terminal_node": "w6",
-      "briefing": "트럼프 행정부의 60개국 관세 확대 정책이 글로벌 공급망 재편을 촉발하고 있습니다. 관세로 인한 인플레이션 우려가 달러 강세를 견인하는 가운데, 중간재 수출 허브인 한국은 공급망 재구성으로 인한 구조적 수출 채산성 압박에 직면하고 있습니다."
+      "korea_terminal_node": null,
+      "briefing": "구리가 $14,000을 돌파하며 원자재 슈퍼사이클 재개 신호를 송출. 차익실현으로 구리광산 ETF는 급등 후 조정받으나, 인플레이션 기대 상승은 지속. 원자재 의존도 높은 한국 제조업 원가 부담 가중 우려."
     },
     {
       "id": "thread_003",
-      "title": "AI 패권경쟁 가속화",
-      "priority": 3,
-      "frequency": "MONTHLY",
+      "title": "트럼프 관세 확대",
+      "priority": 1,
+      "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "m1",
-          "label": "AI투자슈퍼사이클",
-          "value": "빅테크 경쟁 가속화",
+          "id": "n10",
+          "label": "관세정책확대",
+          "value": "글로벌 공급망 재편",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            {
+              "source": "CNBC",
+              "title": "U.S. proposes fresh tariffs on 60 economies over forced labor"
+            }
+          ]
+        },
+        {
+          "id": "n11",
+          "label": "중국디커플",
+          "value": "미중 경제분리 본격화",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "m2",
-          "label": "AI수요확대",
-          "value": "HBM 메모리 독점 수혜",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "m3",
-          "label": "반도체ETF(SOXX)",
-          "value": "[05/01] $465.75->[06/02] $613.51 (+29.90%)",
+          "id": "n12",
+          "label": "중국ETF(FXI)",
+          "value": "[05/28] $34.99->[06/03] $35.54 (+1.60%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "m4",
-          "label": "나스닥ETF(QQQ)",
-          "value": "[05/01] $674.15->[06/02] $744.55 (+10.68%)",
+          "id": "n13",
+          "label": "대만ETF(EWT)",
+          "value": "[05/28] $102.34->[06/03] $106.90 (+4.45%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "m5",
-          "label": "한국메모리독점",
-          "value": "삼성·하이닉스 수혜집중",
+          "id": "n14",
+          "label": "반도체강세",
+          "value": "공급망 재편 수혜 기대",
           "source": "concept",
           "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "m6",
-          "label": "KOSPI",
-          "value": "[05/01] $8465->[06/02] $8801.49 (+3.97%)",
-          "source": "layer_T1_asia_today",
-          "timestamp": "15:30",
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "m1",
-          "to": "m2",
-          "label": "수요집중",
-          "mechanism": "AI 인프라 투자 확대로 HBM 메모리 등 첨단 반도체 수요 급증"
+          "from": "n10",
+          "to": "n11",
+          "label": "공급망재편",
+          "mechanism": "관세 확대가 미중 경제 디커플링을 더욱 가속화"
         },
         {
-          "from": "m2",
-          "to": "m3",
-          "label": "실증",
-          "mechanism": "AI 수요 확대가 반도체 섹터 강세로 직접 반영"
+          "from": "n11",
+          "to": "n12",
+          "label": "중국압박",
+          "mechanism": "디커플링 압력에도 중국 시장 일부 회복세 지속"
         },
         {
-          "from": "m2",
-          "to": "m4",
-          "label": "실증",
-          "mechanism": "AI 투자 테마가 나스닥 테크 섹터 상승 견인"
+          "from": "n11",
+          "to": "n13",
+          "label": "대체수혜",
+          "mechanism": "중국 배제 공급망에서 대만의 반도체 허브 역할 강화"
         },
         {
-          "from": "m2",
-          "to": "m5",
-          "label": "독점수혜",
-          "mechanism": "HBM 메모리 글로벌 독점 지위로 한국 기업 수혜 집중"
-        },
-        {
-          "from": "m5",
-          "to": "m6",
-          "label": "실증",
-          "mechanism": "메모리 반도체 독점으로 한국 주식시장 구조적 강세 지속"
+          "from": "n11",
+          "to": "n14",
+          "label": "한국기회",
+          "mechanism": "공급망 재편에서 한국 반도체·중간재 허브 지위 부각"
         }
       ],
-      "korea_terminal_node": "m6",
-      "briefing": "글로벌 빅테크 기업들의 AI 투자 경쟁이 본격화되면서 반도체 수요가 구조적으로 급증하고 있습니다. 삼성·SK하이닉스의 HBM 메모리 글로벌 독점 지위가 한국을 AI 인프라 투자 슈퍼사이클의 핵심 수혜국으로 확실히 했으며, 한국 주식시장이 1개월 기준 +3.97% 강세를 보이고 있습니다."
+      "korea_terminal_node": null,
+      "briefing": "트럼프 행정부의 60개국 대상 강제노동 관세 부과가 글로벌 공급망 재편을 가속화하며, 미중 디커플링 본격화. 대만 반도체와 함께 한국 반도체 및 중간재 수요 회복 기대가 증가하며 당일 KOSPI 반도체섹터 강세로 반영."
+    },
+    {
+      "id": "thread_004",
+      "title": "Fed 매파 패러다임",
+      "priority": 1,
+      "frequency": "MONTHLY",
+      "nodes": [
+        {
+          "id": "n15",
+          "label": "Fed체제전환",
+          "value": "매파 패러다임 정착",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n16",
+          "label": "달러패권강화",
+          "value": "고금리 달러 체제 공고화",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n17",
+          "label": "성장주압박",
+          "value": "고금리 성장주 밸류에이션 압박",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n18",
+          "label": "달러인덱스(UUP)",
+          "value": "[04/23] $27.53->[06/03] $27.86 (+1.20%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n19",
+          "label": "성장주ETF(IWF)",
+          "value": "[04/24] $127.61->[06/03] $126.63 (-0.77%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n20",
+          "label": "30년국채ETF(TLT)",
+          "value": "[04/24] $86.71->[06/03] $85.31 (-1.62%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n15",
+          "to": "n16",
+          "label": "달러강세",
+          "mechanism": "Fed 매파 전환이 글로벌 달러 패권을 더욱 강화"
+        },
+        {
+          "from": "n15",
+          "to": "n17",
+          "label": "금리압력",
+          "mechanism": "매파 정책기조가 성장주 밸류에이션에 구조적 압박"
+        },
+        {
+          "from": "n16",
+          "to": "n18",
+          "label": "실증",
+          "mechanism": "달러 패권 강화가 달러인덱스 상승으로 실현"
+        },
+        {
+          "from": "n17",
+          "to": "n19",
+          "label": "실증",
+          "mechanism": "성장주 압박이 러셀1000 성장 ETF 조정으로 반영"
+        },
+        {
+          "from": "n15",
+          "to": "n20",
+          "label": "장기금리상승",
+          "mechanism": "매파 정책기조 강화로 장기 국채 수요 감소 압력"
+        }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "Fed 지도부 교체로 매파적 통화정책 패러다임이 정착하며, 고금리 달러 체제 공고화. 성장주 밸류에이션 구조적 압박과 장기 금리 상승 압력이 지속되는 가운데, 글로벌 유동성 축소 기조가 4주 이상 이어질 전망. 한국 성장주(코스닥) 조정 압박이 심화할 가능성."
     }
   ],
   "headlines": [
-    "Kevin Warsh Fed 의장 취임, 글로벌 리스크오프 확산"
+    "Fed 매파 전환으로 달러강세, 신흥국 자금이탈 가속화",
+    "구리 $14,000 돌파, 원자재 인플레 우려 확산"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 반도체ETF 급등(+29.90%) / 당일 아시아: KOSPI 소폭상승(+0.15%)",
-    "layer2": "AI 수요 확대→반도체 강세→한국 메모리 독점 수혜. Fed 정책 불확실성→글로벌 리스크오프→외국인 이탈 압력.",
-    "layer3": "미국 장중 혼조 속 Fed 의장 교체 불확실성과 관세 정책 불안감이 글로벌 자산배분 재조정을 견인하는 가운데, 장기 AI 투자 사이클이 한국 반도체 섹터의 구조적 강세를 지원하고 있습니다."
+    "layer1": "전일 미국: 달러강세·EEM약세·구리급등후조정 / 당일 아시아: KOSPI소폭상승·KOSDAQ조정",
+    "layer2": "Fed 의장 교체로 매파 신호 강화 → 달러 강세 및 신흥국 자본유출 압력이 아시아 시장 전이",
+    "layer3": "한국은 반도체 공급망 재편 수혜로 KOSPI 소폭 방어하나, 성장주 구조적 압박으로 KOSDAQ 급락"
   },
-  "macro_regime_note": "중립기조 리스크온 환경 속에서 Fed 의장 교체로 인한 정책 불확실성이 신흥국 자산에 선제적 압력을 가하는 가운데, AI 투자 슈퍼사이클이 반도체 섹터 강세를 견인해 한국 시장의 상승 흐름과 조정 압력이 공존하는 상태입니다.",
-  "generated_at": "2026-06-03T15:45:58.491Z",
+  "macro_regime_note": "고실질금리 지속 속 성장주 밸류에이션 압박이 심화하고 있으며, 달러강세 기조가 신흥국 자금유출을 가속화하는 환경에서 한국 시장은 반도체 수혜와 성장주 조정 압박이 엇갈리고 있음.",
+  "generated_at": "2026-06-03T22:46:42.075Z",
   "data_as_of": {
-    "timestamp_iso": "2026-06-03T15:45:58.487Z",
-    "display": "6/3 11:45 [ 뉴욕 현지 시각 ]",
-    "display_mobile": "6/3 11:45 뉴욕",
+    "timestamp_iso": "2026-06-03T22:46:42.019Z",
+    "display": "6/3 18:46 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "6/3 18:46 뉴욕",
     "timezone": "America/New_York"
   },
   "meta": {
-    "generated_at": "2026-06-03T15:45:58.491Z",
-    "elapsed_sec": 165,
-    "market_status": [
-      "유럽",
-      "미국"
-    ],
+    "generated_at": "2026-06-03T22:46:42.075Z",
+    "elapsed_sec": 187,
+    "market_status": [],
     "is_weekend": false,
-    "data_note": "T0 전일 미국 확정, T1 당일 아시아 확정"
-  },
-  "deep_analysis_at": "2026-06-03T15:51:56.770Z"
+    "data_note": "모든 주요 시장 마감. 전일 미국장 확정 후 아시아/유럽 당일장 결과 반영"
+  }
 }
