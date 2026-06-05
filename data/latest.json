@@ -2,62 +2,58 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Warsh 의장 금리기조",
+      "title": "Fed 의장직 교체",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "Warsh 의장취임",
-          "value": "매파적 정책기조 기대",
+          "label": "Fed의장교체",
+          "value": "Kevin Warsh 취임",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            {
-              "source": "Fed",
-              "title": "Kevin Warsh takes oath of office as chairman and a member of the Board of Governors of the Federal Reserve System",
-              "pubDate": "2026-05-22T20:15:00.000Z"
-            }
+            "Kevin Warsh takes oath as Fed chairman amid policy uncertainty"
           ]
         },
         {
           "id": "n2",
-          "label": "장기금리상승",
-          "value": "금리인하기대 축소",
+          "label": "외국인이탈",
+          "value": "매파 통화정책 우려",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "미국30년국채(TLT)",
-          "value": "[06/03] $85.31→[06/04] $85.50 (+0.22%)",
+          "label": "한국ETF(EWY)",
+          "value": "[06/03] $212.88->[06/04] $203.97 (-4.23%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": "06:00",
+          "timestamp": null,
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "미국10년국채(IEF)",
-          "value": "[06/03] $94.00→[06/04] $94.12 (+0.13%)",
+          "label": "신흥국ETF(EEM)",
+          "value": "[06/03] $69.91->[06/04] $69.10 (-1.17%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": "06:00",
+          "timestamp": null,
           "related_news": []
         },
         {
           "id": "n5",
-          "label": "글로벌금리연동",
-          "value": "미국 벤치마크 전파",
-          "source": "concept",
-          "timestamp": null,
+          "label": "KOSPI",
+          "value": "$8631->$8267 (-4.31%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "15:30",
           "related_news": []
         },
         {
           "id": "n6",
-          "label": "한국3년국채",
-          "value": "3.858%",
-          "source": "layer_T0_macro",
-          "timestamp": null,
+          "label": "원달러환율",
+          "value": "1529.7원/$(약세)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "12:43",
           "related_news": []
         }
       ],
@@ -65,86 +61,64 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "정책기대",
-          "mechanism": "매파적 Fed 의장 취임으로 금리 인하 기대 축소 및 장기금리 상승 압력"
+          "label": "정책변화",
+          "mechanism": "신임 의장의 매파 성향 우려로 외국인 자금 이탈 압력 증가"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "실증",
-          "mechanism": "장기금리 상승 압력이 30년 국채 ETF 가격 변동성으로 나타남"
+          "label": "선제반응",
+          "mechanism": "한국 프록시 ETF가 신흥국 자금 유출 신호 반영"
         },
         {
           "from": "n2",
           "to": "n4",
-          "label": "실증",
-          "mechanism": "10년 국채 ETF도 금리 상승 압력의 영향을 받음"
+          "label": "신흥국영향",
+          "mechanism": "신흥국 전반 자금 유출 압력 동시 반영"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "label": "현실화",
+          "mechanism": "전일 미국 세션 신호가 당일 한국 현물지수로 급락 현실화"
         },
         {
           "from": "n2",
-          "to": "n5",
-          "label": "전파",
-          "mechanism": "미국 장기금리 변화가 글로벌 벤치마크 역할로 각국에 연동"
-        },
-        {
-          "from": "n5",
           "to": "n6",
-          "label": "실증",
-          "mechanism": "글로벌 금리 상승 환경이 한국 국채 수익률에 상승 압력 가중"
+          "label": "원화약세",
+          "mechanism": "외국인 자금 이탈로 원화 약세 압력 동반"
         }
       ],
-      "korea_terminal_node": "n6",
-      "briefing": "Kevin Warsh Fed 의장의 매파적 기조 기대감이 미국 장기금리 상승 압력으로 나타나며, 글로벌 금리 연동성을 통해 한국 국채 수익률에도 상승 압력을 가하고 있다. TLT·IEF 소폭 상승이 이를 반증하며, 한국 3년물 국채는 고실질금리 체제 속 추가 상승 압력을 마주하고 있는 상황이다.",
+      "korea_terminal_node": "n5",
+      "briefing": "외국인이탈이 핵심 공통원인. Kevin Warsh Fed 의장 취임으로 통화정책 불확실성 확산하며, 매파 우려가 신흥국 자금 유출을 촉발. 한국 프록시 EWY와 신흥국 EEM이 전일 동시 급락한 후 당일 KOSPI 4.3% 급락과 원화 약세로 현실화. 외국인 구조적 이탈 국면으로 평가.",
+      "_hard_violations": [
+        "[?? 하드차단] EWY계열→KR지수 직접 인과. thread=thread_001 \"한국ETF(EWY)\"→\"KOSPI\""
+      ],
       "_warnings": [
-        "[한국 종착 비율] 2/3 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n2->n5->n6->n2 형태",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "Warsh 의장 취임이 무산되거나 연기될 경우 전체 금리 상승 시나리오가 붕괴됨",
-        "alternativePath": null
-      },
-      "missingHops": [
-        {
-          "to": "USD Index",
-          "via": "미국 장기금리 상승이 달러 강세를 유발하여 신흥국 통화 약세 압력 증대",
-          "lag_days": 3
-        },
-        {
-          "to": "REITs",
-          "via": "장기금리 상승으로 부동산 투자신탁의 상대적 매력도 저하 및 할인율 상승",
-          "lag_days": 5
-        }
+        "[?? 복합신호 B안] thread=thread_001 \"한국ETF(EWY)\"(down)→\"KOSPI\"(down) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
       ]
     },
     {
       "id": "thread_002",
-      "title": "AI규제 테크밸류압박",
+      "title": "테크 자금 재배치",
       "priority": 2,
       "frequency": "WEEKLY",
       "nodes": [
         {
           "id": "n7",
-          "label": "AI규제강화",
-          "value": "글로벌 AI 개발 제약",
+          "label": "SpaceX상장계획",
+          "value": "IPO 본격화 신호",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            {
-              "source": "WSJ",
-              "title": "Anthropic Urges Global Pause in AI Development, Flags 'Self-Improvement' Risk",
-              "pubDate": "2026-06-04T20:57:00.000Z"
-            }
+            "SpaceX IPO discussions advance as Musk meets investors",
+            "Wall Street prepares SpaceX valuation frameworks"
           ]
         },
         {
           "id": "n8",
-          "label": "테크밸류압박",
-          "value": "AI 성장 불확실성",
+          "label": "성장주로테이션",
+          "value": "AI→우주항공 재배치",
           "source": "concept",
           "timestamp": null,
           "related_news": []
@@ -152,33 +126,25 @@
         {
           "id": "n9",
           "label": "반도체ETF(SOXX)",
-          "value": "[05/29] $569.08→[06/04] $602.72 (+5.91%)",
+          "value": "[06/03] $614.15->[06/04] $601.26 (-2.10%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": "06:00",
-          "related_news": []
-        },
-        {
-          "id": "n10",
-          "label": "대형테크(XLK)",
-          "value": "$191.18→$193.17 (-1.56%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": "06:00",
-          "related_news": []
-        },
-        {
-          "id": "n11",
-          "label": "한국AI정책",
-          "value": "반도체 수요 재검토",
-          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n12",
-          "label": "KOSDAQ",
-          "value": "1025.23→1049.73 (+2.31%)",
-          "source": "layer_T1_asia_today",
-          "timestamp": "15:30",
+          "id": "n10",
+          "label": "QQQ",
+          "value": "[05/29] $738.31->[06/04] $740.61 (+0.31%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n11",
+          "label": "ARKK",
+          "value": "[05/29] $81.95->[06/04] $80.07 (-2.34%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
           "related_news": []
         }
       ],
@@ -186,156 +152,135 @@
         {
           "from": "n7",
           "to": "n8",
-          "label": "전파",
-          "mechanism": "AI 규제 위험이 테크 기업들의 높은 밸류에이션 정당성에 의문 증가"
+          "label": "섹터분산",
+          "mechanism": "우주항공 부상으로 기존 AI/반도체 중심 투자에서 산업 다변화 요구 증가"
         },
         {
           "from": "n8",
           "to": "n9",
-          "label": "차익실현",
-          "mechanism": "AI 불확실성 속에서도 반도체 주간 상승폭 유지하며 기술주 쏠림 지속"
+          "label": "급등후조정",
+          "mechanism": "SOXX 주간 조정으로 반도체 강세장 단절 신호"
         },
         {
           "from": "n8",
           "to": "n10",
-          "label": "실증",
-          "mechanism": "테크 밸류에이션 압박이 대형 테크 ETF 하락으로 반영"
+          "label": "상승둔화",
+          "mechanism": "나스닥100 소폭 상승에도 로테이션 개시 신호"
         },
         {
-          "from": "n7",
+          "from": "n8",
           "to": "n11",
-          "label": "파급",
-          "mechanism": "글로벌 AI 규제 논의가 한국 K-디지털 전략과 반도체 전망에 영향"
-        },
-        {
-          "from": "n11",
-          "to": "n12",
-          "label": "실증",
-          "mechanism": "AI 정책 불확실성 속에서도 코스닥 기술주들의 상승세 지속"
+          "label": "약세심화",
+          "mechanism": "혁신성장 ETF 약세로 신기술 투자 분산 명확화"
         }
       ],
-      "korea_terminal_node": "n12",
-      "briefing": "Anthropic의 AI 규제 강화 촉구가 글로벌 테크 밸류에이션 압박으로 이어지면서 XLK는 약세를 보이고 있으나, SOXX의 주간 급등세는 반도체 특수 기대감을 반영하고 있다. 한국 KOSDAQ은 AI 정책 불확실성에도 불구하고 +2.31% 상승하며 기술주 쏠림이 지속되고 있는 상황이다."
+      "korea_terminal_node": null,
+      "briefing": "성장주로테이션이 구조적 신호. SpaceX IPO 논의가 기존 AI/반도체 중심 패러다임 전환 촉발하며, SOXX 2% 조정과 ARKK 2.3% 하락으로 혁신성장 자금 이탈 신호. 나스닥100 방어에도 불구하고 섹터 선별성 강화 국면으로 평가.",
+      "_warnings": [
+        "[WEEKLY 프리퀀시 위반] thread=thread_002 node=n9"
+      ]
     },
     {
       "id": "thread_003",
-      "title": "트럼프 관세다자확대",
+      "title": "AI 규제 체제 전환",
       "priority": 3,
       "frequency": "MONTHLY",
       "nodes": [
         {
-          "id": "n13",
-          "label": "다자관세확대",
-          "value": "60개국 보호주의 심화",
+          "id": "n12",
+          "label": "AI개발중단권고",
+          "value": "Anthropic 안전성 경고",
           "source": "concept",
           "timestamp": null,
-          "related_news": [
-            {
-              "source": "CNBC",
-              "title": "U.S. proposes fresh tariffs on 60 economies over forced labor trade practices",
-              "pubDate": "2026-06-04T08:29:56.000Z"
-            }
-          ]
+          "related_news": []
+        },
+        {
+          "id": "n13",
+          "label": "AI투자둔화",
+          "value": "규제 불확실성 확대",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n14",
-          "label": "글로벌인플레",
-          "value": "관세로 인한 비용상승",
-          "source": "concept",
+          "label": "반도체ETF(SOXX)",
+          "value": "[05/05] $482.73->[06/04] $601.26 (+24.56%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n15",
-          "label": "물가연동채권(TIP)",
-          "value": "[05/04] $111.15→[06/04] $109.78 (-1.23%)",
+          "label": "물가연동국채(TIP)",
+          "value": "[05/04] $111.15->[06/04] $109.78 (-1.23%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": "06:00",
-          "related_news": []
-        },
-        {
-          "id": "n16",
-          "label": "달러인덱스(UUP)",
-          "value": "[04/23] $27.53→[06/04] $27.84 (+0.87%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": "06:00",
-          "related_news": []
-        },
-        {
-          "id": "n17",
-          "label": "신흥국리스크",
-          "value": "무역분쟁 자금이탈",
-          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n18",
-          "label": "신흥국ETF(EEM)",
-          "value": "[05/05] $65.40→[06/04] $69.10 (+5.66%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": "06:00",
+          "id": "n16",
+          "label": "실질금리",
+          "value": "2.07 -> 2.11 (+4.0bp)",
+          "source": "layer_T0_macro",
+          "timestamp": null,
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n13",
-          "to": "n14",
-          "label": "파급",
-          "mechanism": "60개국 관세가 글로벌 무역비용 증가로 각국 인플레이션 압력 확대"
+          "from": "n12",
+          "to": "n13",
+          "label": "규제강화",
+          "mechanism": "AI 안전성 우려 확산으로 각국 정부 규제 프레임워크 강화 논의 본격화"
         },
         {
-          "from": "n14",
+          "from": "n13",
+          "to": "n14",
+          "label": "급등후조정",
+          "mechanism": "월간 24.6% 급등 후 규제 우려로 조정 압력 증가"
+        },
+        {
+          "from": "n13",
           "to": "n15",
-          "label": "실증",
-          "mechanism": "인플레이션 압력 증가가 물가연동 국채 ETF 월간 하락으로 반영"
+          "label": "안전자산선호",
+          "mechanism": "AI 투자 둔화 우려로 실질자산 수요 감소"
         },
         {
           "from": "n13",
           "to": "n16",
-          "label": "실증",
-          "mechanism": "미국 보호주의 강화로 달러 인덱스 ETF 월간 상승세 지속"
-        },
-        {
-          "from": "n16",
-          "to": "n17",
-          "label": "전파",
-          "mechanism": "달러강세가 신흥국 자금조달 비용 증가 및 리스크오프 유발"
-        },
-        {
-          "from": "n17",
-          "to": "n18",
-          "label": "실증",
-          "mechanism": "무역분쟁 우려에도 불구하고 신흥국 ETF는 월간 상승세 유지"
+          "label": "성장기대약화",
+          "mechanism": "AI 투자 속도 조절로 성장기대 조정되며 실질금리 상승 압력"
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "트럼프 행정부의 60개국 관세 확대가 글로벌 인플레이션 압력과 달러강세를 심화시키는 구조적 배경으로 작용하고 있다. TIP의 월간 하락(-1.23%)과 UUP의 상승(+0.87%)이 이를 반증하며, 신흥국 자산은 여전히 월간 상승세(+5.66%)를 보이고 있어 선별적 투자심리가 지속되고 있는 상황이다."
+      "briefing": "AI투자둔화가 구조적 전환점. Anthropic 개발 중단 권고로 글로벌 AI 규제 체제 전환 신호 발생하며, SOXX 월간 24.6% 급등 후 조정 압력과 실질금리 4bp 상승으로 성장주 밸류에이션 재평가 진행. 고실질금리 환경에서 기술주 펀더멘탈 재검토 필요."
     }
   ],
   "headlines": [
-    "Warsh 의장 취임 후 금리상승 압력 지속"
+    "Fed 의장 교체, 신흥국 자금 유출 동시 촉발"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 국채 소폭 상승, 테크 혼조 / 당일 아시아: 코스닥 강세, 닛케이 상승",
-    "layer2": "Warsh 매파 기조와 AI 규제 논의가 미국 금리·테크 밸류에이션 압박 → 한국 국채·코스닥 차별화",
-    "layer3": "고실질금리 체제 속 한국 국채 상승압력, 코스닥은 기술주 쏠림으로 +2.31% 상승"
+    "layer1": "전일 미국: Fed 불확실성으로 EWY -4.23%, EEM -1.17% SOXX -2.10% / 당일 아시아: KOSPI -4.31%, 닛케이 -2.5%, 원화 약세",
+    "layer2": "미국 세션 신흥국 자금 유출 신호(EWY/EEM 동시 하락)가 당일 한국 현물지수로 전달되며 외국인 구조적 이탈 국면 확인",
+    "layer3": "KOSPI 4.3% 급락과 원화 약세 동반으로 외국인이탈이 현실화, 동시에 SpaceX IPO와 AI 규제 논의로 테크 섹터 재배치 신호 진행 중"
   },
-  "macro_regime_note": "고실질금리·평탄곡선·리스크온 환경에서 Warsh 의장의 매파 기조가 금리 상승 심화를 강화하면서 성장주 밸류에이션 압박을 심화시켰으나, 한국 기술주는 AI 특수에 대한 로컬 기대감으로 선별적 상승을 보이고 있다.",
-  "generated_at": "2026-06-04T22:47:32.460Z",
+  "macro_regime_note": "고실질금리 환경이 성장주 밸류에이션 압박을 심화시키며, Fed 의장 교체 불확실성과 AI 규제 시그널이 기술주 조정 압력을 배가하는 상황으로 해석.",
+  "generated_at": "2026-06-05T03:46:05.163Z",
   "data_as_of": {
-    "timestamp_iso": "2026-06-04T22:47:32.378Z",
-    "display": "6/4 18:47 [ 뉴욕 현지 시각 ]",
-    "display_mobile": "6/4 18:47 뉴욕",
-    "timezone": "America/New_York"
+    "timestamp_iso": "2026-06-05T03:46:05.125Z",
+    "display": "6/5 12:46 [ KST +0900 ]",
+    "display_mobile": "6/5 12:46 KST",
+    "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-06-04T22:47:32.460Z",
-    "elapsed_sec": 166,
-    "market_status": [],
+    "generated_at": "2026-06-05T03:46:05.163Z",
+    "elapsed_sec": 140,
+    "market_status": [
+      "한국(KOSPI/KOSDAQ)",
+      "일본(닛케이)"
+    ],
     "is_weekend": false,
-    "data_note": "전 시장 마감. T0 전일 미국 장 기준 T1 아시아 반응 분석 가능"
-  },
-  "deep_analysis_at": "2026-06-04T22:53:47.942Z"
+    "data_note": "KOSPI -4.31%, 닛케이 -2.54% 급락. 전일 반도체 조정 파급"
+  }
 }
