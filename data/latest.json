@@ -83,6 +83,28 @@
       ],
       "_warnings": [
         "[?? 복합신호 B안] thread=thread_001 \"아시아ETF(EWY)\"(down)→\"KOSPI\"(down) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n1->n2->n4->n1",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n4->n5",
+        "fragileReason": "아시아 ETF와 KOSPI 간 당일 연동성은 유동성 급감 시 단절 가능성 높음",
+        "alternativePath": "원/달러 환율 급등 경로"
+      },
+      "missingHops": [
+        {
+          "to": "한국국채",
+          "via": "외국인 자금 이탈로 국채 매도 압력 증가하여 수익률 상승",
+          "lag_days": 1
+        },
+        {
+          "to": "원/달러환율",
+          "via": "Fed 매파 전환과 외국인 이탈이 원화 약세 압력으로 직결",
+          "lag_days": 0
+        }
       ]
     },
     {
@@ -148,7 +170,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "AI수요둔화우려가 핵심 공통원인. 구글-SpaceX 대규모 계약과 메타 주식 매각설이 빅테크 자금 조달 압박을 부각하며 AI 투자 지속성 의문 확산. 반도체 SOXX(-10.44%), 테크 XLK(-6.66%), 성장주 ARKK(-6.89%)가 동반 조정되며 AI 버블 우려 심화."
+      "briefing": "AI수요둔화우려가 핵심 공통원인. 구글-SpaceX 대규모 계약과 메타 주식 매각설이 빅테크 자금 조달 압박을 부각하며 AI 투자 지속성 의문 확산. 반도체 SOXX(-10.44%), 테크 XLK(-6.66%), 성장주 ARKK(-6.89%)가 동반 조정되며 AI 버블 우려 심화.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n6->n7",
+        "fragileReason": "AI 수요 둔화 우려는 추정치 기반으로 실제 수요 데이터 발표 시 급반전 위험 존재",
+        "alternativePath": "n6->n8 빅테크 자금 압박 경로"
+      },
+      "missingHops": [
+        {
+          "to": "메모리반도체",
+          "via": "AI 투자 조정이 HBM 등 고부가 메모리 수요 감소 우려로 전이",
+          "lag_days": 2
+        },
+        {
+          "to": "코스닥지수",
+          "via": "혁신성장주 밸류 재평가가 코스닥 중심의 테크 밸류에이션 하향 조정",
+          "lag_days": 1
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -312,5 +356,6 @@
     "market_status": [],
     "is_weekend": true,
     "data_note": "주말 장외시간. 전일 미국장 급락(-2.6% SPY, -4.8% QQQ) 후 당일 아시아장도 연쇄 하락"
-  }
+  },
+  "deep_analysis_at": "2026-06-05T22:52:23.295Z"
 }
