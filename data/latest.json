@@ -2,58 +2,61 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Fed 의장직 교체",
+      "title": "AI개발규제우려",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "Fed의장교체",
-          "value": "Kevin Warsh 취임",
+          "label": "AI개발일시정지",
+          "value": "규제불확실성 증대",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Kevin Warsh takes oath as Fed chairman amid policy uncertainty"
+            {
+              "title": "Anthropic Urges Global Pause in AI Development, Flags 'Self-Improvement' Risk",
+              "source": "WSJ"
+            }
           ]
         },
         {
           "id": "n2",
-          "label": "외국인이탈",
-          "value": "매파 통화정책 우려",
+          "label": "테크투자심리약화",
+          "value": "AI산업 성장성 의문",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "한국ETF(EWY)",
-          "value": "[06/03] $212.88->[06/04] $203.97 (-4.23%)",
+          "label": "반도체ETF(SOXX)",
+          "value": "$569.08->$602.72 (-2.10%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "신흥국ETF(EEM)",
-          "value": "[06/03] $69.91->[06/04] $69.10 (-1.17%)",
+          "label": "테크ETF(QQQ)",
+          "value": "$743.97->$740.61 (-0.48%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n5",
-          "label": "KOSPI",
-          "value": "$8631->$8267 (-4.31%)",
-          "source": "layer_T1_asia_today",
-          "timestamp": "15:30",
+          "label": "한국반도체집중도",
+          "value": "수출 30% 이상 의존",
+          "source": "concept",
+          "timestamp": null,
           "related_news": []
         },
         {
           "id": "n6",
-          "label": "원달러환율",
-          "value": "1529.7원/$(약세)",
+          "label": "KOSPI",
+          "value": "[06/04] 8627.85->[06/05] 8160.59 (-5.54%)",
           "source": "layer_T1_asia_today",
-          "timestamp": "12:43",
+          "timestamp": "15:30",
           "related_news": []
         }
       ],
@@ -61,110 +64,95 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "정책변화",
-          "mechanism": "신임 의장의 매파 성향 우려로 외국인 자금 이탈 압력 증가"
+          "label": "심리약화",
+          "mechanism": "AI 개발 중단 요구가 투자자의 AI 산업 성장성에 대한 신뢰를 훼손한다"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "선제반응",
-          "mechanism": "한국 프록시 ETF가 신흥국 자금 유출 신호 반영"
+          "label": "조정압력",
+          "mechanism": "AI 투자 심리 악화가 반도체 ETF 조정으로 즉시 반영된다"
         },
         {
           "from": "n2",
           "to": "n4",
-          "label": "신흥국영향",
-          "mechanism": "신흥국 전반 자금 유출 압력 동시 반영"
+          "label": "조정압력",
+          "mechanism": "테크 투자 우려가 테크 ETF 하락으로 나타난다"
         },
         {
-          "from": "n3",
-          "to": "n5",
-          "label": "현실화",
-          "mechanism": "전일 미국 세션 신호가 당일 한국 현물지수로 급락 현실화"
+          "from": "n5",
+          "to": "n6",
+          "label": "충격증폭",
+          "mechanism": "한국의 반도체 고의존도 산업구조가 글로벌 AI 우려를 KOSPI 급락으로 증폭시킨다"
         },
         {
           "from": "n2",
-          "to": "n6",
-          "label": "원화약세",
-          "mechanism": "외국인 자금 이탈로 원화 약세 압력 동반"
+          "to": "n5",
+          "label": "연쇄파급",
+          "mechanism": "AI 투자 위축이 한국 반도체 집중 구조와 결합되어 국내 충격을 가중한다"
         }
       ],
-      "korea_terminal_node": "n5",
-      "briefing": "외국인이탈이 핵심 공통원인. Kevin Warsh Fed 의장 취임으로 통화정책 불확실성 확산하며, 매파 우려가 신흥국 자금 유출을 촉발. 한국 프록시 EWY와 신흥국 EEM이 전일 동시 급락한 후 당일 KOSPI 4.3% 급락과 원화 약세로 현실화. 외국인 구조적 이탈 국면으로 평가.",
-      "_hard_violations": [
-        "[?? 하드차단] EWY계열→KR지수 직접 인과. thread=thread_001 \"한국ETF(EWY)\"→\"KOSPI\""
-      ],
+      "korea_terminal_node": "n6",
+      "briefing": "Anthropic의 AI 개발 중단 요구로 글로벌 테크 투자 심리가 급격히 악화되면서, 반도체·테크 ETF가 조정을 받았다. 한국의 반도체 수출 의존도(30% 이상)가 이러한 글로벌 규제 우려를 KOSPI 급락(-5.54%)으로 증폭시키는 구조적 취약점이 되고 있다.",
       "_warnings": [
-        "[?? 복합신호 B안] thread=thread_001 \"한국ETF(EWY)\"(down)→\"KOSPI\"(down) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n2->n6->n2",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "Fed 의장 교체 시점과 실제 정책 변화 간 시차로 인한 조기 반응 위험",
-        "alternativePath": "FOMC 의사록 -> 시장 기대 조정"
-      },
-      "missingHops": [
-        {
-          "to": "한국 국채 10년물",
-          "via": "외국인 자금 이탈시 안전자산 수요 증가로 금리 하락 압력",
-          "lag_days": 1
-        },
-        {
-          "to": "삼성전자 ADR",
-          "via": "한국 대표주 프록시로 미국 세션에서 선제 조정 신호 발생",
-          "lag_days": 0
-        }
+        "[한국 종착 비율] 2/3 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "테크 자금 재배치",
+      "title": "워시Fed매파기조",
       "priority": 2,
       "frequency": "WEEKLY",
       "nodes": [
         {
           "id": "n7",
-          "label": "SpaceX상장계획",
-          "value": "IPO 본격화 신호",
+          "label": "워시의장취임",
+          "value": "매파 정책 전환 기대",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "SpaceX IPO discussions advance as Musk meets investors",
-            "Wall Street prepares SpaceX valuation frameworks"
+            {
+              "title": "Kevin Warsh Takes Oath as Fed Chairman Amid Economic Policy Shifts",
+              "source": "Fed"
+            }
           ]
         },
         {
           "id": "n8",
-          "label": "성장주로테이션",
-          "value": "AI→우주항공 재배치",
+          "label": "긴축정책강화",
+          "value": "금리 인상 기대 지속",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n9",
-          "label": "반도체ETF(SOXX)",
-          "value": "[06/03] $614.15->[06/04] $601.26 (-2.10%)",
+          "label": "장기국채ETF(TLT)",
+          "value": "[05/19] $83.02->[06/04] $85.50 (+2.51%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n10",
-          "label": "QQQ",
-          "value": "[05/29] $738.31->[06/04] $740.61 (+0.31%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "달러강세압력",
+          "value": "신흥국 자본 이탈 우려",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n11",
-          "label": "ARKK",
-          "value": "[05/29] $81.95->[06/04] $80.07 (-2.34%)",
+          "label": "달러인덱스(UUP)",
+          "value": "[05/18] $27.70->[06/04] $27.84 (+0.25%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n12",
+          "label": "신흥국ETF(EEM)",
+          "value": "[05/29] $68.60->[06/04] $69.10 (+0.73%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
@@ -174,136 +162,154 @@
         {
           "from": "n7",
           "to": "n8",
-          "label": "섹터분산",
-          "mechanism": "우주항공 부상으로 기존 AI/반도체 중심 투자에서 산업 다변화 요구 증가"
+          "label": "정책전환",
+          "mechanism": "워시 의장의 매파 성향이 긴축 정책 강화 기대를 형성한다"
         },
         {
           "from": "n8",
           "to": "n9",
-          "label": "급등후조정",
-          "mechanism": "SOXX 주간 조정으로 반도체 강세장 단절 신호"
+          "label": "금리상승",
+          "mechanism": "긴축 정책 기대가 장기 금리 상승으로 반영된다"
         },
         {
           "from": "n8",
           "to": "n10",
-          "label": "상승둔화",
-          "mechanism": "나스닥100 소폭 상승에도 로테이션 개시 신호"
+          "label": "유동성축소",
+          "mechanism": "미국 금리 상승 기대가 달러 강세와 신흥국 자본 유출을 유발한다"
         },
         {
-          "from": "n8",
+          "from": "n10",
           "to": "n11",
-          "label": "약세심화",
-          "mechanism": "혁신성장 ETF 약세로 신기술 투자 분산 명확화"
+          "label": "가격전반",
+          "mechanism": "달러 강세 압력이 달러인덱스 ETF에 반영된다"
+        },
+        {
+          "from": "n10",
+          "to": "n12",
+          "label": "자본유출",
+          "mechanism": "신흥국 자본 이탈이 EEM 약세로 나타난다"
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "성장주로테이션이 구조적 신호. SpaceX IPO 논의가 기존 AI/반도체 중심 패러다임 전환 촉발하며, SOXX 2% 조정과 ARKK 2.3% 하락으로 혁신성장 자금 이탈 신호. 나스닥100 방어에도 불구하고 섹터 선별성 강화 국면으로 평가.",
-      "_warnings": [
-        "[WEEKLY 프리퀀시 위반] thread=thread_002 node=n9"
-      ]
+      "briefing": "워시 Fed 의장 취임으로 매파 정책 기조 강화 기대가 확산되면서, 장기 금리 상승과 달러 강세 압력이 지속되고 있다. 글로벌 유동성 축소 우려 속 신흥국 자본 유출이 가속화될 가능성이 커지고 있다."
     },
     {
       "id": "thread_003",
-      "title": "AI 규제 체제 전환",
+      "title": "한국경상흑자확대",
       "priority": 3,
       "frequency": "MONTHLY",
       "nodes": [
         {
-          "id": "n12",
-          "label": "AI개발중단권고",
-          "value": "Anthropic 안전성 경고",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
           "id": "n13",
-          "label": "AI투자둔화",
-          "value": "규제 불확실성 확대",
+          "label": "반도체수출호조",
+          "value": "AI수요 구조적 확대",
           "source": "concept",
           "timestamp": null,
-          "related_news": []
+          "related_news": [
+            {
+              "title": "Korea's Current Account Surplus Nears Record on AI Chip Demand Boom",
+              "source": "Bloomberg"
+            }
+          ]
         },
         {
           "id": "n14",
-          "label": "반도체ETF(SOXX)",
-          "value": "[05/05] $482.73->[06/04] $601.26 (+24.56%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "외화공급증가",
+          "value": "경상수지 흑자 지속",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n15",
-          "label": "물가연동국채(TIP)",
-          "value": "[05/04] $111.15->[06/04] $109.78 (-1.23%)",
+          "label": "반도체ETF(SOXX)",
+          "value": "[05/05] $482.73->[06/04] $602.72 (+24.86%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n16",
-          "label": "실질금리",
-          "value": "2.07 -> 2.11 (+4.0bp)",
+          "label": "원화강세구조",
+          "value": "달러약세 지속 기대",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n17",
+          "label": "원달러환율",
+          "value": "1529.7원 (강세압력)",
           "source": "layer_T0_macro",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n18",
+          "label": "산업양극화심화",
+          "value": "비반도체 수출경쟁력 악화",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n12",
-          "to": "n13",
-          "label": "규제강화",
-          "mechanism": "AI 안전성 우려 확산으로 각국 정부 규제 프레임워크 강화 논의 본격화"
-        },
-        {
           "from": "n13",
           "to": "n14",
-          "label": "급등후조정",
-          "mechanism": "월간 24.6% 급등 후 규제 우려로 조정 압력 증가"
+          "label": "외화유입",
+          "mechanism": "반도체 수출 호조가 경상수지 흑자 확대로 이어진다"
         },
         {
           "from": "n13",
           "to": "n15",
-          "label": "안전자산선호",
-          "mechanism": "AI 투자 둔화 우려로 실질자산 수요 감소"
+          "label": "글로벌반영",
+          "mechanism": "한국 반도체 호조가 글로벌 반도체 ETF 강세를 견인한다"
         },
         {
-          "from": "n13",
+          "from": "n14",
           "to": "n16",
-          "label": "성장기대약화",
-          "mechanism": "AI 투자 속도 조절로 성장기대 조정되며 실질금리 상승 압력"
+          "label": "환율압력",
+          "mechanism": "외화 공급 증가가 원화 강세 구조를 형성한다"
+        },
+        {
+          "from": "n16",
+          "to": "n17",
+          "label": "환율반영",
+          "mechanism": "원화 강세 기조가 원달러 환율에 반영된다"
+        },
+        {
+          "from": "n16",
+          "to": "n18",
+          "label": "산업영향",
+          "mechanism": "원화 강세가 반도체 외 수출업체의 국제경쟁력을 압박한다"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "AI투자둔화가 구조적 전환점. Anthropic 개발 중단 권고로 글로벌 AI 규제 체제 전환 신호 발생하며, SOXX 월간 24.6% 급등 후 조정 압력과 실질금리 4bp 상승으로 성장주 밸류에이션 재평가 진행. 고실질금리 환경에서 기술주 펀더멘탈 재검토 필요."
+      "korea_terminal_node": "n18",
+      "briefing": "반도체 수출 호조로 경상수지 흑자가 구조적으로 확대되면서, 외화 공급 증가가 원화 강세 압력을 형성하고 있다. 이는 산업 구조의 반도체 집중화를 심화시키고 기타 수출업종의 경쟁력 약화로 이어지는 양극화 구조를 고착화시키고 있다."
     }
   ],
   "headlines": [
-    "Fed 의장 교체, 신흥국 자금 유출 동시 촉발"
+    "AI규제우려로 테크조정·KOSPI급락 -5.5%"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: Fed 불확실성으로 EWY -4.23%, EEM -1.17% SOXX -2.10% / 당일 아시아: KOSPI -4.31%, 닛케이 -2.5%, 원화 약세",
-    "layer2": "미국 세션 신흥국 자금 유출 신호(EWY/EEM 동시 하락)가 당일 한국 현물지수로 전달되며 외국인 구조적 이탈 국면 확인",
-    "layer3": "KOSPI 4.3% 급락과 원화 약세 동반으로 외국인이탈이 현실화, 동시에 SpaceX IPO와 AI 규제 논의로 테크 섹터 재배치 신호 진행 중"
+    "layer1": "전일 미국: AI규제 우려·반도체·테크 ETF 조정 / 당일 아시아: KOSPI 급락(-5.54%)·반도체 의존도 충격파",
+    "layer2": "미국 반도체·테크 ETF 약세(T0) → KOSPI 급락(T1) 전달 메커니즘: 한국의 반도체 수출 의존도(30% 이상) 구조",
+    "layer3": "글로벌 AI 규제 우려와 미국 매파 Fed 기대가 동시에 작용하면서 신흥국 리스크오프 우려 확산"
   },
-  "macro_regime_note": "고실질금리 환경이 성장주 밸류에이션 압박을 심화시키며, Fed 의장 교체 불확실성과 AI 규제 시그널이 기술주 조정 압력을 배가하는 상황으로 해석.",
-  "generated_at": "2026-06-05T03:46:05.163Z",
+  "macro_regime_note": "고실질금리 하 신용 안정이라는 레짐에도 불구하고, 글로벌 AI 규제 불확실성과 Fed 매파 기대라는 이중 충격이 한국의 산업 구조적 취약성(반도체 고집중)을 노출시키고 있다.",
+  "generated_at": "2026-06-05T07:47:49.183Z",
   "data_as_of": {
-    "timestamp_iso": "2026-06-05T03:46:05.125Z",
-    "display": "6/5 12:46 [ KST +0900 ]",
-    "display_mobile": "6/5 12:46 KST",
+    "timestamp_iso": "2026-06-05T07:47:49.179Z",
+    "display": "6/5 16:47 [ KST +0900 ]",
+    "display_mobile": "6/5 16:47 KST",
     "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-06-05T03:46:05.163Z",
-    "elapsed_sec": 140,
-    "market_status": [
-      "한국(KOSPI/KOSDAQ)",
-      "일본(닛케이)"
-    ],
+    "generated_at": "2026-06-05T07:47:49.183Z",
+    "elapsed_sec": 158,
+    "market_status": [],
     "is_weekend": false,
-    "data_note": "KOSPI -4.31%, 닛케이 -2.54% 급락. 전일 반도체 조정 파급"
-  },
-  "deep_analysis_at": "2026-06-05T03:52:00.837Z"
+    "data_note": "KOSPI 5.54% 급락, EWY 4.23% 하락 등 한국증시 충격"
+  }
 }
