@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-06 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/06 07:48 KST</div>
+    <div class="header-date">2026-06-06</div>
+    <div class="header-headline">5월 고용 172K 쇼크 - 나스닥 사상 최대 포인트 낙폭</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">강고용→Fed 금리인상 베팅 확대 속 SpaceX IPO 조건 확정·나스닥 반등 여부 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">5월 고용 쇼크·나스닥 역대급 급락 - Fed 금리인상 베팅 재점화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">5월 미국 비농업 고용이 172K로 예상을 4시그마 상회하며 시장에 충격을 줬고, 이는 Fed 금리인상 가능성을 직접 자극했다. Nasdaq은 1,121포인트 하락으로 사상 최대 포인트 낙폭을 기록했고 S&P 500도 1.8조 달러 시총이 증발했다. Warsh 신임 Fed 의장에게는 취임 후 첫 시험대가 됐으며, 시장은 금리 인상 재개 가능성을 빠르게 반영하기 시작했다. Citi 이코노미스트만이 연내 3회 인하 전망을 고수하며 고립된 포지션을 유지하고 있고, ECB도 아직 금리 인상 근거가 없다는 입장을 내놨다. 반면 강고용 데이터 이후 채권시장에서는 금리인상 베팅이 빠르게 증가하고 있어 통화정책 불확실성이 단기 변동성을 지배할 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SpaceX IPO 로드쇼 개막 - $1.77조 밸류 검증과 자본시장 재편 압력</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#12</span>
+    </div>
+    <div class="theme-summary">SpaceX 기관 로드쇼가 공식 개막되며 IPO 조건 확정이 임박했고, Morgan Stanley는 2040년 매출 $3.4조 전망을 제시해 $1.77조 밸류에이션의 근거를 제시했다. Google과의 $30B 컴퓨트 리스 계약(월 $920M)이 IPO 직전 공개되며 수익 가시성을 보강했다. Goldman과 JPM은 중국·홍콩 투자자의 IPO 참여를 차단했고, S&P 500 편입 요건 완화 제안이 거부됨에 따라 대형 IPO의 지수 편입 경로가 장기화될 전망이다. 기술주 급락과 비트코인 하락이 동시에 진행되는 가운데 리테일 투자자의 소화 여력이 시험대에 올랐으며, AI 트레이드가 크립토 자금을 흡수하는 구조적 이동도 포착됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 인프라 수요·수익화 균열 - Big Tech 증자와 칩 섹터 6년 최악 급락의 충돌</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #13~#18</span>
+    </div>
+    <div class="theme-summary">오늘 칩 섹터가 6년 만에 최악의 하루를 기록하며 Marvell·Micron 주가가 급락했고, 나스닥 전반의 매도세를 주도했다. 반면 Google·Meta는 AI 붐을 위한 $8,200억 규모의 CapEx를 주식 발행으로 조달하는 방향을 검토 중이며, 채권시장은 이를 환영하는 반면 주주들은 희석 우려로 반응이 엇갈린다. Goldman Sachs 자산운용은 지속적인 주가 상승을 위해서는 실적 성장과 AI 투자 수익화가 반드시 뒤따라야 한다고 강조했다. NSA가 Anthropic의 Mythos 모델을 사이버 작전에 활용하려 한다는 보도는 AI 윤리·규제 리스크를 새롭게 부각시키고 있다. Marvell의 S&P 500 신규 편입은 AI 데이터센터 수혜 섹터 재편의 상징으로 해석된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">지정학 복합 리스크 - 이란·우크라이나·중동 다중 긴장 동시 고조</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #19~#22</span>
+    </div>
+    <div class="theme-summary">Putin이 Zelenskyy의 직접 회담 제안을 공개적으로 거부하며 우크라이나 전쟁 장기화 신호를 보냈고, 러시아 Rosatom은 우크라이나 드론이 자포리자 원전 비무장화 작업 인력을 타격했다고 발표해 핵시설 안전 리스크가 재부상했다. 이란은 레바논을 미국과의 핵 협상 카드로 활용하고 있다는 레바논 대통령의 발언이 나오며 중동 지정학 리스크 프리미엄이 다시 높아지고 있다. Trump는 위스콘신 유세에서 이란 전쟁의 신속 종식을 약속했지만 구체적 협상 진전은 불투명하다. 다중 지정학 긴장이 동시에 진행되는 구조는 에너지·방산 섹터의 변동성 확대 요인으로 작용한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Trump 행정권력 확장 - 정보기관 인사 숙청과 관세 정당화 시도</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #23~#24</span>
+    </div>
+    <div class="theme-summary">Trump가 Bill Pulte에게 정보커뮤니티 직원 해고를 직접 지시했다고 확인하며 행정부의 정보기관 장악 시도가 공식화됐다. 노르웨이는 미국의 강제노동 혐의 지정을 '근거 없다'고 반박하며 이를 관세 부과의 정당성으로 활용하는 것에 정면 반대했다. 이는 트럼프 행정부가 무역·안보·인사 전반에서 행정권한을 확장하는 패턴이 연속되고 있음을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #25~#30</span>
+    </div>
+    <div class="theme-summary">교황 Leo XIV의 첫 회칙은 AI 수익화 논리만으로 기술의 사회적 방향을 결정해서는 안 된다는 윤리적 경고를 담고 있다. Goldman 법무총괄 Ruemmler는 Epstein 연루 논란으로 사임했다가 고문으로 잔류하기로 했다. 에스토니아는 디지털 교육 강화 차원에서 국민에게 ChatGPT 무료 접근권을 제공하는 정책을 추진 중이다. Silver Lake의 Egon Durban이 Dell Technologies 주식 약 $1,499만 어치를 매각했다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">5월 고용 쇼크·나스닥 역대급 급락 - Fed 금리인상 베팅 재점화</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">FEDS 논문: 결제 속도와 금융 안정성(개정판)</div>
+    <div class="article-title-en">FEDS Paper: Settlement Speed and Financial Stability(Revised)</div>
+    <div class="article-keypoint">Fed FEDS 논문 - 결제 속도와 금융 안정성 간 상충관계 재조명, 디지털화폐 정책 시사점</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/settlement-speed-and-financial-stability.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 00:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">ECB, 아직 금리 인상에 나서선 안 된다</div>
+    <div class="article-title-en">The ECB Should Not Raise Interest Rates Yet</div>
+    <div class="article-keypoint">ECB, 성장 둔화·임금 억제 환경에서 금리 인상 근거 아직 불충분 - 동결 기조 유지</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ecb-should-not-raise-interest-rates-yet-by-philippe-legrain-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 00:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">신임 의장 Warsh에 가중되는 압박 - 고용 호조로 Fed 금리인상 베팅 강화</div>
+    <div class="article-title-en">Pressure Mounts on Rookie Chair Warsh as Jobs Fuel Fed-Hike Bets</div>
+    <div class="article-keypoint">Warsh 신임 Fed 의장, 172K 고용 쇼크로 취임 후 첫 금리인상 압박 직면</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-05/warsh-faces-early-test-as-blowout-jobs-fuel-rate-hike-bets" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 01:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">비트코인, '어텐션' 부족으로 침체 - 모멘텀 트레이더들 AI로 이동</div>
+    <div class="article-title-en">Bitcoin is suffering from an ‘attention’ deficit, as momentum traders have moved on</div>
+    <div class="article-keypoint">비트코인, AI 트레이드로 자금 이탈 - '어텐션 적자' 현상으로 모멘텀 약화 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/bitcoin-is-suffering-from-an-attention-deficit-as-momentum-traders-have-moved-on-17d2c140?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 06:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">미국 고용 호조 이후 Fed 금리인상 베팅 증가</div>
+    <div class="article-title-en">Investors boost bets for Fed rate rise after bumper US jobs report</div>
+    <div class="article-keypoint">5월 고용 호조 이후 채권시장 Fed 금리인상 베팅 급증 - 172K 고용·실업률 4.3% 유지</div>
+    <a class="article-link" href="https://www.ft.com/content/ab37709f-9b5e-493c-902c-a87cba23b493" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 05:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">5월 미국 고용 172K 급증, 예상치 4시그마 상회 - 실업률 4.3% 유지</div>
+    <div class="article-title-en">US Jobs Soar By 172K In May, Smashing Estimates In 4 Sigma Beat; Unemployment Rate Remains At 4.3%</div>
+    <div class="article-keypoint">5월 비농업 고용 172K, 예상 4시그마 상회 - 인플레·금리인상 우려 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/us-jobs-soar-172k-may-smashing-estimates-4-sigma-beat-unemployment-rate-remains-43" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/05 22:49 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SpaceX IPO 로드쇼 개막 - $1.77조 밸류 검증과 자본시장 재편 압력</span>
+    <span class="theme-label-range">Article #7~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">기술주 급락·비트코인 하락, SpaceX IPO 앞두고 리테일 투자자 체력 시험</div>
+    <div class="article-title-en">Tech Selloff, Bitcoin Drop Test Retail Investor Strength Ahead of SpaceX IPO</div>
+    <div class="article-keypoint">나스닥 급락·비트코인 동반 하락 속 SpaceX IPO 앞둔 리테일 수요 체력 시험</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-05/tanking-tech-crashing-crypto-jolt-retail-crowd-before-spacex" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 06:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX 등 메가 IPO, S&P 500 편입까지 수년 기다려야 할 전망</div>
+    <div class="article-title-en">SpaceX and Other Mega IPOs May Wait Years to Join the S&amp;P 500</div>
+    <div class="article-keypoint">대형 IPO의 S&P 500 패스트트랙 제안 거부 - SpaceX 등 메가 IPO 지수 편입 장기화 확정</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-05/spacex-and-other-mega-ipos-may-wait-years-to-join-the-s-p-500" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 05:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Goldman·JPM, 중국·홍콩 투자자 SpaceX IPO 참여 차단</div>
+    <div class="article-title-en">Goldman, JPM Block China, Hong Kong Investors From SpaceX IPO</div>
+    <div class="article-keypoint">Goldman·JPM, 중국·홍콩 투자자 SpaceX IPO 참여 차단 - 지정학적 자본 분리 가속</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/goldman-jpm-block-china-hong-kong-investors-spacex-ipo" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/05 23:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">SpaceX, Google과 컴퓨트 용량 임대 $300억 계약 체결</div>
+    <div class="article-title-en">SpaceX signs $30bn deal to lease computing capacity to Google</div>
+    <div class="article-keypoint">SpaceX-Google $30B 컴퓨트 리스 계약 - IPO 직전 수익 가시성 확보, AI 인프라 수요 반영</div>
+    <a class="article-link" href="https://www.ft.com/content/77982a06-7d75-45a4-a64f-f8dc89a6a626" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 06:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Google, SpaceX에 월 $9억 2,000만 컴퓨트 비용 지급</div>
+    <div class="article-title-en">Google will pay SpaceX $920M per month for compute</div>
+    <div class="article-keypoint">Google, SpaceX에 월 $920M 지급 컴퓨트 계약 - AI 수요 급증이 우주 인프라를 자금줄로 전환</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/05/google-will-pay-spacex-920m-per-month-for-compute/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 03:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Morgan Stanley, SpaceX 2040년 매출 $3.4조 전망 제시</div>
+    <div class="article-title-en">Morgan Stanley Sees SpaceX’s Revenue Reaching $3.4 Trillion in 2040</div>
+    <div class="article-keypoint">Morgan Stanley, SpaceX 2040년 매출 $3.4조 전망 - $1.77조 밸류에이션 근거 제시</div>
+    <a class="article-link" href="https://www.wsj.com/finance/banking/morgan-stanley-sees-spacexs-revenue-reaching-3-4-trillion-in-2040-c8a7f431?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/05 20:25 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 인프라 수요·수익화 균열 - Big Tech 증자와 칩 섹터 6년 최악 급락의 충돌</span>
+    <span class="theme-label-range">Article #13~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Marvell·Micron 주가 급락 - 칩 섹터 6년 만에 최악의 하루</div>
+    <div class="article-title-en">Marvell, Micron shares tumble as the chip sector suffers its worst day in 6 years</div>
+    <div class="article-keypoint">Marvell·Micron 급락 - 칩 섹터 6년 최악의 하루, 강고용 이후 모멘텀 냉각 신호</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/marvell-micron-shares-tumble-as-the-chip-sector-suffers-its-worst-day-in-6-years-a7c1701a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Google에 이어 Meta도? Big Tech, $8,200억 AI 붐 자금 조달 위해 주식 발행 검토</div>
+    <div class="article-title-en">First Google, now Meta? Big Tech may increasingly sell stock to bankroll $820 billion AI boom.</div>
+    <div class="article-keypoint">Google·Meta, AI CapEx $8,200억 조달 위해 주식 발행 검토 - 주주 희석 vs. 채권시장 환영</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/first-google-then-meta-big-tech-may-increasingly-sell-stock-to-bankroll-820-billion-ai-boom-83c69030?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 06:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">지속적 주가 상승의 열쇠는 실적 성장과 AI 주도 CapEx</div>
+    <div class="article-title-en">Earnings and AI-Driven CapEx as Key to Sustained Gains</div>
+    <div class="article-keypoint">Goldman, 주가 추가 상승 위해 실적 성장·AI CapEx 수익화가 필수 조건임을 강조</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-05/earnings-and-ai-driven-capex-as-key-to-sustained-gains-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 05:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Marvell, S&P 500 신규 편입 - 데이터센터 관련주 포함</div>
+    <div class="article-title-en">Marvell gets a spot in the S&P 500 — along with this data-center play</div>
+    <div class="article-keypoint">Marvell, S&P 500 신규 편입 - AI 데이터센터 수혜 섹터의 벤치마크 지위 확보</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/an-s-p-500-shakeup-is-hours-away-these-stocks-could-soon-earn-spots-in-the-index-a9b64d67?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 06:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">칩 주 급락이 Nasdaq 대폭락 촉발</div>
+    <div class="article-title-en">Selloff in Chip Stocks Prompts Nasdaq Bloodbath</div>
+    <div class="article-keypoint">칩 섹터 급락이 나스닥 전반으로 전이 - 강고용 후 모멘텀 주 차익실현 연쇄 발생</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/selloff-in-chip-stocks-prompts-nasdaq-bloodbath-36fd8c52?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 06:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">NSA, 사이버 작전에 Anthropic의 Mythos 활용 준비 중인 것으로 알려져</div>
+    <div class="article-title-en">NSA said to be readying Anthropic’s Mythos for use in cyber operations</div>
+    <div class="article-keypoint">NSA, Anthropic Mythos 모델 사이버 작전 활용 검토 - AI 윤리·연방 규제 충돌 리스크</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/05/nsa-said-to-be-readying-anthropics-mythos-for-use-in-cyber-operations/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/05 23:32 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">지정학 복합 리스크 - 이란·우크라이나·중동 다중 긴장 동시 고조</span>
+    <span class="theme-label-range">Article #19~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">러시아 Rosatom, 우크라이나 드론이 자포리자 원전 비무장화 작업 인력 타격 발표</div>
+    <div class="article-title-en">Russia's Rosatom says Ukrainian drone hit engineers demining areas around Zaporizhzhia nuclear plant</div>
+    <div class="article-keypoint">우크라이나 드론, 자포리자 원전 비무장화 인력 타격 - 핵시설 안전 리스크 재부상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/russias-rosatom-says-ukrainian-drone-hit-engineers-demining-areas-around-zaporizhzhia-nuclear-plant" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 04:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump, 위스콘신 유세에서 이란 전쟁 신속 종식 공약</div>
+    <div class="article-title-en">Trump, campaigning for Republicans in Wisconsin, vows quick end to Iran war</div>
+    <div class="article-keypoint">Trump, 이란 전쟁 신속 종식 약속 - 유가 하락 기대 vs. 협상 구체성 부재</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/trump-campaigning-for-republicans-in-wisconsin-vows-quick-end-to-iran-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 07:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Putin, Zelenskyy의 회담 제안 거부하며 우크라이나 전쟁 목표 재천명</div>
+    <div class="article-title-en">Putin rejects Zelenskyy’s offer to meet and reaffirms Ukraine war aims</div>
+    <div class="article-keypoint">Putin, Zelenskyy 회담 제안 공개 거부 - 우크라이나 전쟁 협상 경로 사실상 차단</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jun/05/putin-rejects-zelenskyys-offer-to-meet-and-reaffirms-ukraine-war-aims" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 02:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">이란, 레바논을 미국과의 협상 카드로 활용 - 레바논 대통령 발언</div>
+    <div class="article-title-en">Iran using Lebanon as bargaining chip in US talks, Lebanese president says</div>
+    <div class="article-keypoint">이란, 레바논을 핵 협상 카드로 활용 - 중동 지정학 리스크 프리미엄 다중 전이 구조</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/iran-using-lebanon-as-bargaining-chip-in-us-talks-lebanese-president-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 00:06 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Trump 행정권력 확장 - 정보기관 인사 숙청과 관세 정당화 시도</span>
+    <span class="theme-label-range">Article #23~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Trump, Bill Pulte에 정보기관 직원 해고 지시 확인 - 실시간 업데이트</div>
+    <div class="article-title-en">Trump confirms telling Bill Pulte to fire intelligence community employees – live</div>
+    <div class="article-keypoint">Trump, 정보기관 직원 해고 직접 지시 확인 - 행정부의 정보커뮤니티 장악 공식화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/jun/05/us-politics-latest-news-updates-donald-trump-republicans-democrats" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 07:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">노르웨이, 강제노동 관련 미국 주장 반박 및 관세 반대 입장 표명</div>
+    <div class="article-title-en">Norway rejects US claim on forced labour, opposes tariffs</div>
+    <div class="article-keypoint">노르웨이, 미국의 강제노동 지정 반박 - 관세 부과 명분으로 활용 시도에 정면 반대</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/norway-rejects-us-claim-on-forced-labour-opposes-tariffs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/05 23:01 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #25~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Goldman 핵심 법무총괄 Ruemmler, Epstein 연루 논란에도 고문으로 잔류 결정</div>
+    <div class="article-title-en">Top Goldman lawyer Ruemmler to remain with bank despite Epstein ties</div>
+    <div class="article-keypoint">Goldman 법무총괄 Ruemmler, Epstein 연루 사임 후 고문으로 잔류 결정</div>
+    <a class="article-link" href="https://www.ft.com/content/4d802a0e-32c2-49c3-aa57-d50afd123938" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 06:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">교황과 AI 수익주의자들</div>
+    <div class="article-title-en">The Pope and the AI Profiteers</div>
+    <div class="article-keypoint">교황 Leo XIV 첫 회칙 - AI 수익화 논리에 맞서 기술의 사회적 윤리 기준 요구</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/pope-ai-encyclical-human-choice-dignity-over-profit-by-antara-haldar-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/05 22:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Citi 이코노미스트, 고립된 Fed 금리인하 전망 고수</div>
+    <div class="article-title-en">Citigroup Economists Maintain Lonely Call for Fed Rate Cuts</div>
+    <div class="article-keypoint">Citi, 강고용 이후에도 연내 Fed 3회 인하 전망 고수 - 시장 컨센서스와 극단적 괴리</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-05/citigroup-economists-maintain-lonely-call-for-fed-rate-cuts" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 04:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">S&P 500 시총 $1.8조 증발, Nasdaq 사상 최대 포인트 하락 - 금요일 급락의 의미</div>
+    <div class="article-title-en">S&P 500 sees $1.8 trillion wipeout, Nasdaq tallies biggest point drop on record. Here’s what investors need to know about Friday’s selloff.</div>
+    <div class="article-keypoint">나스닥 1,121포인트 역대 최대 포인트 낙폭, S&P 500 시총 $1.8조 증발</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/s-p-500-sees-1-8-trillion-wipeout-nasdaq-tallies-biggest-point-drop-on-record-heres-what-investors-need-to-know-about-fridays-selloff-4eb7b490?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 07:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Silver Lake 이사 Egon Durban, Dell Technologies 주식 $1,499만 어치 매각</div>
+    <div class="article-title-en">Silver Lake, director Egon Durban sell $14.99m Dell Technologies stock</div>
+    <div class="article-keypoint">Silver Lake Egon Durban, Dell Technologies 주식 $1,499만 어치 매각</div>
+    <a class="article-link" href="https://www.investing.com/news/insider-trading-news/silver-lake-director-egon-durban-sell-1499m-dell-technologies-stock-93CH-4729380" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/05 22:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">에스토니아, 'Brain Rot' 퇴치를 위해 ChatGPT 무료 제공</div>
+    <div class="article-title-en">Estonia Is Fighting Brain Rot—With Free ChatGPT</div>
+    <div class="article-keypoint">에스토니아, 국민 전체에 ChatGPT 무료 제공 - AI 공공 접근성 확대의 정책 선례</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/estonia-is-fighting-brain-rotwith-free-chatgpt-8bc2806d?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/06 00:55 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
