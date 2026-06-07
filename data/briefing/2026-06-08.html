@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-08 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/08 07:48 KST</div>
+    <div class="header-date">2026-06-08</div>
+    <div class="header-headline">Goldman 연내 금리인하 철회·이란 이스라엘 미사일 충돌 동시 충격</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">CPI 서프라이즈 여부 및 이란-이스라엘 확전 범위 - 금리·유가 동시 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Goldman 연내 인하 철회·Warsh 데뷔·CPI 베팅 - 금리 인상 경로 현실화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">Goldman Sachs가 강한 고용시장을 근거로 연내 Fed 금리인하 전망을 공식 철회하면서 시장의 통화정책 기대가 급격히 재조정되고 있다. 채권 트레이더들은 이번 주 CPI가 수년 만에 최대 폭으로 급등할 것에 베팅하며 Fed 금리인상 압력을 키우고 있다. Trump는 Warsh가 첫 FOMC 회의를 앞두고 금리인상은 잘못된 결정이라고 압박했으나, Trump 스스로도 Warsh에게 인하 가시화를 요구하는 이중 압력 구도가 형성됐다. Warsh 체제 첫 정책 회의를 앞두고 Fed 독립성과 정치적 간섭 사이의 긴장이 최고조에 달한 시점이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">이란 미사일 발사·이스라엘 베이루트 공습 - 중동 확전 리스크 프리미엄 재점화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#10</span>
+    </div>
+    <div class="theme-summary">이란이 IDF의 베이루트 공습에 대한 보복으로 4월 이후 처음으로 이스라엘을 향해 미사일을 발사하며 중동 긴장이 사상 최고 수준으로 재점화됐다. 미국 주가선물은 초반 하락세를 보였고 유가는 급등하며 휴전 붕괴 위험을 즉각 반영했다. Trump는 이스라엘에 보복 자제를 촉구하며 Netanyahu를 향해 이란과의 합의를 수용할 '선택지가 없을 것'이라고 압박, 미-이스라엘 균열이 표면화됐다. Bessent 재무장관은 동결된 이란 자산을 피해를 입은 걸프 국가 재건에 활용하는 방안을 검토 중이며, IAEA에서는 미국이 이란의 핵시설 및 농축 우라늄 현황 공개를 요구하는 결의안 초안을 제출했다. 이스라엘의 미국 관리 사찰 의혹까지 겹치며 미-이스라엘 동맹 신뢰도가 동시에 흔들리고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">우크라이나 체르노빌 핵시설 드론 공격·Zelensky 런던 방문 - 유럽 안보 긴장 고조</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#15</span>
+    </div>
+    <div class="theme-summary">러시아 드론이 체르노빌 인근 핵연료 저장시설을 강타하며 대량의 핵물질 인근 건물이 심각하게 손상됐다는 우크라이나 발표가 나왔다. Zelensky는 영국, 프랑스, 독일 지도자들과 런던에서 긴급 회동하며 방공망 확충의 시급성을 강조했다. 러시아는 극초음속 무기를 포함한 공습을 지속하고 있으며, 푸틴은 상트페테르부르크 경제포럼 마지막 날 우크라이나 드론 100여 대의 공격을 받으면서도 평화협상을 거부했다. Zelensky는 아브라모비치를 통해 푸틴에게 직접 협상 메시지를 전달하려 했으나 실패했으며, 전선 교착과 핵시설 리스크가 동시에 부각되며 유럽 안보 우려가 한층 심화됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">OpenAI 슈퍼앱 전략·SpaceX IPO 임박 - AI 플랫폼 패권과 자본시장 재편 압력</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #16~#21</span>
+    </div>
+    <div class="theme-summary">OpenAI가 코딩 도구와 AI 에이전트를 탑재한 ChatGPT '슈퍼앱'으로 전면 개편을 준비 중이며, 이는 상장 전 플랫폼 확장을 통한 밸류에이션 정당화 시도로 해석된다. SpaceX IPO 조건이 임박해 자본시장의 최대 관심사로 부상한 가운데, 사상 최대 규모 상장이 기존 성장주·기술주 수급에 미칠 구조적 영향이 주목된다. 한편 백악관 AI 정책 고문 Sriram Krishnan이 퇴임하며 Trump 행정부 내 AI 거버넌스 공백 우려가 제기됐다. AI 쇼핑 사기로 가짜 웹사이트 피해가 확산되는 등 AI 신뢰성 문제도 동시에 부각되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">비트코인 2018년 이후 최대 과매도·유가 급등·S&P 500 오일 기업 이익 내성</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#23</span>
+    </div>
+    <div class="theme-summary">비트코인 단기 보유자들이 사상 최대 손실을 실현하며 2018년 붕괴 이후 최악의 과매도 신호가 켜졌고, $70,000 반등 가능성이 거론되는 상황이다. 중동 확전 우려로 유가가 급등세를 보이고 있으나, S&P 500 기업들의 어닝 콜에서 유가 상승을 실적 하향 이유로 직접 언급한 기업은 7개에 불과해 기업 이익 내성이 확인됐다. 자산 전반의 변동성이 동시에 확대되는 가운데 위험자산 가격 재조정이 진행 중이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">영국 정치·사회·외교 분야의 기타 이슈들이 포함된다. UK 총리 Starmer는 AI 도구를 활용해 일자리 위협에 대응하는 고용센터 개편을 발표했다. 미국은 영국을 우회해 차고스 제도를 모리셔스로부터 직접 매입하는 방안을 검토 중이며, Farage의 암호화폐 억만장자로부터의 500만 파운드 선물 의혹에 대한 정치적 압박이 거세지고 있다. 중국 시진핑의 북한 방문으로 김정은의 대외 자신감이 강화될 전망이며, 멜버른 역 칼부림 사건 등 사회 이슈도 보고됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Goldman 연내 인하 철회·Warsh 데뷔·CPI 베팅 - 금리 인상 경로 현실화</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Goldman Sachs, 올해 Fed 금리인하 전망 철회</div>
+    <div class="article-title-en">Goldman Sachs No Longer Expects Fed Interest-Rate Cut This Year</div>
+    <div class="article-keypoint">Goldman, 강한 고용 근거로 연내 Fed 인하 전망 공식 철회 - 금리 경로 재설정</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-07/goldman-sachs-no-longer-expects-fed-interest-rate-cut-this-year-mq44uu26" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 03:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Trump, Warsh 데뷔 앞두고 금리인상은 잘못이라고 압박</div>
+    <div class="article-title-en">Trump Says Fed Rate Increase Would Be Wrong Ahead of Warsh Debut</div>
+    <div class="article-keypoint">Trump, Warsh 첫 FOMC 회의 앞두고 금리인상 반대 공개 압박 - Fed 독립성 위협</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-07/trump-says-fed-rate-increase-would-be-wrong-again-calls-for-cut" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 22:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">채권 트레이더, CPI 급등 베팅 확대 - Fed 정책 전환 압박 가중</div>
+    <div class="article-title-en">Bond Traders Bet on a CPI Surge That Bolsters Case for Fed Pivot</div>
+    <div class="article-keypoint">채권 트레이더, CPI 수년 최대 급등 베팅 - Fed 금리인상 압력 가중</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-07/bond-traders-bet-on-a-cpi-surge-that-bolsters-case-for-fed-pivot" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Trump, 금리인하 요구로 Warsh에 압박 가중</div>
+    <div class="article-title-en">Trump piles pressure on Warsh with call for rate cut</div>
+    <div class="article-keypoint">Trump, Warsh에 금리인하 압박 강화 - 중앙은행 독립성 훼손 우려 고조</div>
+    <a class="article-link" href="https://www.ft.com/content/056789c0-d316-4b02-be24-2f75208790dd" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 01:03 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">이란 미사일 발사·이스라엘 베이루트 공습 - 중동 확전 리스크 프리미엄 재점화</span>
+    <span class="theme-label-range">Article #5~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">미국 주가선물 하락·유가 급등 - 이란 관련 새 공격에 휴전 위기</div>
+    <div class="article-title-en">U.S. stock futures dip, oil prices surge as new attacks threaten the cease-fire with Iran</div>
+    <div class="article-keypoint">이란 미사일 발사로 중동 휴전 붕괴 위기 - 유가 급등·주가선물 하락 동시 반응</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/u-s-stock-futures-slide-oil-prices-surge-as-new-attacks-threaten-the-cease-fire-with-iran-6e433c90?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 07:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">IDF 베이루트 공습 후 이란, 4월 이후 첫 이스라엘 미사일 발사 - Trump는 자제 촉구</div>
+    <div class="article-title-en">Iran Fires Missiles At Israel In First Since April, After IDF Airstrike On Beirut; Trump Urges Israel To Hold Back</div>
+    <div class="article-keypoint">이란, 베이루트 공습 후 4월 이후 첫 이스라엘 미사일 공격 - 중동 확전 임박</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/iran-fm-blames-us-contradictions-stalled-peace-talks-tehran-slaps-million-dollar" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 07:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Bessent, 동결된 이란 자산 활용해 걸프 동맹국 재건 지원 방안 검토</div>
+    <div class="article-title-en">Bessent Examining Use Of Frozen Iranian Assets To Help Gulf Countries Rebuild</div>
+    <div class="article-keypoint">Bessent, 동결 이란 자산 걸프 재건 전용 검토 - 중동 외교·재정 구도 재편 가능성</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/bessent-examining-use-iranian-assets-help-gulf-countries-rebuild" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 03:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">미국, IAEA에 이란의 핵시설 및 농축우라늄 현황 공개 요구 결의안 초안 제출</div>
+    <div class="article-title-en">US draft resolution at IAEA demands Iran open up on sites, uranium stocks</div>
+    <div class="article-keypoint">미국, IAEA에 이란 핵시설·농축우라늄 공개 요구 결의안 초안 제출</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/us-resolution-draft-at-iaea-demands-iran-open-up-on-sites-uranium-stocks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 22:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">분노한 Pentagon 소식통, 이스라엘의 '도를 넘은' 미국 관리 사찰 보고서 유출</div>
+    <div class="article-title-en">Angry Pentagon Sources Leak Report Of Israel's 'Unhinged' Spying On US Officials</div>
+    <div class="article-keypoint">이스라엘의 미국 관리 사찰 의혹 폭로 - 미-이스라엘 동맹 신뢰도 균열 가속</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/angry-pentagon-sources-leak-report-israels-unhinged-spying-us-officials" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Trump, Netanyahu에 이란과의 합의 수용 '선택지 없을 것'이라고 압박</div>
+    <div class="article-title-en">Trump says Netanyahu will have ‘no choice’ but to accept a deal with Iran</div>
+    <div class="article-keypoint">Trump, Netanyahu에 이란 합의 수용 압박 - 미-이스라엘 균열 표면화</div>
+    <a class="article-link" href="https://www.ft.com/content/a0ce59f9-fbde-49e8-9158-fba3d4079859" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 07:08 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">우크라이나 체르노빌 핵시설 드론 공격·Zelensky 런던 방문 - 유럽 안보 긴장 고조</span>
+    <span class="theme-label-range">Article #11~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Zelensky, 우크라이나 핵시설 피격 후 영국서 동맹국 회동</div>
+    <div class="article-title-en">Zelensky meets allies in Britain after strike hits Ukraine nuclear site</div>
+    <div class="article-keypoint">Zelensky, 런던서 핵시설 피격 직후 서방 동맹과 방공망 긴급 확충 촉구</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelensky-meets-allies-in-britain-after-strike-hits-ukraine-nuclear-site" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Zelensky, 런던서 핵심 동맹국과 방공망 긴급 확충 논의</div>
+    <div class="article-title-en">Zelenskyy discusses ‘urgent need to scale up’ air defences with key allies in London</div>
+    <div class="article-keypoint">Zelensky, 영·프·독과 방공망 확충 긴급 회동 - 러시아 극초음속 공습 대응 가속</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jun/07/zelenskyy-starmer-macron-merz-ukraine-talks-london" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 06:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">러시아 드론, 체르노빌 인근 핵연료 저장시설 타격 - 우크라이나 발표</div>
+    <div class="article-title-en">Russian drone hits nuclear-fuel storage facility near Chernobyl, Ukraine says</div>
+    <div class="article-keypoint">러시아 드론, 체르노빌 인근 핵연료시설 타격 - 핵물질 인근 건물 심각 손상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/russian-drone-hit-nuclear-fuel-storage-facility-near-chornobyl-ukraine-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 17:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Putin의 '다보스' 상트페테르부르크 포럼, 우크라이나 드론 공세 속에 폐막</div>
+    <div class="article-title-en">Putin's 'Davos' in Saint Petersburg ends as it began, under a barrage of Ukrainian drones</div>
+    <div class="article-keypoint">푸틴, 드론 100대 공격 속 상트페테르부르크 포럼서 평화협상 거부 재확인</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/06/07/putin-s-davos-in-saint-petersburg-ends-as-it-began-under-a-barrage-of-ukrainian-drones_6754220_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 17:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Zelensky, 아브라모비치 통해 Putin에 평화협상 메시지 전달 시도</div>
+    <div class="article-title-en">Zelenskyy used Abramovich to send message to Putin about peace talks</div>
+    <div class="article-keypoint">Zelensky, 아브라모비치 통한 푸틴 직접 협상 시도 실패 - 외교 채널 한계 노출</div>
+    <a class="article-link" href="https://www.ft.com/content/d097aba1-fd9a-4fd4-a4ba-fb980c27487a" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 03:56 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">OpenAI 슈퍼앱 전략·SpaceX IPO 임박 - AI 플랫폼 패권과 자본시장 재편 압력</span>
+    <span class="theme-label-range">Article #16~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">OpenAI, 상장 앞두고 ChatGPT '슈퍼앱' 전면 개편 추진 - FT 보도</div>
+    <div class="article-title-en">OpenAI plans ChatGPT ‘superapp’ overhaul ahead of listing, FT reports</div>
+    <div class="article-keypoint">OpenAI, ChatGPT를 코딩·AI 에이전트 탑재 슈퍼앱으로 전면 개편 - IPO 전 밸류에이션 확대 시도</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/openai-plans-chatgpt-superapp-overhaul-ahead-of-listing-ft-reports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 14:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">OpenAI, '슈퍼앱' 개발 계속 추진 중</div>
+    <div class="article-title-en">OpenAI is still working on that ‘super app’</div>
+    <div class="article-keypoint">OpenAI 슈퍼앱 개편으로 채팅 패러다임 종료 선언 - AI 플랫폼 경쟁 구도 재편</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/07/openai-is-still-working-on-that-super-app/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 01:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">SpaceX IPO: 알아야 할 모든 것</div>
+    <div class="article-title-en">SpaceX IPO: What You Need to Know</div>
+    <div class="article-keypoint">SpaceX IPO 조건 확정 임박 - 사상 최대 상장이 기술주 수급 구조에 미칠 압력</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-07/spacex-ipo-what-you-need-to-know-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 22:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">전직 Musk 자문 Sriram Krishnan, 백악관 AI 정책 역할 떠난다</div>
+    <div class="article-title-en">Former Musk Adviser Sriram Krishnan Leaving White House AI Role</div>
+    <div class="article-keypoint">백악관 AI 정책 고문 Krishnan 퇴임 - Trump 행정부 AI 거버넌스 공백 우려</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/former-musk-adviser-sriram-krishnan-leaving-white-house-ai-role" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 05:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">'오염된' AI: ChatGPT 쇼핑 사기가 가짜 웹사이트로 소비자를 유인</div>
+    <div class="article-title-en">‘Poisoned’ AI: the ChatGPT shopping scams that lead to fake websites</div>
+    <div class="article-keypoint">AI 쇼핑 사기로 가짜 사이트 피해 확산 - AI 신뢰성·소비자 보호 이슈 부상</div>
+    <a class="article-link" href="https://www.theguardian.com/money/2026/jun/07/ai-chatgpt-shopping-scams-fake-websites" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 15:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Notion, Anthropic 서비스 장애 후 접속 복구</div>
+    <div class="article-title-en">Notion restores access to Anthropic after service disruption</div>
+    <div class="article-keypoint">Notion, Anthropic 서비스 장애 복구 - AI 인프라 의존도 확대에 따른 취약성 노출</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/07/notion-restores-access-to-anthropic-after-service-disruption/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 02:56 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">비트코인 2018년 이후 최대 과매도·유가 급등·S&P 500 오일 기업 이익 내성</span>
+    <span class="theme-label-range">Article #22~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">S&P 500 기업들, 유가 상승 언급 잦지만 실적 타격 인정은 소수에 불과</div>
+    <div class="article-title-en">S&P 500 companies can’t stop talking about higher oil prices. But few say they’ll actually hurt profits.</div>
+    <div class="article-keypoint">S&P 500 기업 대부분 유가 급등을 실적 하향 사유로 미언급 - 이익 내성 확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/s-p-500-companies-cant-stop-talking-about-higher-oil-prices-but-few-say-theyll-actually-hit-profits-c3a4e4ea?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 04:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">비트코인 단기 보유자, 사상 최대 손실 실현 중 - 2018년 붕괴 이후 최악의 과매도</div>
+    <div class="article-title-en">Short-Term Bitcoin Holders Are Realizing Their Largest Losses On Record; Most Oversold Since 2018 Collapse</div>
+    <div class="article-keypoint">비트코인 단기 보유자 사상 최대 손실 실현·2018년 이후 최악 과매도 신호 점등</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/short-term-bitcoin-holders-are-realizing-their-largest-losses-record-most-oversold-2018" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 22:55 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Labour, 암호화폐 억만장자 500만 파운드 선물 논란 관련 Farage에 소명 촉구</div>
+    <div class="article-title-en">Labour urges Farage to stop evading scrutiny over £5m gift from crypto billionaire</div>
+    <div class="article-keypoint">Farage, 암호화폐 억만장자로부터 500만 파운드 수수 의혹 - 영국 정치 신뢰도 타격</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/jun/07/labour-farage-evading-scrutiny-crypto-billionaire-gift" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Starmer, AI 고용 위협 대응 위해 영국 고용센터에 AI 도구 도입 공약</div>
+    <div class="article-title-en">Starmer to Roll Out UK Job Center Tools to Beat AI Work Threat</div>
+    <div class="article-keypoint">Starmer, AI 고용 위협 대응 위해 취업센터에 AI 도구 도입 공약</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-07/starmer-to-roll-out-uk-job-center-tools-to-beat-ai-work-threat" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">차세대 체중감량 치료제, 현행 GLP-1보다 개선된 효과 목표</div>
+    <div class="article-title-en">A new wave of weight-loss therapies aims to be better than today’s GLP-1s</div>
+    <div class="article-keypoint">GLP-1 차세대 비만 치료제 임상 결과 긍정적 - 헬스케어 섹터 투자 기회 재조명</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/tired-of-nausea-or-taking-a-glp-1-pill-every-day-these-experimental-drugs-could-be-better-than-zepbound-and-wegovy-587bf648?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 23:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">미국, 영국 배제하고 차고스 제도를 모리셔스로부터 직접 매입 검토 - 보도</div>
+    <div class="article-title-en">US considers buying Chagos Islands from Mauritius, bypassing Britain, report says</div>
+    <div class="article-keypoint">미국, 영국 우회해 차고스 제도 직접 매입 검토 - 영미 동맹 균열 신호</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/us-considers-buying-chagos-islands-telegraph-reports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 02:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">멜버른서 10대 다수 칼부림 혐의 체포 - 정부, 범죄 법안 효과 주장</div>
+    <div class="article-title-en">Multiple teens arrested over alleged machete brawl in Melbourne as government says crime laws working</div>
+    <div class="article-keypoint">멜버른 역 칼부림 사건 - 호주 청소년 범죄 대응 정책 논쟁</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/jun/07/multiple-teens-arrested-machete-brawl-melbourne-flinders-street-station-ntwnfb" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 14:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">중국 관련 Home Office 보고서 저자, 포섭 시도 공개 폭로</div>
+    <div class="article-title-en">Author of Home Office report on China reveals attempts to compromise him</div>
+    <div class="article-keypoint">중국 국가의 영국 보고서 저자 포섭 시도 폭로 - 서방 싱크탱크 취약성 경고</div>
+    <a class="article-link" href="https://www.theguardian.com/uk-news/2026/jun/07/home-office-china-report-honey-traps-compromise-attempts" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/08 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">시진핑 북한 방문, 김정은에게 자신감과 대외 강경 자세 투영 기회 제공</div>
+    <div class="article-title-en">With China’s Xi in North Korea, Kim to project confidence, defiance</div>
+    <div class="article-keypoint">시진핑 북한 방문 - 김정은 대외 자신감 강화·한반도 지정학 리스크 재부상</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/with-chinas-xi-in-north-korea-kim-to-project-confidence-defiance-4729648" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/07 22:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
