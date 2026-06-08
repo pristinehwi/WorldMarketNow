@@ -90,7 +90,29 @@
         }
       ],
       "korea_terminal_node": "n6",
-      "briefing": "워시 Fed 의장 취임으로 매파적 통화정책 기조 지속되며 달러강세 심화. 외국인자금이탈이 공통원인으로 작용하여 신흥국ETF 6.5% 급락과 함께 KOSPI 8.3% 폭락 초래. 외국인 자금이탈 압력 당분간 지속될 우려."
+      "briefing": "워시 Fed 의장 취임으로 매파적 통화정책 기조 지속되며 달러강세 심화. 외국인자금이탈이 공통원인으로 작용하여 신흥국ETF 6.5% 급락과 함께 KOSPI 8.3% 폭락 초래. 외국인 자금이탈 압력 당분간 지속될 우려.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2(달러강세)->n4(신흥국 자금조달비용 상승)->n6(KOSPI 하락)->n2(달러 safe haven 수요)",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "워시 의장의 실제 정책 발언이나 FOMC 의사록과 상이할 경우 전체 인과사슬 붕괴 위험",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "일본국채(JGB) 10년물",
+          "via": "달러강세로 엔화약세 압력이 일본 금리상승 압박으로 전이",
+          "lag_days": 3
+        },
+        {
+          "to": "원유ETF",
+          "via": "신흥국 성장둔화 우려가 글로벌 원유수요 감소 전망으로 연결",
+          "lag_days": 5
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -161,7 +183,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "차익실현압력이 공통원인으로 작용하여 반도체ETF 10.4% 급락, 테크ETF 4.8% 하락. 엔비디아 한국 AI 협력 호재에도 불구하고 고평가 우려와 글로벌 성장주 동반 조정으로 강한 낙폭 기록."
+      "briefing": "차익실현압력이 공통원인으로 작용하여 반도체ETF 10.4% 급락, 테크ETF 4.8% 하락. 엔비디아 한국 AI 협력 호재에도 불구하고 고평가 우려와 글로벌 성장주 동반 조정으로 강한 낙폭 기록.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n7->n8",
+        "fragileReason": "AI 수요 확대의 실질적 매출 전환 가시성이 부족할 경우 반도체 상승 동력 상실",
+        "alternativePath": "n10->n8 (기술적 조정 압력)"
+      },
+      "missingHops": [
+        {
+          "to": "나스닥 VIX",
+          "via": "테크주 급등 후 조정으로 기술주 변동성 확대 우려 증가",
+          "lag_days": 1
+        },
+        {
+          "to": "반도체 장비주",
+          "via": "반도체ETF 조정이 상류 장비업체 수주 전망 둔화로 파급",
+          "lag_days": 7
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -367,5 +411,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전일 미국 테크주 급락(-4.8%) 후 당일 아시아 동반 하락. T0→T1 시간 레이어 엄격 준수."
-  }
+  },
+  "deep_analysis_at": "2026-06-08T07:52:57.434Z"
 }
