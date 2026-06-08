@@ -2,49 +2,67 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Fed 매파 전환",
+      "title": "Fed 매파전환 충격",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "외국인이탈압력",
-          "value": "달러강세와 Fed 매파 전환으로 신흥국 자금 이탈 가속화",
+          "label": "Warsh의장취임",
+          "value": "매파 기조 전환으로 금리인하 기대 소멸",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Pressure Mounts on Rookie Chair Warsh as Jobs Fuel Fed-Hike Bets",
-            "Fed's Hammack Says Job Report Shows Labor Market in Balance"
+            {
+              "source": "Fed",
+              "title": "Kevin Warsh Fed 의장 취임으로 정책 기조 전환 신호"
+            }
           ]
         },
         {
           "id": "n2",
-          "label": "달러인덱스ETF(UUP)",
-          "value": "[06/04] $27.77→[06/05] $28.02 (+0.68%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "달러강세압력",
+          "value": "Fed 매파화로 달러 조달비용 상승",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "신흥국ETF(EEM)",
-          "value": "[06/04] $69.07→[06/05] $64.59 (-6.53%)",
+          "label": "달러인덱스ETF(UUP)",
+          "value": "[06/04] $27.84→[06/05] $28.02 (+0.65%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null,
+          "timestamp": "06:00",
           "related_news": []
         },
         {
           "id": "n4",
-          "label": "아시아ETF(EWY)",
-          "value": "[06/04] $199.00→[06/05] $175.19 (-14.11%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "EM자본유출압력",
+          "value": "달러강세+고금리로 신흥국 자금이탈 가속",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n5",
+          "label": "신흥국ETF(EEM)",
+          "value": "[06/04] $69.08→[06/05] $64.59 (-6.53%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": "06:00",
+          "related_news": []
+        },
+        {
+          "id": "n6",
+          "label": "외국인이탈심화",
+          "value": "한국 외인의존 구조에서 자금 집중이탈",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n7",
           "label": "KOSPI",
-          "value": "$8635.95→$8160.59 (-5.54%)",
+          "value": "[06/05] 8164.95→[06/08] 7757.67 (-4.94%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -54,308 +72,271 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "실증",
-          "mechanism": "Fed 매파 전환 기대로 달러 강세 가속화"
+          "label": "정책전환",
+          "mechanism": "매파 의장 취임으로 금리 인하 기대 소멸과 달러 강세 압력 확산"
         },
         {
-          "from": "n1",
+          "from": "n2",
           "to": "n3",
           "label": "실증",
-          "mechanism": "글로벌 리스크오프로 신흥국 자금 이탈 심화"
+          "mechanism": "달러 강세 압력이 달러인덱스 ETF 상승으로 직접 반영"
         },
         {
-          "from": "n1",
+          "from": "n2",
           "to": "n4",
-          "label": "실증",
-          "mechanism": "한국 포함 아시아 자본시장 외국인 자금 이탈 반영"
+          "label": "파급",
+          "mechanism": "달러 강세와 고금리가 신흥국 자산의 상대적 매력도 하락 유발"
         },
         {
           "from": "n4",
           "to": "n5",
-          "label": "급등후조정",
-          "mechanism": "아시아 ETF 급락이 당일 KOSPI 하락 신호로 전이"
-        }
-      ],
-      "korea_terminal_node": "n5",
-      "briefing": "외국인이탈압력이 핵심 공통원인. Kevin Warsh 신임 Fed 의장의 매파적 기조와 강력한 고용지표가 달러강세(UUP +0.68%)를 촉발하며 신흥국·아시아 자금 이탈 가속화. 한국 자본시장도 외국인 이탈 압력에 KOSPI 급락(-5.54%)으로 응답.",
-      "_hard_violations": [
-        "[?? 하드차단] EWY계열→KR지수 직접 인과. thread=thread_001 \"아시아ETF(EWY)\"→\"KOSPI\""
-      ],
-      "_warnings": [
-        "[?? 복합신호 B안] thread=thread_001 \"아시아ETF(EWY)\"(down)→\"KOSPI\"(down) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n1->n2->n4->n1",
-        "riskLevel": "high"
-      },
-      "chainFragility": {
-        "fragileEdge": "n4->n5",
-        "fragileReason": "아시아 ETF와 KOSPI 간 당일 연동성은 유동성 급감 시 단절 가능성 높음",
-        "alternativePath": "원/달러 환율 급등 경로"
-      },
-      "missingHops": [
-        {
-          "to": "한국국채",
-          "via": "외국인 자금 이탈로 국채 매도 압력 증가하여 수익률 상승",
-          "lag_days": 1
+          "label": "실증",
+          "mechanism": "신흥국 자본 유출 압력이 EEM ETF 급락으로 나타남"
         },
         {
-          "to": "원/달러환율",
-          "via": "Fed 매파 전환과 외국인 이탈이 원화 약세 압력으로 직결",
-          "lag_days": 0
+          "from": "n4",
+          "to": "n6",
+          "label": "한국특화",
+          "mechanism": "글로벌 EM 자본 유출이 외인 의존도 높은 한국에 집중 타격"
+        },
+        {
+          "from": "n6",
+          "to": "n7",
+          "label": "급등후조정",
+          "mechanism": "외국인 자금 이탈이 KOSPI 급락으로 직접 반영"
         }
+      ],
+      "korea_terminal_node": "n7",
+      "briefing": "공통원인은 Warsh Fed 의장 취임의 매파 신호입니다. 이것이 달러 강세(UUP +0.65%)와 신흥국 자본 유출(EEM -6.53%) 압력으로 분기되면서, 외국인 의존도 높은 한국 시장에 집중 타격을 주고 있습니다. KOSPI(-4.94%)는 이 글로벌 자금 이탈 흐름의 직접적 결과입니다.",
+      "_warnings": [
+        "[한국 종착 비율] 2/3 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "AI투자 과열조정",
+      "title": "AI칩 공급망재편",
       "priority": 2,
-      "frequency": "NOW",
-      "nodes": [
-        {
-          "id": "n6",
-          "label": "AI수요둔화우려",
-          "value": "빅테크 자금 압박으로 AI 인프라 투자 지속성 의문",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": [
-            "Google to Pay SpaceX Nearly $1 Billion a Month in Cloud-Computing Deal",
-            "First Google, now Meta? Big Tech may increasingly sell stock to bankroll $820 billion AI boom."
-          ]
-        },
-        {
-          "id": "n7",
-          "label": "반도체ETF(SOXX)",
-          "value": "[06/04] $602.11→[06/05] $539.77 (-10.44%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n8",
-          "label": "테크섹터ETF(XLK)",
-          "value": "[06/04] $193.10→[06/05] $180.30 (-6.66%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n9",
-          "label": "혁신성장ETF(ARKK)",
-          "value": "[06/04] $79.85→[06/05] $74.49 (-6.89%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        }
-      ],
-      "edges": [
-        {
-          "from": "n6",
-          "to": "n7",
-          "label": "실증",
-          "mechanism": "AI 수요 둔화 우려가 반도체 섹터 대폭 조정으로 반영"
-        },
-        {
-          "from": "n6",
-          "to": "n8",
-          "label": "실증",
-          "mechanism": "빅테크 자금 압박이 테크 섹터 전반 하락 압력 조성"
-        },
-        {
-          "from": "n6",
-          "to": "n9",
-          "label": "실증",
-          "mechanism": "AI 투자 과열 조정이 혁신성장주 밸류 재평가 촉발"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "AI수요둔화우려가 핵심 공통원인. 구글-SpaceX 대규모 계약과 메타 주식 매각설이 빅테크 자금 조달 압박을 부각하며 AI 투자 지속성 의문 확산. 반도체 SOXX(-10.44%), 테크 XLK(-6.66%), 성장주 ARKK(-6.89%)가 동반 조정되며 AI 버블 우려 심화.",
-      "feedbackRisk": {
-        "hasFeedback": false,
-        "loop": null,
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n6->n7",
-        "fragileReason": "AI 수요 둔화 우려는 추정치 기반으로 실제 수요 데이터 발표 시 급반전 위험 존재",
-        "alternativePath": "n6->n8 빅테크 자금 압박 경로"
-      },
-      "missingHops": [
-        {
-          "to": "메모리반도체",
-          "via": "AI 투자 조정이 HBM 등 고부가 메모리 수요 감소 우려로 전이",
-          "lag_days": 2
-        },
-        {
-          "to": "코스닥지수",
-          "via": "혁신성장주 밸류 재평가가 코스닥 중심의 테크 밸류에이션 하향 조정",
-          "lag_days": 1
-        }
-      ]
-    },
-    {
-      "id": "thread_003",
-      "title": "글로벌 리스크오프",
-      "priority": 1,
       "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "n10",
-          "label": "글로벌리스크오프",
-          "value": "Fed 매파 전환과 기술주 조정으로 리스크 회피 심화",
+          "id": "w1",
+          "label": "Nvidia공급다변화",
+          "value": "메모리 조달처 확대로 독점력 약화 압박",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            {
+              "source": "MarketWatch",
+              "title": "Nvidia 메모리칩 다원화 추진으로 HBM 경쟁 구도 변화"
+            }
+          ]
+        },
+        {
+          "id": "w2",
+          "label": "반도체경쟁심화",
+          "value": "HBM 경쟁 격화로 한국 업체 마진 압박",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n11",
-          "label": "30년국채ETF(TLT)",
-          "value": "[05/19] $83.02→[06/05] $85.06 (+2.51%)",
+          "id": "w3",
+          "label": "반도체ETF(SOXX)",
+          "value": "[06/01] $571.93→[06/05] $539.77 (-5.62%)",
           "source": "layer_T0_us_prev_close",
+          "timestamp": "06:00",
+          "related_news": []
+        },
+        {
+          "id": "w4",
+          "label": "테크재평가압박",
+          "value": "메모리 전망 약화로 글로벌 테크 밸류에이션 재조정",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n12",
-          "label": "하이일드ETF(HYG)",
-          "value": "[05/22] $79.91→[06/05] $79.43 (-0.60%)",
+          "id": "w5",
+          "label": "나스닥100ETF(QQQ)",
+          "value": "[06/01] $742.74→[06/05] $705.06 (-5.07%)",
           "source": "layer_T0_us_prev_close",
+          "timestamp": "06:00",
+          "related_news": []
+        },
+        {
+          "id": "w6",
+          "label": "산업구조전환",
+          "value": "메모리 중심 생태계 한계로 신성장동력 필요",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n13",
-          "label": "구리광산ETF(COPX)",
-          "value": "[06/01] $90.06→[06/05] $80.64 (-10.47%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n14",
-          "label": "금ETF(GLD)",
-          "value": "[05/29] $417.12→[06/05] $396.24 (-5.00%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
+          "id": "w7",
+          "label": "KOSDAQ",
+          "value": "[06/01] 1049.66→[06/08] 938.59 (-10.61%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "15:30",
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n10",
-          "to": "n11",
-          "label": "안전자산",
-          "mechanism": "리스크 회피로 안전자산 국채 수요 확대"
+          "from": "w1",
+          "to": "w2",
+          "label": "경쟁심화",
+          "mechanism": "Nvidia 공급 다변화가 한국 메모리 업체들의 독점력 약화로 연결"
         },
         {
-          "from": "n10",
-          "to": "n12",
-          "label": "신용리스크",
-          "mechanism": "신용 리스크 우려로 하이일드채 소폭 조정"
+          "from": "w2",
+          "to": "w3",
+          "label": "실증",
+          "mechanism": "반도체 경쟁 압박이 글로벌 반도체 ETF 하락으로 반영"
         },
         {
-          "from": "n10",
-          "to": "n13",
-          "label": "경기둔화",
-          "mechanism": "경기 둔화 우려로 구리 등 산업용 금속 급락"
+          "from": "w2",
+          "to": "w4",
+          "label": "확산",
+          "mechanism": "메모리 업체 마진 압박이 글로벌 테크 섹터 재평가 압력으로 확산"
         },
         {
-          "from": "n10",
-          "to": "n14",
-          "label": "기회비용",
-          "mechanism": "실질금리 상승으로 금 기회비용 증가해 조정"
+          "from": "w4",
+          "to": "w5",
+          "label": "실증",
+          "mechanism": "테크 재평가 압력이 나스닥100 ETF 급락으로 나타남"
+        },
+        {
+          "from": "w4",
+          "to": "w6",
+          "label": "구조변화",
+          "mechanism": "글로벌 재평가가 한국의 산업구조 전환 필요성을 가속화"
+        },
+        {
+          "from": "w6",
+          "to": "w7",
+          "label": "급등후조정",
+          "mechanism": "산업구조 전환 압박이 기술주 중심 KOSDAQ 급락으로 반영"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "글로벌리스크오프가 자산 배분을 재편성. Fed 체제 전환과 AI 투자 조정이 광범위한 리스크 회피를 촉발하며 안전자산 국채로의 자금 이동 가속화(TLT +2.51%). 경기 둔화 우려로 산업용 금속 급락(COPX -10.47%)하고 금리 상승으로 금의 기회비용 증가(GLD -5.00%)."
+      "korea_terminal_node": "w7",
+      "briefing": "Nvidia의 메모리 공급망 다변화 전략으로 삼성·SK하이닉스의 독점 구조가 흔들리면서, 글로벌 반도체 섹터(SOXX -5.62%) 및 테크 대형주(QQQ -5.07%)에 재평가 압력이 전파되고 있습니다. 이는 메모리 비중이 높은 한국 기술주 지표인 KOSDAQ(-10.61%)의 더 큰 낙폭으로 나타나고 있습니다."
     },
     {
-      "id": "thread_004",
-      "title": "AI투자 구조전환",
-      "priority": 1,
+      "id": "thread_003",
+      "title": "통화체제구조재편",
+      "priority": 3,
       "frequency": "MONTHLY",
       "nodes": [
         {
-          "id": "n15",
-          "label": "투자기준전환",
-          "value": "성장성 중심에서 수익성 기반 평가로 패러다임 전환",
+          "id": "m1",
+          "label": "달러패권도전",
+          "value": "SWIFT 대안과 지역 결제망 본격화",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n16",
-          "label": "실질금리10Y",
-          "value": "2.11 → 2.11 (±0%p)",
-          "source": "layer_T0_macro",
+          "id": "m2",
+          "label": "안전자산수요확대",
+          "value": "중앙은행 금 보유 증가로 준비자산 다변화",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n17",
-          "label": "성장주ETF(IWF)",
-          "value": "[05/06] $126.82→[06/05] $122.69 (-3.26%)",
+          "id": "m3",
+          "label": "금ETF(GLD)",
+          "value": "[05/05] $418.27→[06/05] $396.24 (-1.67%)",
           "source": "layer_T0_us_prev_close",
+          "timestamp": "06:00",
+          "related_news": []
+        },
+        {
+          "id": "m4",
+          "label": "글로벌유동성변동",
+          "value": "통화체제 재편으로 달러 유동성 흐름 불확실성 증대",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n18",
-          "label": "나스닥ETF(QQQ)",
-          "value": "[05/06] $695.77→[06/05] $705.06 (+1.34%)",
+          "id": "m5",
+          "label": "인플레연동채권ETF(TIP)",
+          "value": "[05/04] $111.15→[06/05] $109.25 (-1.23%)",
           "source": "layer_T0_us_prev_close",
+          "timestamp": "06:00",
+          "related_news": []
+        },
+        {
+          "id": "m6",
+          "label": "아시아금융허브경쟁",
+          "value": "통화 다변화로 지역 금융센터 경쟁 격화",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n16",
-          "to": "n15",
-          "label": "배경",
-          "mechanism": "고실질금리 환경이 투자 평가 기준 변화의 구조적 배경"
+          "from": "m1",
+          "to": "m2",
+          "label": "파급",
+          "mechanism": "달러 대안 모색이 중앙은행들의 준비자산 다변화 가속화로 연결"
         },
         {
-          "from": "n15",
-          "to": "n17",
+          "from": "m2",
+          "to": "m3",
           "label": "실증",
-          "mechanism": "성장주 밸류에이션 압박이 월간 관점에서 지속 반영"
+          "mechanism": "안전자산 수요 확대가 금 ETF 장기 추세로 반영"
         },
         {
-          "from": "n15",
-          "to": "n18",
+          "from": "m1",
+          "to": "m4",
+          "label": "구조변화",
+          "mechanism": "통화체제 재편으로 글로벌 달러 유동성 흐름의 예측불가능성 증대"
+        },
+        {
+          "from": "m4",
+          "to": "m5",
           "label": "실증",
-          "mechanism": "기술주 전반의 수익성 기반 재평가 압력 지속"
+          "mechanism": "유동성 변동성이 인플레이션 헤지 자산 변동성으로 나타남"
+        },
+        {
+          "from": "m4",
+          "to": "m6",
+          "label": "기회창출",
+          "mechanism": "달러 의존도 축소 흐름이 아시아 금융허브 간 경쟁 격화로 연결"
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "투자기준전환이 구조적 배경. 고실질금리 환경에서 AI 투자가 양적 확장에서 수익성 검증 단계로 전환되며 성장주 평가 기준이 근본적으로 변화. 성장주 밸류에이션 압박(IWF -3.26%)이 구조적으로 지속되는 가운데 기술주 선별 강화 추세 심화(QQQ +1.34%)."
+      "briefing": "달러 중심 통화체제의 구조적 재편이 진행되면서 중앙은행들의 금 보유 증가와 결제시스템 분화가 가속화되고 있습니다. 이는 글로벌 유동성의 흐름을 예측하기 어렵게 만들며, 아시아 금융허브 간 경쟁을 격화시키는 중장기 배경으로 작용하고 있습니다."
     }
   ],
   "headlines": [
-    "Fed 매파 전환과 달러강세, 신흥국 자금이탈 가속화",
-    "AI 투자 과열조정, 반도체·테크 대폭락"
+    "Warsh 매파신호, EM 자본유출 가속화",
+    "메모리 경쟁 심화, 테크주 연쇄 조정"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: Kevin Warsh Fed 의장 취임 및 강한 고용지표로 매파 기대 확대, SOXX -10.44%, EEM -6.53%, 달러강세 UUP +0.68% / 당일 아시아: 외국인 이탈 압력 전이로 KOSPI -5.54%, 원화 약세 심화",
-    "layer2": "달러강세(UUP)와 신흥국ETF(EEM) 동반 급락이 아시아-한국 자본시장의 외국인 자금이탈 신호로 전이. AI 수요 둔화 우려도 반도체 조정 압력 강화.",
-    "layer3": "KOSPI 급락과 원화 약세가 동시 진행되는 외국인이탈 패턴이 확산 중. 테크·반도체 조정도 한국 IT 섹터 심화 압박 요인."
+    "layer1": "전일 미국: 달러강세(UUP +0.65%), EM급락(EEM -6.53%) / 당일 아시아: KOSPI -4.94%, KOSDAQ -6.37%",
+    "layer2": "Fed 매파 기조 전환이 글로벌 달러강세와 신흥국 자본유출 압력으로 직결되며, 이것이 아시아 지수 급락의 공통 원인",
+    "layer3": "한국 시장은 외국인 의존도 높은 구조에서 글로벌 자금 이탈의 직격탄을 맞고 있으며, 반도체 공급망 재편까지 겹치며 더 큰 낙폭 기록"
   },
-  "macro_regime_note": "고실질금리 속 성장주 밸류에이션 압박이 기저이며, Fed 매파 기대로 달러강세 심화가 신흥국 리스크오프를 촉발하면서 위험자산 전반 조정 가속화.",
-  "generated_at": "2026-06-05T22:46:53.732Z",
+  "macro_regime_note": "고실질금리 환경에서 Fed 매파화 신호가 성장주·신흥국 자산의 밸류에이션을 동시에 압박하며, 달러강세를 통한 신흥국 자금이탈까지 유발하는 복합 악재로 작용하고 있습니다.",
+  "generated_at": "2026-06-08T03:46:49.076Z",
   "data_as_of": {
-    "timestamp_iso": "2026-06-05T22:46:53.729Z",
-    "display": "6/5 18:46 [ 뉴욕 현지 시각 ]",
-    "display_mobile": "6/5 18:46 뉴욕",
-    "timezone": "America/New_York"
+    "timestamp_iso": "2026-06-08T03:46:49.070Z",
+    "display": "6/8 12:46 [ KST +0900 ]",
+    "display_mobile": "6/8 12:46 KST",
+    "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-06-05T22:46:53.732Z",
-    "elapsed_sec": 182,
-    "market_status": [],
-    "is_weekend": true,
-    "data_note": "주말 장외시간. 전일 미국장 급락(-2.6% SPY, -4.8% QQQ) 후 당일 아시아장도 연쇄 하락"
-  },
-  "deep_analysis_at": "2026-06-05T22:52:23.295Z"
+    "generated_at": "2026-06-08T03:46:49.076Z",
+    "elapsed_sec": 187,
+    "market_status": [
+      "한국(KOSPI/KOSDAQ)",
+      "일본(닛케이)"
+    ],
+    "is_weekend": false,
+    "data_note": "전일 미국 테크주 급락(-10.4% SOXX, -6.7% QQQ) 영향으로 아시아 현물지수 하락세"
+  }
 }
