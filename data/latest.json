@@ -65,7 +65,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "Kevin Warsh Fed 신임의장 취임으로 통화정책 불확실성 해소. 글로벌 리스크온 신호 확산으로 EEM(+1.78%) 신흥국 자산 수요 증가, HYG(+0.05%) 신용자산 안정화. 신뢰 회복이 글로벌 자금흐름 개선의 주요 촉매."
+      "briefing": "Kevin Warsh Fed 신임의장 취임으로 통화정책 불확실성 해소. 글로벌 리스크온 신호 확산으로 EEM(+1.78%) 신흥국 자산 수요 증가, HYG(+0.05%) 신용자산 안정화. 신뢰 회복이 글로벌 자금흐름 개선의 주요 촉매.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "Fed 의장 개인의 정책 발언이나 시장 커뮤니케이션 실수로 전체 리스크온 전환이 급반전될 수 있음",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "USD/KRW",
+          "via": "글로벌 리스크온으로 달러 안전자산 수요 감소하여 원화 강세 압력 발생",
+          "lag_days": 3
+        },
+        {
+          "to": "VIX",
+          "via": "Fed 정책 신뢰도 상승이 시장 변동성 기대치를 구조적으로 하락시킴",
+          "lag_days": 5
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -149,6 +171,28 @@
       "briefing": "Broadcom·Apollo·Blackstone의 350억달러 AI 인프라 플랫폼 출범이 반도체 수요 급증의 핵심 공통원인. SOXX(+5.87%) 미국 반도체 강세가 한국 삼성전자·하이닉스로 파급되어 KOSPI(+8.18%) 당일 급등. QQQ(+1.56%) 동반 상승으로 AI 투자 확대 신호 강화.",
       "_warnings": [
         "[?? 복합신호 B안] thread=thread_002 \"반도체ETF(SOXX)\"(up)→\"KOSPI\"(up) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n6->n8->n6",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n5->n6",
+        "fragileReason": "AI 투자 버블 우려나 규제 강화로 대규모 인프라 투자가 갑작스럽게 위축될 리스크",
+        "alternativePath": "데이터센터 전력난이나 지정학적 긴장으로 인한 우회 수요"
+      },
+      "missingHops": [
+        {
+          "to": "구리선물",
+          "via": "AI 데이터센터 전력 인프라 구축으로 구리 등 산업금속 수요 급증",
+          "lag_days": 14
+        },
+        {
+          "to": "대만지수(TAIEX)",
+          "via": "TSMC 등 대만 파운드리 업체들이 AI 반도체 위탁생산 물량 급증으로 수혜",
+          "lag_days": 7
+        }
       ]
     },
     {
@@ -330,5 +374,6 @@
     ],
     "is_weekend": false,
     "data_note": "T0(전일 미국)→T1(당일 아시아) 인과만 허용"
-  }
+  },
+  "deep_analysis_at": "2026-06-09T15:52:57.487Z"
 }
