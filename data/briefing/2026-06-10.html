@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-10 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/10 07:48 KST</div>
+    <div class="header-date">2026-06-10</div>
+    <div class="header-headline">SpaceX IPO 앞두고 기술주 급락·채권시장 Fed 인상 베팅 가속</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">SpaceX IPO 조건 확정 임박 및 6/24 Fed 스트레스 테스트 결과 - 기술주·금융주 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">SpaceX IPO 공포가 기술주 매도세를 촉발·AI 자본시장 흡수 한계 시험</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">SpaceX IPO 조건 확정이 임박한 가운데, 투자자들이 사상 최대 규모 공모 대기 부담으로 기술주를 매도하면서 나스닥이 추가 하락하는 이례적 IPO 구축 효과가 나타났다. OpenAI와 Anthropic까지 대형 IPO 대기열에 합류하면서, 시장이 동시에 흡수 가능한 AI 관련 자본 수요의 한계에 대한 의문이 제기되고 있다. Broadcom·Apollo·Blackstone은 AI 인프라 파이낸싱을 위한 350억 달러 규모 플랫폼을 출범해 민간 자금 조달로 수요를 분산하려는 움직임을 보였다. AST SpaceMobile은 SpaceX의 위성 발사 계획 속에서 Starlink 경쟁 구도가 재조명되며 변동성 거래를 경험했다. NASA의 Artemis III에 SpaceX와 Blue Origin이 동시 참여하는 구도는 우주 경제 생태계 확장을 상징하지만, 단기적으로는 IPO 수급 우려가 시장 심리를 지배하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">채권시장 Fed 인상 베팅 급부상·BOJ 연내 2회 인상 전망 - 글로벌 긴축 사이클 재가동</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#9</span>
+    </div>
+    <div class="theme-summary">채권 트레이더들이 수개월 내 Fed의 복수 금리 인상을 겨냥한 포지션을 빠르게 쌓고 있으며, 일부는 9월 회의에서의 첫 인상까지 베팅하고 있다. 이는 최근 반복된 '인하 기대 후퇴' 수준을 넘어 인상 시나리오가 메인스트림으로 진입하고 있음을 시사하는 질적 변화다. Fed는 6월 24일 연간 은행 스트레스 테스트 결과를 공개할 예정으로, 결과에 따라 금융 섹터 자본 정책과 대출 여건이 연동될 수 있다. BOJ는 이란 전쟁발 인플레이션 압력을 근거로 다음 주 인상을 시작으로 연내 2회 금리 인상이 전망되며, 전직 임원은 10월 추가 인상 가능성을 언급했다. 글로벌 주요 중앙은행이 동조적 긴축 기조로 수렴할 경우, 장기 채권과 성장주 밸류에이션에 동시 압력이 가해지는 구조적 환경이 형성된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 모델 고도화·에너지 인프라 확장 - 수익화 경쟁의 실물 기반 구축 가속</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #10~#16</span>
+    </div>
+    <div class="theme-summary">Anthropic이 수개월간 사이버보안 우려로 접근을 제한했던 Claude Mythos '안전 버전'을 일반에 공개하며 AI 모델 대중화 경쟁이 한 단계 진전됐고, Fable 5는 바이브 코딩 커뮤니티를 중심으로 높은 관심을 받고 있다. Apple은 WWDC 2026에서 iOS 27과 Apple Intelligence를 공개하며 Siri 중심의 AI 플랫폼 전략을 구체화했다. 데이터센터의 전력 수요 폭증에 대응해 핵에너지와 천연가스가 결합한 하이브리드 전력 공급 모델이 부상하고 있으며, Goldman은 서구권의 상대적 침체 속에서 러시아·중국이 원자력 분야 마일스톤을 빠르게 축적하고 있다고 분석했다. AI 혁명이 녹색 전환과 유사하게 막대한 선행 투자와 일자리 대체를 수반한다는 구조적 비교가 제기되며, AI 에이전트가 크립토 지갑에 접근할 경우 통제 불가능한 자율 행위자가 될 수 있다는 리스크도 경고됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">이란 전쟁 종전 협상 근접·이스라엘 스파이 논란 - 중동 지정학 리스크의 이중 구조</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#19</span>
+    </div>
+    <div class="theme-summary">JD Vance 부통령이 미국과 이란 간 평화 협정이 '매우 근접'했으며 중간선거 전 타결도 가능하다고 언급해 중동 리스크 프리미엄 완화 기대가 부상했다. 그러나 이스라엘이 Pentagon과 트럼프 행정부 고위 인사, 정보기관을 대상으로 광범위한 스파이 활동을 벌인 것으로 보도되면서, Vance를 포함한 워싱턴 당국자들의 반응이 주목을 받았고 미-이스라엘 신뢰 균열이 표면화됐다. 이란 전쟁 장기화 우려가 BOJ의 금리 인상 근거로 직접 인용되는 등, 중동 긴장이 아시아 통화정책에까지 파급효과를 미치는 복합 전이 구조가 확인됐다. DRC의 수출 통제와 콩고 배터리 금속 시장 재편은 중동 외 지정학 리스크가 공급망 차원에서 자원 시장을 동시에 압박하고 있음을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">구리·금·은 원자재 강세 논리 재확인 - Jefferies 상향과 공급 압박의 교차</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #20~#23</span>
+    </div>
+    <div class="theme-summary">Jefferies 애널리스트가 '우리가 충분히 강세를 예상하지 못했다'고 인정하며 구리 전망을 상향 조정, 기존 강세론자들도 놀라게 한 수준의 공급 부족이 현실화되고 있음이 확인됐다. 금과 은은 2026년 1월 고점 대비 20% 이상 하락해 일부에서 '트레이드 종료' 논란이 있지만, 분석가들은 이를 오히려 완벽한 매수 셋업으로 해석하며 중장기 강세 구조가 훼손되지 않았다고 주장한다. 캐나다의 4월 무역 흑자는 원유 수출 사상 최고치 달성으로 크게 확대됐으며, 이는 원자재 수출국의 재정 완충력을 높이는 동시에 관세 환경 속 교역 흐름 왜곡을 반영한다. 반도체 장비 기업들은 Micron 등 메모리 업체의 슈퍼사이클을 등에 업고 공급 계획에 대한 전례 없는 가시성을 확보하고 있다는 UBS 분석도 원자재·소재 수요 강세와 맥을 같이한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">EU가 Meta에 WhatsApp을 경쟁 AI 챗봇에 무료로 개방하라고 명령했으며 Meta는 항소 방침을 밝혔다. 영국 주요 소매업체 CEO들은 청년 실업 문제 해결을 위해 정부의 적극적 개입을 촉구했다. IMF는 나이지리아에 인플레이션 억제를 위한 긴축 통화정책 유지를 권고하는 한편, 50억 달러 규모 부채 스왑의 잠재적 리스크를 경고했다. Pentagon은 Alibaba·Baidu·BYD를 중국 군사 연계 기업 명단에 추가해 기술 디커플링 압력이 중국 빅테크 전반으로 확산됐으며, AI 칩 대중 수출 위험에 대한 입법 논의도 가시화됐다. Silver Lake 이사 Egon Durban은 Dell 주식 1,480만 달러어치를 매각했다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">SpaceX IPO 공포가 기술주 매도세를 촉발·AI 자본시장 흡수 한계 시험</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">SpaceX의 위성 발사 계획 속 AST SpaceMobile 주가 급등락</div>
+    <div class="article-title-en">AST SpaceMobile’s stock experiences rocky trading as SpaceX plans to launch its satellites into orbit</div>
+    <div class="article-keypoint">SpaceX 위성 발사로 Starlink 직접 경쟁 격화, AST SpaceMobile 변동성 확대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/ast-spacemobiles-stock-experiences-rocky-trading-as-spacex-plans-to-launch-its-satellites-into-orbit-331b3c3b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">SpaceX IPO 불안이 기술주 추가 하락 압력으로 작용</div>
+    <div class="article-title-en">Angst over SpaceX IPO adds to dive in tech stocks</div>
+    <div class="article-keypoint">SpaceX IPO 대기 부담이 기술주 매도 촉발 - AI 자본 흡수 한계 테스트 중</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/tech-stocks-dive-as-fridays-incoming-spacex-ipo-creates-bad-psychology-9e50510e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 06:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">NASA, Artemis III 달 착륙 임무에 SpaceX·Blue Origin 우주선 채택</div>
+    <div class="article-title-en">NASA taps US, Italian astronauts for Artemis III mission with SpaceX, Blue Origin mooncraft</div>
+    <div class="article-keypoint">NASA Artemis III에 SpaceX·Blue Origin 동시 투입 - 우주 경제 생태계 확장</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/nasa-taps-us-italian-astronauts-for-artemis-mission-with-spacex-blue-origin-mooncraft" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 02:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Broadcom·Apollo·Blackstone, $350억 AI 인프라 플랫폼 출범</div>
+    <div class="article-title-en">Broadcom, Apollo, Blackstone Launch $35 Billion AI Infrastructure Platform</div>
+    <div class="article-keypoint">Broadcom·Apollo·Blackstone $350억 AI 인프라 플랫폼 출범 - 민간 자금 주도 구조화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/broadcom-apollo-blackstone-launch-35-billion-ai-infrastructure-platform-8fc8f65e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 22:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">OpenAI, 또 하나의 초대형 IPO에 대한 투자자 수요를 시험하다</div>
+    <div class="article-title-en">OpenAI Tests Investor Appetite for Yet Another Giant I.P.O.</div>
+    <div class="article-keypoint">OpenAI·SpaceX·Anthropic 동시 IPO 대기 - 시장 자본 흡수 한계 테스트</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/06/09/business/dealbook/openai-ipo-spacex-anthropic.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 22:46 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">채권시장 Fed 인상 베팅 급부상·BOJ 연내 2회 인상 전망 - 글로벌 긴축 사이클 재가동</span>
+    <span class="theme-label-range">Article #6~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Fed, 연간 은행 스트레스 테스트 결과 6월 24일 공개 예정</div>
+    <div class="article-title-en">Federal Reserve Board announces that results from its annual bank stress test will be released on Wednesday, June 24, at 4 p.m. EDT.</div>
+    <div class="article-keypoint">6/24 Fed 스트레스 테스트 결과 공개 - 은행 자본 정책 변화 촉매 가능</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260609a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">채권 트레이더 포지셔닝, Fed 금리 인상이 빠르게 다가오고 있음을 시사</div>
+    <div class="article-title-en">Bond Trader Positioning Signals Fed Rate Hikes Are Coming Fast</div>
+    <div class="article-keypoint">채권 트레이더, 9월 Fed 인상 베팅 - 인하에서 인상 시나리오로 질적 전환 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-09/bond-trader-positioning-signals-fed-rate-hikes-are-coming-fast" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 05:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">BOJ, 전직 임원 '6월·10월 금리 인상 가능성' 언급</div>
+    <div class="article-title-en">BOJ May Raise Rate in June and October, Former Official Says</div>
+    <div class="article-keypoint">BOJ 전직 임원, 6월·10월 연내 2회 금리 인상 가능성 언급 - 엔화 변동성 촉매</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-09/boj-may-raise-rate-in-october-after-june-former-official-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 14:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">BOJ 워처들, 2026년 2회 금리 인상 전망 - 첫 인상은 다음 주 예상</div>
+    <div class="article-title-en">BOJ Watchers See Two Rate Hikes in 2026, Starting With Next Week</div>
+    <div class="article-keypoint">BOJ 워처들, 이란 전쟁발 인플레로 연내 2회 인상 컨센서스 형성 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-09/boj-watchers-see-two-rate-hikes-in-2026-starting-with-next-week" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 모델 고도화·에너지 인프라 확장 - 수익화 경쟁의 실물 기반 구축 가속</span>
+    <span class="theme-label-range">Article #10~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Goldman, 서구 원자력 정체 속 러시아·중국 가속 분석</div>
+    <div class="article-title-en">Goldman Details A Quiet Month For Western Nuclear While Russia And China Pick Up Speed</div>
+    <div class="article-keypoint">서구 원자력 정체 속 러시아·중국 가속 - AI 전력 경쟁의 지정학적 비대칭 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/goldman-details-quiet-month-western-nuclear-while-russia-and-china-pick-speed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 04:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Anthropic, Claude Mythos AI 모델 '안전' 버전 일반 공개</div>
+    <div class="article-title-en">Anthropic releases ‘safe’ version of Claude Mythos AI model to public</div>
+    <div class="article-keypoint">Anthropic, Claude Mythos 안전 버전 공개 - AI 모델 대중화 경쟁 본격화</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/jun/09/anthropic-claude-mythos-ai-model" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 07:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">핵에너지·천연가스 연합으로 AI 데이터센터 전력 수요 대응</div>
+    <div class="article-title-en">Nuclear and Natural Gas Are Teaming Up to Power the AI Data Center Boom</div>
+    <div class="article-keypoint">핵에너지·천연가스 결합으로 AI 데이터센터 전력 수요 대응 가속</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Nuclear-and-Natural-Gas-Are-Teaming-Up-to-Power-the-AI-Data-Center-Boom.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">AI 혁명, 녹색 전환과 유사한 구조적 패턴 반복</div>
+    <div class="article-title-en">The AI Revolution Mirrors the Green Transition</div>
+    <div class="article-keypoint">AI 혁명이 녹색 전환처럼 대규모 선행 투자·일자리 대체 구조 수반 경고</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-and-clean-energy-transition-similar-economics-and-policy-implications-by-adam-michael-bauer-and-gernot-wagner-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 23:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">WWDC 2026: Siri AI, iOS 27, Apple Intelligence 등 주요 발표 총정리</div>
+    <div class="article-title-en">WWDC 2026: Everything announced on Siri AI, iOS 27, Apple Intelligence, and more</div>
+    <div class="article-keypoint">WWDC 2026: Apple Intelligence·iOS 27 공개, Siri AI 통합 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/09/wwdc-2026-everything-announced-on-siri-ai-os-27-apple-intelligence-and-more/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 03:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">전문가 경고: 크립토 지갑 갖춘 AI 에이전트, '통제 불가' 상태로 탈주할 수 있어</div>
+    <div class="article-title-en">AI Agents With Crypto Could Escape And Become 'Unstoppable', Experts Warn</div>
+    <div class="article-keypoint">AI 에이전트 + 크립토 지갑 결합 시 통제 불가 자율 행위자 출현 리스크 경고</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/ai-agents-crypto-could-escape-and-become-unstoppable-experts-warn" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 03:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Anthropic Fable 5, 버튼 클릭만으로 독특한 비디오 게임 생성 가능</div>
+    <div class="article-title-en">Anthropic’s Fable 5 can make weirdly fun video games with the click of a button</div>
+    <div class="article-keypoint">Anthropic Fable 5, 원클릭 게임 생성 - 바이브 코딩 시장 대중화 촉매</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/09/anthropics-fable-5-can-make-weirdly-fun-video-games-with-the-click-of-a-button/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 05:37 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">이란 전쟁 종전 협상 근접·이스라엘 스파이 논란 - 중동 지정학 리스크의 이중 구조</span>
+    <span class="theme-label-range">Article #17~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Vance, 미국이 이란과의 평화 협정에 '매우 근접'했다고 주장</div>
+    <div class="article-title-en">JD Vance claims US ‘very close’ to peace deal with Iran</div>
+    <div class="article-keypoint">Vance '이란 평화 협정 매우 근접' 발언 - 중동 리스크 프리미엄 완화 가능성 부상</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/09/jd-vance-iran-peace-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 07:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">DRC 수출 통제가 배터리 금속 시장 구조를 재편하고 있다</div>
+    <div class="article-title-en">DRC's Export Controls Are Reshaping the Battery Metals Market</div>
+    <div class="article-keypoint">DRC 수출 통제로 배터리 금속 시장 재편 - 중동 리스크와 맞물린 공급망 이중 압박</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/DRCs-Export-Controls-Are-Reshaping-the-Battery-Metals-Market.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">이스라엘, Pentagon 스파이 의혹에 대한 Vance의 반응</div>
+    <div class="article-title-en">Vance Reacts After Israel Reportedly Caught Spying On Pentagon</div>
+    <div class="article-keypoint">이스라엘, Pentagon·트럼프 측근 스파이 의혹 - 미-이스라엘 신뢰 균열 표면화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/vance-reacts-after-israel-reportedly-caught-spying-pentagon" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">구리·금·은 원자재 강세 논리 재확인 - Jefferies 상향과 공급 압박의 교차</span>
+    <span class="theme-label-range">Article #20~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Micron 등 메모리 업체가 반도체 장비 섹터 '슈퍼사이클' 견인</div>
+    <div class="article-title-en">Micron and other memory makers are driving a ‘supercycle’ for this corner of the chip sector</div>
+    <div class="article-keypoint">메모리 슈퍼사이클 개막 - 장비사들이 전례 없는 공급 가시성 확보</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/micron-and-other-memory-makers-are-driving-a-supercycle-for-this-corner-of-the-chip-sector-398c40c5?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 06:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">금·은: 조정에서 완벽한 매수 셋업으로</div>
+    <div class="article-title-en">Gold & Silver: From Pullback To Perfect Setup</div>
+    <div class="article-keypoint">금·은 고점 대비 20% 하락에도 중장기 강세 구조 유효 - 매수 셋업 논리 부각</div>
+    <a class="article-link" href="https://www.zerohedge.com/precious-metals/gold-silver-pullback-perfect-setup" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 23:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">캐나다 무역 흑자, 관세 부과 이전 이후 최대 수준으로 확대</div>
+    <div class="article-title-en">Canada Trade Surplus Widens to Largest Since Before Tariffs</div>
+    <div class="article-keypoint">캐나다 4월 무역 흑자 확대 - 원유 수출 사상 최고치, 관세 환경 속 교역 왜곡 반영</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-09/oil-drives-canada-trade-surplus-to-largest-since-before-tariffs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Jefferies: '알고 보니 구리에 대해 충분히 낙관적이지 않았다'</div>
+    <div class="article-title-en">Jefferies: "Turns Out, We Weren't Bullish Enough On Copper" </div>
+    <div class="article-keypoint">Jefferies '구리 강세 전망이 부족했다' 자인 - 공급 부족 현실화로 목표가 상향</div>
+    <a class="article-link" href="https://www.zerohedge.com/commodities/jefferies-turns-out-we-werent-bullish-enough-copper" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 01:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">IMF, 나이지리아에 전쟁 리스크 대응 위한 긴축 통화정책 유지 촉구</div>
+    <div class="article-title-en">IMF Urges Nigeria to Maintain Tight Monetary Stance to Counter War Risks</div>
+    <div class="article-keypoint">IMF, 나이지리아에 긴축 통화정책 유지 권고·$50억 부채 스왑 리스크 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-09/imf-urges-nigeria-to-maintain-tight-monetary-stance-to-counter-war-risks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 22:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">영국 최대 소매업체들, 청년 실업 해결 위해 정부 행동 촉구</div>
+    <div class="article-title-en">UK’s biggest retailers urge government to act on youth unemployment</div>
+    <div class="article-keypoint">영국 청년 실업 심화, M&S·Tesco 등 소매 CEO들 정부 개입 촉구</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/jun/09/uk-top-retailers-government-jobless-young-people" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 00:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">EU, Meta에 WhatsApp을 경쟁 AI 챗봇에 무료 개방 명령</div>
+    <div class="article-title-en">EU orders Meta to open WhatsApp to rival AI chatbots for free</div>
+    <div class="article-keypoint">EU, Meta에 WhatsApp 경쟁 AI 챗봇 무료 개방 명령 - 플랫폼 규제 강도 상향</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/eu-orders-meta-to-open-whatsapp-to-rival-ai-chatbots-for-free" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 01:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Silver Lake 이사 Egon Durban, Dell 주식 $1,480만어치 매각</div>
+    <div class="article-title-en">Silver Lake, director Egon Durban sells $14.8m Dell shares</div>
+    <div class="article-keypoint">Silver Lake 이사 Dell 주식 $1,480만 매각 - 내부자 매도 동향 주시 필요</div>
+    <a class="article-link" href="https://www.investing.com/news/insider-trading-news/silver-lake-director-egon-durban-sells-148m-dell-shares-93CH-4734152" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 22:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">오피니언 | AI 칩 대중 수출의 위험성</div>
+    <div class="article-title-en">Opinion | The Danger of Exporting AI Chips to China</div>
+    <div class="article-keypoint">AI 칩 대중 수출 통제 입법 논의 가시화 - 반도체 수출 규제 리스크 재부각</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/the-danger-of-exporting-ai-chips-to-china-2093f51a?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 00:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Amazon 영국 주요 법인, 수익 급증에도 £760만 세액 공제 수령</div>
+    <div class="article-title-en">Amazon’s main UK arm handed £7.6m tax credit as profits soar to £355m</div>
+    <div class="article-keypoint">Amazon UK 수익 급증에도 £760만 세액 공제 수령 - 빅테크 조세 역설 재점화</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/jun/09/amazon-uk-arm-tax-credit-profits-tech-company" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 21:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Pentagon, BYD·Alibaba를 중국 군사 지원 기업 명단에 추가</div>
+    <div class="article-title-en">BYD and Alibaba among big names aiding China’s military, Pentagon says</div>
+    <div class="article-keypoint">Pentagon, Alibaba·Baidu·BYD 군사 연계 기업 추가 - 기술 디커플링 빅테크 확산</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jun/09/china-military-tech-companies-byd-alibaba-baidu-pentagon-claims" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/09 19:06 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
