@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-11 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/11 07:49 KST</div>
+    <div class="header-date">2026-06-11</div>
+    <div class="header-headline">미군 이란 공습 2일째 - 중동 확전 리스크 현실화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">이란 공습 확전 여부 및 Oracle $40B 추가 자본조달이 AI 자본시장 수급에 미칠 충격</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">SpaceX $75B IPO - 투자등급 신용등급 확보와 성장 내러티브의 균열</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">SpaceX가 3대 신용평가사로부터 투자등급 신용등급을 확보했다고 투자자들에게 통보하며 IPO 자금조달 비용 절감 기반을 마련했으나, Renaissance Capital의 Kennedy 전략가는 주당 $135, 총 $750억 규모의 밸류에이션이 '매우 과도하다'고 경고했다. 상장 예정일인 6월 12일을 앞두고 인도 정부가 Starlink 확장에 제동을 걸며 핵심 성장 스토리에 균열이 생겼고, 텍사스 토지 교환을 둘러싼 환경단체 소송도 변수로 부상했다. IPO 가치의 상당 부분이 우주 데이터센터 등 미래 옵션에 기반한다는 분석이 나오는 가운데, 사상 최대 규모 IPO가 자본시장에서 얼마나 흡수될지 시험대에 올랐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Oracle $40B 추가 자본조달 경고 - AI 비용 폭증이 기술주 매도세 촉발</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#10</span>
+    </div>
+    <div class="theme-summary">Oracle이 계약 파이프라인 $6,380억으로 실적 기대치를 상회했음에도 불구하고, AI 인프라 비용 급증과 $400억 규모의 추가 부채·자본 조달 계획 발표로 주가가 급락하며 기술주 3일 연속 하락세를 이끌었다. Amazon도 AI 지출 지속을 위해 채권 발행에 이어 은행권으로부터 $175억을 추가 차입하며 빅테크의 부채 의존 구조가 심화되고 있음을 확인시켰다. OpenAI는 오하이오 연방 부지에 10기가와트급 데이터센터 임차 협상을 진행 중인 것으로 알려졌으며, Visa와의 ChatGPT 결제 파트너십으로 수익화 경로를 다각화하고 있다. AI 인프라 확장 비용이 기업 수익성을 압박하는 구조적 우려가 시장 전반으로 확산되는 양상이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">미군 이란 공습 2일째 - 유가 급등과 핵 사찰 압박 동시 고조</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#14</span>
+    </div>
+    <div class="theme-summary">미군이 이란 내 '복수의 표적'에 대해 이틀 연속 공습을 감행하며 중동 확전 리스크가 현실화 단계에 진입했다. 유가는 미-이란 교전 재개와 8주 연속 원유 재고 감소, 쿠싱 지역 탱크 바닥 우려가 겹치며 상승세를 이어갔다. IAEA 이사회는 이란에 농축 우라늄 잔여 재고 신고와 사찰관 접근 허용을 요구하는 미국 주도 결의안을 통과시켜 핵 외교 국면을 복잡하게 만들고 있다. 한편 헤그세스 국방장관은 쿠바 방문을 통해 미국에 위협이 될 수 있는 무기 획득에 경고를 발하며 서반구 안보 압박도 동시에 가열되는 형국이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Fed 동결 유지 전망 속 2026년 인상 베팅 - CPI 완화에도 채권시장 긴축 포지션 고수</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#17</span>
+    </div>
+    <div class="theme-summary">5월 근원 CPI가 예상보다 낮게 나왔음에도 채권 트레이더들은 연준이 2026년 말까지 금리를 인상할 것이라는 베팅을 유지했다. JPMorgan Asset Management의 David Kelly는 5월 CPI를 '고점'으로 평가하며 연준이 다음 주 회의에서 금리를 동결할 것으로 예상했다. 미국 재무부가 5월에 약 $220억의 관세 수입을 환급했다는 보도는 트럼프 관세 정책의 법적 불확실성이 여전히 재정 수입에 영향을 미치고 있음을 시사한다. AI 지출 확대와 기업 부채 급증이 장기 인플레이션 기대를 자극하는 구조 속에서 시장의 매파적 포지션은 당분간 유지될 가능성이 높다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">중앙아시아 핵심광물·중국 핵추진 해양허브 - 공급망 지정학 새 전선 부상</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #18~#20</span>
+    </div>
+    <div class="theme-summary">미국과 중앙아시아 5개국이 6월 11~12일 카자흐스탄 아스타나에서 핵심 광물 채굴·가공 협력을 논의하는 C5+1 회의를 개최하며, 중국 의존도를 줄이기 위한 광물 공급망 다변화 경쟁이 새로운 지리적 전선으로 확장되었다. 중국은 핵에너지로 구동되는 대형 해상 물류 허브 개념을 공개하며 무탄소 해운 인프라에서의 기술 선도를 노리고 있다. 미국 법무부는 중국 정보기관과 연계된 것으로 의심되는 웹사이트 도메인 13개를 압수하며 기술 및 인력 디커플링 압박을 강화했다. 글로벌 공급망 재편이 광물·해운·사이버 영역을 동시에 포괄하는 복합 경쟁 구도로 진화하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #21~#30</span>
+    </div>
+    <div class="theme-summary">비트코인 강세론자들이 암호화폐 시장을 떠나 다른 고위험 자산으로 이동하는 흐름이 차트 데이터로 확인되었다. Goldman Sachs는 'Build America 250' 인프라 법안이 건설주에 미칠 영향을 분석했다. Anthropic의 새 모델 Fable이 사이버보안 연구에 지나치게 엄격한 가드레일을 적용한다는 연구자들의 비판이 제기되었다. 사이버보안 스타트업 Cyera가 $6억 투자 유치로 기업가치 $120억을 달성했고, ShinyHunters 해킹 그룹이 100여 개 기관의 Oracle PeopleSoft 서버를 침해했다고 주장하는 등 사이버 리스크가 부각되었다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">SpaceX $75B IPO - 투자등급 신용등급 확보와 성장 내러티브의 균열</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">SpaceX, 투자자들에게 블루칩 신용등급 확보 사실 통보</div>
+    <div class="article-title-en">SpaceX Tells Investors It Has Lined Up Blue-Chip Credit Ratings</div>
+    <div class="article-keypoint">SpaceX 3대 신용평가사 투자등급 확보 - IPO 자금조달 비용 절감 기반 마련</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-10/spacex-touts-investment-grade-ratings-for-75-billion-ipo" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 04:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">SpaceX 밸류에이션 '매우 과도' - Renaissance Capital Kennedy의 경고</div>
+    <div class="article-title-en">SpaceX Price Tag is 'Very Steep': Renaissance's Kennedy</div>
+    <div class="article-keypoint">SpaceX 주당 $135, 총 $75B 밸류 '매우 과도' - 상장 전 냉정한 시장 평가 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-10/spacex-price-tag-is-very-steep-renaissance-s-kennedy-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 04:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">환경단체, 트럼프 행정부의 SpaceX 텍사스 토지 교환에 소송 제기</div>
+    <div class="article-title-en">Lawsuit challenges Trump administration's land swap with SpaceX in Texas</div>
+    <div class="article-keypoint">SpaceX 텍사스 토지 교환 소송 - 환경 리스크가 IPO 내러티브를 위협</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/10/spacex-trump-administration-texas-land-swap" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 07:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">SpaceX IPO 직전 인도 정부의 Starlink 확장 계획에 제동</div>
+    <div class="article-title-en">The Indian government got cold feet on Starlink just before SpaceX’s IPO</div>
+    <div class="article-keypoint">인도 Starlink 확장 제동 - SpaceX IPO 핵심 성장 스토리에 균열 발생</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/10/the-indian-government-got-cold-feet-on-starlink-just-before-spacexs-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 01:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">SpaceX IPO를 이끄는 세 가지 하드테크 도전 과제</div>
+    <div class="article-title-en">The three hard-tech moonshots fueling SpaceX’s unbelievable IPO</div>
+    <div class="article-keypoint">SpaceX IPO 가치 상당 부분 우주 데이터센터 옵션 - 불확실한 미래에 베팅하는 구조</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/10/the-three-hard-tech-moonshots-fueling-spacexs-unbelievable-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 23:48 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Oracle $40B 추가 자본조달 경고 - AI 비용 폭증이 기술주 매도세 촉발</span>
+    <span class="theme-label-range">Article #6~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Oracle 주가 실적 발표 후 급락 - AI 비용 급증이 투자자 불안 자극</div>
+    <div class="article-title-en">Oracle’s stock slides after earnings, as the steep price of AI spooks investors</div>
+    <div class="article-keypoint">Oracle AI 비용 급증 경고 - 실적 상회에도 주가 급락, 수익성 우려 확산</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oracles-stock-slides-after-earnings-as-the-steep-price-of-ai-spooks-investors-0653b309?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 07:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Oracle, 혼조 실적에 주가 급락 - Capex 과열에 $400억 추가 부채·자본 조달 경고</div>
+    <div class="article-title-en">Oracle Tumbles After Mixed Results, Capex Comes In Hot; Warns Another $40BN Debt/Equity Capital Raise Coming</div>
+    <div class="article-keypoint">Oracle $40B 추가 자본조달 예고 - 기술주 3일 연속 하락세 심화 촉매</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/oracle-tumbles-after-mixed-results-capex-comes-hot-warns-another-40bn-debtequity-capital" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Visa, OpenAI 파트너십으로 ChatGPT 쇼핑 결제 보안 담당</div>
+    <div class="article-title-en">Visa to Secure Payments for Shoppers on ChatGPT in OpenAI Partnership</div>
+    <div class="article-keypoint">OpenAI-Visa 결제 파트너십 - AI 에이전트 커머스 수익화의 구체적 경로 첫 등장</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/visa-to-secure-payments-for-shoppers-on-chatgpt-in-openai-partnership-7ece5b22?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 03:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Amazon, 채권 발행에 이어 AI 지출 확대 위해 은행권에서 $175억 추가 차입</div>
+    <div class="article-title-en">Fresh off bond sale, Amazon borrows $17.5B from banks as AI spending continues</div>
+    <div class="article-keypoint">Amazon AI 지출용 은행 차입 $17.5B 추가 - 빅테크 부채 의존 구조 심화 확인</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/10/fresh-off-bond-sale-amazon-borrows-17-5-billion-from-banks-as-ai-spending-continues/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 05:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">OpenAI, 오하이오 10기가와트급 대형 데이터센터 추진 검토</div>
+    <div class="article-title-en">OpenAI Eyes Massive 10-Gigawatt Ohio Data Center </div>
+    <div class="article-keypoint">OpenAI 오하이오 10기가와트 데이터센터 협상 - AI 인프라 투자 규모 사상 최대 수준</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/openai-eyes-massive-10-gigawatt-ohio-data-center" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 04:40 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">미군 이란 공습 2일째 - 유가 급등과 핵 사찰 압박 동시 고조</span>
+    <span class="theme-label-range">Article #11~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">중동 위기 실시간 업데이트: 미군, 이란 '복수의 표적'에 이틀 연속 공습 감행</div>
+    <div class="article-title-en">Middle East crisis live: US military launches second day of airstrikes at ‘multiple targets’ in Iran</div>
+    <div class="article-keypoint">미군 이란 공습 2일 연속 - 중동 확전 현실화로 에너지·안보 프리미엄 급등</div>
+    <a class="article-link" href="https://www.theguardian.com/world/live/2026/jun/10/iran-war-updates-missile-strikes-trump-us-retaliation-middle-east-crisis-war-live" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 07:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">IAEA 이사회, 이란에 농축 우라늄 재고 신고 요구 결의안 통과</div>
+    <div class="article-title-en">IAEA board passes resolution demanding Iran report uranium stocks</div>
+    <div class="article-keypoint">IAEA, 이란 농축 우라늄 재고 신고·사찰 수용 결의 통과 - 핵 협상 복잡성 증가</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/iaea-board-passes-resolution-demanding-iran-report-uranium-stocks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 23:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Hegseth 국방장관, 관타나모 방문에서 쿠바에 무기 획득 경고</div>
+    <div class="article-title-en">Hegseth warns Cuba against acquiring weapons in visit to Guantánamo Bay</div>
+    <div class="article-keypoint">Hegseth 쿠바 방문 무기 획득 경고 - 서반구 안보 압박 가열</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/10/hegseth-warns-cuba-weapons-guantanamo-bay" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 01:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">8주 연속 대규모 원유 재고 감소에 유가 상승 지속 - 쿠싱 '탱크 바닥' 우려 고조</div>
+    <div class="article-title-en">Oil Prices Extend Gains After Another Big Crude Draw, Cushing 'Tank Bottoms' Loom</div>
+    <div class="article-keypoint">8주 연속 원유 재고 감소·쿠싱 바닥 우려 - 이란 공습과 맞물려 유가 상승 압력 가중</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/oil-prices-extend-gains-after-another-big-crude-draw-cushing-tank-bottoms-loom" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 23:40 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Fed 동결 유지 전망 속 2026년 인상 베팅 - CPI 완화에도 채권시장 긴축 포지션 고수</span>
+    <span class="theme-label-range">Article #15~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">JPMorgan, 5월 CPI를 '인플레 고점'으로 전망 - 연준 동결 기조 유지 예상</div>
+    <div class="article-title-en">JPMorgan Sees May as CPI ‘High-Water Mark’ With Fed Set to Hold</div>
+    <div class="article-keypoint">JPMorgan, 5월 CPI를 인플레 고점으로 평가 - 연준 다음 주 동결 전망 지지</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-10/jpmorgan-sees-may-as-cpi-high-water-mark-with-fed-set-to-hold" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 23:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">소프트 근원 CPI 발표 후에도 채권 트레이더들 2026년 Fed 인상 베팅 유지</div>
+    <div class="article-title-en">Bond Traders Bet on a Fed Hike in 2026 Even After Soft Core CPI</div>
+    <div class="article-keypoint">소프트 CPI에도 채권시장 2026년 Fed 인상 베팅 유지 - 매파 포지션 고수</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-10/bond-traders-keep-bets-on-a-fed-hike-this-year-after-cpi-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 21:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">미국 재무부, 5월 관세 $220억 환급 - 관세 수입 상쇄 효과 발생</div>
+    <div class="article-title-en">US Refunds $22 Billion in Tariffs, Offseting Customs Revenue</div>
+    <div class="article-keypoint">트럼프 관세 $22B 환급 - 대법원 판결 이후 관세 수입 불확실성 재정에 현실화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-10/us-refunds-22-billion-in-tariffs-canceling-out-customs-revenue" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 03:37 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">중앙아시아 핵심광물·중국 핵추진 해양허브 - 공급망 지정학 새 전선 부상</span>
+    <span class="theme-label-range">Article #18~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">미국, 중국 정보수집 활동에 연루된 웹사이트 도메인 13개 압수</div>
+    <div class="article-title-en">US seizes 13 website domains tied to alleged Chinese intelligence collection</div>
+    <div class="article-keypoint">미국, 중국 정보수집 연계 웹도메인 13개 압수 - 기술 디커플링 사이버 전선 확장</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-seizes-13-website-domains-tied-to-alleged-chinese-intelligence-collection" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 05:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">중앙아시아, 핵심광물 공급망 경쟁의 새로운 전선으로 부상</div>
+    <div class="article-title-en">Central Asia Emerges as a New Front in the Minerals Supply Chain Battle</div>
+    <div class="article-keypoint">미-중앙아시아 C5+1 핵심광물 회의 - 중국 의존 탈피 공급망 재편 새 전선 개막</div>
+    <a class="article-link" href="https://oilprice.com/Metals/Commodities/Central-Asia-Emerges-as-a-New-Front-in-the-Minerals-Supply-Chain-Battle.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">중국, 핵추진 해상 물류허브 구상 공개 - 무탄소 선박 연료·충전 기지 겸용</div>
+    <div class="article-title-en">China Unveils Nuclear-Powered Floating Hub for Zero-Emission Shipping</div>
+    <div class="article-keypoint">중국 핵추진 해상 물류허브 공개 - 무탄소 해운에서 기술 주도권 경쟁 선언</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/China-Unveils-Nuclear-Powered-Floating-Hub-for-Zero-Emission-Shipping.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 02:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #21~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">비트코인 강세론자들은 건재 - 차트가 보여주는 '더 뜨거운 시장'으로의 이동</div>
+    <div class="article-title-en">Bitcoin bulls are still around. These charts show they just moved on to hotter markets.</div>
+    <div class="article-keypoint">비트코인 강세 자금, 암호화폐 이탈 후 타 고위험 자산으로 이동 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/bitcoin-bulls-are-still-around-these-charts-show-they-just-moved-on-to-hotter-markets-8e04c48c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 06:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">해커, Oracle PeopleSoft 서버 100개 이상 기관 침해 주장</div>
+    <div class="article-title-en">Cybercriminals claim breach of Oracle PeopleSoft servers at 100-plus organizations</div>
+    <div class="article-keypoint">Oracle PeopleSoft 100개 기관 해킹 주장 - 엔터프라이즈 보안 리스크 재부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/10/cybercriminals-claim-breach-of-oracle-peoplesoft-servers-at-100-plus-organizations/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 06:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">미국 증시는 지나치게 비대해졌는가</div>
+    <div class="article-title-en">Is the US Stock Market Too Big?</div>
+    <div class="article-keypoint">미국 증시 글로벌 비중 과도 논쟁 - 동양 경제 부상에 따른 자산배분 재편 압력</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/stock-market-valuations-out-of-step-global-gdp-distribution-by-jim-o-neill-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 22:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">사이버보안 연구자들, Anthropic Fable 모델의 지나친 가드레일에 불만</div>
+    <div class="article-title-en">Cybersecurity researchers aren’t happy about the guardrails on Anthropic’s Fable</div>
+    <div class="article-keypoint">Anthropic Fable 과도한 가드레일 비판 - 사이버보안 실용성과 AI 안전 간 충돌</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/10/cybersecurity-researchers-arent-happy-about-the-guardrails-on-anthropics-fable/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 00:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Goldman Sachs, 'Build America 250' 법안이 건설주에 미치는 영향 분석</div>
+    <div class="article-title-en">Goldman Breaks Down Build America 250 Impact On Construction Stocks</div>
+    <div class="article-keypoint">Goldman, Build America 250 법안 건설주 영향 분석 - 인프라 수혜 섹터 선별 주목</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/goldman-breaks-down-build-america-250-impact-construction-stocks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">AI 시대 사이버보안 스타트업 Cyera, $6억 투자 유치 - 기업가치 $120억 달성</div>
+    <div class="article-title-en">Cyera, a Cybersecurity Start-up for the A.I. Era, Raises $600 Million</div>
+    <div class="article-keypoint">Cyera $6억 유치, 기업가치 $120억 - AI 시대 데이터 보안 투자 급증 확인</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/06/10/business/dealbook/cyera-ai-cybersecurity-funding.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/10 22:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Artemis III 부스터 세그먼트, 열차로 NASA 케네디 우주센터 이송</div>
+    <div class="article-title-en">Train Ride to NASA Kennedy for Artemis III Booster Segments</div>
+    <div class="article-keypoint">NASA Artemis III SLS 부스터 세그먼트 케네디 우주센터 이송 - 달 탐사 일정 진행</div>
+    <a class="article-link" href="https://www.nasa.gov/image-detail/ng-06022026-artemis-iii-booster-segment-shipment-to-ksc-1-31large/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 01:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Keir Starmer 측근, Andy Burnham과의 당권 경쟁 시뮬레이션 진행 중</div>
+    <div class="article-title-en">Keir Starmer aides ‘war-gaming’ leadership contest with Andy Burnham</div>
+    <div class="article-keypoint">Starmer 측근, Burnham과 당권 경쟁 시뮬레이션 - 영국 정치 불확실성 확대 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/jun/10/keir-starmer-aides-war-gaming-over-leadership-contest-with-andy-burnham" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 03:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Bill Gates, 의회 증언에서 Epstein이 혼외 관계 정보로 압박했다고 진술</div>
+    <div class="article-title-en">Bill Gates testifies Epstein pressured him using knowledge of his extramarital affairs</div>
+    <div class="article-keypoint">Gates, Epstein 압박 의회 증언 - 실리콘밸리 거버넌스 리스크 재부각</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/bill-gates-testifies-epstein-pressured-him-using-knowledge-of-his-affairs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 04:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">보고서 관련 주요 내용</div>
+    <div class="article-title-en">What to know about the report.</div>
+    <div class="article-keypoint">관련 보고서 상세 내용 미확인 - 추가 정보 필요</div>
+    <a class="article-link" href="https://www.nytimes.com/live/2026/06/10/business/inflation-report-cpi/what-to-know-about-the-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/11 01:08 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
