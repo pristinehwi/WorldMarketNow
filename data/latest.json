@@ -94,7 +94,29 @@
         }
       ],
       "korea_terminal_node": "n6",
-      "briefing": "달러강세기대가 공통원인. Warsh 신임 Fed 의장 취임으로 매파 정책 기대감 부상하며 달러 강세 압력 증가. 신흥국 자금 이탈로 EEM 1.73% 하락하고 외국인 자금 유출이 KOSPI 4.52% 급락 유발."
+      "briefing": "달러강세기대가 공통원인. Warsh 신임 Fed 의장 취임으로 매파 정책 기대감 부상하며 달러 강세 압력 증가. 신흥국 자금 이탈로 EEM 1.73% 하락하고 외국인 자금 유출이 KOSPI 4.52% 급락 유발.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "달러강세->신흥국이탈->달러수요증가->달러강세",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "Warsh 의장 지명이 확정되지 않은 상황에서 매파 기대만으로는 달러 강세 모멘텀이 지속되지 않을 수 있음",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "국채수익률(TLT)",
+          "via": "매파 통화정책 기대로 장기금리 상승하여 TLT 하락 압력",
+          "lag_days": 1
+        },
+        {
+          "to": "원/달러환율",
+          "via": "외국인 자금이탈과 달러강세가 원화약세로 직접 전이",
+          "lag_days": 0
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -162,7 +184,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "Oracle 실적 부진으로 AI 인프라 투자 비용 우려 확산. 고실질금리 환경에서 성장주 밸류에이션 재평가 압력으로 SOXX 3.55%, ARKK 2.68% 하락하며 테크 약세 지속."
+      "briefing": "Oracle 실적 부진으로 AI 인프라 투자 비용 우려 확산. 고실질금리 환경에서 성장주 밸류에이션 재평가 압력으로 SOXX 3.55%, ARKK 2.68% 하락하며 테크 약세 지속.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "Oracle 단일 기업 실적이 전체 테크섹터 밸류에이션 재평가로 확산되는 연결고리가 취약함",
+        "alternativePath": "AI 인프라 투자 지속성에 대한 근본적 의구심"
+      },
+      "missingHops": [
+        {
+          "to": "나스닥100(QQQ)",
+          "via": "테크 대형주 집중도가 높은 나스닥100 지수 조정 압력으로 확산",
+          "lag_days": 1
+        },
+        {
+          "to": "AI칩주식(NVDA)",
+          "via": "AI 투자 수익성 우려가 핵심 수혜주인 엔비디아 등 개별주로 전이",
+          "lag_days": 0
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -360,5 +404,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전일 미국장(T0) 테크주 급락과 당일 아시아장(T1) KOSPI 4.5% 급락 연계"
-  }
+  },
+  "deep_analysis_at": "2026-06-10T22:51:32.766Z"
 }
