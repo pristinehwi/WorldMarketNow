@@ -93,7 +93,29 @@
         }
       ],
       "korea_terminal_node": "e3",
-      "briefing": "Kevin Warsh Fed 신임 의장 취임으로 정책 불확실성이 해소되며 AI 투자 확산이 가속화되고 있으나, 동시 진행 중인 글로벌 리스크오프 신호가 단기 수익 실현 조정을 촉발하고 있습니다. Oracle, Micron 등의 투자 모멘텀은 한국 반도체 메모리 슈퍼사이클 기대를 지탱하되, KOSPI는 여타 아시아 시장 대비 강한 조정압을 받으며 3.64% 급락했습니다."
+      "briefing": "Kevin Warsh Fed 신임 의장 취임으로 정책 불확실성이 해소되며 AI 투자 확산이 가속화되고 있으나, 동시 진행 중인 글로벌 리스크오프 신호가 단기 수익 실현 조정을 촉발하고 있습니다. Oracle, Micron 등의 투자 모멘텀은 한국 반도체 메모리 슈퍼사이클 기대를 지탱하되, KOSPI는 여타 아시아 시장 대비 강한 조정압을 받으며 3.64% 급락했습니다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "c2->e3->c2",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "c1->c2",
+        "fragileReason": "Fed 신임의장 정책 불확실성이 재부상하면 AI 투자 확산 동력 전체가 차단됨",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "달러인덱스",
+          "via": "Fed 정책 안정화가 달러 강세 둔화를 통해 신흥국 자산 상대적 매력도 제고",
+          "lag_days": 3
+        },
+        {
+          "to": "구리선물",
+          "via": "AI 인프라 투자 확산이 전력망 구축 수요 증가를 통해 구리 가격 상승 압력 조성",
+          "lag_days": 7
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -172,7 +194,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "VIX 지수 5% 급등으로 글로벌 리스크오프 신호가 강화되고 있습니다. 성장주 나스닥 ETF는 1.15% 조정받는 반면 장기 국채 안전자산으로의 자금 이동이 강하며, 신흥국 자산은 약한 수익 실현 압력에 직면하고 있습니다."
+      "briefing": "VIX 지수 5% 급등으로 글로벌 리스크오프 신호가 강화되고 있습니다. 성장주 나스닥 ETF는 1.15% 조정받는 반면 장기 국채 안전자산으로의 자금 이동이 강하며, 신흥국 자산은 약한 수익 실현 압력에 직면하고 있습니다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "r1->e7->r1",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "r1->e7",
+        "fragileReason": "VIX 급등이 투자심리 악화 자기강화 메커니즘의 핵심 신호로 작용하여 단절 시 리스크 오프 강도 왜곡",
+        "alternativePath": "r1->e8 (나스닥 하락을 통한 리스크 오프 신호)"
+      },
+      "missingHops": [
+        {
+          "to": "엔화",
+          "via": "글로벌 리스크오프가 캐리트레이드 청산을 통해 엔화 급등 압력 조성",
+          "lag_days": 1
+        },
+        {
+          "to": "하이일드채권ETF",
+          "via": "리스크 회피 심화가 신용 스프레드 확대를 통해 하이일드채 약세 가속화",
+          "lag_days": 2
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -279,5 +323,6 @@
     ],
     "is_weekend": false,
     "data_note": "전일 미국 테크주 급락(-1.63% SOXX) 후 아시아 혼조세, KOSPI -3.64% 대폭락"
-  }
+  },
+  "deep_analysis_at": "2026-06-10T03:52:03.895Z"
 }
