@@ -93,7 +93,29 @@
         }
       ],
       "korea_terminal_node": "n6",
-      "briefing": "달러강세 신흥국 압박: Kevin Warsh Fed 의장 취임으로 매파적 통화정책 우려가 확산되며 달러 강세와 신흥국 자본 유출이 가속화되고 있다. KOSPI는 외국인 이탈 압력에 하락세를 지속하고 있다."
+      "briefing": "달러강세 신흥국 압박: Kevin Warsh Fed 의장 취임으로 매파적 통화정책 우려가 확산되며 달러 강세와 신흥국 자본 유출이 가속화되고 있다. KOSPI는 외국인 이탈 압력에 하락세를 지속하고 있다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2(달러강세)->n4(신흥국자본유출)->n6(한국증시하락)->n2(달러강세)",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "Fed 의장 교체가 실제 매파 정책으로 이어지지 않을 경우 전체 인과사슬이 무력화된다",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "미국 국채 10년물",
+          "via": "Fed 매파 우려가 장기채 금리 상승을 통해 채권 가격 하락을 촉발",
+          "lag_days": 1
+        },
+        {
+          "to": "원/달러 환율",
+          "via": "한국 증시 하락이 외국인 자본 이탈을 가속화하여 원화 약세 심화",
+          "lag_days": 3
+        }
+      ]
     },
     {
       "id": "thread_002",
@@ -178,7 +200,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "Oracle 실적 부진과 OpenAI 가격 인하로 AI 투자 수익성에 대한 의문이 제기되며 반도체와 테크 섹터 전반에 조정 압력이 확산되고 있다."
+      "briefing": "Oracle 실적 부진과 OpenAI 가격 인하로 AI 투자 수익성에 대한 의문이 제기되며 반도체와 테크 섹터 전반에 조정 압력이 확산되고 있다.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n7->n8",
+        "fragileReason": "AI 수익성 우려가 실제 분기 실적으로 입증되지 않으면 테크 섹터 조정 압력이 단기 조정으로 그칠 수 있다",
+        "alternativePath": "AI 관련 정부 정책 지원 발표를 통한 우회 경로"
+      },
+      "missingHops": [
+        {
+          "to": "나스닥 100 변동성 지수(VXN)",
+          "via": "테크 섹터 조정이 투자자 불안 심리를 확산시켜 변동성 급등을 유발",
+          "lag_days": 1
+        },
+        {
+          "to": "글로벌 성장주 ETF",
+          "via": "AI 투자 수익성 위기가 성장주 전반에 대한 밸류에이션 재평가를 촉발",
+          "lag_days": 5
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -382,5 +426,6 @@
     ],
     "is_weekend": false,
     "data_note": "전일 미국 테크 급락(-2~3.7%) 후 당일 아시아 혼조"
-  }
+  },
+  "deep_analysis_at": "2026-06-11T03:52:21.183Z"
 }
