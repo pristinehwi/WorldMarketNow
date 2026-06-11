@@ -2,61 +2,69 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "Fed 의장 교체 충격",
+      "title": "호르무즈봉쇄 에너지쇼크",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "Fed의장교체",
-          "value": "통화정책 방향성 불확실성",
+          "label": "호르무즈봉쇄",
+          "value": "이란 해협봉쇄 위협",
           "source": "concept",
           "timestamp": null,
           "related_news": [
             {
-              "title": "Kevin Warsh takes oath of office as chairman of Federal Reserve",
-              "source": "Fed"
+              "title": "Oil Prices Spike as Iran Closes Strait of Hormuz",
+              "source": "OilPrice"
             }
           ]
         },
         {
           "id": "n2",
-          "label": "달러강세압력",
-          "value": "매파 기조 우려로 달러 수요 증가",
-          "source": "concept",
+          "label": "원유ETF(USO)",
+          "value": "[06/09] $131.31->[06/10] $134.30 (+2.28%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "달러인덱스(UUP)",
-          "value": "[06/09] $27.96->[06/10] $28.05 (+0.32%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n4",
-          "label": "신흥국자본유출",
-          "value": "달러강세로 EM 자금 이탈 압력",
+          "label": "에너지섹터수혜",
+          "value": "공급차단 우려 반영",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n5",
-          "label": "신흥국ETF(EEM)",
-          "value": "[06/09] $65.82->[06/10] $64.66 (-1.76%)",
+          "id": "n4",
+          "label": "에너지ETF(XLE)",
+          "value": "[06/09] $57.39->[06/10] $58.25 (+1.50%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
+          "id": "n5",
+          "label": "인플레압력재점화",
+          "value": "에너지비용 상승 전이",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
           "id": "n6",
-          "label": "KOSPI",
-          "value": "[06/10] $7730.53->[06/11] $7674.33 (-0.73%)",
-          "source": "layer_T1_asia_today",
-          "timestamp": "15:30",
+          "label": "채권수요약세",
+          "value": "인플레우려 반영",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n7",
+          "label": "미국30년국채(TLT)",
+          "value": "[06/09] $85.12->[06/10] $84.88 (-0.28%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
           "related_news": []
         }
       ],
@@ -64,368 +72,406 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "매파우려",
-          "mechanism": "새 의장의 정책 성향 불확실성이 달러 강세 압력을 촉발한다"
+          "label": "직증",
+          "mechanism": "호르무즈 봉쇄 위협이 원유ETF 급등으로 실현"
         },
         {
-          "from": "n2",
+          "from": "n1",
           "to": "n3",
+          "label": "파급",
+          "mechanism": "원유 공급 차단 우려가 에너지 섹터 전반 수혜"
+        },
+        {
+          "from": "n3",
+          "to": "n4",
           "label": "실증",
-          "mechanism": "달러 강세 압력이 달러인덱스 상승으로 나타난다"
+          "mechanism": "에너지 섹터 수혜가 에너지ETF 상승으로 구현"
         },
         {
           "from": "n2",
-          "to": "n4",
-          "label": "자금이탈",
-          "mechanism": "달러 강세가 신흥국 자본 유출을 촉발한다"
-        },
-        {
-          "from": "n4",
           "to": "n5",
-          "label": "실증",
-          "mechanism": "신흥국 자본 유출이 EEM 하락으로 반영된다"
+          "label": "전이",
+          "mechanism": "원유가 급등이 운송·생산비 상승으로 인플레 압력"
         },
         {
-          "from": "n4",
+          "from": "n5",
           "to": "n6",
           "label": "파급",
-          "mechanism": "신흥국 자본 유출이 한국 증시 하락으로 전파된다"
-        }
-      ],
-      "korea_terminal_node": "n6",
-      "briefing": "달러강세 신흥국 압박: Kevin Warsh Fed 의장 취임으로 매파적 통화정책 우려가 확산되며 달러 강세와 신흥국 자본 유출이 가속화되고 있다. KOSPI는 외국인 이탈 압력에 하락세를 지속하고 있다.",
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n2(달러강세)->n4(신흥국자본유출)->n6(한국증시하락)->n2(달러강세)",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "Fed 의장 교체가 실제 매파 정책으로 이어지지 않을 경우 전체 인과사슬이 무력화된다",
-        "alternativePath": null
-      },
-      "missingHops": [
-        {
-          "to": "미국 국채 10년물",
-          "via": "Fed 매파 우려가 장기채 금리 상승을 통해 채권 가격 하락을 촉발",
-          "lag_days": 1
+          "mechanism": "인플레 재점화 우려가 채권 매도 압력 증가"
         },
         {
-          "to": "원/달러 환율",
-          "via": "한국 증시 하락이 외국인 자본 이탈을 가속화하여 원화 약세 심화",
-          "lag_days": 3
+          "from": "n6",
+          "to": "n7",
+          "label": "실증",
+          "mechanism": "채권 수요 약세가 TLT 하락으로 실현"
         }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "이란 호르무즈 해협 봉쇄 선언으로 원유공급 차단 우려 급증. 원유ETF(USO) 2.3%, 에너지ETF(XLE) 1.5% 급등하며 에너지 인플레 압력 재점화. 채권 매도로 TLT 0.3% 하락. 글로벌 에너지 공급망 교란 리스크 부각.",
+      "_warnings": [
+        "[한국 종착 비율] 3/4 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "AI투자 수익성 위기",
+      "title": "달러강세 신흥국압박",
       "priority": 2,
       "frequency": "NOW",
       "nodes": [
         {
-          "id": "n7",
-          "label": "AI수익성우려",
-          "value": "AI 투자 지속가능성 의문",
+          "id": "n8",
+          "label": "Warsh매파취임",
+          "value": "신임의장 고금리 기조",
           "source": "concept",
           "timestamp": null,
           "related_news": [
             {
-              "title": "Oracle's stock slides after earnings, as the steep price of AI spooks investors",
-              "source": "MarketWatch"
-            },
-            {
-              "title": "OpenAI Considers Drastic Price Cuts, Anticipating War for Users With Anthropic",
-              "source": "WSJ"
+              "title": "Kevin Warsh Takes Oath as Fed Chair with Hawkish Stance",
+              "source": "Fed"
             }
           ]
         },
         {
-          "id": "n8",
-          "label": "테크섹터조정",
-          "value": "AI 관련 섹터 매도 확산",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
           "id": "n9",
-          "label": "반도체ETF(SOXX)",
-          "value": "[06/09] $561.75->[06/10] $541.51 (-3.67%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "달러강세공통원인",
+          "value": "고금리 장기화로 달러매력",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n10",
-          "label": "테크ETF(XLK)",
-          "value": "[06/09] $180.79->[06/10] $176.63 (-2.29%)",
+          "label": "달러인덱스(UUP)",
+          "value": "[06/09] $27.98->[06/10] $28.05 (+0.25%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n11",
-          "label": "혁신성장(ARKK)",
-          "value": "[06/09] $75.02->[06/10] $73.01 (-2.68%)",
+          "label": "신흥국자본유출",
+          "value": "강달러로 자금이탈",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n12",
+          "label": "신흥국ETF(EEM)",
+          "value": "[06/09] $65.82->[06/10] $64.66 (-1.76%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
-        }
-      ],
-      "edges": [
-        {
-          "from": "n7",
-          "to": "n8",
-          "label": "조정압력",
-          "mechanism": "AI 수익성 우려가 테크 섹터 전반의 매도 압력으로 확산된다"
-        },
-        {
-          "from": "n8",
-          "to": "n9",
-          "label": "실증",
-          "mechanism": "테크 조정 압력이 반도체 ETF 급락으로 나타난다"
-        },
-        {
-          "from": "n8",
-          "to": "n10",
-          "label": "실증",
-          "mechanism": "테크 조정 압력이 대형 테크 ETF 하락으로 반영된다"
-        },
-        {
-          "from": "n8",
-          "to": "n11",
-          "label": "실증",
-          "mechanism": "테크 조정 압력이 혁신 성장주 매도로 이어진다"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "Oracle 실적 부진과 OpenAI 가격 인하로 AI 투자 수익성에 대한 의문이 제기되며 반도체와 테크 섹터 전반에 조정 압력이 확산되고 있다.",
-      "feedbackRisk": {
-        "hasFeedback": false,
-        "loop": null,
-        "riskLevel": "low"
-      },
-      "chainFragility": {
-        "fragileEdge": "n7->n8",
-        "fragileReason": "AI 수익성 우려가 실제 분기 실적으로 입증되지 않으면 테크 섹터 조정 압력이 단기 조정으로 그칠 수 있다",
-        "alternativePath": "AI 관련 정부 정책 지원 발표를 통한 우회 경로"
-      },
-      "missingHops": [
-        {
-          "to": "나스닥 100 변동성 지수(VXN)",
-          "via": "테크 섹터 조정이 투자자 불안 심리를 확산시켜 변동성 급등을 유발",
-          "lag_days": 1
-        },
-        {
-          "to": "글로벌 성장주 ETF",
-          "via": "AI 투자 수익성 위기가 성장주 전반에 대한 밸류에이션 재평가를 촉발",
-          "lag_days": 5
-        }
-      ]
-    },
-    {
-      "id": "thread_003",
-      "title": "중동 지정학 리스크",
-      "priority": 1,
-      "frequency": "WEEKLY",
-      "nodes": [
-        {
-          "id": "n12",
-          "label": "호르무즈봉쇄",
-          "value": "글로벌 원유 공급 중단 위험",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": [
-            {
-              "title": "Oil Prices Spike as Iran Declares Strait of Hormuz Closed",
-              "source": "OilPrice"
-            }
-          ]
         },
         {
           "id": "n13",
-          "label": "에너지공급충격",
-          "value": "유가 급등으로 인플레 압력",
+          "label": "외국인이탈우려",
+          "value": "달러강세 속 신흥국 이탈",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n14",
-          "label": "원유ETF(USO)",
-          "value": "[06/04] $136.32->[06/10] $134.30 (-1.49%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
+          "label": "KOSPI",
+          "value": "$7763.95 (-4.11%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "15:30",
           "related_news": []
         },
         {
           "id": "n15",
-          "label": "글로벌리스크오프",
-          "value": "지정학적 불확실성 확산",
+          "label": "원화약세",
+          "value": "달러강세로 환율상승",
           "source": "concept",
           "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n16",
-          "label": "신흥국ETF(EEM)",
-          "value": "[06/04] $69.10->[06/10] $64.66 (-6.43%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n17",
-          "label": "닛케이225",
-          "value": "[06/10] $65410.24->[06/11] $63239.52 (-3.33%)",
-          "source": "layer_T1_asia_today",
-          "timestamp": "15:00",
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n12",
+          "from": "n8",
+          "to": "n9",
+          "label": "전이",
+          "mechanism": "매파 Fed 기조가 고금리 장기화 기대로 달러 펀더멘털 강화"
+        },
+        {
+          "from": "n9",
+          "to": "n10",
+          "label": "실증",
+          "mechanism": "달러강세 공통원인이 달러인덱스 상승으로 구현"
+        },
+        {
+          "from": "n9",
+          "to": "n11",
+          "label": "파급",
+          "mechanism": "달러강세가 신흥국 자본조달비용 상승으로 유출 압력"
+        },
+        {
+          "from": "n11",
+          "to": "n12",
+          "label": "실증",
+          "mechanism": "신흥국 자본유출이 EEM 1.8% 하락으로 실현"
+        },
+        {
+          "from": "n9",
           "to": "n13",
-          "label": "공급충격",
-          "mechanism": "호르무즈 봉쇄가 에너지 공급망 전체에 충격을 가한다"
+          "label": "파급",
+          "mechanism": "달러강세로 신흥국 매력 하락, 한국 외국인 이탈"
         },
         {
           "from": "n13",
           "to": "n14",
           "label": "실증",
-          "mechanism": "에너지 공급 우려가 원유 ETF 변동성으로 나타난다"
+          "mechanism": "외국인 자금이탈 우려가 KOSPI 4.1% 급락으로 구현"
         },
         {
-          "from": "n12",
+          "from": "n9",
           "to": "n15",
-          "label": "리스크오프",
-          "mechanism": "지정학적 긴장이 전반적인 위험회피 심리를 촉발한다"
-        },
-        {
-          "from": "n15",
-          "to": "n16",
-          "label": "실증",
-          "mechanism": "리스크오프 환경이 신흥국 ETF 급락으로 반영된다"
-        },
-        {
-          "from": "n15",
-          "to": "n17",
           "label": "파급",
-          "mechanism": "글로벌 리스크오프가 아시아 주요 지수 하락으로 전파된다"
+          "mechanism": "달러강세가 원화 약세 압력 확대"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "이란의 호르무즈 해협 봉쇄 선언으로 에너지 공급 충격 우려가 급증하며 글로벌 리스크오프 심리가 확산되고 있다. 신흥국과 아시아 증시에 매도 압력이 지속되고 있다.",
-      "_warnings": [
-        "[WEEKLY 프리퀀시 위반] thread=thread_003 node=n17"
-      ]
+      "korea_terminal_node": "n14",
+      "briefing": "달러강세 공통원인으로 신흥국 자본유출 압박 확산. Warsh Fed 의장 매파 취임으로 고금리 장기화 기대, 달러인덱스(UUP) 0.25% 상승. 신흥국ETF(EEM) 1.8% 하락하며 한국도 외국인 자금이탈 우려로 KOSPI 4.1% 급락, 원화는 약세 압박."
     },
     {
-      "id": "thread_004",
-      "title": "달러 패권 체제 정착",
+      "id": "thread_003",
+      "title": "AI비용충격 테크조정",
       "priority": 1,
-      "frequency": "MONTHLY",
+      "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "n18",
-          "label": "트럼프정책정착",
-          "value": "America First 체제 안정화",
+          "id": "n16",
+          "label": "AI투자비용부담",
+          "value": "Oracle 실적쇼크 반영",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            {
+              "title": "Oracle Stock Plunges on AI Investment Cost Concerns",
+              "source": "MarketWatch"
+            }
+          ]
+        },
+        {
+          "id": "n17",
+          "label": "테크밸류에이션조정",
+          "value": "AI 수익성 의문 제기",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
+          "id": "n18",
+          "label": "나스닥100(QQQ)",
+          "value": "[06/04] $740.61->[06/10] $693.69 (-6.34%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
           "id": "n19",
-          "label": "달러헤게모니",
-          "value": "기축통화 지위 강화",
+          "label": "반도체수요우려",
+          "value": "AI 투자조절로 HBM수요 둔화",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n20",
-          "label": "달러인덱스(UUP)",
-          "value": "[05/11] $27.35->[06/10] $28.05 (+2.56%)",
+          "label": "반도체ETF(SOXX)",
+          "value": "[06/04] $602.72->[06/10] $541.51 (-10.16%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n21",
-          "label": "신흥국구조압박",
-          "value": "성장 모델 제약 심화",
+          "label": "한국반도체충격",
+          "value": "삼성·하이닉스 의존도",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n22",
+          "label": "KOSPI",
+          "value": "$7763.95 (-4.11%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": "15:30",
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n16",
+          "to": "n17",
+          "label": "전이",
+          "mechanism": "AI 비용부담 노출이 테크 밸류에이션 재검토 압력"
+        },
+        {
+          "from": "n17",
+          "to": "n18",
+          "label": "실증",
+          "mechanism": "테크 밸류에이션 조정이 나스닥100 주간 6.3% 하락으로 실현"
+        },
+        {
+          "from": "n16",
+          "to": "n19",
+          "label": "파급",
+          "mechanism": "AI 투자 속도조절 우려가 반도체 수요 둔화 신호"
+        },
+        {
+          "from": "n19",
+          "to": "n20",
+          "label": "실증",
+          "mechanism": "반도체 수요 우려가 SOXX 주간 10.2% 급락으로 구현"
+        },
+        {
+          "from": "n19",
+          "to": "n21",
+          "label": "증폭",
+          "mechanism": "반도체 조정이 한국의 높은 집중도로 충격 증폭"
+        },
+        {
+          "from": "n21",
+          "to": "n22",
+          "label": "실증",
+          "mechanism": "한국 반도체 충격이 KOSPI 하락 압력으로 작용"
+        }
+      ],
+      "korea_terminal_node": "n22",
+      "briefing": "Oracle AI 비용쇼크로 테크 밸류에이션 조정 가속화. 나스닥100(QQQ) 주간 6.3% 하락, 반도체ETF(SOXX) 10.2% 급락하며 한국 반도체 의존도로 KOSPI 4.1% 하락 압력 증폭. AI 투자 둔화 우려 지속."
+    },
+    {
+      "id": "thread_004",
+      "title": "고실질금리 EM재편",
+      "priority": 1,
+      "frequency": "MONTHLY",
+      "nodes": [
+        {
+          "id": "n23",
+          "label": "고실질금리정착",
+          "value": "2.20%p 장기화",
+          "source": "layer_T0_macro",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n24",
+          "label": "투자기준상향",
+          "value": "무위험수익률 구조적 상승",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n25",
+          "label": "자본선별성강화",
+          "value": "신흥국 신용분화 심화",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n26",
           "label": "신흥국ETF(EEM)",
           "value": "[05/11] $67.89->[06/10] $64.66 (-4.76%)",
           "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n27",
+          "label": "달러패권공고화",
+          "value": "고금리달러 기축통화 강화",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n28",
+          "label": "달러인덱스(UUP)",
+          "value": "[05/11] $27.35->[06/10] $28.05 (+2.50%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n29",
+          "label": "한국중간지위취약성",
+          "value": "선진-신흥 중간 변동성",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n18",
-          "to": "n19",
-          "label": "헤게모니",
-          "mechanism": "미국 우선주의 정착이 달러 패권을 더욱 강화시킨다"
+          "from": "n23",
+          "to": "n24",
+          "label": "전이",
+          "mechanism": "실질금리 2%p 이상 정착이 위험자산 요구수익률 구조적 상승"
         },
         {
-          "from": "n19",
-          "to": "n20",
+          "from": "n24",
+          "to": "n25",
+          "label": "파급",
+          "mechanism": "높아진 투자기준으로 신흥국 간 펀더멘털 차별 심화"
+        },
+        {
+          "from": "n25",
+          "to": "n26",
           "label": "실증",
-          "mechanism": "달러 헤게모니 강화가 달러인덱스 상승으로 나타난다"
+          "mechanism": "자본 선별성 강화가 신흥국ETF 월간 4.8% 하락으로 구현"
         },
         {
-          "from": "n19",
-          "to": "n21",
-          "label": "구조압박",
-          "mechanism": "달러 패권 강화가 신흥국 성장에 구조적 제약을 가한다"
+          "from": "n24",
+          "to": "n27",
+          "label": "증폭",
+          "mechanism": "자본 선별성 강화가 달러 기축통화 지위 공고화"
         },
         {
-          "from": "n21",
-          "to": "n22",
+          "from": "n27",
+          "to": "n28",
           "label": "실증",
-          "mechanism": "신흥국 구조적 압박이 EEM 월간 하락으로 반영된다"
+          "mechanism": "달러패권 강화가 달러인덱스 월간 2.5% 상승으로 구현"
+        },
+        {
+          "from": "n25",
+          "to": "n29",
+          "label": "취약성",
+          "mechanism": "신흥국 신용분화 속 한국 중간지위로 자본흐름 변동성 확대"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "트럼프 2기 행정부 정책이 안정화되면서 미국 우선주의와 달러 헤게모니가 새로운 경제 질서로 자리잡으며, 신흥국에 구조적 압박을 지속시키고 있다."
+      "korea_terminal_node": "n29",
+      "briefing": "Fed 고실질금리 2.2%p 체제 장기화로 글로벌 자본흐름 구조 재편. 투자기준 상향과 신흥국 신용분화 심화로 달러인덱스(UUP) 월간 2.5% 상승, 신흥국ETF(EEM) 4.8% 하락. 한국은 선진-신흥 중간지위로 자본이탈 변동성 확대 리스크 노출."
     }
   ],
   "headlines": [
-    "Fed 의장 교체·AI 회의론 동반 충격",
-    "테크 급락 후 아시아 분화 양상",
-    "중동 지정학 리스크 확대"
+    "호르무즈봉쇄로 유가급등·채권약세",
+    "Warsh의장 매파 취임, 달러강세·코스피급락",
+    "Oracle AI비용충격 테크조정확산"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 테크 조정으로 SOXX -3.67%, 달러강세 UUP +0.32% / 당일 아시아: KOSPI -0.73%, 닛케이 -3.33%",
-    "layer2": "VIX 급등(+11.83%) 변동성 확대 신호로 신흥국 자본 이탈 가속화 (EEM -1.76%)",
-    "layer3": "KOSDAQ 반등(+1.66%)으로 부분적 차익실현 보이나 외국인 이탈 압력은 지속 중"
+    "layer1": "전일 미국: 원유·달러 강세, 테크약세 / 당일 아시아: KOSPI 급락, 달러강세 압박",
+    "layer2": "호르무즈봉쇄(에너지)·Warsh취임(달러강세)·Oracle충격(테크) 3대 신호로 신흥국 자본이탈 확산",
+    "layer3": "KOSPI 4.1% 급락하나 KOSDAQ 역행상승 시사 (헬스케어·언택트 반등)"
   },
-  "macro_regime_note": "고실질금리 평탄커프 중립기조에서 Fed 불확실성과 AI 회의론이 결합되면서 테크 섹터 조정과 신흥국 압박이 동시 진행되고 있다.",
-  "generated_at": "2026-06-11T03:46:06.104Z",
+  "macro_regime_note": "고실질금리 체제에서 신흥국 선별이탈 심화, 테크 밸류에이션 조정으로 위험자산 리밸런싱 가속화되는 가운데 한국은 반도체 의존도로 이중 충격.",
+  "generated_at": "2026-06-11T07:47:22.795Z",
   "data_as_of": {
-    "timestamp_iso": "2026-06-11T03:46:06.098Z",
-    "display": "6/11 12:46 [ KST +0900 ]",
-    "display_mobile": "6/11 12:46 KST",
+    "timestamp_iso": "2026-06-11T07:47:22.789Z",
+    "display": "6/11 16:47 [ KST +0900 ]",
+    "display_mobile": "6/11 16:47 KST",
     "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-06-11T03:46:06.104Z",
-    "elapsed_sec": 187,
-    "market_status": [
-      "한국(KOSPI/KOSDAQ)",
-      "일본(닛케이)"
-    ],
+    "generated_at": "2026-06-11T07:47:22.795Z",
+    "elapsed_sec": 207,
+    "market_status": [],
     "is_weekend": false,
-    "data_note": "전일 미국 테크 급락(-2~3.7%) 후 당일 아시아 혼조"
-  },
-  "deep_analysis_at": "2026-06-11T03:52:21.183Z"
+    "data_note": "전일 미국장 급락, 당일 아시아장 혼조"
+  }
 }
