@@ -108,6 +108,28 @@
       "briefing": "OpenAI 대폭 가격인하 검토가 AI 업계 수익성 우려 부각하며 테크 밸류에이션 재평가로 확산. AI 인프라 투자 위축이 반도체 섹터 수요 감소로 이어져 한국 메모리 기업 간접 타격. KOSDAQ 급등은 AI 약세에 대한 이커머스·바이오 등 저원가 섹터의 상대적 재평가로 해석.",
       "_warnings": [
         "[한국 종착 비율] 3/4 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2->n4->n5->n2",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n4->n6",
+        "fragileReason": "AI 인프라 투자 위축이 한국 메모리 기업으로 직접 전이되는 단일 경로에 과도 의존",
+        "alternativePath": "n2->글로벌밸류에이션우려->n6"
+      },
+      "missingHops": [
+        {
+          "to": "중국테크ETF",
+          "via": "AI 경쟁 심화로 중국 테크기업 상대적 경쟁력 하락 우려 확산",
+          "lag_days": 3
+        },
+        {
+          "to": "클라우드서비스주",
+          "via": "AI 인프라 투자 위축이 클라우드 서비스 업체 CapEx 감소로 연결",
+          "lag_days": 5
+        }
       ]
     },
     {
@@ -200,7 +222,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "달러강세가 복합 신흥국 압박의 공통원인. ECB 에너지 대응 금리인상에도 달러는 선진국 안전자산 선호 속 강세 지속. 신흥국 자본 유출 압력이 EEM 등 신흥국 자산 매도로 직접 전이되며 아시아 증시 하방 압력 강화."
+      "briefing": "달러강세가 복합 신흥국 압박의 공통원인. ECB 에너지 대응 금리인상에도 달러는 선진국 안전자산 선호 속 강세 지속. 신흥국 자본 유출 압력이 EEM 등 신흥국 자산 매도로 직접 전이되며 아시아 증시 하방 압력 강화.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n12->n13",
+        "fragileReason": "신흥국 자본유출이 EEM ETF로만 반영되어 다른 신흥국 자산 압박 경로 누락",
+        "alternativePath": "n12->신흥국채권ETF->n13"
+      },
+      "missingHops": [
+        {
+          "to": "원화약세",
+          "via": "달러 강세 압력이 한국 경상수지 개선에도 불구하고 원화 약세 압력으로 작용",
+          "lag_days": 1
+        },
+        {
+          "to": "금ETF",
+          "via": "달러 강세와 실질금리 상승이 금 실물수요 감소와 ETF 매도 압력 병행 발생",
+          "lag_days": 2
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -409,5 +453,6 @@
     ],
     "is_weekend": false,
     "data_note": "ECB 기준금리 인상, AI 관련 뉴스 다수, 미국 PPI 발표 예정"
-  }
+  },
+  "deep_analysis_at": "2026-06-11T15:52:37.968Z"
 }
