@@ -110,6 +110,28 @@
       "briefing": "이란 호르무즈 해협 봉쇄 선언으로 원유공급 차단 우려 급증. 원유ETF(USO) 2.3%, 에너지ETF(XLE) 1.5% 급등하며 에너지 인플레 압력 재점화. 채권 매도로 TLT 0.3% 하락. 글로벌 에너지 공급망 교란 리스크 부각.",
       "_warnings": [
         "[한국 종착 비율] 3/4 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2->n5->n6->n2(원유가↑→인플레↑→채권약세→실질금리↑→원유재상승)",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n5->n6",
+        "fragileReason": "인플레 우려가 채권 매도로 이어지는 연결고리는 Fed 정책반응 불확실성에 의존적",
+        "alternativePath": "n5->스태그플레이션 우려->주식 밸류에이션 압박"
+      },
+      "missingHops": [
+        {
+          "to": "금 ETF(GLD)",
+          "via": "지정학적 위험 + 인플레 우려가 안전자산 수요 증가로 이어짐",
+          "lag_days": 1
+        },
+        {
+          "to": "항공주 섹터",
+          "via": "유가 급등이 항공사 운영비 직격탄으로 섹터 전반 타격",
+          "lag_days": 2
+        }
       ]
     },
     {
@@ -233,7 +255,29 @@
         }
       ],
       "korea_terminal_node": "n14",
-      "briefing": "달러강세 공통원인으로 신흥국 자본유출 압박 확산. Warsh Fed 의장 매파 취임으로 고금리 장기화 기대, 달러인덱스(UUP) 0.25% 상승. 신흥국ETF(EEM) 1.8% 하락하며 한국도 외국인 자금이탈 우려로 KOSPI 4.1% 급락, 원화는 약세 압박."
+      "briefing": "달러강세 공통원인으로 신흥국 자본유출 압박 확산. Warsh Fed 의장 매파 취임으로 고금리 장기화 기대, 달러인덱스(UUP) 0.25% 상승. 신흥국ETF(EEM) 1.8% 하락하며 한국도 외국인 자금이탈 우려로 KOSPI 4.1% 급락, 원화는 약세 압박.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n9->n11->n12->n9(달러강세→신흥국유출→달러수요증가→추가강세)",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n13->n14",
+        "fragileReason": "외국인 이탈 우려가 KOSPI 급락으로 직결되는 연결은 국내 기관의 매수 대응력에 따라 차단 가능",
+        "alternativePath": "n13->원화약세->수출기업 수혜 기대->선별적 상승"
+      },
+      "missingHops": [
+        {
+          "to": "중국 A주(ASHR)",
+          "via": "달러강세가 중국 위안화 약세 압박으로 중국 증시 동반 하락 유발",
+          "lag_days": 1
+        },
+        {
+          "to": "브라질 헤알 채권",
+          "via": "신흥국 자본유출이 브라질 등 고금리 통화채권 매도 압력으로 확산",
+          "lag_days": 3
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -473,5 +517,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전일 미국장 급락, 당일 아시아장 혼조"
-  }
+  },
+  "deep_analysis_at": "2026-06-11T07:53:28.576Z"
 }
