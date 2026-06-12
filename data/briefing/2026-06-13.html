@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-13 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/13 07:48 KST</div>
+    <div class="header-date">2026-06-13</div>
+    <div class="header-headline">SpaceX $75B IPO 완료·Musk 세계 첫 조만장자 등극</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">미-이란 평화협정 서명 임박 여부 - 유가 방향성과 G-7 의제 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">SpaceX $2.1조 나스닥 데뷔 - 역대 최대 IPO가 자본시장 구조를 재편</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#14</span>
+    </div>
+    <div class="theme-summary">SpaceX가 $75B 조달, 시총 $2.1조로 나스닥에 상장하며 역사상 최대 IPO를 완성했고, Elon Musk는 세계 최초 조만장자(trillionaire)에 등극했다. 공모가 대비 첫날 약 20% 급등하며 Amazon 시총을 추격하는 수준으로 마감, 시장 예상을 상회하는 수요를 확인했다. AI·위성·로켓 통합 성장 내러티브가 외국인 수요를 집중시키며 MANGOS(Meta·Anthropic·Nvidia·Google·OpenAI·SpaceX) 중심의 새 자본시장 질서를 예고했다. 다만 NYC Comptroller는 MSCI·FTSE Russell의 시즈닝 기간 요건 면제와 Musk 중심 지배구조를 문제 삼아 인덱스 편입 속도에 공식 우려를 제기했고, 주식 구조 자체가 소수 주주 희생 위에 Musk 이익을 극대화한다는 지배구조 비판도 병존한다. IPO 성공 이후 시장의 초점은 $1.77조 밸류에이션 지속 가능성과 Tesla 상장 후 5년 수익률 비교 등 중장기 투자 매력으로 빠르게 이동하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">미-이란 종전 협상 급진전 - 유가 급락과 G-7 의제 동시 충격</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #15~#20</span>
+    </div>
+    <div class="theme-summary">파키스탄이 미-이란 평화협정 체결을 공식 발표하면서 Brent유가 3개월 최저치로 급락 마감했다. 그러나 이란 외무부는 레바논 전선 종식은 수용하되 핵 프로그램 포기는 불가하다는 입장을 재확인하며 협정의 실질적 범위를 제한했고, IRNA는 언론의 과잉 해석을 공개 경고했다. 이란 전쟁은 다음 주 프랑스에서 열리는 G-7 정상회담의 핵심 의제가 되었으며, Trump-Netanyahu 균열과 미군의 NATO 유럽 전력 축소 보도까지 맞물려 서방 동맹 결속에 균열 우려가 커지고 있다. BloombergNEF는 이란 분쟁이 에너지 공급망·무역 흐름·시장 구조에 가져올 중기적 재편을 별도 분석으로 제시했다. 평화협정의 법적 구속력과 이행 검증 체계가 확인되기 전까지 유가 변동성과 지정학 리스크 프리미엄의 진폭은 크게 유지될 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 자본 흡수 한계와 반도체·소프트웨어 섹터 분화 가속</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #21~#24</span>
+    </div>
+    <div class="theme-summary">SpaceX IPO의 천문학적 자본 흡수와 AI 인프라 비용 폭증이 기술주 매도세의 구조적 배경으로 동시에 작용하고 있다. Adobe CFO의 Marvell 이직은 소프트웨어 섹터가 AI 전환에 취약하다는 투자자 인식을 강화시키며 칩 대비 소프트웨어 선호도를 재편하는 시그널로 해석된다. Blackrock의 사모 신용 펀드는 환매 요청 급증으로 재차 게이팅을 실시, 유동성 압박이 스타트업 생태계와 AI 투자 사이클에 연쇄적으로 전이될 가능성을 시사한다. 비트코인은 $60,000 하단에서 반등 시도를 보이며 AI 열풍·SpaceX IPO에 편승한 저점 매수세가 유입됐으나, 과매도 신호와 수익화 균열 우려가 공존하는 상황이다. Anthropic·OpenAI가 IPO 레이스에 합류하면서 AI 자본시장의 구조적 팽창과 수익화 검증 시험이 동시에 진행 중이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">ECB 결정·Fed 경로 불확실성 - 글로벌 긴축 사이클 재가동 현실화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #25~#27</span>
+    </div>
+    <div class="theme-summary">ECB 정책위원회는 6월 12일 금리 결정 외 기후 관련 금융공시 등 추가 조치를 단행하며 통화정책 정상화 기조를 지속했다. 채권시장에서는 Fed의 2026년 금리 인상 베팅이 현실화 압력을 받고 있으며, Goldman Sachs는 연내 인하 전망을 공식 철회한 상태다. Trump 행정부의 LA 노숙자 지원기관 연방 자금 차단은 재정·연방 권한 갈등의 최신 사례로, 경제 정책 불확실성을 높이는 요인으로 작용한다. 연방정부 지출 통제와 통화긴축 방향이 동시에 강화되는 구도는 성장 민감 자산에 대한 할인율 상승 압력을 지속시킬 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Trump 행정권력 확장 - Gabbard 보고서 취소와 정보기관 재편의 시장 함의</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #28~#29</span>
+    </div>
+    <div class="theme-summary">Tulsi Gabbard 국가정보국장이 퇴임 직전 '미스터리 증후군(Havana Syndrome)' 관련 정보기관 보고서를 공식 취소하며 정보 생산 체계의 정치화 논란이 재점화됐다. Trump 행정부는 이란 전쟁·NATO 전력 재편·G-7 외교라는 복합 지정학 국면에서 행정 권한 집중화를 동시에 추진하고 있어, 제도적 견제 약화에 대한 우려가 커지고 있다. 인도 Modi 정부의 유권자 명부 조작 의혹은 신흥국 민주주의 후퇴라는 별도의 정치 리스크 테마를 형성한다. 이 같은 행정권력 확장 기조는 규제 불확실성과 지정학적 예측 가능성 저하를 통해 신흥국 및 방산·에너지 섹터의 변동성 확대 요인으로 작용할 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #30</span>
+    </div>
+    <div class="theme-summary">개인 재무 관련 어드바이저 신뢰 문제와 연금 상품 권유 논란은 직접적인 거시경제·시장 함의보다 소비자 금융 행태 측면의 이슈다. Musk의 SpaceX 관련 602개 목표 달성 여부 점검은 IPO 완료 시점에 경영 실행력 평가라는 맥락을 갖는다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">SpaceX $2.1조 나스닥 데뷔 - 역대 최대 IPO가 자본시장 구조를 재편</span>
+    <span class="theme-label-range">Article #1~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Elon Musk가 SpaceX IPO를 완벽히 성공시킨 방법: '이보다 더 잘될 수는 없었다'</div>
+    <div class="article-title-en">How Elon Musk nailed the SpaceX IPO: ‘I’m not sure that this could have gone much better’</div>
+    <div class="article-keypoint">SpaceX IPO 완벽 성공 - $75B 조달로 역대 최대 상장, Wall Street 관행 파괴</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/how-elon-musk-nailed-the-spacex-ipo-im-not-sure-that-this-could-have-gone-much-better-8149d479?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 06:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">시총 $2.1조 SpaceX, '딱 좋은' 나스닥 데뷔로 시장 기대 충족</div>
+    <div class="article-title-en">SpaceX, Now Worth $2.1 Trillion, Pulls Off Goldilocks Debut</div>
+    <div class="article-keypoint">SpaceX 시총 $2.1조·Musk 세계 첫 조만장자 등극으로 AI 성장 내러티브 검증</div>
+    <a class="article-link" href="https://www.wsj.com/business/spacex-now-worth-2-1-trillion-pulls-off-goldilocks-debut-bcc59ace?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 07:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">나스닥 데뷔 급등으로 Musk, 세계 최초 조만장자 등극</div>
+    <div class="article-title-en">SpaceX’s surge on debut makes Musk world’s first trillionaire</div>
+    <div class="article-keypoint">SpaceX 첫날 약 20% 급등 - $75B IPO가 AI·우주 복합 밸류에이션 수용 확인</div>
+    <a class="article-link" href="https://www.ft.com/content/16387550-4d13-4d2d-b487-c4f6f4a5e9c8" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 06:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">SpaceX, Anthropic, OpenAI의 뜨거운 IPO 여름</div>
+    <div class="article-title-en">SpaceX, Anthropic, and OpenAI’s hot IPO summer</div>
+    <div class="article-keypoint">MANGOS 시대 개막 - Anthropic·OpenAI·SpaceX IPO 열풍이 FAANG 패권 교체 가속</div>
+    <a class="article-link" href="https://techcrunch.com/video/spacex-anthropic-and-openais-hot-ipo-summer/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 01:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">SpaceX 주식, 지금 매수해도 늦지 않을까? Tesla 상장 후 1일·5년 수익률로 본 시사점</div>
+    <div class="article-title-en">Is it too late to buy SpaceX’s stock? Here’s how Tesla’s did after one day — and five years.</div>
+    <div class="article-keypoint">SpaceX 상장 후 투자 적기 논쟁 - Tesla 5년 수익률 비교로 장기 매력 재평가</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/is-it-too-late-to-buy-spacexs-stock-heres-how-teslas-did-after-one-day-and-five-years-9c7564d3?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 05:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">NYC Comptroller, SpaceX 인덱스 조기 편입과 지배구조 문제에 우려 제기</div>
+    <div class="article-title-en">NYC Comptroller Raises Concerns Over SpaceX Index Inclusion and Governance Structure</div>
+    <div class="article-keypoint">NYC Comptroller, SpaceX 인덱스 조기 편입·지배구조 취약성에 공식 우려 제기</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-12/nyc-comptroller-s-concerns-over-spacex-index-inclusion-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 06:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">모든 SpaceX 발사 뒤에 숨겨진 공급망의 실체</div>
+    <div class="article-title-en">The Hidden Supply Chain Behind Every SpaceX Launch</div>
+    <div class="article-keypoint">SpaceX 공급망 숨은 수혜주 - 로켓 추진제 시장 지배 예상 산업가스 기업 주목</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/The-Hidden-Supply-Chain-Behind-Every-SpaceX-Launch.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX IPO: 기자들이 평가하는 천문학적 밸류에이션과 잠재적 경제 파급 효과</div>
+    <div class="article-title-en">SpaceX IPO: How Our Reporters Assess the Sky-High Valuation and Potential Economic Impact</div>
+    <div class="article-keypoint">SpaceX $1.77조 밸류 검증 과제 - 경제적 파급 효과와 Musk 리스크 동시 평가 필요</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/06/11/insider/spacex-ipo-coverage-facts-price.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 02:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SpaceX 지배구조, 다른 주주를 희생시키고 Musk에 유리하게 설계된 구조</div>
+    <div class="article-title-en">SpaceX is structured in a way that appears to benefit Musk at the expense of other shareholders.</div>
+    <div class="article-keypoint">SpaceX 지배구조 리스크 - 이중 주식 구조가 Musk 이익 우선화 구조 고착</div>
+    <a class="article-link" href="https://www.nytimes.com/live/2026/06/12/business/spacex-ipo-elon-musk/spacex-is-structured-in-a-way-that-appears-to-benefit-musk-at-the-expense-of-other-shareholders" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 03:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">SpaceX, 나스닥 데뷔서 시총 $2조 돌파하며 Amazon 추격</div>
+    <div class="article-title-en">SpaceX surges past $2 trillion in Nasdaq debut, closes in on Amazon</div>
+    <div class="article-keypoint">SpaceX 시총 $2조 돌파·Amazon 추격 - 나스닥 신흥 헤게모니 교체 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/after-record-ipo-musks-spacex-faces-next-test-in-market-debut-4739027" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/12 22:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">SpaceX 역대 최대 IPO의 모든 것</div>
+    <div class="article-title-en">What to Know About SpaceX’s Record-Breaking IPO</div>
+    <div class="article-keypoint">SpaceX 역대 최대 IPO 완성 - $2.2조 시총으로 자본시장 패러다임 전환 확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-12/what-to-know-about-spacex-s-record-breaking-ipo" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 07:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Elon Musk가 제시한 602개 목표, 달성률은?</div>
+    <div class="article-title-en">Elon Musk laid out 602 goals. We counted how many he hit.</div>
+    <div class="article-keypoint">Musk 602개 목표 달성률 공개 - IPO 시점 경영 실행력 신뢰도 재평가 계기</div>
+    <a class="article-link" href="https://www.nytimes.com/live/2026/06/12/business/spacex-ipo-elon-musk/elon-musk-laid-out-602-goals-we-counted-how-many-he-hit" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">SpaceX, $1.77조 역사적 밸류에이션으로 미국 증시 상장</div>
+    <div class="article-title-en">SpaceX to list on US stock market at historic $1.77tn valuation</div>
+    <div class="article-keypoint">SpaceX 나스닥 상장 - Musk 세계 최부호 등극과 AI·우주 복합 기업 가치 공인</div>
+    <a class="article-link" href="https://www.theguardian.com/science/2026/jun/12/spacex-stock-price-ipo-spcx" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 05:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Musk, '우주비행의 성배'인 재사용성에 여전히 집중 - Loren Grush 분석</div>
+    <div class="article-title-en">Musk Aiming For 'Holy Grail of Space Flight' in Reusability, Says Loren Grush</div>
+    <div class="article-keypoint">SpaceX IPO 이후 Musk, 재사용 로켓 '우주비행 성배' 집중 - 핵심 기술 경쟁력 유지</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-12/musk-aiming-for-holy-grail-of-space-flight-grush-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 05:01 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">미-이란 종전 협상 급진전 - 유가 급락과 G-7 의제 동시 충격</span>
+    <span class="theme-label-range">Article #15~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump가 폐기한 2015년 이란 핵합의 주요 조항들</div>
+    <div class="article-title-en">Main provisions of the 2015 Iran nuclear deal abandoned by Trump</div>
+    <div class="article-keypoint">미-이란 평화협정 임박 보도 - 2015년 핵합의 폐기 이후 최대 외교 분기점</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/main-provisions-of-the-2015-iran-nuclear-deal-abandoned-by-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 04:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">중동 사태 속보: 이란, 레바논은 미국과의 합의에 포함되지만 핵 프로그램은 협상 대상 아니라고 밝혀</div>
+    <div class="article-title-en">Middle East crisis live: Iran says Lebanon is part of deal with US but nuclear programme is not</div>
+    <div class="article-keypoint">이란, 레바논 종전 수용·핵 프로그램 포기 거부 - 평화협정 범위 제한 확인</div>
+    <a class="article-link" href="https://www.theguardian.com/world/live/2026/jun/12/middle-east-crisis-live-us-iran-israel-lebanon-trump-hormuz-oil-peace-deal-doubt-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 07:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Trump의 대형 주말 행보가 G-7을 뒤흔들 수 있다</div>
+    <div class="article-title-en">Trump’s Big Weekend Could Derail the G-7</div>
+    <div class="article-keypoint">이란 전쟁이 G-7 정상회담 핵심 의제 - Trump 행동 방향이 동맹 결속 시험대</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/06/12/trump-iran-war-peace-talks-deal-g7-leaders-summit/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 05:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">BloombergNEF 글로벌 에너지 시장 전망</div>
+    <div class="article-title-en">BloombergNEF Global Energy Market Outlook</div>
+    <div class="article-keypoint">이란 분쟁이 글로벌 에너지 공급망·무역 흐름 구조적 재편 촉발 - BloombergNEF 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-12/bloombergnef-global-energy-market-outlook-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 05:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">파키스탄, 미-이란 평화협정 체결 발표에 글로벌 유가 3개월 최저치로 마감</div>
+    <div class="article-title-en">Global oil prices end at 3-month low after Pakistan says a U.S.-Iran peace deal has been reached</div>
+    <div class="article-keypoint">미-이란 평화협정 소식에 Brent유 3개월 최저 - 지정학 프리미엄 급격 해소</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oil-prices-extend-declines-on-possible-u-s-iran-peace-deal-to-reopen-strait-of-hormuz-6d2822bd?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 04:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">미국, 유럽 NATO에 전투기·함정 대폭 축소 계획 - New York Times 보도</div>
+    <div class="article-title-en">US plans to slash fighter jets, warships to NATO in Europe, reports New York Times</div>
+    <div class="article-keypoint">미국, NATO 유럽 전투기·함정 감축 검토 - 이란전 변수 속 동맹 방위 공약 약화 우려</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/06/12/us-plans-to-slash-fighter-jets-warships-to-nato-in-europe-reports-new-york-times_6754398_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/12 20:02 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 자본 흡수 한계와 반도체·소프트웨어 섹터 분화 가속</span>
+    <span class="theme-label-range">Article #21~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">비트코인 저점 사냥꾼들, AI 열풍과 SpaceX IPO에 주목</div>
+    <div class="article-title-en">Bitcoin Bottom Hunters Are Eyeing Up AI Frenzy,  SpaceX IPO</div>
+    <div class="article-keypoint">비트코인 $60,000 하단 반등 - AI 열풍·SpaceX IPO가 저점 매수 심리 자극</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-12/bitcoin-bottom-hunters-are-eyeing-up-ai-frenzy-and-spacex-ipo" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/12 23:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Adobe CFO, Marvell로 이직 - 투자자들이 소프트웨어보다 칩을 선택해야 할 이유 하나 더 추가</div>
+    <div class="article-title-en">Adobe’s CFO is departing for Marvell. And it’s one more reason for investors to choose chips over software.</div>
+    <div class="article-keypoint">Adobe CFO의 Marvell 이직 - AI 전환 시대 소프트웨어 대비 칩 섹터 우위 신호</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/adobes-cfo-is-departing-for-marvell-and-its-one-more-reason-for-investors-to-choose-chips-over-software-336b9e16?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 04:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Blackrock 사모 신용 펀드, 환매 요청 급증으로 재차 게이팅 실시</div>
+    <div class="article-title-en">Blackrock's Private Credit Fund Gates Investors Again After Redemption Requests Surge</div>
+    <div class="article-keypoint">Blackrock 사모 신용 펀드 재차 게이팅 - 환매 급증으로 AI 투자 유동성 경색 경고</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/blackrocks-private-credit-fund-gates-investors-again-after-redemption-requests-surge" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">OpenAI 본사 내부 풍경: Stephen Collins 카툰</div>
+    <div class="article-title-en">Behind the scenes at OpenAI HQ: the Stephen Collins cartoon</div>
+    <div class="article-keypoint">OpenAI 내부 전략 카툰 - AI 플랫폼 패권 경쟁의 문화적 긴장감 반영</div>
+    <a class="article-link" href="https://www.theguardian.com/lifeandstyle/picture/2026/jun/12/behind-the-scenes-at-openai-hq-the-stephen-collins-cartoon" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/12 18:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">ECB 결정·Fed 경로 불확실성 - 글로벌 긴축 사이클 재가동 현실화</span>
+    <span class="theme-label-range">Article #25~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">ECB 정책위원회 6월 결정 사항(금리 결정 외 추가 조치)</div>
+    <div class="article-title-en"> Decisions taken by the Governing Council of the ECB (in addition to decisions setting interest rates)</div>
+    <div class="article-keypoint">ECB 6월 12일 결정 - 기후 공시 포함 추가 조치로 긴축 기조 정상화 지속</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/govcdec/otherdec/2026/html/ecb.gc260612~12de4776f6.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/12 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Trump 행정부, 사기 혐의 빌미로 LA 노숙자 지원 기관 연방 자금 차단</div>
+    <div class="article-title-en">Trump officials cut federal funds to LA homeless services agency</div>
+    <div class="article-keypoint">Trump 행정부, LA 노숙자 기관 연방 자금 차단 - 재정 권한 갈등 확대 지속</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/12/trump-la-homeless-agency-cuts" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 06:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">연방정부, 사기 혐의 적용하며 LA 노숙자 기관 자금 지원 일시 중단</div>
+    <div class="article-title-en">Federal Government Pauses Funding To Los Angeles Homeless Agency Citing Fraud Allegations</div>
+    <div class="article-keypoint">연방정부, LA 노숙자 기관 자금 동결 - HUD 사기 혐의 주장과 재정 갈등 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/federal-government-pauses-funding-los-angeles-homeless-agency-citing-fraud-allegations" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 04:40 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Trump 행정권력 확장 - Gabbard 보고서 취소와 정보기관 재편의 시장 함의</span>
+    <span class="theme-label-range">Article #28~#29</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Modi는 인도 민주주의를 조작하고 있다</div>
+    <div class="article-title-en">Modi Is Rigging Indian Democracy</div>
+    <div class="article-keypoint">Modi 정부의 유권자 명부 조작 의혹 - 신흥국 정치 리스크 프리미엄 상승 요인</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/modi-unprecedented-voter-purge-is-his-most-brazen-power-grab-yet-by-jayati-ghosh-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/12 20:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Gabbard, 정보기관의 미스터리 증후군 관련 보고서 취소</div>
+    <div class="article-title-en">Gabbard Rescinds Intelligence Committee Reports On Mysterious Syndrome</div>
+    <div class="article-keypoint">Gabbard, Havana Syndrome 보고서 취소 - 정보기관 정치화·대외 신뢰도 훼손 우려</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/gabbard-rescinds-intelligence-committee-reports-mysterious-syndrome" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 03:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">'저를 이용하는 것 같아요': 이미 거절했는데 연금 상품을 계속 권유하는 어드바이저, 해고해야 할까요?</div>
+    <div class="article-title-en">‘I feel like he may be taking advantage of us’: Our adviser pushes annuities after we already said no. Do we fire him?</div>
+    <div class="article-keypoint">어드바이저 연금 상품 반복 권유 논란 - 소비자 신뢰 훼손과 수탁 의무 위반 우려</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/our-financial-adviser-keeps-pushing-annuities-even-after-we-said-no-should-we-fire-him-19188c98?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/13 05:30 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
