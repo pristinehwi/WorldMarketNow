@@ -96,6 +96,28 @@
       "briefing": "ECB 긴급 금리인상으로 유로화 강세와 글로벌 리스크오프 신호 발생했으나, 신흥국 ETF의 4.4% 반등과 KOSPI 강세가 지속되며 초기 충격의 파급력이 제한적임을 시사합니다.",
       "_warnings": [
         "[한국 종착 비율] 3/4 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n1(ECB 금리인상)->n3(글로벌 유동성 긴축)->n5(아시아 자금 회수)->n1(ECB 정책 재고려)",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n3->n4",
+        "fragileReason": "리스크오프 초기 기술적 반등은 일시적 현상으로 지속성이 매우 취약함",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "독일 10년물 국채",
+          "via": "ECB 금리인상으로 독일 국채 수익률 상승, 안전자산 매력도 증가",
+          "lag_days": 1
+        },
+        {
+          "to": "EUR/KRW",
+          "via": "유럽 금리인상과 아시아 자금 회수 압력이 원화 약세 압력으로 작용",
+          "lag_days": 3
+        }
       ]
     },
     {
@@ -195,7 +217,29 @@
         }
       ],
       "korea_terminal_node": "n6",
-      "briefing": "SpaceX IPO 열풍으로 글로벌 테크 센티멘트가 강화되며 QQQ(+3.4%), XLK(+3.7%) 강세가 지속되고, 이러한 흐름이 KOSDAQ까지 동조되어 당일 3.2% 상승으로 확인됩니다."
+      "briefing": "SpaceX IPO 열풍으로 글로벌 테크 센티멘트가 강화되며 QQQ(+3.4%), XLK(+3.7%) 강세가 지속되고, 이러한 흐름이 KOSDAQ까지 동조되어 당일 3.2% 상승으로 확인됩니다.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n2->n5",
+        "fragileReason": "미국 테크 센티멘트의 글로벌 전이는 지역별 펀더멘털 차이로 인해 지속성이 불안정함",
+        "alternativePath": "n2->n4->글로벌 테크 ETF->n6"
+      },
+      "missingHops": [
+        {
+          "to": "비트코인",
+          "via": "SpaceX IPO 열풍이 혁신 기술 전반의 리스크온 분위기를 조성하며 암호화폐로 확산",
+          "lag_days": 2
+        },
+        {
+          "to": "TSLA",
+          "via": "SpaceX와 테슬라의 일론 머스크 연관성으로 테슬라 주가에 직접적 센티멘트 전이",
+          "lag_days": 1
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -425,5 +469,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전일 미국 장 마감 확정, 당일 아시아/유럽 장 마감"
-  }
+  },
+  "deep_analysis_at": "2026-06-12T07:54:41.797Z"
 }
