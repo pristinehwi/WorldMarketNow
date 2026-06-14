@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-15 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/15 07:48 KST</div>
+    <div class="header-date">2026-06-15</div>
+    <div class="header-headline">Warsh 첫 FOMC 데뷔·미-이란 평화협정 서명 임박</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 첫 기자회견 발언 방향과 미-이란 협정 서명 여부 - 금리·유가 동시 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Warsh 첫 FOMC 데뷔 - 채권시장 금리인상 베팅 속 Fed 경로 불확실성 극대화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#3</span>
+    </div>
+    <div class="theme-summary">이번 주 Kevin Warsh가 Fed 의장으로서 첫 FOMC 회의와 기자회견에 임하면서, 시장은 그의 정책 성향에 대한 극도의 불확실성에 직면해 있다. 경제학자들조차 그의 스탠스를 예측하지 못하는 상황에서, 채권시장은 이미 금리인상 베팅을 강화하고 있으며 Warsh는 Trump와 채권시장 사이에서 이중 압박을 받고 있다. Bloomberg Intelligence는 인플레이션 불확실성과 금리 방향성에 대한 혼선이 이번 데뷔를 사상 유례없이 고위험 이벤트로 만들고 있다고 평가한다. Warsh의 첫 기자회견 발언 하나하나가 금리 민감 자산 전반의 포지션 재조정을 촉발할 수 있는 분기점이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">미-이란 평화협정 임박 - 유가 하락·주식선물 급등과 호르무즈 재개방 현실화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #4~#7</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 미국과 이란이 평화협정에 합의했다고 발표하면서, 유가가 급락하고 미국 주식선물이 급등하는 즉각적인 시장 반응이 나타났다. 협정 초안에는 이란의 핵무기 불생산·불취득 합의, 석유 제재 면제, 호르무즈 해협 재개방, 미국 해군 봉쇄 해제, 이란 동결 자산 해제 등이 포함된 것으로 알려졌다. 협정 서명은 금요일로 예정되어 있으며, 수개월간 글로벌 경제를 압박했던 에너지 공급 리스크 프리미엄의 구조적 해소가 현실화될 가능성이 높아졌다. 한편 SpaceX IPO 충격이 일단락된 투자자들의 시선도 이란 딜과 Fed로 빠르게 이동하고 있어, 이번 주 유가와 금리의 동반 변동이 예상된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">SpaceX·OpenAI - 역대 최대 IPO 완료 후 월가 자금조달 구조에 균열 신호</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #8~#10</span>
+    </div>
+    <div class="theme-summary">SpaceX의 $750억 IPO가 성공적으로 완료된 이후, 시장의 초점은 이 역사적 상장이 월가의 자금조달 인프라에 남긴 부작용으로 이동하고 있다. AI 랠리와 레버리지 ETF 급성장, SpaceX 대규모 상장이 동시에 맞물리면서 미국 주식 포지션 펀딩 비용이 예상 밖으로 급등하며 월가의 시장 배관망을 시험하고 있다. OpenAI의 비밀 IPO 신청 소식까지 더해지면서, SpaceX·OpenAI의 연속 대형 상장이 닷컴 버블 이후 최대 규모의 주식 공급 팽창을 예고하고 있다는 경고가 나온다. TechCrunch는 SpaceX가 시가총액 기준으로 Tesla를 추월했음을 확인하며 기술·우주 섹터 내 자본 재배분이 가속화되고 있음을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Anthropic 수출통제 충격 - AI 기술 디커플링이 유럽·글로벌 AI 시장 구조를 흔든다</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #11~#12</span>
+    </div>
+    <div class="theme-summary">미국 정부의 국가안보 명령으로 Anthropic의 최신 AI 모델 'Mythos 5'가 단 3일 만에 해외 서비스를 차단당하는 초유의 사태가 발생했다. Anthropic은 수석 기술 인력을 긴급히 워싱턴 DC에 파견하며 대응에 나섰고, 유럽에서는 이를 미국의 AI 패권 장악과 Trump 행정부의 기술 통제 의지의 증거로 해석하며 'AI 전쟁 개막'이라는 위기감이 확산되고 있다. 이번 사태는 AI 모델이 첨단 기술 수출통제의 직접 대상이 되는 새로운 국면을 열었으며, 글로벌 AI 기업의 해외 시장 접근성과 자본 배분 전략에 구조적 리스크로 작용할 전망이다. AI 기술 디커플링이 반도체에 이어 소프트웨어·모델 레이어까지 확대되는 속도가 시장 예상보다 빠르게 진행되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">핵에너지 르네상스·러시아-우크라이나 교착 - 에너지 안보와 지정학 리스크의 교차</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #13~#15</span>
+    </div>
+    <div class="theme-summary">일본이 2050년까지 원자로 12기 이상 재건 계획을 발표하고, 중국이 올해만 7기를 신규 건설 중이며, 독일이 탈원전을 공식 실책으로 인정하는 등 글로벌 핵에너지 르네상스가 구체화되고 있다. 미국에서도 핵·가스 하이브리드 발전소 건설이 진행되며 에너지 안보의 'All of the Above' 전략이 정책 주류로 자리잡고 있다. 한편 Trump는 Putin과의 통화에서 우크라이나 종전 중재 의사를 밝혔으나, 미-이란 협상에 집중된 행정력으로 인해 러시아-우크라이나 평화 협상은 여전히 교착 상태다. Zelensky와의 통화도 병행되었으나 실질적 진전은 없어 유럽 안보 불안이 지속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #16~#27</span>
+    </div>
+    <div class="theme-summary">이번 분류에서 거시경제·금융·지정학·산업·기술·정치 주요 테마와 직접 연관성이 낮은 기사들이 포함된다. NYC 임리병 급증 대응, 스타트업 CEO의 Trump 사면 로비, 직장 내 AI 경계 논란, JD Vance의 2028 대선 출마 가능성 언급, UFC의 Trump 계열 크립토 보너스 지급, 일본-영국 방산 협력, 제네바 G7 반대 시위 중 Tesla 방화, 그리고 소규모 스포츠·정치 기사들이 해당한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Warsh 첫 FOMC 데뷔 - 채권시장 금리인상 베팅 속 Fed 경로 불확실성 극대화</span>
+    <span class="theme-label-range">Article #1~#3</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">진짜 Kevin Warsh는 누구인가? 첫 Fed 회의 앞두고 경제학자들도 전망 못해</div>
+    <div class="article-title-en">Will the real Kevin Warsh please stand up? Ahead of his first Fed meeting, economists honestly don’t know what to expect.</div>
+    <div class="article-keypoint">Warsh 첫 기자회견, 경제학자조차 스탠스 예측 불가 - Fed 정책 불확실성 극대화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/will-the-real-kevin-warsh-please-stand-up-ahead-of-his-first-fed-meeting-economists-honestly-dont-know-what-to-expect-6fa95c8c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Fed 의장 Warsh, 험난한 데뷔전에 직면</div>
+    <div class="article-title-en">Fed Chair Warsh Faces Challenging Debut</div>
+    <div class="article-keypoint">Warsh 데뷔 주, 인플레·금리 불확실성 속 첫 기자회견이 금리 민감 자산 분기점</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-14/fed-chair-warsh-faces-challenging-debut-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 22:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Warsh, Trump와 금리인상 베팅 채권시장 사이에서 압박</div>
+    <div class="article-title-en">Warsh Caught Between Trump and Bond Market Betting on Rate Hikes</div>
+    <div class="article-keypoint">Warsh, Trump 압박과 채권시장 금리인상 베팅 사이에서 취임 3주 만에 고강도 시험대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-14/warsh-caught-between-trump-and-bond-market-betting-on-rate-hikes" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 02:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">미-이란 평화협정 임박 - 유가 하락·주식선물 급등과 호르무즈 재개방 현실화</span>
+    <span class="theme-label-range">Article #4~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">주식시장, SpaceX에서 벗어나 이란 딜·Fed로 시선 이동</div>
+    <div class="article-title-en">Stock Market Moves On From SpaceX To Focus On Iran Deal, Fed</div>
+    <div class="article-keypoint">SpaceX IPO 충격 소화 후 시장 시선이 이란 딜·Fed로 급속 이동</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-14/stock-market-moves-on-from-spacex-with-iran-deal-fed-in-focus" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Trump, 미-이란 평화협정 합의 발표 - 주식선물 급등·유가 급락</div>
+    <div class="article-title-en">Stock futures jump, oil prices fall as Trump says U.S. has reached peace deal with Iran</div>
+    <div class="article-keypoint">미-이란 평화협정 합의 발표 - 유가 급락·주식선물 급등, 호르무즈 재개방 현실화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trump-says-u-s-had-reached-peace-deal-with-iran-57a93e56?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 07:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump, 이란-미국 호르무즈 해협 개방·휴전 연장 합의 발표</div>
+    <div class="article-title-en">Trump says Iran and US agree deal to open Strait of Hormuz and extend ceasefire</div>
+    <div class="article-keypoint">미-이란 협정 초안 공개 - 핵 제한·석유 제재 면제·자산 해제 조건 구체화</div>
+    <a class="article-link" href="https://www.ft.com/content/76bed6e5-ab1f-43ff-a6c0-ae5e7cdbf3c1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 07:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">이란, 미국과의 협정 초안에 석유 제재 면제·핵 제한·자산 해제 포함 - 밝혀</div>
+    <div class="article-title-en">Iran says draft US deal includes oil sanctions waiver, nuclear limits and asset release</div>
+    <div class="article-keypoint">이란 협정 초안 - 핵무기 불생산 합의와 석유 제재 면제 조건이 시장 리스크 재평가 촉발</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/iran-says-draft-us-deal-includes-oil-sanctions-waiver-nuclear-limits-and-asset-release" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 19:28 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">SpaceX·OpenAI - 역대 최대 IPO 완료 후 월가 자금조달 구조에 균열 신호</span>
+    <span class="theme-label-range">Article #8~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX와 OpenAI, 월가의 '주식 희소성 시대'를 끝내다</div>
+    <div class="article-title-en">SpaceX and OpenAI Are Ending Wall Street’s Era of Stock Scarcity</div>
+    <div class="article-keypoint">SpaceX·OpenAI 연속 대형 IPO - 닷컴 버블 이후 최대 규모 주식 공급 팽창 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/features/2026-06-14/spacex-open-ai-anthropic-ipos-have-wall-street-bullish-on-equities-again" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">AI 랠리·SpaceX IPO가 주식 자금조달 비용 급등 유발 - 은행 시스템 압박</div>
+    <div class="article-title-en">Equity Funding Squeeze Driven By AI Rally, SpaceX IPO Stretches Banks</div>
+    <div class="article-keypoint">AI 랠리·레버리지 ETF·SpaceX $75B IPO 삼중 충격으로 주식 펀딩 비용 급등</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-14/s-p-500-funding-squeeze-driven-by-ai-rally-spacex-ipo-stretches-banks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">TechCrunch 모빌리티: SpaceX, Tesla를 시가총액에서 추월</div>
+    <div class="article-title-en">TechCrunch Mobility: SpaceX rockets past Tesla</div>
+    <div class="article-keypoint">SpaceX 시가총액이 Tesla 추월 - 우주·기술 섹터 내 자본 재배분 가속 확인</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/14/techcrunch-mobility-spacex-rockets-past-tesla/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 01:05 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Anthropic 수출통제 충격 - AI 기술 디커플링이 유럽·글로벌 AI 시장 구조를 흔든다</span>
+    <span class="theme-label-range">Article #11~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Anthropic, 국가안보 명령으로 Fable 3일 만에 차단 - 직원 긴급 워싱턴 파견</div>
+    <div class="article-title-en">Anthropic Rushes Staff To D.C. After A National-Security Order Yanked Fable In Three Days</div>
+    <div class="article-keypoint">Anthropic, 국가안보 명령에 3일 만에 해외 AI 모델 차단 - 수출통제 소프트웨어까지 확대</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/anthropic-rushes-staff-dc-after-national-security-order-yanked-fable-three-days" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">'AI 전쟁이 시작됐다': 미국이 Anthropic 최신 AI 모델 차단, 프랑스·유럽 긴장</div>
+    <div class="article-title-en">'The AI war has begun': France and Europe worried as US blocks Anthropic's latest AI model</div>
+    <div class="article-keypoint">Mythos 5 해외 차단 - AI 기술 디커플링이 모델 레이어까지 확대, 유럽 시장 충격</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/pixels/article/2026/06/14/the-ai-war-has-begun-france-and-europe-worried-as-us-blocks-anthropic-s-latest-ai-model_6754455_13.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 16:57 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">핵에너지 르네상스·러시아-우크라이나 교착 - 에너지 안보와 지정학 리스크의 교차</span>
+    <span class="theme-label-range">Article #13~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Trump, Putin에 우크라이나 전쟁 종식 지원 준비 의사 전달 - 보도</div>
+    <div class="article-title-en">Trump reportedly tells Putin he is prepared to help end war in Ukraine</div>
+    <div class="article-keypoint">Trump, Putin에 우크라이나 종전 중재 의사 표명 - 미-이란 딜과 병행 외교 부담</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/14/trump-putin-call-ukraine-russia-iran-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 04:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">핵에너지, 에너지 안보의 '올인원' 트렌드를 주도</div>
+    <div class="article-title-en">Nuclear Drives “All of the Above” Trend in Energy Security</div>
+    <div class="article-keypoint">일본·중국·미국 핵에너지 동시 확장 - 에너지 안보 전략의 구조적 전환 가속</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Nuclear-Drives-All-of-the-Above-Trend-in-Energy-Security.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump, 평화 협상 답보 속 80번째 생일에 Putin·Zelensky와 통화</div>
+    <div class="article-title-en">Trump speaks with Putin, Zelensky on his 80th birthday as peace talks remain on hold</div>
+    <div class="article-keypoint">Trump-Putin 통화 이후도 러-우 협상 교착 지속, 이란 딜 집중으로 우크라이나 후순위</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/trump-speaks-with-putin-zelensky-even-as-peace-talks-are-on-hold" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 02:23 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #16~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">'너무 좋아서 사실 같지 않다': 스테이크 만찬 은퇴 세미나에서 연금이 시장 수익률을 초과할 수 있다고?</div>
+    <div class="article-title-en">‘It seems too good to be true’: At a steak-dinner retirement seminar, the guy said annuities can outperform the market. Is that true?</div>
+    <div class="article-keypoint">고정금리 연금 수익률 논란 - 금리 불확실성 속 개인 자산배분 왜곡 리스크 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/it-seems-too-good-to-be-true-at-a-steak-dinner-retirement-seminar-the-guy-said-annuities-can-outperform-the-market-is-that-true-33e11b0a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 05:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">NYC 임질 급증: Mamdani, 시민에게 초콜릿 콘돔 무료 배포 나서</div>
+    <div class="article-title-en">Gonorrhea Rates Are Soaring In NYC: Mamdani Rushes Free Chocolate Condoms To Citizens Of Big Apple!</div>
+    <div class="article-keypoint">NYC 임리병 급증과 자치단체 대응 - 공중보건 이슈, 시장 영향 제한적</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/gonorrhea-rate-are-soaring-nyc-mamdani-rushes-free-chocolate-condoms-citizens-big-apple" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 01:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">'이제 남 얘기': 미국 중소기업에게 Trump 관세는 더 이상 핵심 이슈가 아니다</div>
+    <div class="article-title-en">Me, worry? For US small businesses, Trump’s tariffs are now a non-issue</div>
+    <div class="article-keypoint">관세 이슈, 중소기업 현장에서 이미 '비이슈화' - 시장 우려와 실물 괴리 확인</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/jun/14/small-business-trump-tariffs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">스타트업 CEO Charlie Javice, Trump 사면 로비 중인 것으로 알려져</div>
+    <div class="article-title-en">Startup CEO Charlie Javice is reportedly angling for a Trump pardon</div>
+    <div class="article-keypoint">스타트업 CEO의 Trump 사면 로비 시도 - 사법·정치 리스크의 개인 투자자 영역 침투</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/14/startup-ceo-charlie-javice-is-reportedly-angling-for-a-trump-pardon/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Elon Musk 등은 로봇 행진을 반기지만, 직장 내 AI에는 경계가 필요하다</div>
+    <div class="article-title-en">Elon Musk and co may relish march of the robots but there must be AI boundaries in the workplace | Heather Stewart</div>
+    <div class="article-keypoint">AI 로봇의 직업 대체 논란 심화 - 규제 공백 속 기업 책임 경계 이슈 부상</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/jun/14/ai-technology-workplace-boundaries-elon-musk" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 20:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">JD Vance, 중간선거 이후 2028년 대선 출마 논의할 것이라고 밝혀</div>
+    <div class="article-title-en">JD Vance says he will discuss 2028 presidential run after midterm elections</div>
+    <div class="article-keypoint">JD Vance 2028 대선 출마 시사 - 미 정치 연속성 변수로 장기 정책 리스크 관리 필요</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/14/jd-vance-2028-presidential-campaign-midterms-talks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">UFC, White House 파이터들에게 Trump 관련 기업 발행 크립토로 보너스 지급 예정</div>
+    <div class="article-title-en">UFC to pay White House fighters in crypto issued by Trump company</div>
+    <div class="article-keypoint">UFC, Trump 계열 스테이블코인으로 파이터 보너스 지급 - 크립토·정치 유착 심화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/14/white-house-ufc-fighters-crypto" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 23:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">일본 PM Takaichi, 전투기 불확실성에도 영국과의 방위 협력 관계 평가</div>
+    <div class="article-title-en">Japan PM Takaichi hails UK defence ties despite jet uncertainty</div>
+    <div class="article-keypoint">일본-영국 방산·경제안보 협력 강화 - 인도태평양 공급망 재편 흐름 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/japan-pm-takaichi-hails-uk-defence-ties-despite-jet-uncertainty" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 22:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">우루과이, 서류 오류로 월드컵 개막전 미국행 출발 지연 - 보도</div>
+    <div class="article-title-en">Uruguay forced to delay trip to US for World Cup opener - reports</div>
+    <div class="article-keypoint">우루과이 월드컵 입국 서류 오류로 미국행 지연 - 비시장 기사</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/uruguay-forced-to-delay-trip-to-us-for-world-cup-opener-reports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 07:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">시위대, G7 반대 제네바 행진에서 창문 부수고 Tesla 불태워</div>
+    <div class="article-title-en">Protesters smash windows and set Tesla ablaze in anti-G-7 march in Geneva</div>
+    <div class="article-keypoint">제네바 G7 반대 시위에서 Tesla 차량 방화 - 반기업·반미 정서의 물리적 표출</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/protesters-smash-windows-and-set-tesla-ablaze-in-anti-g7-march-in-geneva" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/15 00:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Putin과 인연 맺고 쿠라사오를 월드컵에 이끈 감독</div>
+    <div class="article-title-en">The coach who bonded with Putin and took Curaçao to the World Cup</div>
+    <div class="article-keypoint">Putin과 인연 맺은 감독의 쿠라사오 월드컵 진출기 - 비시장 기사</div>
+    <a class="article-link" href="https://www.ft.com/content/d56df5f0-0310-4e31-b5bb-f53d335b191c" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">프랑스 대선: Gabriel Attal, 마크롱주의 재창조를 꿈꾸다</div>
+    <div class="article-title-en">French presidential election: Gabriel Attal wants to reinvent Macronism</div>
+    <div class="article-keypoint">Gabriel Attal의 마크롱주의 재발명 시도 - 프랑스 정치 지형 변화 관찰 포인트</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/politics/article/2026/06/14/french-presidential-election-gabriel-attal-wants-to-reinvent-macronism_6754460_5.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/14 20:30 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
