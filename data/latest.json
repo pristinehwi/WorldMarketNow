@@ -108,6 +108,28 @@
       "briefing": "워시 Fed 의장 취임으로 완화적 통화정책 기대감이 글로벌 리스크온 환경을 형성. TLT와 EEM 상승이 이를 실증하며, 외국인 자금 유입으로 KOSPI가 5.2% 급등했다.",
       "_warnings": [
         "[한국 종착 비율] 4/4 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n7->n2->n3->n7",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "워시 의장의 실제 정책 스탠스가 시장 기대와 상이할 경우 전체 인과체인이 역전될 수 있음",
+        "alternativePath": null
+      },
+      "missingHops": [
+        {
+          "to": "원달러환율",
+          "via": "Fed 완화정책 기대→달러약세→원화강세로 한국 자산 매력도 추가 상승",
+          "lag_days": 1
+        },
+        {
+          "to": "리츠(REITs)",
+          "via": "장기금리 하락 기대→부동산 할인율 축소→리츠 밸류에이션 재평가",
+          "lag_days": 3
+        }
       ]
     },
     {
@@ -200,7 +222,29 @@
         }
       ],
       "korea_terminal_node": "n13",
-      "briefing": "AI수요확대 신호를 중심으로 엔비디아의 200억달러 채권발행이 SOXX(+1.59%), XLK(+3.50%) 급등을 견인. 한국의 메모리 반도체 독점적 지위가 AI 슈퍼사이클의 최대 수혜로 평가되며 KOSDAQ이 3.2% 상승했다."
+      "briefing": "AI수요확대 신호를 중심으로 엔비디아의 200억달러 채권발행이 SOXX(+1.59%), XLK(+3.50%) 급등을 견인. 한국의 메모리 반도체 독점적 지위가 AI 슈퍼사이클의 최대 수혜로 평가되며 KOSDAQ이 3.2% 상승했다.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n8->n9",
+        "fragileReason": "엔비디아 채권발행의 실제 용도가 AI 투자가 아닌 다른 목적일 경우 신호해석 오류 발생 가능",
+        "alternativePath": "실적 발표나 가이던스를 통한 직접적 AI 수요 확인"
+      },
+      "missingHops": [
+        {
+          "to": "전력/인프라주",
+          "via": "AI 데이터센터 확장→전력수요 급증→유틸리티 및 인프라 기업 수혜",
+          "lag_days": 5
+        },
+        {
+          "to": "구리선물",
+          "via": "AI 인프라 투자 확대→데이터센터 및 반도체 제조 증가→구리 수요 급증",
+          "lag_days": 7
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -410,5 +454,6 @@
     ],
     "is_weekend": false,
     "data_note": "KOSPI 5.2% 급등, 미국 테크주 강세 지속"
-  }
+  },
+  "deep_analysis_at": "2026-06-15T15:53:52.421Z"
 }
