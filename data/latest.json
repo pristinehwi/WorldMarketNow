@@ -2,49 +2,65 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "미-이란 평화협정",
+      "title": "워시 Fed 의장취임",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "미이란협정",
-          "value": "호르무즈해협 재개방",
+          "label": "워시의장취임",
+          "value": "케빈 워시 Fed 의장 취임으로 통화정책 기조 전환 신호",
           "source": "concept",
-          "timestamp": "03:02",
+          "timestamp": null,
           "related_news": [
-            "Stock futures jump, oil prices fall as Trump says U.S. has reached peace deal with Iran",
-            "Oil Prices Plunge as U.S. and Iran Reach Deal to Reopen Strait of Hormuz"
+            "Kevin Warsh takes oath of office as chairman and a member of the Board of Governors of the Federal Reserve System",
+            "Warsh Caught Between Trump and Bond Market Bet on Rate Hikes"
           ]
         },
         {
           "id": "n2",
-          "label": "원유급락",
-          "value": "[06/11] $128.83->[06/12] $125.43 (-2.64%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "금리인하기대",
+          "value": "완화적 통화정책 기대로 장기채 수요 증가",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n3",
-          "label": "리스크온전환",
-          "value": "중동프리미엄 해소",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n4",
-          "label": "신흥국ETF(EEM)",
-          "value": "[06/11] $67.50->[06/12] $67.88 (+0.56%)",
+          "label": "30년국채ETF(TLT)",
+          "value": "[06/11] $84.83->[06/12] $85.83 (+1.21%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
+          "id": "n4",
+          "label": "글로벌리스크온",
+          "value": "저금리 기대로 위험자산 선호도 급상승",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
           "id": "n5",
+          "label": "신흥국ETF(EEM)",
+          "value": "[06/11] $69.25->[06/12] $69.64 (+0.56%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n6",
+          "label": "외국인유입",
+          "value": "Fed 완화 기대로 아시아 자금 유입 가속화",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n7",
           "label": "KOSPI",
-          "value": "[06/11] $8125.34->[06/12] $8545.98 (+5.20%)",
+          "value": "$8123.34->$8545.98 (+5.20%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -54,89 +70,98 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "공급정상",
-          "mechanism": "호르무즈 해협 재개방으로 원유 공급망 병목 제거"
+          "label": "기대형성",
+          "mechanism": "워시 의장의 과거 발언과 성향을 토대로 시장이 금리인하 가능성을 높게 평가"
         },
         {
-          "from": "n1",
+          "from": "n2",
           "to": "n3",
-          "label": "위험해소",
-          "mechanism": "중동 지정학적 리스크 프리미엄 급감"
+          "label": "실증",
+          "mechanism": "금리인하 기대가 장기채권 매수 압력으로 작용하여 TLT 상승"
         },
         {
-          "from": "n3",
+          "from": "n2",
           "to": "n4",
-          "label": "자금유입",
-          "mechanism": "리스크온 전환으로 신흥국 자산 선호도 증가"
+          "label": "파급",
+          "mechanism": "완화 정책 기대가 글로벌 유동성 확대와 위험자산 선호로 연결"
         },
         {
-          "from": "n3",
+          "from": "n4",
           "to": "n5",
-          "label": "외국인매수",
-          "mechanism": "글로벌 리스크온 모드에서 한국 주식 외국인 유입"
+          "label": "실증",
+          "mechanism": "리스크온 환경에서 신흥국 자산으로의 자금 이동이 EEM 상승으로 구현"
+        },
+        {
+          "from": "n4",
+          "to": "n6",
+          "label": "유입",
+          "mechanism": "글로벌 리스크온 모드에서 한국의 상대적 안전성과 밸류에이션 매력이 부각"
+        },
+        {
+          "from": "n6",
+          "to": "n7",
+          "label": "실증",
+          "mechanism": "외국인 자금 유입과 저금리 기대가 결합되어 KOSPI 급등으로 나타남"
         }
       ],
-      "korea_terminal_node": "n5",
-      "briefing": "중동 리스크 해소가 공통원인. 트럼프 미-이란 협정으로 호르무즈 해협 재개방 합의, 원유 2.6% 급락. 글로벌 리스크온 모드 전환으로 신흥국 자금 유입 가속. KOSPI 5.2% 급등 기록.",
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n3->n5->n3",
-        "riskLevel": "medium"
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n3",
-        "fragileReason": "지정학적 리스크 프리미엄은 시장 센티멘트에 극도로 민감하여 사소한 외교적 긴장도 즉시 반전 가능",
-        "alternativePath": "n1->n2->USD 약세->신흥국 통화 강세"
-      },
-      "missingHops": [
-        {
-          "to": "미국 국채 10년물",
-          "via": "중동 안정화로 인플레이션 기대 하락 → 장기 금리 하향 압력",
-          "lag_days": 3
-        },
-        {
-          "to": "골드",
-          "via": "지정학적 헤지 수요 급감 → 안전자산 선호도 약화로 금값 조정",
-          "lag_days": 1
-        }
+      "korea_terminal_node": "n7",
+      "briefing": "워시 Fed 의장 취임으로 완화적 통화정책 기대감이 글로벌 리스크온 환경을 형성. TLT와 EEM 상승이 이를 실증하며, 외국인 자금 유입으로 KOSPI가 5.2% 급등했다.",
+      "_warnings": [
+        "[한국 종착 비율] 4/4 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "AI수요 테크랠리",
+      "title": "AI수요확대신호",
       "priority": 2,
       "frequency": "NOW",
       "nodes": [
         {
-          "id": "n6",
-          "label": "AI수요확대",
-          "value": "신흥국AI인프라투자",
+          "id": "n8",
+          "label": "엔비디아채권",
+          "value": "200억달러 규모 채권발행으로 AI 인프라 투자 확대 의지 표명",
           "source": "concept",
-          "timestamp": "07:00",
+          "timestamp": null,
           "related_news": [
-            "Kazakhstan, Firebird Ink $10 Billion AI Deal With Nvidia Support"
+            "Even Nvidia is joining the AI borrowing spree, with a historic $20 billion bond deal"
           ]
         },
         {
-          "id": "n7",
-          "label": "반도체ETF(SOXX)",
-          "value": "[06/11] $586.95->[06/12] $596.25 (+1.59%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n8",
-          "label": "나스닥ETF(QQQ)",
-          "value": "[06/11] $717.10->[06/12] $721.34 (+0.59%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
           "id": "n9",
+          "label": "AI수요확대",
+          "value": "대규모 자금조달이 AI 생태계 투자 급증을 예고",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n10",
+          "label": "반도체ETF(SOXX)",
+          "value": "[06/11] $613.16->[06/12] $622.94 (+1.59%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n11",
+          "label": "테크섹터ETF(XLK)",
+          "value": "[06/11] $184.86->[06/12] $191.26 (+3.50%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n12",
+          "label": "한국메모리우위",
+          "value": "삼성과 하이닉스의 HBM 독점적 지위가 AI 붐에서 부각",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n13",
           "label": "KOSDAQ",
-          "value": "[06/11] $1029.08->[06/12] $1034.03 (+0.48%)",
+          "value": "$996.91->$1029.05 (+3.22%)",
           "source": "layer_T1_asia_today",
           "timestamp": "15:30",
           "related_news": []
@@ -144,147 +169,89 @@
       ],
       "edges": [
         {
-          "from": "n6",
-          "to": "n7",
-          "label": "수요확대",
-          "mechanism": "카자흐스탄 AI 계약으로 반도체 슈퍼사이클 기대감"
-        },
-        {
-          "from": "n6",
-          "to": "n8",
-          "label": "센티멘트",
-          "mechanism": "글로벌 AI 투자 확대가 나스닥 기술주 견인"
-        },
-        {
-          "from": "n6",
+          "from": "n8",
           "to": "n9",
-          "label": "파급효과",
-          "mechanism": "AI 테크 랠리가 한국 기술주 코스닥 상승"
+          "label": "신호전달",
+          "mechanism": "엔비디아의 대규모 채권발행이 AI 인프라 투자 가속화의 강력한 신호로 시장에 전달"
+        },
+        {
+          "from": "n9",
+          "to": "n10",
+          "label": "실증",
+          "mechanism": "AI 투자 확대 기대가 반도체 수요 급증으로 연결되어 SOXX 상승"
+        },
+        {
+          "from": "n9",
+          "to": "n11",
+          "label": "실증",
+          "mechanism": "AI 생태계 확산 기대가 대형 테크 기업 전반으로 파급되어 XLK 급등"
+        },
+        {
+          "from": "n9",
+          "to": "n12",
+          "label": "집중",
+          "mechanism": "AI 투자 확산에서 한국 기업들의 핵심 기술력과 시장지위가 재평가"
+        },
+        {
+          "from": "n12",
+          "to": "n13",
+          "label": "실증",
+          "mechanism": "HBM 독점적 지위와 AI 수요 급증이 결합되어 KOSDAQ 기술주 상승"
         }
       ],
-      "korea_terminal_node": "n9",
-      "briefing": "AI 수요 확대가 공통원인. 카자흐스탄 100억달러 AI 인프라 계약으로 신흥국 AI 붐 확산. 반도체 ETF 1.6% 상승으로 테크 랠리 재점화. 한국 코스닥도 AI 수혜 기대감으로 0.5% 상승.",
-      "feedbackRisk": {
-        "hasFeedback": false,
-        "loop": null,
-        "riskLevel": "low"
-      },
-      "chainFragility": {
-        "fragileEdge": "n6->n7",
-        "fragileReason": "단일 계약 기반 기대감은 실제 납품 지연이나 계약 조건 변경 시 즉시 붕괴 위험",
-        "alternativePath": "n6->n8->글로벌 밸류에이션 확산"
-      },
-      "missingHops": [
-        {
-          "to": "반도체 ETF (SMH)",
-          "via": "AI 슈퍼사이클 기대감이 글로벌 반도체 섹터 ETF 프리미엄 확대",
-          "lag_days": 2
-        },
-        {
-          "to": "한국 원화",
-          "via": "기술주 외국인 유입 기대로 원화 수급 개선 → 달러원 환율 하락 압력",
-          "lag_days": 5
-        }
-      ]
+      "korea_terminal_node": "n13",
+      "briefing": "AI수요확대 신호를 중심으로 엔비디아의 200억달러 채권발행이 SOXX(+1.59%), XLK(+3.50%) 급등을 견인. 한국의 메모리 반도체 독점적 지위가 AI 슈퍼사이클의 최대 수혜로 평가되며 KOSDAQ이 3.2% 상승했다."
     },
     {
       "id": "thread_003",
-      "title": "워시Fed체제전환",
+      "title": "Fed정책전환점",
       "priority": 1,
       "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "n10",
-          "label": "Fed의장교체",
-          "value": "정책불투명성증대",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": [
-            "Will the real Kevin Warsh please stand up? Ahead of his first Fed meeting, economists honestly don't know what to expect."
-          ]
-        },
-        {
-          "id": "n11",
-          "label": "정책불확실성",
-          "value": "통화기조 재평가",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n12",
-          "label": "달러ETF(UUP)",
-          "value": "[06/08] $28.03->[06/12] $27.95 (-0.29%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n13",
-          "label": "장기채ETF(TLT)",
-          "value": "[06/08] $84.62->[06/12] $85.77 (+1.36%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        }
-      ],
-      "edges": [
-        {
-          "from": "n10",
-          "to": "n11",
-          "label": "전이",
-          "mechanism": "새 의장 정책 철학 불투명으로 달러 방향성 혼재"
-        },
-        {
-          "from": "n11",
-          "to": "n12",
-          "label": "약세압력",
-          "mechanism": "Fed 정책 불확실성이 달러 약세 신호"
-        },
-        {
-          "from": "n11",
-          "to": "n13",
-          "label": "안전자산",
-          "mechanism": "정책 불확실성으로 장기채 안전자산 수요 증가"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "정책불확실성이 공통원인. Kevin Warsh Fed 의장 취임으로 통화정책 방향 불투명화. 달러 약세와 장기채 상승이 정책 혼란을 반영. 6월 스트레스 테스트와 첫 FOMC 결과 주목 필요."
-    },
-    {
-      "id": "thread_004",
-      "title": "고실질금리정착",
-      "priority": 1,
-      "frequency": "MONTHLY",
-      "nodes": [
-        {
           "id": "n14",
-          "label": "고실질금리",
-          "value": "2.21->2.16 (고수준유지)",
-          "source": "layer_T0_macro",
+          "label": "Fed리더십교체",
+          "value": "워시 의장 체제로 통화정책 철학 변화 예고",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n15",
-          "label": "성장주압박",
-          "value": "할인율상승 구조",
+          "label": "장기금리하락",
+          "value": "완화 정책 기대로 장기 채권수익률 하락 압력 증가",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n16",
-          "label": "성장ETF(IWF)",
-          "value": "$121.58->$121.61 (+0.03%)",
+          "label": "30년국채ETF(TLT)",
+          "value": "[06/08] $84.62->[06/12] $85.83 (+1.36%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n17",
-          "label": "가치ETF(IWD)",
-          "value": "$239.76->$242.13 (+0.98%)",
+          "label": "글로벌자본재편",
+          "value": "달러약세 기대와 신흥국 자본 유입 재개 조짐",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n18",
+          "label": "신흥국ETF(EEM)",
+          "value": "[06/08] $65.75->[06/12] $69.64 (+3.24%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n19",
+          "label": "한국ETF(EWY)",
+          "value": "[06/08] $185.64->[06/12] $209.31 (+6.36%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
@@ -294,49 +261,154 @@
         {
           "from": "n14",
           "to": "n15",
-          "label": "밸류에이션",
-          "mechanism": "높은 실질금리가 성장주 미래현금흐름 할인 압박"
+          "label": "기조전환",
+          "mechanism": "워시 의장의 정책 성향을 바탕으로 완화 전환 가능성이 장기금리 하락 압력으로 작용"
         },
         {
           "from": "n15",
           "to": "n16",
-          "label": "제한",
-          "mechanism": "성장주 밸류에이션 압박으로 상승력 약화"
+          "label": "실증",
+          "mechanism": "완화 정책 기대가 장기채 매수 압력으로 작용하여 TLT 주간 1.36% 상승"
         },
         {
           "from": "n15",
           "to": "n17",
-          "label": "상대우위",
-          "mechanism": "성장주 대비 배당 중심 가치주 상대적 매력 증가"
+          "label": "파급",
+          "mechanism": "미국 장기금리 하락이 달러 약세와 신흥국 자본 유입 환경을 조성"
+        },
+        {
+          "from": "n17",
+          "to": "n18",
+          "label": "실증",
+          "mechanism": "글로벌 자본흐름 변화가 신흥국 전반으로의 자금 유입을 촉진하여 EEM 주간 급등"
+        },
+        {
+          "from": "n17",
+          "to": "n19",
+          "label": "실증",
+          "mechanism": "신흥국 자본 유입에서 한국의 상대적 매력이 부각되어 EWY 주간 6.36% 급등"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "고실질금리가 구조적 배경. Fed 중립 기조로 실질금리 고수준 장기 지속. Russell 가치 ETF 0.98% vs 성장 ETF 0.03%로 스타일 전환 뚜렷. 배당 중심 투자 구조 고착화."
+      "korea_terminal_node": "n19",
+      "briefing": "워시 Fed 의장 체제로 통화정책 패러다임 전환이 본격화되며 장기금리 하락 압력 지속. 글로벌 자본흐름 재편 신호로 EEM(+3.24%), EWY(+6.36%) 주간 급등하며 신흥국 중심의 자금 쏠림이 가속화되고 있다."
+    },
+    {
+      "id": "thread_004",
+      "title": "AI경제체제전환",
+      "priority": 1,
+      "frequency": "MONTHLY",
+      "nodes": [
+        {
+          "id": "n20",
+          "label": "AI기술혁신",
+          "value": "생성형 AI 급속 발전으로 산업 전반 디지털 전환 가속화",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n21",
+          "label": "글로벌투자재배치",
+          "value": "전통 산업에서 AI 관련 기술로 자본 대규모 재배치",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n22",
+          "label": "반도체ETF(SOXX)",
+          "value": "[05/13] $528.29->[06/12] $622.94 (+12.86%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n23",
+          "label": "대만ETF(EWT)",
+          "value": "[05/13] $94.86->[06/12] $106.07 (+8.18%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n24",
+          "label": "한국기술경쟁력",
+          "value": "메모리 반도체가 AI 생태계에서 필수 요소로 부상",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n25",
+          "label": "한국ETF(EWY)",
+          "value": "[05/13] $188.63->[06/12] $209.31 (+4.68%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "n20",
+          "to": "n21",
+          "label": "재배치",
+          "mechanism": "AI 기술혁신 가속화가 전세계 투자자들의 자본배치 전략을 근본적으로 변화"
+        },
+        {
+          "from": "n21",
+          "to": "n22",
+          "label": "실증",
+          "mechanism": "AI 투자 재배치가 반도체 섹터로 집중되어 SOXX 월간 12.86% 급등"
+        },
+        {
+          "from": "n21",
+          "to": "n23",
+          "label": "실증",
+          "mechanism": "글로벌 투자 재배치에서 대만의 반도체 제조 우위가 부각되어 EWT 월간 급등"
+        },
+        {
+          "from": "n21",
+          "to": "n24",
+          "label": "집중",
+          "mechanism": "AI 중심 투자 재배치 과정에서 한국 기업들의 핵심 기술력과 시장지위 재평가"
+        },
+        {
+          "from": "n24",
+          "to": "n25",
+          "label": "실증",
+          "mechanism": "한국의 메모리 반도체 경쟁력이 AI 경제체제에서 재평가되어 EWY 월간 상승"
+        }
+      ],
+      "korea_terminal_node": "n25",
+      "briefing": "생성형 AI 기술 확산으로 글로벌 경제구조가 근본 변화하며 글로벌투자재배치가 본격화. 반도체 섹터으로의 자본 집중으로 SOXX(+12.86%), EWT(+8.18%) 월간 급등하며, 한국의 메모리 반도체 경쟁력이 AI 경제체제에서 재평가되어 EWY가 월간 4.68% 상승했다."
     }
   ],
   "headlines": [
-    "중동리스크 해소, 글로벌 리스크온 전환 신호",
-    "AI 인프라 투자 확대, 테크 랠리 재점화"
+    "Fed 완화전환 신호, KOSPI 5% 급등",
+    "엔비디아 채권발행, AI 수요 급증 신호",
+    "워시 체제 통화정책 전환, 신흥국 자금몰린다"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 테크 강세(SOXX +1.59%, QQQ +0.59%), 원유 급락(-2.64%) / 당일 아시아: KOSPI 급등(+5.20%), KOSDAQ 상승(+0.48%)",
-    "layer2": "미-이란 협정으로 호르무즈 해협 재개방 → 원유 공급정상화 및 글로벌 리스크온 전환 → 신흥국 자금 유입 및 아시아 주식 상승. AI 수요 확대 신호도 테크 랠리 동반",
-    "layer3": "중동 지정학적 리스크 프리미엄 해소와 AI 슈퍼사이클 기대감 동시 진행. 고실질금리 체제 下 성장주 대비 가치주 우위 지속"
+    "layer1": "전일 미국: TLT(+1.21%), EEM(+0.56%), SOXX(+1.59%) 상승으로 Fed 완화 기대 강화 / 당일 아시아: KOSPI 5.2%, KOSDAQ 3.2% 급등으로 외국인 자금 유입 가속",
+    "layer2": "Fed 의장 체제 전환→장기금리 하락→글로벌 리스크온→신흥국 자금 유입→아시아 주요지수 급등",
+    "layer3": "미국 장중 테크주 강세 지속, 유럽 DAX(+1.09%) 추종하며 리스크온 모드 확산"
   },
-  "macro_regime_note": "고실질금리·평탄커브·리스크온 환경이 신흥국 자산 선호도를 높여 KOSPI 급등을 뒷받침하는 한편, 성장주 대비 가치주 아웃퍼폼 구조는 유지.",
-  "generated_at": "2026-06-15T07:46:26.632Z",
+  "macro_regime_note": "고실질금리 하에서도 Fed 완화 기대감이 리스크온 환경을 주도하며, 신흥국 자산의 상대적 매력이 부각되고 있다.",
+  "generated_at": "2026-06-15T15:47:33.079Z",
   "data_as_of": {
-    "timestamp_iso": "2026-06-15T07:46:26.617Z",
-    "display": "6/15 16:46 [ KST +0900 ]",
-    "display_mobile": "6/15 16:46 KST",
-    "timezone": "Asia/Seoul"
+    "timestamp_iso": "2026-06-15T15:47:33.036Z",
+    "display": "6/15 11:47 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "6/15 11:47 뉴욕",
+    "timezone": "America/New_York"
   },
   "meta": {
-    "generated_at": "2026-06-15T07:46:26.632Z",
-    "elapsed_sec": 173,
-    "market_status": [],
+    "generated_at": "2026-06-15T15:47:33.079Z",
+    "elapsed_sec": 201,
+    "market_status": [
+      "유럽",
+      "미국"
+    ],
     "is_weekend": false,
-    "data_note": "전 시장 마감. 미-이란 협상 타결로 원유급락(-2.64%), 아시아 지수 강세(KOSPI +5.2%)"
-  },
-  "deep_analysis_at": "2026-06-15T07:52:47.561Z"
+    "data_note": "KOSPI 5.2% 급등, 미국 테크주 강세 지속"
+  }
 }
