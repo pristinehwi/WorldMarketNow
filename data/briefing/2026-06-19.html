@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-19 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/19 07:57 KST</div>
+    <div class="header-date">2026-06-19</div>
+    <div class="header-headline">Warsh 가이던스 철폐 - 채권 단기물 변동성 급등</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 첫 FOMC 이후 2년물 변동성 확대 지속 여부 및 금리인상 베팅 강도 변화 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Warsh 가이던스 철폐 - 2년물 변동성 급등과 포트폴리오 방향 상실</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#9</span>
+    </div>
+    <div class="theme-summary">Warsh 의장이 첫 FOMC에서 정책 가이던스를 공식 철폐하면서 채권시장 단기물 변동성이 급격히 확대됐다. Goldman Sachs는 Warsh 발언 이후 2년물 변동성은 더 커지는 반면 장기물은 상대적으로 안정될 것으로 전망했다. 가이던스 부재는 투자자들이 금리 경로를 자체적으로 추정해야 함을 의미하며, 인상 베팅과 인하 베팅이 동시에 시장에 공존하는 혼돈 국면이 이어지고 있다. Fed는 동시에 스테이블코인 발행사에 대한 고객확인 의무화 규정 제안을 발표하는 등 규제 행보도 병행했으며, Lisa Cook 이사 해임 소송 비용이 $1.3M에 달한다는 보도로 Fed 내부 정치 갈등도 가시화됐다. 필라델피아 Fed 지수 상승과 실업급여 청구건수 소폭 감소(22만6천 건)로 경기 펀더멘털은 견조하지만, 정책 불확실성이 시장 변동성의 주된 동인으로 부상했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Intel·Apple 국내 반도체 파트너십 - 파운드리 수혜와 메모리 공급 부족 심화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #10~#14</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 직접 Apple-Intel 칩 협력 딜을 공개 언급하면서 Intel 주가가 11% 급등하며 사실상 국내 파운드리 전략의 공식화를 알렸다. 애널리스트들은 초기 물량은 제한적일 수 있으나 Intel의 정치·전략적 순풍이 구체적 파운드리 수주로 전환되고 있다고 평가했다. Micron은 메모리 칩 수요가 공급을 단기적으로 크게 초과하는 국면이 지속될 것이라는 전망과 함께 주가가 상승했으며, Apple의 기기 가격 인상 압력도 메모리 비용 상승에서 기인한다는 분석이 나왔다. Amazon AWS는 자사 AI 칩을 외부 데이터센터에 판매하는 방안을 추진 중으로, CEO Andy Jassy는 이를 $500억 규모 기회로 제시하며 Nvidia에 대한 직접 도전을 선언했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">SpaceX FOMO 자금 유입과 AI 스타트업 자본조달 가속</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #15~#20</span>
+    </div>
+    <div class="theme-summary">SpaceX 상장 이후 FOMO 심리에 기반한 수십억 달러 규모 자금이 ETF를 통해 유입되고 있으며, 현재 밸류에이션은 S&P 500 내 어떤 종목보다도 높은 수준으로 전통적 밸류에이션 기준을 초월했다. 옵션 거래량도 폭발적으로 증가하며 파생시장에서도 SpaceX가 주요 트레이딩 대상으로 자리잡았고, EU 위성 스펙트럼 계획과의 갈등도 지정학적 변수로 부상했다. AI 인퍼런스 스타트업 Baseten은 $130억 밸류에이션에 $15억 신규 라운드를 거의 확정 단계로, 'AI 인퍼런스 골드러시'가 자본시장에서 현실화되고 있음을 보여준다. OpenAI도 IPO를 앞두고 Google DeepMind 출신 Transformer 공동 발명자 Noam Shazeer를 영입하는 등 인재·자본 확보 경쟁이 가속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">핵에너지 공급망 재편 - 우라늄 국내 조달과 지정학 리스크 교차</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #21~#23</span>
+    </div>
+    <div class="theme-summary">원자로 연료 제조사 Standard Nuclear가 AI 전력 수요 급증을 명분으로 미국 IPO를 신청하며 핵에너지 르네상스 자본화 흐름이 가속되고 있다. Centrus Energy는 Oklo와 국내 생산 우라늄 공급 계약 의향서를 체결하며 미국 내 핵연료 공급망 자립 구조 구축에 속도를 냈다. 한편 러시아가 관할하는 자포리자 원전 인근에서 드론 공격으로 핵시설 관계자가 사망했다는 Rosatom 발표는 우크라이나 전선의 핵 리스크가 여전히 현재진행형임을 부각시키며 유럽 에너지 안보 우려를 재점화시켰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Trump 행정권력 확장 - 지정학 재편과 중동·군사 산업 함의</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #24~#27</span>
+    </div>
+    <div class="theme-summary">Trump 행정부 하에서 국방부 내 억만장자 Stephen Feinberg가 군사비 지출에 막대한 비공개 영향력을 행사하고 있다는 보도가 나오며 방위산업 예산 배분 구조에 대한 시장의 주목도가 높아졌다. 미 재무부는 헤즈볼라와 연계된 레바논 관료들에 대한 추가 제재를 발표하며 중동 지정학 긴장을 고조시켰다. 우크라이나의 모스크바 대규모 드론 공격은 2022년 이후 최대 규모로 평가되며 러시아-우크라이나 교착 국면에서 전황이 오히려 격화되고 있음을 보여줬다. Hegseth 국방장관이 독감 백신 의무접종을 폐지한 직후 군 기지에서 150명 이상 집단 감염이 발생하는 등 행정 결정의 즉각적 부작용도 표면화됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #28~#30</span>
+    </div>
+    <div class="theme-summary">인간 게놈의 물리적 복잡성이 AI 기반 유전체 분석의 근본적 한계로 작용할 수 있다는 과학적 논의가 제기됐다. 호주에서는 자본이득세 개혁을 둘러싼 정치적 논쟁이 이어지고 있으며, 프랑스 지식인 에드가 모랭의 별세로 유럽 지성 전통의 종언을 둘러싼 담론이 부각됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Warsh 가이던스 철폐 - 2년물 변동성 급등과 포트폴리오 방향 상실</span>
+    <span class="theme-label-range">Article #1~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Fed 의장 Kevin Warsh의 시장 가이던스 철폐로 타격 받는 주식들</div>
+    <div class="article-title-en">These stocks are in trouble after Fed Chair Kevin Warsh removed the market’s guardrails</div>
+    <div class="article-keypoint">Warsh 가이던스 철폐로 포트폴리오 금리 경로 판단 기준 소멸, 시장 변동성 확대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/these-stocks-are-in-trouble-now-that-kevin-warsh-removed-the-markets-guardrails-f7f1e51c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 06:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Fed, 특정 결제용 스테이블코인 발행사에 고객확인 프로그램 의무화 규정 제안 공고</div>
+    <div class="article-title-en">Federal Reserve Board requests comment on proposal to require certain payment stablecoin issuers to maintain an effective customer identification program</div>
+    <div class="article-keypoint">Fed, 스테이블코인 발행사에 고객확인 의무화 규정 제안 - 크립토 규제 본격화</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260618a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/18 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Fed, Bank of Eufaula 및 SNB Bancshares 전 직원에 대한 집행조치 발표</div>
+    <div class="article-title-en">Federal Reserve Board issues enforcement action with former employee of Bank of Eufaula and S N B Bancshares, Inc.</div>
+    <div class="article-keypoint">Fed, Bank of Eufaula 전 직원 대상 집행조치 - 개별 사안이나 감독 강화 기조 유지</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/enforcement20260618b.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">미국 실업급여 청구 감소, 필라델피아 Fed 지수 상승 - 고용시장 회복력 확인</div>
+    <div class="article-title-en">US Jobless Claims Fall as Philadelphia Fed Index Rises</div>
+    <div class="article-keypoint">실업급여 청구 22만6천 건·필라델피아 Fed 지수 상승 - 노동시장 견조로 긴축 압력 유지</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-18/us-jobless-claims-fall-as-philadelphia-fed-index-rises-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/18 23:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Goldman Sachs, Warsh 이후 2년물 변동성 추가 확대·장기물 안정 전망</div>
+    <div class="article-title-en">Goldman Sees More Two-Year Volatility, Calmer Long End on Warsh</div>
+    <div class="article-keypoint">Goldman Sachs: Warsh 발언 이후 2년물 변동성 확대, 장기물은 상대적 안정 전망</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-18/goldman-sees-more-two-year-volatility-calmer-long-end-on-warsh" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/18 22:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Warsh, Fed의 시그널 축소 원한다 - 이에 따르는 리스크</div>
+    <div class="article-title-en">Warsh Wants the Fed to Send Fewer Signals. That Comes With Risks.</div>
+    <div class="article-keypoint">Warsh 가이던스 철폐 - 투자자들의 금리인상 베팅 급증으로 단기물 시장 혼란 심화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/06/18/business/federal-reserve-warsh-interest-rates.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 03:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Fed, 스테이블코인 허점 차단을 위한 고객확인 규정 신설 추진</div>
+    <div class="article-title-en">Fed Moves To Close Stablecoin Loopholes With New Customer ID Rules</div>
+    <div class="article-keypoint">Fed, 스테이블코인 고객확인 규정 제안 - 크립토 제도화 경로에 새 장벽 추가</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/fed-moves-close-stablecoin-loopholes-new-customer-id-rules" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 03:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">미국 실업급여 청구 소폭 감소 - 노동시장 회복력 유지 신호</div>
+    <div class="article-title-en">US Jobless Claims Edge Down in Sign of Job Market Resilience</div>
+    <div class="article-keypoint">실업급여 청구 소폭 감소 - 노동시장 '저해고' 국면 지속으로 Fed 금리인하 명분 약화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-18/us-jobless-claims-edge-lower-in-sign-of-labor-market-resilience" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/18 21:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Fed 이사 Lisa Cook, Trump의 해임 시도 이후 법률·보안 비용으로 $130만 지출</div>
+    <div class="article-title-en">Fed governor Lisa Cook faced $1.3m in legal and security fees after Trump’s bid to fire her</div>
+    <div class="article-keypoint">Cook 이사 해임 소송 비용 $130만 - Fed 독립성 훼손 논란이 실제 비용으로 현실화</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/jun/18/lisa-cook-legal-security-fees-trump-fed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 00:43 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Intel·Apple 국내 반도체 파트너십 - 파운드리 수혜와 메모리 공급 부족 심화</span>
+    <span class="theme-label-range">Article #10~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Micron 주가 상승세 - Apple도 메모리 칩 비용 급등에서 자유롭지 않다</div>
+    <div class="article-title-en">Micron’s stock is on the rise. Even Apple isn’t safe from ballooning memory-chip costs.</div>
+    <div class="article-keypoint">Micron 상승세 - 메모리 수요가 공급 초과, Apple 제품 가격 인상 압력 전이 가능성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microns-stock-is-on-the-rise-even-apple-isnt-safe-from-ballooning-memory-chip-costs-ddd04d74?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 06:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Intel 주가 11% 급등 - 애널리스트들은 새로운 Apple 칩 딜 초기 규모는 소규모일 것으로 전망</div>
+    <div class="article-title-en">Intel’s stock jumps 11% — even as analysts say new Apple chip deal might start small</div>
+    <div class="article-keypoint">Intel 주가 11% 급등 - Apple 칩 설계·생산 협력 발표로 국내 파운드리 전략 가시화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/intel-shares-rally-as-trump-says-company-will-build-chips-for-apple-in-the-u-s-c72d8c88?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Amazon, AI 칩 외부 데이터센터 판매로 Nvidia에 직접 도전 나서</div>
+    <div class="article-title-en">Amazon hopes to challenge Nvidia more directly by selling its AI chips</div>
+    <div class="article-keypoint">Amazon AWS, 자체 AI 칩 외부 판매 추진 - $500억 시장 공략으로 Nvidia 직접 도전</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/18/amazon-hopes-to-challenge-nvidia-more-directly-by-selling-its-ai-chips/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 03:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Trump의 Apple 파트너십 선언에 Intel 주가 사상 최고치 급등</div>
+    <div class="article-title-en">Intel Rallies to Record After Trump Touts Apple Chip Deal</div>
+    <div class="article-keypoint">Trump 직접 Apple-Intel 칩 협력 발표 - 국내 반도체 제조 정치적 드라이브 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-18/intel-intc-share-price-soars-after-trump-says-it-struck-apple-chip-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/18 18:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Trump의 Apple 파트너십 발표 이후 Intel 주가 급등</div>
+    <div class="article-title-en">Intel Shares Surge After Trump Announces Apple Partnership</div>
+    <div class="article-keypoint">Intel 주가 급등 - Trump의 Apple 파트너십 선언이 파운드리 전략 신뢰도를 제고</div>
+    <a class="article-link" href="https://www.wsj.com/tech/intel-shares-bounce-premarket-after-trump-announces-apple-partnership-19e5123d?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/18 22:41 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">SpaceX FOMO 자금 유입과 AI 스타트업 자본조달 가속</span>
+    <span class="theme-label-range">Article #15~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">SpaceX, FOMO 심리에 힘입어 S&P 500 전 종목보다 높은 밸류에이션 기록</div>
+    <div class="article-title-en">SpaceX is vastly more expensive than any stock in the S&P 500, fueled by ‘FOMO’ mentality</div>
+    <div class="article-keypoint">SpaceX 밸류에이션 S&P 500 전 종목 초과 - FOMO 자금 유입으로 전통 밸류에이션 붕괴</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacex-is-vastly-more-expensive-than-any-stock-in-the-s-p-500-fueled-by-fomo-mentality-eb61cd69?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 07:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">SpaceX 옵션 거래량 폭발적 증가 - 대규모 급등에 대응하는 저리스크 전략</div>
+    <div class="article-title-en">SpaceX options volume explodes as trading kicks off. Here is a low-risk strategy to play the massive surge.</div>
+    <div class="article-keypoint">SpaceX 옵션 거래량 폭증 - 저비용 전략으로 변동성 리스크 관리 수요 급증</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacex-options-volume-explodes-as-trading-kicks-off-here-is-a-low-risk-strategy-to-play-the-massive-surge-425f9b51?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 06:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">SpaceX, EU 위성 계획이 우크라이나 연결성을 저해할 위험 있다고 경고</div>
+    <div class="article-title-en">SpaceX warns EU satellite plan risks undermining connectivity in Ukraine</div>
+    <div class="article-keypoint">SpaceX, EU 위성 스펙트럼 계획이 우크라이나 연결성 훼손 가능성 경고</div>
+    <a class="article-link" href="https://www.ft.com/content/0b012610-8132-4549-afd9-14bacd9db8cb" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">AI 인퍼런스 스타트업 Baseten, 직전 대형 라운드 수개월 만에 $15억 추가 조달 추진 보도</div>
+    <div class="article-title-en">AI inference startup Baseten reportedly raising $1.5B months after its last mega-round</div>
+    <div class="article-keypoint">Baseten, $130억 밸류에이션에 $15억 조달 임박 - AI 인퍼런스 투자 과열 국면 지속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/18/ai-inference-startup-baseten-reportedly-raising-1-5b-months-after-its-last-mega-round/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">OpenAI, IPO를 앞두고 거물급 인사들 영입 본격화</div>
+    <div class="article-title-en">OpenAI is bringing on some big guns in the lead-up to its IPO </div>
+    <div class="article-keypoint">OpenAI IPO 앞두고 Transformer 공동 발명자 영입 - 기술·정책 역량 동시 강화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/18/openai-is-bringing-on-some-big-guns-in-the-lead-up-to-its-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 04:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">OpenAI·Anthropic 대비 저렴한 대안 베팅하는 $130억 AI 스타트업</div>
+    <div class="article-title-en">The $13 Billion AI Startup Betting on Cheaper Alternatives to OpenAI, Anthropic</div>
+    <div class="article-keypoint">Baseten $130억 밸류 AI 인퍼런스 플랫폼 - OpenAI·Anthropic 대비 저비용 대안 부상</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/the-13-billion-ai-startup-betting-on-cheaper-alternatives-to-openai-anthropic-b9679603?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/18 19:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">핵에너지 공급망 재편 - 우라늄 국내 조달과 지정학 리스크 교차</span>
+    <span class="theme-label-range">Article #21~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Standard Nuclear, 원자로 연료 사업 확대 위해 미국 IPO 신청</div>
+    <div class="article-title-en">Standard Nuclear Files for US IPO In Reactor Fuel Push</div>
+    <div class="article-keypoint">Standard Nuclear, AI 전력 수요 명분으로 미국 IPO 신청 - 핵연료 자본화 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-18/standard-nuclear-files-for-us-ipo-in-reactor-fuel-push" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 07:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">러시아 핵 기관장, 우크라이나가 드론 공격으로 자포리자 원전 직원 사망시켰다고 주장</div>
+    <div class="article-title-en">Russian nuclear chief accuses Ukraine of killing Zaporizhzhia power plant worker in drone attack</div>
+    <div class="article-keypoint">자포리자 원전 인근 드론 공격으로 핵시설 직원 사망 - 핵 안전 리스크 재점화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/russian-nuclear-chief-accuses-ukraine-of-killing-zaporizhzhia-power-plant-worker-in-drone-attack" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/18 23:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Centrus, 국내 생산 우라늄 Oklo 공급 계약 체결로 주가 급등</div>
+    <div class="article-title-en">Centrus Jumps On Deal To Supply Oklo With Domestically-Produced Uranium </div>
+    <div class="article-keypoint">Centrus-Oklo 국내 우라늄 공급 계약 - 미국 핵연료 공급망 자립 구조 구체화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/centrus-supply-oklo-domestically-produced-haleu-under-multi-year-agreement" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 00:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Trump 행정권력 확장 - 지정학 재편과 중동·군사 산업 함의</span>
+    <span class="theme-label-range">Article #24~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Hegseth의 백신 의무접종 폐지 이후 미 공군 기지에서 독감 환자 160명 가까이 발생</div>
+    <div class="article-title-en">Nearly 160 sick with flu at US air force base after Hegseth ends mandatory vaccines</div>
+    <div class="article-keypoint">Hegseth 백신 의무 폐지 직후 군 기지 독감 150명 이상 집단감염 - 정책 역효과 현실화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/18/lackland-air-force-base-flu-outbreak" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 06:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">우크라이나의 모스크바 드론 공습, Putin의 승리 약속을 흔들다</div>
+    <div class="article-title-en">Ukrainian drone assault on Moscow undermines Putin's promises of victory</div>
+    <div class="article-keypoint">우크라이나, 모스크바 2022년 이후 최대 드론 공격 - 러-우 교착 속 전황 격화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/06/18/ukrainian-drone-assault-on-moscow-undermines-putin-s-promises-of-victory_6754645_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 06:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Trump Pentagon 막후에 숨겨진 억만장자의 실체</div>
+    <div class="article-title-en">The billionaire hidden behind the curtain inside Trump’s Pentagon</div>
+    <div class="article-keypoint">억만장자 Feinberg의 Pentagon 비공개 영향력 - 방위 예산 배분 불투명성 리스크 부각</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/18/stephen-feinberg-trump-pentagon" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 03:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">미 재무부, 헤즈볼라 지원 혐의 레바논 관료 등에 제재 부과</div>
+    <div class="article-title-en">US Treasury imposes sanctions on Lebanese officials, others for aiding Hezbollah</div>
+    <div class="article-keypoint">미 재무부, 헤즈볼라 연계 레바논 관료 추가 제재 - 중동 긴장 고조 및 레바논 재건 차질</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/us-treasury-imposes-sanctions-on-lebanese-officials-others-for-aiding-hezbollah" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 03:19 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #28~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">인간 게놈의 복잡한 물리적 구조가 AI를 혼란에 빠뜨릴 수 있는 이유</div>
+    <div class="article-title-en">Why the Human Genome’s Tangled Physicality May Confound AI</div>
+    <div class="article-keypoint">인간 게놈의 물리적 복잡성이 AI 분석 모델의 정확도 한계를 구조적으로 제약 가능</div>
+    <a class="article-link" href="https://www.quantamagazine.org/why-the-human-genomes-tangled-physicality-may-confound-ai-20260618/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/18 23:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">호주 뉴스 라이브: Jim Chalmers, 세제 개혁 관련 '정치적 손실' 인정 - NSW 금광 인근 지진</div>
+    <div class="article-title-en">Australia news live: Jim Chalmers admits losing ‘political paint’ over tax reform; NSW quake near goldmine</div>
+    <div class="article-keypoint">호주 자본이득세 개혁 논란 - 재무장관 '정치적 손실' 인정으로 재정 불확실성 부각</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/live/2026/jun/19/news-live-australia-ukraine-jim-chalmers-anthony-albanese-capital-gains-tax-concessions-business-pauline-hanson-one-nation-ntwnfb" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 07:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">프랑스 지식인의 시대는 끝났다</div>
+    <div class="article-title-en">The Era of the French Intellectual Is Over</div>
+    <div class="article-keypoint">에드가 모랭 별세 - 유럽 지식인 전통의 종언, 시장 관련성 낮음</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/06/18/france-intellectuals-edgar-morin-philosophy-history/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 04:12 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
