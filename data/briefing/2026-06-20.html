@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-20 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/20 07:48 KST</div>
+    <div class="header-date">2026-06-20</div>
+    <div class="header-headline">Warsh 첫 FOMC - 매파 기조 확인, 금리인하 연말까지 지연</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 태스크포스 결론 시점과 12월 인상 베팅 강도 - 채권·달러 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Warsh 매파 데뷔 - 금리인하 지연과 Fed 구조 논쟁 가속</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">이번 주 Warsh의 첫 FOMC 기자회견에서 복수의 태스크포스 설치가 공개되며, 금리 결정을 최소 12월까지 미룰 수 있는 명분이 마련됐다. Trump가 금리인하를 위해 발탁한 Warsh가 오히려 매파적 의제를 추진하고 있다는 점이 시장의 기존 기대를 정면으로 뒤집었다. Fed가 시장 구원자 역할에서 벗어나고 있다는 구조적 전환 논쟁도 동시에 부상했다. FundStrat 등 일부에서는 FOMC를 AI로 대체하자는 도발적 제안까지 등장하며 Fed 의사결정 신뢰성에 대한 근본적 의문이 제기됐다. 통화정책 경로 불확실성이 극대화된 가운데 2년물 금리 변동성 확대와 포트폴리오 방향 상실 위험이 단기 핵심 리스크로 부상한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">미-이란 협정 지연·중동 재긴장 - 유가 하락과 달러 패권 교차</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#8</span>
+    </div>
+    <div class="theme-summary">미-이란 휴전 합의 이후 유가가 하락세를 보이고 있으나, 레바논 남부 교전 격화로 본격적인 핵 협상이 지연되며 중동 리스크 프리미엄이 재조정 국면에 들어섰다. 호르무즈 재개방 기대에도 불구하고 유조선 이동이 여전히 제한적이어서 실질적 공급 회복까지 시간이 필요하다는 평가가 지배적이다. Rubio의 다음 주 중동 방문 계획이 알려지며 외교적 해결 의지는 유지되고 있으나, 협상 불확실성이 에너지 시장 변동성을 지속시키고 있다. Trump의 이란 딜이 달러의 글로벌 기축통화 지위와도 맞닿아 있다는 분석이 나오며 지정학-통화 연계 논의가 확산되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 자본·규제·군비경쟁 - Anthropic 통제와 중국 공급망 압박 교차</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #9~#12</span>
+    </div>
+    <div class="theme-summary">미국 정부가 Anthropic의 최신 모델 Fable 5·Mythos 5를 국가안보를 이유로 강제 출시 중단시킨 사건이 오히려 브랜드 인지도를 높이는 역설적 효과를 낳고 있다는 분석이 주목된다. 동시에 중국이 AI 데이터센터 고속 칩 핵심 소재인 인듐(Indium) 수출 심사를 강화하면서 반도체 공급망 디커플링 리스크가 구체화되고 있다. AI가 드론·전장 데이터와 결합해 군사력 패러다임을 바꾸고 있다는 전략 분석도 부상하며 AI 군비경쟁이 단순한 기술 경쟁을 넘어 지정학 재편 변수로 자리잡고 있다. Amazon이 OpenAI와 파트너십을 맺은 직후 Sam Altman 전기영화 제작을 중단한 것은 빅테크의 AI 진영 정치가 문화·미디어 산업에까지 영향을 미치고 있음을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">민간 크레딧 부실·비트코인 대체상품 경고 - 리테일 리스크 노출 심화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #13~#15</span>
+    </div>
+    <div class="theme-summary">Fitch 집계에 따르면 미국 민간 크레딧(Private Credit) 부도율이 사상 최고 수준을 유지하고 있으며, 대형 운용사들의 환매 제한 조치가 반복되는 구조적 취약성이 확인됐다. 이와 별개로 Strategy(STRC) 등 비트코인 연계 증권이 정크 신용등급 자산임에도 불구하고 약 88억 달러 규모의 리테일 자금을 끌어들이고 있다는 경고가 나왔다. 세 개 유사 상품을 합산하면 총 150억 달러에 달하는 자금이 비트코인을 더 안전하게 투자하는 방법이라는 마케팅에 기반해 유입된 것으로 분석됐다. 스테이블코인의 중앙화 거래소 내 보상 구조 논의까지 겹치며 크립토 파생 금융상품의 리테일 리스크 노출이 새로운 감독 이슈로 부각되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학 다극화 - 우크라이나 교착·G7 균열·Trump 행정권 확장</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #16~#21</span>
+    </div>
+    <div class="theme-summary">폴란드가 Zelensky에게 부여한 최고 훈장을 박탈하며 우크라이나-폴란드 관계가 WW2 역사 분쟁으로 급랭했고, 브라질 Lula의 중재 제안을 우크라이나가 수용하면서 평화 협상 구도가 다극화되고 있다. Italy PM Meloni가 Trump의 발언을 공개 비판하며 G7 내부 균열이 가시화됐고, 이는 서방 동맹의 대러·대중 공동전선에 균열 신호로 해석된다. Trump 행정부는 Bill Pulte를 국가정보국장 직무대행으로 임명하며 정보기관 재편을 가속화했다. ASML 첨단 장비의 중국 유입 여부에 대한 미국 조사 착수는 수출통제 이행 실효성 논란과 함께 동맹국과의 기술 거버넌스 갈등을 예고한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #22~#30</span>
+    </div>
+    <div class="theme-summary">캐나다의 통조림 채소 10% 관세 부과는 소규모 품목이지만 미-캐나다 무역 마찰의 연장선에서 식품 공급망 비용 상승 신호로 읽힌다. 파나마 구리광산 재개 가능성이 높아지며 구리 공급 전망에 미세한 긍정 변수가 생겼고, Alamos Gold는 지진으로 인한 생산 차질로 주가가 2020년 이후 최대 낙폭을 기록했다. 일본 최대 IPO Go의 로보택시 전략은 아시아 모빌리티 시장 재편 신호로 주목받는다. 유럽 로봇 스타트업들이 중국 인형 로봇 압도적 점유율(87%)에 맞서 경쟁하는 구도도 부각됐다. Palantir의 프랑스 보안 계약 종료는 유럽의 AI 기술 주권 강화 움직임의 구체적 사례로 기록된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Warsh 매파 데뷔 - 금리인하 지연과 Fed 구조 논쟁 가속</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Trump는 금리인하를 위해 Kevin Warsh를 지명했다. 그런데 새 Fed 의장은 다른 계획을 갖고 있다</div>
+    <div class="article-title-en">Trump picked Kevin Warsh to cut rates. The new Fed chief just told us he has other plans.</div>
+    <div class="article-keypoint">Trump 의도와 달리 Warsh, 매파 기조 공개 천명 - 금리인하 기대 정면 역행</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trump-picked-kevin-warsh-to-cut-rates-the-new-fed-chief-just-told-us-he-has-other-plans-096bba56?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 02:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Warsh의 태스크포스 설치, Fed에 12월까지 금리 변경을 미룰 여지 제공</div>
+    <div class="article-title-en">Warsh’s new task forces give the Fed wiggle room to put off changing rates until December</div>
+    <div class="article-keypoint">Warsh, 태스크포스 설치로 금리 결정 12월까지 지연 가능성 공식화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/warshs-task-forces-give-the-fed-wiggle-room-to-put-off-changing-rates-until-december-364fc1fc?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">FundStrat의 Newton: FOMC를 AI로 대체하면 어떨까?</div>
+    <div class="article-title-en">FundStrat's Newton: Why Not Replace The FOMC With AI?</div>
+    <div class="article-keypoint">FOMC를 AI로 대체 제안 - Warsh 시대 Fed 의사결정 신뢰성 근본 논쟁 부상</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/fundstrats-newton-why-not-replace-fomc-ai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 02:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Fed는 마침내 시장 구제를 중단했는가?</div>
+    <div class="article-title-en">Is The Fed Finally Done Rescuing Markets?</div>
+    <div class="article-keypoint">Fed의 시장 구원자 역할 종료 가능성 - 투자자 자기책임 원칙 강화 국면 진입</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/fed-finally-done-rescuing-markets" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 06:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">미-이란 협정 지연·중동 재긴장 - 유가 하락과 달러 패권 교차</span>
+    <span class="theme-label-range">Article #5~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">레바논 교전 격화로 미-이란 핵 협상 지연</div>
+    <div class="article-title-en">US, Iran Delay Nuclear Talks as Lebanon Clashes Worsen</div>
+    <div class="article-keypoint">레바논 교전 격화로 미-이란 핵 협상 지연 - 중동 리스크 프리미엄 재상승 가능성</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-19/us-iran-delay-nuclear-talks-as-lebanon-clashes-worsen-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 01:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">유조선 억류 지속에도 유가가 하락하는 이유</div>
+    <div class="article-title-en">Why Oil Prices Are Falling Even as Tankers Remain Trapped</div>
+    <div class="article-keypoint">호르무즈 재개방 기대에도 유조선 이동 제한 - 유가 하락과 실질 공급 회복 시차 존재</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Crude-Oil/Why-Oil-Prices-Are-Falling-Even-as-Tankers-Remain-Trapped.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 01:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Rubio, 다음 주 중동 방문 계획 - Axios 보도</div>
+    <div class="article-title-en">Rubio plans Middle East trip next week, Axios reports</div>
+    <div class="article-keypoint">Rubio 다음 주 중동 방문 - 미-이란 협상 재개 여부와 에너지 시장 방향성 핵심 변수</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/rubio-plans-middle-east-trip-next-week-axios-reports-4751574" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 22:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Trump의 이란 협정에는 달러의 글로벌 위상 수호 의도가 담겨 있다</div>
+    <div class="article-title-en">Trump’s Iran Deal Includes a Mindful Eye on the Dollar’s Global Role</div>
+    <div class="article-keypoint">이란 딜에 달러 패권 유지 의도 내포 - 지정학 합의가 기축통화 방어 수단으로 활용</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-06-19/us-iran-deal-what-does-the-agreement-mean-for-the-dollar" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 20:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 자본·규제·군비경쟁 - Anthropic 통제와 중국 공급망 압박 교차</span>
+    <span class="theme-label-range">Article #9~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Luca Guadagnino 감독의 Sam Altman 전기영화, Amazon의 OpenAI 파트너십 발표 후 제작 중단</div>
+    <div class="article-title-en">Luca Guadagnino’s Sam Altman movie dropped by Amazon after it announces OpenAI partnership</div>
+    <div class="article-keypoint">Amazon, OpenAI 파트너십 직후 Altman 전기영화 제작 포기 - 빅테크 AI 진영화 가속</div>
+    <a class="article-link" href="https://www.theguardian.com/film/2026/jun/19/luca-guadagnino-sam-altman-movie-dropped-amazon-openai-artificial" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 22:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">AI 군비경쟁의 전략적 논리</div>
+    <div class="article-title-en">The Strategic Logic of the AI Arms Race</div>
+    <div class="article-keypoint">AI·드론 결합으로 군사력 패러다임 전환 - 미·유럽 정치 기능 장애가 경쟁 열위 심화</div>
+    <a class="article-link" href="https://www.project-syndicate.org/onpoint/ai-is-transforming-military-power-and-geopolitical-competition-by-charles-ferguson-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 17:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">AI 칩 수요 급증 속 중국, 인듐 수출 심사 강화</div>
+    <div class="article-title-en">Beijing Steps Up Scrutiny of Indium Exports as AI Chip Demand Soars</div>
+    <div class="article-keypoint">중국, 인듐 수출 심사 강화 - AI 칩 핵심 소재 통제로 반도체 공급망 디커플링 현실화</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Beijing-Steps-Up-Scrutiny-of-Indium-Exports-as-AI-Chip-Demand-Soars.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">미국 정부의 Anthropic 신모델 출시 금지, 오히려 브랜드 도움?</div>
+    <div class="article-title-en">Is the US government’s Anthropic ban accidentally helping the brand?</div>
+    <div class="article-keypoint">Anthropic 신모델 정부 강제 출시 중단 - 역설적 브랜드 효과와 AI 수출통제 논쟁 심화</div>
+    <a class="article-link" href="https://techcrunch.com/video/is-the-us-governments-anthropic-ban-accidentally-helping-the-brand/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 01:08 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">민간 크레딧 부실·비트코인 대체상품 경고 - 리테일 리스크 노출 심화</span>
+    <span class="theme-label-range">Article #13~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">미국 민간 크레딧 부도율, 사상 최고 수준 유지 - Fitch</div>
+    <div class="article-title-en">US Private Credit Default Rate Remains At Record High: Fitch</div>
+    <div class="article-keypoint">민간 크레딧 부도율 사상 최고 유지 - Blackrock 등 환매 제한 반복으로 구조적 경고</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/us-private-credit-default-rate-remains-record-high-fitch" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 05:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">STRC는 비트코인 포장을 한 정크 신용 - 리테일 투자자 88억 달러 노출</div>
+    <div class="article-title-en">STRC Is Junk Credit In A Bitcoin Costume, And Retail Is Holding $8.8 Billion Of It</div>
+    <div class="article-keypoint">비트코인 연계 증권 STRC, 정크 신용등급 자산에 리테일 88억 달러 노출 경고</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/strc-junk-credit-bitcoin-costume-and-retail-holding-88-billion-it" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">중앙화 거래소의 스테이블코인 보상 체계</div>
+    <div class="article-title-en">Stablecoin remuneration on centralised exchanges</div>
+    <div class="article-keypoint">중앙화 거래소 내 스테이블코인 보상 구조 논의 - 크립토 규제 공백 이슈 재부상</div>
+    <a class="article-link" href="https://www.bis.org/publ/bisbull125.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 17:25 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학 다극화 - 우크라이나 교착·G7 균열·Trump 행정권 확장</span>
+    <span class="theme-label-range">Article #16~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">이탈리아 Meloni 총리, Trump의 '사진 구걸' 발언에 '경악'했다고 밝혀</div>
+    <div class="article-title-en">Italian PM Meloni says she was ‘astonished’ by Trump claims that she ‘begged’ him for a photo - as it happened</div>
+    <div class="article-keypoint">Meloni-Trump 공개 충돌 - G7 내부 균열이 서방 공동전선 약화로 이어질 우려</div>
+    <a class="article-link" href="https://www.theguardian.com/world/live/2026/jun/19/eu-leaders-ukraine-russia-ukraine-magyar-von-der-leyen-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 23:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">폴란드, WW2 역사 분쟁으로 Zelensky 최고 훈장 박탈</div>
+    <div class="article-title-en">Poland strips Ukraine’s Zelensky of top honour as WW2 dispute sours ties</div>
+    <div class="article-keypoint">폴란드, Zelensky 훈장 박탈 - 역사 갈등이 우크라이나 유럽 지지 연대에 균열</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/poland-strips-ukraines-zelensky-of-top-honour-as-ww2-dispute-sours-ties" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 04:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Bill Pulte, 미국 국가정보국장 직무대행 취임</div>
+    <div class="article-title-en">Bill Pulte assumes role of US acting director of national intelligence</div>
+    <div class="article-keypoint">Pulte, 국가정보국장 직무대행 임명 - Trump 정보기관 재편 가속으로 안보 거버넌스 불확실성</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/19/bill-pulte-acting-director-national-intelligence" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 22:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">미국, ASML 첨단 반도체 장비 중국 유입 여부 조사 착수</div>
+    <div class="article-title-en">US Probes Whether ASML's Advanced Chip Machine Ended Up In China</div>
+    <div class="article-keypoint">ASML 장비 중국 유입 의혹 조사 - 수출통제 이행 실효성·동맹국 기술 거버넌스 갈등 예고</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/us-probes-whether-asmls-advanced-chip-machine-ended-china" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 01:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">우크라이나, 평화 중재를 위한 브라질 Lula의 제안 수용</div>
+    <div class="article-title-en">Ukraine accepts proposal from Brazil's Lula to work for peace, Kyiv adviser says</div>
+    <div class="article-keypoint">우크라이나, Lula 중재 수용 - 평화 협상 구도 다극화로 서방 주도 해결 구조 약화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraine-accepts-proposal-from-brazils-lula-to-work-for-peace-kyiv-adviser-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 00:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Meloni, Trump의 서방 적 편향 공개 비판</div>
+    <div class="article-title-en">Meloni accuses Trump of pandering to west’s enemies</div>
+    <div class="article-keypoint">Meloni, Trump의 서방 적 편향 공개 비판 - 미-이탈리아 균열이 NATO 결속에 부정 신호</div>
+    <a class="article-link" href="https://www.ft.com/content/f68fc9f4-ba49-472b-ac56-9b2d9236da53" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 21:25 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">캐나다, 통조림 채소에 임시 10% 관세 부과</div>
+    <div class="article-title-en">Canada Imposes Temporary 10% Tariff on Canned Vegetables</div>
+    <div class="article-keypoint">캐나다, 통조림 채소 10% 관세 부과 - 미-캐나다 무역 마찰 식품 부문으로 확산</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-19/canada-imposes-temporary-10-tariff-on-canned-vegetables" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 02:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Trump, 윤리 논란에도 카타르 전용기를 새 Air Force One으로 수락</div>
+    <div class="article-title-en">Trump accepts Qatar jet as new Air Force One despite ethics concerns </div>
+    <div class="article-keypoint">Qatar 400mn달러 전용기 수령 - Trump 이해충돌 논란이 외교 신뢰도에 영향</div>
+    <a class="article-link" href="https://www.ft.com/content/2bb0efd9-fe82-4943-ab5f-ac80682bee00" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 06:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Go, 일본 2026년 최대 IPO 이후 로보택시와 인수합병 추진 - 시사점은?</div>
+    <div class="article-title-en">Go eyes robotaxis and acquisitions after Japan’s biggest IPO of 2026. Here’s why it matters</div>
+    <div class="article-keypoint">Go, 일본 최대 IPO로 로보택시·M&A 자금 확보 - 아시아 모빌리티 재편 신호</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/19/go-eyes-robotaxis-and-acquisitions-after-japans-biggest-ipo-of-2026-heres-why-it-matters/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 06:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">유럽 로보틱스 스타트업, 중국 강자들과 맞붙다</div>
+    <div class="article-title-en">European robotics start-ups go up against Chinese heavyweights</div>
+    <div class="article-keypoint">유럽 로봇 스타트업, 중국산 87% 점유율 맞서 경쟁 - 공급망 다변화 수요 확대</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/european-robotics-start-ups-go-up-against-chinese-heavyweights" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 18:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Burnham, '영국의 새 길' 촉구 - Starmer, 리더십 도전에 맞서겠다 다짐</div>
+    <div class="article-title-en">Burnham calls for ‘new path for Britain’ as Starmer vows to fight any leadership challenge – as it happened</div>
+    <div class="article-keypoint">Starmer 리더십 위기 심화 - 영국 정치 불안이 재정·통화 정책 불확실성으로 전이 가능</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/live/2026/jun/18/makerfield-byelection-keir-starmer-andy-burnham-robert-kenyon-labour-leadership-reform-aberdeen-arbroath-uk-politics-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 02:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">닷컴 여왕의 발자취 추적: Julie Meyer가 남긴 미지급 청구서·실종 자금·깨진 꿈</div>
+    <div class="article-title-en">On the trail of the dotcom queen: how Julie Meyer left a pattern of unpaid bills, missing funds and broken dreams in her wake</div>
+    <div class="article-keypoint">닷컴 버블 재현 우려 - AI 붐 속 사기성 스타트업 생태계 반복 패턴 경고</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/jun/19/julie-meyer-dotcom-queen-unpaid-bills-missing-funds-broken-dreams" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 16:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">파나마 구리광산 환경·법적 의무 대부분 이행 - First Quantum 재개 가능성 확대</div>
+    <div class="article-title-en">First Quantum Deemed Broadly Compliant at Panama Copper Mine</div>
+    <div class="article-keypoint">파나마 구리광산 감사 통과 - First Quantum 재개 가능성으로 구리 공급 전망 개선</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-19/panama-says-audit-found-broad-compliance-at-idled-copper-mine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 01:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">광산 지진 피해로 생산 하향 조정 - Alamos Gold 주가 2020년 이후 최대 폭 급락</div>
+    <div class="article-title-en">Alamos Gold Shares Plunge on Output Cut After Earthquake at Mine</div>
+    <div class="article-keypoint">Alamos Gold, 지진 피해로 2분기 생산 하향 - 2020년 이후 최대 주가 낙폭 기록</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-19/alamos-gold-shares-plunge-on-output-cut-after-earthquake-at-mine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/19 23:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Palantir, 프랑스 국내 보안 계약 종료에 반발: '인스타그램으로 처리할 사안이 아니다'</div>
+    <div class="article-title-en">Palantir objects to France ending domestic security contract: 'You can't do this on Instagram. This is a very serious matter.'</div>
+    <div class="article-keypoint">프랑스, Palantir 보안 계약 종료 - 유럽 AI 기술 주권 강화의 구체적 실행 사례</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/06/19/palantir-objects-to-france-ending-domestic-security-contract-you-can-t-do-this-on-instagram-this-is-a-very-serious-matter_6754679_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/20 05:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
