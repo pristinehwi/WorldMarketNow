@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-23 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/23 07:48 KST</div>
+    <div class="header-date">2026-06-23</div>
+    <div class="header-headline">Greenspan 타계·Warsh 시대 개막 - Fed 리더십 세대교체</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Core PCE(목) + Micron 어닝 + Warsh 첫 FOMC 발언 - 금리경로 재조정 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Greenspan 타계와 Warsh 데뷔 - Fed 리더십 세대교체와 통화정책 재조정</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#9</span>
+    </div>
+    <div class="theme-summary">Alan Greenspan 전 Fed 의장이 100세로 별세하며 Fed 역사의 한 시대가 마감됐고, 동시에 Warsh 신임 의장의 첫 FOMC가 가시권에 들어오면서 통화정책 리더십 공백이 시장의 핵심 변수로 부상했다. Greenspan은 시장 자율규제 신봉자로 약 20년간 Fed를 이끌었으나, 금융위기의 씨앗을 뿌렸다는 비판도 동시에 재조명되고 있다. Warsh에 대해서는 Greenspan만큼 세밀하고 뉘앙스 있는 리더십을 발휘할 것이라는 평가가 나오는 한편, 매파적 스탠스에 대한 시장 경계감이 높다. 이번 주 예정된 Core PCE 발표와 글로벌 PMI 데이터는 Warsh 체제 하 첫 금리 경로 결정의 핵심 근거가 되며, 6월 FOMC 점도표 역시 Fed의 구조적 방향성을 가늠하는 지표로 주목받고 있다. 달러 국제적 역할에 대한 Waller 이사의 발언도 Fed 내부 통화정책 논쟁의 또 다른 축을 형성하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SpaceX 회사채 발행과 IPO 거품 경고 - 자본시장 과열과 FOMO 리스크</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #10~#13</span>
+    </div>
+    <div class="theme-summary">SpaceX가 사상 첫 달러 투자등급 회사채 발행에 나서며 자본시장에서의 존재감을 확대하고 있으나, 주가는 3거래일 연속 약 9% 하락하는 등 실제 펀더멘털과의 괴리가 노출되고 있다. 1929년과 2000년 버블 붕괴 직전에 기록됐던 미국 주식 발행 규모에 비견되는 IPO 파이프라인이 형성됐다는 경고가 나오며, SpaceX와 OpenAI가 40% 급락의 트리거가 될 수 있다는 분석도 제기됐다. '서구의 DeepSeek'으로 불리는 Reflection이 SpaceXAI와 대형 컴퓨팅 계약을 체결하는 등 AI 스타트업 자본 유입은 가속되고 있다. 한편 Elon Musk의 SpaceX $1조 달러 기업가치 전망에 대한 시장의 반론도 커지고 있어, 성장주 대 가치주 간 자금 이동 가능성이 주목된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 자본 팽창과 반도체 M&A 가속 - Micron·Groq·Qualcomm의 공급망 재편</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #14~#18</span>
+    </div>
+    <div class="theme-summary">Micron이 Anthropic과 메모리·스토리지 공급 계약을 체결하며 AI 인프라 수혜주로서의 모멘텀을 강화했고, 이번 주 예정된 Micron 실적 발표가 AI 메모리 수요의 실질적 확인 계기로 주목받고 있다. Groq는 Nvidia의 사실상 인수(not-acqui-hire) 이후 $650M 추가 자금 조달에 성공하며 네오클라우드 사업을 재정비하고 있으며, Qualcomm은 AI 칩 스타트업 Modular를 약 $40억에 인수하는 협상을 진행 중이다. 반도체 섹터 전반적으로는 Nvidia가 규모의 역설에 직면해 기대치 초과 여력이 축소된 반면, 칩 지수 자체는 올해 들어 두 배 상승하며 하위 종목들이 주도하는 구도가 나타나고 있다. AI 자본 팽창이 메모리·스토리지·전력·냉각 등 인프라 전반의 공급 부족을 심화시키는 구조적 흐름이 지속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 기술 패권·규제·윤리 - Anthropic·Big Tech 진영 분화와 디커플링 압력</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #19~#24</span>
+    </div>
+    <div class="theme-summary">Big Tech가 AI 전략에서 두 진영으로 분화되는 양상이 뚜렷해지고 있으며, Alphabet·Microsoft 같은 대형 플랫폼이 직접 AI 모델 개발보다 안전한 인프라 투자처로 평가받는 반면, OpenAI류의 순수 AI 플레이어는 고위험·고수익 자산으로 분류되고 있다. Anthropic의 Claude는 특정 상황에서 여권·면허증 등 신분 확인을 요구하는 방향으로 개인정보처리방침을 개정하며 AI 신원 인증 논쟁을 촉발시켰다. ECB Lagarde 총재는 유럽의회 청문회에서 중동 전쟁 발발 이후 지정학적 공급 충격 환경에서의 통화정책 운영을 주제로 발언하며 AI와 신기술이 인플레·성장 전망에 미치는 불확실성을 언급했다. AI가 일자리와 삶의 목적을 대체할 경우 사회 구조적 의미 창출 메커니즘이 붕괴될 수 있다는 심층 분석도 제기되고 있어, 규제·사회적 수용성 논쟁이 자본배분 결정에 영향을 줄 변수로 부상하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">이란 핵 협상 교착과 중동 지정학 리스크 프리미엄 재조정</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #25~#29</span>
+    </div>
+    <div class="theme-summary">이란이 Vance 부통령의 핵 사찰 및 동결자산 농업 구매 활용 관련 주장을 공식 반박하며 미-이란 간 협상의 실질적 진전 여부에 의문이 커지고 있다. Trump 행정부의 대이란 전략에 대해서는 '굴욕적 패배를 승리로 포장했다'는 비판 분석이 나오며, 구조적 정책 실패라는 시각이 제기되고 있다. 사우디 Aramco가 FIFA 월드컵의 '에너지 파트너'로 참여하며 오일머니의 스포츠워싱 논란이 재점화되는 가운데, 중동 원유 공급망과 지정학 리스크 프리미엄은 여전히 에너지 시장의 핵심 변수로 작동하고 있다. Trump의 양자 컴퓨팅 행정명령 서명과 Starmer 영국 총리 사임에 대한 비판은 G7 내 정치 균열이 지속되고 있음을 보여주며, 동맹국 리더십 불확실성이 글로벌 외교 재편의 배경으로 이어지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #30</span>
+    </div>
+    <div class="theme-summary">Alan Greenspan의 유산에 대한 재평가가 그의 타계를 계기로 광범위하게 이루어지고 있으며, 시장 자율규제에 대한 과신이 금융위기의 구조적 원인이 되었다는 교훈이 재조명되고 있다. Bundesbank Nagel 총재는 디지털 화폐의 새로운 형태와 통화정책 전달 메커니즘 변화에 대해 발언하며 중앙은행 디지털 통화(CBDC) 관련 논의를 이어갔다. Google DeepMind와 A24의 AI 영화제작 협업은 AI가 엔터테인먼트 산업 구조를 바꾸는 신호탄으로 주목받고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Greenspan 타계와 Warsh 데뷔 - Fed 리더십 세대교체와 통화정책 재조정</span>
+    <span class="theme-label-range">Article #1~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">FEDS 논문: 지역 노동시장 타이트함과 고용 질 - 이직자 데이터 분석</div>
+    <div class="article-title-en">FEDS Paper: Local Labor Market Tightness and Job Quality: Evidence from Job Changers</div>
+    <div class="article-keypoint">노동시장 타이트할수록 이직자 고용 질 향상 - Fed 임금·인플레 판단에 미시적 근거 추가</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/local-labor-market-tightness-and-job-quality-evidence-from-job-changers.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">FEDS 논문: 지급준비금을 넘어 - Fed 대차대조표와 레포시장의 관계</div>
+    <div class="article-title-en">FEDS Paper: Beyond Reserves: The Federal Reserve's Balance Sheet and the Repo Market</div>
+    <div class="article-keypoint">Fed 대차대조표 축소가 레포시장 유동성에 미치는 구조적 영향 - QT 속도 논쟁 재점화</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/beyond-reserves-the-federal-reserves-balance-sheet-and-the-repo-market.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">이번 주 주요 이벤트: Core PCE, 글로벌 PMI, Micron 실적, Fed 발언</div>
+    <div class="article-title-en">Key Events This Week: Core PCE, Global PMIs, Micron Earnings And Fed Talk</div>
+    <div class="article-keypoint">이번 주 Core PCE·PMI·Micron 어닝·Fed 발언 집중 - 금리경로 재조정 최대 분기점</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/key-events-week-core-pce-global-pmis-micron-earnings-and-fed-talk" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/22 23:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Waller 이사, 미 달러화 국제적 역할에 관한 환영사</div>
+    <div class="article-title-en">Waller, Welcoming Remarks on the International Role of the U.S. Dollar</div>
+    <div class="article-keypoint">Waller 이사, 달러 국제적 역할 컨퍼런스 개최 - 달러 패권 지속 여부 Fed 내부 논의 부상</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/waller20260622a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/22 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Federal Reserve, Alan Greenspan 전 의장 별세에 깊은 애도 표명</div>
+    <div class="article-title-en">Federal Reserve notes with deep sadness the passing of Alan Greenspan</div>
+    <div class="article-keypoint">Alan Greenspan 100세 타계 - Warsh 신체제 개막 전 Fed 역사적 전환점 상징</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/other20260622a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/22 21:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">새 Fed 의장 Warsh, Greenspan만큼 세밀하고 뉘앙스 있는 리더십 전망</div>
+    <div class="article-title-en">Mr. Fed Pres.: Warsh Every Bit as Nuanced as Greenspan</div>
+    <div class="article-keypoint">Warsh, Greenspan에 버금가는 세밀한 리더십 발휘 전망 - 매파 vs 뉘앙스 해석 분열</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-22/mr-fed-pres-warsh-every-bit-as-nuanced-as-greenspan-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">2026년 6월 FOMC 경제전망 요약(점도표)</div>
+    <div class="article-title-en">FOMC Summary of Economic Projections, June 2026</div>
+    <div class="article-keypoint">6월 FOMC 점도표 공개 - Warsh 체제 첫 금리 경로 기준선으로 시장 민감도 최고조</div>
+    <a class="article-link" href="https://fredblog.stlouisfed.org/2026/06/fomc-summary-of-economic-projections-june-2026/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/22 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Alan Greenspan의 엇갈린 유산</div>
+    <div class="article-title-en">Alan Greenspan’s Mixed Legacy</div>
+    <div class="article-keypoint">Greenspan 시장 자율규제 신봉이 금융위기 씨앗 - 과거 교훈이 현 규제 논쟁에 재소환</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/alan-greenspan-fed-chair-mixed-legacy-by-barry-eichengreen-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 01:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Alan Greenspan 전 Fed 의장, 시장 자율규제 신봉자 100세로 별세</div>
+    <div class="article-title-en">Alan Greenspan, former Fed chair and champion of market self-regulation, dies 100</div>
+    <div class="article-keypoint">Greenspan 100세 타계 - 20년 Fed 의장 시대 마감, Warsh 신체제와의 대비 부각</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/obituaries/article/2026/06/22/alan-greenspan-former-fed-chair-and-champion-of-market-self-regulation-dies-100_6754750_15.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/22 23:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SpaceX 회사채 발행과 IPO 거품 경고 - 자본시장 과열과 FOMO 리스크</span>
+    <span class="theme-label-range">Article #10~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">IPO 파이프라인에 잠복한 40% 시장 붕괴 위험 - SpaceX와 OpenAI가 방아쇠를 당길 수 있다</div>
+    <div class="article-title-en">A 40% market crash is lurking in the IPO pipeline. SpaceX and OpenAI could trigger it.</div>
+    <div class="article-keypoint">1929·2000년 수준의 IPO 파이프라인 - SpaceX·OpenAI 상장이 40% 붕괴 트리거 될 수 있다는 경고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/a-40-market-crash-is-lurking-in-the-ipo-pipeline-spacex-and-openai-could-trigger-it-64ae4026?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 07:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">"서구의 DeepSeek" Reflection, SpaceXAI와 대형 컴퓨팅 계약 체결</div>
+    <div class="article-title-en">"DeepSeek Of The West" Reflection Inks Major Compute Deal With SpaceXAI</div>
+    <div class="article-keypoint">SpaceX 주가 3일 연속 약 9% 하락 속 투자등급 회사채 발행 - 펀더멘털 괴리 노출</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/deepseek-west-reflection-inks-major-compute-deal-spacexai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 00:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">월가는 성장주를 사랑한다 - 하지만 이 10개 '낙오주'가 반격을 준비하고 있다</div>
+    <div class="article-title-en">Wall Street loves growth stocks — but these 10 ‘losers’ are primed to win</div>
+    <div class="article-keypoint">SpaceX $1조 기업가치 전망에 반론 - 역발상 투자자, 저평가 가치주로 자금 이동 포착</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/wall-street-loves-growth-stocks-but-these-10-losers-are-primed-to-win-0202e491?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">SpaceX, 사상 첫 미국 달러 투자등급 회사채 발행 개시</div>
+    <div class="article-title-en">SpaceX Kicks Off Debut US Dollar High-Grade Bond Sale</div>
+    <div class="article-keypoint">SpaceX 사상 첫 투자등급 달러 채권 발행 - 펀더멘털 부재 속 신용등급 선취 구조 논란</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-22/spacex-kicks-off-debut-us-dollar-high-grade-bond-sale-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 05:51 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 자본 팽창과 반도체 M&A 가속 - Micron·Groq·Qualcomm의 공급망 재편</span>
+    <span class="theme-label-range">Article #14~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Anthropic 파트너십 체결로 Micron 주가 상승 모멘텀 강화</div>
+    <div class="article-title-en">Micron’s stock momentum builds as the company inks a new Anthropic partnership</div>
+    <div class="article-keypoint">Micron-Anthropic 메모리·스토리지 공급 계약 - AI 인프라 수혜 모멘텀 어닝으로 검증 예정</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microns-stock-momentum-builds-as-the-company-inks-a-new-anthropic-partnership-484e3845?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 05:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">AI 칩 기업 Groq, $6억5천만 추가 조달 확인 - Nvidia 사실상 인수 이후 재정비</div>
+    <div class="article-title-en">AI chipmaker Groq confirms $650M raise, re-staffs after Nvidia’s $20B not-acqui-hire deal</div>
+    <div class="article-keypoint">Groq, Nvidia 사실상 인수 후 $650M 추가 조달 - AI 칩 독립 생태계 재건 신호</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/22/ai-chipmaker-groq-confirms-650m-raise-re-staffs-after-nvidias-20b-not-acqui-hire-deal/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 05:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Qualcomm, AI 칩 스타트업 Modular 약 $40억 인수 협상 막바지</div>
+    <div class="article-title-en">Qualcomm Nears Deal for AI Chip Startup Modular</div>
+    <div class="article-keypoint">Qualcomm, AI 칩 스타트업 Modular 약 $40억 인수 협상 - 엣지 AI 공급망 재편 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-22/qualcomm-is-said-to-near-deal-for-ai-chip-startup-modular" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">주요 반도체 지수 올해 두 배 상승, 정작 Nvidia는 꼴찌</div>
+    <div class="article-title-en">A major chip index has doubled this year despite Nvidia ranking dead last</div>
+    <div class="article-keypoint">반도체 지수 올해 두 배 상승, Nvidia는 꼴찌 - 대형주 기대치 소진·중소형 칩주 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/a-major-chip-index-has-doubled-this-year-despite-nvidia-ranking-dead-last-f049eb5e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 05:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Nvidia, 데이터센터 냉각수 절감 추진 - 그러나 AI 전체 수자원 문제 해결은 아직 요원</div>
+    <div class="article-title-en">Nvidia wants to cut data center water use, but that’s not the same as fixing AI’s water problem</div>
+    <div class="article-keypoint">Nvidia 데이터센터 냉각수 절감 시스템 발표 - 발전소 단계 수자원 문제는 미해결 한계</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/22/nvidia-wants-to-cut-data-center-water-use-but-thats-not-the-same-as-fixing-ais-water-problem/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 05:08 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 기술 패권·규제·윤리 - Anthropic·Big Tech 진영 분화와 디커플링 압력</span>
+    <span class="theme-label-range">Article #19~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Big Tech, 두 AI 진영으로 분열 - 그러나 스마트머니는 다음 OpenAI를 쫓지 않는다</div>
+    <div class="article-title-en">Big Tech has split into two artificial-intelligence camps — but the smart money isn’t chasing the next OpenAI</div>
+    <div class="article-keypoint">Alphabet·Microsoft가 AI 레이스의 안전한 선택 - 순수 AI 플레이어 고위험 분류 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/big-tech-is-splitting-into-two-artificial-intelligence-camps-here-is-the-better-bet-e75c9876?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 07:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Christine Lagarde: 유럽의회 경제통화위원회 청문회 발언</div>
+    <div class="article-title-en"> Christine Lagarde: Hearing of the Committee on Economic and Monetary Affairs of the European Parliament</div>
+    <div class="article-keypoint">Lagarde, 중동 전쟁 이후 공급 충격 환경에서 통화정책 운영 방향 제시 - ECB 긴축 완화 신중론</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp260622~b060a27b78.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/22 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">AI는 풍요를 가져올 것인가 - 그러나 삶의 목적은 어디서 찾는가</div>
+    <div class="article-title-en">Will AI Yield Abundance Without Purpose?</div>
+    <div class="article-keypoint">AI가 대부분 일자리 대체 시 사회적 목적·소속감 붕괴 우려 - 규제 수용성 리스크 부상</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-abundance-without-purpose-meaning-by-carl-benedikt-frey-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/22 23:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Joachim Nagel: 새로운 화폐 형태와 통화정책 전달 메커니즘</div>
+    <div class="article-title-en">Joachim Nagel: New forms of money and the transmission of monetary policy</div>
+    <div class="article-keypoint">Nagel, 디지털 화폐 새 형태와 통화정책 전달 변화 논의 - CBDC 도입 압력 재점화</div>
+    <a class="article-link" href="https://www.bis.org/review/r260622h.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/22 21:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Anthropic, Claude가 신분증 확인을 요청할 수 있다고 밝혀</div>
+    <div class="article-title-en">Anthropic says Claude may want to see your ID</div>
+    <div class="article-keypoint">Anthropic Claude, 특정 상황에서 신분증 확인 요구 - AI 신원 인증 선례와 개인정보 논쟁</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/22/anthropic-says-claude-may-want-to-see-your-id/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 03:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Apple 칩 패치 불가 신규 취약점 발견 - iPhone 탈옥 경로 열려</div>
+    <div class="article-title-en">A new unpatchable flaw in Apple chips opens the door to an iPhone jailbreak </div>
+    <div class="article-keypoint">Apple 칩 취약점 패치 불가 결함 발견 - 구형 iPhone 탈옥·보안 침해 경로 노출</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/22/a-new-unpatchable-flaw-in-apple-chips-opens-the-door-to-an-iphone-jailbreak/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 03:50 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">이란 핵 협상 교착과 중동 지정학 리스크 프리미엄 재조정</span>
+    <span class="theme-label-range">Article #25~#29</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">테헤란, 핵 사찰·동결자산 농업 활용 관련 Vance 주장 반박 - 오일 라이선스 협상 속 갈등</div>
+    <div class="article-title-en">Tehran Disputes Vance Claims On Nuclear Inspections & Assets For Agriculture Funding Amid Oil License Deal</div>
+    <div class="article-keypoint">이란, Vance 핵 사찰·동결자산 주장 공식 반박 - 미-이란 협상 교착 심화·유가 리스크 재조정</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/iran-agrees-invite-nuclear-inspectors-back-vance-hails-great-progress-after-little" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 01:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Trump, 양자컴퓨팅 육성 행정명령 서명</div>
+    <div class="article-title-en">Trump Seeks to Boost Quantum Computing With New Executive Orders</div>
+    <div class="article-keypoint">Trump, 양자컴퓨팅 행정명령 서명 - 안보 위협 완화·기술 개발 가속 동시 추진</div>
+    <a class="article-link" href="https://www.wsj.com/politics/policy/trump-seeks-to-boost-quantum-computing-with-new-executive-orders-b2200634?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 05:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">이란을 향한 Trump의 어리석은 행군</div>
+    <div class="article-title-en">Trump’s March of Folly in Iran</div>
+    <div class="article-keypoint">Trump, 이란 협상을 '거래'로 포장 - 구조적 정책 실패라는 비판과 중동 전략 신뢰성 훼손</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-america-capitulated-to-iran-strategic-ethical-disaster-by-timothy-snyder-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 01:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">The Hotspot | Aramco의 오일달러로 지원되는 월드컵 - 스포츠워싱의 오명</div>
+    <div class="article-title-en">The Hotspot | Aramco’s petrodollar backing of World Cup leaves stain of sportswashing</div>
+    <div class="article-keypoint">Aramco, FIFA 월드컵 에너지 파트너 - 오일머니 스포츠워싱과 탈탄소 압력 충돌</div>
+    <a class="article-link" href="https://www.theguardian.com/sport/2026/jun/22/aramco-petrodollar-world-cup-football-sportswashing-the-hotspot" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/22 19:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Trump, Starmer 영국 총리 사임 발표 후 강도 높은 비판</div>
+    <div class="article-title-en">Trump criticises Britain’s Starmer after resignation announcement</div>
+    <div class="article-keypoint">Trump, Starmer 사임 비판 - G7 동맹 균열과 영국 리더십 공백이 대서양 외교 재편 촉발</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-criticises-britains-starmer-after-resignation-announcement" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 07:22 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Google DeepMind, $7,500만 투자로 A24와 AI 영화제작 동맹 결성</div>
+    <div class="article-title-en">Google DeepMind bets $75M on AI’s future in Hollywood with A24 deal</div>
+    <div class="article-keypoint">Google DeepMind·A24, AI 영화제작 도구 개발 협력 - 엔터테인먼트 AI 전환 본격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/22/google-deepmind-bets-75m-on-ais-future-in-hollywood-with-a24-deal/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/23 03:49 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
