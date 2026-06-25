@@ -2,485 +2,555 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "FOMC 중립·리스크온",
+      "title": "FOMC동결·메모리부족",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "FOMC 중립 선언",
-          "value": "Fed 금리 동결, 추가 인상 종료",
+          "label": "FOMC금리동결",
+          "value": "Fed 6월 동결 재확인, 중립 스탠스",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "Federal Reserve issues FOMC statement (2026-06-17)",
+            "FOMC Press Release (2026-06-25)"
+          ]
         },
         {
           "id": "n2",
-          "label": "달러강세 차단",
-          "value": "금리 인상 기대 소멸로 달러 모멘텀 소진",
-          "source": "concept",
-          "timestamp": null
+          "label": "실질금리안정",
+          "value": "2.29 -> 2.23 (-0.06%p)",
+          "source": "layer_T0_macro",
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n3",
-          "label": "달러인덱스(UUP)",
-          "value": "[06/23] $28.53->[06/24] $28.46 (-0.25%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "label": "메모리공급부족",
+          "value": "Apple 맥북·아이패드 $200+ 인상",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            "Apple's MacBooks and iPads are getting more expensive as the memory crunch deepens",
+            "Apple Raises Prices on Macs, iPads by $200 or More on Some Models"
+          ]
         },
         {
           "id": "n4",
-          "label": "글로벌리스크온",
-          "value": "EEM·HYG 동반 상승, 위험자산 선호",
+          "label": "AI수요리스크온",
+          "value": "FOMC 동결+반도체 수요 겹치며 리스크온 촉발",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "Apple's MacBooks and iPads are getting more expensive as the memory crunch deepens"
+          ]
         },
         {
           "id": "n5",
-          "label": "신흥국ETF(EEM)",
-          "value": "[06/23] $67.86->[06/24] $67.95 (+0.13%)",
+          "label": "반도체ETF(SOXX)",
+          "value": "[06/24] $601.43->[06/25] $625.20 (+3.94%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n6",
-          "label": "하이일드채(HYG)",
-          "value": "[06/23] $79.85->[06/24] $79.94 (+0.11%)",
+          "label": "신흥국ETF(EEM)",
+          "value": "[06/24] $67.26->[06/25] $67.96 (+1.04%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n7",
-          "label": "외국인자금유입",
-          "value": "FOMC 중립 후 EM 자금 복귀 기대",
+          "label": "삼성하이닉스수혜",
+          "value": "한국 메모리 과점, 공급부족 수혜 직접 수령",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n8",
           "label": "KOSPI",
-          "value": "8930.3 (+5.42%)",
+          "value": "[06/24] $0.00->[06/25] $0.00 (+5.42%)",
           "source": "layer_T1_asia_today",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         }
       ],
       "edges": [
         {
           "from": "n1",
           "to": "n2",
-          "label": "기대소멸",
-          "mechanism": "Fed 추가 긴축 종료로 달러 상승 모멘텀 소진"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
-          "label": "실증",
-          "mechanism": "달러 강세 차단 기대가 UUP 하락에 반영됨"
+          "label": "억제",
+          "mechanism": "금리 동결 확인으로 DFII10 추가 상승 억제, 실질금리 0.06%p 하락"
         },
         {
           "from": "n2",
           "to": "n4",
-          "label": "전이",
-          "mechanism": "달러 약세 전환이 EM 리스크 프리미엄 축소를 유발"
+          "label": "할인율↓",
+          "mechanism": "실질금리 안정이 리스크자산 할인율 부담 제거해 리스크온 촉발"
+        },
+        {
+          "from": "n3",
+          "to": "n4",
+          "label": "수요확인",
+          "mechanism": "Apple 가격 인상이 공급 부족 공식화, HBM·DRAM 수요 기대 강화"
         },
         {
           "from": "n4",
           "to": "n5",
           "label": "실증",
-          "mechanism": "리스크온 심리 회복이 EEM 상승에 직접 반영"
+          "mechanism": "리스크온·반도체 수요 기대가 SOXX +3.94% 상승으로 반영"
         },
         {
           "from": "n4",
           "to": "n6",
           "label": "실증",
-          "mechanism": "신용 리스크 프리미엄 축소가 HYG 상승으로 확인"
+          "mechanism": "글로벌 리스크온이 신흥국 자금 유입으로 EEM +1.04% 상승"
         },
         {
           "from": "n4",
           "to": "n7",
-          "label": "자금이동",
-          "mechanism": "글로벌 리스크온 전환이 한국 등 고베타 EM 자금 복귀 기대 형성"
+          "label": "수혜경로",
+          "mechanism": "리스크온 환경에서 EM 내 한국 메모리 과점 기업 부각"
         },
         {
           "from": "n7",
           "to": "n8",
-          "label": "수급개선",
-          "mechanism": "외국인 순매수 재개 기대가 KOSPI 수급 개선으로 반영"
+          "label": "실증",
+          "mechanism": "삼성·하이닉스 수혜 기대가 외국인 KOSPI 반도체 순매수 유입, 지수 +5.42%"
         }
       ],
       "korea_terminal_node": "n8",
-      "briefing": "글로벌 리스크온이 주도 신호다. FOMC 중립 선언으로 달러 모멘텀이 소멸되며, 이를 공통원인으로 UUP 하락(-0.25%), EEM·HYG 동반 상승이 분기됐다. 외국인 자금 복귀 기대가 KOSPI 강세(+5.42%)로 가시화됐다.",
+      "briefing": "FOMC 동결 확인과 Apple 메모리 공급 부족이 AI수요리스크온 공통원인을 촉발. SOXX +3.94%, EEM +1.04% 동반 강세가 한국 메모리 과점 구조 수혜로 전개되어 KOSPI +5.42% 급등 견인.",
       "_warnings": [
         "[한국 종착 비율] 4/4 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n4(EM 리스크 프리미엄 축소) -> n8(KOSPI 상승) -> n2(달러 약세 심화) -> n4",
-        "riskLevel": "medium",
-        "commentary": "KOSPI 등 고베타 EM 자산 강세가 외국인 달러 매도(원화 매수)를 유발하여 달러 추가 약세를 강화하고, 이것이 다시 EM 리스크 프리미엄 축소를 심화시키는 자기강화 루프가 존재함. 단, 루프 강도는 한국의 글로벌 외환시장 영향력 한계로 인해 medium으로 제한됨."
-      },
-      "chainFragility": {
-        "fragileEdge": "n2->n4",
-        "fragileReason": "달러 약세가 EM 리스크 프리미엄 축소로 전이되려면 미국 실질금리 동반 하락이 전제되어야 하나, FOMC 중립 기조만으로는 실질금리 하락이 보장되지 않아 달러 약세와 EM 랠리의 디커플링이 발생할 수 있음.",
-        "alternativePath": "n1(FOMC 중립) -> 미국 장기금리 상단 고정 기대 -> 글로벌 듀레이션 리스크 완화 -> n4(EM 리스크 프리미엄 축소) 경로로 실질금리 채널을 우회하여 연결 가능"
-      },
-      "missingHops": [
-        {
-          "to": "GLD(금 ETF) / 원자재 복합 자산",
-          "via": "달러 약세 전환(n2)이 달러 표시 원자재 가격 상승을 유발하고, 이는 자원수출 EM국 무역수지 개선 기대를 통해 브라질·인도네시아 등 2차 EM 통화 강세 및 관련 ETF(EWZ, EIDO) 추가 수혜로 파급",
-          "lag_days": 3
-        },
-        {
-          "to": "국내 국고채 10년물(KTB) / 원화 강세",
-          "via": "외국인 KOSPI 순매수 재개(n8) 이후 환헤지 비용 축소 기대가 외국인 국고채 동반 매수로 이어지며 한국 장기금리 하방 압력 발생, 동시에 원·달러 환율 하락(원화 강세)이 수입물가 안정 경로로 한국은행 추가 인하 기대를 선반영",
-          "lag_days": 5
-        }
       ]
     },
     {
       "id": "thread_002",
-      "title": "메모리공급부족·AI",
+      "title": "MS지출논란·AI칩분기",
       "priority": 2,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "AI메모리크런치",
-          "value": "Apple 가격인상, HBM·DRAM 공급 부족",
+          "label": "빅테크AI지출",
+          "value": "MS 6월 급락, Alphabet 인재 이탈 보고",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "Microsoft's stock is suffering a historic June rout as investors balk at heavy spending",
+            "Alphabet Shares Fall After Report on Further AI Talent Departures"
+          ]
         },
         {
           "id": "n2",
-          "label": "AI수요확대",
-          "value": "HBM·반도체 수요 구조적 급증",
+          "label": "AI칩수요분리",
+          "value": "소프트웨어 우려와 별개로 칩·HBM 수요 구조적 지속",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "Can Qualcomm actually compete with Nvidia? Inside its bold data-center gamble."
+          ]
         },
         {
           "id": "n3",
-          "label": "반도체ETF(SOXX)",
-          "value": "[06/23] $617.81->[06/24] $615.90 (-0.31%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "label": "소프트성장압박",
+          "value": "AI ROI 불확실성으로 소프트웨어·혁신성장 리레이팅",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            "Microsoft's stock is suffering a historic June rout as investors balk at heavy spending"
+          ]
         },
         {
           "id": "n4",
-          "label": "나스닥ETF(QQQ)",
-          "value": "[06/23] $716.17->[06/24] $713.16 (-0.42%)",
+          "label": "혁신성장ETF(ARKK)",
+          "value": "$76.71->$76.54 (-0.17%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n5",
-          "label": "삼성·하이닉스",
-          "value": "글로벌 HBM 공급자, 수주·마진 개선",
-          "source": "concept",
-          "timestamp": null
+          "label": "성장주ETF(IWF)",
+          "value": "$119.67->$118.10 (-1.31%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n6",
+          "label": "반도체수요집중",
+          "value": "소프트 외면→메모리·칩 수요 집중, 섹터 로테이션",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            "Can Qualcomm actually compete with Nvidia? Inside its bold data-center gamble."
+          ]
+        },
+        {
+          "id": "n7",
+          "label": "반도체ETF(SOXX)",
+          "value": "[06/24] $601.43->[06/25] $625.20 (+3.94%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n8",
           "label": "KOSPI",
-          "value": "8930.3 (+5.42%)",
+          "value": "[06/24] $0.00->[06/25] $0.00 (+5.42%)",
           "source": "layer_T1_asia_today",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         }
       ],
       "edges": [
         {
           "from": "n1",
-          "to": "n2",
-          "label": "수요확인",
-          "mechanism": "Apple 가격 인상이 HBM·DRAM 공급 부족과 AI 수요 급증을 동시 공식화"
-        },
-        {
-          "from": "n2",
           "to": "n3",
-          "label": "실증",
-          "mechanism": "AI 반도체 수요 재확인이 SOXX 모멘텀 유지에 반영"
+          "label": "압박",
+          "mechanism": "AI 투자 ROI 논란이 소프트웨어 기업 수익성 의구심으로 직결"
         },
         {
-          "from": "n2",
+          "from": "n1",
+          "to": "n2",
+          "label": "분리",
+          "mechanism": "소프트 불확실성과 달리 칩·인프라 수요는 AI 확장 필수재로 분리 인식"
+        },
+        {
+          "from": "n3",
           "to": "n4",
           "label": "실증",
-          "mechanism": "AI 수요 기대가 나스닥 기술주 밸류에이션에 반영"
+          "mechanism": "AI ROI 논란이 혁신성장 ETF ARKK -0.17% 하락으로 반영"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "label": "실증",
+          "mechanism": "성장주 밸류 압박이 Russell1000 성장 IWF -1.31% 하락으로 실증"
         },
         {
           "from": "n2",
-          "to": "n5",
-          "label": "수주집중",
-          "mechanism": "HBM 수요 급증이 글로벌 공급 70%+ 차지 삼성·SK하이닉스로 집중"
+          "to": "n6",
+          "label": "집중",
+          "mechanism": "AI 칩 수요 지속 인식이 소프트 이탈 자금을 반도체·하드웨어로 유인"
         },
         {
-          "from": "n5",
-          "to": "n6",
-          "label": "급등후조정",
-          "mechanism": "삼성·SK하이닉스 강세가 KOSPI 시총 30%+ 비중으로 지수 견인"
+          "from": "n6",
+          "to": "n7",
+          "label": "실증",
+          "mechanism": "반도체 수요 집중이 SOXX +3.94% 상승으로 섹터 로테이션 실증"
+        },
+        {
+          "from": "n6",
+          "to": "n8",
+          "label": "수혜",
+          "mechanism": "HBM 공급망 집중도 높은 한국 반도체가 로테이션 수혜 흡수, KOSPI 상방"
         }
       ],
-      "korea_terminal_node": "n6",
-      "briefing": "AI수요 노드가 SOXX(-0.31%) 모멘텀 유지와 삼성·SK하이닉스 수주 집중으로 분기된다. 메모리 크런치 확인(Apple 가격 인상 200달러+)이 한국 반도체 업종 강세로 연결되며 KOSPI +5.42% 견인한다.",
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n2(HBM·DRAM 공급부족 공식화) -> n5(삼성·SK하이닉스 수주 집중) -> n6(KOSPI 지수 상승) -> 글로벌 반도체 섹터 센티먼트 강화 -> n3(SOXX 모멘텀 유지) -> n2",
-        "riskLevel": "high",
-        "commentary": "SOXX 강세가 글로벌 AI 반도체 투자심리를 재차 부양하여 HBM 선주문 확대 기대를 재자극하고, 이것이 공급부족 내러티브를 재강화하는 양의 피드백 루프가 형성됨. 공급부족이 실수요가 아닌 투기적 선주문 증가에 기인할 경우 루프 붕괴 시 낙폭 확대 위험이 high 수준으로 상존함."
-      },
-      "chainFragility": {
-        "fragileEdge": "n5->n6",
-        "fragileReason": "삼성전자·SK하이닉스의 HBM 수주 집중이 KOSPI 지수 상승으로 연결되려면 실제 ASP(평균판매단가) 및 마진 개선이 분기 실적에서 확인되어야 하나, 수주 집중 단계에서는 원가 상승(전력·장비 CAPEX 급증) 압박이 동시 발생하여 EPS 상향 없는 멀티플 확대에 그칠 수 있음.",
-        "alternativePath": "n2(AI 수요 확인) -> 글로벌 빅테크의 한국산 HBM 장기공급계약(LTA) 체결 공시 -> 삼성·SK하이닉스 수익가시성 직접 확보 -> n6(KOSPI 견인) 경로를 통해 실적 불확실성을 우회하여 지수 상승 정당화 가능"
-      },
-      "missingHops": [
-        {
-          "to": "ASML·AMAT 등 반도체 장비주 / 국내 장비·소재株(한미반도체, 솔브레인)",
-          "via": "HBM 공급부족 대응을 위한 삼성·SK하이닉스의 HBM3E 전환 투자 결정이 EUV 노광장비 및 고순도 공정소재 긴급 발주로 이어지며, 장비·소재 업스트림 밸류체인에 수혜가 선행하여 파급(실적 반영은 본주 대비 1~2분기 선행)",
-          "lag_days": 7
-        },
-        {
-          "to": "전력 인프라 ETF(GRID, AMPS) / 국내 전력기기株(LS일렉트릭, HD현대일렉트릭)",
-          "via": "AI 데이터센터 HBM 수요 급증이 데이터센터 전력 소비 급증을 유발하고, 이는 변압기·전력망 투자 수요 폭발로 연결되어 전력 인프라 관련 자산군에 2차 테마로 파급됨으로써 KOSPI 내 비반도체 업종 동반 상승의 촉매로 작용",
-          "lag_days": 10
-        }
-      ]
+      "korea_terminal_node": "n8",
+      "briefing": "MS 급락·Alphabet 인재 이탈로 촉발된 테크섹터 AI칩수요분리. 소프트웨어 밸류 압박(IWF -1.31%, ARKK -0.17%)과 대비되는 반도체 로테이션이 SOXX +3.94%로 가시화. HBM 과점 한국 반도체가 로테이션 수혜 흡수하며 KOSPI 상방 견인."
     },
     {
       "id": "thread_003",
-      "title": "은행건전성·신용안정",
+      "title": "은행스트레스·신용완화",
       "priority": 3,
       "frequency": "WEEKLY",
       "nodes": [
         {
           "id": "n1",
-          "label": "스트레스테스트",
-          "value": "대형은행 전원 통과, 시스템 리스크 해소",
+          "label": "대형은행스트레스통과",
+          "value": "Fed 스트레스 테스트 전원 합격, 시스템 리스크 해소",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "Federal Reserve Board's annual bank stress test confirms that large banks are well positioned to weather a severe recession (2026-06-24)"
+          ]
         },
         {
           "id": "n2",
-          "label": "신용환경안정",
-          "value": "신용 위축 우려 소멸, 스프레드 안정",
-          "source": "concept",
-          "timestamp": null
+          "label": "HY스프레드안정",
+          "value": "2.71 -> 2.76 (+0.05%p)",
+          "source": "layer_T0_macro",
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n3",
-          "label": "HY신용스프레드",
-          "value": "2.65 -> 2.71 (+0.06%p)",
-          "source": "layer_T0_macro",
-          "timestamp": null
+          "label": "자본환원기대",
+          "value": "스트레스 통과 후 배당·자사주 확대 기대",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            "Federal Reserve Board's annual bank stress test confirms that large banks are well positioned (2026-06-24)"
+          ]
         },
         {
           "id": "n4",
-          "label": "하이일드채(HYG)",
-          "value": "[06/16] $80.03->[06/24] $79.94 (-0.20%)",
+          "label": "금융섹터ETF(XLF)",
+          "value": "$53.72->$53.45 (-0.50%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n5",
-          "label": "자본환원기대",
-          "value": "배당·자사주매입 확대 기대 형성",
+          "label": "EM리스크선호지속",
+          "value": "글로벌 신용 환경 리스크온 유지로 EM 유입 지속",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n6",
-          "label": "금융섹터ETF(XLF)",
-          "value": "[06/23] $53.72->[06/24] $54.27 (+1.02%)",
+          "label": "하이일드ETF(HYG)",
+          "value": "[06/18] $80.03->[06/25] $79.88 (-0.20%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n7",
-          "label": "투자등급채(LQD)",
-          "value": "[06/17] $108.77->[06/24] $109.51 (+0.60%)",
+          "label": "신흥국ETF(EEM)",
+          "value": "[06/18] $70.79->[06/25] $67.96 (-4.01%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n8",
-          "label": "한국국채외인수요",
-          "value": "리스크온 속 외국인 순매수 확대",
+          "label": "WGBI외인채권수요",
+          "value": "WGBI 편입 효과+리스크온으로 외인 한국채 수요 강화",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n9",
+          "label": "KOSPI",
+          "value": "[06/24] $0.00->[06/25] $0.00 (+5.42%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": null,
+          "related_news": []
         }
       ],
       "edges": [
         {
           "from": "n1",
           "to": "n2",
-          "label": "우려해소",
-          "mechanism": "스트레스 통과로 신용 위축 공포 차단, 스프레드 추가 확대 압력 제거"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
-          "label": "실증",
-          "mechanism": "HY스프레드 소폭 확대에도 구조적 안정세 유지 확인"
-        },
-        {
-          "from": "n2",
-          "to": "n4",
-          "label": "실증",
-          "mechanism": "크레딧 환경 안정이 HYG 주간 보합 유지로 반영"
+          "label": "억제",
+          "mechanism": "시스템 리스크 해소 확인이 HY 스프레드 추가 확대 우려 차단"
         },
         {
           "from": "n1",
+          "to": "n3",
+          "label": "기대",
+          "mechanism": "스트레스 통과로 규제 자본 초과분 주주 환원 허용 기대 즉각 반영"
+        },
+        {
+          "from": "n3",
+          "to": "n4",
+          "label": "실증",
+          "mechanism": "자본 환원 기대가 금융 섹터 수급 개선 신호로 XLF에 반영"
+        },
+        {
+          "from": "n2",
           "to": "n5",
-          "label": "자본여력",
-          "mechanism": "스트레스 통과 후 배당·자사주매입 확대 여력 확인으로 금융주 매수"
+          "label": "유지",
+          "mechanism": "HY 스프레드 소폭 확대에도 시스템 안정이 EM 리스크 선호 기조 유지"
         },
         {
           "from": "n5",
           "to": "n6",
           "label": "실증",
-          "mechanism": "자본환원 기대가 XLF 상승(+1.02%)에 즉각 반영"
+          "mechanism": "리스크온 유지가 HYG 주간 -0.20% 소폭 하락에 그쳐 방어적 흐름 실증"
         },
         {
-          "from": "n2",
+          "from": "n5",
           "to": "n7",
           "label": "실증",
-          "mechanism": "크레딧 안정이 투자등급채 LQD 주간 상승으로 확인"
+          "mechanism": "EM 리스크 선호 지속이 EEM 주간 흐름에 반영(전주 대비 완만한 조정)"
         },
         {
-          "from": "n2",
+          "from": "n5",
           "to": "n8",
-          "label": "EM유입",
-          "mechanism": "선진국 크레딧 안정이 글로벌 EM 자금 흐름 촉진, 한국 국채 외인 수요 확대"
+          "label": "결합",
+          "mechanism": "EM 리스크 선호가 한국 WGBI 편입 프리미엄과 결합해 외인 채권 수요 강화"
+        },
+        {
+          "from": "n8",
+          "to": "n9",
+          "label": "실증",
+          "mechanism": "외인 한국채 수요 증가가 원화 지지·KOSPI 외인 순매수로 연결"
         }
       ],
-      "korea_terminal_node": "n8",
-      "briefing": "Fed 스트레스테스트 대형은행 전원 통과가 신용 환경 안정 노드를 주도한다. XLF +1.02%, LQD +0.60% 상승과 HY스프레드 안정이 이를 실증하며, 한국 국채 외국인 수급 개선 기반을 강화한다.",
+      "korea_terminal_node": "n9",
+      "briefing": "Fed 스트레스 테스트 전원 통과로 HY 스프레드 소폭 확대(2.71→2.76)에도 시스템 건전성 확인. 글로벌 리스크온 유지와 WGBI 편입 효과가 결합해 외인 한국채 수요 강화, KOSPI 외인 유입 흐름 주간 지속.",
       "_warnings": [
-        "[WEEKLY 프리퀀시 위반] thread=thread_003 node=n6"
+        "[WEEKLY 프리퀀시 위반] thread=thread_003 node=n9"
       ]
     },
     {
       "id": "thread_004",
-      "title": "AI생태계재편·HBM",
+      "title": "고실질금리·AI투자사이클",
       "priority": 4,
       "frequency": "MONTHLY",
       "nodes": [
         {
           "id": "n1",
-          "label": "AI공급망보안",
-          "value": "AI 기술 유출 우려, 수출통제 강화",
-          "source": "concept",
-          "timestamp": null
+          "label": "고실질금리고착",
+          "value": "2.29 -> 2.23 (-0.06%p) / 월간 고착",
+          "source": "layer_T0_macro",
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n2",
-          "label": "미국AI클러스터",
-          "value": "규제강화로 미국 내 데이터센터 투자 집중",
+          "label": "AI인프라투자가속",
+          "value": "빅테크 CapEx 사이클 지속, 데이터센터 수요 구조화",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n3",
-          "label": "HBM수요구조화",
-          "value": "AI서버 증설로 HBM3E 등 고성능 메모리 폭증",
+          "label": "성장주밸류차별화",
+          "value": "고실질금리에도 AI수익화 가시 기업만 리레이팅",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n4",
-          "label": "반도체ETF(SOXX)",
-          "value": "[05/22] $537.33->[06/24] $615.90 (+14.63%)",
+          "label": "나스닥100ETF(QQQ)",
+          "value": "[05/26] $730.28->[06/25] $716.38 (-1.90%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n5",
-          "label": "한국반도체수혜",
-          "value": "삼성·SK하이닉스 HBM 장기 수주 가시성",
-          "source": "concept",
-          "timestamp": null
+          "label": "달러ETF(UUP)",
+          "value": "[05/21] $27.73->[06/25] $28.48 (+2.65%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n6",
-          "label": "한국ETF(EWY)",
-          "value": "[05/22] $182.03->[06/24] $202.88 (+8.40%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "label": "반도체공급망재편",
+          "value": "HBM·어드밴스드 패키징 한국 집중도 심화",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n7",
-          "label": "경상수지·원화강세",
-          "value": "반도체 수출 증가→경상흑자→원화 절상",
+          "label": "반도체ETF(SOXX)",
+          "value": "[05/26] $570.09->[06/25] $625.20 (+9.67%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n8",
+          "label": "한국반도체구조강세",
+          "value": "AI투자 사이클이 고실질금리 역풍 상쇄, KOSPI 지지",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n9",
+          "label": "KOSPI",
+          "value": "[06/24] $0.00->[06/25] $0.00 (+5.42%)",
+          "source": "layer_T1_asia_today",
+          "timestamp": null,
+          "related_news": []
         }
       ],
       "edges": [
         {
           "from": "n1",
-          "to": "n2",
-          "label": "규제집중",
-          "mechanism": "수출통제 강화로 중국 접근 차단, 미국 내 AI 인프라 투자 집중"
+          "to": "n3",
+          "label": "압박",
+          "mechanism": "고실질금리가 수익화 불확실 성장주 압박, AI 수익화 가시 기업만 차별 생존"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "수요유발",
-          "mechanism": "미국 하이퍼스케일 데이터센터 건설 가속이 HBM 발주 폭증으로 연결"
+          "label": "정당화",
+          "mechanism": "AI CapEx 지속이 수익화 가시성 근거 제공, 밸류에이션 정당화"
         },
         {
           "from": "n3",
           "to": "n4",
           "label": "실증",
-          "mechanism": "HBM 수요 구조화가 SOXX 월간 +14.63% 급등에 반영"
+          "mechanism": "성장주 차별화가 QQQ 월간 -1.90% 분화 흐름으로 실증"
         },
         {
-          "from": "n3",
+          "from": "n1",
           "to": "n5",
-          "label": "수주집중",
-          "mechanism": "글로벌 HBM 공급 70%+ 장악 삼성·SK하이닉스로 장기 수주 집중"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
           "label": "실증",
-          "mechanism": "한국 반도체 수혜 기대가 EWY 월간 +8.40% 상승에 선반영"
+          "mechanism": "미국 실질금리 우위가 달러 수요 지지, UUP 월간 +2.65% 달러 강세 실증"
         },
         {
-          "from": "n5",
+          "from": "n2",
+          "to": "n6",
+          "label": "집중",
+          "mechanism": "데이터센터 수요 구조화가 HBM·패키징 한국 공급망 집중도 심화"
+        },
+        {
+          "from": "n6",
           "to": "n7",
-          "label": "경상개선",
-          "mechanism": "반도체 수출 증가→경상수지 흑자 확대→원화 절상·KOSPI 밸류 재평가"
+          "label": "실증",
+          "mechanism": "한국 HBM 공급망 집중이 SOXX 월간 +9.67% 반도체 강세로 실증"
+        },
+        {
+          "from": "n6",
+          "to": "n8",
+          "label": "상쇄",
+          "mechanism": "HBM 고단가·공급 집중이 달러 강세 원화 약세 역풍을 수출 단가 상승으로 상쇄"
+        },
+        {
+          "from": "n8",
+          "to": "n9",
+          "label": "실증",
+          "mechanism": "반도체 수출 단가 상승·실적 가시성이 외인 KOSPI 복귀 유인, 지수 지지"
         }
       ],
-      "korea_terminal_node": "n7",
-      "briefing": "AI 공급망 보안 규제가 미국 내 HBM 수요 구조화를 촉발했다. SOXX 월간 +14.63%, EWY +8.40%가 이를 실증하며, 삼성·SK하이닉스 장기 수주 집중이 한국 경상수지 개선과 원화 강세·KOSPI 밸류 재평가 경로를 형성한다."
+      "korea_terminal_node": "n9",
+      "briefing": "DFII10 2.23% 고실질금리 고착에도 AI CapEx 사이클이 SOXX 월간 +9.67%를 견인. HBM 공급망 한국 집중이 달러강세(UUP +2.65%) 역풍을 수출 단가 상승으로 상쇄, KOSPI 반도체 구조적 강세 월간 지속."
     }
   ],
   "headlines": [
-    "FOMC 중립으로 달러약세·리스크온 가속",
-    "메모리크런치 공식화, 한국반도체 견인",
-    "은행건전성 확인, 신용환경 안정 지속"
+    "반도체 랠리 KOSPI 대형주 견인, KOSDAQ 역행",
+    "MS지출우려·테크섹터 AI칩 로테이션",
+    "은행 스트레스테스트 통과, 신용환경 리스크온 유지"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: FOMC 중립기조 공식화 후 UUP -0.25%, EEM·HYG 동반 상승(리스크온) / 당일 아시아: KOSPI +5.42%, KOSDAQ -2.36% 대형주·반도체 쏠림",
-    "layer2": "FOMC 중립 선언(T0)→달러약세·리스크온 신호→외국인 자금 복귀 기대→KOSPI 수급 개선(T1)",
-    "layer3": "Apple 메모리 가격 인상(200달러+) 공식화가 AI수요 확대와 한국 반도체 수주 집중으로 작용, KOSPI 반도체 업종(시총 18%+)이 지수 전체를 견인하는 중"
+    "layer1": "전일 미국: SOXX +3.94%, EEM +1.04%, IWF -1.31% 테크섹터 분화 강화 / 당일 아시아: KOSPI +5.42% 반도체 랠리, KOSDAQ -2.36% 역행",
+    "layer2": "FOMC 동결·메모리 공급 부족·Fed 스트레스 테스트 전원 통과가 AI수요리스크온·테크칩분기·신용환경 완화 신호로 복합 작용하며 KOSPI 외인 반도체 순매수 유입 견인",
+    "layer3": "07:43 KST 장외 모든 시장 마감. 실질금리 2.23%·HY스프레드 +5bp 소폭 확대·기대인플레 상승 혼재 속 반도체 공급망 한국 집중도 월간 강세 지속 확인"
   },
-  "macro_regime_note": "고실질금리·평탄커브 기조 속 Fed 중립선언이 달러 모멘텀 소멸 신호로 작용하며, 글로벌 리스크온·신용 안정이 EM 자금 복귀와 한국 외인 순매수 재개의 구조적 배경을 형성한다.",
-  "generated_at": "2026-06-25T15:47:40.791Z",
+  "macro_regime_note": "고실질금리·평탄커브·리스크온 혼합 레짐에서 AI 인프라 투자 사이클이 반도체 수요를 구조적으로 지탱하며 한국 메모리 과점 기업에 유리한 섹터 로테이션 환경 형성.",
+  "generated_at": "2026-06-25T22:48:02.845Z",
   "data_as_of": {
-    "timestamp_iso": "2026-06-25T15:47:40.787Z",
-    "display": "6/25 11:47 [ 뉴욕 현지 시각 ]",
-    "display_mobile": "6/25 11:47 뉴욕",
+    "timestamp_iso": "2026-06-25T22:48:02.664Z",
+    "display": "6/25 18:48 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "6/25 18:48 뉴욕",
     "timezone": "America/New_York"
   },
   "meta": {
-    "generated_at": "2026-06-25T15:47:40.792Z",
-    "elapsed_sec": 249,
-    "market_status": [
-      "미국(S&P500/NASDAQ)",
-      "유럽(DAX/CAC/FTSE)"
-    ],
+    "generated_at": "2026-06-25T22:48:02.845Z",
+    "elapsed_sec": 285,
+    "market_status": [],
     "is_weekend": false,
-    "data_note": "T0=전일 미국 마감(6/24), T1=당일 한국/일본(6/25 마감), 유럽(6/24 장중). KOSPI +5.42% 강세 vs KOSDAQ -2.36% 대조, 원/달러 1542.7원. VIX +2.79% 상승 주목."
-  },
-  "deep_analysis_at": "2026-06-25T15:54:30.089Z"
+    "data_note": "전일 미국 장(T0) 마감 확정 기준. KOSPI +5.42%, KOSDAQ -2.36% 로 대형주·소형주 극심한 괴리. SOXX +3.94%, QQQ +0.81%, EWY +3.91% 등 반도체/테크 강세. VIX 18.89(+1.4%) 소폭 상승 병존."
+  }
 }
