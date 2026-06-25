@@ -127,6 +127,29 @@
       "briefing": "FOMC 동결 확인과 Apple 메모리 공급 부족이 AI수요리스크온 공통원인을 촉발. SOXX +3.94%, EEM +1.04% 동반 강세가 한국 메모리 과점 구조 수혜로 전개되어 KOSPI +5.42% 급등 견인.",
       "_warnings": [
         "[한국 종착 비율] 4/4 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n4(리스크온) -> n7(한국반도체 부각) -> n8(KOSPI+외국인순매수) -> n4(글로벌 리스크온 강화 재확인)",
+        "riskLevel": "medium",
+        "commentary": "KOSPI 반도체 급등(+5.42%)이 글로벌 리스크온 심리를 재확증하는 양방향 피드백이 형성되며, 단기 과매수 후 역피드백(외국인 차익실현 -> 리스크온 훼손) 전환 시 하락 가속 위험 내포"
+      },
+      "chainFragility": {
+        "fragileEdge": "n3->n4",
+        "fragileReason": "Apple 가격 인상이 수요 확인보다 소비자 수요 파괴(demand destruction) 신호로 재해석될 경우, HBM·DRAM 수요 기대 경로가 역전되어 리스크온 촉발 근거가 붕괴된다",
+        "alternativePath": "n2(실질금리 안정) -> n4 단독 경로로 리스크온 유지 가능하나, 반도체 섹터 특수성 프리미엄은 소멸"
+      },
+      "missingHops": [
+        {
+          "to": "USD/KRW 환율(원화 강세)",
+          "via": "글로벌 리스크온(n4) -> 신흥국 자금 유입(EEM +1.04%) -> 한국 외국인 순매수 급증 -> 달러 매도·원화 매수 포지션 확대 -> 원/달러 하락 압력",
+          "lag_days": 1
+        },
+        {
+          "to": "일본 도시바·키옥시아 NAND 섹터",
+          "via": "Apple 공급 부족 공식화(n3) -> DRAM 외 NAND 부족 우려 동반 확산 -> 일본 메모리 관련주 동조 상승 -> 아시아 반도체 섹터 전반 리레이팅",
+          "lag_days": 2
+        }
       ]
     },
     {
@@ -254,7 +277,30 @@
         }
       ],
       "korea_terminal_node": "n8",
-      "briefing": "MS 급락·Alphabet 인재 이탈로 촉발된 테크섹터 AI칩수요분리. 소프트웨어 밸류 압박(IWF -1.31%, ARKK -0.17%)과 대비되는 반도체 로테이션이 SOXX +3.94%로 가시화. HBM 과점 한국 반도체가 로테이션 수혜 흡수하며 KOSPI 상방 견인."
+      "briefing": "MS 급락·Alphabet 인재 이탈로 촉발된 테크섹터 AI칩수요분리. 소프트웨어 밸류 압박(IWF -1.31%, ARKK -0.17%)과 대비되는 반도체 로테이션이 SOXX +3.94%로 가시화. HBM 과점 한국 반도체가 로테이션 수혜 흡수하며 KOSPI 상방 견인.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n1(MS AI 지출 논란) -> n3(소프트 수익성 의구심) -> n5(IWF 성장주 하락) -> 성장주 밸류에이션 압박 확산 -> n1 논란 증폭(미디어·애널리스트 추가 공격)",
+        "riskLevel": "high",
+        "commentary": "AI ROI 논란이 성장주 ETF 하락으로 실증되면 기관 리스크 관리 규정상 추가 익스포저 축소 의무가 발동되고, 이는 논란 자체를 증폭시키는 자기실현적 하락 피드백을 유발할 수 있어 위험 수준이 높다"
+      },
+      "chainFragility": {
+        "fragileEdge": "n2->n6",
+        "fragileReason": "AI 칩·인프라 수요를 소프트웨어와 '분리 인식'하는 시장 내러티브가 단 하나의 빅테크 캐펙스 삭감 발표(예: MS·Meta 설비투자 가이던스 하향)로 즉각 붕괴되며, 소프트 이탈 자금의 반도체 재유입 경로가 차단된다",
+        "alternativePath": "thread_001의 n3(Apple 공급부족) 경로가 독립적 수요 근거로 작동하여 SOXX 지지 역할을 부분 대체 가능하나, 로테이션 강도는 현저히 약화"
+      },
+      "missingHops": [
+        {
+          "to": "투자등급 회사채 스프레드(IG Credit Spread) 확대",
+          "via": "AI ROI 논란(n1) -> 빅테크 성장 내러티브 훼손 -> 대형 기술기업 미래 현금흐름 신뢰도 하락 -> IG 크레딧 시장에서 기술섹터 채권 스프레드 방어적 확대 -> 전체 IG 인덱스 소폭 상승",
+          "lag_days": 3
+        },
+        {
+          "to": "TSMC ADR 및 대만달러",
+          "via": "SOXX 섹터 로테이션 수혜(n6->n7) -> AI 칩 팹리스 수요 집중 인식 -> TSMC 선단공정 수주 기대 재부각 -> TSMC ADR 동조 상승 및 외국인 대만 투자 증가 -> 대만달러 강세 압력",
+          "lag_days": 2
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -552,5 +598,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "전일 미국 장(T0) 마감 확정 기준. KOSPI +5.42%, KOSDAQ -2.36% 로 대형주·소형주 극심한 괴리. SOXX +3.94%, QQQ +0.81%, EWY +3.91% 등 반도체/테크 강세. VIX 18.89(+1.4%) 소폭 상승 병존."
-  }
+  },
+  "deep_analysis_at": "2026-06-25T22:54:16.250Z"
 }
