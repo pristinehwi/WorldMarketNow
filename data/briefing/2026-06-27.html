@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-27 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/27 07:48 KST</div>
+    <div class="header-date">2026-06-27</div>
+    <div class="header-headline">AI 주도 빅테크 주식 최악의 한 주 - 반도체·소프트웨어 동반 매도</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">S&P 500 5연속 하락·SpaceX 채권 경고 속 미국 고용보고서 발표 - 위험자산 방향성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 과열 균열 - 빅테크 최악의 한 주와 자본배분 회의론 확산</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">이번 주 기술주는 연중 최악 수준의 하락세를 기록했으며, S&P 500은 10개월 만에 최장 연속 하락(5일)을 이어갔다. 시장의 핵심 질문은 '막대한 AI 지출이 실제로 무엇을 만들어내고 있는가'로 수렴되며, 단순한 모멘텀 피로를 넘어 AI 자본배분 모델 자체에 대한 구조적 의구심이 부상했다. OpenAI의 IPO 시점이 2027년으로 밀릴 가능성이 제기되고 Micron 등 메모리 반도체가 주도하던 AI 사이클 수혜 논리도 흔들리는 반면, Anthropic과 OpenAI의 경쟁 구도는 단순 기업 경쟁을 넘어 정치적·안보적 함의를 갖는 새 국면에 진입했다. OpenAI는 트럼프 행정부 요청으로 GPT-5.6 출시를 제한하며 정부-AI 기업 간 관계가 새로운 긴장 축으로 부상했고, 이는 Anthropic의 국가안보 연계 전략과 대비되는 구도를 형성했다. 한편 소프트웨어주(ServiceNow·Salesforce)는 OpenAI 위협 약화 기대감에 일시 반등했지만 지속성은 불확실하다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">커스텀 칩 전쟁 - Nvidia 독점 균열과 수직통합 가속</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#10</span>
+    </div>
+    <div class="theme-summary">OpenAI의 자체 추론 칩 'Jalapeño'(Broadcom 협력) 공개를 계기로, Google·Apple·SpaceX에 이어 주요 AI 기업들이 일제히 커스텀 실리콘 개발에 나서며 Nvidia 의존도 탈피 전략이 가시화됐다. 이는 단순한 비용 절감 차원을 넘어 AI 인프라 공급망의 수직통합 경쟁으로 해석되며, 중장기적으로 Nvidia의 데이터센터 GPU 수요 성장 전망에 구조적 변수가 추가됐다. 반도체 섹터는 이번 주 전반적인 매도세를 겪었고, 칩 기업들의 슬라이드가 기술주 전반 하락을 주도했다. Broadcom의 내부자 거래 공시도 이 흐름 속에서 주목받았다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">SpaceX 자본시장 팽창 - $250억 채권 경고 신호와 IPO 거품 논쟁</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#16</span>
+    </div>
+    <div class="theme-summary">SpaceX는 IPO 직후 불과 2주 만에 250억 달러 규모의 회사채를 발행해 시장의 주목을 받았으나, 채권 시장에서는 AI 과열 우려와 맞물려 경고 신호가 감지됐다. SpaceX 주식이 IPO 후 37% 급등했음에도 불구하고, 과도한 밸류에이션에 대한 월가의 회의적 시각이 동시에 제기되는 상충된 국면이 전개됐다. Starlink는 T-Mobile 인수 가능성까지 거론되며 이동통신 시장 진출 야망을 드러냈고, 이는 Musk 제국의 자본시장 내 영향력 팽창을 상징하는 동시에 ESG 리스크와 레버리지 우려를 동반한다. Tesla의 FSD 관련 소송 합의와 연방 조사 지속은 자율주행 섹터 전반의 규제 불확실성을 재확인시켰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">에너지·지정학 교차점 - 이란 호르무즈 드론 공격과 핵 에너지 수요 폭증</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#20</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령이 이란을 호르무즈 해협 내 화물선 드론 공격의 배후로 지목하며 '정전 합의 위반'이라고 강하게 비난함으로써, 미-이란 협상 교착과 지정학 리스크 프리미엄이 동시에 재점화됐다. IAEA는 이란 핵 사찰 접근권 문제에서 새로운 난제에 직면해 있으며, 협상 재개 여부에 따라 유가와 중동 지정학 프리미엄의 방향성이 결정될 분기점에 있다. 한편 AI 데이터센터의 전력 수요 폭증, 전쟁에 따른 에너지 불안, 기후 압력이 복합적으로 작용하며 글로벌 에너지 시장이 원자력으로의 구조적 회귀를 가속하고 있다. 미국의 아프리카 핵심 광물 전략도 재편되는 가운데, 잠비아 코퍼벨트의 대서양 수출 루트 확장은 탈중국 공급망 재편의 실질적 진전을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">트럼프 관세·AI 규제 - EU 디지털세 100% 보복 위협과 정부의 AI 출시 개입</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#22</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령이 유럽 각국의 디지털세에 대해 100% 관세를 부과하겠다고 위협하며, EU와 방금 타결된 무역합의를 스스로 뒤집을 수 있다고 시사해 글로벌 무역 불확실성이 재확대됐다. 이와 동시에 트럼프 행정부가 OpenAI의 GPT-5.6 출시를 보안 검토를 이유로 제한 요청함으로써, 정부의 AI 기술 출시 개입이 선례화될 가능성에 대한 업계의 반발이 커지고 있다. 캘리포니아의 지방세 인상 한도 강화 투표도 미국 내 조세 환경 변화의 방향성을 가늠할 사전 지표로 주목된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #23~#30</span>
+    </div>
+    <div class="theme-summary">베네수엘라 대규모 지진은 사망자 589명, 실종 5만 명 이상, 직접 피해액 67억 달러로 집계되며 인도주의적 위기가 심화됐다. 한국은 전군을 드론 전투원으로 육성하는 군사 현대화 계획을 발표했고, 러시아와 벨라루스 정상은 우크라이나 전쟁 관련 회담을 가졌다. Meta의 Zuckerberg는 예측시장 플랫폼 Polymarket·Kalshi와의 협력 가능성을 탐색 중이며, Amazon Prime Day는 소비 부진 신호를 나타냈다. 미국 주간 일정에서는 고용보고서가 핵심 이벤트로 예정돼 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 과열 균열 - 빅테크 최악의 한 주와 자본배분 회의론 확산</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">OpenAI 위협 약화에 ServiceNow·Salesforce 등 소프트웨어주 급등</div>
+    <div class="article-title-en">ServiceNow, Salesforce and other software stocks surge as the OpenAI threat weakens</div>
+    <div class="article-keypoint">OpenAI 위협 약화 기대감에 ServiceNow·Salesforce 반등 - AI 수혜 구도 소프트웨어로 이동 가능성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/servicenow-salesforce-and-other-software-stocks-surge-as-the-openai-threat-weakens-bb1eacfb?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 07:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Apple·Micron·OpenAI와 AI의 험난한 여름</div>
+    <div class="article-title-en">Apple, Micron, OpenAI and A.I.’s Rough Summer</div>
+    <div class="article-keypoint">AI 섹터 여름 난기류 - 메모리 가격 상승·OpenAI IPO 지연·iPad 가격 인상 트리플 악재</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/06/26/business/dealbook/ai-openai-ipo-slump.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/26 20:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">기술주, 올해 최악의 한 주 - AI 모멘텀이 탈선한 경위</div>
+    <div class="article-title-en">Tech stocks just had one of their worst weeks in a year. Here’s how AI momentum went off the rails.</div>
+    <div class="article-keypoint">AI 지출 정당성에 대한 월가 집단 의문 부상 - 기술주 연중 최악 주간 성과</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/tech-stocks-just-had-one-of-their-worst-weeks-in-a-year-heres-how-ai-momentum-went-off-the-rails-d4596bae?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 06:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">이제는 Anthropic 대 OpenAI의 싸움이 아니다</div>
+    <div class="article-title-en">It’s not about Anthropic vs. OpenAI anymore</div>
+    <div class="article-keypoint">AI 모델 경쟁이 정치·안보 영역으로 확장 - 집단적 거버넌스 부재가 새로운 시스템 리스크</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/26/its-not-about-anthropic-vs-openai-anymore/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 01:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">OpenAI, 정부 보안 우려 이유로 신규 모델 접근 제한</div>
+    <div class="article-title-en">OpenAI Limits Access to New Models, Citing Government Security Concerns</div>
+    <div class="article-keypoint">트럼프 행정부의 OpenAI GPT-5.6 출시 제한 - AI 기업 자율성 vs. 정부 보안 통제 첫 충돌</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/openai-limits-access-to-new-model-citing-government-security-concerns-66420050?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">OpenAI, 정부 요청으로 GPT-5.6 출시 제한 - '이것이 기본값이 돼서는 안 된다'</div>
+    <div class="article-title-en">OpenAI limits GPT-5.6 rollout after government request, says restrictions shouldn’t be the norm</div>
+    <div class="article-keypoint">OpenAI, 정부 주도 AI 출시 통제 선례화에 공개 반발 - 업계 규제 긴장 고조</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/26/openai-limits-gpt-5-6-rollout-after-government-request-says-restrictions-shouldnt-be-the-norm/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 03:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">OpenAI, 트럼프 행정부 요청으로 AI 모델 출시 단계적 제한</div>
+    <div class="article-title-en">OpenAI staggers AI model release after Trump administration request</div>
+    <div class="article-keypoint">OpenAI GPT-5.6 출시 제한 - Anthropic 사례와 유사한 정부-AI 기업 협상 구도 패턴화</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/jun/26/openai-ai-model-release-trump-us-sam-altman-gpt-anthropic-mythos" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/26 23:06 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">커스텀 칩 전쟁 - Nvidia 독점 균열과 수직통합 가속</span>
+    <span class="theme-label-range">Article #8~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">OpenAI부터 SpaceX까지 자체 칩 개발에 나서는 이유 - Nvidia에 가해지는 열기</div>
+    <div class="article-title-en">Why everyone from OpenAI to SpaceX is building their own chips (and turning up the heat on Nvidia)</div>
+    <div class="article-keypoint">OpenAI·SpaceX 등 빅테크 커스텀 칩 경쟁 가속 - Nvidia 독점 지위에 구조적 균열 가시화</div>
+    <a class="article-link" href="https://techcrunch.com/video/why-everyone-from-openai-to-spacex-is-building-their-own-chips-and-turning-up-the-heat-on-nvidia/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 02:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">S&P 500, 10개월 만에 최장 연속 하락 - 반도체주 급락이 주도</div>
+    <div class="article-title-en">S&P 500 notches longest losing streak in 10 months as chipmakers slide</div>
+    <div class="article-keypoint">반도체 슬라이드 주도로 S&P 500 10개월 만에 5연속 하락 - 소프트웨어 반등은 일시적</div>
+    <a class="article-link" href="https://www.ft.com/content/bb70e272-5b09-4806-8b19-7c03c350f580" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 05:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Broadcom 내부자 거래 공시 (6월 26일 기준)</div>
+    <div class="article-title-en">Form 4 Broadcom Inc For: 26 June</div>
+    <div class="article-keypoint">Broadcom 내부자 거래 공시 - 커스텀 칩 수요 수혜 기대와 대주주 매도 신호 교차</div>
+    <a class="article-link" href="https://www.investing.com/news/filings/form-4-broadcom-inc-for-26-june-93CH-4763779" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/26 22:16 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">SpaceX 자본시장 팽창 - $250억 채권 경고 신호와 IPO 거품 논쟁</span>
+    <span class="theme-label-range">Article #11~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">SpaceX 신규 채권에 경고 신호 - 투자자들, AI 과열 열기에 제동</div>
+    <div class="article-title-en">SpaceX’s new bonds are flashing a warning sign, as investors pump the brakes on AI frenzy</div>
+    <div class="article-keypoint">SpaceX, IPO 2주 만에 $250억 채권 발행 - 채권시장에서 AI 과열 경고 신호 포착</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacexs-new-bonds-are-flashing-a-warning-sign-as-investors-pump-the-brakes-on-ai-frenzy-752ad44b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 05:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">SpaceX 주식은 최악의 매수 - 이것이 강세장에 실제로 의미하는 것</div>
+    <div class="article-title-en">SpaceX stock is a terrible buy — what that actually means for the bull market</div>
+    <div class="article-keypoint">SpaceX IPO 고평가 우려 속 '거품 경고'와 '강세장 지속' 논리 충돌 - 단기 매수 리스크 확대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacex-is-a-bad-buy-why-openai-and-anthropic-will-be-too-2448ea73?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 07:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Tesla와 Waymo의 로보택시 경쟁 - 정작 가장 많은 돈을 쓰는 기업은 차를 만들지 않는다</div>
+    <div class="article-title-en">Tesla and Waymo duel in the robotaxi race — but the company spending the most builds no cars at all</div>
+    <div class="article-keypoint">Uber, 로보택시 확보에 $5억 베팅 - Waymo·Tesla 경쟁 심화로 자율주행 패권 판도 재편</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/tesla-and-waymo-are-chasing-the-robotaxi-dream-but-the-company-spending-the-most-to-win-builds-no-cars-at-all-0d8682b9?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 07:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Tesla, FSD 충돌 소송 합의 - 연방 조사는 지속</div>
+    <div class="article-title-en">Tesla settles FSD crash lawsuit as federal investigations continue</div>
+    <div class="article-keypoint">Tesla FSD 치사 사고 소송 합의 - 연방 조사 지속으로 자율주행 법적 리스크 해소 미완</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/26/tesla-settles-fsd-crash-lawsuit-as-federal-investigations-continue/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 01:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Musk의 Starlink, 이동통신사 도전 계획 - TD Cowen, T-Mobile 인수 가능성 제시</div>
+    <div class="article-title-en">Musk's Starlink Plots To Become A Mobile Carrier; TD Cowen Sees Possible T-Mobile Buyout</div>
+    <div class="article-keypoint">Starlink, T-Mobile 인수 가능성 거론 - Musk의 이동통신 시장 직접 진입 전략 현실화</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/musks-starlink-plots-become-mobile-carrier-td-cowen-sees-possible-t-mobile-buyout" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/26 22:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">로보택시, 청소·충전을 위해 수 마일을 이동 - 이를 해결하려는 신생 스타트업 등장</div>
+    <div class="article-title-en">Robotaxis drive miles just to get cleaned and charged; this new startup wants to fix that</div>
+    <div class="article-keypoint">로보택시 청소·충전 스타트업 Aseon Labs $1천만 조달 - 자율주행 생태계 인프라 투자 본격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/26/this-silicon-valley-startup-has-raised-10m-to-build-pitstops-to-clean-and-charge-robotaxis/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/26 22:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">에너지·지정학 교차점 - 이란 호르무즈 드론 공격과 핵 에너지 수요 폭증</span>
+    <span class="theme-label-range">Article #17~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">AI 수요·전쟁·기후 압력으로 세계는 다시 원자력으로 향한다</div>
+    <div class="article-title-en">AI Demand, War, and Climate Pressure Push World Back To Nuclear</div>
+    <div class="article-keypoint">AI·전쟁·기후 복합 위기로 원자력 수요 구조적 급증 - 글로벌 에너지 믹스 재편 가속</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/AI-Demand-War-and-Climate-Pressure-Push-World-Back-To-Nuclear.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">IAEA, 이란 내부의 새로운 핵 퍼즐에 직면</div>
+    <div class="article-title-en">The IAEA Faces a New Nuclear Puzzle Inside Iran</div>
+    <div class="article-keypoint">IAEA, 이란 핵 사찰 접근권 분쟁 심화 - 검증 불능 시 핵 리스크 프리미엄 급등 가능</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/The-IAEA-Faces-a-New-Nuclear-Puzzle-Inside-Iran.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">콩고 코퍼벨트의 대서양 수출 루트 확장</div>
+    <div class="article-title-en">Expanding the Copperbelt’s Atlantic Export Routes</div>
+    <div class="article-keypoint">미국-잠비아 $4.91억 코퍼벨트 수출 인프라 투자 - 중국 대비 대서양 루트 핵심 광물 공급망 재편</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/expanding-the-copperbelts-atlantic-export-routes/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 01:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump, 이란을 호르무즈 해협 화물선 드론 공격 배후로 지목</div>
+    <div class="article-title-en">Trump blames Iran for drone strike on cargo ship in strait of Hormuz</div>
+    <div class="article-keypoint">Trump, 이란을 호르무즈 드론 공격 배후 지목 - 정전 합의 붕괴 시 유가 급등 리스크 현실화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/26/trump-iran-drone-strike-strait-hormuz" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 04:08 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">트럼프 관세·AI 규제 - EU 디지털세 100% 보복 위협과 정부의 AI 출시 개입</span>
+    <span class="theme-label-range">Article #21~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Trump, 유럽 디지털세에 100% 관세 부과 위협</div>
+    <div class="article-title-en">Trump Threatens to Impose 100% Tariff on European Countries Over Tech Taxes</div>
+    <div class="article-keypoint">Trump, EU 디지털세에 100% 보복 관세 위협 - EU 무역합의 무력화 가능성으로 통상 리스크 재확대</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/06/26/business/economy/trump-tariffs-europe.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 04:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">캘리포니아, 도시별 세금 인상 기준 강화 법안 투표 예정</div>
+    <div class="article-title-en">California to Vote on Raising Bar for Cities to Increase Taxes</div>
+    <div class="article-keypoint">캘리포니아 지방세 인상 한도 강화 투표 - 미국 주 단위 조세 환경 변화 가늠자</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-26/california-to-vote-on-raising-bar-for-cities-to-increase-taxes" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 00:33 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #23~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">FEDS 논문: 경기 변동, 금융 마찰, 그리고 기업 간 생산성 격차</div>
+    <div class="article-title-en">FEDS Paper: Cyclical Fluctuations, Financial Frictions, and Productivity Differences across Firms</div>
+    <div class="article-keypoint">Fed 내부 연구: 금융 마찰이 기업 생산성 격차를 경기 사이클 전반에 증폭시키는 구조 분석</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/cyclical-fluctuations-financial-frictions-and-productivity-differences-across-firms.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 01:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Zuckerberg, Meta의 Polymarket·Kalshi 협력 가능성 검토 지시 - NYT 보도</div>
+    <div class="article-title-en">Zuckerberg asks Meta to explore working with Polymarket and Kalshi, NYT reports</div>
+    <div class="article-keypoint">Zuckerberg, 예측시장 Polymarket·Kalshi 협력 탐색 - Meta의 금융정보 플랫폼 확장 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/zuckerberg-asks-meta-to-explore-working-with-polymarket-and-kalshi-nyt-reports-4763701" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/26 22:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Putin·Lukashenko, 우크라이나 전쟁 긴장 고조 속 회담</div>
+    <div class="article-title-en">Putin, Lukashenko hold talks on Friday at tense point in Ukraine war</div>
+    <div class="article-keypoint">Putin-Lukashenko 회담 - 우크라이나 전황 전환점에서 러시아-벨라루스 전략 조율 강화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/putin-lukashenko-hold-talks-on-friday-at-tense-point-in-ukraine-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 02:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">베네수엘라 지진으로 5만 명 이상 실종 - UN 구호 책임자 AFP에 전달</div>
+    <div class="article-title-en">Over 50,000 people missing after Venezuela quakes, UN aid chief tells AFP</div>
+    <div class="article-keypoint">베네수엘라 지진 실종자 5만 명 초과 - 인도주의 위기와 자원 수출 차질 리스크 병존</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/over-50000-people-missing-after-venezuela-quakes-un-aid-chief-tells-afp" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 01:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">주간 전망: 미국 고용보고서 및 America 250</div>
+    <div class="article-title-en">Look Ahead: US Jobs Report, America 250</div>
+    <div class="article-keypoint">미국 고용보고서 발표 예정 - AI 투자 둔화·관세 충격 속 노동시장 건전성 핵심 지표</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-26/look-ahead-us-jobs-report-america-250-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 06:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">베네수엘라 지진, 직접 피해액 $67억 - UN 추산</div>
+    <div class="article-title-en">Venezuela Quakes Did $6.7 Billion in Direct Damage, UN Estimates</div>
+    <div class="article-keypoint">베네수엘라 지진 직접 피해 $67억 - 석유 인프라 피해 시 글로벌 공급 영향 경계</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-26/venezuela-quakes-affected-1-7-million-buildings-causing-6-7-billions-in-losses" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 02:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">한국, 50만 군 병력을 '드론 전사'로 육성 계획</div>
+    <div class="article-title-en">South Korea to train half a million military personnel to become ‘drone warriors’</div>
+    <div class="article-keypoint">한국 전군 드론 전사 육성 계획 - 방산 드론 수요 급증과 AI 군사화 가속 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jun/26/south-korea-drone-warriors-military-training" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/26 15:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Amazon Prime Day 가계 지출 기대 이하 - 설문조사</div>
+    <div class="article-title-en">Amazon Prime Day Household Spending Underwhelms, Survey Finds </div>
+    <div class="article-keypoint">Amazon Prime Day 소비 부진 초기 신호 - 미국 소비자 지출 둔화 가능성 재확인</div>
+    <a class="article-link" href="https://www.zerohedge.com/personal-finance/amazon-prime-day-household-spending-underwhelms-survey-finds" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/27 00:20 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
