@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-29 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/06/29 07:48 KST</div>
+    <div class="header-date">2026-06-29</div>
+    <div class="header-headline">미-이란 교전 지속·호르무즈 봉쇄 위기 재점화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">호르무즈 해협 통항 재개 여부 및 이란 추가 보복 범위 - 유가·EM채권·방산 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">미-이란 교전 확대와 호르무즈 리스크 프리미엄 급등</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">최근 협상 국면에서 벗어나 미-이란이 페르시아만에서 실제 교전을 주고받으며 호르무즈 해협 재봉쇄 공포가 현실화되고 있다. 유가는 교전 소식에 즉각 상승했고, 미국 주식선물은 소폭 반등하며 시장이 위험 재평가에 진입했다. 사우디 아람코 헬리콥터가 Ras Tanura 항에서 추락해 14명이 사망하는 사고가 미-이란 공습 직후 발생, 중동 에너지 인프라 전반의 취약성이 부각됐다. Warsh 체제의 Fed가 매파 기조를 유지하는 상황에서 에너지 가격 급등은 신흥국 채권 랠리의 발목을 잡는 이중 압박으로 작용하고 있다. 푸틴이 우크라이나의 러시아 연료 인프라 타격을 공개 인정하면서 글로벌 에너지 공급망 불안이 중동에 국한되지 않음을 확인시켰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Micron 사상 최대 수익 전망·AI 메모리 수요가 반도체 수익 지형 재편</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#8</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Micron이 Nvidia와 Google을 제외한 미국 전체 기업 중 가장 높은 수익성을 달성할 것으로 전망된다는 구체적 순위 비교다. 빅테크가 AI 메모리 부품에 천문학적 가격을 지불하면서 Micron의 재무구조가 극적으로 개선되고 있으며, 이는 AI 인프라 투자가 메모리 섹터까지 전방위로 확산됨을 입증한다. 호주 Firmus Technologies가 Nvidia와 AI 접근 계약을 체결하는 등 Nvidia 생태계는 글로벌 확장을 지속하고 있다. AI IPO 시장은 사실상 동결 상태인 반면, 핵에너지 SPAC 시장은 수요 폭증으로 과열 양상을 보이며 자본이 AI 직접 투자에서 AI 전력 인프라로 분산되는 흐름이 포착된다. 한국도 삼성전자·SK그룹과 함께 '3대 메가 프로젝트'를 발표, 반도체·AI 공급망 주도권 경쟁에 국가 단위로 참전했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Warsh 매파 기조 고착·채권시장 전략 재조정과 EM 압박</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #9~#11</span>
+    </div>
+    <div class="theme-summary">Fed 신임 의장 Kevin Warsh의 매파 스탠스가 글로벌 채권시장의 기존 랠리 기대를 정면으로 타격하고 있다. 주요 채권 운용사들은 Warsh 시대 초반을 방어적으로 통과하기 위해 특정 듀레이션 구간에 집중하는 전략을 구체화하고 있다. 신흥국 채권은 에너지 가격 하락이라는 순풍이 Warsh 발 금리 압력으로 상쇄되며 랠리 동력을 잃고 있다. 일본 정부 기본방침 초안이 BOJ에 '적절한' 통화 운용을 촉구하며 추가 금리인상 자제를 간접 압박하는 것도 주목할 대목으로, 미·일 통화정책 간 긴장이 엔화와 달러 흐름에 영향을 줄 수 있다. 공공부채와 통화정책 전달 메커니즘에 관한 학술 분석도 고부채 환경에서 금리인상 효과가 제한될 수 있다는 구조적 맥락을 제공한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 기술 진영 분화·중국 오픈웨이트 모델 부상과 공급망 디커플링</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #12~#14</span>
+    </div>
+    <div class="theme-summary">중국 AI가 사이버보안 과제에서 Anthropic의 Mythos 모델에 필적하는 성능을 오픈웨이트 방식으로 달성했다는 보고가 나오면서, AI 기술 디커플링의 새로운 분기점이 확인됐다. Anthropic은 최신 일반용 모델을 2주 이상 강제 다운타임 상태에 두고 있어 기술 공급 신뢰성 문제가 부각되는 가운데, 중국 오픈웨이트 대안이 공백을 파고드는 구도가 형성되고 있다. Google은 Meta의 Gemini AI 모델 사용을 제한하며 빅테크 간 AI 협력의 경계가 좁아지고 있음을 드러냈고, 다수 기업 고객도 유사한 영향을 받고 있다. AI 의료 활용 논의도 확대되며 AI가 진단 의사결정에 직접 개입하는 구조로의 전환 압력이 커지고 있다. 이 같은 진영 분화는 단순 기업 경쟁을 넘어 수출통제·공급망 보안 정책과 맞물려 지정학적 함의를 갖는다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">스테이블코인 입법 vs. 지역은행 생존·디지털 금융 규제 지형 충돌</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #15~#17</span>
+    </div>
+    <div class="theme-summary">미국 4,000개 지역 커뮤니티 은행이 스테이블코인 규제 법안에 공동 전선을 구축하며, 입법화 시 농촌 기업·농가에 8,500억 달러 규모의 대출 자금이 증발할 수 있다고 경고하고 있다. 이는 스테이블코인 규제 논의가 금융 포용성과 지역 신용 공급이라는 현실 문제와 정면충돌하는 국면으로 진입했음을 보여준다. 프라이빗 크레딧이 BNPL(선구매 후결제) 붐을 조용히 지원하며 소비자 신용 팽창을 뒷받침하고 있으나, 신용평가사와 전 규제당국은 잠재적 리스크를 경고하고 있다. 상품 담보 화폐 복귀 논의도 부상하며, 법정화폐 신뢰 약화와 대안 통화 체계에 대한 탐색이 구조적 관심사로 자리잡고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #18~#28</span>
+    </div>
+    <div class="theme-summary">영국 Starmer 총리는 Burnham 승계 전 자신의 정책 유산 확립에 집중하고 있으며, 노동당 내 에너지장관 Miliband의 재무장관 가능성이 거론되는 등 포스트-Starmer 권력 지형 재편이 가속되고 있다. 베네수엘라에서는 강진 이후 약탈·절도 사태가 발생하고 있으며, 트럼프 행정부는 USAID 축소 이후 재난 대응 역량의 한계를 시험받고 있다. 핵연료 개발 경쟁이 여러 국가에서 가속화되며 에너지 안보 다각화 전략의 일환으로 부상하고 있다. Tesla FSD(완전자율주행)에 대한 규제 및 기술 관심이 지속되고 있으며, 뉴욕시장 Mamdani의 진보 연대 메시지는 미국 정치 지형 변화를 예고한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">미-이란 교전 확대와 호르무즈 리스크 프리미엄 급등</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">미-이란 추가 공습 교환 속 유가 상승·미국 주가선물 소폭 반등</div>
+    <div class="article-title-en">Oil prices rise, stock futures inch higher as U.S. and Iran trade more airstrikes</div>
+    <div class="article-keypoint">미-이란 교전 지속으로 유가 상승·호르무즈 봉쇄 재공포 현실화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oil-prices-rise-stock-futures-inch-higher-as-u-s-and-iran-trade-more-airstrikes-3fc66beb?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 07:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Putin, 우크라이나 공격이 러시아 연료 부족 초래한다고 인정</div>
+    <div class="article-title-en">Putin admits Ukrainian strikes driving Russian fuel shortages</div>
+    <div class="article-keypoint">푸틴, 우크라이나의 러시아 연료 인프라 타격 공개 인정 - 글로벌 에너지 공급 불안 확산</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jun/28/putin-admits-ukrainian-strikes-driving-russian-fuel-shortages" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 06:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">매파 Fed, 신흥국 채권 랠리에 도전장</div>
+    <div class="article-title-en">Hawkish Fed Throws Down Challenge for Emerging-Market Bond Rally</div>
+    <div class="article-keypoint">Warsh 매파 기조가 신흥국 채권 랠리 정면 차단 - EM 자산 재조정 압력 가중</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-28/hawkish-fed-throws-down-challenge-for-emerging-market-bond-rally" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Aramco 헬리콥터, 사우디 Ras Tanura 항에서 추락</div>
+    <div class="article-title-en">Aramco helicopter crashes at Saudi port</div>
+    <div class="article-keypoint">Aramco 헬기 Ras Tanura 추락 14명 사망 - 미-이란 공습 직후 중동 에너지 인프라 취약성 부각</div>
+    <a class="article-link" href="https://www.ft.com/content/6be8c3fd-5f1d-4659-afee-43db76a36fd6" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 03:09 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Micron 사상 최대 수익 전망·AI 메모리 수요가 반도체 수익 지형 재편</span>
+    <span class="theme-label-range">Article #5~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Micron, Nvidia·Google 제외 미국 최고 수익 기업 등극 초읽기</div>
+    <div class="article-title-en">Micron is about to be more profitable than any U.S. company except Nvidia and Google</div>
+    <div class="article-keypoint">Micron, Nvidia·Google 제외 미국 전체 1위 수익성 전망 - AI 메모리 수요 폭발 확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/micron-is-about-to-be-more-profitable-than-any-u-s-company-except-nvidia-and-google-3a83e343?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">한국, 삼성·SK그룹과 함께 '3대 메가 프로젝트' 발표 예정</div>
+    <div class="article-title-en">S. Korea to Unveil ‘Three Mega Projects’ With Samsung, SK Group</div>
+    <div class="article-keypoint">삼성·SK 참여 한국 '3대 메가 프로젝트' 발표 - 국가 주도 반도체·AI 공급망 경쟁 격화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-28/s-korea-to-unveil-three-mega-projects-with-samsung-sk-group" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 16:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">AI IPO 시장 동결, 핵에너지 SPAC 시장은 과열 질주</div>
+    <div class="article-title-en">IPO Market For AI Freezes Up While The Nuclear SPAC Market Runs Hot </div>
+    <div class="article-keypoint">AI IPO 동결·핵 SPAC 과열 - AI 직접 투자 자금이 전력 인프라로 이동 중</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/ipo-market-ai-freezes-while-nuclear-spac-market-runs-hot" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 21:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">호주 Firmus Technologies, Nvidia와 AI 접근 계약 체결</div>
+    <div class="article-title-en">Australia’s Firmus Technologies strikes AI access deal with Nvidia</div>
+    <div class="article-keypoint">Firmus Technologies-Nvidia AI 접근 계약 - Nvidia 생태계 아태 지역 확장 가속</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/australias-firmus-technologies-strikes-ai-access-deal-with-nvidia-4764147" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Warsh 매파 기조 고착·채권시장 전략 재조정과 EM 압박</span>
+    <span class="theme-label-range">Article #9~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">공공부채와 통화정책 전달: 선진·신흥 유럽의 실증 분석</div>
+    <div class="article-title-en">Public debt and monetary policy transmission: evidence from advanced and emerging Europe</div>
+    <div class="article-keypoint">고부채 환경에서 통화정책 전달 약화 가능성 - Warsh 매파 효과 제한 리스크</div>
+    <a class="article-link" href="https://www.bis.org/publ/work1365.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 18:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">일본 정책 초안, '적절한' 통화정책 지지 명시</div>
+    <div class="article-title-en">Japan Policy Draft Backs ‘Appropriate’ Monetary Policy</div>
+    <div class="article-keypoint">일본 정부, BOJ 추가 금리인상 자제 간접 압박 - 엔화·달러 흐름 영향 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-28/japan-policy-draft-backs-appropriate-monetary-policy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 17:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">채권 대형사들, Warsh 시대 초반을 위한 시장 스위트스팟 겨냥</div>
+    <div class="article-title-en">Bond Heavyweights Target a Market Sweet Spot for New Warsh Era</div>
+    <div class="article-keypoint">주요 채권 운용사, Warsh 시대 초반 특정 듀레이션 구간 집중 전략 구체화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-28/bond-heavyweights-target-a-market-sweet-spot-for-new-warsh-era" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 04:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 기술 진영 분화·중국 오픈웨이트 모델 부상과 공급망 디커플링</span>
+    <span class="theme-label-range">Article #12~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">중국 AI, 오픈웨이트 모델로 사이버보안 과제에서 Mythos에 필적</div>
+    <div class="article-title-en">Chinese AI Matches Mythos In Cybersecurity Tasks With Open-Weight Model</div>
+    <div class="article-keypoint">중국 오픈웨이트 AI가 Anthropic Mythos 수준 사이버보안 성능 달성 - 디커플링 가속</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/chinese-ai-matches-mythos-cybersecurity-tasks-open-weight-model" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Google, Meta의 Gemini AI 모델 이용 제한 - FT 보도</div>
+    <div class="article-title-en">Google limits Meta’s use of its Gemini AI models, FT reports</div>
+    <div class="article-keypoint">Google이 Meta의 Gemini 접근 제한 - 빅테크 AI 협력 경계 급속 수축</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/google-limits-metas-use-of-its-gemini-ai-models-ft-reports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 14:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">치료 계획은 건강보험사가 아닌 의사와 AI가 결정해야 한다</div>
+    <div class="article-title-en">Your health insurer shouldn’t decide your treatment plan. That’s what your doctor — and AI — should be doing.</div>
+    <div class="article-keypoint">AI 진단 도구의 의료 의사결정 직접 개입 논의 - 헬스케어 AI 규제 공백 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/your-health-insurer-shouldnt-decide-your-treatment-plan-thats-what-your-doctor-and-possibly-ai-should-be-doing-45152d6a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 23:03 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">스테이블코인 입법 vs. 지역은행 생존·디지털 금융 규제 지형 충돌</span>
+    <span class="theme-label-range">Article #15~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">'암호화폐 대 지역사회': 미국 지역은행 4,000곳, 스테이블코인 법안에 공동 저항</div>
+    <div class="article-title-en">‘Crypto v community’: 4,000 local US lenders join forces to fight ‘stablecoins’ law</div>
+    <div class="article-keypoint">미국 4,000개 지역은행, 스테이블코인 법안 반대 - $8,500억 농촌 대출 소멸 경고</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/jun/28/crypto-v-community-local-lenders-fight-stablecoins-law" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">프라이빗 크레딧, 미국 소비자를 떠받치는 BNPL 열풍을 조용히 지원</div>
+    <div class="article-title-en">Private Credit Quietly Backs the Craze Propping Up US Consumers</div>
+    <div class="article-keypoint">프라이빗 크레딧의 BNPL 지원 확대 - 소비자 신용 과잉 팽창 리스크 경고등</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-06-28/private-credit-quietly-backs-the-craze-propping-up-us-consumers" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">상품 담보 화폐의 귀환 전망</div>
+    <div class="article-title-en">The Coming Return Of Commodity-Backed Money</div>
+    <div class="article-keypoint">상품 담보 화폐 복귀 논의 부상 - 법정화폐 신뢰 약화 속 대안 통화 체계 탐색</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/coming-return-commodity-backed-money" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 06:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #18~#28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">BIS 연례경제보고서 2026</div>
+    <div class="article-title-en">Annual Economic Report 2026</div>
+    <div class="article-keypoint">BIS 연례경제보고서 발표 - 고금리 장기화 환경의 거시 리스크 점검 시의성</div>
+    <a class="article-link" href="https://www.bis.org/publ/arpdf/ar2026e.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 21:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">세계 각국, 신형 핵연료 개발 경쟁에 돌입</div>
+    <div class="article-title-en">The World Is Racing to Develop New Nuclear Fuels</div>
+    <div class="article-keypoint">다국가 핵연료 개발 경쟁 가속 - AI 전력 수요 급증이 핵르네상스 촉매로 작용</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/The-World-Is-Racing-to-Develop-New-Nuclear-Fuels.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Zohran Mamdani, 자신과 지지 동맹들이 '전국적 메시지'를 담고 있다고 밝혀</div>
+    <div class="article-title-en">Zohran Mamdani says he and allies he endorsed carry a ‘national message’</div>
+    <div class="article-keypoint">Mamdani 뉴욕시장, 진보 연대 전국 메시지 선언 - 미국 정치 지형 좌경화 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/28/zohran-mamdani-new-democratic-politics" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 03:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Lucy Powell, Ed Miliband가 Andy Burnham의 재무장관으로 '적합'하다고 동의</div>
+    <div class="article-title-en">Lucy Powell agrees Ed Miliband would be ‘good’ as Andy Burnham’s chancellor</div>
+    <div class="article-keypoint">Burnham 승계 대비 Starmer 유산 구축 경쟁 - 영국 포스트-Starmer 권력 재편 가속</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/jun/28/labour-lucy-powell-ed-miliband-chancellor" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 23:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">베네수엘라 지진, USAID 축소 이후 트럼프의 서반구 정책 시험대에</div>
+    <div class="article-title-en">Venezuelan earthquakes test Trump’s new western hemisphere policy after gutting of USAID</div>
+    <div class="article-keypoint">트럼프 USAID 축소 후 베네수엘라 강진 대응 역량 한계 시험대</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jun/28/venezuelan-earthquakes-test-trumps-new-western-hemisphere-policy-after-gutting-of-usaid" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 18:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">교황 Leo, 베네수엘라 지진 피해자 위해 기도 - EU 긴급지원 파견</div>
+    <div class="article-title-en">Pope Leo prays for Venezuela quake victims as EU sends emergency aid</div>
+    <div class="article-keypoint">교황 Leo, 베네수엘라 강진 피해 연대 표명 - EU 긴급지원 병행</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/pope-leo-prays-for-venezuela-quake-victims-as-eu-sends-emergency-aid" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 21:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">TechCrunch Mobility: Tesla FSD에 시선 집중</div>
+    <div class="article-title-en">TechCrunch Mobility: All eyes on Tesla FSD</div>
+    <div class="article-keypoint">Tesla FSD 기술·규제 동향 주시 - 자율주행 상용화 속도와 리스크 재점검</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/28/techcrunch-mobility-all-eyes-on-tesla-fsd/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 01:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Trump, East Potomac 공공 골프장 공사 9월 착공 예정 밝혀</div>
+    <div class="article-title-en">Trump says work on East Potomac public golf course to begin in September</div>
+    <div class="article-keypoint">Trump, East Potomac 골프장 공사 9월 착공 발표 - 정치·부동산 이해충돌 논란 지속</div>
+    <a class="article-link" href="https://www.investing.com/news/politics-news/trump-says-reflecting-pool-in-full-use-public-golf-course-building-will-begin-4764160" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/28 21:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">베네수엘라 지진 피해지역 약탈·절도, 비극에 더해진 혼란</div>
+    <div class="article-title-en">Looting, theft in Venezuela’s earthquake zone add to tragedy</div>
+    <div class="article-keypoint">베네수엘라 지진 피해지역 약탈 사태 - 사회 불안 심화와 인도주의 위기 확대</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/looting-theft-in-venezuelas-earthquake-zone-add-to-tragedy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 07:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Starmer, Burnham 승계 전 자신의 유산 확립에 주력</div>
+    <div class="article-title-en">Starmer seeks to ensure legacy before Burnham ascends</div>
+    <div class="article-keypoint">Starmer, Burnham 승계 전 NHS 대기 감축 등 국내 정책 유산 확립에 집중</div>
+    <a class="article-link" href="https://www.ft.com/content/50f6c150-08a1-489d-88d2-1df7c6ff3291" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">'입과 눈, 손이 테이프로 묶인 채 구덩이에 던져졌다': 러시아 병사들, 전선 현실을 Putin에게 직언</div>
+    <div class="article-title-en">'Their mouths, eyes, hands, were taped and they were thrown into the hole': Russian soldiers confront Putin with reality of front lines</div>
+    <div class="article-keypoint">러시아 병사 7,000통 편지 분석 - 전선 현실과 푸틴 공식 발표 간 괴리 노출</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/06/28/their-mouths-eyes-hands-were-taped-and-they-were-thrown-into-the-hole-russian-soldiers-confront-putin-with-reality-of-front-lines_6754954_5.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/29 01:44 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
