@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-01 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/01 07:48 KST</div>
+    <div class="header-date">2026-07-01</div>
+    <div class="header-headline">Trump 암호화폐 수익 $14억 공개 - 대통령 이해충돌 리스크 부각</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">S&P 500 최고의 분기 마감 후 관세 대법원 판결 파급효과와 반도체 섹터 방향성 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Trump 암호화폐 수익 $14억 공개·관세 대법원 패소 - 정치 리스크와 시장 재편</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 2025년 암호화폐 및 밈코인 관련 사업에서 최소 $14억(가족 보유 크립토 토큰 매각 $5억 포함)을 벌어들인 것으로 연간 재산공개에서 확인되며, 현직 대통령의 디지털 자산 이해충돌 논란이 전례 없는 수준으로 부각됐다. 동시에 대법원이 트럼프의 포괄적 관세 정책을 무효화하는 판결을 내리면서, 시장에서는 이를 기업 이익 개선의 '숨겨진 호재'로 해석하는 시각이 확산되고 있다. 출생시민권 폐지 행정명령도 대법원에서 기각되는 등 트럼프 2기 행정부의 사법 리스크가 다층적으로 확대되고 있다. Bitcoin ETF는 기관 채택 확대에도 불구하고 대규모 매도 사이클을 완충하지 못한다는 이론이 시험대에 오르며 크립토 시장의 구조적 변화 여부가 주목된다. JPMorgan은 상원이 8월 시한을 앞두고 논의 중인 연방 디지털 자산 법안을 지지하면서도 핵심 경고를 전면에 내세워 입법 리스크를 환기시켰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 인프라 투자 가속 vs. 커스텀 칩 경쟁 심화 - 자본배분 구조 재편</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#12</span>
+    </div>
+    <div class="theme-summary">Nvidia 대항마 Etched가 기업가치 $50억, 계약 수주 $10억을 달성하며 AI 추론 칩 시장에서 수직통합형 도전자로 급부상, Nvidia 독점 구도에 실질적 균열 신호가 나타났다. Amazon은 OpenAI·Anthropic에 이어 $10억 규모의 현장배치(FDE) 조직을 신설하여 기업 내 AI 에이전트 배포를 가속화하며 클라우드 3강의 AI 엔터프라이즈 침투 경쟁이 새 국면에 진입했다. Anthropic은 Claude Sonnet 5를 출시하며 Opus·GPT-5.5·Gemini Pro 대비 저가 에이전트 대안을 제시, AI 모델 가격 경쟁이 본격화되고 있다. S&P 500 상반기 최고 성과 종목 리스트가 반도체·컴퓨터 하드웨어 업체들로 채워지며 AI 인프라 투자 수혜가 수익으로 현실화되고 있음이 확인됐다. Micron의 뉴욕 칩 공장 베팅은 초당파적 산업정책의 맥락에서 AI 메모리 공급망 국내화 전략으로 재조명되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 규제·기술 디커플링 - 트럼프 정부 모델 접근 통제와 수출규제 긴장</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #13~#16</span>
+    </div>
+    <div class="theme-summary">트럼프 행정부의 AI 거버넌스가 불투명하고 예측 불가능하다는 비판이 고조되며, 정부가 최고 성능 모델에 대한 접근권을 사실상 통제하는 구조가 지속 가능하지 않다는 우려가 확산되고 있다. 대만 당국이 Super Micro와 관련 업체들에 대한 급습 조사를 재차 실시하며 첨단 AI 하드웨어의 중국 우회 유통 차단 노력을 강화, 반도체 수출통제 집행이 한층 엄격해졌다. DeepMind 출신 연구진이 설립한 체코 AI 랩 EquiLibre Technologies는 기업가치 $5억 이상으로 평가되며 퀀트 헤지펀드에 AI를 공급하는 새로운 기술 생태계 노드로 부상했다. OpenAI 수석 이코노미스트는 AI가 인간 노동자를 대체하지 않을 것이라고 주장했으나, 에이전트 배포 가속화 추세와의 괴리가 시장 내 해석 분기점을 형성하고 있다. OpenClaw의 Android·iOS 출시는 오픈소스 에이전틱 AI의 모바일 플랫폼 침투를 상징하며 규제 외곽에서의 AI 확산을 가속화한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">러시아 연료 위기·호르무즈 봉쇄 교차 - 에너지 지정학 리스크 구조 변화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#19</span>
+    </div>
+    <div class="theme-summary">우크라이나의 러시아 정유시설 드론 대규모 공격으로 Putin이 공개적으로 연료 부족을 인정하면서, 호르무즈 해협 봉쇄와의 이중 에너지 충격이 러시아 전쟁 수행 능력에 미치는 영향이 새롭게 조명되고 있다. 지정학 분석가 George Friedman은 Putin의 협상 옵션이 축소되고 있다고 진단하며, 핵 에스컬레이션 위협이 실제 협상 카드로 부상하는 역설적 상황을 경고했다. 호르무즈 봉쇄가 서방의 우려와 달리 러시아에 반드시 이익이 되지 않을 수 있다는 분석도 제기되며, 에너지 지정학의 복잡성이 단순 공급 충격 프레임을 넘어서고 있다. 이 구도에서 핵에너지 수요 급증과 연계된 전력 인프라 투자가 중장기 에너지 섹터 재편의 핵심 변수로 부각된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">글로벌 통화정책 재조정 - Lagarde EP 청문회·BOJ 보고서·IMF 뉴질랜드 권고</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #20~#26</span>
+    </div>
+    <div class="theme-summary">Christine Lagarde의 유럽의회 경제통화위원회 청문회, BOJ의 반기 통화금융보고서, 그리고 IMF의 뉴질랜드 금리 인상 권고가 동시에 부각되며 주요국 중앙은행이 각기 다른 통화정책 경로에 놓여 있음이 확인됐다. IMF는 뉴질랜드 중앙은행이 인플레이션 리스크 억제를 위해 금리를 중립 수준으로 인상해야 한다고 권고하며 완화 사이클 조기 종료 가능성을 시사했다. Fed 이사 Waller의 달러의 국제적 역할에 관한 발언은 달러 패권 지속성과 CBDC 금지 이후 디지털 달러 생태계 설계 방향에 대한 논쟁을 자극한다. 마크로프루덴셜 컨퍼런스와 통화정책 트레이드오프 관련 발언들은 고금리 장기화 환경에서 이질적 통화 지역 내 금융안정 리스크 관리의 복잡성을 부각시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #27~#30</span>
+    </div>
+    <div class="theme-summary">인도 Modi 총리의 12년 집권 성과와 제도적 후퇴에 대한 종합 평가, 유럽의회 극우 횡령 의혹 관련 압수수색, 호주 연방선거에서의 민주주의 위협 의회 조사 결과가 포함된다. 이들 기사는 각국 정치 내부 역학과 제도적 리스크를 다루지만 금융시장에 대한 직접적 단기 임팩트는 제한적이다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Trump 암호화폐 수익 $14억 공개·관세 대법원 패소 - 정치 리스크와 시장 재편</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Bitcoin ETF는 매도세를 완화할 것이라는 이론, 이제 시험대에 오르다</div>
+    <div class="article-title-en">Bitcoin ETFs were supposed to make selloffs less painful. That theory is being put to the test.</div>
+    <div class="article-keypoint">기관 채택 확대에도 Bitcoin ETF가 매도 사이클 완충 못한다는 이론 시험대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/bitcoin-etfs-were-supposed-to-make-selloffs-less-painful-that-theory-is-being-put-to-the-test-f70ba3c6?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 06:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Trump, 2025년 암호화폐 수익 최소 $14억 신고</div>
+    <div class="article-title-en">Trump Reports at Least $1.4 Billion in 2025 Crypto Earnings</div>
+    <div class="article-keypoint">현직 대통령 암호화폐 수익 $14억 공개 - 이해충돌·입법 압박 동시 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-30/trump-reports-at-least-1-2-billion-in-crypto-earnings-for-2025" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">트럼프 관세 패소, 시장에는 '아무도 주목하지 않는 호재'</div>
+    <div class="article-title-en">Trump Tariff Defeat Is Market Tailwind ‘No One Is Talking About’</div>
+    <div class="article-keypoint">대법원 관세 무효화 - 기업 이익 개선 호재로 S&P 500 상승 모멘텀 추가</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-30/trump-tariff-defeat-is-market-tailwind-no-one-is-talking-about" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 20:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Trump, 대법원 판결 후 의회를 통한 출생시민권 폐지 위협 - 실시간 업데이트</div>
+    <div class="article-title-en">Trump threatens to abolish birthright citizenship through Congress after supreme court rules against him – live</div>
+    <div class="article-keypoint">대법원 출생시민권 행정명령 기각 - 트럼프 2기 사법 리스크 다층 확대</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/jun/30/birthright-citizenship-supreme-court-donald-trump-us-politics-latest-news" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 07:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Trump, 지난해 가족 크립토 토큰 매각으로 $5억 이상 수익</div>
+    <div class="article-title-en">Trump made more than $500mn from sale of family’s crypto tokens last year</div>
+    <div class="article-keypoint">Trump, 크립토 토큰 매각으로 $5억 이상 수익 - 대통령 이해충돌 전례 없는 규모</div>
+    <a class="article-link" href="https://www.ft.com/content/dab0dd71-2d95-4838-b0df-e942f9cc5dec" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 07:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">JPMorgan, 미국 암호화폐 법안 지지 - 단, 핵심 경고를 전면에 내세우며 상원 8월 시한 주시</div>
+    <div class="article-title-en">JPMorgan Backs US Crypto Bill, But Puts Warning Label Front & Center As Senate Eyes August Deadline</div>
+    <div class="article-keypoint">JPMorgan, 연방 디지털 자산 법안 지지하되 핵심 경고 전면 부각 - 상원 8월 시한 압박</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/jpmorgan-backs-us-crypto-bill-puts-warning-label-front-center-senate-eyes-august-deadline" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 03:05 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 인프라 투자 가속 vs. 커스텀 칩 경쟁 심화 - 자본배분 구조 재편</span>
+    <span class="theme-label-range">Article #7~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">OpenClaw, Android 및 iOS 출시 완료</div>
+    <div class="article-title-en">OpenClaw is finally available on Android and iOS</div>
+    <div class="article-keypoint">오픈소스 에이전틱 AI의 모바일 플랫폼 침투 - 규제 외곽 확산 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/30/openclaw-is-finally-available-on-android-and-ios/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 06:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Amazon, OpenAI·Anthropic에 이어 $10억 규모 FDE 조직 신설</div>
+    <div class="article-title-en">Amazon launches new $1 billion FDE org, following OpenAI and Anthropic</div>
+    <div class="article-keypoint">Amazon $10억 FDE 조직 신설 - 클라우드 3강 AI 에이전트 기업 침투 경쟁 격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/30/amazon-launches-new-1-billion-fde-org-following-openai-and-anthropic/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Nvidia 경쟁사 Etched, 기업가치 $50억·AI 칩 $10억 수주 달성</div>
+    <div class="article-title-en">Nvidia competitor Etched hits $5B valuation, $1B in sales for AI chip</div>
+    <div class="article-keypoint">Etched $50억 밸류에이션·$10억 수주 - Nvidia 추론 칩 독점에 실질적 균열 신호</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/30/nvidia-competitor-etched-hits-5b-valuation-1b-in-sales-for-ai-chip/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 03:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">오피니언 | Micron이 뉴욕 칩 생산에 과감히 베팅하는 이유</div>
+    <div class="article-title-en">Opinion | Why Micron Is Betting Big on New York Chips</div>
+    <div class="article-keypoint">Micron 뉴욕 칩 공장 - AI 메모리 공급망 국내화의 초당파적 산업정책 정당성</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/why-micron-is-betting-big-on-new-york-chips-46a2b3ad?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 01:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Anthropic, 에이전트 저비용 운영을 위한 Claude Sonnet 5 출시</div>
+    <div class="article-title-en">Anthropic launches Claude Sonnet 5 as a cheaper way to run agents</div>
+    <div class="article-keypoint">Claude Sonnet 5 출시 - GPT-5.5·Gemini Pro 대비 저가 에이전트 가격 경쟁 본격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/30/anthropic-launches-claude-sonnet-5-as-a-cheaper-way-to-run-agents/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">2026년 상반기 S&P 500 최고 성과 종목 20선</div>
+    <div class="article-title-en">The 20 best-performing stocks in the S&P 500 for the first half of 2026</div>
+    <div class="article-keypoint">S&P 500 상반기 최고 성과 종목 반도체 집중 - AI 인프라 투자 수혜 수익 현실화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-20-best-performing-stocks-in-the-s-p-500-for-the-first-half-of-2026-d916d182?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 06:13 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 규제·기술 디커플링 - 트럼프 정부 모델 접근 통제와 수출규제 긴장</span>
+    <span class="theme-label-range">Article #13~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">포커 AI를 만든 DeepMind 출신 3인방, 이제 퀀트 헤지펀드를 위한 수익을 창출하다</div>
+    <div class="article-title-en">The DeepMind trio who built a poker AI are now making money for quant hedge funds</div>
+    <div class="article-keypoint">DeepMind 출신 EquiLibre, 기업가치 $5억+ 달성 - 퀀트 헤지펀드 AI 인프라 부상</div>
+    <a class="article-link" href="https://techcrunch.com/2026/06/30/the-deepmind-trio-who-built-a-poker-ai-are-now-making-money-for-quant-hedge-funds/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 05:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">AI는 인간 노동자를 대체하지 않을 것, OpenAI 수석 이코노미스트 밝혀</div>
+    <div class="article-title-en">AI Won’t Be Substitute for Human Workers, OpenAI Economist Says</div>
+    <div class="article-keypoint">OpenAI 수석 이코노미스트 'AI, 인간 노동 대체 안 해' - 에이전트 확산과의 괴리 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-30/ai-won-t-be-substitute-for-human-workers-openai-economist-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 23:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">또 다시 반복: 대만, AI 칩 수출 조사로 Super Micro 급습</div>
+    <div class="article-title-en">Here We Go Again: Taiwan Raids Super Micro In AI Chip Probe</div>
+    <div class="article-keypoint">대만, Super Micro 재급습 - 첨단 AI 칩 중국 우회 차단 집행 강화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/here-we-go-again-taiwan-raids-super-micro-ai-chip-probe" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 03:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">트럼프의 AI 정책은 불투명하고 예측 불가능하며 지속 불가능하다</div>
+    <div class="article-title-en">
+        Donald Trump’s AI regime is opaque, unpredictable—and unsustainable
+      </div>
+    <div class="article-keypoint">트럼프 AI 거버넌스 불투명·예측 불가 - 최고 모델 접근 통제 지속 가능성 의문</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/06/30/donald-trumps-ai-regime-is-opaque-unpredictable-and-unsustainable" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 23:21 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">러시아 연료 위기·호르무즈 봉쇄 교차 - 에너지 지정학 리스크 구조 변화</span>
+    <span class="theme-label-range">Article #17~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Putin의 선택지가 줄어들고 있다: George Friedman, 협상 대 에스컬레이션을 논하다</div>
+    <div class="article-title-en">Putin is Running Out of Options: George Friedman on Negotiation vs. Escalation</div>
+    <div class="article-keypoint">호르무즈 봉쇄·우크라이나 드론 공격으로 Putin 연료 부족 공개 인정 - 협상 옵션 축소</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/putin-is-running-out-of-options-george-friedman-on-negotiation-vs-escalation/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 05:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">트럼프 에너지장관, 지구온난화는 '별 문제 아냐'라고 발언 - 그 사이 미국은 폭염 비상사태</div>
+    <div class="article-title-en">Trump’s energy secretary says global warming is ‘no big deal.’ Meanwhile, a heat emergency is striking the U.S.</div>
+    <div class="article-keypoint">미 에너지장관 '지구온난화 별 일 아냐' 발언 속 폭염 긴급사태 - 기후 정책 신뢰도 훼손</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trumps-energy-secretary-says-global-warming-is-no-big-deal-meanwhile-a-heat-emergency-is-striking-the-u-s-5f9674c3?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 06:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">러시아의 연료 위기와 핵 에스컬레이션 위협</div>
+    <div class="article-title-en">Russia’s Fuel Crisis and the Threat of Nuclear Escalation</div>
+    <div class="article-keypoint">호르무즈 봉쇄·드론 공격 교차 - 러시아 핵 에스컬레이션 위협의 역설적 부상</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/russias-fuel-crisis-and-the-threat-of-nuclear-escalation-podcast/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 05:43 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">글로벌 통화정책 재조정 - Lagarde EP 청문회·BOJ 보고서·IMF 뉴질랜드 권고</span>
+    <span class="theme-label-range">Article #20~#26</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Christine Lagarde: 유럽의회 경제통화위원회 청문회</div>
+    <div class="article-title-en">Christine Lagarde: Hearing of the Committee on Economic and Monetary Affairs of the European Parliament</div>
+    <div class="article-keypoint">Lagarde EP 청문회 - ECB 통화정책 경로 재확인 여부 시장 주목</div>
+    <a class="article-link" href="https://www.bis.org/review/r260625a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 17:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">IMF, 뉴질랜드 금리를 중립 수준으로 인상해야 한다고 권고</div>
+    <div class="article-title-en">New Zealand Should Raise Interest Rates Toward Neutral, IMF Says</div>
+    <div class="article-keypoint">IMF, 뉴질랜드 금리 중립 수준 인상 권고 - 완화 사이클 조기 종료 압력</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-30/new-zealand-should-raise-interest-rates-toward-neutral-imf-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Ryozo Himino: 일본은행 반기 통화금융 보고서</div>
+    <div class="article-title-en">Ryozo Himino: The Bank of Japan's Semiannual Report on Currency and Monetary Control</div>
+    <div class="article-keypoint">BOJ 반기 통화금융보고서 - 엔화 정책 경로 및 국내 인플레 평가 주시</div>
+    <a class="article-link" href="https://www.bis.org/review/r260624c.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 15:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Gabriel Makhlouf: 제10회 연간 마크로프루덴셜 컨퍼런스 개회사</div>
+    <div class="article-title-en">Gabriel Makhlouf: Opening remarks - "10th Annual Macroprudential Conference"</div>
+    <div class="article-keypoint">마크로프루덴셜 컨퍼런스 - 고금리 장기화 속 금융안정 리스크 관리 복잡성 증가</div>
+    <a class="article-link" href="https://www.bis.org/review/r260630f.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 18:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Martin Kocher: '이질적 통화 지역에서의 통화정책 트레이드오프' 폐회사</div>
+    <div class="article-title-en">Martin Kocher: Concluding remarks -"Monetary policy trade-offs in a heterogeneous currency area"</div>
+    <div class="article-keypoint">이질적 통화 지역 내 통화정책 트레이드오프 - ECB 경로 분화 논쟁 지속</div>
+    <a class="article-link" href="https://www.bis.org/review/r260630g.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 18:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Christopher J Waller: 미 달러의 국제적 역할에 관한 환영사</div>
+    <div class="article-title-en">Christopher J Waller: Welcoming remarks on the international role of the US dollar</div>
+    <div class="article-keypoint">Waller 달러 국제적 역할 발언 - 달러 패권 지속성과 디지털 달러 설계 논쟁 자극</div>
+    <a class="article-link" href="https://www.bis.org/review/r260624a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 16:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">연방기관, 낙후·소외 비도시 중간소득 지역 목록 발표</div>
+    <div class="article-title-en">Agencies release list of distressed or underserved nonmetropolitan middle-income geographies </div>
+    <div class="article-keypoint">Fed, 비도시 중간소득 지역 낙후·소외 지역 목록 발표 - 지역금융 지원 정책 지속</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260630a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 23:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #27~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Modi가 인도를 어떻게 바꿨나</div>
+    <div class="article-title-en">How Modi Has Remade India</div>
+    <div class="article-keypoint">Modi 12년 집권 평가 - 경제 현대화 성과와 제도 독립성 후퇴의 이중 기록</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/modi-12-year-record-includes-economic-successes-and-democratic-failures-by-shashi-tharoor-2026-06" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 23:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">미국 증시 상승 - S&P 500·Nasdaq, 2020년 이후 최고 분기 기록</div>
+    <div class="article-title-en">US Stocks Gain as S&amp;P 500, Nasdaq Notch Best Quarter Since 2020</div>
+    <div class="article-keypoint">S&P 500·Nasdaq 2020년 이후 최고 분기 마감 - 랠리 지속성 여부 분기점</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-06-30/us-stocks-mixed-as-indexes-head-for-best-quarter-since-2020" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/06/30 22:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">유럽의회 극우 횡령 의혹 관련 복수 압수수색 실시</div>
+    <div class="article-title-en">Multiple raids conducted over alleged far-right embezzlement at European Parliament</div>
+    <div class="article-keypoint">유럽의회 극우 횡령 의혹 압수수색 - RN 등 극우 세력 정치적 리스크 부각</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/france/article/2026/06/30/multiple-raids-conducted-over-alleged-far-right-embezzlement-at-european-parliament_6755021_7.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 03:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">2025년 연방선거에서 민주주의가 '중대 제3세력'의 위협을 받았다 - 의회 조사 결과</div>
+    <div class="article-title-en">Democracy ‘under assault’ from significant third parties at 2025 federal election, parliamentary inquiry finds</div>
+    <div class="article-keypoint">호주 의회, 2025년 연방선거 민주주의 위협 제3세력 규제 법안 권고</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/jul/01/democracy-under-assault-from-significant-third-parties-at-2025-federal-election-parliamentary-inquiry-finds" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 02:12 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
