@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-02 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/02 07:48 KST</div>
+    <div class="header-date">2026-07-02</div>
+    
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">전체 뉴스</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#30</span>
+    </div>
+    <div class="theme-summary"></div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">전체 뉴스</span>
+    <span class="theme-label-range">Article #1~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Is Meta ‘giving up’ on cutting-edge AI? Wall Street is divided over potential cloud pivot.</div>
+    <div class="article-title-en">Is Meta ‘giving up’ on cutting-edge AI? Wall Street is divided over potential cloud pivot.</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/is-meta-giving-up-on-cutting-edge-ai-wall-street-is-divided-over-potential-cloud-pivot-7c5ffc5d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 05:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Fed’s Warsh Picks Senior Bessent Staffer to Serve as Adviser</div>
+    <div class="article-title-en">Fed’s Warsh Picks Senior Bessent Staffer to Serve as Adviser</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-01/fed-s-warsh-picks-senior-bessent-staffer-to-serve-as-adviser" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 03:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Federal Reserve issues initial findings from its 2025 triennial payments study</div>
+    <div class="article-title-en">Federal Reserve issues initial findings from its 2025 triennial payments study</div>
+    
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/other20260701a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 03:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Trump Accounts to Receive $250 Million Donation From Chip Maker Micron</div>
+    <div class="article-title-en">Trump Accounts to Receive $250 Million Donation From Chip Maker Micron</div>
+    
+    <a class="article-link" href="https://www.nytimes.com/2026/07/01/business/economy/micron-250-million-dollars-trump-accounts.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 04:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">CoreWeave, Nebius shares tumble as Meta stands to become a fresh threat in the cloud</div>
+    <div class="article-title-en">CoreWeave, Nebius shares tumble as Meta stands to become a fresh threat in the cloud</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/coreweave-nebius-shares-tumble-as-meta-stands-to-become-a-fresh-threat-in-the-cloud-a47c3616?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Sandisk’s and Micron’s stocks sink as the rotation trade builds, but supply shortages should limit losses</div>
+    <div class="article-title-en">Sandisk’s and Micron’s stocks sink as the rotation trade builds, but supply shortages should limit losses</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/sandisks-and-microns-stocks-sink-as-the-rotation-trade-builds-but-supply-shortages-should-limit-losses-94a05f82?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 06:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">"Utterly False": Musk Denies WSJ Report On SpaceX Handset-Like AI Device</div>
+    <div class="article-title-en">"Utterly False": Musk Denies WSJ Report On SpaceX Handset-Like AI Device</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/technology/slimmer-iphone-spacex-takes-aim-smartphone-market-new-ai-device" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 04:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX Showed Investors Prototype of Elon Musk’s New AI Device</div>
+    <div class="article-title-en">SpaceX Showed Investors Prototype of Elon Musk’s New AI Device</div>
+    
+    <a class="article-link" href="https://www.wsj.com/tech/ai/spacex-showed-investors-prototype-of-elon-musks-new-ai-device-b445c57b?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 03:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Meta, like SpaceX, looks to turn excess AI compute into cash</div>
+    <div class="article-title-en">Meta, like SpaceX, looks to turn excess AI compute into cash</div>
+    
+    <a class="article-link" href="https://techcrunch.com/2026/07/01/meta-like-spacex-looks-to-turn-excess-ai-compute-into-cash/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 22:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">ServiceNow and Salesforce shares now look like buys, as ‘Armageddon’ fears are too extreme, analyst says</div>
+    <div class="article-title-en">ServiceNow and Salesforce shares now look like buys, as ‘Armageddon’ fears are too extreme, analyst says</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/servicenow-and-salesforce-shares-now-look-like-buys-as-armageddon-fears-are-too-extreme-analyst-says-3c3d8887?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 06:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">SpaceX has an AI device prototype, and it sure sounds phone-ish</div>
+    <div class="article-title-en">SpaceX has an AI device prototype, and it sure sounds phone-ish</div>
+    
+    <a class="article-link" href="https://techcrunch.com/2026/07/01/spacex-has-an-ai-device-prototype-and-it-sure-sounds-phone-ish/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 03:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">‘Everybody is profiting’: Trump dismisses questions about over $1bn in crypto earnings – live</div>
+    <div class="article-title-en">‘Everybody is profiting’: Trump dismisses questions about over $1bn in crypto earnings – live</div>
+    
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/jul/01/donald-trump-cryptocurrencies-supreme-court-birthright-citizenship-save-america-act-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 06:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Asian Stocks to Decline as Traders Weigh AI, Warsh: Markets Wrap</div>
+    <div class="article-title-en">Asian Stocks to Decline as Traders Weigh AI, Warsh: Markets Wrap</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-01/asian-stocks-to-decline-as-traders-weigh-ai-warsh-markets-wrap" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">World Cup could boost the June jobs report by 40,000, Goldman estimates</div>
+    <div class="article-title-en">World Cup could boost the June jobs report by 40,000, Goldman estimates</div>
+    
+    <a class="article-link" href="https://www.cnbc.com/2026/07/01/world-cup-could-boost-the-june-jobs-report-by-40000-goldman-estimates.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 05:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Starlink pushes back against EU-imposed restrictions on satellite telephony</div>
+    <div class="article-title-en">Starlink pushes back against EU-imposed restrictions on satellite telephony</div>
+    
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/07/01/starlink-pushes-back-against-eu-imposed-restrictions-on-satellite-telephony_6755058_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 06:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Warsh Signals Long Road Ahead for a Smaller Fed Balance Sheet</div>
+    <div class="article-title-en">Warsh Signals Long Road Ahead for a Smaller Fed Balance Sheet</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-01/warsh-signals-long-road-ahead-for-a-smaller-fed-balance-sheet" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Europe’s Nuclear Ambitions Drive New Interest in Italian Uranium Exploration</div>
+    <div class="article-title-en">Europe’s Nuclear Ambitions Drive New Interest in Italian Uranium Exploration</div>
+    
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Europes-Nuclear-Ambitions-Drive-New-Interest-in-Italian-Uranium-Exploration.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">USMCA Was Once Trump’s Brainchild. Now, It’s a Dead Deal Walking.</div>
+    <div class="article-title-en">USMCA Was Once Trump’s Brainchild. Now, It’s a Dead Deal Walking.</div>
+    
+    <a class="article-link" href="https://foreignpolicy.com/2026/07/01/usmca-renewal-us-canada-mexico-trade-deficit-annual-reviews/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 06:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">As Democrats Freak Out Over Socialist Takeover, Kamala Harris Speaks With Zohran Mamdani</div>
+    <div class="article-title-en">As Democrats Freak Out Over Socialist Takeover, Kamala Harris Speaks With Zohran Mamdani</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/political/democrats-freak-out-over-socialist-takeover-kamala-harris-speaks-zohran-mamdani" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 07:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">AI Money and Anxiety Are Powering This Election Cycle</div>
+    <div class="article-title-en">AI Money and Anxiety Are Powering This Election Cycle</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-01/anthropic-splits-from-pack-in-race-to-shape-first-ai-election-big-take-podcas" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 05:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Did META Just Expose The First Crack In The AI CapEx Boom?</div>
+    <div class="article-title-en">Did META Just Expose The First Crack In The AI CapEx Boom?</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/markets/did-meta-just-hint-cracks-ai-capex-boom" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 00:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Naoki Tamura: Economic activity, prices and monetary policy in Japan</div>
+    <div class="article-title-en">Naoki Tamura: Economic activity, prices and monetary policy in Japan</div>
+    
+    <a class="article-link" href="https://www.bis.org/review/r260701c.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 21:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Apple Negotiating To Buy Blacklisted Chinese Chips To Ease AI-Driven Shortage</div>
+    <div class="article-title-en">Apple Negotiating To Buy Blacklisted Chinese Chips To Ease AI-Driven Shortage</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/technology/apple-negotiating-buy-blacklisted-chinese-chips-ease-ai-driven-shortage" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 05:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Wall Street Worries Less Fed Talk Will Spur Market Volatility</div>
+    <div class="article-title-en">Wall Street Worries Less Fed Talk Will Spur Market Volatility</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-01/wall-street-worries-less-fed-talk-will-spur-market-volatility" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 03:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Copper Demand Surges, But Supply Deficit Is Hard To Solve, Expert Says</div>
+    <div class="article-title-en">Copper Demand Surges, But Supply Deficit Is Hard To Solve, Expert Says</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/commodities/copper-demand-surges-supply-deficit-hard-solve-expert-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 06:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Where can I invest my kid’s ‘Trump account’ money? The Treasury Department just answered that question.</div>
+    <div class="article-title-en">Where can I invest my kid’s ‘Trump account’ money? The Treasury Department just answered that question.</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/where-can-i-invest-my-kids-trump-account-money-the-treasury-department-just-answered-that-question-4f656574?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Andrew Hauser: "The straight line belongs to man, the curved line belongs to God"</div>
+    <div class="article-title-en">Andrew Hauser: "The straight line belongs to man, the curved line belongs to God"</div>
+    
+    <a class="article-link" href="https://www.bis.org/review/r260701d.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 21:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Gemini Spark, Google’s agentic assistant, is now available on Mac</div>
+    <div class="article-title-en">Gemini Spark, Google’s agentic assistant, is now available on Mac</div>
+    
+    <a class="article-link" href="https://techcrunch.com/2026/07/01/gemini-spark-googles-agentic-assistant-is-now-available-on-mac/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/01 23:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Neocloud Together AI raises $800M, leaps to $8.3B valuation</div>
+    <div class="article-title-en">Neocloud Together AI raises $800M, leaps to $8.3B valuation</div>
+    
+    <a class="article-link" href="https://techcrunch.com/2026/07/01/neocloud-together-ai-raises-800m-leaps-to-8-3b-valuation/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 03:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Cloudflare’s new policy pushes AI companies to pay for publishers’ content</div>
+    <div class="article-title-en">Cloudflare’s new policy pushes AI companies to pay for publishers’ content</div>
+    
+    <a class="article-link" href="https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/02 02:48 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
