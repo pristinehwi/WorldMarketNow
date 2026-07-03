@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-04 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/04 07:48 KST</div>
+    <div class="header-date">2026-07-04</div>
+    <div class="header-headline">Lagarde 조기 퇴임 시사·ECB 리더십 공백 리스크</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">호르무즈 재개통 여부·Citi $60 전망 vs. OPEC 증산 속도 - 원유 방향성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 과잉 기대 균열 - 생산성 과대평가·Apple 업그레이드 실패·데이터센터 $236억 붕괴</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Allianz 수석 이코노미스트가 AI 생산성 기대를 '과잉 열기(exuberance)'로 명시적으로 경고하고, UBS가 Apple Intelligence가 iPhone 업그레이드 사이클을 촉발하지 못했다고 진단한 것이다. 중국 연계 NGO가 Blackstone 철수를 유도해 $236억 규모 데이터센터 프로젝트를 붕괴시켰다는 보고서는 AI 인프라 투자에 대한 지정학적 취약성을 새롭게 드러냈다. Anthropic은 중국 기술기업의 Claude 우회 접근을 차단하는 조치를 취했으나, 상무부의 수출통제 해제와 맞물려 기술 디커플링의 경계가 불분명해지는 역설을 낳고 있다. 유럽은 여가 중심 문화를 AI 시대의 경쟁력으로 재해석하려는 시도가 나오고 있으나, 노령화·복지국가 재정 위기와 맞물려 현실성 논쟁이 이어진다. 트럼프 행정부는 중앙집중식 AI 규제에 반대 입장을 재확인했으며, 이는 EU와의 디지털 규제 갈등을 심화시킬 요인이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">호르무즈·OPEC·구리 - 에너지·원자재 가격 방향성 재설정</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#13</span>
+    </div>
+    <div class="theme-summary">미-이란 휴전 드라마에도 불구하고 유가는 좁은 범위에서 움직이며 시장의 지정학 민감도가 크게 낮아졌다. Citigroup은 호르무즈 정상화와 미-이란 합의를 전제로 연말 Brent $60 하락 시나리오를 제시했고, OPEC은 6월 생산량을 급반등시켰으나 전쟁 이전 수준 회복에는 아직 미치지 못한다. 구리 가격의 다음 방향은 호르무즈가 아닌 워싱턴의 관세·무역 정책에 달려 있다는 분석이 부각되며, 금속 시장의 지정학 리스크 프리미엄이 정책 리스크로 대체되는 흐름이 나타나고 있다. 아프리카 PMI는 에너지 가격 하락과 이란 충격 완화를 배경으로 6월 반등을 기록, 이머징 원자재 수입국에 긍정적 신호를 보냈다. 우라늄 분야에서는 Centrus Energy가 DOE와 수십억 달러 규모 농축 계약을 체결해 핵연료 공급망 국산화가 가속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">ECB·Fed 통화정책 분기 - Lagarde 조기 퇴임 시사와 미-프랑스 금리 전망 충돌</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #14~#17</span>
+    </div>
+    <div class="theme-summary">오늘 가장 새로운 변수는 Christine Lagarde ECB 총재가 임기 만료 전 조기 퇴임 가능성을 공개적으로 시사하며 프랑스 정치 행보를 저울질하고 있다는 점이다. 이는 ECB 리더십 공백 우려와 함께 유로존 통화정책 연속성에 대한 불확실성을 키운다. 반면 두 프랑스 수석 이코노미스트는 노동시장 약화 지표에도 불구하고 Fed가 올해 추가 금리 인상이 필요하다는 분석을 내놓아 Fed와 ECB의 정책 경로 격차 논쟁이 재점화됐다. 유로존 6월 PMI는 초기 집계보다 상향 수정되어 수축에서 정체(stagnation)로 바뀌었으나, 회복이라 부르기에는 역부족이다. 아르헨티나는 2027년 대선을 앞두고 $60억 규모 레포 만기를 연장해 재정 부담을 선거 이후로 미루는 전략을 선택했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">트럼프 크립토 $10억 수익·Trump 계좌·정치 리스크와 자산 배분 왜곡</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#20</span>
+    </div>
+    <div class="theme-summary">Donald Trump 대통령이 취임 이후 암호화폐 사업에서 $10억 이상의 수익을 올린 것으로 집계되며 이해충돌 논란이 증폭되고 있다. 미국 독자들 사이에서는 고가스·고식료품 가격에도 대통령이 개인 자산을 불리는 데 집중한다는 비판이 광범위하게 확산되고 있다. 한편 트럼프 행정부가 추진 중인 아동 투자 계좌('Trump account')는 채권과 해외 주식을 배제하고 미국 주식만 허용해, 자산 배분의 편향과 집중 리스크가 구조적으로 내재됐다는 지적이 제기된다. 이는 정치 리스크가 가계 단위의 자산 형성 전략에까지 직접 영향을 미치는 새로운 국면을 보여준다. 독일 Merz 총리는 트럼프의 NATO 방위비 비판에 반박하며 독일의 국방비 확대 추진 의지를 재확인했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">러시아·우크라이나·발트 지정학 - Putin 에스컬레이션 위협과 리투아니아 핵 억지 참여 선언</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#23</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 리투아니아가 헌법상 핵무기 배치 금지 조항을 삭제하는 절차를 밟으며 NATO 핵 억지 구조에 직접 편입을 추진한다고 선언한 것이다. 이는 발트해 지역의 안보 방정식을 구조적으로 바꾸는 신호탄으로, 러시아의 반발과 NATO 내부 논쟁을 동시에 자극할 수 있다. Putin은 우크라이나 전선의 누적 손실과 경제 압박에도 강경 입장을 고수하며 협상 여지를 닫고 있어, 크림반도 타격 심화 시 핵 위협 카드를 꺼낼 에스컬레이션 리스크가 잠재적으로 커지고 있다. 이 같은 다극 지정학 긴장은 유럽 방산주와 에너지 안보 투자에 대한 프리미엄 논리를 지속적으로 뒷받침한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#28</span>
+    </div>
+    <div class="theme-summary">Nvidia는 휴머노이드 로봇을 수십조 달러 규모의 기회로 제시하며 관련 투자 테마를 부각시키고 있고, 선물 시장은 7월 4일 독립기념일 휴장 속에서도 금과 비트코인이 함께 반등하는 모습을 보였다. Venezuela는 쌍둥이 지진 이후 정부의 부실한 재난 대응으로 정치적 불만이 고조되고 있다. Taylor Swift와 Travis Kelce의 결혼식 관련 기사는 금융·시장과 무관한 사회·문화 뉴스다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 과잉 기대 균열 - 생산성 과대평가·Apple 업그레이드 실패·데이터센터 $236억 붕괴</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">유럽의 AI 돌체 비타? - 여가 중심 문화가 AI 시대 경쟁력이 될 수 있다는 역발상</div>
+    <div class="article-title-en">Europe’s AI Dolce Vita?</div>
+    <div class="article-keypoint">유럽의 여가 문화가 AI 시대 경쟁력이 될 수 있다는 역발상 - 재정위기 우려와 충돌</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-could-give-europe-unexpected-competitive-edge-by-kenneth-rogoff-2026-07" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 22:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">중국 연계 사회주의 NGO, $236억 규모 데이터센터 건설 무산시켜 - 보고서</div>
+    <div class="article-title-en">China-Linked Socialist NGO Derailed $23.6 Billion In Data Center Buildouts: Report</div>
+    <div class="article-keypoint">중국 연계 NGO가 $236억 데이터센터 프로젝트 붕괴 유도 - AI 인프라 지정학 취약성 노출</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/china-linked-socialist-ngo-derailed-236-billion-data-center-buildouts-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Apple Intelligence, UBS '업그레이드 수요 촉발 실패' 진단</div>
+    <div class="article-title-en">Apple Intelligence Fails To Ignite "Upgrade Activity," UBS Says </div>
+    <div class="article-keypoint">Apple Intelligence 업그레이드 사이클 촉발 실패 - AI 하드웨어 수요 기대 하향 압력</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/apple-intelligence-fails-ignite-upgrade-activity-ubs-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 20:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Anthropic, 중국 기술기업의 Claude 우회 접근 차단 조치 착수</div>
+    <div class="article-title-en">Anthropic Moves To Shut Loopholes Letting Chinese Tech Firms Access Claude</div>
+    <div class="article-keypoint">Anthropic, 중국 기업의 Claude 우회 접근 차단 - 수출통제 해제 직후 역설적 조치</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/anthropic-moves-shut-loopholes-letting-chinese-tech-firms-access-claude" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 02:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">AI 생산성 기대, '과잉 열기' - Allianz 수석 이코노미스트 경고</div>
+    <div class="article-title-en">AI Productivity Hopes Show ‘Exuberance,’ Allianz’s Subran Says</div>
+    <div class="article-keypoint">Allianz 이코노미스트, AI 생산성 기대를 '과잉 열기'로 공식 경고 - 밸류에이션 재점검 촉구</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-03/ai-productivity-hopes-show-exuberance-allianz-s-subran-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 17:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">NSW 정부, OpenAI 시드니 진출 환영... 직원이 터미네이터 언급하기 전까지</div>
+    <div class="article-title-en">NSW government ‘absolutely thrilled’ to welcome OpenAI ... until someone mentioned the Terminator films</div>
+    <div class="article-keypoint">호주 NSW 정부, OpenAI 시드니 진출 환영하면서도 내부적으로 AI 리스크 경계</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/jul/03/nsw-government-openai-arrives-sydney-terminator-films" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 23:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">트럼프, 강력한 AI 규제에 반대 - 퇴임하는 기술 자문관 발언</div>
+    <div class="article-title-en">Trump will oppose heavy US AI regulation, says outgoing tech adviser</div>
+    <div class="article-keypoint">트럼프 행정부, 중앙집중식 AI 규제 반대 재확인 - EU와 디지털 규제 갈등 심화 예고</div>
+    <a class="article-link" href="https://www.ft.com/content/5128e476-db8b-48ac-a8fb-0f16d0f5c2ed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 23:32 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">호르무즈·OPEC·구리 - 에너지·원자재 가격 방향성 재설정</span>
+    <span class="theme-label-range">Article #8~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">구리의 다음 행보, 호르무즈가 아닌 워싱턴이 결정한다</div>
+    <div class="article-title-en">Copper's Next Move Depends On Washington, Not The Strait Of Hormuz</div>
+    <div class="article-keypoint">구리 가격 방향성, 호르무즈 아닌 워싱턴 관세 정책에 달려 있다는 분석 부상</div>
+    <a class="article-link" href="https://oilprice.com/Metals/Commodities/Coppers-Next-Move-Depends-On-Washington-Not-The-Strait-Of-Hormuz.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">에너지 가격 하락에 아프리카 경제 회복세 - PMI 반등</div>
+    <div class="article-title-en">African Economies Bounce Back as Energy Prices Tumble, PMIs Show</div>
+    <div class="article-keypoint">아프리카 PMI 6월 반등, 에너지 가격 하락이 이머징 원자재 수입국 회복 견인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-03/african-economies-bounce-back-as-energy-prices-tumble-pmis-show" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 22:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">유가, 미-이란 휴전 드라마에 무감각 - 방향성 관망 지속</div>
+    <div class="article-title-en">Oil Markets Grow Numb to U.S.-Iran Ceasefire Drama</div>
+    <div class="article-keypoint">유가, 미-이란 휴전 드라마에도 좁은 범위 유지 - 시장의 지정학 민감도 구조적 저하</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Crude-Oil/Oil-Markets-Grow-Numb-to-US-Iran-Ceasefire-Drama.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 01:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Centrus Energy, DOE와 수십억 달러 규모 우라늄 농축 계약 체결</div>
+    <div class="article-title-en">Centrus Energy Signs Billion Dollar Contract With DOE For Uranium Enrichment</div>
+    <div class="article-keypoint">Centrus Energy, DOE와 수십억 달러 우라늄 농축 계약 - 핵연료 국산화 공급망 가속</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/centrus-energy-signs-billion-dollar-contract-doe-uranium-enrichment" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 00:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">OPEC 원유 생산량 급증했지만 걸프 공급은 아직 정상 수준 한참 못 미쳐</div>
+    <div class="article-title-en">OPEC Oil Production Jumps, But Gulf Supply Is Still Far From Normal</div>
+    <div class="article-keypoint">OPEC 6월 생산량 급반등했으나 전쟁 이전 수준 미달 - 공급 회복 속도가 유가 하단 결정</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/OPEC-Oil-Production-Jumps-But-Gulf-Supply-Is-Still-Far-From-Normal.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 04:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Citi: 호르무즈 통행 정상화 시 유가 $60까지 하락 가능</div>
+    <div class="article-title-en">Citi: Oil Could Sink to $60 as Hormuz Traffic Normalizes</div>
+    <div class="article-keypoint">Citi, 호르무즈 정상화 시 Brent $60 하락 전망 - 에너지 수입국엔 인플레 완화 호재</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Citi-Oil-Could-Sink-to-60-as-Hormuz-Traffic-Normalizes.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">ECB·Fed 통화정책 분기 - Lagarde 조기 퇴임 시사와 미-프랑스 금리 전망 충돌</span>
+    <span class="theme-label-range">Article #14~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Fed-ECB 정책 경로 분기 - 프랑스 이코노미스트들의 전쟁 이후 스냅샷</div>
+    <div class="article-title-en">Fed and ECB Seen Diverging in French Snapshot of War Aftermath</div>
+    <div class="article-keypoint">프랑스 이코노미스트들, 노동시장 약화에도 Fed 추가 인상 필요 주장 - Fed-ECB 경로 괴리 논쟁</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-03/fed-and-ecb-seen-diverging-in-french-snapshot-of-war-aftermath" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 23:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">아르헨티나, $60억 레포 만기 선거 이후로 연장</div>
+    <div class="article-title-en">Argentina Pushes $6 Billion in Repo Maturities Past Election</div>
+    <div class="article-keypoint">아르헨티나, $60억 레포 만기 2027년 이후로 연장 - 선거 전 재정 부담 이연 전략</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-03/argentina-extends-6-billion-in-repo-maturities-beyond-election" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 00:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">유로존 6월 기업활동 상향 수정 - 수축 대신 '정체'로</div>
+    <div class="article-title-en">Euro-Zone Business Activity Revised Up to Stagnation for June</div>
+    <div class="article-keypoint">유로존 6월 PMI 상향 수정, 수축에서 정체로 - 회복 기대엔 미흡한 수준</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-03/euro-zone-business-activity-revised-up-to-stagnation-for-june" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 17:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Christine Lagarde, ECB 조기 퇴임 가능성 열어둬 - 프랑스 정계 행보 저울질</div>
+    <div class="article-title-en">Christine Lagarde leaves door open to early ECB exit, as she mulls French politics</div>
+    <div class="article-keypoint">Lagarde ECB 조기 퇴임 가능성 시사 - ECB 리더십 공백과 통화정책 연속성 불확실성 급부상</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/07/03/christine-lagarde-ecb-france-election.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 19:34 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">트럼프 크립토 $10억 수익·Trump 계좌·정치 리스크와 자산 배분 왜곡</span>
+    <span class="theme-label-range">Article #18~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">'Trump 계좌'를 자녀에게 개설하기 전에 반드시 고려해야 할 리스크</div>
+    <div class="article-title-en">Opening a ‘Trump account’ for your children? Here is the risk you need to reckon with first.</div>
+    <div class="article-keypoint">Trump 아동 계좌, 미국 주식만 허용 - 구조적 편향으로 장기 자산 배분 왜곡 우려</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/opening-a-trump-account-for-your-children-here-is-the-risk-you-need-to-recognize-first-fe206bc0?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 04:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">대통령 재임 중 크립토로 $10억 수익 챙긴 Trump에 미국인들 공분 - '노골적인 사기'</div>
+    <div class="article-title-en">Americans disgusted at Trump earning $1bn from crypto as president: ‘Obviously a grift’</div>
+    <div class="article-keypoint">Trump 대통령 취임 후 크립토 수익 $10억 돌파 - 이해충돌·도덕적 해이 논란 급부상</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/03/americans-disgusted-trump-crypto" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 01:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump 비판에 Merz 반박 - 독일의 국방비 확대 추진 정당성 강조</div>
+    <div class="article-title-en">In riposte to Trump, Merz says Germany can defend its military spending push</div>
+    <div class="article-keypoint">Merz, Trump의 NATO 방위비 비판에 반박 - 독일 국방 지출 확대 의지 재확인</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/in-riposte-to-trump-merz-says-germany-can-defend-its-military-spending-push" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 21:51 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">러시아·우크라이나·발트 지정학 - Putin 에스컬레이션 위협과 리투아니아 핵 억지 참여 선언</span>
+    <span class="theme-label-range">Article #21~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Putin 에스컬레이션 리스크 - 궁지에 몰릴수록 커지는 위협</div>
+    <div class="article-title-en">The Putin Escalation Risk</div>
+    <div class="article-keypoint">우크라이나 압박 심화 시 Putin 핵 카드 위협 에스컬레이션 리스크 고조</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/putin-escalation-risk-failing-ukraine-war-could-lead-to-rash-behavior-by-ian-bremmer-2026-07" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 21:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">리투아니아 대통령, '핵 억지력에 동참' 선언 - 러시아 대응 위한 헌법 개정 추진</div>
+    <div class="article-title-en">Lithuania aims to be ‘part of nuclear deterrence’ against Russia, says President</div>
+    <div class="article-keypoint">리투아니아, 헌법상 핵무기 배치 금지 삭제 추진 - 발트해 NATO 핵 억지 구조 재편 신호</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/lithuania-aims-to-be-part-of-nuclear-deterrence-against-russia-says-president" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 23:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Putin, 잇따른 좌절에도 우크라이나 전쟁 강행 의지 재천명</div>
+    <div class="article-title-en">Putin doubles down on Ukraine war despite mounting setbacks</div>
+    <div class="article-keypoint">Putin, 전황 악화에도 강경 고수 - 협상 교착이 에스컬레이션 리스크 프리미엄 유지</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/07/03/putin-doubles-down-on-ukraine-war-despite-mounting-setbacks_6755125_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 03:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Nvidia, 수조 달러 규모 로봇 붐에 베팅 - 숨겨진 간접 투자 경로는</div>
+    <div class="article-title-en">Nvidia is betting on a trillion-dollar robotics boom. Here is the hidden way to trade it.</div>
+    <div class="article-keypoint">Nvidia, 휴머노이드 로봇을 수조 달러 기회로 선언 - 간접 투자 경로 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidia-is-betting-on-a-trillion-dollar-robotics-boom-here-is-the-hidden-way-to-trade-it-c5b10c4e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 03:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">선물 시장 반등, 현물 휴장 속 금·비트코인 동반 상승</div>
+    <div class="article-title-en">Futures Rebound With Cash Markets Closed; Gold, Bitcoin Jump</div>
+    <div class="article-keypoint">7월 4일 휴장 속 선물 반등·금·비트코인 상승 - AI 불안 진정 및 위험선호 회복</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/futures-rebound-cash-markets-closed-gold-bitcoin-jump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 22:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">'구조대가 돕지도 않고 떠났다' - Venezuela 지진 피해 가족의 절망</div>
+    <div class="article-title-en">'Many rescuers left without helping us': After the earthquakes in Venezuela, a family's despair as they dig through the rubble with their bare hands</div>
+    <div class="article-keypoint">Venezuela 지진 부실 대응, 정치 불안 가속 - 라틴아메리카 정치 리스크 재부상</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/07/04/many-rescuers-left-without-helping-us-after-the-earthquakes-in-venezuela-a-family-s-despair-as-they-dig-through-the-rubble-with-their-bare-hands_6755133_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 07:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Taylor Swift 팬들, 뉴욕 폭염 속 Travis Kelce와의 결혼식에 (멀리서나마) 함께하려 모여</div>
+    <div class="article-title-en">Taylor Swift fans brave the New York heat to be (at least somewhat) near wedding to Travis Kelce</div>
+    <div class="article-keypoint">Taylor Swift·Kelce 결혼식 - 시장과 무관한 사회 문화 이벤트</div>
+    <a class="article-link" href="https://www.theguardian.com/music/2026/jul/03/taylor-swift-travis-kelce-wedding" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 04:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Venezuela의 지진 대응 실패</div>
+    <div class="article-title-en">Venezuela’s Bungled Earthquake Response</div>
+    <div class="article-keypoint">Venezuela 지진 재난 대응 실패, 정치 변화 가속 촉매로 작용할지 주목</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/07/03/venezuela-earthquakes-rodriguez-machado-politics/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/03 21:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
