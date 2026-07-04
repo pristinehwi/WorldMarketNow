@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-05 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/05 07:48 KST</div>
+    <div class="header-date">2026-07-05</div>
+    <div class="header-headline">6월 미국 고용 급감·삼성 메모리 20% 가격 인상 - 수요·공급 충격 동시 발생</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">NATO 정상회담 전 러시아의 폴란드 도발 경고·트럼프-푸틴 통화 후속 지정학 전개 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">6월 고용 둔화·유로존 CPI 냉각 - 글로벌 통화정책 재조정 압력</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">6월 미국 신규 고용이 3개월 연속 예상치 상회 흐름을 끊고 급격히 둔화되면서 Fed 금리 인상 기대가 후퇴했고, 투자자들은 연내 금리 경로를 재산정하고 있다. 유로존 CPI도 동시에 냉각되며 ECB와 Fed 양측 모두 긴축 사이클 종료 가능성이 부각되는 국면이다. 브라질에서는 룰라 정부의 신용 공급 확대 조치가 통화정책을 훼손하지 않는다는 재무장관 발언이 나왔으나, 재정·통화 정책 간 긴장은 신흥국 전반의 공통 리스크로 남아 있다. 프랑스에서는 마크롱 임기 말 예산 대결이 10년 내 최고 수위의 재정 혼란으로 치닫고 있어 유럽 재정 리스크 프리미엄 확대 가능성이 열려 있다. 보험사가 연방 규정을 활용해 지붕 수리 비용을 가입자에게 전가하는 구조는 허리케인 시즌과 맞물려 소비자 부담 증가 및 재정적 취약성 확대로 이어질 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">DRAMageddon 심화 - Samsung 20% 메모리 가격 인상과 AI 반도체 공급 재편</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#8</span>
+    </div>
+    <div class="theme-summary">삼성이 최첨단 메모리 칩 가격을 20% 인상할 준비를 하고 있다는 보도가 나오며 AI 인프라 투자 비용 구조 전반에 경고등이 켜졌다. 신규 팹과 생산라인 증설에는 시간이 필요해 단기 공급 완화는 불가능하며, 한국의 메모리 용량 두 배 확대 계획에도 불구하고 가격 상승 압력은 지속될 전망이다. Mistral AI가 오픈소스 프론티어 모델 전략으로 OpenAI에 도전장을 내밀고 있고, Alibaba는 Claude Code를 고위험 소프트웨어로 분류·금지하면서 AI 기술 진영 분화와 공급망 재편이 가속되고 있다. OpenAI의 Stargate UK 프로젝트는 £30억 중 £20억이 사실상 가상의 투자로 드러나며 AI 인프라 과잉 기대에 균열이 생기고 있다. 이처럼 메모리 가격 급등, AI 모델 경쟁, 인프라 투자 신뢰 훼손이 동시에 진행되며 AI 자본배분 합리성 논쟁이 재점화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">러시아 폴란드 도발 경고·트럼프-푸틴 통화 - NATO 결속 시험대</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #9~#12</span>
+    </div>
+    <div class="theme-summary">미국이 폴란드에 러시아의 NATO 결속 시험 도발 가능성을 경고했다는 보도가 나오면서 NATO 정상회담을 앞두고 동유럽 안보 리스크가 최고조에 달하고 있다. 트럼프 대통령은 푸틴·젤렌스키와 잇따라 통화하며 미국 독립 250주년을 계기로 우크라이나 전쟁과 이란 문제를 동시에 논의했으나, 구체적 합의나 진전은 불분명하다. 젤렌스키는 코스탄티니우카 점령 주장을 '또 다른 러시아의 거짓말'로 즉각 부인하며 전선 정보전이 격화되고 있음을 보여줬다. 푸틴이 국내 연료 공급 촉진을 위한 세금 개정안에 서명한 것은 서방 제재 속 러시아의 에너지 내수 안정화 시도로, 지정학적 긴장이 에너지 시장에 간접적으로 파급될 가능성을 높인다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">트럼프 크립토 수익 공개·'Trump 계좌' 투자처 확정 - 정치 리스크와 자산배분 왜곡</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #13~#15</span>
+    </div>
+    <div class="theme-summary">약 100만 명의 투자자가 Trump 암호화폐 코인에서 총 49억 달러 손실을 본 반면 트럼프 본인은 6억 3,600만 달러의 수익을 거뒀다는 분석이 공개되며 정치 리스크와 크립토 시장 왜곡 논란이 재점화됐다. 재무부는 트럼프 계좌 자금을 저비용 인덱스 펀드에만 투자할 수 있다고 확정 발표해 초기 투자자와 부모들의 자산배분 선택지가 좁혀졌다. 비트코인이 정부 구제금융 가능성 논쟁에 휩싸이면서 '탈중앙화 자산'이라는 본질적 가치 훼손 우려도 제기되고 있다. 이 세 흐름이 겹치며 크립토 자산 전반에 대한 정치적 신뢰도와 시장 배분 논리가 동시에 흔들리고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">SpaceX IPO 앞두고 Musk의 정치 행보·EV 산업 위기 - 빅테크 자본시장 신뢰 균열</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #16~#19</span>
+    </div>
+    <div class="theme-summary">SpaceX IPO 준비 기간 동안 Musk가 X(구 트위터)에서 SpaceX보다 영국 인종·이민 문제를 두 배 더 많이 게시한 것으로 나타나 기업가치 산정과 투자자 신뢰에 잠재적 리스크가 부각됐다. Vance 부통령의 영국 리더십 비판 발언은 미-영 외교 마찰을 자극하며 다국적 테크 기업의 규제 환경 불확실성을 높이고 있다. 인도 Modi 총리는 서방의 정유 시설 폐쇄와 달리 원유 정제 용량을 지속 확대할 것이라고 선언해 에너지 공급망 분화가 가속되고 있음을 보여준다. EV 산업은 관세 인상과 정치 이념 충돌, 중국 저가차 경쟁 속에 '황금기'를 놓칠 수 있다는 경고가 나오며 자동차 섹터 자본배분 재검토 압력이 커지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #20~#29</span>
+    </div>
+    <div class="theme-summary">미국 독립 250주년 전국 행사와 정치 집회, 영국 스타머 총리 퇴임 발언, 베네수엘라 자연재해 사망자 증가, 캘리포니아 도시 교육 수준 평가, Paul Pelosi 뺑소니 혐의, Newsom 내부 FBI 제보자 논란, 유럽 어닝 시즌 프리뷰 등 직접적 시장 임팩트와 거리가 있는 기사들이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">6월 고용 둔화·유로존 CPI 냉각 - 글로벌 통화정책 재조정 압력</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">보험사, 새 연방 규정 활용해 지붕 교체 비용 가입자에 전가 - 우박·허리케인 시즌과 맞물려</div>
+    <div class="article-title-en">Insurers shifted roof-replacement costs onto homeowners thanks to a new federal rule — just in time for hail and hurricane season</div>
+    <div class="article-keypoint">보험사, 연방 규정 활용해 지붕 수리비 소비자 전가 - 허리케인 시즌 가계 재정 충격 확대 우려</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/insurers-shifted-roof-replacement-costs-onto-homeowners-thanks-to-a-new-federal-rule-just-in-time-for-hail-and-hurricane-season-e86068df?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 03:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">브라질 Durigan 재무장관, 신용 공급 확대가 통화정책에 영향 없다고 주장</div>
+    <div class="article-title-en">Brazil’s Durigan Says Credit Lines Won’t Affect Monetary Policy</div>
+    <div class="article-keypoint">브라질 재무장관, 신용 확대가 통화정책 훼손 안 한다 주장 - 신흥국 재정·통화 긴장 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-04/brazil-s-durigan-says-credit-lines-won-t-affect-monetary-policy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 02:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">글로벌 경제 차트: 미국 고용 둔화, 유로존 CPI 냉각</div>
+    <div class="article-title-en">Charting the Global Economy: US Hiring Slows, Eurozone CPI Cools</div>
+    <div class="article-keypoint">6월 미국 고용 급감·유로존 CPI 냉각 - Fed 금리 인상 기대 후퇴, 연내 경로 재산정</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-04/charting-the-global-economy-us-hiring-slows-eurozone-cpi-cools" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Macron의 마지막 예산 전쟁, 프랑스에 더 큰 정치 혼란 예고</div>
+    <div class="article-title-en">Macron’s Budget Finale Augurs More Political Chaos in France</div>
+    <div class="article-keypoint">마크롱 임기 말 프랑스 예산 대결, 10년 내 최고 수위 - 유럽 재정 리스크 프리미엄 확대 가능성</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-04/macron-s-budget-finale-augurs-more-political-chaos-in-france" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 16:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">DRAMageddon 심화 - Samsung 20% 메모리 가격 인상과 AI 반도체 공급 재편</span>
+    <span class="theme-label-range">Article #5~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Mistral AI란 무엇인가? OpenAI 경쟁자에 대한 모든 것</div>
+    <div class="article-title-en">What is Mistral AI? Everything to know about the OpenAI competitor</div>
+    <div class="article-keypoint">Mistral AI, 오픈소스 프론티어 모델로 OpenAI에 도전 - AI 경쟁 구도 분산 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/04/what-is-mistral-ai-everything-to-know-about-the-openai-competitor/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 00:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">OpenAI의 핵심 부지 미방문 의혹, 영국 투자 계획에 의문 제기</div>
+    <div class="article-title-en">OpenAI’s apparent failure to visit key site raises questions over UK investment</div>
+    <div class="article-keypoint">OpenAI Stargate UK 투자 £20억이 사실상 허구로 드러나 - AI 인프라 과잉 기대 균열</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/jul/04/openai-apparent-failure-visit-key-site-questions-stargate-uk-project" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Alibaba, 직원들의 Claude Code 사용 금지 조치 보도</div>
+    <div class="article-title-en">Alibaba reportedly bans employees from using Claude Code</div>
+    <div class="article-keypoint">Alibaba, Claude Code 고위험 소프트웨어 분류·금지 - AI 기술 진영 분화 심화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/04/alibaba-reportedly-bans-employees-from-using-claude-code/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 01:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">DRAMageddon 심화 - Samsung, 메모리 가격 20% 인상 준비</div>
+    <div class="article-title-en">DRAMageddon Deepens As Samsung Prepares 20% Memory Price Hike</div>
+    <div class="article-keypoint">Samsung 메모리 20% 가격 인상 준비 - AI 인프라 비용 구조 전반에 상방 압력</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/dramageddon-deepens-samsung-prepares-20-memory-price-hike" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 01:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">러시아 폴란드 도발 경고·트럼프-푸틴 통화 - NATO 결속 시험대</span>
+    <span class="theme-label-range">Article #9~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">러시아, NATO 결속 시험 위해 폴란드 도발 계획 중 - 미국이 경고한 것으로 보도</div>
+    <div class="article-title-en">Russia Planning Provocation Against Poland To Test NATO Resolve, US Reportedly Warned</div>
+    <div class="article-keypoint">미국, 러시아의 폴란드 도발 가능성 경고 - NATO 결속 시험대·방산 섹터 주목</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/russia-planning-provocation-against-poland-test-nato-resolve-us-reportedly-warned" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 21:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">트럼프, NATO 정상회담 앞두고 Putin·Zelensky와 잇따라 통화</div>
+    <div class="article-title-en">Trump speaks with Putin and Zelensky ahead of NATO summit</div>
+    <div class="article-keypoint">트럼프, 푸틴·젤렌스키와 통화 - NATO 정상회담 전 우크라이나·이란 동시 논의</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/07/05/trump-speaks-with-putin-and-zelensky-ahead-of-nato-summit_6755156_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 07:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Putin, 국내 연료 공급 확대를 위한 세금 개정안에 서명</div>
+    <div class="article-title-en">Putin Signs Tax Amendments Aiming to Boost Domestic Fuel Supply</div>
+    <div class="article-keypoint">푸틴, 국내 연료 공급 촉진 세금 개정 서명 - 제재 속 에너지 내수 안정화 시도</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-04/putin-signs-tax-amendments-aiming-to-boost-domestic-fuel-supply" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 00:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">'또 다른 러시아의 거짓말': 우크라이나 Zelensky, 핵심 동부 도시 Kostiantynivka 점령 주장 부인</div>
+    <div class="article-title-en">‘Another Russian lie’: Ukraine’s Zelensky denies capture of key eastern town Kostiantynivka</div>
+    <div class="article-keypoint">젤렌스키, 코스탄티니우카 점령 주장 즉각 부인 - 전선 정보전 격화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraine-denies-russian-capture-of-key-eastern-city-kostiantynivka" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 17:41 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">트럼프 크립토 수익 공개·'Trump 계좌' 투자처 확정 - 정치 리스크와 자산배분 왜곡</span>
+    <span class="theme-label-range">Article #13~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">정부가 세금으로 Bitcoin을 구제할 수 있을까?</div>
+    <div class="article-title-en">Could The Government Use Tax Dollars To Bail Out Bitcoin?</div>
+    <div class="article-keypoint">비트코인 정부 구제금융 논쟁 점화 - 탈중앙화 자산 본질 훼손 리스크</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/could-government-use-tax-dollars-bail-out-bitcoin" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">'Trump 계좌' 자금은 어디에 투자해야 하나? 재무부가 답변을 내놨다</div>
+    <div class="article-title-en">Where can I invest my kid’s ‘Trump account’ money? The Treasury Department just answered that question.</div>
+    <div class="article-keypoint">Trump 계좌, 저비용 인덱스 펀드로만 투자 확정 - 자산배분 선택지 제한</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/where-can-i-invest-my-kids-trump-account-money-the-treasury-department-just-answered-that-question-4f656574?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 02:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">약 100만 명의 투자자, Trump 암호화폐 코인에서 총 49억 달러 손실</div>
+    <div class="article-title-en">Nearly a million investors lost a total of $4.9 billion on Trump crypto coin</div>
+    <div class="article-keypoint">Trump 코인 투자자 100만 명 $49억 손실, 트럼프 본인 $6.36억 수익 - 정치 크립토 리스크 재점화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/nearly-a-million-investors-lost-a-total-of-4-9-billion-on-trump-crypto-coin" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 03:47 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">SpaceX IPO 앞두고 Musk의 정치 행보·EV 산업 위기 - 빅테크 자본시장 신뢰 균열</span>
+    <span class="theme-label-range">Article #16~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Elon Musk, SpaceX IPO 준비 기간 동안 SpaceX보다 영국 인종·이민 관련 게시물을 두 배 더 올려</div>
+    <div class="article-title-en">Elon Musk posted twice as often on UK race and immigration as about SpaceX in IPO run-up</div>
+    <div class="article-keypoint">Musk, SpaceX IPO 준비 중 영국 정치 게시물이 SpaceX의 2배 - 경영자 리스크 부각</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/jul/04/elon-musk-uk-race-immigration-spacex-ipo" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">미국 VP Vance, 영국 지도자들이 국민을 저버렸다고 비판 - 차기 총리의 변화 기대</div>
+    <div class="article-title-en">US VP Vance says Britain has been failed by leaders, hopes next PM delivers change</div>
+    <div class="article-keypoint">Vance 부통령, 영국 리더십 공개 비판 - 미-영 외교 마찰 및 테크 규제 불확실성 상승</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/us-vp-vance-says-britain-has-been-failed-by-leaders-hopes-next-pm-delivers-change-4775380" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 20:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">자동차 비용 상승 속, 미국은 전기차 황금기를 놓치게 될까?</div>
+    <div class="article-title-en">As auto costs rise, will the US miss the golden age of electric vehicles?</div>
+    <div class="article-keypoint">관세·정치 이념 충돌 속 EV 산업, 중국 저가차에 황금기 빼앗길 위기</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/04/electric-cars-vehicles-united-states" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Modi 총리, 인도는 원유 정제 용량을 계속 확대할 것이라고 선언</div>
+    <div class="article-title-en">Modi Says India Will Keep Expanding Oil Refining Capacity</div>
+    <div class="article-keypoint">Modi, 원유 정제 용량 지속 확대 선언 - 인도 에너지 공급망 독자 노선 강화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-04/modi-says-india-will-continue-to-expand-oil-refining-capacity" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 18:12 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #20~#29</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">우크라이나 Zelensky, 트럼프와 통화 - '미국의 결의'로 러시아와의 전쟁 종식 도와달라</div>
+    <div class="article-title-en">Ukraine’s Zelensky says he spoke to Trump, calls for ‘American resolve’ to help end war with Russia</div>
+    <div class="article-keypoint">젤렌스키, 트럼프에 '미국의 결의' 촉구 - NATO 정상회담 앞두고 우크라이나 지원 압박 강화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraines-zelenskiy-says-he-spoke-to-trump-calls-for-american-resolve-to-help-end-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 05:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">새 Google 광고, AI 도움으로 독립선언문 작성하는 장면 상상</div>
+    <div class="article-title-en">New Google commercial imagines a Declaration of Independence written with help from AI</div>
+    <div class="article-keypoint">Google, AI로 독립선언문 작성 광고 - AI 일상화 마케팅 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/04/new-google-commercial-imagines-a-declaration-of-independence-written-with-help-from-ai/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">신파시스트 단체 Patriot Front, 독립기념일에 워싱턴 DC서 남부연합 깃발 행진</div>
+    <div class="article-title-en">Neo-fascist group Patriot Front parades Confederate flag in Washington DC on Fourth of July</div>
+    <div class="article-keypoint">극우 단체, 독립 250주년 워싱턴 행진 - 미국 내 사회 분열 리스크 가시화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/04/neo-fascist-patriot-front-washington-dc" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 04:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">트럼프, 미국 건국 250주년 기념식을 National Mall 선거 집회 방식으로 진행</div>
+    <div class="article-title-en">Trump to mark US 250th anniversary with campaign-style rally on National Mall</div>
+    <div class="article-keypoint">트럼프, 독립 250주년에 선거 집회식 행사 - 정치적 활용 논란</div>
+    <a class="article-link" href="https://www.investing.com/news/politics-news/trump-to-mark-us-250th-anniversary-with-campaignstyle-rally-on-national-mall-4775359" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 22:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">유럽 어닝 시즌 프리뷰: 애널리스트가 주목하는 3가지 포인트</div>
+    <div class="article-title-en">European earnings season preview: Watch these 3 things, analyst says</div>
+    <div class="article-keypoint">유럽 어닝 시즌 개막 - 고금리·유로 강세·성장 둔화의 3중 압박 점검 필요</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/european-earnings-season-preview-watch-these-3-things-analyst-says-4775381" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 20:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">퇴임 앞둔 영국 Starmer 총리, 후임자도 외교에 동등한 시간 투자해야 한다고 강조</div>
+    <div class="article-title-en">Outgoing UK PM Starmer says successor cannot spend less time on foreign affairs</div>
+    <div class="article-keypoint">스타머 퇴임 발언, 차기 총리에 외교 지속성 요구 - 영국 정책 연속성 불확실성</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/outgoing-uk-pm-starmer-says-successor-cannot-spend-less-time-on-foreign-affairs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 17:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Paul Pelosi, 캘리포니아서 주차 차량 충돌 후 뺑소니 혐의 - 언론 보도</div>
+    <div class="article-title-en">Paul Pelosi faces hit-and-run charge after striking parked vehicle in California, media reports say</div>
+    <div class="article-keypoint">Paul Pelosi 뺑소니 혐의 - 정치 뉴스 노이즈</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/paul-pelosi-faces-hitandrun-charge-after-striking-parked-vehicle-in-california-media-reports-say-4775385" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 21:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">캘리포니아 6개 도시, 미국 최하위 교육 수준 10위 안에 포함</div>
+    <div class="article-title-en">Six California Cities Ranked Among Top 10 Least Educated In US</div>
+    <div class="article-keypoint">캘리포니아 6개 도시 최하위 교육 수준 - 노동 생산성·인적 자본 리스크 장기 관찰 필요</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/six-california-cities-ranked-among-top-10-least-educated-us" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">베네수엘라 사망자 증가 속, 생존자가 잔해 속 며칠의 기억 전해</div>
+    <div class="article-title-en">As Venezuela death toll rises, survivor recounts days beneath the rubble</div>
+    <div class="article-keypoint">베네수엘라 자연재해 사망자 증가 - 인도주의 위기, 직접 시장 임팩트 제한적</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/death-toll-from-venezuela-quakes-rises-to-2954-4775382" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/04 22:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">FBI 제보자, Newsom 측근 내부에서 녹취 활동 - 변호인 폭로</div>
+    <div class="article-title-en">FBI Mole Wore Wire Inside Newsom's Inner Circle: Lawyer</div>
+    <div class="article-keypoint">FBI 제보자, Newsom 측근 내부 녹취 - 미국 정치 불확실성 노이즈</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/fbi-mole-wore-wire-inside-newsoms-inner-circle-lawyer" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 00:55 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
