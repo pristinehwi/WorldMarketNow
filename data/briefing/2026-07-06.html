@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-06 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/06 07:47 KST</div>
+    <div class="header-date">2026-07-06</div>
+    <div class="header-headline">SK Hynix $290억 미국 상장 - AI 메모리 패권 자본시장으로 확전</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">10·30년 국채 입찰 및 6월 FOMC 의사록 공개 - 장기금리 방향성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">SK Hynix $290억 미국 상장과 한국 반도체 세금 성장펀드 - AI 메모리 자본 재편</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#3</span>
+    </div>
+    <div class="theme-summary">SK Hynix의 $290억 규모 미국 상장은 외국 기업 사상 최대 IPO가 될 수 있으며, 단순한 자금 조달을 넘어 AI 투자자 접근권 확보와 글로벌 반도체 자본시장 주도권 경쟁이 핵심 목적이다. 한국 정부도 반도체 산업 세수를 재원으로 한 장기 성장 투자펀드 조성을 검토 중이라는 보도가 나오며, 국가 차원의 반도체 산업 자본 동원 전략이 가시화되고 있다. AI 수요 급증으로 HBM 메모리 공급이 구조적 병목이 된 상황에서, SK Hynix의 미국 상장은 Nvidia 등 핵심 고객과의 자본시장 연결고리를 강화하는 전략적 포석으로 해석된다. Amazon의 Mechanical Turk 신규 고객 중단은 LLM 기반 AI가 크라우드소싱 데이터 레이블링 시장을 대체하는 흐름을 상징적으로 드러낸다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">OPEC+ 증산 재확인에도 호르무즈 변수 잔존 - 에너지 가격 방향성 재시험</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #4~#6</span>
+    </div>
+    <div class="theme-summary">OPEC+는 원유가 하락세 속에서도 소폭 증산을 재확인했으나, 미-이란 합의 지속 여부와 호르무즈 해협 완전 재개통이 실질적 공급 증가의 전제 조건으로 남아 있어 증산 효과는 제한적이다. 이란-핵 협상 교착 리스크가 에너지 가격에 구조적 불확실성을 유지시키는 가운데, 증산 결정이 상징적 수준에 그친다는 시장의 냉소적 시각이 우세하다. 트럼프-푸틴 간 7월 4일 약 90분 통화에서 러시아 방문 초청이 이루어진 점은 우크라이나 전쟁 종결 협상의 새로운 국면 가능성을 열면서 에너지 지정학 리스크 전반의 재조정을 촉발할 수 있다. NATO 정상회의에서 트럼프가 Zelensky·시리아 al-Sharaa와 면담 예정인 점도 중동·동유럽 지정학 복합 변수로 작용한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">미국 스테이블코인 법안 진전·비트코인 $62K 회복 - 크립토 규제 모멘텀 재점화</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #7~#8</span>
+    </div>
+    <div class="theme-summary">비트코인이 $62,000 위로 복귀하며 미국 의회의 크립토 법안 추진 재가속이 직접적 상승 촉매로 작용했다. 스테이블코인 입법 논의가 구체화될수록 기관 자금의 크립토 시장 진입 문턱이 낮아지는 구조적 변화가 예상되며, 이는 동시에 지역은행의 예금 이탈 압력을 높이는 규제 지형 충돌로도 이어진다. SpaceX의 통신 사업 확장 야망과 Anthropic의 수출 제한 해제 뉴스는 빅테크·AI 플랫폼의 자본시장 영향력 확대라는 더 큰 흐름 속에 위치하며, 크립토 입법과 함께 디지털 자산·기술 규제 지형의 동시 재편을 예고한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">10·30년 국채 입찰·6월 FOMC 의사록 - 장기금리 수요 시험대</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #9~#11</span>
+    </div>
+    <div class="theme-summary">이번 주 10년·30년 만기 미 국채 입찰이 예정되어 있어, 재정 확대 우려 속 장기물 수요 강도가 채권시장의 핵심 시험 지점이 된다. 동시에 6월 FOMC 의사록 공개는 연준 내부의 인하 타이밍 논쟁 온도를 재확인할 기회로, 장기금리 궤적과 금리 민감 자산의 포지션 재조정을 유발할 수 있다. 신흥시장 캐리트레이더들이 달러 자금 조달에서 유로·호주달러로 이동하는 흐름은 달러 강세 재가속 국면에서도 EM 통화 전략이 다변화되고 있음을 시사한다. 영국 Starmer 총리 퇴진 후 Burnham 체제로의 전환 가능성은 영국 에너지 정책 불확실성을 단기적으로 높이는 요인이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">트럼프 7월 4일 연설·FIFA 개입·Vance 재조명 - 정치 리스크의 시장 외부 확산</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #12~#17</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령은 독립기념일 행사를 사실상 자신의 정치 선전 무대로 활용하며 '미국의 귀환'을 선언했고, FIFA에 압력을 가해 미국 스트라이커의 징계를 번복시키는 이례적 개입도 단행했다. 10년 전 Vance의 반(反)트럼프 기고문을 The Atlantic이 재게재하며 현 행정부 내 이념적 균열 가능성에 대한 시장의 정치 리스크 감지 안테나가 높아지고 있다. Netanyahu의 레바논 기독교 마을 병합 발언과 Macron의 시리아 방문 예정은 중동 지역 정치 지형의 복잡성을 더하며 지정학 프리미엄 산정을 어렵게 한다. 베네수엘라 지진 사망자 3,000명 이상으로 급증하는 인도주의 위기도 중남미 정치 불안정성 변수로 잔존한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #18~#24</span>
+    </div>
+    <div class="theme-summary">합성 세포 SpudCell의 완전한 생명 주기 구현은 생명과학 기초연구의 이정표로, 단기 시장 영향은 제한적이나 바이오테크 장기 투자 내러티브에 간접적으로 영향을 줄 수 있다. Paul McCartney의 Taylor Swift 결혼식 공연, 뉴욕 총격 사건, 월드컵 드론 압수 등은 시장과 직접적 연관성이 낮은 사회·문화 이슈다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">SK Hynix $290억 미국 상장과 한국 반도체 세금 성장펀드 - AI 메모리 자본 재편</span>
+    <span class="theme-label-range">Article #1~#3</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">SK Hynix, $290억 미국 상장으로 AI 투자자 접근권 확보 추진</div>
+    <div class="article-title-en">SK Hynix Seeks Access to AI Investors in $29 Billion US Listing</div>
+    <div class="article-keypoint">외국 기업 사상 최대 규모 미국 IPO - AI 메모리 패권 자본시장으로 확전</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-05/sk-hynix-seeks-access-to-ai-investors-in-29-billion-us-listing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">한국, 반도체 세수 활용한 성장펀드 조성 검토 - Yonhap 보도</div>
+    <div class="article-title-en">South Korea Eyes Growth Fund From Chip Tax Windfall, Yonhap Says</div>
+    <div class="article-keypoint">한국 반도체 세수 활용 장기 성장펀드 조성 검토 - 국가 자본 동원 전략 가시화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-05/south-korea-eyes-growth-fund-from-chip-tax-windfall-yonhap-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 20:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Amazon, Mechanical Turk 신규 고객 수용 중단 결정</div>
+    <div class="article-title-en">Amazon will stop accepting new customers for Mechanical Turk</div>
+    <div class="article-keypoint">Amazon Mechanical Turk 신규 고객 중단 - LLM이 크라우드소싱 데이터 시장 대체 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/05/amazon-will-stop-accepting-new-customers-for-mechanical-turk/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 02:43 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">OPEC+ 증산 재확인에도 호르무즈 변수 잔존 - 에너지 가격 방향성 재시험</span>
+    <span class="theme-label-range">Article #4~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">OPEC+, 원유가 급락에도 불구하고 재차 증산 합의</div>
+    <div class="article-title-en">OPEC+ raises output levels again despite tumbling crude prices</div>
+    <div class="article-keypoint">OPEC+ 증산 재확인에도 호르무즈 미개통으로 실질 공급 증가 효과 제한적</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/opec-raises-output-levels-again-despite-tumbling-crude-prices-534791c8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">트럼프, NATO 정상회의서 Zelensky·시리아 al-Sharaa와 회동 예정</div>
+    <div class="article-title-en">Trump to meet Ukraine’s Zelensky, Syria’s al-Sharaa at NATO summit: White House</div>
+    <div class="article-keypoint">트럼프-Zelensky·al-Sharaa NATO 정상회의 회동 - 중동·동유럽 지형 동시 시험</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-to-meet-leaders-of-ukraine-syria-alongside-nato-summit" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 03:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Putin, '건설적' 7월 4일 통화에서 Trump에 러시아 방문 초청</div>
+    <div class="article-title-en">Putin Invites Trump To Visit Russia In 'Constructive' July 4th Phone Call</div>
+    <div class="article-keypoint">트럼프-푸틴 90분 통화, 러시아 방문 초청 - 우크라이나 협상 새 국면 개막 가능성</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/putin-invites-trump-visit-russia-constructive-july-4th-phone-call" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 00:05 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">미국 스테이블코인 법안 진전·비트코인 $62K 회복 - 크립토 규제 모멘텀 재점화</span>
+    <span class="theme-label-range">Article #7~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">미국 크립토 법안 재추진 모멘텀에 비트코인 $62K 위로 상승</div>
+    <div class="article-title-en">Bitcoin trades above $62K as U.S. crypto bill gains fresh traction</div>
+    <div class="article-keypoint">스테이블코인 법안 재가속에 비트코인 $62K 회복 - 제도화 기대가 상승 촉매</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-trades-above-62k-as-us-crypto-bill-gains-fresh-traction-4775415" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 20:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX의 통신 사업 야망</div>
+    <div class="article-title-en">SpaceX’s Telecom Dreams</div>
+    <div class="article-keypoint">SpaceX 통신 사업 확장과 Anthropic 수출 제한 해제 - 빅테크 플랫폼 경쟁 재편</div>
+    <a class="article-link" href="https://www.wsj.com/tech/spacexs-telecom-dreams-d461e568?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 20:37 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">10·30년 국채 입찰·6월 FOMC 의사록 - 장기금리 수요 시험대</span>
+    <span class="theme-label-range">Article #9~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">채권 트레이더들, 국채 입찰과 6월 FOMC 의사록에 주목</div>
+    <div class="article-title-en">Bond Traders Watch for Treasury Auctions, June Fed Minutes</div>
+    <div class="article-keypoint">10·30년 국채 입찰 및 6월 FOMC 의사록 - 장기금리 방향성 분기점</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-05/bond-traders-watch-for-treasury-auctions-june-fed-minutes" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">EM 동향: 캐리 트레이더들, 달러 이탈 가속화</div>
+    <div class="article-title-en">What’s Happening in EM: Carry Traders Shift Away From Dollar</div>
+    <div class="article-keypoint">EM 캐리 자금 조달 통화가 달러에서 유로·호주달러로 이동 - 달러 헤게모니 균열 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/audio/2026-07-05/what-s-happening-in-em-carry-traders-shift-away-from-dollar" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Starmer 퇴진, Burnham 부상: 영국 에너지 정책 무엇이 달라지나</div>
+    <div class="article-title-en">Starmer Out, Burnham In: What Changes for UK Energy Policy?</div>
+    <div class="article-keypoint">Starmer 퇴진 후 Burnham 체제 전환 가능성 - 영국 에너지 정책 불확실성 단기 확대</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Starmer-Out-Burnham-In-What-Changes-for-UK-Energy-Policy.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 02:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">트럼프 7월 4일 연설·FIFA 개입·Vance 재조명 - 정치 리스크의 시장 외부 확산</span>
+    <span class="theme-label-range">Article #12~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">미국 독립 250주년: Trump, 혼란스러운 기념행사에서 미국 찬양과 '공산주의자' 공격</div>
+    <div class="article-title-en">250 years of American independence: Trump praises US and attacks 'communists' at chaotic celebration</div>
+    <div class="article-keypoint">트럼프 7월 4일 연설을 정치 선전 무대화 - 행정부 메시지 일관성 리스크 주목</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/07/05/250-years-of-american-independence-trump-praises-us-and-attacks-communists-at-chaotic-celebration_6755164_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 19:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">The Atlantic, JD Vance의 10년 전 반트럼프 기고문 재게재</div>
+    <div class="article-title-en">The Atlantic republishes JD Vance’s anti-Trump essay from 10 years ago</div>
+    <div class="article-keypoint">Vance의 10년 전 반트럼프 기고문 재게재 - 행정부 내 이념 균열 가능성 부각</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/05/atlantic-republishes-jd-vance-trump-essay" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 02:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">FIFA, Trump의 전화 통화 후 미국 스트라이커 출전 정지 번복</div>
+    <div class="article-title-en">Fifa reverses suspension of star US striker after call from Trump</div>
+    <div class="article-keypoint">트럼프 FIFA 징계 번복 개입 - 행정 권력의 스포츠 영역 침투로 거버넌스 우려 확산</div>
+    <a class="article-link" href="https://www.ft.com/content/a858d225-59b8-4a85-866d-77055e7bfd58" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 06:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Netanyahu, 레바논 일부 기독교 마을이 이스라엘 편입 요청했다고 주장</div>
+    <div class="article-title-en">Netanyahu says some Lebanese Christian villages 'asked to be annexed' by Israel</div>
+    <div class="article-keypoint">Netanyahu 레바논 마을 병합 발언 - 이스라엘 북부 확장 의도 표면화로 중동 긴장 고조</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/07/05/netanyahu-says-some-lebanese-christian-villages-asked-to-be-annexed-by-israel_6755174_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Rodriguez, 베네수엘라 긴급 지진 대응 변호 - 사망자 수 급증 전망</div>
+    <div class="article-title-en">Rodríguez defends Venezuela’s emergency earthquake response as number of bodies expected to soar</div>
+    <div class="article-keypoint">베네수엘라 지진 사망자 3,000명 이상 - 인도주의 위기가 정치 불안정성으로 전이 가능</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jul/05/rodriguez-defends-venezuelas-emergency-earthquake-response-as-bodies-expected-to-soar" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 06:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">시리아, Assad 정권 붕괴 후 서방 정상 첫 방문으로 Macron 맞이할 준비</div>
+    <div class="article-title-en">Syria expecting Macron in first post-Assad visit by Western head of state</div>
+    <div class="article-keypoint">Macron 시리아 전후 첫 서방 정상 방문 예정 - 중동 재건 외교 지형 변화 가속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/syria-expecting-macron-in-first-post-assad-visit-by-western-head-of-state" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 23:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #18~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">이 대형 식료품 체인이 어떻게 컬트적 인기를 얻었나</div>
+    <div class="article-title-en">How This Major Grocery Store Chain Became a Cult-Favorite</div>
+    <div class="article-keypoint">Aldi 저가 전략의 미국 시장 컬트적 충성도 - 소비 양극화 심화의 단면</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-07-05/how-this-major-grocery-store-chain-became-a-cult-favorite" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 05:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">과학자들, 생명의 특징 대부분을 갖춘 세포 개발 - 알아야 할 것들</div>
+    <div class="article-title-en">Scientists made a cell with most of the hallmarks of life. Here’s what to know.</div>
+    <div class="article-keypoint">SpudCell 합성세포 생명주기 완성 - 바이오 기초연구 이정표, 단기 시장 영향 제한</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/scientists-made-a-cell-with-most-of-the-hallmarks-of-life-heres-what-to-know" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">영국 Farage, 미신고 혜택 보도 후 규정 위반 부인</div>
+    <div class="article-title-en">Britain’s Farage denies rules broken after report of undeclared benefits</div>
+    <div class="article-keypoint">Farage 미신고 혜택 의혹 - 영국 극우 정치 리스크 표면화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/uks-farage-denies-rules-broken-after-report-of-undeclared-benefits" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 18:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Paul McCartney, Taylor Swift 결혼식에서 60년 만에 'I Want to Hold Your Hand' 공연</div>
+    <div class="article-title-en">Paul McCartney performs I Want to Hold Your Hand for first time in 60 years at Taylor Swift wedding</div>
+    <div class="article-keypoint">Taylor Swift 결혼식에 McCartney 공연 - 시장 무관 문화 이벤트</div>
+    <a class="article-link" href="https://www.theguardian.com/artanddesign/2026/jul/05/paul-mccartney-i-want-to-hold-your-hand-taylor-swift-wedding" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 00:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Vladimir Putin, 혹은 '소비에트 호모'의 고독</div>
+    <div class="article-title-en">Vladimir Putin, or the loneliness of 'Homo Sovieticus'</div>
+    <div class="article-keypoint">푸틴 '소비에트 호모' 분석 - 러시아 전략 행동 패턴의 구조적 이해에 참고</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/07/05/vladimir-putin-or-the-loneliness-of-homo-sovieticus_6755172_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">뉴욕에서 어린이 4명 포함 최소 8명 총격 피해 - ABC News 보도</div>
+    <div class="article-title-en">At least 8 shot, including 4 children, in New York, ABC News reports</div>
+    <div class="article-keypoint">뉴욕 총격 사건 8명 부상 - 미국 치안 리스크, 직접적 시장 영향 제한</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/at-least-8-shot-including-4-children-in-new-york-abc-news-reports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/05 19:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">FBI, 월드컵 경기 상공 비행 드론 600대 이상 압수</div>
+    <div class="article-title-en">FBI seized more than 600 drones flying over World Cup games in US cities</div>
+    <div class="article-keypoint">월드컵 드론 600대 이상 압수 - 보안 인프라 수요와 드론 규제 강화 방향성 확인</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/05/fbi-seizes-600-drones-world-cup-games" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 01:36 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
