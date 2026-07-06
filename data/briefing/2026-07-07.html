@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-07 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/07 07:48 KST</div>
+    <div class="header-date">2026-07-07</div>
+    <div class="header-headline">Waller, Warsh 기조 합류 - Fed 포워드 가이던스 전면 재설계</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">SK Hynix ADR 상장·Samsung 실적 발표 - AI 메모리 밸류에이션 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Fed 커뮤니케이션 혁신 - Waller의 유연한 포워드 가이던스 지지와 통화정책 전달 재설계</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Waller Fed 이사가 Warsh 신임 의장의 포워드 가이던스 재설계 방향에 공개적으로 동조하며, Fed 내부 커뮤니케이션 전략이 실질적인 전환 국면에 접어들었음을 시사한 것이다. Waller는 통화정책 전달에 관한 연설에서 포워드 가이던스는 유용하지만 유연하게 운용되어야 한다고 강조, 시장이 기계적으로 의존하던 선제 안내 방식의 수정을 예고했다. ECB의 Lane 이사 역시 AI가 통화정책 파급 경로를 구조적으로 변화시킬 수 있다는 연구 결과를 제시하며 선진국 중앙은행의 정책 프레임 재검토 흐름을 뒷받침했다. 이번 주 FOMC 의사록 공개와 함께 ISM 지표 및 복수의 Fed 연사 발언이 예정되어 있어, 포워드 가이던스 재설계의 구체적 윤곽이 시장 금리 기대에 직접 영향을 줄 수 있는 변수로 부상했다. 트럼프 대통령이 이민과 주택가격의 연관성을 주장하는 Fed 워킹페이퍼를 인용하는 등 정치권의 Fed 개입 시도도 지속되고 있어, 독립성 이슈와 커뮤니케이션 변화가 동시에 시장 노이즈로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SK Hynix ADR 상장·Samsung 실적 임박 - AI 메모리 자본 재편 현실화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#13</span>
+    </div>
+    <div class="theme-summary">SK Hynix의 미국 ADR 상장이 임박한 가운데, 전직 OpenAI 연구원이 설립한 헤지펀드 Situational Awareness와 영국의 Baillie Gifford가 상장을 지지하며 AI 메모리 투자 자금의 글로벌 집중이 가속화되고 있다. Micron 주가 상승이 반도체 섹터 전반의 '낙관론 회귀' 신호로 해석되는 가운데, 시장은 Samsung 실적과 SK Hynix ADR 상장을 AI 메모리 밸류에이션의 다음 시험대로 주목하고 있다. Broadcom과 Apple이 2031년까지 칩 파트너십을 연장하기로 하면서 AI 서버 인프라 공급망의 장기 계약 구도가 더욱 공고해지는 모습이다. Nvidia는 차세대 AI 서버랙 시스템 'Kyber'의 지연설을 부인하며 주가가 반등, 공급망 우려가 일시적으로 완화됐으나 제조 난이도에 대한 시장의 경계감은 유지되고 있다. AI 인프라 투자는 '멀티이어 사이클'이라는 업계 전문가 시각이 재확인되며 반도체·데이터센터 섹터의 자본배분 논리가 강화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">SpaceX Nasdaq-100 편입·AI 인프라 빅딜 - 테크 자본시장 구도 재편</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #14~#16</span>
+    </div>
+    <div class="theme-summary">SpaceX가 화요일 Nasdaq-100에 편입되면서 이미 S&P 500 대비 변동성이 높은 Nasdaq-100의 리스크 프로파일이 추가로 확대될 것이라는 분석이 제기됐다. SpaceX는 비상장 기업 특성상 S&P 500 편입까지 최소 1년 이상이 소요될 전망이어서, 양 지수 간 변동성 격차가 구조적으로 심화될 수 있다는 우려가 나온다. 한편 TeraWulf는 Anthropic과 190억 달러 규모의 딜을 체결하며 암호화폐 채굴에서 AI 인프라 지원으로의 피벗을 공식화했고, CEO는 이번 계약이 해당 전략을 '검증'한다고 평가했다. AI 데이터 소유권 논쟁도 부상해, 사용자 데이터가 AI 붐을 이끌었음에도 빅테크가 이익의 100%를 독점하고 있다는 비판이 제기되며 향후 AI 수익 배분 구조에 대한 정치·규제 압력을 예고했다. AI 고정비 지출(Capex) 수요는 기업들이 수직 통합 플레이어로 전환하면서 장기 사이클이 지속될 것이라는 전망이 강화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">NATO 앙카라 정상회의·Putin-Trump 재통화 합의 - 우크라이나 외교 분기점</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#19</span>
+    </div>
+    <div class="theme-summary">이번 주 NATO 앙카라 정상회의를 앞두고 Trump와 Zelenskyy의 사이드라인 회담이 공식 확정되며 우크라이나 전쟁 외교가 재가동 국면에 진입했다. 크렘린은 Putin과 Trump가 주말 통화에서 '가까운 미래'에 재통화하기로 합의했다고 발표, 정상회의 기간 중 추가 접촉 가능성을 시사했다. 유럽 정보 보고서에 따르면 러시아는 전시 경제 부담을 금융권이 대거 흡수하면서 '폭발적' 은행 위기 위험에 직면해 있어, 전쟁 장기화의 러시아 내부 비용이 임계점에 가까워지고 있다는 분석이 나왔다. 이 같은 지정학적 흐름은 에너지 가격과 유럽 방산·채권 시장에 동시에 영향을 미치는 변수로, NATO 회의 결과와 Putin-Trump 추가 통화 내용이 향후 48시간 내 핵심 관전 포인트다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">UAE OPEC 탈퇴 후 생산 사상 최고 근접·에너지 지정학 구도 변화</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #20~#22</span>
+    </div>
+    <div class="theme-summary">UAE가 OPEC 탈퇴 이후 6월 원유 생산량을 380만 배럴/일 이상으로 끌어올리며 6년래 최고 수준에 근접, 잉여 생산능력을 신속히 수출로 전환하고 있다. 이는 OPEC+ 증산 결정이 구속력을 상실하는 속도가 예상보다 빠름을 보여주는 구체적 사례로, 유가 하방 압력 요인이 추가됐다. 트럼프 대통령이 주유소 사업자들의 가격 인하 미이행을 비난하고 있으나, 증거는 유가 하락 시 정유·유통 마진이 오히려 확대되는 구조적 패턴을 가리키고 있어 정치적 압력의 실효성에 의문이 제기된다. 미국의 핵에너지 확장 야망과 높은 비용 사이의 간극도 조명됐는데, AI 데이터센터 전력 수요 급증이 SMR 등 원자력 투자 논리를 강화하고 있으나 실제 비용 경쟁력 확보까지는 상당한 시간이 필요하다는 분석이 나온다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #23~#30</span>
+    </div>
+    <div class="theme-summary">브라질 상원의원 Flavio Bolsonaro가 트럼프 행정부에 25% 관세 부과를 10월 선거 이후로 연기해달라고 로비, 관세가 브라질 정치 지형과 교차하는 복합 변수로 부상했다. 트럼프의 월드컵 개입 논란 속 미국-벨기에 경기가 역대 최고 시청률을 기록할 수 있다는 예측이 나왔다. 블록체인 합의 메커니즘의 분열 문제, 베네수엘라 지진 사망자 급증, 오스트리아 법원의 시리아 전 정보국장 고문 유죄 판결 등 금융시장과 직접적 연관성이 낮은 사안들이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Fed 커뮤니케이션 혁신 - Waller의 유연한 포워드 가이던스 지지와 통화정책 전달 재설계</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Waller, 통화정책 전달에 관한 두 가지 고찰</div>
+    <div class="article-title-en">Waller, Two Thoughts on the Transmission of Monetary Policy</div>
+    <div class="article-keypoint">Waller, 유연한 포워드 가이던스 지지 - Fed 커뮤니케이션 전략 전환 공식화</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/waller20260706a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">통화의 물리 법칙이 바뀔 때</div>
+    <div class="article-title-en">When The Monetary Laws Of Physics Change</div>
+    <div class="article-keypoint">비트코인·금 등 대안자산으로의 자금 이동 가속화 - 전통 통화 법칙 변화 시사</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/when-monetary-laws-physics-change" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 04:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Fed Waller, '포워드 가이던스는 유연해야 한다' 강조</div>
+    <div class="article-title-en">Fed’s Waller Says ‘Forward Guidance’ Needs to Be Flexible</div>
+    <div class="article-keypoint">Waller, Warsh 포워드 가이던스 재설계에 공개 동조 - Fed 내부 컨센서스 형성 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-06/fed-s-waller-says-forward-guidance-needs-to-be-flexible" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">이번 주 주요 이벤트: ISM, FOMC 의사록, Fed 연사 발언</div>
+    <div class="article-title-en">Key Events This Week: ISM, FOMC Minutes And Fed Speakers</div>
+    <div class="article-keypoint">이번 주 FOMC 의사록·ISM·Fed 연사 집중 - 금리 경로 재조정 여부 분기점</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/key-events-week-ism-fomc-minutes-and-fed-speakers" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 22:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Fed 고위 인사, Kevin Warsh의 포워드 가이던스 재설계론 지지</div>
+    <div class="article-title-en">Top Fed official backs Kevin Warsh’s rethink of forward guidance</div>
+    <div class="article-keypoint">Waller, Warsh 포워드 가이던스 혁신 지지 - Fed 정책 소통 방식 전면 재편 예고</div>
+    <a class="article-link" href="https://www.ft.com/content/52030e91-cac4-4ea9-b518-35a50bb8273d" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 01:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">이민이 주택 가격을 끌어올렸나? 트럼프, Fed 초안 논문 인용</div>
+    <div class="article-title-en">Did immigration drive up housing prices? Trump touts a draft Fed paper.</div>
+    <div class="article-keypoint">트럼프, Fed 워킹페이퍼로 이민-주택가격 연계 주장 - Fed 독립성·정치 개입 논란 재점화</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/07/06/immigration-housing-costs-inside-fed-paper-trump-cited/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 05:39 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SK Hynix ADR 상장·Samsung 실적 임박 - AI 메모리 자본 재편 현실화</span>
+    <span class="theme-label-range">Article #7~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">전직 OpenAI 연구원이 운용하는 헤지펀드, SK Hynix 미국 IPO에 베팅</div>
+    <div class="article-title-en">Hedge fund run by ex-OpenAI researcher bets on SK Hynix’s US IPO </div>
+    <div class="article-keypoint">전직 OpenAI 연구원 헤지펀드, SK Hynix 미국 상장 베팅 - AI 메모리 자금 집중 가속</div>
+    <a class="article-link" href="https://www.ft.com/content/a6f1e92d-0232-4343-9930-6d965a67f187" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 03:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Micron 주가 상승, 반도체 섹터 '낙관론 회귀' 신호 - Samsung 실적·SK Hynix IPO 주목</div>
+    <div class="article-title-en">Micron’s stock gains, signaling a ‘return to optimism’ about the chip sector</div>
+    <div class="article-keypoint">Micron 주가 상승, Samsung 실적·SK Hynix ADR 앞두고 반도체 낙관론 회귀</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microns-stock-gains-signaling-a-return-to-optimism-about-the-chip-sector-0b7f6a8c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 05:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Samsung 실적·SK Hynix IPO 앞두고 기술주 랠리 지속</div>
+    <div class="article-title-en">Tech Stocks Extend Rally Ahead of Samsung Earnings, SK Hynix IPO</div>
+    <div class="article-keypoint">삼성 실적·SK Hynix IPO 앞두고 기술주 랠리 연장 - AI 트레이드 재점화 여부 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-06/tech-set-to-rebound-as-ai-leadership-faces-fresh-tests" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 20:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Broadcom-Apple, 칩 파트너십 2031년까지 연장</div>
+    <div class="article-title-en">Broadcom, Apple Extend Chips Partnership to 2031</div>
+    <div class="article-keypoint">Broadcom-Apple 칩 파트너십 2031년까지 연장 - AI 서버 공급망 장기 계약 구도 확립</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-07-06/broadcom-apple-extend-chips-partnership-to-2031-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 04:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">AI Capex 수요는 '멀티이어' 사이클 - Rudina Seseri 전망</div>
+    <div class="article-title-en">High AI Capex Demand a 'Multi-Year' Cycle, Says Rudina Seseri</div>
+    <div class="article-keypoint">AI Capex 수요는 '멀티이어 사이클' - 기업 수직 통합 가속으로 인프라 투자 장기화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-07-06/high-ai-capex-demand-a-multi-year-cycle-says-seseri-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 04:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Nvidia, Kyber 서버랙 지연 보도 부인 후 주가 반등</div>
+    <div class="article-title-en">Nvidia Turns Green After Denying Report Its Kyber Server Rack Has Been Delayed</div>
+    <div class="article-keypoint">Nvidia, Kyber 서버랙 지연설 부인 - AI 인프라 공급망 우려 일시 완화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/nvidia-turns-green-after-denying-report-its-kyber-server-rack-has-been-delayed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 02:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Micron 열풍 뒤에 숨은 메모리 시장 집중도 실태</div>
+    <div class="article-title-en">How concentrated is the market behind Micron mania?</div>
+    <div class="article-keypoint">메모리 시장 집중도 분석 - Micron 열풍 속 과점 구조 리스크 재조명</div>
+    <a class="article-link" href="https://www.ft.com/content/b3666d16-38e9-47b6-a519-44648377dc8e" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 19:37 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">SpaceX Nasdaq-100 편입·AI 인프라 빅딜 - 테크 자본시장 구도 재편</span>
+    <span class="theme-label-range">Article #14~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Nasdaq-100, S&P 500 대비 변동성 이미 높은데 SpaceX 편입으로 격차 더 확대될 전망</div>
+    <div class="article-title-en">The Nasdaq-100 has been far more volatile than the S&P 500. Now add SpaceX to the mix.</div>
+    <div class="article-keypoint">SpaceX Nasdaq-100 편입으로 S&P 500 대비 변동성 격차 구조적 확대 우려</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-nasdaq-100-has-been-far-more-volatile-than-the-s-p-500-now-add-spacex-to-the-mix-cd397c36?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 07:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">TeraWulf 주가 급등, Anthropic과 $190억 딜 체결</div>
+    <div class="article-title-en">TeraWulf’s stock gains after a $19 billion deal with Anthropic</div>
+    <div class="article-keypoint">TeraWulf, Anthropic과 $190억 딜 - 크립토 채굴→AI 인프라 피벗 공식 검증</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/terawulfs-stock-surges-after-a-19-billion-deal-with-anthropic-6899d3bc?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 05:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">당신의 데이터가 AI 붐을 만들었지만 빅테크가 수익 100% 독식</div>
+    <div class="article-title-en">Your data built the AI boom — but Big Tech is pocketing 100% of the equity</div>
+    <div class="article-keypoint">빅테크가 사용자 데이터 기반 AI 수익 100% 독점 - 향후 규제·수익 배분 논쟁 예고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/your-share-of-the-ai-wealth-is-a-right-not-a-handout-here-is-how-we-claw-back-our-money-7454b0e0?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 06:36 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">NATO 앙카라 정상회의·Putin-Trump 재통화 합의 - 우크라이나 외교 분기점</span>
+    <span class="theme-label-range">Article #17~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">전쟁이 러시아 은행 위기 촉발 위협 - 유럽 정보 보고서 경고</div>
+    <div class="article-title-en">War threatens Russian banking crisis, European intelligence report says</div>
+    <div class="article-keypoint">유럽 정보보고서, 러시아 전시 금융 부담으로 은행 위기 '폭발' 위험 경고</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/war-threatens-russian-banking-crisis-european-intelligence-report-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 21:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Trump, NATO 정상회의서 Zelenskyy와 회담 - 우크라이나 전쟁 외교 재개</div>
+    <div class="article-title-en">Trump to Meet Zelenskyy at NATO Summit as Ukraine War Diplomacy Resumes</div>
+    <div class="article-keypoint">NATO 앙카라 정상회의서 Trump-Zelenskyy 회담 확정 - 우크라이나 외교 재가동</div>
+    <a class="article-link" href="https://oilprice.com/Geopolitics/Europe/Trump-to-Meet-Zelenskyy-at-NATO-Summit-as-Ukraine-War-Diplomacy-Resumes.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">크렘린, Putin-Trump 주말 통화 후 '조만간 재통화' 합의 발표</div>
+    <div class="article-title-en">Kremlin says Putin and Trump agreed during weekend call to talk again in 'near future'</div>
+    <div class="article-keypoint">Putin-Trump 주말 통화 후 '조만간 재통화' 합의 - NATO 회의 중 추가 접촉 가능성</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/kremlin-says-putin-and-trump-agreed-during-weekend-call-to-talk-again-in-near-future" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 23:36 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">UAE OPEC 탈퇴 후 생산 사상 최고 근접·에너지 지정학 구도 변화</span>
+    <span class="theme-label-range">Article #20~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">미국 원자력에너지: 최고의 야망과 최고의 비용</div>
+    <div class="article-title-en">American Nuclear Energy: The Highest Ambitions And The Highest Costs</div>
+    <div class="article-keypoint">AI 데이터센터 전력 수요 급증이 핵에너지 투자 논리 강화, 단 비용 경쟁력 확보는 장기 과제</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/american-nuclear-energy-highest-ambitions-and-highest-costs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">유가 하락 시 주유소 마진 확대 - 트럼프의 가격 인하 요구에 현실 반박</div>
+    <div class="article-title-en">Gas Stations Gain When Oil Prices Start to Drop</div>
+    <div class="article-keypoint">유가 하락에도 주유소 마진 확대 구조 - 트럼프 가격 압박의 정책 실효성 의문</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/07/06/business/economy/gas-station-prices.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 00:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">OPEC 탈퇴 후 UAE 원유 생산, 사상 최고 수준 근접</div>
+    <div class="article-title-en">UAE Oil Production Nears Record High After OPEC Exit</div>
+    <div class="article-keypoint">UAE, OPEC 탈퇴 후 6월 생산량 380만b/d 돌파 - OPEC+ 결속력 약화 현실화</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/UAE-Oil-Production-Nears-Record-High-After-OPEC-Exit.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 03:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #23~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Philip R. Lane: AI와 통화정책</div>
+    <div class="article-title-en"> Philip R. Lane: AI and monetary policy</div>
+    <div class="article-keypoint">ECB Lane, AI가 통화정책 전달 경로를 구조적으로 변화시킨다는 연구 결과 제시</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp260706~b81aa4e329.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 03:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">트럼프 블루칼라 지지층, 관세가 제조업 부흥의 만능해법은 아니라는 우려 표명</div>
+    <div class="article-title-en">Trump’s Blue-Collar Base Worry Tariffs Aren’t a Cure-All for Factory Malaise</div>
+    <div class="article-keypoint">트럼프 관세가 제조업 르네상스 유발 못한다는 블루칼라 기반의 회의론 확산</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-07-06/trump-and-factory-jobs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">블록체인 합의 메커니즘과 분열 문제</div>
+    <div class="article-title-en">Blockchain consensus mechanisms and fragmentation</div>
+    <div class="article-keypoint">블록체인 합의 메커니즘 분열 문제 - 디지털 금융 인프라 안정성 리스크 부각</div>
+    <a class="article-link" href="https://www.bis.org/publ/bisbull126.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">뉴저지 BJ's Wholesale Club 지붕 붕괴 충격 영상 공개</div>
+    <div class="article-title-en">Dramatic Video Shows BJ's Wholesale Club Roof Collapse In New Jersey</div>
+    <div class="article-keypoint">열돔 폭풍 피해 - 기후 극단 현상이 인프라 취약성으로 직결되는 사례</div>
+    <a class="article-link" href="https://www.zerohedge.com/personal-finance/dramatic-video-shows-bjs-wholesale-club-roof-collapse-new-jersey" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">트럼프 월드컵 논란 속 미국-벨기에전, TV 시청자 수 역대 최고 기록 가능성</div>
+    <div class="article-title-en">U.S.-Belgium match could draw record TV audience amid the Trump World Cup controversy</div>
+    <div class="article-keypoint">트럼프 월드컵 개입 논란 속 미-벨기에전 역대 최고 시청률 가능성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/u-s-belgium-match-could-draw-record-tv-audience-amid-the-trump-world-cup-controversy-52783b8f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 07:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Lula와의 선거전을 앞두고 Flavio Bolsonaro, 브라질 관세 연기 워싱턴 로비</div>
+    <div class="article-title-en">In race against Lula, Flavio Bolsonaro lobbies Washington to delay Brazil tariff</div>
+    <div class="article-keypoint">Bolsonaro 측, 트럼프에 브라질 25% 관세를 10월 선거 후로 연기 로비</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/in-race-against-lula-flavio-bolsonaro-lobbies-washington-to-delay-brazil-tariff" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 19:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">베네수엘라 지진 사망자 3,535명으로 증가, 수만 명 이재민 발생</div>
+    <div class="article-title-en">Death toll from Venezuela quakes rises to 3,535 as thousands remain displaced</div>
+    <div class="article-keypoint">베네수엘라 지진 사망자 3,535명으로 급증 - 인도주의 위기 심화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/death-toll-from-venezuela-quakes-rises-to-3535-as-thousands-remain-displaced" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 04:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">오스트리아 법원, 시리아 Raqqa 출신 전 정보국장 고문 혐의 유죄 판결</div>
+    <div class="article-title-en">Austrian court convicts ex-intelligence chief in Syria's Raqqa of torture</div>
+    <div class="article-keypoint">오스트리아 법원, 시리아 전 정보국장 고문 혐의 유죄 판결</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/austrian-court-convicts-ex-intelligence-chief-in-syrias-raqqa-of-torture" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/06 23:42 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
