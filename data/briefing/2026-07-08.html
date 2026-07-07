@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-08 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/08 07:48 KST</div>
+    <div class="header-date">2026-07-08</div>
+    <div class="header-headline">Samsung 실적 실망·칩주 급락 - AI 반도체 고점 논쟁 재점화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Nasdaq 칩주 추가 하락 여부 및 Micron·SK Hynix 메모리 수요 가시성 - AI 투자 사이클 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Samsung 실적 충격발 칩주 급락 - AI 메모리 고점 논쟁</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">Samsung Electronics 실적이 시장 기대에 미치지 못하면서 AI 반도체 랠리의 지속성에 대한 의구심이 본격 확산되었다. Nasdaq이 하락하고 반도체 주식 전반이 밸류에이션 재검토 압력에 직면했으며, Micron 주가도 메모리 시장이 고점에 근접했다는 투자자 우려로 동반 하락했다. SK Hynix에 대해서도 외형상 저평가 매력에도 불구하고 구조적 리스크를 경고하는 시각이 부각되고 있다. DeepSeek의 자체 AI 칩 개발 추진은 Nvidia 의존도 축소를 목표로 하며, 중국의 반도체 자립 가속과 맞물려 글로벌 AI 칩 공급망 재편 압력을 더한다. 중국 반도체 산업의 설계 역량은 빠르게 성장하나 제조 경쟁력은 여전히 서방에 뒤처져 있어 구조적 격차가 유지되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 인프라 자본배분 균열 - Amazon $250억 부채·Microsoft 자체모델 전환</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#14</span>
+    </div>
+    <div class="theme-summary">Amazon이 AI 인프라 확장을 위해 추가로 $250억 규모의 부채 발행에 나서면서 AI 관련 채권 시장이 급격한 매도세를 보였다. 이는 AI 빅딜의 자금조달 비용 상승과 채권 투자자들의 위험 선호 후퇴를 동시에 시사한다. Microsoft는 반대로 외부 AI 모델 의존을 줄이고 자체 모델로 전환하는 비용 절감 전략을 택하며 업계 전반의 AI 지출 효율화 흐름에 합류했다. Anthropic은 Claude가 인간 뇌의 정보처리 방식을 모방할 수 있다고 주장하며 기술 차별화를 강조했으나, 동시에 Claude Code에 숨겨진 개발자 추적 코드가 발견·삭제되는 사건으로 신뢰 훼손 논란에 직면했다. 오픈소스 AI의 부상이 Anthropic 등 프론티어 랩에 즉각적 위협은 아니지만 중장기 수익성 압박 요인으로 작용할 수 있다는 분석도 제기됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">SpaceX·Tesla 합병 기대감 - 빅테크 자본시장 구도 재편 시도</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #15~#16</span>
+    </div>
+    <div class="theme-summary">Wall Street 애널리스트들이 SpaceX와 Tesla의 합병 가능성에 주목하며 Tesla 주가가 20% 추가 상승할 수 있다는 분석을 제시했다. Raymond James는 SpaceX에 대해 목표주가 $800의 가장 강한 낙관론을 제시했고, 복수의 애널리스트들이 '문명적 야망의 정점'이라는 표현까지 동원하며 강세 의견을 냈다. Elon Musk의 두 핵심 기업이 결합될 경우 위성통신·우주·전기차·AI가 결합된 초대형 플랫폼 기업이 탄생한다는 기대가 자본시장의 상상력을 자극하고 있다. 다만 SpaceX의 비상장 특성과 Musk의 정치적 행보가 실현 가능성에 대한 불확실성으로 남아 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Fed AI 활용·AML 규제 개편 - 금융감독 프레임워크 재설계</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#20</span>
+    </div>
+    <div class="theme-summary">Fed 부의장 Bowman이 금융기관의 AI 건전 활용을 위한 실무 기준에 관한 개회사를 발표하며 감독 당국 차원의 AI 거버넌스 논의가 공식화됐다. 동시에 Fed는 은행의 자금세탁방지(AML) 프로그램 요건 개정안에 대한 의견 수렴을 개시했는데, 이는 AI 기반 금융거래 모니터링 기술의 확산과 맞물려 규제 체계의 현대화 필요성을 반영한다. Fed 연구진은 머신러닝을 활용한 내재 변동성 예측의 이질성 포착 가능성을 분석한 논문을 발표하며 중앙은행 내부의 AI 연구 역량도 심화되고 있음을 보여줬다. 옵션 시장에서는 트레이더들이 Fed의 금리 인상 강도를 시장이 과대평가하고 있다는 헤지 포지션을 늘리고 있어, 통화정책 경로에 대한 불확실성이 여전히 높음을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">에너지·핵 인프라 - AI 수요발 전력난과 지정학 리스크 교차</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#24</span>
+    </div>
+    <div class="theme-summary">Trump 행정부가 $170억 이상의 연방 대출을 통한 원자력 르네상스 추진에 나섰으나, 실제 에너지 인프라의 구조적 문제를 해결하기엔 역부족이라는 비판이 제기됐다. AI 데이터센터의 전력 수요 급증이 핵에너지 투자 논리를 강화하는 배경이 되고 있다. 중국은 태평양에서 핵잠수함 발사 탄도미사일 시험발사를 실시해 주변국의 경계심을 높이며 핵 전략 능력 과시에 나섰다. Big Oil인 Chevron과 Exxon이 미-이스라엘의 이란 공격 이후 공급 긴축으로 2022년 이후 최고 실적을 기록할 것으로 예상되면서 Trump의 가격 횡포 단속 압박이 재점화될 가능성이 있다. 강제노동 청문회가 관세 재건 논쟁을 촉발시키는 등 에너지·원자재 공급망에 대한 지정학적 압박이 복합적으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #25~#30</span>
+    </div>
+    <div class="theme-summary">우크라이나 전황에서 Putin의 에스컬레이션 위협에도 불구하고 우크라이나가 서사 전쟁에서 우위를 점하고 있다는 분석이 제기됐다. 모나코 폭탄 공격 용의자가 우크라이나에서 사살되는 등 동유럽 정보전이 복잡하게 전개되고 있다. 프랑스 Macron은 시리아 다마스쿠스 폭발에도 불구하고 신정부와의 협력 기조를 유지하며 중동 외교 행보를 이어가고 있다. Trump 전 고문 Pierre Yared는 퇴임 회고에서 Trump의 충격적 정책이 오히려 동맹국의 자강 사례가 될 수 있다고 평가했다. World Cup에서 약소국들의 선전이 지속되며 강대국 논리가 항상 우세하지 않음을 보여준다는 논평도 제기됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Samsung 실적 충격발 칩주 급락 - AI 메모리 고점 논쟁</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Micron 주가 하락 - 메모리 시장 고점 근접 여부 투자자 우려</div>
+    <div class="article-title-en">Micron’s stock falls as investors wonder if the memory market is near the top</div>
+    <div class="article-keypoint">Micron 주가 하락 - AI 메모리 수요 고점 도달 우려 투자자 심리 악화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microns-stock-falls-as-investors-wonder-if-the-memory-market-is-near-the-top-ab2d2feb?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 07:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">DeepSeek, Nvidia 의존 탈피 위해 자체 AI 칩 개발 추진</div>
+    <div class="article-title-en">DeepSeek Developing In-House AI Chip In Bid To Cut Nvidia Reliance </div>
+    <div class="article-keypoint">DeepSeek 자체 AI 칩 개발 추진 - Nvidia·Huawei 동시 의존 탈피 시도로 공급망 재편 압력</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/deepseek-developing-house-ai-chip-bid-cut-nvidia-reliance" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 22:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">칩주 급락 심화, SpaceX는 강세 의견 잇따라</div>
+    <div class="article-title-en">Tech Rout Deepens as Chipmakers Fall; SpaceX Gets Bullish Calls</div>
+    <div class="article-keypoint">Samsung 실적 실망에 칩주 전반 급락 - AI 투자 사이클 내구성에 대한 시장 의구심 확산</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-07/tech-rout-deepens-as-chipmakers-fall-spacex-gets-bullish-calls" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 05:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">급등했던 반도체 주식, 갑자기 매력 잃는 이유</div>
+    <div class="article-title-en">Why highflying chip stocks are suddenly losing their luster</div>
+    <div class="article-keypoint">반도체 주가 급락 - 기록적 랠리 후 밸류에이션 재검토 압력 본격화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-highflying-chip-stocks-are-suddenly-losing-their-luster-f0659145?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 06:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">SK Hynix, 왜 보이는 것만큼 저렴하지 않은가</div>
+    <div class="article-title-en">Why SK Hynix Isn’t as Cheap as it Looks</div>
+    <div class="article-keypoint">SK Hynix, 외형상 저평가에도 구조적 리스크 경고 - AI 메모리 투자 신중론 확산</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/why-sk-hynix-isnt-as-cheap-as-it-looks-f2f2af42?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">AI 우려에 칩주 급락하며 Nasdaq 하락</div>
+    <div class="article-title-en">Nasdaq sinks as AI worries hit chipmakers</div>
+    <div class="article-keypoint">Samsung 실적 실망에 Nasdaq 칩 섹터 동반 급락 - AI 무역 내구성 우려 확산</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/nasdaq-futures-fall-after-samsungs-record-profit-fails-to-allay-chip-jitters-4778520" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 22:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">중국 반도체 산업, 서방을 따라잡기 위해 질주 중</div>
+    <div class="article-title-en">
+        China’s semiconductor industry is racing to catch the West’s
+      </div>
+    <div class="article-keypoint">중국 반도체, 설계는 빠르게 성장하나 제조 격차 여전 - 서방 기술 우위 구조적 지속</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/07/07/chinas-semiconductor-industry-is-racing-to-catch-the-wests" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 01:18 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 인프라 자본배분 균열 - Amazon $250억 부채·Microsoft 자체모델 전환</span>
+    <span class="theme-label-range">Article #8~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Amazon, $250억 추가 차입 추진에 AI 관련 채권 급락</div>
+    <div class="article-title-en">AI-related debt sells off sharply as Amazon looks to borrow another $25 billion</div>
+    <div class="article-keypoint">Amazon $250억 추가 부채 발행에 AI 관련 채권 급락 - AI 인프라 자금조달 비용 상승 경고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/ai-related-debt-sells-off-sharply-as-amazon-borrows-another-25-billion-46928353?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 07:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Meta, 새 AI 이미지 생성 모델 Muse 출시</div>
+    <div class="article-title-en">Meta rolls out Muse, a new AI image generator</div>
+    <div class="article-keypoint">Meta, Muse 이미지 생성 모델 출시 - 광고·크리에이터 시장 AI 경쟁 진입 강화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/07/meta-rolls-out-muse-a-new-ai-image-generator/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 07:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Anthropic, 개발자가 발견한 Claude의 '무서운' 비밀 추적 코드 삭제</div>
+    <div class="article-title-en">Anthropic Removes "Scary" Secret Claude Tracker After Developer Stumbles Across It</div>
+    <div class="article-keypoint">Anthropic, Claude Code 숨겨진 추적 코드 노출·삭제 - AI 기업 신뢰 훼손 리스크 부각</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/anthropic-removes-scary-secret-claude-tracker-after-developer-stumbles-across-it" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">캐나다 주, 총격 사건 관련 OpenAI 상대 소송 준비 중</div>
+    <div class="article-title-en">Canada province preparing lawsuit against OpenAI over school shooting</div>
+    <div class="article-keypoint">캐나다 총격 사건 관련 OpenAI 소송 준비 - AI 플랫폼 법적 책임 확대 선례 가능성</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/07/07/canada-province-preparing-lawsuit-against-openai-over-school-shooting_6755249_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 05:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Meta, Zuckerberg의 AI 대개편 후 첫 이미지 모델 출시</div>
+    <div class="article-title-en">Meta releases first image model since Zuckerberg’s AI overhaul</div>
+    <div class="article-keypoint">Meta, Zuckerberg AI 개편 후 첫 이미지 모델 출시 - Instagram 생태계 AI 통합 가속</div>
+    <a class="article-link" href="https://www.ft.com/content/389f9102-fb5d-471a-bc50-9c591b7f7994" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 03:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Microsoft, 자체 모델 활용 확대로 AI 비용 절감 추세 합류</div>
+    <div class="article-title-en">Microsoft joins AI cost-cutting trend by relying more on its own models</div>
+    <div class="article-keypoint">Microsoft, 자체 AI 모델 전환으로 비용 절감 - 빅테크 AI 지출 효율화 트렌드 합류</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/07/microsoft-joins-ai-cost-cutting-trend-by-relying-more-on-its-own-models/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 04:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">오픈소스 AI의 부상이 Anthropic에 아직은 타격 안 주는 이유</div>
+    <div class="article-title-en">Why the rise of open source AI isn’t hurting Anthropic … yet</div>
+    <div class="article-keypoint">오픈소스 AI 부상이 Anthropic에 즉각적 위협은 아니나 중장기 수익성 압박 요인으로 잠재</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/07/why-the-rise-of-open-source-ai-isnt-hurting-anthropic-yet/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 05:04 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">SpaceX·Tesla 합병 기대감 - 빅테크 자본시장 구도 재편 시도</span>
+    <span class="theme-label-range">Article #15~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Tesla 주가, SpaceX 합병 가능성으로 20% 상승 여력 - 애널리스트 전망</div>
+    <div class="article-title-en">Tesla’s stock could rise 20% thanks to the potential for a SpaceX merger, analyst says</div>
+    <div class="article-keypoint">Tesla-SpaceX 합병 현실화 시 Tesla 주가 20% 추가 상승 가능성 - 자본시장 구도 재편 촉매</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/teslas-stock-could-rise-20-thanks-to-the-potential-for-a-spacex-merger-analyst-says-0d64693e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 07:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">'문명적 야망의 정점': Wall Street 강세론자들 SpaceX에 집결, Raymond James 최고 목표가 $800 제시</div>
+    <div class="article-title-en">'Apex Of Civilizational Ambition': Wall Street Bulls Pile In On SpaceX, Raymond James Street-High $800 Target</div>
+    <div class="article-keypoint">Raymond James SpaceX 목표가 $800 - Wall Street 12개 기관 일제히 강세 전환</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/raymond-james-slaps-800-target-spacex-wall-street-bulls-pile" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 02:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Fed AI 활용·AML 규제 개편 - 금융감독 프레임워크 재설계</span>
+    <span class="theme-label-range">Article #17~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Fed 연구논문: 이질성 포착 - 내재변동성 예측에 대한 머신러닝 접근법</div>
+    <div class="article-title-en">FEDS Paper: Capturing Heterogeneity: Machine Learning Approaches to Implied Volatility Forecasting</div>
+    <div class="article-keypoint">Fed, 머신러닝으로 내재변동성 이질성 포착 - 중앙은행 AI 연구 심화 신호</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/capturing-heterogeneity-machine-learning-approaches-to-implied-volatility-forecasting.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 22:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Fed, 은행의 자금세탁방지 프로그램 요건 개정안 의견수렴 요청</div>
+    <div class="article-title-en">Federal Reserve Board requests comment on a proposal to amend its requirements for banks to maintain anti-money laundering programs</div>
+    <div class="article-keypoint">Fed, 은행 AML 요건 개정안 의견수렴 개시 - AI 시대 금융감독 현대화 본격화</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260707a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Bowman 부의장, 인공지능 건전 활용 기준 관련 개회사</div>
+    <div class="article-title-en">Bowman, Opening Remarks on Sound Practices for Artificial Intelligence</div>
+    <div class="article-keypoint">Bowman 부의장, 금융기관 AI 건전 활용 기준 공식화 - 감독 프레임워크 재설계 착수</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/bowman20260707a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">트레이더들, 덜 매파적인 Fed에 대한 헤지 확대 - 금리인상 기대 여전히 가격 반영 중</div>
+    <div class="article-title-en">Traders Hedge for Less Hawkish Fed as Hikes Remain Priced In</div>
+    <div class="article-keypoint">옵션 트레이더, Fed 금리인상 과대평가 헤지 확대 - 통화정책 경로 불확실성 여전히 높아</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-07/traders-hedge-for-less-hawkish-fed-as-hikes-remain-priced-in" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 05:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">에너지·핵 인프라 - AI 수요발 전력난과 지정학 리스크 교차</span>
+    <span class="theme-label-range">Article #21~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Trump의 핵 대출 프로그램, 진짜 문제는 해결 못 한다</div>
+    <div class="article-title-en">Trump's Nuclear Loan Program Won't Fix What's Really Broken</div>
+    <div class="article-keypoint">Trump $170억 핵 대출 프로그램, AI 전력난 해결엔 역부족 - 에너지 인프라 구조 문제 미해결</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Trumps-Nuclear-Loan-Program-Wont-Fix-Whats-Really-Broken.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">중국, 태평양서 핵 탑재 가능 탄도미사일 시험발사 - 주변국 경계</div>
+    <div class="article-title-en">China Test-Launches Nuclear-Capable Ballistic Missile In Pacific, Alarming Neighbors</div>
+    <div class="article-keypoint">중국, 태평양서 핵잠수함 탄도미사일 시험발사 - 핵 전략 능력 과시로 지역 긴장 고조</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/china-test-launches-nuclear-capable-ballistic-missile-pacific-alarming-neighbors" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 06:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">미국 강제노동 청문회 개시, 새로운 관세 논쟁 촉발</div>
+    <div class="article-title-en">Forced-Labor Hearings in US Kick Off Fresh Tariff Debate</div>
+    <div class="article-keypoint">강제노동 청문회 개시 - Trump 관세 재건 의제 재점화 가능성 주시</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-07-07/trump-and-forced-labor-tariffs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Big Oil의 깜짝 실적, Trump의 폭리 단속 압박 재점화 위협</div>
+    <div class="article-title-en">Big Oil's Windfall Earnings Threaten to Reignite Trump's Price-Gouging Push</div>
+    <div class="article-keypoint">Chevron·Exxon 이란 공급 긴축으로 2022년 이후 최고 실적 전망 - Trump 가격 횡포 단속 압박 재점화</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Crude-Oil/Big-Oils-Windfall-Earnings-Threaten-to-Reignite-Trumps-Price-Gouging-Push.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 05:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #25~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">월드컵의 약자들을 응원하며</div>
+    <div class="article-title-en">In Praise of the World Cup’s Little Guys</div>
+    <div class="article-keypoint">World Cup 약소국 선전 - 규모의 경제가 절대 우위 아님을 보여주는 상징적 사례</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/small-countries-success-at-world-cup-mirrors-economic-pattern-by-andres-velasco-2026-07" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 23:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Anthropic, Claude가 인간 뇌의 정보처리 방식을 모방한다고 발표</div>
+    <div class="article-title-en">Anthropic Says Claude Can Mimic How The Human Brain Processes Information</div>
+    <div class="article-keypoint">Anthropic, Claude의 인간 뇌 정보처리 모방 주장 - 프론티어 AI 기술 차별화 경쟁 심화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-07-07/anthropic-s-report-fuels-ai-consciousness-debate-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 03:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">다마스쿠스 폭발, Macron의 Sharaa에 대한 신뢰 흔들지 못해</div>
+    <div class="article-title-en">Explosions in Damascus Won’t Shake Macron’s Faith in Sharaa</div>
+    <div class="article-keypoint">다마스쿠스 폭발에도 Macron의 시리아 협력 기조 유지 - 프랑스 중동 외교 독자 행보 지속</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/07/07/explosions-damascus-syria-sharaa-macron-france-investment/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">모나코 폭탄 공격 용의자 우크라이나서 사살, 정보장교 구금</div>
+    <div class="article-title-en">Monaco Bombing Attack Suspect Shot Dead In Ukraine, Intelligence Officer In Custody</div>
+    <div class="article-keypoint">모나코 폭탄 공격 용의자 우크라이나서 사살 - 동유럽 정보전 복잡성 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/monaco-bombing-attack-suspect-shot-dead-ukraine-intelligence-officer-custody" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">'천재 집단' Trump 팀 퇴임 멤버 Pierre Yared의 회고</div>
+    <div class="article-title-en">Reflections From Pierre Yared, a Departing Member of ‘Brainiac’ Trump Team</div>
+    <div class="article-keypoint">전 Trump 고문 Yared, Trump 정책 충격이 동맹국 자강 사례 될 수 있다고 평가</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-07-07/reflections-from-pierre-yared-a-departing-member-of-brainiac-trump-team" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/07 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Putin은 에스컬레이션 할 수 있지만, 우크라이나가 이기고 있다</div>
+    <div class="article-title-en">Putin May Escalate, but Ukraine Is Winning</div>
+    <div class="article-keypoint">Putin 에스컬레이션 위협에도 우크라이나가 서사 전쟁 우위 - 외교 협상 기조 유지 논리 강화</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/07/07/ukraine-winning-war-russia-zelensky-putin-kyiv-moscow/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/08 00:59 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
