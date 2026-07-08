@@ -111,6 +111,28 @@
       "briefing": "외국인자금이탈 공통원인이 지정학 안전자산 수요(USO +4.38%)와 달러강세(UUP +0.28%)를 선행하며 EEM -2.74% 신흥국 급락을 견인, KOSPI -0.94% 외인매도 압력이 당일 중 지속되고 있다.",
       "_warnings": [
         "[한국 종착 비율] 3/4 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n6->n8->n4->n6 (KOSPI 외국인 매도 → 원화 약세 심화 → 달러 강세 재강화 → EM 추가 자본유출)",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n4->n6",
+        "fragileReason": "달러 강세가 EM 압박으로 전달되는 경로는 각국 외환보유고 방어 개입·자본통제 조치 단 하나만으로도 전파 강도가 급격히 약화되므로, 이 링크가 차단되면 n6 이하 KOSPI·EEM 실증 노드 전체가 인과적 근거를 상실한다.",
+        "alternativePath": "n2(유가 급등) → 경상수지 악화 경로를 통한 EM 통화 직접 약세 (원유 순수입국 펀더멘털 채널)"
+      },
+      "missingHops": [
+        {
+          "to": "국내 외화채 스프레드 (KRW IG USD Bond CDS)",
+          "via": "달러 강세(n4) → 국내 기업 외화부채 상환비용 상승 → 크레딧 스프레드 확대 → 외화채 발행 프리미엄 급등",
+          "lag_days": 3
+        },
+        {
+          "to": "GCC(걸프협력회의) 국부펀드 EM 리밸런싱 매도",
+          "via": "이란 긴장(n1) → 중동 지역 리스크 프리미엄 상승 → GCC 국부펀드 포트폴리오 내 EM 익스포저 선제 축소 → EEM·KOSPI 추가 매도 압력 중첩",
+          "lag_days": 5
+        }
       ]
     },
     {
@@ -221,7 +243,29 @@
         }
       ],
       "korea_terminal_node": "m7",
-      "briefing": "반도체센티멘트악화 공통원인이 SOXX -5.13%·QQQ -1.85%·EWT -5.02% 동반 급락과 AI채권매도확산(LQD)을 동시 견인, KOSDAQ -3.43% 반도체 집중 섹터가 글로벌 충격의 최전선으로 부각되고 있다."
+      "briefing": "반도체센티멘트악화 공통원인이 SOXX -5.13%·QQQ -1.85%·EWT -5.02% 동반 급락과 AI채권매도확산(LQD)을 동시 견인, KOSDAQ -3.43% 반도체 집중 섹터가 글로벌 충격의 최전선으로 부각되고 있다.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "m4->m6->m2->m4 (AI 조달비용 상승 → QQQ 밸류 압박 → 반도체 센티멘트 추가 악화 → AI 투자 지출 재검토 → 크레딧 압박 재강화)",
+        "riskLevel": "medium"
+      },
+      "chainFragility": {
+        "fragileEdge": "m1->m4",
+        "fragileReason": "마이크론 약세·WSJ 보도에서 'AI 투자 조달비용 상승'으로 이어지는 논리적 도약은 Amazon 채권 발행이 HBM 수요 피크 서사와 동시에 발생했다는 우연적 시계열 일치에 의존하므로, 두 이벤트 간 구조적 연결이 단절될 경우 m4·m5·m6 크레딧·기술주 하락 노드 전체의 인과 정당성이 소멸한다.",
+        "alternativePath": "m2(SOXX 급락) → 기술주 담보가치 하락 → 헤지펀드 마진콜 → QQQ 직접 매도 (레버리지 청산 채널)"
+      },
+      "missingHops": [
+        {
+          "to": "SK하이닉스·삼성전자 외국인 지분 순매도 (KRX 반도체 섹터)",
+          "via": "SOXX 급락(m3) → 글로벌 반도체 ETF 리밸런싱 → 한국 비중 축소 매도 오더 집행 → KOSDAQ 추가 하방 압력(m7과 독립적 경로로 중첩)",
+          "lag_days": 1
+        },
+        {
+          "to": "HBM 관련 장비주 (AMAT·KLAC·한미반도체)",
+          "via": "HBM 수요 의구심(m2) → 전공정 장비 수주 파이프라인 축소 우려 → 장비업체 Forward P/E 할인 → 반도체 장비 서브섹터 독립 급락",
+          "lag_days": 2
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -484,5 +528,6 @@
     ],
     "is_weekend": false,
     "data_note": "T0: 전일(07/07) 미국 장 마감 기준. T1: 당일(07/08) 한국·일본 장중. 유럽은 미개장. EWY/EWJ/EWT는 leaf node 전용."
-  }
+  },
+  "deep_analysis_at": "2026-07-08T03:53:55.410Z"
 }
