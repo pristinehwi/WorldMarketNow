@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-10 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/10 07:48 KST</div>
+    <div class="header-date">2026-07-10</div>
+    <div class="header-headline">SK Hynix $265억 미국 최대 외국기업 IPO 성사</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">SK Hynix ADR 상장 후 AI 메모리 밸류에이션 재평가 및 미국 추가 대이란 공습 확전 여부</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">SK Hynix $265억 IPO - AI 메모리 자본시장 재편의 현실화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">SK Hynix가 $265억 규모의 미국 ADS 공모를 완료하며 외국기업 역대 최대 미국 IPO 기록을 수립했다. 이는 단순한 상장이 아니라 AI 메모리 수요를 배경으로 한 자본시장 재편의 상징적 이벤트로, 미국 투자자들이 HBM(고대역폭 메모리) 사이클에 직접 베팅하는 통로가 마련된 것이다. 한국 정부도 반도체 세금 수익을 청년 일자리 등 성장펀드에 활용하는 방안을 검토 중이어서 AI 수혜가 국가 재정 전략으로까지 연결되고 있다. 동시에 Meta가 커스텀 칩과 에이전틱 AI 코딩 모델 발표로 주가가 반등하면서 빅테크의 자체 실리콘 전략이 메모리 수요 구조를 장기적으로 변화시킬 수 있다는 점도 주목된다. AI 칩 랠리에 힘입어 아시아 증시도 상승 출발이 예상되며, 메모리-파운드리-시스템 반도체 전반의 자본배분 방향이 재시험받고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Warsh 체제 Fed 태스크포스 출범 - 통화정책 프레임워크 전면 재설계 착수</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#9</span>
+    </div>
+    <div class="theme-summary">Kevin Warsh 연준 의장이 통화정책 운영 방식을 전면 재검토하기 위한 5개 태스크포스의 리더십과 목표를 공식 발표했다. 전 Walmart CEO를 실시간 경제 데이터 활용 태스크포스에 임명하는 등 비전통적 인사를 포함시키며 데이터 수집·분석 혁신 의지를 드러냈다. 이는 단순한 조직 개편이 아니라 인플레이션 측정, 포워드 가이던스 설계, 정책 전달 방식까지 포괄하는 구조적 변화의 신호탄으로 해석된다. Warsh 체제의 연준이 트럼프 행정부와의 긴장 속에서 독립성을 유지하면서도 정책 커뮤니케이션 방식을 어떻게 재설계할지가 향후 금리 민감 자산의 핵심 변수로 부상하고 있다. TS Banking Group에 대한 집행 조치도 병행 발표되며 감독 기능도 병행 유지됨을 확인했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Anthropic·OpenAI·SpaceX 메가 IPO - VC 25년 수익을 넘는 자본시장 판도 변화</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #10~#14</span>
+    </div>
+    <div class="theme-summary">Anthropic, OpenAI, SpaceX 세 기업의 예상 IPO 가치 합산이 2000년 이후 25년간의 미국 VC 지원 기업 전체 엑싯 가치를 초과한다는 분석이 나오며 AI·우주 자본시장의 역사적 규모가 부각됐다. OpenAI는 GPT-5.6을 포함한 새 모델 패밀리를 출시하며 사이버보안 등 엔터프라이즈 영역으로 확장을 가속화하고 있다. 한편 Elon Musk가 Anthropic 모델 호스팅에 '차단하지 않겠다'고 발언하며 경쟁사 간 인프라 협력 가능성이 열렸고, 이는 약 $400억 규모의 잠재 수익이 걸린 복잡한 이해관계를 내포한다. Anthropic의 Claude Reflect 기능은 사용자 의존도를 심화시키는 전략으로 평가되며, AI 플랫폼 락인 경쟁이 심화되고 있다. NYT의 OpenAI 증거 은닉 주장은 AI 기업의 저작권 리스크를 다시 부각시켜 규제·법적 비용이 IPO 밸류에이션의 할인 요인으로 작용할 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">미국 대이란 추가 공습 - 중동 확전과 에너지·지정학 리스크 재점화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#16</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령이 에스컬레이션 위협을 공언한 지 수 시간 만에 미국이 이란에 추가 공습을 단행했고, 이란은 쿠웨이트·카타르 등 미국 동맹국을 겨냥한 보복에 나서며 중동 긴장이 급격히 고조됐다. 이란이 자국 유일의 핵발전소 인근을 공격받았다고 주장하면서 호르무즈 봉쇄 리스크와 함께 핵시설 안전 우려까지 중첩되고 있다. 에너지 시장에서는 공습 직후 유가가 하락 출발했으나 확전 시나리오에 따라 급등 가능성이 상존하며, 걸프 지역 해상 운송 차질 우려가 원유·LNG 스프레드에 반영될 가능성이 높다. 동시에 트럼프와 연계된 텍사스 석유사가 그린란드 시추권 확보를 추진 중이라는 보도는 에너지 지정학의 다층적 전선이 확대되고 있음을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">AI 생산성 현실화 - 기업 실무 도입과 로보틱스 자본배분 가속</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #17~#20</span>
+    </div>
+    <div class="theme-summary">Starbucks가 Microsoft·IBM으로부터 구매하던 소프트웨어를 AI로 대체 개발 중이라는 사실이 알려지며 기업의 AI 기반 비용 절감이 실제 계약 해지 단계로 진입했음이 확인됐다. Citi의 로보틱스·물리적 AI 컨퍼런스에서는 Rockwell, Emerson, Honeywell 등 산업 자동화 기업들이 핵심 수혜주로 부각되며 AI 인프라 투자가 데이터센터를 넘어 물리적 자동화로 확산되는 흐름이 포착됐다. 한 주니어 직원이 AI를 활용해 수십만 달러를 절감한 사례는 AI 활용의 조직 저변 확대를 상징하며, 기업 전반의 생산성 혁신 기대를 실증하고 있다. 일본은행의 금리인상 논쟁은 AI 투자 자금 조달 비용과 엔화 환율에 복합적으로 영향을 미칠 수 있어 아시아 자본 흐름의 변수로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #21~#30</span>
+    </div>
+    <div class="theme-summary">금융기관 관련 규제·소송·정치 이슈 등 직접적인 거시 임팩트가 제한적인 기사들이 포함된다. UPS·FedEx는 Amazon의 3자 배송 서비스 확장으로 주가가 하락하며 물류 섹터 경쟁 구도 변화가 부각됐다. Goldman Sachs의 직원 예측 시장 베팅 제한은 규제 은행의 컴플라이언스 부담을 재확인시켰다. 러시아의 우크라이나 아동 군사 세뇌, Zelensky의 Patriot 생산 논의, Palantir NHS 계약 논란, 수단 평화 협상, Taco Bell 식중독 사태, Costco 단백질 보충제 소송 등은 개별 이슈로 광범위한 시장 파급력은 제한적이다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">SK Hynix $265억 IPO - AI 메모리 자본시장 재편의 현실화</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Meta 주가 반등 - 에이전틱 AI 코딩과 커스텀 칩이 지출 우려 불식</div>
+    <div class="article-title-en">Meta’s stock rebounds as agentic AI coding and custom chips ease spending fears</div>
+    <div class="article-keypoint">Meta, 커스텀 칩·에이전틱 AI 코딩 공개 후 주가 반등 - 자체 실리콘 전략 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/metas-stock-rebounds-as-agentic-ai-coding-and-custom-chips-ease-spending-fears-16d1cb24?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 05:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">SK Hynix, 미국 시장 상장 임박 - 투자자가 알아야 할 핵심 사항</div>
+    <div class="article-title-en">SK Hynix is about to hit the U.S. market. Here’s what to know about the deal.</div>
+    <div class="article-keypoint">SK Hynix ADS, AI 메모리 수요 배경으로 외국기업 최대 미국 IPO 임박</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/sk-hynix-is-about-to-hit-the-u-s-market-heres-what-to-know-about-the-deal-1c873fa4?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 07:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">SK Hynix, $265억 ADS 공모 완료 - 외국기업 미국 최대 IPO 기록 달성</div>
+    <div class="article-title-en">SK Hynix Raises $26.5 Billion in Top US Debut by a Foreign Firm</div>
+    <div class="article-keypoint">SK Hynix, $265억 ADS 공모 완료 - 외국기업 미국 IPO 역대 최대 기록 수립</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-09/sk-hynix-is-said-to-price-us-share-offering-at-149-apiece-mrdz562z" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 05:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">미국 반도체주 랠리 이후 아시아 증시 상승 출발 전망 - 시장 동향</div>
+    <div class="article-title-en">Asian Stocks Set to Gain After US Chipmakers Rally: Markets Wrap</div>
+    <div class="article-keypoint">AI 칩 랠리에 아시아 증시 상승 출발 전망 - 반도체 섹터 센티먼트 동조화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-09/stock-market-today-dow-s-p-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 07:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">한국, AI 반도체 세금 수익으로 청년 지원 '윈드폴 펀드' 조성 검토</div>
+    <div class="article-title-en">South Korea Eyes AI Windfall Fund to Aid Growth, Jobs for Youth</div>
+    <div class="article-keypoint">한국, 반도체 세금 수익으로 청년 성장펀드 조성 검토 - AI 수혜의 국가 재정 전략화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-09/south-korea-eyes-ai-windfall-fund-to-aid-growth-jobs-for-youth" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 06:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Warsh 체제 Fed 태스크포스 출범 - 통화정책 프레임워크 전면 재설계 착수</span>
+    <span class="theme-label-range">Article #6~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Federal Reserve, 통화정책 운영 혁신을 위한 태스크포스 리더십 및 목표 발표</div>
+    <div class="article-title-en">Federal Reserve announces the leadership and objectives of its task forces to advance the conduct of monetary policy</div>
+    <div class="article-keypoint">Warsh 연준, 5개 태스크포스 출범으로 통화정책 프레임워크 전면 재설계 착수</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260709a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Federal Reserve, TS Banking Group 및 TS Contrarian Bancshares에 집행 조치 발동</div>
+    <div class="article-title-en">Federal Reserve Board issues enforcement action with TS Banking Group, Inc. and TS Contrarian Bancshares, Inc.</div>
+    <div class="article-keypoint">연준, TS Banking Group에 집행 조치 - Warsh 체제 감독 기능 병행 확인</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/enforcement20260709a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Walmart이 연준의 실시간 미국 경제 데이터 활용을 도울 수 있을까? 곧 확인된다</div>
+    <div class="article-title-en">Can Walmart help the Fed harness real-time U.S. economic data? We’re about to find out.</div>
+    <div class="article-keypoint">연준, Walmart 전 CEO 임명으로 실시간 소비·인플레 데이터 정책 활용 시험 착수</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/can-walmart-help-the-fed-harness-real-time-u-s-economic-data-were-about-to-find-out-e625925a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 06:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Warsh 연준 의장, 5개 신설 태스크포스 리더십 발표</div>
+    <div class="article-title-en">Fed’s Warsh Names Leadership for Five New Task Forces</div>
+    <div class="article-keypoint">Warsh, 5개 태스크포스 리더십 공개 - 연준 정책 운영 방식 전면 재검토 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-09/fed-s-warsh-names-leadership-for-five-new-task-forces" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 04:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Anthropic·OpenAI·SpaceX 메가 IPO - VC 25년 수익을 넘는 자본시장 판도 변화</span>
+    <span class="theme-label-range">Article #10~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Anthropic·OpenAI·SpaceX, 지난 25년 테크 엑싯 가치 합산 능가 전망</div>
+    <div class="article-title-en">Anthropic, OpenAI, and SpaceX are bigger than the last 25 years of tech exits</div>
+    <div class="article-keypoint">Anthropic·OpenAI·SpaceX IPO 합산 가치, VC 25년 엑싯 전체 초과 - 자본시장 구도 변화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/09/anthropic-openai-and-spacex-are-bigger-than-the-last-25-years-of-tech-exits/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/09 23:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Elon Musk, Mythos/Fable 극찬하며 Anthropic 모델 '차단하지 않겠다' 약속</div>
+    <div class="article-title-en">Elon Musk praises Mythos/Fable, promises not to ‘cut off’ Anthropic</div>
+    <div class="article-keypoint">Musk, Anthropic 모델 호스팅 '차단 없다' 발언 - $400억 수익 걸린 AI 인프라 협력 변수</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/09/elon-musk-praises-mythos-fable-promises-not-to-cut-off-anthropic/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 06:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">NYT, ChatGPT 저작권 소송에서 OpenAI가 증거를 은닉했다고 주장</div>
+    <div class="article-title-en">New York Times says OpenAI hid evidence in ChatGPT copyright trial</div>
+    <div class="article-keypoint">NYT, OpenAI 저작권 소송서 증거 은닉 주장 - AI 기업 법적 리스크 IPO 할인 요인 부상</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/09/new-york-times-says-openai-hid-evidence-in-chatgpt-copyright-trial/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 04:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">OpenAI, GPT-5.6 포함 신규 모델 패밀리 출시</div>
+    <div class="article-title-en">OpenAI launches its new family of models with GPT-5.6</div>
+    <div class="article-keypoint">OpenAI, GPT-5.6 포함 신규 모델 패밀리 출시 - 사이버보안 등 엔터프라이즈 확장 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/09/openai-launches-its-new-family-of-models-with-gpt-5-6/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 07:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Anthropic의 새 Claude 기능, 사용자에게 AI 의존도를 은근히 높이다</div>
+    <div class="article-title-en">Anthropic’s new Claude feature is quietly selling you on AI</div>
+    <div class="article-keypoint">Claude Reflect 출시 - 사용자 의존도 심화 설계로 AI 플랫폼 락인 경쟁 격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/09/anthropics-new-claude-feature-is-quietly-selling-you-on-ai/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/09 23:53 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">미국 대이란 추가 공습 - 중동 확전과 에너지·지정학 리스크 재점화</span>
+    <span class="theme-label-range">Article #15~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">미국, 트럼프의 에스컬레이션 위협 수 시간 만에 이란에 추가 공습 단행</div>
+    <div class="article-title-en">US launches new airstrikes against Iran hours after Trump threatens to escalate</div>
+    <div class="article-keypoint">미국 대이란 추가 공습·이란 걸프 동맹국 보복 - 중동 확전 시나리오와 에너지 리스크 재점화</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jul/09/iran-trade-strikes-ceasefire-extended-donald-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 07:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">시추 면허증? 트럼프 연계 텍사스 석유사의 그린란드 진출 시도</div>
+    <div class="article-title-en">Licensed to drill? How a Trump-linked Texas oil company is elbowing its way into Greenland</div>
+    <div class="article-keypoint">트럼프 연계 텍사스 석유사, 그린란드 시추권 주장 - 에너지 지정학 전선 북극까지 확대</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jul/09/licence-to-drill-trump-linked-texas-oil-company-elbowing-into-greenland" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/09 22:52 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">AI 생산성 현실화 - 기업 실무 도입과 로보틱스 자본배분 가속</span>
+    <span class="theme-label-range">Article #17~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">일본은행, 금리인상을 단행해야 하는가?</div>
+    <div class="article-title-en">Should the Bank of Japan Raise Interest Rates?</div>
+    <div class="article-keypoint">BOJ 금리인상 논쟁 재점화 - 엔화 환율·아시아 자본 흐름 변수로 부상</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/bessent-is-right-to-recommend-higher-interest-rates-in-japan-by-koichi-hamada-2026-07" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/09 17:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">한 주니어 직원이 AI로 회사에 수십만 달러를 절감시킨 방법</div>
+    <div class="article-title-en">A junior employee saved this company six figures using AI. Here’s how.</div>
+    <div class="article-keypoint">주니어 직원의 AI 활용 수십만 달러 절감 - 기업 저변 AI 생산성 혁신 현실화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/a-junior-employee-saved-this-company-six-figures-using-ai-heres-how-ca4335d3?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 06:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Citi AI 로보틱스 추천주: Rockwell·Emerson·Honeywell 선두</div>
+    <div class="article-title-en">Citi's AI Robotics Picks: Rockwell, Emerson, Honeywell Lead the List</div>
+    <div class="article-keypoint">Citi 컨퍼런스서 Rockwell·Emerson·Honeywell 로보틱스 수혜주 부각 - 물리적 AI 자본배분 확대</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Citis-AI-Robotics-Picks-Rockwell-Emerson-Honeywell-Lead-the-List.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Starbucks, AI로 Microsoft·IBM으로부터 구매하던 소프트웨어 자체 개발 대체 추진</div>
+    <div class="article-title-en">Starbucks Using AI To Build Software Replacing Applications It Buys From Microsoft, IBM</div>
+    <div class="article-keypoint">Starbucks, Microsoft·IBM 소프트웨어를 AI로 자체 대체 - 엔터프라이즈 SW 시장 구조 변화 가속</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/starbucks-using-ai-build-software-replacing-applications-it-buys-microsoft-ibm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 04:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #21~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Amazon 배송 위협 확대에 UPS·FedEx 주가 하락</div>
+    <div class="article-title-en">UPS, FedEx Shares Fall on Growing Threat From Amazon Shipping</div>
+    <div class="article-keypoint">Amazon 3자 배송 확장에 UPS·FedEx 주가 하락 - 물류 섹터 경쟁 지형 변화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-09/ups-fedex-shares-fall-on-growing-threat-from-amazon-shipping" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 03:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Bloom Energy, 공급망 의혹에 강력 반박 - Hunterbrook 리포트 '허위·오도' 규정</div>
+    <div class="article-title-en">Bloom Energy Defends Supply Chain, Calls Hunterbrook Report "False And Misleading"</div>
+    <div class="article-keypoint">Bloom Energy, 공매도 리포트에 '허위·오도' 반박 - 에너지 인프라 기업 신뢰도 논쟁</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/bloom-energy-claims-hunterbook-media-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/09 22:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Taco Bell, 일부 매장에서 채소 공급 중단 - 경위와 주의사항</div>
+    <div class="article-title-en">Taco Bell is reportedly pulling produce from some stores. Here’s what to know.</div>
+    <div class="article-keypoint">Taco Bell 기생충 식중독 1,000명 이상 감염 - 일부 매장 채소 공급 중단</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/taco-bell-is-reportedly-pulling-produce-from-some-stores-heres-what-to-know-a3569cd8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Costco, 독성 중금속 오염 단백질 보충제 판매 혐의로 집단소송 제기</div>
+    <div class="article-title-en">Costco accused in lawsuit of selling protein powder ‘tainted’ with toxic heavy metals</div>
+    <div class="article-keypoint">Costco, 단백질 보충제 중금속 오염 집단소송 - 소비자 신뢰 및 법적 비용 리스크</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/09/costco-lawsuit-protein-powder" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/09 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Goldman Sachs, 직원의 예측시장 베팅 제한</div>
+    <div class="article-title-en">Goldman Sachs limits prediction market betting for employees  </div>
+    <div class="article-keypoint">Goldman Sachs, 직원 예측시장 베팅 제한 - 규제 은행의 신규 플랫폼 컴플라이언스 부담 확인</div>
+    <a class="article-link" href="https://www.ft.com/content/7a2a3200-763f-4141-8372-f2f6afba521d" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 04:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">러시아, 우크라이나 아동 160만 명을 군사 세뇌에 노출 - OSCE 보고서</div>
+    <div class="article-title-en">Russia subjecting 1.6 million Ukraine children to military brainwashing: OSCE report</div>
+    <div class="article-keypoint">러시아, 우크라이나 아동 160만 명 군사 세뇌 - OSCE, 반인도 범죄 가능성 경고</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/russia-subjecting-1-6-million-ukraine-children-to-military-brainwashing-osce-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 02:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Zelensky, 우크라이나 내 Patriot 미사일 현지 생산 기술 협의 진행 중임을 밝혀</div>
+    <div class="article-title-en">Zelensky says technical details remain ahead of Patriot missile production in Ukraine</div>
+    <div class="article-keypoint">Zelensky, Patriot 우크라이나 현지 생산 기술 협의 진행 중 - 방산 공급망 자립 논의 가속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelensky-says-technical-details-remain-ahead-of-patriot-missile-production-in-ukraine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 04:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">영국 의회, Labour에 £3.3억 Palantir NHS 소프트웨어 계약 폐기 촉구</div>
+    <div class="article-title-en">MPs urge Labour to ditch £330m Palantir software contract with NHS</div>
+    <div class="article-keypoint">영국 의회, Palantir NHS £3.3억 계약 폐기 촉구 - AI 데이터 거버넌스 신뢰 논쟁 확산</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/jul/09/mps-urge-labour-to-ditch-330m-palantir-software-contract-with-nhs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 03:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Nigel Farage의 크립토 자금에 대한 Guardian 사설: 책임 요구는 음모론이 아니다</div>
+    <div class="article-title-en">The Guardian view on Nigel Farage’s crypto cash: accountability is not a conspiracy | Editorial</div>
+    <div class="article-keypoint">Farage의 Reform UK 크립토 자금 불투명성 - 정치 자금과 디지털 자산 투명성 논쟁</div>
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/2026/jul/09/the-guardian-view-on-nigel-farages-crypto-cash-accountability-is-not-a-conspiracy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 02:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">수단 군부, 미국 평화안에 RSF의 도시 완전 철수 요구 - 문건 공개</div>
+    <div class="article-title-en">Sudan army says US peace plan must call for full RSF withdrawal from cities, documents show</div>
+    <div class="article-keypoint">수단 군부, 미국 평화안에 RSF 완전 철수 요구 - 분쟁 해결 교착 심화</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/sudan-army-says-us-peace-plan-must-call-for-full-rsf-withdrawal-from-cities-documents-show-4785128" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/09 22:19 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
