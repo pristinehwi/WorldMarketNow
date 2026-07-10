@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-11 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/11 07:48 KST</div>
+    <div class="header-date">2026-07-11</div>
+    <div class="header-headline">SK Hynix $265억 미국 역대 최대 외국기업 IPO 성공</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">SK Hynix 13% 급등 첫날 이후 AI 메모리 밸류에이션 지속 여부 및 2Q 빅테크 실적 시즌 개막 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">SK Hynix 미국 상장 첫날 13% 급등 - AI 메모리 자본시장 재편 현실화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">SK Hynix가 미국 역사상 외국 기업 최대 규모인 265억 달러 IPO를 성공시키며 Nasdaq 첫날 13% 상승으로 데뷔했다. 개장가 170달러에 형성된 ADR은 AI 데이터센터 수요에 따른 HBM 메모리 공급 구조 변화가 자본시장에서 본격 평가받는 분기점을 만들었다. SK Hynix 회장은 블룸버그 인터뷰에서 'AI 수요가 기하급수적으로 성장할 것'이라고 강조하며 투자자 신뢰를 높였고, 이번 상장을 계기로 미국 정부는 SK Hynix·Samsung에 미국 내 공장 건설을 촉구하고 있다. 이번 IPO는 AI 붐이 반도체 업계의 전통적인 경기순환 사이클을 깨뜨릴 수 있다는 시장의 베팅을 반영하며, 글로벌 AI 인프라 자본배분의 새로운 기준점이 될 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Meta 최고 주간 상승·AI 생태계 주도권 경쟁 - Apple의 OpenAI 소송과 기술 신뢰 균열</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#11</span>
+    </div>
+    <div class="theme-summary">Meta가 저비용 AI 가격 정책과 인프라 투자 계획을 발표하며 2025년 4월 이후 최대 주간 상승폭을 기록, AI 수익화 모델에 대한 투자자 신뢰가 빅테크 내에서 차별화되고 있다. 반면 Apple은 OpenAI가 기밀 정보를 탈취했다고 주장하며 소송을 제기, 'OpenAI 리더십에서 비위가 일상화되어 있다'는 강도 높은 비판을 쏟아냈다. 이는 AI 생태계 내 빅테크 간 협력과 경쟁의 경계가 법적 분쟁으로 격화되는 신호로, 향후 AI 기술 공유 및 파트너십 구조 전반에 영향을 미칠 수 있다. 미국이 UAE에 AI 칩·군사 물자·상업용 위성 수출을 완화한 조치는 AI 지정학적 공급망 재편이 동맹 구도 속에서 가속화되고 있음을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Fed 물가안정 재확약·통화정책 불확실성 속 현금 운용 전략 재점검</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#14</span>
+    </div>
+    <div class="theme-summary">Fed는 반기 통화정책 보고서에서 인플레이션이 2% 목표를 여전히 상회하는 상황에서도 물가 안정 의지를 재확인했다. 시장에서는 다음 FOMC 결정 전후 CD 금리 4% 수준의 고정 여부를 두고 현금 운용 전략 재검토가 활발히 이뤄지고 있다. 통화정책 방향이 여전히 불투명한 가운데, 골드만삭스는 2024년 시장 충격의 원인이었던 통화 캐리 트레이드가 수년 만에 최대 규모로 복귀했다고 경고해 금융 안정성 리스크가 재부각되고 있다. 장기 금리 수준과 Fed 정책 경로에 대한 불확실성이 지속되면서 투자자들의 듀레이션 및 유동성 포지셔닝이 시험대에 오른 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">호르무즈 공급 리스크 재점화·이란 지정학 긴장 고조 - 유가 WTI $71 회복</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#18</span>
+    </div>
+    <div class="theme-summary">이번 주 WTI 8월물은 $67.82 저점에서 $76.08 고점까지 급등 후 $71.84 수준에서 마감, 주간 기준 4.94% 상승하며 호르무즈 공급 차질 우려가 에너지 가격에 직접 반영됐다. 트럼프 전 대통령이 자신이 암살될 경우 이란을 '전례 없는 수준으로 폭격'하라는 명령을 남겼다는 보도가 나오며 이란 리스크 프리미엄이 추가 확대될 가능성이 제기됐다. 미국의 UAE 군사 물자·AI 칩 수출 완화 조치도 이란 견제라는 지정학적 맥락 속에서 이뤄진 것으로, 중동 에너지 지정학과 기술 공급망이 교차하는 복합 리스크 구도가 심화되고 있다. 우크라이나 외교 국면에서 트럼프 측의 대러 접근법 변화 가능성까지 더해져 글로벌 지정학 불확실성이 다층적으로 확대되는 흐름이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">SpaceX·핵 에너지·우주 인프라 - 민간 자본과 국가 전략의 교차점 가속</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #19~#23</span>
+    </div>
+    <div class="theme-summary">SpaceX 로켓을 통해 세계 최초 상업용 핵동력 위성 발사가 준비되는 가운데, 인도 국영 NTPC는 핵 발전 확대를 위해 글로벌 우라늄 자산 인수에 나서며 에너지 안보 경쟁이 가시화되고 있다. 중국 국영 우주기업이 첫 궤도 로켓 부스터 회수에 성공하며 머스크의 재사용 로켓 기술을 빠르게 추격 중인 것도 우주 패권 경쟁의 새 변수로 떠올랐다. 영국은 은행·금융 안정 차원에서 Amazon·Google·Oracle·Microsoft 등 핵심 기술 기업에 대한 중앙은행(BOE) 규제 권한을 부여, AI·클라우드 인프라가 금융 시스템 리스크의 핵심 변수로 제도화되고 있음을 보여준다. 워싱턴주의 AI 데이터센터 투자 집중이 다른 산업의 성장 기회를 잠식한다는 비판도 제기되며, 인프라 자본배분의 사회적 비용 논쟁이 확산되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#25</span>
+    </div>
+    <div class="theme-summary">우크라이나 전 외교장관 쿨레바는 트럼프 행정부의 대우크라이나 기조 변화를 분석하며 키이우의 외교 전략 적응 과정을 설명했다. 이스라엘 네타냐후 총리의 터키 위협 과장 논란은 국내 선거 정치와 외교 수사의 경계를 둘러싼 논쟁을 촉발하고 있다. 영국 Reform 당의 미신고 후원금 의혹에 대해 런던 경찰이 수사에 착수했다는 보도가 나왔다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">SK Hynix 미국 상장 첫날 13% 급등 - AI 메모리 자본시장 재편 현실화</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">SK Hynix 미국 상장 - AI가 반도체 경기순환을 깨뜨릴 것이라는 시장의 베팅</div>
+    <div class="article-title-en">SK Hynix Debut Is a Bet That AI Breaks Boom-and-Bust Chip Cycle</div>
+    <div class="article-keypoint">미국 역대 외국기업 최대 IPO·AI 메모리 경기순환 탈피 베팅의 시장 검증 시작</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-10/sk-hynix-debut-is-a-bet-that-ai-breaks-boom-and-bust-chip-cycle" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 06:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">SK Hynix 주가 Nasdaq 데뷔 첫날 두 자릿수 급등</div>
+    <div class="article-title-en">SK Hynix’s stock sees double-digit pop in Nasdaq debut</div>
+    <div class="article-keypoint">SK Hynix ADR 첫날 13% 급등, AI 메모리 밸류에이션 프리미엄 본격 형성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/sk-hynixs-stock-looks-primed-for-a-pop-in-its-nasdaq-debut-38054370?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 07:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">SK Hynix, 미국 역대 외국기업 최대 IPO로 $265억 조달 성공 - 미국 공장 건설 요구도</div>
+    <div class="article-title-en">SK Hynix raises $26.5B in the biggest foreign IPO in US history, is urged to build new US fabs</div>
+    <div class="article-keypoint">$265억 조달 성공 후 미국 정부의 현지 공장 건설 압박 - 지정학적 반도체 재편 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/10/sk-hynix-raises-26-5b-in-the-biggest-foreign-ipo-in-us-history-is-urged-to-build-new-us-fabs/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 02:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">한국 반도체 기업 SK Hynix, AI 붐 타고 미국 대형 상장으로 $265억 조달</div>
+    <div class="article-title-en">South Korea chip maker SK hynix rides AI boom raising $26.5bn in huge US listing</div>
+    <div class="article-keypoint">$265억 상장으로 AI 데이터센터 HBM 수요 구조적 성장 기대 자본화</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jul/10/south-korea-chip-maker-sk-hynix-rides-ai-boom-raising-265bn-in-huge-us-listing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 14:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">SK Hynix ADR 개장가 $170 - 월스트리트 유동성으로 한국 AI 메모리 붐 자금 조달</div>
+    <div class="article-title-en">SK Hynix ADRs Open At $170, Tapping Wall Street Liquidity To Fuel Korea's AI Memory Boom</div>
+    <div class="article-keypoint">SK Hynix ADR 개장가 $170, 회장 '수요 기하급수적 성장' 발언으로 투자 심리 강화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/sk-hynix-adrs-priced-3-premium-wall-street-readies-wave-leveraged-etfs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 00:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">SK Hynix, 265억 달러 역대 최대 공모 후 첫날 13% 상승</div>
+    <div class="article-title-en">SK Hynix Climbs 13% After Record $26.5 Billion US Offering</div>
+    <div class="article-keypoint">SK Hynix 13% 급등 데뷔 - 외국기업 미국 IPO 역대 최대 기록 경신</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-10/sk-hynix-indicated-to-climb-17-after-26-5-billion-adr-offering" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 22:56 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Meta 최고 주간 상승·AI 생태계 주도권 경쟁 - Apple의 OpenAI 소송과 기술 신뢰 균열</span>
+    <span class="theme-label-range">Article #7~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Meta 주가 수년 만에 최고 주간 상승률 기록하며 강세 복귀</div>
+    <div class="article-title-en">Meta’s stock roars back to life as it notches its best week in years</div>
+    <div class="article-keypoint">Meta, 저비용 AI 전략으로 2025년 4월 이후 최대 주간 상승 - AI 수익화 모델 차별화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/metas-stock-roars-back-to-life-as-it-heads-for-its-best-week-in-years-0ff0fa7d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 07:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Apple, OpenAI를 기밀정보 탈취 혐의로 제소 - '이것은 빙산의 일각'</div>
+    <div class="article-title-en">Apple sues OpenAI for alleged theft of confidential info — and says that’s just ‘the tip of the iceberg’</div>
+    <div class="article-keypoint">Apple의 OpenAI 소송 - AI 생태계 내 빅테크 간 법적 분쟁으로 기술 협력 구조 균열</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/apple-sues-openai-for-institutional-misconduct-and-alleges-thats-just-the-tip-of-the-iceberg-6e803c4d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 07:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Meta 주가 2025년 4월 이후 최대 상승 | 클로징 벨</div>
+    <div class="article-title-en">Meta Shares Gain Most Since April 2025 | Closing Bell</div>
+    <div class="article-keypoint">Meta 주가 4월 이후 최대 주간 상승 - AI 인프라 투자 계획이 밸류에이션 재평가 촉발</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-07-10/meta-shares-gain-most-since-april-2025-closing-bell-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 05:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">미국, UAE에 특정 군사 장비·AI 칩·상업용 위성 수출 규제 완화</div>
+    <div class="article-title-en">US makes it easier to export certain military items, AI chips and commercial satellites to the UAE</div>
+    <div class="article-keypoint">미국, UAE에 AI 칩·군사장비·위성 수출 완화 - 이란 견제 속 기술 공급망 지정학화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/us-makes-it-easier-to-export-certain-military-items-ai-chips-and-commercial-satellites-to-the-uae" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 02:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">EU, Facebook·Instagram의 중독성 기능 관련 Meta에 과징금 위협</div>
+    <div class="article-title-en">EU threatens Meta with fines over addictive features on Facebook and Instagram</div>
+    <div class="article-keypoint">EU, Meta에 DSA 위반 과징금 위협 - 알고리즘 추천·무한스크롤 규제 압박 현실화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/10/eu-threatens-meta-with-fines-over-addictive-features-on-facebook-and-instagram/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 23:19 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Fed 물가안정 재확약·통화정책 불확실성 속 현금 운용 전략 재점검</span>
+    <span class="theme-label-range">Article #12~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">지금 현금을 어디에 둘까 - 4% 금리 고정 vs 다음 Fed 결정 대기 선택의 기로</div>
+    <div class="article-title-en">Where to put cash right now: Should you lock in at 4% — or wait for the next Fed rate decision?</div>
+    <div class="article-keypoint">Fed 다음 회의 전 CD 4% 고정 vs 대기 갈림길 - 통화정책 경로 불확실성이 현금 전략 좌우</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/should-you-lock-in-a-4-cd-rate-now-heres-how-to-decide-on-the-next-move-for-your-cash-41a7ef4c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 04:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Fed, 통화정책 보고서에서 물가안정 공약 재확인</div>
+    <div class="article-title-en">Fed Vows to Deliver Price Stability in Monetary Policy Report</div>
+    <div class="article-keypoint">Fed 반기 보고서, 인플레 2% 상회 지속에도 물가안정 의지 재확인 - 인하 시점 불투명</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-10/fed-vows-to-deliver-price-stability-in-monetary-policy-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 01:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">2024년 대규모 시장 충격 주범이었던 헤지펀드 캐리 트레이드, 골드만삭스에 따르면 대규모 복귀</div>
+    <div class="article-title-en">A hedge-fund trade blamed for a massive market blowup in 2024 has made a big comeback, Goldman Sachs says</div>
+    <div class="article-keypoint">캐리 트레이드 수년 만에 최대 복귀 - 2024년 시장 충격 재현 가능성 경고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/a-hedge-fund-trade-blamed-for-a-massive-market-blowup-in-2024-has-made-a-big-comeback-goldman-sachs-says-f2308a78?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 04:04 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">호르무즈 공급 리스크 재점화·이란 지정학 긴장 고조 - 유가 WTI $71 회복</span>
+    <span class="theme-label-range">Article #15~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">기술주 랠리 이후 미국 주가지수 선물 소폭 하락 - SK Hynix 거래 시작</div>
+    <div class="article-title-en">US Stock Futures Slip After Tech Rally, SK Hynix Starts Trading</div>
+    <div class="article-keypoint">SK Hynix IPO 첫날 미 증시 선물 소폭 하락 - 이란 긴장 재점화로 기술 랠리 숨 고르기</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-10/us-stock-futures-slip-after-tech-rally-sk-hynix-starts-trading" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 20:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">우크라이나가 트럼프 세계를 파악하는 방법</div>
+    <div class="article-title-en">How Ukraine Figured Out Trump World</div>
+    <div class="article-keypoint">쿨레바 전 우크라이나 외교장관, 트럼프 행정부 대우크라이나 기조 변화 해석</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/07/10/dmytro-kuleba-ukraine-russia-war-victory-nato-patriot-missile/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 02:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">트럼프, 암살 시 이란 '전례 없는 수준으로 폭격' 명령 남겨</div>
+    <div class="article-title-en">Trump Left Orders To Obliterate Iran If Assassinated: 'Bomb Them At Levels Never Seen Before'</div>
+    <div class="article-keypoint">트럼프, 암살 시 이란 전면 폭격 명령 보도 - 이란 리스크 프리미엄 추가 확대 촉매</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/trump-left-orders-obliterate-iran-if-hes-assassinated-bomb-them-levels-never-seen" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">호르무즈 공급 리스크 재부각에 유가 상승</div>
+    <div class="article-title-en">Oil Prices Rally on Renewed Hormuz Supply Risks</div>
+    <div class="article-keypoint">WTI 주간 +4.94% 급등, $76.08 고점 후 $71.84 마감 - 호르무즈 공급 리스크 직접 반영</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Oil-Prices-Rally-on-Renewed-Hormuz-Supply-Risks.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 20:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">SpaceX·핵 에너지·우주 인프라 - 민간 자본과 국가 전략의 교차점 가속</span>
+    <span class="theme-label-range">Article #19~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">세계 최초 상업용 핵동력 위성, SpaceX 로켓에 탑재해 발사 예정</div>
+    <div class="article-title-en">World's First Commercial Nuclear-Powered Satellite Set For Launch Aboard SpaceX Rocket</div>
+    <div class="article-keypoint">SpaceX 로켓에 세계 최초 상업용 핵동력 위성 탑재 - 민간 우주·핵 인프라 융합 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/worlds-first-commercial-nuclear-powered-satellite-set-launch-aboard-spacex-rocket" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 01:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">인도 국영 핵에너지 기업, 글로벌 우라늄 자산 인수 추진</div>
+    <div class="article-title-en">India’s State Nuclear Firm In Search of Global Uranium Assets</div>
+    <div class="article-keypoint">인도 NTPC, 글로벌 우라늄 자산 인수 추진 - 핵 발전 확대를 위한 연료 안보 경쟁 가속</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Indias-State-Nuclear-Firm-In-Search-of-Global-Uranium-Assets.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">영국 중앙은행, Amazon·Google 등 핵심 기술기업 규제 권한 부여받아</div>
+    <div class="article-title-en">Bank of England handed powers to regulate key tech firms including Amazon and Google</div>
+    <div class="article-keypoint">BOE, Amazon·Google 등 핵심 기술기업 직접 규제 권한 획득 - 금융 시스템 리스크 제도화</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/jul/10/bank-of-england-handed-powers-to-regulate-key-tech-firms-including-amazon-and-google" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 23:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">중국, Elon Musk의 재사용 로켓 기술을 빠르게 추격 중</div>
+    <div class="article-title-en">China is catching up to Elon Musk’s reusable rockets</div>
+    <div class="article-keypoint">중국 국영 우주기업 첫 궤도 부스터 회수 성공 - SpaceX 재사용 기술 추격 가시화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/10/china-is-catching-up-to-elon-musks-reusable-rockets/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 01:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">워싱턴주는 성장 대신 정체를 선택할 것인가</div>
+    <div class="article-title-en">Opinion | Will Washington State Choose Stagnation Over Growth?</div>
+    <div class="article-keypoint">워싱턴주 AI 데이터센터 집중 투자, 미래 성장 산업 자본 잠식 논란 제기</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/will-washington-state-choose-stagnation-over-growth-48b15adb?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 02:53 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">영국 경찰, Reform당 후원금 의혹 수사 착수 - 보도</div>
+    <div class="article-title-en">UK police investigate Reform donations, report says</div>
+    <div class="article-keypoint">영국 Reform당 미신고 후원금 의혹, 런던 경찰 수사 착수 - 야당 정치 리스크 부각</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/07/10/uk-police-investigate-reform-donations-report-says_6755356_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 06:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">왜 Netanyahu는 터키에 대해 근거 없는 경고를 하는가</div>
+    <div class="article-title-en">Why Netanyahu Is Crying Wolf on Turkey</div>
+    <div class="article-keypoint">네타냐후의 터키 위협 과장 논란 - 이스라엘 선거 정치가 외교 수사 왜곡 가능성</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/07/10/israel-netanyahu-turkey-erdogan-politics-election-iran/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/10 19:29 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
