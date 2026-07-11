@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-12 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/12 07:47 KST</div>
+    <div class="header-date">2026-07-12</div>
+    <div class="header-headline">호르무즈 봉쇄 선언 - 에너지·지정학 리스크 동시 폭발</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">호르무즈 해협 봉쇄 지속 여부 및 이란 IRGC 추가 행동 - 유가·방산·해운 섹터 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">호르무즈 봉쇄 선언과 중동 확전 리스크의 시장 전이</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#3</span>
+    </div>
+    <div class="theme-summary">이란 IRGC 해군이 호르무즈 해협을 추가 통보 시까지 폐쇄한다고 선언하며 글로벌 에너지 공급망 리스크가 급격히 고조됐다. 이는 최근 미국의 대이란 공습 이후 이란의 첫 대규모 공식 보복 조치로, 전 세계 원유 물동량의 약 20%가 통과하는 해협 봉쇄는 유가 급등과 해운·보험료 급등을 즉각적으로 자극할 수 있다. 우크라이나 전선에서도 러시아가 민간 거주 구역 인근 무기 창고를 타격해 10명이 사망하고 Zelensky가 자국 관리 책임론을 제기하는 등 지정학적 불안이 복수의 전선에서 동시 확산되고 있다. 인도의 Modi 총리는 이러한 불확실성 속에서 인도-태평양 파트너십을 강화하며 중국 견제와 미국 사이의 전략적 균형 행보를 가속화했다. 복합 지정학 리스크는 안전자산 수요, 에너지 섹터 변동성, 방산 주식에 동시 압력을 가하는 구도다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SK Hynix ADR 상장과 AI 메모리 버블 논쟁 - BNP '1998년 초입' 진단</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #4~#5</span>
+    </div>
+    <div class="theme-summary">SK Hynix ADR이 7배 초과청약 후 미국 시장에 데뷔하며 AI 메모리 수요에 대한 자본시장의 강한 확신을 재확인했다. 그러나 BNP Paribas는 현 국면을 닷컴 버블 정점이 아닌 1998년 초입으로 해석하며 추가 상승 여지를 열어뒀고, 이는 AI 관련 반도체 밸류에이션 논쟁을 다시 수면 위로 끌어올렸다. S&P500이 '맑음과 무지개' 가격을 선반영한 상태에서 곧 개막하는 실적 시즌이 밸류에이션 정당성을 검증하는 핵심 시험대가 될 전망이다. 어닝 서프라이즈 여부에 따라 AI 메모리·반도체 섹터의 방향성이 단기적으로 크게 갈릴 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Warsh Fed 태스크포스 진용 확정 - 통화정책 프레임워크 재설계 본격화</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #6</span>
+    </div>
+    <div class="theme-summary">Kevin Warsh 연준 의장이 구성한 5개 태스크포스의 외부 자문단 인선이 공개되며 신뢰도와 전문성을 동시에 확보했다는 평가를 받고 있다. 이번 인선은 Warsh가 추진하는 커뮤니케이션 방식 및 정책 실행 프레임워크 전면 재검토에 정당성을 부여하는 신호로 읽힌다. 태스크포스 출범은 단순한 조직 개편을 넘어 포워드 가이던스 설계, 물가목표 체계, 정책 투명성 기준을 동시에 재정립하는 중장기 프로세스의 시작점이다. 시장은 이 태스크포스 결과물이 향후 FOMC 의사결정 구조와 금리 경로 해석에 미칠 영향을 주시해야 한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 생태계 확장 - OpenAI 가족 서비스·ChatGPT 일상 침투와 기술 신뢰 균열</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #7~#9</span>
+    </div>
+    <div class="theme-summary">OpenAI가 가족·노인·돌봄 사용자 전용 ChatGPT 경험 구축을 위한 전담 PM 채용에 나서며 AI의 소비자 일상 침투 전략을 구체화하고 있다. 이는 Meta의 소셜 AI 확장, Apple의 OpenAI 영업비밀 침해 소송 등과 맞물려 AI 생태계 내 플랫폼 주도권 경쟁이 B2C 영역으로 전선을 넓히고 있음을 시사한다. 한편 Washington의 Intel 투자 베팅이 성과를 내기 시작했다는 분석도 나오며 AI 반도체 공급망의 미국 내재화 흐름이 가시화되고 있다. Bitcoin은 미국 크립토 정책 논의가 지속되는 가운데 $64,000선을 유지하며 규제 모멘텀에 대한 시장의 기대를 반영하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">SpaceX vs 중국 재사용 로켓 - 우주 기술 패권 격차와 자본시장 함의</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #10~#11</span>
+    </div>
+    <div class="theme-summary">중국이 Long March 10B 1단 부스터를 해상 바지선에 착륙시키는 데 처음으로 성공하며 재사용 로켓 경쟁에 공식 진입했다. 그러나 분석가들은 SpaceX가 여전히 수년 앞선 기술 수준을 유지하고 있다고 평가하며 현 격차의 단기 해소 가능성을 낮게 보고 있다. 우주 인프라 기술 경쟁은 위성 인터넷, 군사 정찰, AI 컴퓨팅 인프라와 직결되는 국가 전략 자산으로 부상했으며, 민간 자본의 우주 섹터 배분 근거를 강화하는 방향으로 작용한다. Kansas에서 진행 중인 지하 소형 핵반응로 실증 프로젝트도 AI 전력 수요 급증 시대에 분산형 에너지 인프라 투자 테마를 보강하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #12~#22</span>
+    </div>
+    <div class="theme-summary">이번 묶음의 나머지 기사들은 직접적인 시장 임팩트보다 정치·사회·문화적 배경 이슈에 해당한다. Trump 건강 및 인지 테스트 관련 발언, NYT 기자 소환장 발부, Canada-US 교량 프로젝트 승인, Musk 가족의 Tommy Robinson 러시아 방문 논란, 베네수엘라 지진 사망자 4,300명 돌파, 유럽 청년 실업률 시각화, 호주 경제 비관론과 스태그플레이션 논쟁, 미 해군 함정 증강 요구, 펜타곤 UFO 파일 공개, 팔레스타인 활동가 살해 사건 등이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">호르무즈 봉쇄 선언과 중동 확전 리스크의 시장 전이</span>
+    <span class="theme-label-range">Article #1~#3</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Zelensky, 러시아 타격으로 민간인 10명 사망한 무기 창고 관련 우크라이나 관리들에 책임 묻겠다고 밝혀</div>
+    <div class="article-title-en">Officials in Ukraine will be held accountable over weapons store that was hit, killing 10 people: Zelensky</div>
+    <div class="article-keypoint">러시아, 우크라이나 민간 구역 인근 무기 창고 타격 - 전선 확대와 서방 지원 지속 압박</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelenskiy-says-ukraine-officials-will-be-held-accountable-for-weapons-store" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 06:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">이란 IRGC 해군, 추가 통보 시까지 호르무즈 해협 폐쇄 선언 - 국영 매체 보도</div>
+    <div class="article-title-en">Iran’s IRGC navy says Strait of Hormuz closed until further notice, state media reports</div>
+    <div class="article-keypoint">이란 IRGC, 호르무즈 해협 봉쇄 선언 - 전 세계 원유 물동량 20% 차단 위협으로 유가 급등 압력</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/irans-irgc-navy-says-strait-of-hormuz-closed-until-further-notice-state-media-reports-4787307" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 22:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Modi, 중국과 미국이 지역을 재편하는 가운데 인도-태평양 파트너들을 적극 유치</div>
+    <div class="article-title-en">Modi Courts Indo-Pacific Partners as China, US Reshape Region</div>
+    <div class="article-keypoint">Modi 인도-태평양 3개국 순방 - 미·중 사이 전략적 균형 외교 가속화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-11/modi-courts-indo-pacific-partners-as-china-us-reshape-region" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 06:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SK Hynix ADR 상장과 AI 메모리 버블 논쟁 - BNP '1998년 초입' 진단</span>
+    <span class="theme-label-range">Article #4~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">SK Hynix 미국 데뷔가 AI 버블 정점인가? BNP는 '아직 1998년'이라고 말한다</div>
+    <div class="article-title-en">Was SK Hynix's US Debut The AI Bubble Top? BNP Says It's Still 1998 </div>
+    <div class="article-keypoint">BNP, AI 버블 정점 아닌 '1998년 초입' 진단 - SK Hynix ADR 7배 초과청약이 방아쇠</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/was-sk-hynixs-us-debut-ai-bubble-top-bnp-says-its-still-1998" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">'맑음과 무지개' 가격이 선반영된 증시, 이제 실적 시험대에 직면</div>
+    <div class="article-title-en">Stocks Priced for ‘Sunshine and Rainbows’ Now Face Earnings Test</div>
+    <div class="article-keypoint">실적 시즌 개막 임박 - '맑음과 무지개' 가격 선반영한 증시의 어닝 검증 시험대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-11/stocks-priced-for-sunshine-and-rainbows-now-face-earnings-test" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 22:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Warsh Fed 태스크포스 진용 확정 - 통화정책 프레임워크 재설계 본격화</span>
+    <span class="theme-label-range">Article #6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Fed 태스크포스 인선, Warsh에 신뢰도와 지지 기반 제공</div>
+    <div class="article-title-en">Fed Task Force Picks Bring Credibility and Support for Warsh</div>
+    <div class="article-keypoint">Warsh Fed 태스크포스 외부 자문단 확정 - 통화정책 프레임워크 재설계 신뢰도 확보</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-11/fed-task-force-picks-bring-credibility-and-support-for-warsh" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 21:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 생태계 확장 - OpenAI 가족 서비스·ChatGPT 일상 침투와 기술 신뢰 균열</span>
+    <span class="theme-label-range">Article #7~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">미국 크립토 정책 주목 속 Bitcoin, $64,000 위 상승분 유지</div>
+    <div class="article-title-en">Bitcoin holds gains above $64,000 as U.S. crypto policy remains in focus</div>
+    <div class="article-keypoint">Bitcoin $64,000 사수 - 미 크립토 규제 법안 진전이 단기 가격 지지선 역할</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-stays-above-64000-as-us-crypto-policy-advances-adoption-grows-4787225" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 20:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">OpenAI, ChatGPT를 가정으로 더 깊이 침투시키며 가족 시장에 베팅</div>
+    <div class="article-title-en">OpenAI bets on families as ChatGPT goes deeper into households</div>
+    <div class="article-keypoint">OpenAI, 가족·노인 대상 ChatGPT 전담팀 구성 - AI B2C 플랫폼 주도권 경쟁 확전</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/11/openai-bets-on-families-as-chatgpt-goes-deeper-into-households/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 23:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Intel에 대한 Washington의 베팅이 성과를 내기 시작하다</div>
+    <div class="article-title-en">Washington’s Bet on Intel Is Starting to Pay Off</div>
+    <div class="article-keypoint">Washington의 Intel 투자 성과 가시화 - AI 반도체 공급망 미국 내재화 전략 진전</div>
+    <a class="article-link" href="https://www.wsj.com/business/washingtons-bet-on-intel-is-starting-to-pay-off-0072065b?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 19:33 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">SpaceX vs 중국 재사용 로켓 - 우주 기술 패권 격차와 자본시장 함의</span>
+    <span class="theme-label-range">Article #10~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">중국, 재사용 로켓 해상 착륙 성공 - 그러나 SpaceX는 여전히 수년 앞서 있다</div>
+    <div class="article-title-en">China Lands Reusable Rocket On Barge, But SpaceX Remains Years Ahead </div>
+    <div class="article-keypoint">중국 재사용 로켓 첫 해상 착륙 성공, 그러나 SpaceX와의 기술 격차는 수년 지속 전망</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/china-lands-reusable-rocket-barge-spacex-remains-years-ahead" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 03:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Kansas, 급진적 소형 핵반응로 설계의 실증 시험장이 되다</div>
+    <div class="article-title-en">Kansas Becomes Testing Ground for a Radical Nuclear Reactor Design</div>
+    <div class="article-keypoint">Kansas 지하 소형 핵반응로 실증 착수 - AI 전력 수요 대응 분산 에너지 투자 테마 부상</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Kansas-Becomes-Testing-Ground-for-a-Radical-Nuclear-Reactor-Design.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 06:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #12~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">보험사는 기와 몇 장 떨어졌다고 했지만, 손해사정사는 폭풍 피해액 $10,000를 산정했다 - 어떻게 이런 일이 가능한가?</div>
+    <div class="article-title-en">My insurance company said my roof lost a few tiles. Loss adjusters found $10,000 in storm damage. How could this happen?</div>
+    <div class="article-keypoint">AI 기반 보험 손해사정 오류 사례 - AI 신뢰도·책임 논쟁 확산 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/my-insurance-company-said-my-roof-lost-a-few-tiles-loss-adjusters-found-10-000-in-storm-damage-how-could-this-happen-8e1cb8bf?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 06:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Trump, 5월 신체검사 관련 게시물에서 건강·인지 테스트 자화자찬 재개</div>
+    <div class="article-title-en">Trump revives praise for his health, cognitive test in post about May physical</div>
+    <div class="article-keypoint">Trump 건강 과시 발언 - 2026년 정치 일정 앞두고 리더십 리스크 관리 의도</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-revives-praise-for-his-health-cognitive-test-in-post-about-may-physical" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 06:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Trump 행정부, 카타르 제공 에어포스원 보안 우려 보도 관련 NYT 기자들에 소환장 발부</div>
+    <div class="article-title-en">Trump administration subpoenas New York Times journalists over new Air Force One reporting</div>
+    <div class="article-keypoint">Trump 정부, NYT 기자 소환장 발부 - 언론 자유 침해 논란과 정치 리스크 확산</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/11/justice-department-subpoenas-new-york-times-air-force-one" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 23:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">유럽의 급등하는 청년 실업률 시각화</div>
+    <div class="article-title-en">Visualizing Europe's Soaring Youth Unemployment</div>
+    <div class="article-keypoint">유럽 청년 실업률 국가별 격차 확대 - 남유럽 중심 구조적 노동시장 분열 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/visualizing-europes-soaring-youth-unemployment" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/11 20:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">해군 참모총장, 미국에 더 많은 전함이 필요하다고 밝혀</div>
+    <div class="article-title-en">Navy Chief Says US Needs More Warships</div>
+    <div class="article-keypoint">미 해군 함정·탄약 증강 요구 - 다중 전선 대비 국방비 확대 압력 강화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-07-11/navy-chief-says-us-needs-more-warships-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 00:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">친팔레스타인 활동가, 이민자 남자친구에게 살해된 것으로 보도</div>
+    <div class="article-title-en">Pro-Palestine Activist Reportedly Murdered By Migrant Boyfriend</div>
+    <div class="article-keypoint">이민자 범죄 사건 - 유럽 내 이민·치안 정치화 가속 배경 사례</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/pro-palestine-activist-murdered-jordanian-migrant-boyfriend" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">One Nation, 호주인들의 경제 비관론을 전례 없이 활용 중 - '스태그플레이션 충격'이 원인인가?</div>
+    <div class="article-title-en">One Nation is capitalising on Australians’ economic pessimism like never before. Is a ‘stagflation impulse’ to blame?</div>
+    <div class="article-keypoint">호주 스태그플레이션 우려 - 이민·주거 비용 연계 포퓰리즘 정치화 확산</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/jul/12/one-nation-australia-economy-stagflation-impulse-ntwnfb" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Elon Musk의 가족 재단이 Tommy Robinson을 러시아에 데려갔다고 Musk 부친이 밝혀</div>
+    <div class="article-title-en">Elon Musk’s family foundation took Tommy Robinson to Russia, says Musk’s father</div>
+    <div class="article-keypoint">Musk 가족재단의 Tommy Robinson 러시아 방문 - SpaceX IPO 앞두고 Musk 평판 리스크 재점화</div>
+    <a class="article-link" href="https://www.theguardian.com/uk-news/2026/jul/11/elon-musk-family-foundation-took-tommy-robinson-to-russia-says-musks-father" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 01:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Donald Trump, 캐나다-미국 간 $45억 교량 사업 추진 승인</div>
+    <div class="article-title-en">Donald Trump clears path for $4.5bn bridge between Canada and US</div>
+    <div class="article-keypoint">Trump, 캐나다-미국 $45억 교량 프로젝트 승인 - 북미 인프라 투자 모멘텀 소폭 강화</div>
+    <a class="article-link" href="https://www.ft.com/content/7c9c3e82-63c5-442f-aef5-09f6b7bb501f" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 05:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">베네수엘라 지진 사망자 4,300명 넘어서며 대규모 복구 작업 앞날 막막</div>
+    <div class="article-title-en">Venezuela quake death toll passes 4,300 as scale of recovery effort looms large</div>
+    <div class="article-keypoint">베네수엘라 지진 사망자 4,333명 돌파 - 인도주의·재건 자금 수요 급증</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jul/11/venezuela-quake-deaths-passes-4000-recovery-effort" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 02:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">펜타곤 UFO 파일 4차 공개의 주요 폭로 내용</div>
+    <div class="article-title-en">Key Revelations From 4th Batch Of Pentagon UFO Files</div>
+    <div class="article-keypoint">Pentagon UFO 4차 파일 공개 - 국방 정보 투명성 압력 지속</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/key-revelations-4th-batch-pentagon-ufo-files" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 00:40 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
