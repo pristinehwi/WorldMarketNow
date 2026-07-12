@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-13 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/13 07:47 KST</div>
+    <div class="header-date">2026-07-13</div>
+    <div class="header-headline">미-이란 호르무즈 교전 지속 - 유가 상승·증시 선물 하락</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">호르무즈 봉쇄 현실화 여부 및 주요 은행 실적 발표 - 에너지·금융 섹터 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">미-이란 충돌 지속 - 호르무즈 봉쇄 위협과 에너지·시장 리스크 전이</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#3</span>
+    </div>
+    <div class="theme-summary">주말 사이 미국과 이란의 상호 공습이 계속되며 호르무즈 해협 긴장이 한층 고조됐고, 유가 상승과 미국 증시 선물 하락이 동시에 나타났다. 트럼프 대통령은 이란의 호르무즈 해협 봉쇄 선언을 일축했으나, 현장에서는 양측의 통제권 다툼이 진행 중이다. 이란의 봉쇄 주장이 현실화될 경우 전 세계 원유 공급의 약 20%가 직접적 위협에 노출되어 에너지 수입국 인플레이션 압력이 급격히 확대될 수 있다. 한편 3국 핵 군비 경쟁 심화라는 구조적 지정학 리스크도 중동 긴장과 맞물려 글로벌 안보 불확실성을 증폭시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">2Q 어닝시즌 개막 - AI·에너지 주도 실적 전망 상향과 Citi 턴어라운드 주목</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #4~#6</span>
+    </div>
+    <div class="theme-summary">이번 2분기 어닝시즌은 통상과 달리 애널리스트들이 실적 발표 전 추정치를 상향 조정하는 이례적 패턴이 나타났으며, 에너지와 기술(AI) 섹터가 주도하고 있다. 주식시장 랠리의 핵심 동력이 유가보다 AI 투자 모멘텀으로 무게중심이 이동했다는 분석이 제기되며, AI 관련 기업들의 실적 가시성이 시장 방향성을 좌우하는 변수로 부상했다. 대형 은행 중 Citigroup은 핵심 수익성 지표에서 가장 큰 개선이 기대되나 자체 목표치까지는 여전히 격차가 존재해, 구조적 턴어라운드의 현실성 검증이 이번 주 집중될 전망이다. 어닝시즌 결과는 AI 투자 지속 여부와 에너지 섹터 수익성에 대한 시장의 검증대가 될 것이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 버블 논쟁과 빅테크 자본배분 - Meta 칩 자체 생산과 신흥시장 쏠림 리스크</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #7~#9</span>
+    </div>
+    <div class="theme-summary">Meta가 9월 자체 AI 칩 양산에 돌입하며 컴퓨팅 용량 2배 확대 계획을 내부 문서로 공식화해, 빅테크의 AI 인프라 수직계열화 경쟁이 가속화되고 있다. AI 버블 붕괴 여부에 대한 논쟁이 재점화된 가운데, 시가총액 4조4천억 달러 규모의 3대 AI 기술주가 신흥시장 수익률을 과도하게 지배하고 있다는 집중 리스크 우려가 기관투자자 사이에서 확산되고 있다. 투자자들이 AI 대장주 외부로 분산을 모색하는 로테이션 움직임이 감지되나, AI 성장 내러티브 자체에 대한 신뢰는 아직 유지되고 있는 상황이다. AI가 일상과 기업 실무에 깊숙이 침투한 현실과 과잉 투자 우려 사이의 긴장이 이번 어닝시즌의 핵심 화두로 자리 잡고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">기술 산업 구조 변화 - Intel 내부 동향·로보택시 경쟁·식이장애 AI 논란</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #10~#11</span>
+    </div>
+    <div class="theme-summary">반도체 산업 재편 과정에서 Intel의 내부 인사 및 전략 동향이 주목받고 있으며, 구조적 경쟁력 회복 여부가 시장의 관심사다. 로보택시 분야에서는 규제 당국과 사업자 간의 최후통첩 수준의 긴장이 고조되며 자율주행 상용화 일정에 대한 불확실성이 커지고 있다. AI 조언이 식이장애 치료를 오히려 저해할 수 있다는 우려가 제기되며, 의료·상담 분야 AI 신뢰성 문제가 기술 규제 논의로 확산될 가능성이 부각됐다. 이들 이슈는 AI와 첨단 기술의 실제 사회적 적용 한계와 책임 문제를 동시에 드러내고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학·정치 리스크 - 이스라엘 총선·우크라이나 내각 개편·Lindsey Graham 사망</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #12~#15</span>
+    </div>
+    <div class="theme-summary">이스라엘이 10월 27일 총선을 확정하며 Netanyahu 장기 집권에 대한 국민적 심판 무대가 마련됐고, 중동 지정학 불안과 맞물려 이스라엘 정치 불확실성이 고조되고 있다. 젤렌스키 우크라이나 대통령이 총리를 포함한 내각을 대폭 교체하며 지난 1년 새 두 번째 대규모 개각을 단행했고, 이는 전쟁 장기화 속 국내 정치 주도권 재편 의도로 해석된다. 트럼프 대통령의 핵심 상원 동맹인 Lindsey Graham 의원이 71세로 갑작스럽게 사망하며 미국 정치 지형에 예상치 못한 변수가 발생했다. Musk 가족재단이 극우 활동가 Tommy Robinson의 러시아 방문을 지원한 사실이 드러나 영국 민주주의 방어를 둘러싼 논쟁이 가열되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #16~#18</span>
+    </div>
+    <div class="theme-summary">베네수엘라 지진 사망자가 4,490명으로 증가하며 인도적 피해가 확대되고 있다. 영국에서는 암호화폐 투자자와 극우 정치인의 연계 구조가 민주주의 제도 침식 우려로 이어지고 있으며, 프랑스에서는 드레퓌스 사건 무죄 인정 120주년을 맞아 Macron 대통령이 공식 추모 연설을 진행했다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">미-이란 충돌 지속 - 호르무즈 봉쇄 위협과 에너지·시장 리스크 전이</span>
+    <span class="theme-label-range">Article #1~#3</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">미-이란 추가 공습 충돌 후 유가 상승·증시 선물 하락</div>
+    <div class="article-title-en">Oil prices rise, stock futures dip after latest flare-up of strikes between U.S. and Iran</div>
+    <div class="article-keypoint">미-이란 호르무즈 교전 지속 - 유가 상승·증시 선물 하락 동시 발생</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oil-prices-rise-stock-futures-dip-after-latest-flare-up-of-strikes-between-u-s-and-iran-fef7f856?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/13 07:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">트럼프, 이란의 호르무즈 해협 봉쇄 주장 일축 - 통제권 다툼 지속</div>
+    <div class="article-title-en">Trump rejects Iran’s strait of Hormuz closure claim as fight for control goes on</div>
+    <div class="article-keypoint">트럼프, 이란 호르무즈 봉쇄 주장 일축 - 해협 통제권 다툼 현재진행형</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/jul/12/us-and-iran-exchange-strikes-as-tehran-again-says-strait-of-hormuz-is-closed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/13 03:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">3국 핵 군비 경쟁</div>
+    <div class="article-title-en">A three-way nuclear arms race</div>
+    <div class="article-keypoint">미-중-러 3국 핵 군비 경쟁 심화 - 냉전 이후 최대 핵 리스크 경고</div>
+    <a class="article-link" href="https://www.ft.com/content/e7ff97e3-a4a2-4237-af16-de7115296ca6" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">2Q 어닝시즌 개막 - AI·에너지 주도 실적 전망 상향과 Citi 턴어라운드 주목</span>
+    <span class="theme-label-range">Article #4~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">이번 주 은행 실적 발표에서 주목해야 할 종목은 Citigroup</div>
+    <div class="article-title-en">Why Citigroup is the one to watch when banks report earnings this week</div>
+    <div class="article-keypoint">Citi, 대형 은행 중 핵심 수익성 지표 최대 개선 기대 - 자체 목표까지는 격차 잔존</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/as-five-big-u-s-banks-report-earnings-on-the-same-day-citigroup-is-the-one-to-watch-683c3707?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/13 04:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">증시 랠리, 유가보다 AI에 더 크게 의존하는 국면으로 전환</div>
+    <div class="article-title-en">The stock-market rally now hinges more on AI than oil</div>
+    <div class="article-keypoint">AI 투자 모멘텀, 유가보다 증시 랠리의 핵심 동력으로 부상</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-stock-market-rally-now-hinges-more-on-ai-than-oil-1292260a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">이번 어닝시즌 실적 추정치, 이례적 패턴 따라 상향 조정</div>
+    <div class="article-title-en">Earnings estimates have been following an unusual pattern this time around</div>
+    <div class="article-keypoint">2Q 실적 추정치 이례적 상향 - 에너지·기술 섹터가 어닝 기대치 견인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/earnings-estimates-have-been-following-an-unusual-pattern-this-time-around-fbebfb62?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 23:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 버블 논쟁과 빅테크 자본배분 - Meta 칩 자체 생산과 신흥시장 쏠림 리스크</span>
+    <span class="theme-label-range">Article #7~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Meta, 9월 AI 칩 양산 착수 - 컴퓨팅 용량 2배 확대 계획 내부 문서 공개</div>
+    <div class="article-title-en">Meta to put AI chip into production in September as it looks to double computing capacity, memo shows</div>
+    <div class="article-keypoint">Meta, 9월 자체 AI 칩 양산 착수 - 컴퓨팅 용량 2배 확대로 AI 인프라 수직계열화 가속</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/meta-to-put-ai-chip-into-production-in-september-as-it-looks-to-double-computing-capacity-memo-shows-4787372" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">AI 버블, 붕괴 직전인가?</div>
+    <div class="article-title-en">Is the AI Bubble About to Burst?</div>
+    <div class="article-keypoint">AI 버블 붕괴 논쟁 재점화 - 과열 vs 실수요 논거 충돌 국면</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Is-the-AI-Bubble-About-to-Burst.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/13 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">펀드들, $4.4조 AI 3인방의 신흥시장 장악력에 우려 표명</div>
+    <div class="article-title-en">Funds Fret Over $4.4 Trillion AI Trio’s Grip on Emerging Markets</div>
+    <div class="article-keypoint">$4.4조 규모 3대 AI 기술주, 신흥시장 수익률 과도 지배 - 집중 리스크 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-12/funds-fret-over-4-4-trillion-ai-trio-s-grip-on-emerging-markets" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 21:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">기술 산업 구조 변화 - Intel 내부 동향·로보택시 경쟁·식이장애 AI 논란</span>
+    <span class="theme-label-range">Article #10~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Intel의 내부 동향</div>
+    <div class="article-title-en">Intel’s Insiders</div>
+    <div class="article-keypoint">Intel 내부 인사 동향 - 반도체 구조 재편 속 경쟁력 회복 여부 주목</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/intels-insiders-1fdaa97f?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 22:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">TechCrunch Mobility: 로보택시 최후통첩</div>
+    <div class="article-title-en">TechCrunch Mobility: A robotaxi ultimatum</div>
+    <div class="article-keypoint">로보택시 규제 긴장 고조 - 자율주행 상용화 일정 불확실성 확대</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/12/techcrunch-mobility-a-robotaxi-ultimatum/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/13 01:07 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학·정치 리스크 - 이스라엘 총선·우크라이나 내각 개편·Lindsey Graham 사망</span>
+    <span class="theme-label-range">Article #12~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">젤렌스키, 내각 개편으로 우크라이나 총리 교체</div>
+    <div class="article-title-en">Zelenskyy dismisses Ukraine’s PM in cabinet shake-up</div>
+    <div class="article-keypoint">젤렌스키 총리 포함 내각 대폭 교체 - 전쟁 장기화 속 정치 주도권 재편</div>
+    <a class="article-link" href="https://www.ft.com/content/db48418a-f906-4afd-86a2-1ab08004bd13" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 23:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">트럼프의 핵심 동맹 Lindsey Graham 상원의원, 갑작스러운 병환으로 71세에 사망</div>
+    <div class="article-title-en">Lindsey Graham, key ally of Donald Trump, dies after sudden illness aged 71</div>
+    <div class="article-keypoint">트럼프 핵심 동맹 Lindsey Graham 의원 갑작스러운 사망 - 미국 정치 지형 변수</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/12/lindsey-graham-key-ally-of-donald-trump-has-died-after-sudden-illness-his-office-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/13 06:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">이스라엘, 10월 27일 총선 확정 - Netanyahu에 대한 신임 투표 성격</div>
+    <div class="article-title-en">Israel to hold Oct 27 elections in vote seen as referendum on Netanyahu</div>
+    <div class="article-keypoint">이스라엘 10월 27일 총선 확정 - Netanyahu 장기 집권 심판 무대 마련</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/israel-to-hold-oct-27-elections-in-vote-seen-as-referendum-on-netanyahu" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/13 02:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Tommy Robinson의 Musk 재단 지원 러시아 방문, 영국 민주주의 수호 촉구 목소리로 이어져</div>
+    <div class="article-title-en">Tommy Robinson’s Musk-funded Russia trip spurs call to defend UK democracy</div>
+    <div class="article-keypoint">Musk 재단, 극우 활동가 러시아 방문 지원 - 영국 민주주의 방어 논쟁 가열</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/jul/12/tommy-robinson-musk-russia-trip-defend-uk-democracy-ed-davey" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 18:41 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #16~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Nigel Farage는 극우 정치인과 암호화폐 투자자들의 복잡한 얽힘 속 한 축에 불과</div>
+    <div class="article-title-en">Nigel Farage is just one strand in the tangle of rightwing politicians and crypto investors | John Harris</div>
+    <div class="article-keypoint">영국 극우 정치인·암호화폐 투자자 연계 - 제도 침식 리스크 부각</div>
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/2026/jul/12/nigel-farage-cryptocurrency-rightwing-politicians-money-uk" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">베네수엘라 지진 사망자 4,490명으로 증가</div>
+    <div class="article-title-en">Death toll from Venezuela earthquakes rises to 4,490</div>
+    <div class="article-keypoint">베네수엘라 지진 사망자 4,490명으로 증가 - 인도적 피해 확대</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/death-toll-from-venezuela-earthquakes-rises-to-4490-4787374" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/12 19:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Emmanuel Macron, Alfred Dreyfus 추모사 전문</div>
+    <div class="article-title-en">Emmanuel Macron pays tribute to Alfred Dreyfus: full text of his speech</div>
+    <div class="article-keypoint">Macron, 드레퓌스 무죄 인정 120주년 공식 추모 - 역사·정치적 상징성</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/politics/article/2026/07/12/macron-s-tribute-to-alfred-dreyfus-dreyfusism-reminds-us-that-antisemitism-is-the-enemy-of-the-republic_6755403_5.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/13 00:17 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
