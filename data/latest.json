@@ -126,6 +126,28 @@
       "briefing": "미-이란 교전 재개로 호르무즈 위기 고조, USO 주간 +4.17% 급등 및 XLE +3.67% 강세. 기대인플레 소폭 상승 속 원유 전량 수입국 한국은 교역조건 악화로 KOSPI 당일 -8.95% 급락.",
       "_warnings": [
         "[한국 종착 비율] 3/5 (50% 초과)"
+      ],
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n4(인플레 압력) -> n7(원화 약세) -> n8(KOSPI 급락) -> n4(외국인 이탈 → 원화 추가 약세 → 수입물가 재상승)",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n2->n4",
+        "fragileReason": "호르무즈 통과 물량 불확실성이 인플레 전이로 이어지는 경로는 사우디·UAE의 대체 송유관(ADCO 육로 우회, 야마니 파이프라인) 가동 여부에 전적으로 의존하므로, 대체 공급 루트가 신속히 활성화될 경우 공급 차질 내러티브 자체가 붕괴되어 n4 이하 전체 인플레 전이 체인이 무력화된다.",
+        "alternativePath": "n2 -> n3(USO 선물 포지션 언와인딩) -> 시장 변동성 경로로 부분 대체 가능하나 인플레 경로 자체는 대안 없음"
+      },
+      "missingHops": [
+        {
+          "to": "항공·해운 섹터 (XAL, BDRY)",
+          "via": "유가 급등 → 항공유·벙커C유 비용 직격 → 글로벌 항공·건화물 운임 비용 구조 악화 → 관련 ETF 하락 압력",
+          "lag_days": 3
+        },
+        {
+          "to": "EM 국채 (EMB) 및 인도·인도네시아 통화",
+          "via": "중동산 원유 수입 의존도 높은 신흥국(인도·인니·터키)의 경상적자 확대 → 해당 국가 국채 CDS 스프레드 확대 → EM 국채 ETF 하락 및 현지 통화 추가 약세",
+          "lag_days": 5
+        }
       ]
     },
     {
@@ -249,7 +271,29 @@
         }
       ],
       "korea_terminal_node": "n8",
-      "briefing": "지정학·금융불안의 공통원인으로 VIX +9.12% 급등, 글로벌 리스크오프 신호 발생. EEM -1.28%, HYG -0.31%, ARKK -1.57% 하락하며 신흥국·고위험자산 이탈. T0 신호가 T1 KOSPI 당일 -8.95% 급락으로 전파."
+      "briefing": "지정학·금융불안의 공통원인으로 VIX +9.12% 급등, 글로벌 리스크오프 신호 발생. EEM -1.28%, HYG -0.31%, ARKK -1.57% 하락하며 신흥국·고위험자산 이탈. T0 신호가 T1 KOSPI 당일 -8.95% 급락으로 전파.",
+      "feedbackRisk": {
+        "hasFeedback": true,
+        "loop": "n2(VIX 급등) -> n3(글로벌 리스크오프) -> n4(EEM 급락 / 신흥국 자금 이탈) -> n2(신흥국 위기 공포 재확산 → VIX 추가 상승)",
+        "riskLevel": "high"
+      },
+      "chainFragility": {
+        "fragileEdge": "n3->n8",
+        "fragileReason": "글로벌 리스크오프에서 KOSPI 급락으로의 전이는 외국인 현물 순매도와 프로그램 매도 동시 발동이라는 구체적 메커니즘을 전제하는데, 한국거래소의 사이드카·서킷브레이커가 발동되거나 국민연금 등 국내 기관의 역매수 개입이 집행될 경우 낙폭이 현저히 완충되어 -8.95% 급락 실증 링크가 단절될 수 있다.",
+        "alternativePath": "n3 -> n5(HYG 하락) -> 크레딧 스프레드 확대 → 한국 회사채 시장 경색 경로로 우회 전이 가능"
+      },
+      "missingHops": [
+        {
+          "to": "달러 인덱스 (DXY) 및 엔화 (JPY)",
+          "via": "리스크오프 강도 심화 → 달러·엔 안전자산 동반 강세 → DXY 상승·USD/JPY 급락 → 신흥국 달러 부채 상환 비용 증가로 자금 이탈 가속화",
+          "lag_days": 1
+        },
+        {
+          "to": "투자등급 회사채 스프레드 (LQD)",
+          "via": "VIX 급등 → 기관 투자자 레버리지 축소(디레버리징) 강제 → 유동성 높은 IG 회사채 매도 → LQD 스프레드 확대 및 가격 하락",
+          "lag_days": 2
+        }
+      ]
     },
     {
       "id": "thread_003",
@@ -347,7 +391,29 @@
         }
       ],
       "korea_terminal_node": null,
-      "briefing": "Apple의 AI 독자화 선언으로 플랫폼 분화 가속화, SOXX -0.06% 반증 신호. QQQ +0.31% vs. ARKK -1.57% 혼조로 수혜 집중도 희석 전개. HBM 수요 다변화는 중장기 수혜 가능하나 단기 불확실성 부담."
+      "briefing": "Apple의 AI 독자화 선언으로 플랫폼 분화 가속화, SOXX -0.06% 반증 신호. QQQ +0.31% vs. ARKK -1.57% 혼조로 수혜 집중도 희석 전개. HBM 수요 다변화는 중장기 수혜 가능하나 단기 불확실성 부담.",
+      "feedbackRisk": {
+        "hasFeedback": false,
+        "loop": null,
+        "riskLevel": "low"
+      },
+      "chainFragility": {
+        "fragileEdge": "n1->n2",
+        "fragileReason": "Apple 독자 AI 선언이 빅테크 플랫폼 독립화 경쟁으로 연결되는 해석은 Apple의 실제 자체 LLM 칩 양산 타임라인(TSMC 3nm 전용 AI 칩 확보 여부)이 시장 기대보다 지연될 경우, 독자화 내러티브 자체가 '미래 불확실 이벤트'로 재분류되어 n2 이하 수혜 희석 논리 전체가 무력화된다.",
+        "alternativePath": "n1 -> Apple 자체 수익성 개선(ASP 상승·서비스 매출 확대) 경로로 AAPL 단독 모멘텀 지속 가능하나, 반도체 섹터 영향 경로는 대안 없음"
+      },
+      "missingHops": [
+        {
+          "to": "TSMC (TSM) 및 파운드리 섹터",
+          "via": "Apple AI 독자화를 위한 전용 AI 추론 칩 설계 → TSMC 2nm/3nm 파운드리 추가 수주 → TSM 매출 성장 기대 상향 및 주가 재평가, NVIDIA 의존도 분산 효과 부분 상쇄",
+          "lag_days": 7
+        },
+        {
+          "to": "Microsoft·Google (MSFT, GOOGL) 클라우드 AI 서비스",
+          "via": "Apple 독자 AI 생태계 구축 → Siri·온디바이스 AI 강화로 Azure·Google Cloud AI API 의존도 감소 → 빅테크 클라우드 AI 수익 성장 전망 하향 조정 압력",
+          "lag_days": 14
+        }
+      ]
     },
     {
       "id": "thread_004",
@@ -634,5 +700,6 @@
     "market_status": [],
     "is_weekend": false,
     "data_note": "T0: 미국 2026-07-10 마감 확정. T1: 한국·일본 2026-07-13 당일 마감. 유럽 2026-07-10 기준. KOSPI -8.95%, KOSDAQ -4.55% 급락. 미·이란 충돌 뉴스 및 호르무즈 위기 헤드라인 감지."
-  }
+  },
+  "deep_analysis_at": "2026-07-13T07:53:43.303Z"
 }
