@@ -2,199 +2,71 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "호르무즈·유가급등",
+      "title": "CPI충격·Warsh선언",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "호르무즈통제선언",
-          "value": "트럼프 호르무즈 통제·전략비축유 확대 선언",
+          "label": "CPI첫마이너스",
+          "value": "2020년 이후 첫 CPI 전월비 하락",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n2",
-          "label": "원유공급차질우려",
-          "value": "중동 공급 차단 리스크로 유가 급등",
+          "label": "Warsh레짐전환",
+          "value": "신임의장 가격안정 우선 레짐 선언",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n3",
-          "label": "원유ETF(USO)",
-          "value": "[07/10] $108.92->[07/13] $117.79 (+8.36%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n4",
-          "label": "에너지섹터ETF(XLE)",
-          "value": "[07/10] $54.84->[07/13] $56.74 (+3.01%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n5",
-          "label": "신흥국교역조건악화",
-          "value": "유가 상승으로 에너지 수입국 경상수지 악화",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n6",
-          "label": "한국에너지수입부담",
-          "value": "한국 원유 100% 수입 의존·교역조건 직격",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n7",
-          "label": "신흥국ETF(EEM)",
-          "value": "[07/10] $66.91->[07/13] $64.50 (-3.59%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n8",
-          "label": "KOSPI",
-          "value": "6856.83 (+0.73%)",
-          "source": "layer_T1_asia_today",
-          "timestamp": null
-        }
-      ],
-      "edges": [
-        {
-          "from": "n1",
-          "to": "n2",
-          "label": "촉발",
-          "mechanism": "호르무즈 봉쇄 우려가 원유 선물 가격을 즉각 급등시킴"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
-          "label": "실증",
-          "mechanism": "공급 차질 우려가 USO 8.36% 급등으로 직접 반영됨"
-        },
-        {
-          "from": "n2",
-          "to": "n4",
-          "label": "실증",
-          "mechanism": "유가 급등이 미국 에너지 섹터 수익성 개선 기대로 XLE 상승"
-        },
-        {
-          "from": "n2",
-          "to": "n5",
-          "label": "전이",
-          "mechanism": "공급 불안 프리미엄 유지로 에너지 수입국 비용 구조 악화"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
-          "label": "직결",
-          "mechanism": "한국 원유 전량 수입 구조상 교역조건 악화 충격이 직접 전달됨"
-        },
-        {
-          "from": "n5",
-          "to": "n7",
-          "label": "실증",
-          "mechanism": "유가 상승발 교역조건 악화 우려가 EEM 3.59% 급락으로 실증"
-        },
-        {
-          "from": "n6",
-          "to": "n8",
-          "label": "압박",
-          "mechanism": "에너지 수입 부담 증가에도 KOSPI는 단기 기술적 반등 0.73% 기록"
-        }
-      ],
-      "korea_terminal_node": "n8",
-      "briefing": "호르무즈 통제 선언으로 USO 8.36% 급등하며 한국의 에너지 수입 부담이 급증. 교역조건 악화로 EEM 3.59% 급락하나 KOSPI는 대형주 매매 기술적 반등으로 당일 +0.73% 선방. 중기적으로는 교역조건 악화가 원화약세 압력으로 작용할 가능성.",
-      "_warnings": [
-        "[한국 종착 비율] 3/4 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n2(유가급등) -> n5(에너지수입국 비용악화) -> n6(한국 교역조건 악화) -> KRW 약세 -> 수입 에너지 원화 환산 비용 추가 상승 -> n2 프리미엄 강화",
-        "riskLevel": "high"
-      },
-      "chainFragility": {
-        "fragileEdge": "n5->n6",
-        "fragileReason": "n5(에너지 수입국 비용 악화)에서 n6(한국 교역조건 직접 충격)으로의 링크는 한국의 원유 수입 결제 구조(달러 결제 비중 100%)와 정부의 유류세 조정 또는 원유 비축 방출 여부에 전적으로 의존하므로, 정책 개입 시 단절 가능성이 가장 높은 링크임",
-        "alternativePath": "n2 -> n8 직접 경로: 유가 급등 → 국내 인플레이션 기대 상승 → 한국은행 긴축 유지 → KOSPI 밸류에이션 압박"
-      },
-      "missingHops": [
-        {
-          "to": "KRW/USD (원화 환율)",
-          "via": "유가 급등 → 경상수지 적자 확대 우려(에너지 수입액 증가) → 외환시장에서 달러 수요 증가 → 원화 약세 압력 상승",
-          "lag_days": 3
-        },
-        {
-          "to": "국내 항공·운송주 (대한항공, CJ대한통운 등)",
-          "via": "유가 급등 → 항공유·경유 등 운송 연료비 급등 → 국내 운송 섹터 영업이익률 직격 → 해당 섹터 주가 하락 및 신용 스프레드 확대",
-          "lag_days": 5
-        }
-      ]
-    },
-    {
-      "id": "thread_002",
-      "title": "달러강세·신흥국압박",
-      "priority": 2,
-      "frequency": "NOW",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "연준매파신호",
-          "value": "Waller 통화정책 불확실성 발언",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n2",
-          "label": "고실질금리구조",
-          "value": "2.31 -> 2.32 (+0.01%p)",
-          "source": "layer_T0_macro",
-          "timestamp": null
-        },
-        {
-          "id": "n3",
-          "label": "달러강세압력",
-          "value": "달러 인덱스 상승·신흥국 통화 약세",
+          "label": "달러방향성분기",
+          "value": "완화기대 약세 vs 레짐강경 강세 충돌",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n4",
-          "label": "달러인덱스ETF(UUP)",
-          "value": "[07/10] $28.39->[07/13] $28.50 (+0.39%)",
+          "label": "달러인덱스(UUP)",
+          "value": "[07/10] $28.22→[07/13] $28.33 (+0.39%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n5",
           "label": "유로화ETF(FXE)",
-          "value": "[07/10] $105.30->[07/13] $105.01 (-0.28%)",
+          "value": "[07/10] $105.92→[07/13] $105.62 (-0.28%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n6",
-          "label": "외국인이탈",
-          "value": "EM 자산 매도·달러 본국 환류 가속",
+          "label": "EM자금흐름교란",
+          "value": "달러 방향성 혼선으로 신흥국 자금 교란",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n7",
           "label": "신흥국ETF(EEM)",
-          "value": "[07/10] $66.91->[07/13] $64.50 (-3.59%)",
+          "value": "[07/10] $68.08→[07/13] $65.62 (-3.59%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n8",
-          "label": "MSCI한국ETF(EWY)",
-          "value": "[07/10] $183.57->[07/13] $168.02 (-8.45%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "원화·국채변동성",
+          "value": "WGBI 외인 채권 수급 변동으로 원화·국채 변동성 확대",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n9",
+          "label": "KOSPI",
+          "value": "6856.83 (+0.73%)",
+          "source": "layer_T1_asia_today",
           "timestamp": null
         }
       ],
@@ -203,130 +75,117 @@
           "from": "n1",
           "to": "n3",
           "label": "촉발",
-          "mechanism": "연준 인하 지연 기대가 달러 수요를 즉각 자극"
+          "mechanism": "CPI 하락은 금리인하 조기화 베팅 강화로 달러 약세 압력 형성"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "증폭",
-          "mechanism": "고실질금리 2.32%가 달러 보유 매력을 구조적으로 지지"
+          "label": "충돌",
+          "mechanism": "레짐 전환 강경 신호가 달러 강세 요인으로 맞부딪혀 방향성 혼선 심화"
         },
         {
           "from": "n3",
           "to": "n4",
           "label": "실증",
-          "mechanism": "달러 강세 압력이 UUP 0.39% 상승으로 실증됨"
+          "mechanism": "달러 강세 우세로 UUP +0.39% 상승 확인"
         },
         {
           "from": "n3",
           "to": "n5",
-          "label": "실증",
-          "mechanism": "달러 강세 대비 유로화 약세가 FXE 0.28% 하락으로 실증됨"
+          "label": "반증",
+          "mechanism": "달러 강세 신호에도 FXE -0.28% 동반 하락으로 유로도 약세 방향 일치"
         },
         {
           "from": "n3",
           "to": "n6",
-          "label": "유발",
-          "mechanism": "달러 강세로 신흥국 통화 약세 압력이 높아지며 자본 이탈 가속"
+          "label": "전이",
+          "mechanism": "달러 방향 불확실성이 신흥국 자본시장 자금 흐름 교란으로 전이"
         },
         {
           "from": "n6",
           "to": "n7",
           "label": "실증",
-          "mechanism": "신흥국 자본 유출이 EEM 3.59% 급락으로 직접 반영됨"
+          "mechanism": "EM 교란으로 EEM -3.59% 급락 확인"
         },
         {
           "from": "n6",
           "to": "n8",
-          "label": "실증",
-          "mechanism": "한국 포함 신흥국 이탈 압력이 EWY 8.45% 급락으로 실증됨"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "공통원인: 달러강세. Waller 매파 발언과 DFII10 2.32% 고실질금리가 UUP 0.39% 상승을 촉발하며 외국인 신흥국 자산 매도 가속. EEM 3.59% 급락·EWY 8.45% 급락으로 한국 포함 신흥국 자본 유출 압박이 실증됨. 원화약세 우려 고조.",
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n3(달러강세) -> n6(신흥국 통화약세·자본이탈) -> 신흥국 중앙은행 외환방어 위해 미국채 매도 -> 미국 국채 금리 상승 -> 연준 인하 기대 추가 약화 -> n3 달러 강세 재강화",
-        "riskLevel": "high"
-      },
-      "chainFragility": {
-        "fragileEdge": "n3->n6",
-        "fragileReason": "n3(달러강세)에서 n6(신흥국 자본이탈)으로의 링크는 각국 중앙은행의 외환시장 개입 강도, 자본통제 조치, 또는 IMF 유동성 지원 여부에 따라 전이 속도와 폭이 크게 달라지므로, 정책 변수 하나로 체인 전체의 증폭 여부가 결정되는 가장 취약한 링크임",
-        "alternativePath": "n2(고실질금리) -> n6 직접 경로: 미국 실질금리 상승 자체가 신흥국 달러 표시 부채의 리파이낸싱 비용을 직접 상승시켜 자본 이탈을 유발하는 독립적 채널 존재"
-      },
-      "missingHops": [
-        {
-          "to": "EM 달러 표시 국채 스프레드 (EMBI+)",
-          "via": "달러 강세 → 신흥국 외채 상환 부담 증가(달러 부채 실질 가치 상승) → 신용 리스크 프리미엄 확대 → EMBI+ 스프레드 급등 → 신흥국 재정 긴축 압력 강화",
-          "lag_days": 4
+          "label": "귀결",
+          "mechanism": "신흥국 자금 교란이 WGBI 외인 채권 수급 변동 통해 원화·국채 변동성 확대"
         },
         {
-          "to": "골드(GLD) / 금 현물",
-          "via": "달러 강세 → 비달러 안전자산 수요 구조 변화 → 단기적으로 금 달러 표시 가격 하방 압력 발생(달러 강세의 역상관) → 단 지정학 리스크(호르무즈·thread_001)와 교차 시 안전자산 수요가 달러 강세 효과를 상쇄하며 금값 반등 가능",
-          "lag_days": 2
+          "from": "n8",
+          "to": "n9",
+          "label": "반증",
+          "mechanism": "당일 KOSPI +0.73% 반등은 변동성 확대 우려와 상충하는 단기 노이즈"
         }
+      ],
+      "korea_terminal_node": "n9",
+      "briefing": "CPI 하락·Warsh 강경 선언이 달러 방향성 충돌(공통원인)을 유발, UUP +0.39%·FXE -0.28% 양극화로 EEM -3.59% 급락 유도. WGBI 외인 채권 수급 변동성 확대로 귀결되며 당일 KOSPI +0.73% 반등은 단기 노이즈.",
+      "_warnings": [
+        "[한국 종착 비율] 3/4 (50% 초과)"
       ]
     },
     {
-      "id": "thread_003",
-      "title": "Fed TF·정책재편",
-      "priority": 3,
-      "frequency": "WEEKLY",
+      "id": "thread_002",
+      "title": "달러강세 신흥국압박",
+      "priority": 2,
+      "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "연준정책TF발족",
-          "value": "Fed 통화정책 TF 출범·이중목표 재정의 가능성",
+          "label": "달러강세압력",
+          "value": "UUP 상승, 글로벌 달러 수요 증가",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n2",
-          "label": "금리경로재산정",
-          "value": "인하 기대 후퇴·장기 명목금리 상방 압박",
-          "source": "concept",
+          "label": "달러인덱스(UUP)",
+          "value": "[07/10] $28.22→[07/13] $28.33 (+0.39%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n3",
-          "label": "실질금리(DFII10)",
-          "value": "2.31 -> 2.32 (+0.01%p)",
-          "source": "layer_T0_macro",
+          "label": "글로벌리스크오프",
+          "value": "달러강세+신흥국급락+변동성상승 동시 발생",
+          "source": "concept",
           "timestamp": null
         },
         {
           "id": "n4",
-          "label": "10년국채ETF(TLT)",
-          "value": "[07/07] $84.55->[07/13] $83.97 (-0.69%)",
+          "label": "신흥국ETF(EEM)",
+          "value": "[07/10] $68.08→[07/13] $65.62 (-3.59%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n5",
-          "label": "성장주밸류압박",
-          "value": "고실질금리로 성장주 할인율 상승 압박",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n6",
-          "label": "성장ETF(IWF)",
-          "value": "$121.59 (-1.90%)",
+          "label": "변동성지수(VIXY)",
+          "value": "[07/10] $20.00→[07/13] $20.67 (+3.34%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
+          "id": "n6",
+          "label": "외인한국주식이탈",
+          "value": "달러강세 시 외국인 한국주식 순매도 우려",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
           "id": "n7",
-          "label": "혁신성장ETF(ARKK)",
-          "value": "[07/07] $81.19->[07/13] $78.24 (-3.63%)",
+          "label": "MSCI한국ETF(EWY)",
+          "value": "[07/10] $191.76→[07/13] $175.51 (-8.45%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n8",
-          "label": "글로벌채권리프라이싱",
-          "value": "미 실질금리 상승·한국 국채 외인 수요 약화",
-          "source": "concept",
+          "label": "KOSDAQ",
+          "value": "783.98 (-1.92%)",
+          "source": "layer_T1_asia_today",
           "timestamp": null
         }
       ],
@@ -334,99 +193,236 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "유발",
-          "mechanism": "TF 출범·의사록이 인하 기대를 후퇴시키며 금리 경로 재산정 촉발"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
           "label": "실증",
-          "mechanism": "인하 기대 소멸로 실질금리 2.32% 고착화 진행 실증"
+          "mechanism": "달러강세 압력이 UUP +0.39% 상승으로 직접 확인"
         },
         {
-          "from": "n2",
+          "from": "n1",
+          "to": "n3",
+          "label": "촉발",
+          "mechanism": "달러강세가 신흥국 자산 이탈 가속, 글로벌 리스크오프 전환 유발"
+        },
+        {
+          "from": "n3",
           "to": "n4",
           "label": "실증",
-          "mechanism": "금리 상방 압박이 TLT 주간 0.69% 하락으로 채권 리프라이싱 반영"
+          "mechanism": "리스크오프로 EEM -3.59% 급락 확인"
         },
         {
           "from": "n3",
           "to": "n5",
-          "label": "전이",
-          "mechanism": "고실질금리가 성장주 미래현금흐름 할인율을 구조적으로 상승"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
           "label": "실증",
-          "mechanism": "성장주 밸류 압박이 IWF 1.90% 하락으로 실증됨"
-        },
-        {
-          "from": "n5",
-          "to": "n7",
-          "label": "실증",
-          "mechanism": "고실질금리 압박이 ARKK 주간 3.63% 급락으로 증폭 실증됨"
+          "mechanism": "리스크오프 심화로 VIXY +3.34% 상승 확인"
         },
         {
           "from": "n3",
+          "to": "n6",
+          "label": "전이",
+          "mechanism": "글로벌 리스크오프가 외국인 한국주식 비중 축소로 전이"
+        },
+        {
+          "from": "n6",
+          "to": "n7",
+          "label": "실증",
+          "mechanism": "외인 이탈 선행신호가 EWY -8.45% 급락으로 확인(T0 완전종료)"
+        },
+        {
+          "from": "n6",
           "to": "n8",
-          "label": "파급",
-          "mechanism": "미 실질금리 상승이 한국 국채 외국인 매력 약화로 파급됨"
+          "label": "실증",
+          "mechanism": "외인 이탈 압력이 당일 KOSDAQ -1.92% 하락으로 파급"
         }
       ],
       "korea_terminal_node": "n8",
-      "briefing": "연준 통화정책 TF 출범과 FOMC 의사록이 인하 기대를 후퇴시키며 DFII10 2.32% 고착화를 유발. TLT 주간 0.69% 하락·ARKK 3.63% 급락으로 성장주 밸류 구조적 압박 심화. 미국 실질금리 상승으로 한국 국채 외국인 수요 약화 우려 고조되어 중기 원화약세·국채 수익률 상승 가능성 증대."
+      "briefing": "달러강세(공통원인) 기저로 UUP +0.39%, EEM -3.59%, VIXY +3.34% 동시 발생하며 글로벌 리스크오프 확인. EWY -8.45%의 선행신호 이후 당일 KOSDAQ -1.92% 하락 압력으로 귀결."
+    },
+    {
+      "id": "thread_003",
+      "title": "Fed레짐전환 구조변화",
+      "priority": 3,
+      "frequency": "WEEKLY",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "Fed정책경로분화",
+          "value": "Warsh 레짐전환 vs Waller 신중론 충돌",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n2",
+          "label": "실질금리(DFII10)",
+          "value": "2.31 → 2.32 (+0.01%p)",
+          "source": "layer_T0_macro",
+          "timestamp": null
+        },
+        {
+          "id": "n3",
+          "label": "성장주밸류압박",
+          "value": "고실질금리 지속 시 성장주 할인율 상승",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n4",
+          "label": "나스닥100(QQQ)",
+          "value": "[07/07] $709.43→[07/13] $721.08 (+1.64%W)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        },
+        {
+          "id": "n5",
+          "label": "혁신성장ETF(ARKK)",
+          "value": "[07/07] $81.19→[07/13] $79.17 (-2.49%W)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        },
+        {
+          "id": "n6",
+          "label": "크레딧스프레드",
+          "value": "HY스프레드 2.69 → 2.69 (변동폭 0.00%p)",
+          "source": "layer_T0_macro",
+          "timestamp": null
+        },
+        {
+          "id": "n7",
+          "label": "하이일드채(HYG)",
+          "value": "[07/07] $79.76→[07/13] $79.68 (-0.10%W)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        },
+        {
+          "id": "n8",
+          "label": "글로벌채권수급재조정",
+          "value": "미국채 듀레이션 수요 경로 불확실성 심화",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n9",
+          "label": "미국30년채(TLT)",
+          "value": "[07/07] $84.55→[07/13] $84.30 (-0.30%W)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "촉발",
+          "mechanism": "Fed 경로 분화로 실질금리 장기 경로 불확실성 부가, DFII10 2.31→2.32 소폭 상승"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "label": "전이",
+          "mechanism": "실질금리 상승이 성장주 DCF 할인율 상향 압박으로 전이"
+        },
+        {
+          "from": "n3",
+          "to": "n4",
+          "label": "반증",
+          "mechanism": "QQQ 주간 +1.64%로 성장주 압박이 아직 광범위 발현 미흡"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "label": "실증",
+          "mechanism": "ARKK 주간 -2.49%로 고위험 성장주 밸류 압박 선행 반영 확인"
+        },
+        {
+          "from": "n2",
+          "to": "n6",
+          "label": "전이",
+          "mechanism": "정책 불확실성 심화 시 신용시장 위험 프리미엄 확대 압력"
+        },
+        {
+          "from": "n6",
+          "to": "n7",
+          "label": "반증",
+          "mechanism": "HYG 주간 -0.10%로 크레딧 스프레드 내압이 아직 경미"
+        },
+        {
+          "from": "n6",
+          "to": "n8",
+          "label": "전이",
+          "mechanism": "스프레드 안정화 속에서도 정책 불확실성이 글로벌 채권 수급 재조정 유발"
+        },
+        {
+          "from": "n8",
+          "to": "n9",
+          "label": "반증",
+          "mechanism": "TLT 주간 -0.30%로 장기채 수급 재조정 신호 제한적"
+        }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "Fed 정책 경로 분화(공통원인)로 DFII10 2.32% 유지 속 ARKK -2.49%로 고위험 성장주 밸류 압박 선행 신호. QQQ +1.64%·HYG -0.10%·TLT -0.30%는 광범위 타격 미흡, 정책 불확실성 국면만 심화 중."
     },
     {
       "id": "thread_004",
-      "title": "중국AI칩·반도체재편",
+      "title": "AI칩경쟁 구조전환",
       "priority": 4,
       "frequency": "MONTHLY",
       "nodes": [
         {
           "id": "n1",
           "label": "중국AI칩독자개발",
-          "value": "DFSX 서방 도전 AI칩 양산 선언",
+          "value": "DFSX 자체칩 출시, 미국 반도체 독점 균열",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n2",
-          "label": "글로벌AI투자재편",
-          "value": "미국 AI 민관 경쟁·패권 분산 가속",
+          "label": "AI공급망재편압력",
+          "value": "서방 주도 독점 공급망 다극화 가속",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n3",
-          "label": "반도체ETF(SOXX)",
-          "value": "[06/10] $541.51->[07/13] $553.61 (+2.23%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n4",
-          "label": "HBM수요불확실성",
-          "value": "중국향 수출제한+자체칩 확산으로 경로 불투명",
+          "label": "반도체수출통제실효",
+          "value": "미국 대중 수출통제 장기 실효성 약화 우려",
           "source": "concept",
           "timestamp": null
         },
         {
-          "id": "n5",
-          "label": "대만ETF(EWT)",
-          "value": "[06/10] $98.00->[07/13] $101.88 (+3.96%)",
+          "id": "n4",
+          "label": "반도체ETF(SOXX)",
+          "value": "[06/10] $541.51→[07/13] $572.87 (+5.79%M)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
+          "id": "n5",
+          "label": "HBM수요경로변화",
+          "value": "중국 AI칩 자급화 시 HBM 고객사·지역 재분배",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
           "id": "n6",
-          "label": "KOSPI반도체변동성",
-          "value": "HBM 수요 재평가로 KOSPI 반도체 변동성 확대",
+          "label": "미중기술패권정책",
+          "value": "트럼프 행정부 추가 대중 기술제재 명분 강화",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n7",
+          "label": "MSCI대만ETF(EWT)",
+          "value": "[06/10] $98.00→[07/13] $102.09 (+4.17%M)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        },
+        {
+          "id": "n8",
+          "label": "KOSPI반도체섹터",
+          "value": "삼성·하이닉스 중국 사업·HBM 수요 불확실성 누적",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n9",
           "label": "KOSPI",
           "value": "6856.83 (+0.73%)",
           "source": "layer_T1_asia_today",
@@ -437,67 +433,88 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "가속",
-          "mechanism": "중국 자체칩 양산이 미국 정부의 AI 민간투자 확대 경쟁 격화를 유발"
+          "label": "촉발",
+          "mechanism": "중국 자체 AI칩 출시가 서방 독점 공급망 대체재 등장 신호로 재편 가속"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "실증",
-          "mechanism": "AI 인프라 투자 경쟁이 반도체 수요 기대를 높여 SOXX 월간 2.23% 상승 실증"
-        },
-        {
-          "from": "n1",
-          "to": "n4",
-          "label": "유발",
-          "mechanism": "중국 내재화가 HBM 수출 경로 불확실성을 구조적으로 증폭시킴"
-        },
-        {
-          "from": "n4",
-          "to": "n5",
-          "label": "실증",
-          "mechanism": "HBM·파운드리 수요 재편 기대가 EWT 월간 3.96% 상승으로 일부 실증"
-        },
-        {
-          "from": "n4",
-          "to": "n6",
           "label": "전이",
-          "mechanism": "HBM 수요 경로 재평가가 삼성·하이닉스 밸류에이션 변동으로 직결됨"
+          "mechanism": "공급망 다극화가 미국 수출통제 장기 실효성 약화 우려 부각"
+        },
+        {
+          "from": "n3",
+          "to": "n4",
+          "label": "반증",
+          "mechanism": "SOXX 월간 +5.79%로 수출통제 실효성 약화가 반도체 섹터 전체 성장 압박 미흡"
+        },
+        {
+          "from": "n2",
+          "to": "n5",
+          "label": "전이",
+          "mechanism": "공급망 재편이 HBM 수요처 지역·기업별 분배 구조 변화 야기"
+        },
+        {
+          "from": "n3",
+          "to": "n6",
+          "label": "촉발",
+          "mechanism": "수출통제 실효성 약화가 트럼프 행정부 추가 대중 제재 명분 제공"
+        },
+        {
+          "from": "n5",
+          "to": "n8",
+          "label": "전이",
+          "mechanism": "HBM 수요처 재편이 삼성·하이닉스 매출 경로 불확실성 확대로 귀결"
         },
         {
           "from": "n6",
+          "to": "n8",
+          "label": "전이",
+          "mechanism": "추가 대중 제재 가능성이 한국 반도체 기업 중국 사업 리스크 증폭"
+        },
+        {
+          "from": "n5",
           "to": "n7",
+          "label": "실증",
+          "mechanism": "HBM 수요 재편 속 EWT 월간 +4.17%로 대만 반도체 상대적 수혜 확인"
+        },
+        {
+          "from": "n8",
+          "to": "n9",
           "label": "귀결",
-          "mechanism": "반도체 섹터 변동성 확대가 KOSPI 전체 변동성 구조적 확대 요인으로 작용"
+          "mechanism": "반도체 섹터 구조적 불확실성이 KOSPI 반도체 기업 밸류에이션 압박으로 파급"
         }
       ],
-      "korea_terminal_node": "n7",
-      "briefing": "DFSX AI칩 양산과 미국 AI 민관 투자 경쟁이 SOXX 월간 2.23% 상승을 견인하나, 중국향 HBM 수출 제한으로 삼성·하이닉스 수요 경로가 불확실성 확대. EWT 3.96% 상승 속에서 KOSPI 반도체 섹터의 구조적 변동성 심화 국면 진입. 중장기 HBM 수요 가시성 개선 필요."
+      "korea_terminal_node": "n9",
+      "briefing": "중국 AI칩 독자개발 기저로 공급망 재편·수출통제 실효성 약화·추가 제재 리스크(공통원인)가 동시 발생. SOXX +5.79%·EWT +4.17% 상승에도 HBM 수요 경로 변화·중국 사업 리스크 누적으로 KOSPI 반도체 밸류에이션 장기 재조정 압력 지속."
     }
   ],
   "headlines": [
-    "호르무즈 통제선언, USO 8% 급등·한국 교역조건 악화",
-    "Waller 매파신호·고실질금리로 달러강세·신흥국 자본유출"
+    "CPI하락·Fed강경, 달러방향성 충돌로 신흥국자금 교란",
+    "달러강세로 글로벌 리스크오프, 외인한국주식 이탈 가속",
+    "Fed경로분화, ARKK -2.49%로 성장주 압박 신호"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: 테크 및 반도체 급락(나스닥 -1.55%, SOXX -4.77%)·달러강세(UUP +0.39%)·유가급등(USO +8.36%) / 당일 아시아: KOSPI +0.73% 반등·KOSDAQ -1.92% 약세",
-    "layer2": "미국 매파신호와 호르무즈 공급 불안이 글로벌 신흥국 약세·달러강세로 파급되나 한국 대형주는 기술적 반등으로 당일 선방",
-    "layer3": "유럽 DAX -0.52%·FTSE -0.24%로 글로벌 약세 지속 중. 한국은 에너지 수입 부담·외인 자본유출 압박 속에서도 KOSPI 대형주의 기술적 지지로 당일 제한적 반등"
+    "layer1": "전일 미국: CPI첫하락·Warsh강경선언으로 달러강세·신흥국급락(EEM-3.59%) / 당일 아시아: 외인이탈 우려 속 KOSDAQ-1.92% 하락, KOSPI +0.73% 단기반등",
+    "layer2": "CPI 서프라이즈+Warsh 레짐 전환 발언이 금일 시장 핵심 인계신호. 완화 기대와 정책 강경의 충돌이 달러 방향성 혼선과 신흥국 자금 교란 동시 발생.",
+    "layer3": "CPI 발표 후 S&P500·NASDAQ 장중 상승 전환(+0.38%·+0.95%), VIX 급락(-4.6%)하며 리스크온 반전 신호. 유럽은 보합권, 아시아는 전일 급락 여파로 약세 지속 중."
   },
-  "macro_regime_note": "고실질금리(DFII10 2.32%)와 평탄커브 구조가 성장주·신흥국 자산의 구조적 압박을 지속시키며, 달러강세·안정적 신용환경과 맞물려 신흥국 자본유출 경로를 강화하는 레짐이 한국 원화약세·국채 외인 매도 리스크를 높이고 있음.",
-  "generated_at": "2026-07-14T07:47:44.227Z",
+  "macro_regime_note": "고실질금리(DFII10=2.32%)+평탄커브 레짐 속 CPI 서프라이즈로 완화 기대 부분 상승하나, Warsh 강경 신호로 정책 불확실성 심화되어 금일 시장을 달러·신흥국·성장주 간 방향성 혼선이 지배.",
+  "generated_at": "2026-07-14T15:49:51.021Z",
   "data_as_of": {
-    "timestamp_iso": "2026-07-14T07:47:44.222Z",
-    "display": "7/14 16:47 [ KST +0900 ]",
-    "display_mobile": "7/14 16:47 KST",
-    "timezone": "Asia/Seoul"
+    "timestamp_iso": "2026-07-14T15:49:50.913Z",
+    "display": "7/14 11:49 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "7/14 11:49 뉴욕",
+    "timezone": "America/New_York"
   },
   "meta": {
-    "generated_at": "2026-07-14T07:47:44.227Z",
-    "elapsed_sec": 240,
-    "market_status": [],
+    "generated_at": "2026-07-14T15:49:51.021Z",
+    "elapsed_sec": 279,
+    "market_status": [
+      "미국(S&P500/NASDAQ)",
+      "유럽(DAX/CAC/FTSE)"
+    ],
     "is_weekend": false,
-    "data_note": "T0: 미국 2026-07-13 마감 확정. T1: 한국·일본 2026-07-14 마감 확정. 유럽 2026-07-13 마감. EWY/EWJ/EWT는 leaf node 전용."
-  },
-  "deep_analysis_at": "2026-07-14T07:53:43.179Z"
+    "data_note": "T0=전일 미국 ETF(7/13 마감) 및 장중 미국 지수(7/14 현재), T1=한국/일본 당일(7/14 마감), 유럽 당일 장중. EWY/EWJ/EWT는 leaf node 전용."
+  }
 }
