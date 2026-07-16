@@ -2,62 +2,76 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "한국금리인상 반도체충격",
+      "title": "한은 금리인상 충격",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "한국금리인상",
-          "value": "한국은행 2.75% 인상 단행",
+          "label": "한은 금리인상",
+          "value": "2023년 이후 첫 기준금리 인상",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Korea Raises Rates for First Time Since 2023 on Chip-Led Boom (Bloomberg Econ, 07/16)"
+            "Korea Raises Rates for First Time Since 2023 on Chip-Led Boom (Bloomberg, 07/16)"
           ]
         },
         {
           "id": "n2",
-          "label": "한국기준금리",
-          "value": "2.75%",
+          "label": "단기채 금리급등",
+          "value": "통안채·국고채 단기물 수익률 상승",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n3",
+          "label": "성장주 할인율",
+          "value": "국내 성장주 밸류 할인율 상승",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n4",
+          "label": "미실질금리(DFII10)",
+          "value": "2.36 -> 2.33 (-0.03%p)",
           "source": "layer_T0_macro",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n3",
-          "label": "반도체밸류압박",
-          "value": "할인율 상승→고PER 성장주 타격",
-          "source": "concept",
-          "timestamp": null,
-          "related_news": [
-            "Asia stocks slide as S. Korea chip stocks tumble (Investing.com, 07/15)"
-          ]
-        },
-        {
-          "id": "n4",
+          "id": "n5",
           "label": "반도체ETF(SOXX)",
-          "value": "[07/14] $568.49->[07/15] $555.27 (-2.23%)",
+          "value": "[07/14] $570.23->[07/15] $555.27 (-2.23%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
-          "id": "n5",
-          "label": "외국인매도심화",
-          "value": "고금리=위험자산 이탈 가속",
+          "id": "n6",
+          "label": "외국인채권수급",
+          "value": "긴축신뢰→외국인 원화채 매수",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Asia stocks slide as S. Korea chip stocks tumble (Investing.com, 07/15)"
+            "Korea Raises Rates for First Time Since 2023 on Chip-Led Boom (Bloomberg, 07/16)"
           ]
         },
         {
-          "id": "n6",
-          "label": "KOSPI급락",
-          "value": "[07/15] 7284.65->[07/16] 6851.15 (-5.95%)",
+          "id": "n7",
+          "label": "KOSPI",
+          "value": "[07/16] 6820.60 (-6.37%)",
           "source": "layer_T1_asia_today",
-          "timestamp": "12:42",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n8",
+          "label": "한국ETF(EWY)",
+          "value": "[07/14] $177.09->[07/15] $171.64 (-3.02%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
           "related_news": []
         }
       ],
@@ -65,129 +79,124 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "실증",
-          "mechanism": "한국은행 기준금리 2.75% 인상 확정으로 조달비용 상승 즉각 반영"
+          "label": "즉각반영",
+          "mechanism": "기준금리 인상 결정이 단기 국채 수익률 상승으로 즉각 반영된다"
         },
         {
-          "from": "n1",
+          "from": "n2",
           "to": "n3",
-          "label": "촉발",
-          "mechanism": "기준금리 인상이 고PER 반도체·성장주 할인율 상승으로 직결"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
-          "label": "실증",
-          "mechanism": "할인율 상승 압박이 미국 반도체ETF SOXX -2.23% 하락으로 실증"
+          "label": "할인율↑",
+          "mechanism": "무위험 단기금리 상승이 성장주 DCF 할인율을 높여 밸류를 압박한다"
         },
         {
           "from": "n3",
           "to": "n5",
-          "label": "촉발",
-          "mechanism": "반도체주 밸류 압박이 외국인 차익실현 매도세를 유발"
+          "label": "실증",
+          "mechanism": "할인율 상승 우려가 전일 미국 반도체 ETF 하락(-2.23%)에 반영된다"
         },
         {
-          "from": "n4",
+          "from": "n1",
           "to": "n6",
-          "label": "선행",
-          "mechanism": "전일 SOXX 급락이 당일 KOSPI 반도체 섹터 집중 낙폭의 선행 신호"
+          "label": "신뢰↑",
+          "mechanism": "긴축 전환으로 중앙은행 신뢰도 상승, 외국인 원화채 수요 증가"
         },
         {
-          "from": "n5",
-          "to": "n6",
-          "label": "귀결",
-          "mechanism": "T0 반도체 매도 신호가 T1 KOSPI -5.95% 급락으로 귀결"
+          "from": "n3",
+          "to": "n4",
+          "label": "연동",
+          "mechanism": "한국 금리인상 기조가 미 실질금리 하락과 대비되며 내외금리차 구조를 변화시킨다"
+        },
+        {
+          "from": "n1",
+          "to": "n7",
+          "label": "충격전이",
+          "mechanism": "금리인상발 할인율 상승과 성장주 압박이 당일 KOSPI 급락(-6.37%)으로 귀결된다"
+        },
+        {
+          "from": "n1",
+          "to": "n8",
+          "label": "실증",
+          "mechanism": "한은 긴축 충격이 전일 미국 상장 한국 ETF 하락(-3.02%)으로 선반영된다"
         }
       ],
-      "korea_terminal_node": "n6",
-      "briefing": "한국은행의 2023년 이후 첫 기준금리 인상(2.75%)이 반도체 고PER 밸류를 압박하는 공통 원인으로 작용했다. 이는 외국인 매도 심화를 촉발해 전일 SOXX -2.23%에 이어 당일 KOSPI -5.95% 급락으로 귀결됐다.",
+      "korea_terminal_node": "n7",
+      "briefing": "한국은행 첫 금리인상이 국내 성장주 할인율을 끌어올리고 KOSPI -6.37% 급락을 초래했으며, 전일 미국 상장 한국 ETF(EWY) -3.02% 하락이 긴축 충격을 선반영했다.",
       "_warnings": [
-        "[?? 복합신호 B안] thread=thread_001 \"반도체ETF(SOXX)\"(down)→\"KOSPI급락\"(down) ? 동방향 자산 직접 연결. 공통원인 노드 권장.",
-        "[한국 종착 비율] 3/4 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n6(KOSPI 급락) -> 외국인 순매도 가속 -> n5(외국인 차익실현 매도 심화) -> n6(추가 KOSPI 하락)",
-        "riskLevel": "high",
-        "commentary": "KOSPI 급락이 원화 약세를 동반할 경우 외국인의 환손실 회피 매도가 재점화되어 n5→n6 경로를 자기강화(self-reinforcing)하는 양의 피드백 루프가 형성됨. 특히 한국 반도체 비중 집중 구조상 패시브 ETF 리밸런싱까지 연동되면 루프 진폭이 확대될 위험이 존재함."
-      },
-      "chainFragility": {
-        "fragileEdge": "n3->n4",
-        "fragileReason": "한국은행 기준금리 인상이 미국 반도체 ETF(SOXX) 할인율 상승으로 직결된다는 가정은 미 연준 금리 경로 및 달러 유동성 조건이 독립적으로 작동할 경우 성립하지 않으며, 한국 단독 금리 인상의 글로벌 할인율 전파력이 과대 평가될 수 있음.",
-        "alternativePath": "n1(기준금리 인상) -> 원화 강세 압력 -> 수출 반도체 기업 이익 전망 하향 -> n6(KOSPI 반도체 섹터 낙폭) 경로로 우회 전파 가능하며, 이 경우 n3·n4를 경유하지 않고도 n6 귀결에 도달함."
-      },
-      "missingHops": [
-        {
-          "to": "KRW/USD 환율 (원화 약세)",
-          "via": "KOSPI 급락(n6) 이후 외국인 원화 매도·달러 환전 수요 급증 → 원달러 환율 상승 → 수입 원자재 비용 상승으로 비반도체 제조업 마진 추가 압박",
-          "lag_days": 2
-        },
-        {
-          "to": "국내 회사채 스프레드 (크레딧 스프레드 확대)",
-          "via": "기준금리 인상(n1) + KOSPI 급락(n6) 복합 충격 → 기관투자자 위험회피 심화 → 회사채 매도·국채 매수 쏠림 → BBB급 이하 크레딧 스프레드 급등 → 중소 반도체 부품사 조달비용 2차 상승",
-          "lag_days": 5
-        }
+        "[한국 종착 비율] 4/4 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "현대차 보스턴다이나믹스",
+      "title": "EM관세충격·달러리스크",
       "priority": 2,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "보스턴다이나믹스인수",
-          "value": "소프트뱅크 지분 완전 인수 선언",
+          "label": "브라질관세25%",
+          "value": "7/22 발효, EM 관세 확산",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Hyundai Motor Group to make Boston Dynamics wholly owned with purchase of SoftBank stake (Investing.com, 07/15)"
+            "US Sets 25% Tariff on Some Brazilian Imports Starting July 22 (Bloomberg, 07/16)",
+            "Trump Administration to Impose New Tariffs on Brazil (NYT, 07/16)"
           ]
         },
         {
           "id": "n2",
-          "label": "단기재무부담",
-          "value": "대규모 현금유출·인수금융 부담",
+          "label": "EM자본유출압력",
+          "value": "신흥국 통화약세·자본이탈",
           "source": "concept",
           "timestamp": null,
-          "related_news": [
-            "Hyundai Motor Group to make Boston Dynamics wholly owned with purchase of SoftBank stake (Investing.com, 07/15)"
-          ]
+          "related_news": []
         },
         {
           "id": "n3",
-          "label": "로보틱스AI기대",
-          "value": "AI·자동화 장기 밸류 리레이팅",
+          "label": "달러강세수요",
+          "value": "안전자산 달러 수요 증가",
           "source": "concept",
           "timestamp": null,
-          "related_news": [
-            "AI is so big, it's now impossible for investors to avoid (MarketWatch, 07/16)"
-          ]
+          "related_news": []
         },
         {
           "id": "n4",
-          "label": "글로벌AI투자붐",
-          "value": "AI 인프라 수요 구조적 확대",
-          "source": "concept",
+          "label": "달러ETF(UUP)",
+          "value": "[07/14] $28.39->[07/15] $28.25 (-0.49%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
-          "related_news": [
-            "AI is so big, it's now impossible for investors to avoid (MarketWatch, 07/16)"
-          ]
+          "related_news": []
         },
         {
           "id": "n5",
-          "label": "혁신성장ETF(ARKK)",
-          "value": "[07/14] $79.52->[07/15] $79.60 (+0.10%)",
+          "label": "신흥국ETF(EEM)",
+          "value": "[07/14] $65.67->[07/15] $65.57 (-0.15%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n6",
-          "label": "산업재ETF(XLI)",
-          "value": "[07/14] $180.46->[07/15] $180.06 (-0.22%)",
+          "label": "아시아수출리스크",
+          "value": "관세확산→수출국 채산성",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            "US Sets 25% Tariff on Some Brazilian Imports Starting July 22 (Bloomberg, 07/16)"
+          ]
+        },
+        {
+          "id": "n7",
+          "label": "한국ETF(EWY)",
+          "value": "[07/14] $177.09->[07/15] $171.64 (-3.02%)",
           "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n8",
+          "label": "KOSPI",
+          "value": "[07/16] 6820.60 (-6.37%)",
+          "source": "layer_T1_asia_today",
           "timestamp": null,
           "related_news": []
         }
@@ -196,92 +205,77 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "촉발",
-          "mechanism": "대규모 인수대금 지급으로 단기 현금유출·신용비용 상승 우려 즉각 발생"
+          "label": "즉각",
+          "mechanism": "브라질 관세 발표가 EM 전반 대미 수출 리스크 인식을 즉각 고조시킨다"
         },
         {
-          "from": "n1",
+          "from": "n2",
           "to": "n3",
-          "label": "촉발",
-          "mechanism": "로보틱스 완전 내재화로 AI·자동화 장기 밸류 리레이팅 기대감 부각"
+          "label": "자금이동",
+          "mechanism": "EM 이탈 자금이 달러 표시 안전자산으로 이동하며 달러 수요를 높인다"
         },
         {
           "from": "n3",
           "to": "n4",
-          "label": "연결",
-          "mechanism": "현대차 로보틱스 전략이 글로벌 AI 투자 붐 테마와 연계되며 밸류 프리미엄 부각"
-        },
-        {
-          "from": "n4",
-          "to": "n5",
-          "label": "실증",
-          "mechanism": "AI 투자 테마 지속으로 혁신성장 ETF ARKK 소폭 상승 유지"
+          "label": "반증",
+          "mechanism": "달러강세 기대에도 불구 UUP 당일 -0.49% 하락, 실물 달러 수요는 제한적"
         },
         {
           "from": "n2",
-          "to": "n6",
-          "label": "반증",
-          "mechanism": "단기 재무부담 우려에도 산업재 ETF XLI는 -0.22% 소폭 하락에 그침"
-        }
-      ],
-      "korea_terminal_node": null,
-      "briefing": "현대차의 보스턴다이나믹스 완전 인수는 단기 현금유출 부담(XLI 실증 불명확)과 AI 로보틱스 장기 리레이팅 기대(ARKK +0.10%)가 충돌하는 구조로, 글로벌 AI 투자 붐 테마 내에서 현대차의 장기 밸류 재평가 여부가 주목되고 있다.",
-      "_warnings": [
-        "[규칙22 중립] thread=thread_002 \"글로벌AI투자붐\"→\"혁신성장ETF(ARKK)\" 변화율 0.1% — ETF 노드 제외 권장"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n3(로보틱스 밸류 리레이팅 기대) -> n4(AI 투자 테마 연계 프리미엄) -> 현대차 주가 상승 -> 시가총액 확대 → 기관 패시브 추종 매수 → n3(로보틱스 내러티브 재강화)",
-        "riskLevel": "medium",
-        "commentary": "AI·로보틱스 테마가 시장 내러티브로 자기실현적으로 강화되는 양의 피드백 구조가 존재하나, n2(단기 재무부담)의 억제 압력이 루프의 진폭을 제한하는 음의 피드백으로 작동하여 당장 고위험 수준은 아님. 단, 테마 ETF 자금 유입이 급증할 경우 밸류에이션 디커플링 리스크가 medium에서 high로 전환될 수 있음."
-      },
-      "chainFragility": {
-        "fragileEdge": "n3->n4",
-        "fragileReason": "현대차의 로보틱스 내재화 전략이 글로벌 AI 투자 붐과 연계된다는 서사는 보스턴다이나믹스의 실질적 상업 매출 가시성이 확인되지 않는 한 순수 테마성 연결에 불과하며, 글로벌 AI 섹터 조정 국면 진입 시 해당 링크가 즉각 단절되어 n4→n5의 ARKK 상승 지지 근거도 동시에 소멸할 위험이 있음.",
-        "alternativePath": "n1(인수 완료) -> 현대차 내부 제조 자동화 적용 → 생산성 향상 → EPS 개선 → 전통 자동차 밸류에이션 경로로 n4를 우회한 독립적 주가 지지 가능하나, 실현까지 최소 18~36개월 시차가 존재함."
-      },
-      "missingHops": [
-        {
-          "to": "현대차 신용등급 및 회사채 스프레드",
-          "via": "대규모 인수대금 지급(n2)으로 부채비율 및 순차입금 증가 → 무디스·S&P 신용등급 아웃룩 부정적 검토 개시 → 현대차 회사채 스프레드 확대 → 향후 회사채 발행 조달비용 상승으로 EV 전환 투자 재원 조달 여력 약화",
-          "lag_days": 30
+          "to": "n5",
+          "label": "실증",
+          "mechanism": "EM 자본유출 압력이 신흥국 ETF 하락(-0.15%)에 반영된다"
         },
         {
-          "to": "글로벌 휴머노이드 로보틱스 경쟁사 주가 (테슬라 옵티머스, Figure AI 비교 밸류)",
-          "via": "현대차-보스턴다이나믹스 완전 통합 공표 → 글로벌 로보틱스 시장 경쟁 격화 인식 → 테슬라 옵티머스·ABB·Fanuc 등 경쟁사 상대 밸류에이션 리디스카운트 압력 발생 → 섹터 내 투자 자금 현대차 쪽으로 리로테이션 가능성",
-          "lag_days": 7
+          "from": "n1",
+          "to": "n6",
+          "label": "확산우려",
+          "mechanism": "브라질 사례가 관세 대상 확대 시그널로 해석되어 아시아 수출국 경계심 자극"
+        },
+        {
+          "from": "n6",
+          "to": "n7",
+          "label": "실증",
+          "mechanism": "대미 수출 의존 한국 리스크 프리미엄이 전일 EWY -3.02% 하락에 반영된다"
+        },
+        {
+          "from": "n6",
+          "to": "n8",
+          "label": "충격전이",
+          "mechanism": "관세 확산 우려가 T1 당일 KOSPI -6.37% 급락의 복합 요인으로 작용한다"
         }
-      ]
+      ],
+      "korea_terminal_node": "n8",
+      "briefing": "브라질 관세 25% 발표에서 비롯된 EM 자본유출 압력이 한국 수출 리스크 프리미엄을 높이고, 전일 EWY -3.02% 급등후조정을 거쳐 당일 KOSPI -6.37% 급락의 복합 요인으로 작용 중이다."
     },
     {
       "id": "thread_003",
-      "title": "TSMC·Fed중립 아시아압박",
+      "title": "Fed정책분기·성장주압박",
       "priority": 3,
       "frequency": "WEEKLY",
       "nodes": [
         {
           "id": "n1",
-          "label": "TSMC실적경계",
-          "value": "AI 반도체 수요 지속성 검증 대기",
+          "label": "Fed정책분기신호",
+          "value": "Waller 연설·FOMC 의사록 분기",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Asia stocks slide as S. Korea chip stocks tumble; TSMC earnings in focus (Investing.com, 07/15)"
+            "Waller, Monetary Policy at a Crossroads (Fed Speeches, 07/13)",
+            "Minutes of the FOMC, June 16-17, 2026 (Fed, 07/08)"
           ]
         },
         {
           "id": "n2",
-          "label": "Fed중립고금리",
-          "value": "Waller 중립 기조·DFII10 고수준",
+          "label": "실질금리고착",
+          "value": "인하기대 후퇴→실질금리 상방",
           "source": "concept",
           "timestamp": null,
-          "related_news": [
-            "Waller, Monetary Policy at a Crossroads (Fed Speeches, 07/13)"
-          ]
+          "related_news": []
         },
         {
           "id": "n3",
-          "label": "실질금리(DFII10)",
+          "label": "미실질금리(DFII10)",
           "value": "2.36 -> 2.33 (-0.03%p)",
           "source": "layer_T0_macro",
           "timestamp": null,
@@ -289,24 +283,16 @@
         },
         {
           "id": "n4",
-          "label": "아시아기술이중압박",
-          "value": "실적+금리 양방향 부담 공통원인",
+          "label": "성장주밸류압박",
+          "value": "할인율↑→기술·AI 성장주",
           "source": "concept",
           "timestamp": null,
           "related_news": [
-            "Asia stocks slide as S. Korea chip stocks tumble (Investing.com, 07/15)"
+            "Barr, Will AI Broadly Raise Living Standards? (Fed Speeches, 07/14)"
           ]
         },
         {
           "id": "n5",
-          "label": "반도체ETF(SOXX)",
-          "value": "[07/09] $581.70->[07/15] $555.27 (-4.54%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null,
-          "related_news": []
-        },
-        {
-          "id": "n6",
           "label": "나스닥ETF(QQQ)",
           "value": "[07/09] $723.28->[07/15] $717.74 (-0.77%)",
           "source": "layer_T0_us_prev_close",
@@ -314,17 +300,33 @@
           "related_news": []
         },
         {
+          "id": "n6",
+          "label": "테크섹터(XLK)",
+          "value": "[07/14] $183.61->[07/15] $181.58 (-1.11%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
           "id": "n7",
-          "label": "KOSPI기술주압박",
-          "value": "[07/09] 7457.41->[07/15] 6851.15 (-8.13%)",
-          "source": "layer_T1_asia_today",
+          "label": "미국채ETF(TLT)",
+          "value": "[07/09] $84.49->[07/15] $84.24 (-0.30%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n8",
-          "label": "닛케이225",
-          "value": "[07/09] 68604.55->[07/15] 66796.79 (-2.64%)",
+          "label": "고금리레짐장기화",
+          "value": "인하지연→글로벌 자본비용",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n9",
+          "label": "KOSDAQ",
+          "value": "[07/16] 791.84 (-5.44% 주간)",
           "source": "layer_T1_asia_today",
           "timestamp": null,
           "related_news": []
@@ -333,71 +335,80 @@
       "edges": [
         {
           "from": "n1",
-          "to": "n4",
-          "label": "촉발",
-          "mechanism": "TSMC 실적 불확실이 아시아 반도체주 선제 매도를 주간 단위로 유발"
+          "to": "n2",
+          "label": "기대후퇴",
+          "mechanism": "Waller 발언이 인하 시점 불확실성을 높여 실질금리 상방 압력을 강화한다"
         },
         {
           "from": "n2",
           "to": "n3",
           "label": "실증",
-          "mechanism": "Fed 중립 기조로 DFII10 실질금리 2.33% 고수준 유지 실증"
+          "mechanism": "실질금리 고착화 우려가 DFII10 수준(2.33%)에 반영되어 있다"
         },
         {
           "from": "n2",
           "to": "n4",
-          "label": "촉발",
-          "mechanism": "고실질금리 지속이 성장주 할인율을 높여 기술주 밸류 압박 증폭"
+          "label": "할인율↑",
+          "mechanism": "실질 할인율 상승이 장기 현금흐름 의존 성장주 DCF 밸류를 압박한다"
         },
         {
           "from": "n4",
           "to": "n5",
           "label": "실증",
-          "mechanism": "이중 압박이 주간 반도체 ETF SOXX -4.54% 급락으로 실증"
+          "mechanism": "성장주 밸류 압박이 주간 QQQ -0.77% 하락으로 실증된다"
         },
         {
           "from": "n4",
           "to": "n6",
           "label": "실증",
-          "mechanism": "나스닥100 QQQ 주간 -0.77% 하락으로 기술주 압박 실증"
+          "mechanism": "할인율 상승 우려가 대형 테크 섹터 ETF 당일 -1.11% 하락에 반영된다"
         },
         {
-          "from": "n5",
+          "from": "n1",
+          "to": "n8",
+          "label": "구조화",
+          "mechanism": "인하 지연 신호가 반복될수록 고실질금리 레짐 장기화 자기강화 구조가 형성된다"
+        },
+        {
+          "from": "n8",
           "to": "n7",
-          "label": "선행",
-          "mechanism": "주간 SOXX 급락이 당일 KOSPI 반도체 집중 하락 -8.13%로 귀결"
+          "label": "반증",
+          "mechanism": "고금리 고착 우려에도 TLT 주간 소폭 하락(-0.30%)에 그쳐 채권 수요가 일부 유지됨"
         },
         {
           "from": "n4",
-          "to": "n8",
-          "label": "실증",
-          "mechanism": "아시아 기술주 이중압박이 닛케이 주간 -2.64% 하락으로 실증"
+          "to": "n9",
+          "label": "전이",
+          "mechanism": "미국 성장주 밸류 압박이 한국 기술·성장 중심 코스닥 주간 -5.44% 하락으로 전이된다"
         }
       ],
-      "korea_terminal_node": "n7",
-      "briefing": "TSMC 실적 경계와 Waller 발 Fed 중립 기조가 고실질금리(DFII10 2.33%)를 지속시키는 공통 원인으로 작용했다. 이로 인한 아시아 기술주 이중압박이 SOXX 주간 -4.54%, QQQ -0.77%에 이어 KOSPI 주간 -8.13%, 닛케이 -2.64%로 실증됐다.",
+      "korea_terminal_node": "n9",
+      "briefing": "Fed 정책 분기 신호(Waller 연설, FOMC 의사록)가 실질금리 고착화(DFII10 2.33%)를 드러내며 성장주 할인율을 압박, QQQ 주간 -0.77%, XLK -1.11% 하락에 이어 KOSDAQ 주간 -5.44% 급등후조정으로 전이되고 있다.",
       "_warnings": [
-        "[?? 복합신호 B안] thread=thread_003 \"반도체ETF(SOXX)\"(down)→\"KOSPI기술주압박\"(down) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
+        "[WEEKLY 프리퀀시 위반] thread=thread_003 node=n6"
       ]
     },
     {
       "id": "thread_004",
-      "title": "AI인프라 수출구조전환",
+      "title": "AI붐·고금리 체제충돌",
       "priority": 4,
       "frequency": "MONTHLY",
       "nodes": [
         {
           "id": "n1",
-          "label": "AI데이터센터붐",
-          "value": "글로벌 AI 인프라 투자 구조적 급증",
+          "label": "AI인프라투자붐",
+          "value": "글로벌 AI 데이터센터 투자 가속",
           "source": "concept",
           "timestamp": null,
-          "related_news": []
+          "related_news": [
+            "AI is so big, it's now impossible for investors to avoid (MarketWatch, 07/16)",
+            "Barr, Will AI Broadly Raise Living Standards? (Fed Speeches, 07/14)"
+          ]
         },
         {
           "id": "n2",
-          "label": "HBM·DRAM수요폭증",
-          "value": "메모리 수요 구조 재편·수출 사상최고",
+          "label": "HBM수요구조화",
+          "value": "AI 서버 확대→HBM·DRAM",
           "source": "concept",
           "timestamp": null,
           "related_news": []
@@ -412,41 +423,59 @@
         },
         {
           "id": "n4",
-          "label": "한국긴축전환",
-          "value": "칩 붐 기반 금리인상 긴축 전환",
+          "label": "고실질금리지속",
+          "value": "Fed 인하지연→글로벌 자본비용",
           "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n5",
-          "label": "원화강세압력",
-          "value": "경상흑자+외인채권 유입 복합 강세",
-          "source": "concept",
+          "label": "미실질금리(DFII10)",
+          "value": "2.36 -> 2.33 (-0.03%p)",
+          "source": "layer_T0_macro",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n6",
-          "label": "달러약세(UUP)",
-          "value": "[06/12] $27.95->[07/15] $28.25 (+1.07%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "한은긴축전환",
+          "value": "반도체 호황 과열→금리인상",
+          "source": "concept",
           "timestamp": null,
-          "related_news": []
+          "related_news": [
+            "Korea Raises Rates for First Time Since 2023 on Chip-Led Boom (Bloomberg, 07/16)"
+          ]
         },
         {
           "id": "n7",
-          "label": "신흥국ETF(EEM)",
-          "value": "[06/12] $67.88->[07/15] $65.57 (-3.40%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "원화강세·수출주",
+          "value": "원화강세·수출주 밸류 분기",
+          "source": "concept",
           "timestamp": null,
           "related_news": []
         },
         {
           "id": "n8",
-          "label": "수출채산·KOSPI",
-          "value": "[06/12] 7357.58->[07/15] 6851.15 (-6.88%)",
+          "label": "KOSPI",
+          "value": "[07/16] 6820.60 (-8.77% 주간)",
           "source": "layer_T1_asia_today",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n9",
+          "label": "한국ETF(EWY)",
+          "value": "[06/12] $197.45->[07/15] $171.64 (-13.07%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n10",
+          "label": "혁신성장(ARKK)",
+          "value": "[06/12] $75.65->[07/15] $79.60 (+5.22%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null,
           "related_news": []
         }
@@ -455,76 +484,91 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "촉발",
-          "mechanism": "AI 데이터센터 확장이 HBM·DRAM 장기 수요를 구조적으로 견인"
+          "label": "수요견인",
+          "mechanism": "AI 데이터센터 투자 가속이 HBM·DRAM 수요를 구조적으로 끌어올린다"
         },
         {
           "from": "n2",
           "to": "n3",
           "label": "반증",
-          "mechanism": "수요 기대에도 SOXX 월간 -6.87%로 밸류 조정·공급 우려 반증"
+          "mechanism": "HBM 수요 구조화에도 반도체 ETF 월간 -6.87% 하락, 고금리 압박이 실적 모멘텀 상쇄"
         },
         {
-          "from": "n2",
+          "from": "n1",
           "to": "n4",
-          "label": "촉발",
-          "mechanism": "반도체 수출 호조가 과열 우려를 자극해 한국은행 금리인상 긴축 전환 유발"
+          "label": "성장기대↑",
+          "mechanism": "AI 투자 붐이 미국 성장 기대를 높여 Fed 인하 여지를 좁히고 실질금리를 고착시킨다"
         },
         {
           "from": "n4",
           "to": "n5",
-          "label": "촉발",
-          "mechanism": "금리인상+경상흑자가 복합적으로 원화 강세 압력 형성"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
-          "label": "반증",
-          "mechanism": "원화강세 기대에도 UUP 월간 +1.07% 달러 강세로 구조적 긴장 반증"
-        },
-        {
-          "from": "n5",
-          "to": "n7",
           "label": "실증",
-          "mechanism": "원화강세·긴축 환경이 신흥국 EEM 월간 -3.40% 이탈로 실증"
+          "mechanism": "고실질금리 지속 구조가 DFII10 2.33% 수준에 반영되어 있다"
         },
         {
-          "from": "n5",
+          "from": "n4",
+          "to": "n6",
+          "label": "환경조성",
+          "mechanism": "글로벌 고금리 환경이 한국 내수 억제 필요성과 맞물려 한은 긴축 기조를 강화한다"
+        },
+        {
+          "from": "n2",
+          "to": "n6",
+          "label": "촉발",
+          "mechanism": "반도체 수출 호황이 한국 경기 과열 우려를 키워 한은 선제 긴축 명분을 제공한다"
+        },
+        {
+          "from": "n6",
+          "to": "n7",
+          "label": "구조충돌",
+          "mechanism": "한은 긴축이 원화강세를 심화시키는 동시에 수출주 채산성 약화와 충돌한다"
+        },
+        {
+          "from": "n7",
           "to": "n8",
-          "label": "귀결",
-          "mechanism": "원화 강세가 수출 채산성 압박해 KOSPI 월간 -6.88% 수출주 이익 추정치 하향"
+          "label": "실증",
+          "mechanism": "실적 모멘텀과 밸류 압박 분기가 KOSPI 주간 -8.77% 급락으로 귀결된다"
+        },
+        {
+          "from": "n7",
+          "to": "n9",
+          "label": "실증",
+          "mechanism": "구조적 분기 국면이 EWY 월간 -13.07% 하락에 반영되어 있다"
+        },
+        {
+          "from": "n1",
+          "to": "n10",
+          "label": "실증",
+          "mechanism": "AI 투자 낙관론이 혁신성장 ETF 월간 +5.22% 상승으로 일부 실증된다"
         }
       ],
       "korea_terminal_node": "n8",
-      "briefing": "AI 데이터센터 붐이 HBM·DRAM 수요를 구조적으로 재편하면서 한국 반도체 수출 호조가 한국은행 긴축 전환을 촉발했다. 금리인상과 경상흑자의 복합 원화강세(EEM -3.40%, 신흥국 이탈)가 수출 채산성을 압박하는 구조적 딜레마로, KOSPI 월간 -6.88%로 귀결되고 있다."
+      "briefing": "AI 인프라 투자 붐과 고실질금리 지속이 한은 긴축 전환을 촉발하며, 반도체 ETF 월간 -6.87% 급등후조정, EWY -13.07%, KOSPI 주간 -8.77%의 구조적 분기 국면이 진행 중이다."
     }
   ],
   "headlines": [
-    "한국금리인상·반도체충격 KOSPI급락",
-    "현대차 AI 로보틱스 장기 밸류"
+    "한은 금리인상으로 성장주 할인율 상승, KOSPI -6.37%",
+    "브라질 관세 25%로 EM 자본유출, 한국 수출 리스크 고조",
+    "Fed 인하지연 신호에 성장주 밸류 압박, 코스닥 -5.44%"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: SOXX -2.23%·EWY -3.02% / 당일 아시아: KOSPI -5.95%·닛케이 -2.84%",
-    "layer2": "T0 반도체 ETF 급락(SOXX -2.23%)과 한국은행 금리인상(2.75%) 서프라이즈가 T1 KOSPI 반도체 섹터 집중 낙폭으로 인계",
-    "layer3": "아시아장 중 한국은행 긴축 전환 충격과 T0 미국 반도체 약세의 복합 작용으로 KOSPI -5.95% 급락, 닛케이도 동조 하락"
+    "layer1": "전일 미국: SOXX -2.23%, XLK -1.11% 성장주 약세 / 당일 아시아: KOSPI -6.37% 급락",
+    "layer2": "한은 깜짝 금리인상이 성장주 할인율 상승으로 반영되며 미국 반도체 ETF 하락을 거쳐 한국으로 전이",
+    "layer3": "한은 긴축, 브라질 관세, Fed 정책 분기가 복합 작용하며 원화강세·수출주 분기 구조 심화 중"
   },
-  "macro_regime_note": "고실질금리·평탄커프 하에서 반도체 고PER 밸류 압박과 긴축 전환 신호가 겹쳐 아시아 기술주 이중 충격이 증폭되는 구조적 하방 압력이 지배적이다.",
-  "generated_at": "2026-07-16T03:46:33.574Z",
+  "macro_regime_note": "고실질금리·평탄커브 레짐 속 한국발 긴축 충격이 글로벌 성장주 밸류 재평가와 중첩되며 신흥국 자본이탈 압력을 가중시키고 있다.",
+  "generated_at": "2026-07-16T07:47:42.727Z",
   "data_as_of": {
-    "timestamp_iso": "2026-07-16T03:46:33.566Z",
-    "display": "7/16 12:46 [ KST +0900 ]",
-    "display_mobile": "7/16 12:46 KST",
+    "timestamp_iso": "2026-07-16T07:47:42.700Z",
+    "display": "7/16 16:47 [ KST +0900 ]",
+    "display_mobile": "7/16 16:47 KST",
     "timezone": "Asia/Seoul"
   },
   "meta": {
-    "generated_at": "2026-07-16T03:46:33.574Z",
-    "elapsed_sec": 239,
-    "market_status": [
-      "한국(KOSPI/KOSDAQ)",
-      "일본(닛케이)"
-    ],
+    "generated_at": "2026-07-16T07:47:42.727Z",
+    "elapsed_sec": 264,
+    "market_status": [],
     "is_weekend": false,
-    "data_note": "T0: 전일 미국장 마감(7/15) 기준. T1: 당일 아시아장(7/16) 장중. KOSPI -5.95%, 닛케이225 -2.84% 급락 중. 한국은행 기준금리 인상(2023년 이후 첫 인상) 단행."
-  },
-  "deep_analysis_at": "2026-07-16T03:52:44.632Z"
+    "data_note": "T0: 미국 7/15 마감 확정. T1: 한국/일본 7/16 마감 확정, 유럽 7/15 마감. KOSPI -6.37%, KOSDAQ -4.53% 급락. 한국은행 2023년 이후 첫 금리인상(칩 호황 주도) 뉴스 확인."
+  }
 }
