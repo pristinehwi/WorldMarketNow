@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-19 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/19 07:48 KST</div>
+    <div class="header-date">2026-07-19</div>
+    <div class="header-headline">SpaceX IPO 이후 공매도 급증·상장가 하회 본격화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">SpaceX 공매도 확대·Bitcoin 반등 지속성 및 미-캐나다 관세 마찰 재점화 여부 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">SpaceX 공매도 급증 - IPO 상장가 하회와 성장주 신뢰 재균열</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1</span>
+    </div>
+    <div class="theme-summary">SpaceX 상장 후 수 주 만에 트레이더들의 공매도 베팅이 급격히 늘어나고 주가가 상장가를 처음으로 하회하면서 IPO 모멘텀이 본격적으로 꺾이는 신호가 포착됐다. 이는 단순한 주가 조정을 넘어 $1조 안팎의 시가총액을 정당화했던 성장 프리미엄에 대한 시장의 재평가 압력을 반영한다. Elon Musk의 로켓·AI 복합기업이라는 내러티브가 흔들리는 가운데, 우주·기술 성장주 전반에 대한 리스크 프리미엄 재조정이 진행 중이다. 중국의 재사용 로켓 기술 추격도 SpaceX의 독점적 기술 해자 프리미엄을 잠식하는 구조적 압력으로 작용하고 있어, 향후 Starship 재비행 성공 여부가 주가 회복의 핵심 분기점이 될 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI·칩 산업 구조 재편 - Samsung 대규모 감원·Xi 오픈AI 대항마 공세</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #2~#4</span>
+    </div>
+    <div class="theme-summary">Samsung Electronics America가 뉴저지에서 739명 감원 WARN 공고를 제출하며 반도체·AI 하드웨어 섹터의 비용 구조 조정이 미국 현지 고용에까지 직접 파급되고 있음이 확인됐다. 동시에 중국은 상하이 AI 글로벌 컨퍼런스에서 Xi Jinping이 '개방적이고 접근 가능한' 중국판 AI 생태계를 공개 천명하며 미국 주도 AI 패권에 정면으로 도전하는 국가 전략을 재확인했다. Lego의 칩 내장 스마트 블록 출시는 AI·센서 기술이 소비재 하드웨어로 저변 확대되는 흐름을 보여주는 사례다. 이 세 흐름은 AI 투자의 수혜가 빅테크 소수에서 광범위한 산업으로 분산되는 동시에, 경쟁 격화에 따른 비용 압박도 전 섹터로 전이되고 있음을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">관세 전선 다변화 - 캐나다 산불·중국 트럭·멕시코 우회로 동시 압박</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #5~#7</span>
+    </div>
+    <div class="theme-summary">Trump 행정부의 관세 압박이 이번 주 복수의 새로운 전선으로 확산됐다. 캐나다 산불 연기로 인한 미국 내 대기 오염을 빌미로 캐나다에 추가 관세를 위협했고, 멕시코의 중국산 트럭 급증이 대미 관세 면제 교섭의 새로운 장애물로 부상했다. 이는 관세 협상이 단순 무역수지 문제를 넘어 환경·안보·공급망 등 다영역 압박 수단으로 진화하고 있음을 보여준다. AI와 관세가 시장을 동시에 지배하고 있다는 분석이 나오는 가운데, 관세 환급 미완료 상태가 지속되어 기업들의 비용 불확실성도 여전히 해소되지 않고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Bitcoin·크립토 회복력 시험 - AI 쇼크·규제 불확실성 속 $65k 반등</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #8~#10</span>
+    </div>
+    <div class="theme-summary">Bitcoin이 AI 관련 충격과 크립토 법안 불확실성으로 급락한 직후 $65,000 수준을 향해 반등하며 단기 회복 탄력성을 보여주고 있다. Trump의 크립토 친화 행보가 시장에 정상화 기대를 심어주고 있으나, 규제 공백과 대통령 개인의 $2.2bn 크립토 수익 논란이 금융 안정성 리스크로 부각되고 있다. Robinhood 계정 해킹 시도 사례는 크립토 플랫폼의 보안 취약성이 여전히 개인 투자자 신뢰의 아킬레스건임을 상기시킨다. 크립토 정상화 내러티브와 구조적 리스크가 공존하는 상황에서 법안 통과 여부가 향후 방향성의 핵심 변수다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학 불안 복합 - 우크라이나 군 수뇌부 혼란·이란 세력 후퇴·중동 리스크</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #11~#14</span>
+    </div>
+    <div class="theme-summary">Zelensky가 국방장관 해임에 이어 군 총사령관 Syrskyi 경질을 검토 중이라는 FT 보도가 나오며 우크라이나 군 지도부 전면 개편 가능성이 부각됐고, 사흘 연속 시위가 지속되며 내부 정치 불안이 가중되고 있다. 중동에서는 이란의 세력 퇴조 속 터키가 지역 주도권을 강화하고 인도가 전략적 행보를 확대하는 등 지정학 권력 구도의 재편이 가속화되고 있다. 뉴욕 시장이 Netanyahu 체포 가능성을 거론하는 등 이스라엘을 둘러싼 외교적 긴장도 고조된 상태다. 이러한 복합 지정학 리스크는 에너지·방산·신흥국 자산 전반의 변동성 프리미엄 유지 요인으로 작용한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #15~#27</span>
+    </div>
+    <div class="theme-summary">거시경제·금융·지정학·산업·기술·정치 어느 영역과도 직접적 시장 연관성이 낮은 기사들을 묶었다. 미국 연방 직원의 TikTok 업무폰 재허용, 뉴저지 AR-15 금지 위헌 판결, 영국 디지털 ID 폐지, 베네수엘라 지진 사망자 5,000명 초과, 독일 Merz 동맹 보좌관 사임, 영국 생애 첫 내 집 마련 도시 순위, Trump의 유럽 MAGA 프로젝트 자금 지원, 우크라이나 군 시위 관련 개별 보도, 한국 KOSPI 실적 개선에도 주가 하락, 미 CPI 둔화 확인, 미 군 테스토스테론 검진 계획, Big Law와 Trump 행정부 간 갈등이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">SpaceX 공매도 급증 - IPO 상장가 하회와 성장주 신뢰 재균열</span>
+    <span class="theme-label-range">Article #1</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">IPO 수 주 만에 SpaceX 공매도 베팅 급증</div>
+    <div class="article-title-en">Traders are increasingly betting against SpaceX just weeks after IPO</div>
+    <div class="article-keypoint">SpaceX 공매도 급증·상장가 하회 - IPO 프리미엄 붕괴 첫 공식 확인</div>
+    <a class="article-link" href="https://www.ft.com/content/2b96703d-440b-46db-8d86-9fff9ecc59d5?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 20:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI·칩 산업 구조 재편 - Samsung 대규모 감원·Xi 오픈AI 대항마 공세</span>
+    <span class="theme-label-range">Article #2~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Samsung Electronics America, 뉴저지서 739명 감원 - WARN 공고 제출</div>
+    <div class="article-title-en">Samsung Electronics America to reduce workforce by 739 in New Jersey, WARN notice says</div>
+    <div class="article-keypoint">Samsung 미국 법인 739명 감원 - 반도체 수요 둔화가 현지 고용 조정으로 직접 전이</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/samsung-electronics-america-to-reduce-workforce-by-739-in-new-jersey-us-warn-notice-says-4799679" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 22:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Lego, 스크린에 맞서 벽돌 안에 칩을 심다</div>
+    <div class="article-title-en">Lego Strikes Back Against Screens—With Chips in Bricks</div>
+    <div class="article-keypoint">Lego 칩 내장 스마트 블록 출시 - AI·센서 기술의 소비재 침투 가속화</div>
+    <a class="article-link" href="https://www.wsj.com/business/lego-smart-play-interactive-toys-865907e5?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">인공지능: Xi Jinping, 미국에 도전하는 개방적 중국 AI 대안 육성 천명</div>
+    <div class="article-title-en">Artificial intelligence: Xi Jinping promotes open and accessible Chinese alternative to challenge the US</div>
+    <div class="article-keypoint">Xi, 상하이 AI 컨퍼런스서 오픈형 중국 AI 공개 천명 - 미중 AI 패권 경쟁 국가전략 재확인</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/07/18/artificial-intelligence-xi-jinping-promotes-open-and-accessible-chinese-alternative-to-challenge-the-us_6755604_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 01:05 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">관세 전선 다변화 - 캐나다 산불·중국 트럭·멕시코 우회로 동시 압박</span>
+    <span class="theme-label-range">Article #5~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">관세 환급도, AI의 약속도 아직 완성되지 않았다</div>
+    <div class="article-title-en">Not Done Yet Refunding Tariffs or Realizing AI’s Promise</div>
+    <div class="article-keypoint">AI·관세가 시장 동시 지배 - 관세 환급 미완료로 기업 비용 불확실성 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-07-18/not-done-yet-refunding-tariffs-or-realizing-ai-s-promise" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">중국산 트럭, 멕시코의 대미 관세 면제 추진에 새 걸림돌로 부상</div>
+    <div class="article-title-en">Chinese Trucks Pose New Peril in Mexico’s US Tariff Relief Bid</div>
+    <div class="article-keypoint">중국산 트럭 멕시코 우회 - 대미 관세 면제 교섭의 새 장애물로 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-18/chinese-trucks-pose-new-peril-in-mexico-s-us-tariff-relief-bid" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Trump, 산불 연기 오염 문제로 캐나다에 관세 인상 위협</div>
+    <div class="article-title-en">Trump threatens to increase Canada tariffs over wildfire smoke pollution</div>
+    <div class="article-keypoint">Trump, 캐나다 산불 연기 빌미 추가 관세 위협 - 관세 압박 수단의 환경 이슈 확장</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/07/18/trump-threatens-to-increase-canada-tariffs-over-wildfire-smoke-pollution_6755594_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 18:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Bitcoin·크립토 회복력 시험 - AI 쇼크·규제 불확실성 속 $65k 반등</span>
+    <span class="theme-label-range">Article #8~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Bitcoin, AI 충격·크립토 법안 불확실성 속 급락 후 $65k 회복 시도</div>
+    <div class="article-title-en">Bitcoin recovers toward $65k after sliding on AI shock, crypto bill doubts</div>
+    <div class="article-keypoint">Bitcoin $65k 반등 시도 - AI 쇼크·법안 불확실성 속 회복 탄력성이 관건</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-rebounds-toward-64000-as-ai-shock-and-crypto-bill-doubts-weigh-4799577" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">'집요한 시도': 빈 Robinhood 계정의 이메일을 바꾸려는 사기꾼 - 무엇을 노리나</div>
+    <div class="article-title-en">‘They are relentless’: A scammer is trying to change the email on my empty Robinhood account. What do they have to gain?</div>
+    <div class="article-keypoint">Robinhood 빈 계정 해킹 시도 - 크립토 플랫폼 보안 취약성이 소매 투자자 신뢰 리스크로 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/they-are-relentless-a-scammer-is-trying-to-change-the-email-on-my-empty-robinhood-account-what-do-they-have-to-gain-26103dac?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Trump, 크립토를 정상화시켰다 - 다음 금융 붕괴의 경로가 될까?</div>
+    <div class="article-title-en">Trump has normalized crypto. Is it the path to the next financial collapse? | Eduardo Porter</div>
+    <div class="article-keypoint">Trump 크립토 수익 $2.2bn - 규제 공백 속 대통령 이해충돌이 금융 안정 리스크로 부각</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/jul/18/trump-crypto-us-economy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 19:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학 불안 복합 - 우크라이나 군 수뇌부 혼란·이란 세력 후퇴·중동 리스크</span>
+    <span class="theme-label-range">Article #11~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Zelensky, 시위 확산 속 총사령관 Syrskyi 경질 검토 - FT 보도</div>
+    <div class="article-title-en">Zelenskyy May Fire Commander Syrskyi After Protests, FT Reports</div>
+    <div class="article-keypoint">Zelensky, 군 총사령관 Syrskyi 경질 검토 - FT 보도로 우크라이나 군 수뇌부 전면 개편 현실화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-18/zelenskyy-may-fire-commander-syrskyi-after-protests-ft-reports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 21:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">George의 독자 Q&A: 이란이 쇠퇴하는 사이 터키가 부상하고 인도가 대담한 행보를</div>
+    <div class="article-title-en">George Answers Your Questions: As Iran Declines, Turkey Advances and A Major Move by India</div>
+    <div class="article-keypoint">이란 세력 퇴조·터키 부상·인도 확장 - 중동 지정학 권력 구도 재편 가속화</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/george-answers-your-questions-as-iran-declines-turkey-advances-and-a-major-move-by-india/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">뉴욕 시장, UN 회의 중 Netanyahu 체포 가능성 여전히 검토 중</div>
+    <div class="article-title-en">New York mayor still considering Netanyahu arrest during UN meet</div>
+    <div class="article-keypoint">뉴욕 시장, Netanyahu 체포 가능성 거론 - 이스라엘 둘러싼 외교적 긴장 고조</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/new-york-mayor-still-considering-netanyahu-arrest-during-un-meet" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 02:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Zelensky, 시위 확산 속 총사령관 경질 검토</div>
+    <div class="article-title-en">Zelenskyy considers sacking commander-in-chief as protests swell </div>
+    <div class="article-keypoint">Zelensky, Syrskyi 사령관 경질 검토 - 우크라이나 군 지도부 공백이 전선 운용 리스크로 전이</div>
+    <a class="article-link" href="https://www.ft.com/content/1b34caa6-d909-4df8-a90f-b928f2199261?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 19:10 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #15~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">연방 직원, 업무용 스마트폰에 TikTok 재설치 허용</div>
+    <div class="article-title-en">Federal employees can download TikTok on their work phones again</div>
+    <div class="article-keypoint">연방 직원 TikTok 재허용 - 국가 데이터 보안 정책의 일관성 후퇴 신호</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/18/federal-employees-can-download-tiktok-on-their-work-phones-again/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 00:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">주목할 판결: 연방 항소법원, 뉴저지의 AR-15 및 탄창 금지 위헌 결정</div>
+    <div class="article-title-en">Landmark Decision: Federal Appeals Court Rejects New Jersey's AR-15 And Magazine Bans</div>
+    <div class="article-keypoint">뉴저지 AR-15 금지 위헌 판결 - 연방 항소법원의 첫 주 단위 공격용 무기 금지 무효화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/landark-decision-federal-appeals-court-rejects-new-jerseys-ar-15-and-magazine-bans" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Trump, 미국 대외 원조 재편 속 유럽 내 MAGA 성향 프로젝트에 자금 지원</div>
+    <div class="article-title-en">Trump to fund Maga-aligned projects in Europe as he reorders US aid</div>
+    <div class="article-keypoint">Trump, 유럽 MAGA 프로젝트 자금 지원 - EU 규제 우회·주권주의 확산 시도</div>
+    <a class="article-link" href="https://www.ft.com/content/1cb986a4-2428-4e64-a559-7867cfa1a3e3?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 02:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Zelensky, 국방장관 해임에 항의 시위 사흘째 계속되는 가운데 군 인사 개편 검토</div>
+    <div class="article-title-en">Zelensky mulls army changes as protests over defence minister’s removal rock Ukraine for a third day</div>
+    <div class="article-keypoint">Zelensky, 국방장관 해임 후 사흘째 시위 지속 - 우크라이나 군 지도부 불안 가중</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelensky-mulls-army-changes-as-protests-over-defence-ministers-removal-rock-ukraine-for-a-third-day" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 04:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">KOSPI 실적은 개선됐는데 왜 주가는 더 떨어지나</div>
+    <div class="article-title-en">KOSPI earnings are better. So why are stocks falling harder?</div>
+    <div class="article-keypoint">KOSPI 실적 개선에도 주가 하락 - 이익 상향과 밸류에이션 부담 간 괴리 확대</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/kospi-earnings-are-better-so-why-are-stocks-falling-harder-4799678" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 21:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">베네수엘라 지진 사망자 5,000명 초과, 실종자 5만 명 여전히 행방불명</div>
+    <div class="article-title-en">Venezuela Quake Disaster Tops 5,000 Deaths As 50,000 Remain Missing </div>
+    <div class="article-keypoint">베네수엘라 지진 사망 5,000명 초과·5만 명 실종 - 인도적 위기 심화와 정부 대응 부재 논란</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/venezuela-quake-disaster-tops-5000-deaths-50000-remain-missing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">글로벌 경제 차트: 미국 CPI 둔화, 중국 성장 둔화</div>
+    <div class="article-title-en">Charting the Global Economy: US CPI Cools, China Growth Slows</div>
+    <div class="article-keypoint">미국 6월 CPI 예상 하회 - 연준 금리 인상 베팅 축소로 이어지는 중요 데이터 포인트</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-18/charting-the-global-economy-us-cpi-cools-china-growth-slows" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Burnham, Starmer의 디지털 ID 계획 폐기 방침 - '우선순위 재설정'</div>
+    <div class="article-title-en">Burnham to scrap Starmer’s digital ID scheme in ‘reset of priorities’</div>
+    <div class="article-keypoint">영국 Burnham, Starmer 디지털 ID 폐기 예고 - 정책 우선순위 재설정과 생활비 대응 전환</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/jul/18/burnham-to-scrap-starmers-digital-id-scheme-in-reset-of-priorities" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">대형 로펌, Trump와의 두 번째 법적 충돌 대비 - 합의 건으로 수뇌부 증언 요구</div>
+    <div class="article-title-en">Big Law braces for second fight with Trump over capitulation deals</div>
+    <div class="article-keypoint">Big Law vs Trump 행정부 - 합의 기업 수뇌부 증언 요구로 법적 갈등 2라운드 돌입</div>
+    <a class="article-link" href="https://www.ft.com/content/44a3698f-6481-4e83-a50d-7db109768ea1?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">의사들, 테스토스테론 검진 추진하는 Pentagon 계획의 근거에 의문 제기</div>
+    <div class="article-title-en">Doctors question evidence behind Pentagon plan for testosterone screening</div>
+    <div class="article-keypoint">미군 테스토스테론 검진 계획 - 의학적 근거 논란 속 Hegseth 군 개혁 방향성 재점검</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/18/us-military-testosterone-screening-doctors" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 00:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">명령 지연·혼선이 베네수엘라 군의 지진 대응을 늦췄다 - 소식통</div>
+    <div class="article-title-en">Delayed orders, confusion slowed Venezuelan military's response to quakes, sources say</div>
+    <div class="article-keypoint">베네수엘라 정부 지진 대응 지연 - 군 명령 혼선이 인도적 피해 확대의 직접 원인으로 지목</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/delayed-orders-confusion-slowed-venezuelan-militarys-response-to-quakes-sources-say" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 20:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Merz의 핵심 측근, 독일에서 대리모 아기 논란으로 압박받다 사임</div>
+    <div class="article-title-en">Senior Merz ally resigns after facing pressure in Germany over surrogate baby</div>
+    <div class="article-keypoint">Merz 핵심 보좌관 사임 - 독일 연립 정부 내 균열 신호</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/senior-merz-ally-resigns-after-coming-under-pressure-in-germany-over-surrogate-baby" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 21:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">공개: 생애 첫 주택 구매자를 위한 영국 10대 도시</div>
+    <div class="article-title-en">Revealed: the top 10 UK cities for first-time buyers</div>
+    <div class="article-keypoint">영국 생애 첫 주택 구매자 유망 도시 순위 - 100% 모기지 도입 배경과 부동산 시장 구조 변화</div>
+    <a class="article-link" href="https://www.theguardian.com/money/2026/jul/18/top-uk-cities-first-time-buyers-rent-property" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/18 14:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
