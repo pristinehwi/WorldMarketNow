@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-20 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/07/20 07:48 KST</div>
+    <div class="header-date">2026-07-20</div>
+    <div class="header-headline">미-이란 교전 격화, 유가 급등·주식선물 혼조</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">이란 리스크 지속 여부 및 이번 주 빅테크 실적 발표 - 유가·기술주 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">미-이란 교전 격화 - 유가 급등과 에너지·시장 리스크 전이</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">주말 사이 미국과 이란 간 중동 교전이 격화되며 유가가 급등하고 주식선물은 혼조세를 보였다. 호르무즈 봉쇄 우려가 재점화되면서 에너지 공급망 리스크가 글로벌 시장 전반으로 전이될 가능성이 높아졌다. 우크라이나 전선에서도 러시아가 키이우에 최대 규모 탄도미사일 공습을 단행했고, Zelensky는 러시아 '그림자 함대' 유조선 3척 타격을 공표하며 에너지 지정학 리스크를 추가로 자극했다. 독일과 프랑스가 공동 핵 훈련에 합의하며 '대러 억지력' 강화 움직임도 가시화됐고, Putin이 북한 외무장관과 회동해 전쟁 지원에 대한 결속을 과시하는 등 지정학 리스크 프리미엄이 다층적으로 확대되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI·빅테크 생태계 재편 - OpenAI 하드웨어·Apple 소송·Jensen Huang 일본 행보</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#8</span>
+    </div>
+    <div class="theme-summary">OpenAI의 하드웨어 진출 계획을 둘러싸고 Apple이 소송을 제기하면서 AI 생태계 내 빅테크 간 균열이 가시화됐다. Apple의 법적 압박이 OpenAI의 하드웨어 출시 일정과 IPO 계획에 실질적 영향을 미칠지가 핵심 관전 포인트로 부상했다. 한편 Jensen Huang은 일본 방문에서 일본 테크 생태계 전반에 걸친 대규모 딜을 성사시켜 Nvidia의 아시아 공급망 확장 전략을 구체화했다. 한국 증시는 AI 열풍의 신뢰 지표로서의 역할이 흔들리고 있으며, 한국 대통령이 추진하는 주식시장 혁신 정책이 레버리지 ETF 역풍에 직면해 정책 실효성 논란이 커지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">SpaceX Starship 재발사 임박 - 우주·성장주 신뢰 재시험</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #9</span>
+    </div>
+    <div class="theme-summary">SpaceX가 Starship 발사 시도 일정을 목요일로 확정하며 우주주 투자 심리의 재시험대가 마련됐다. 최근 SpaceX 주가가 IPO 상장가를 하회하며 시가총액이 대규모 증발한 상황에서, Starship 재비행 성공 여부가 성장주 신뢰 회복의 단기 분기점이 될 전망이다. 이번 발사 일정 변경은 기술적 준비 상황을 반영한 것으로, 시장은 발사 성공 시 우주·방산 테마주의 단기 반등 촉매로 해석할 가능성이 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">크립토·신흥시장 자금 흐름 - Bitcoin $72K 도전과 EM 캐리 트레이드 부활</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #10~#12</span>
+    </div>
+    <div class="theme-summary">Bitcoin이 $72,000를 목표로 상승세를 이어가는 가운데, 거버넌스 불확실성과 채굴 집중도 우려가 동시에 부각되고 있다. 트럼프 행정부가 미국 시장에 고레버리지 영구 선물(perpetual futures) 상품을 개방하면서 개인 트레이더들의 크립토 레버리지 리스크가 구조적으로 확대되고 있다. 신흥시장에서는 연초 이후 통화 변동성이 최저 수준으로 떨어지며 특히 라틴아메리카 통화 캐리 트레이드가 재활성화되고 있어 위험선호 자금의 이동 경로가 주목된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">2Q 어닝시즌·시장 구조 - 모멘텀 붕괴와 실적 품질 리스크</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #13~#15</span>
+    </div>
+    <div class="theme-summary">이번 주 빅테크 실적 발표를 앞두고 시장 모멘텀이 급격히 냉각되는 현상이 트레이더들 사이에서 충격으로 받아들여지고 있다. 표면적 지수 안정 이면에서 실적 품질 문제가 잠재적 리스크로 누적되고 있다는 경고가 제기됐다. Boeing은 2030년까지 737 Max 후속 기종 개발 자금을 확보할 수 있을 것으로 전망했으나, 수요 측 제약이 더 큰 변수가 될 수 있다고 밝혔다. 로보택시 규제 경쟁도 본격화되며 자율주행 섹터의 정책 리스크가 부각되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #16~#25</span>
+    </div>
+    <div class="theme-summary">월드컵 우승팀 스페인의 상금 $5천만에 대한 IRS 세금 부과 이슈, 트럼프 계정 자녀 기여금 청구 마감 관련 세금 혜택 안내, 트럼프·인판티노의 월드컵 시상식 야유 수난 등 시장과 직접 연관성이 낮은 뉴스들이 포함된다. 뉴욕 시장 Mamdani의 Netanyahu 체포 가능성 검토 발언이 이스라엘과의 외교 마찰로 번지고 있으며, Meta의 Facebook·Instagram 싱가포르 접속 장애, 베네수엘라 지진 생존 고양이 구조 등 단편 뉴스들도 수집됐다. JD Vance 부통령의 득남 소식과 소셜미디어 규제 논쟁 오피니언도 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">미-이란 교전 격화 - 유가 급등과 에너지·시장 리스크 전이</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">미-이란 교전 격화 속 유가 급등·주식선물 보합 - 이번 주 빅테크 실적 주목</div>
+    <div class="article-title-en">Oil prices surge, stock futures flat as fighting between U.S. and Iran intensifies</div>
+    <div class="article-keypoint">미-이란 교전 격화로 유가 급등, 이번 주 빅테크 실적과 맞물려 시장 변동성 확대 우려</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oil-prices-surge-stock-futures-dip-as-fighting-between-u-s-and-iran-intensifies-6fb37c79?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 07:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Putin, 북한 외무장관 회동 - 전쟁 지원의 '영웅적 행위' 치하</div>
+    <div class="article-title-en">Putin meets North Korea’s foreign minister, hails war support</div>
+    <div class="article-keypoint">Putin-북한 외무 회동으로 러-북 전쟁 결속 공식화, 지정학 리스크 프리미엄 가중</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/putin-meets-north-koreas-foreign-minister-hails-war-support" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 03:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">독일, 프랑스 핵 훈련 합류 - '대러 억지력' 심화</div>
+    <div class="article-title-en">Germany To Join French Nuclear Exercise, Deepening 'Counter-Russia' Deterrence</div>
+    <div class="article-keypoint">독일·프랑스 공동 핵 훈련 합의 - 유럽 대러 억지력 강화가 방산 수요에 직접 자극</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/germany-join-french-nuclear-exercise-deepening-counter-russia-deterrence" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 20:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Zelensky, 러시아 '그림자 함대' 유조선 3척 타격 공표 - 키이우 군수 창고는 초토화</div>
+    <div class="article-title-en">Zelensky Boasts Of Hits On 3 Russian 'Shadow Fleet' Tankers After Kiev Military Depot Leveled</div>
+    <div class="article-keypoint">러시아 키이우 최대 탄도미사일 공습 + 그림자 함대 유조선 타격 - 에너지 지정학 리스크 중첩</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/zelensky-boasts-hits-3-russian-shadow-fleet-tankers-after-kiev-military-depot-strike" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 01:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI·빅테크 생태계 재편 - OpenAI 하드웨어·Apple 소송·Jensen Huang 일본 행보</span>
+    <span class="theme-label-range">Article #5~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Apple의 소송이 OpenAI 하드웨어 계획에 제동을 걸 수 있을까?</div>
+    <div class="article-title-en">Can an Apple lawsuit derail OpenAI’s hardware plans?</div>
+    <div class="article-keypoint">Apple 소송이 OpenAI 하드웨어 출시·IPO 일정에 실질적 제동 걸 수 있어</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/19/can-an-apple-lawsuit-derail-openais-hardware-plans/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 04:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">한국 증시, 신뢰할 만한 선행 지표에서 AI 광풍의 진원지로 변모한 이유</div>
+    <div class="article-title-en">How Korean stocks turned from trusty bellwether to AI frenzy</div>
+    <div class="article-keypoint">한국 증시, AI 열풍 신뢰 지표에서 변동성 진원지로 전환되는 구조 변화 주목</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/how-korean-stocks-turned-from-trusty-bellwether-to-ai-frenzy-4799743" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Jensen Huang의 일본 방문 이후 주목할 것들</div>
+    <div class="article-title-en">What to watch for after Jensen Huang’s Japan visit</div>
+    <div class="article-keypoint">Jensen Huang 일본 방문에서 테크 생태계 전방위 딜 성사 - Nvidia 아시아 확장 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/19/what-to-watch-for-after-jensen-huangs-japan-visit/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 06:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">한국 대통령의 증시 활성화 구상, 레버리지 ETF 역풍에 부딪히다</div>
+    <div class="article-title-en">Korea President’s Stock Dream Bumps Into Leveraged ETF Backlash</div>
+    <div class="article-keypoint">한국 대통령 주도 레버리지 ETF 정책이 역풍에 직면, 시장 혁신 신뢰 훼손 우려</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-19/korea-president-s-stock-dream-bumps-into-leveraged-etf-backlash" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 06:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">SpaceX Starship 재발사 임박 - 우주·성장주 신뢰 재시험</span>
+    <span class="theme-label-range">Article #9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SpaceX, Starship 발사 시도 목요일로 일정 변경</div>
+    <div class="article-title-en">SpaceX moves Starship launch attempt to Thursday</div>
+    <div class="article-keypoint">Starship 발사 목요일로 확정 - 상장가 하회 이후 우주주 신뢰 회복의 단기 분기점</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/spacex-moves-starship-launch-attempt-to-thursday-4799747" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 22:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">크립토·신흥시장 자금 흐름 - Bitcoin $72K 도전과 EM 캐리 트레이드 부활</span>
+    <span class="theme-label-range">Article #10~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Bitcoin, $72,000 목전 - 거버넌스·채굴 집중도 우려 동시 부상</div>
+    <div class="article-title-en">Bitcoin eyes $72,000 as governance and mining concentration concerns grow</div>
+    <div class="article-keypoint">Bitcoin $72K 도전 속 거버넌스·채굴 집중 우려 동시 부각 - 상승 지속성 시험</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-eyes-72000-as-governance-and-mining-concentration-concerns-grow-4799711" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 21:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">미국 개인 트레이더들, '크립토에서 가장 위험한 상품'으로 몰려든다</div>
+    <div class="article-title-en">US day traders flock to ‘the most dangerous product in crypto’</div>
+    <div class="article-keypoint">트럼프 행정부의 고레버리지 영구 선물 허용 - 크립토 개인 투자자 리스크 구조적 확대</div>
+    <a class="article-link" href="https://www.ft.com/content/8da4243f-820c-428c-bcfb-ba63dac48c1c?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 19:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">신흥시장에서 가장 안전한 캐리 트레이드는 라틴아메리카 통화</div>
+    <div class="article-title-en">Safest Carry in Emerging Markets Is in Latin American Currencies</div>
+    <div class="article-keypoint">EM 통화 변동성 연초 이후 최저 - 라틴아메리카 캐리 트레이드 재활성화로 위험선호 확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-07-19/safest-carry-in-emerging-markets-is-in-latin-american-currencies" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 21:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">2Q 어닝시즌·시장 구조 - 모멘텀 붕괴와 실적 품질 리스크</span>
+    <span class="theme-label-range">Article #13~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">모멘텀 급랭에 충격받은 트레이더들 - 수면 아래 실적 품질 문제 잠복</div>
+    <div class="article-title-en">Traders Stunned By Momentum Meltdown As Earnings Quality Problem Simmers Under The Surface</div>
+    <div class="article-keypoint">모멘텀 급랭 이면의 실적 품질 리스크 - 지수 안정 속 구조적 균열 경고 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/traders-stunned-momentum-meltdown-earnings-quality-problem-simmers-under-surface" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 22:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Boeing, 2030년까지 신형 항공기 프로그램 자금 조달 준비 완료 전망</div>
+    <div class="article-title-en">Boeing says it will be ready to fund new plane programme by 2030</div>
+    <div class="article-keypoint">Boeing, 2030년 737 후속기 개발 자금 확보 전망 - 수요 제약이 더 큰 변수</div>
+    <a class="article-link" href="https://www.ft.com/content/c688ea11-c066-44a3-9372-2e2293e9e6f9?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 02:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">TechCrunch Mobility: 로보택시 규제 주도권 경쟁</div>
+    <div class="article-title-en">TechCrunch Mobility: The battle over robotaxi rules</div>
+    <div class="article-keypoint">로보택시 규제 경쟁 본격화 - 정책 불확실성이 자율주행 섹터 밸류에이션에 하방 압력</div>
+    <a class="article-link" href="https://techcrunch.com/2026/07/19/techcrunch-mobility-the-battle-over-robotaxi-rules/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 01:05 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #16~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">월드컵 우승 스페인, 상금 $5천만 획득 - IRS도 몫 챙긴다</div>
+    <div class="article-title-en">World Cup-champion Spain just won $50 million — and the IRS gets a cut</div>
+    <div class="article-keypoint">월드컵 상금 $5천만, IRS 과세 구조 재조명 - 스포츠·세금 정책 접점</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-world-cupwinning-side-will-make-50-million-and-the-irs-gets-a-cut-10f0780b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 07:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">'트럼프 계좌' 자녀 기여금 $1,000 청구 마감 시한이 있나요?</div>
+    <div class="article-title-en">Is there a deadline to claim the $1,000 ‘Trump account’ contribution for my kid?</div>
+    <div class="article-keypoint">트럼프 자녀 계좌 $1,000 기여금, 청구 마감 및 자격 요건 주의 필요</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/is-there-a-deadline-to-claim-the-1-000-trump-account-contribution-for-my-kid-1b70141c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 00:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">'그는 전쟁 범죄자': Mamdani, Netanyahu 방문 시 체포 가능성 검토 중</div>
+    <div class="article-title-en">‘He’s a war criminal’: Mamdani exploring whether he can arrest Netanyahu if he visits New York</div>
+    <div class="article-keypoint">Mamdani NYC 시장, Netanyahu 체포 검토 발언으로 이스라엘과 외교 마찰 가시화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/jul/19/mamdani-netanyahu" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 00:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Mamdani의 뉴욕: 12블록에 걸친 웨스트사이드 노숙자 캠프, 시 전력 무단 도용 의혹</div>
+    <div class="article-title-en">Mamdani's New York: West Side Homeless Camp Stretching 12 Blocks Now Allegedly Stealing City Power</div>
+    <div class="article-keypoint">Mamdani 행정부 출범 후 맨해튼 노숙자 캠프 12블록 확산, 도시 거버넌스 리스크 부각</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/west-side-nyc-homeless-camp-now-allegedly-stealing-city-power" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 03:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Meta의 Facebook·Instagram, 싱가포르 포함 일부 지역에서 접속 장애 보고</div>
+    <div class="article-title-en">Users of Meta’s Facebook, Instagram report suffering some outages, including in Singapore  </div>
+    <div class="article-keypoint">Meta 싱가포르 접속 장애 - 플랫폼 안정성 리스크와 아시아 사용자 신뢰 영향</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/users-of-metas-facebook-instagram-report-suffering-some-outages-including-in-singapore" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 18:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Donald Trump·Gianni Infantino, 월드컵 시상식 등장에 야유 세례</div>
+    <div class="article-title-en">Donald Trump and Gianni Infantino booed before World Cup presentation ceremony</div>
+    <div class="article-keypoint">트럼프·인판티노 월드컵 시상식 야유 - 미국 외교 이미지와 소프트파워 약화 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/football/2026/jul/19/donald-trump-world-cup-final" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 07:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">미국 부통령 JD Vance, 아들 출생 발표</div>
+    <div class="article-title-en">US Vice President JD Vance announces birth of son</div>
+    <div class="article-keypoint">JD Vance 부통령 득남 - 시장 영향 없으나 정치 일정 맥락 참고</div>
+    <a class="article-link" href="https://www.investing.com/news/world-news/us-vice-president-jd-vance-announces-birth-of-son-4799746" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 22:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">이스라엘 총리실, Netanyahu 체포 발언에 뉴욕 시장 강력 비판</div>
+    <div class="article-title-en">Israel PM’s office slams New York mayor over Netanyahu arrest remarks</div>
+    <div class="article-keypoint">이스라엘, Mamdani 발언 강력 반발 - 중동 정치 리스크의 미국 내정 연계 확산</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/israel-pms-office-slams-new-york-mayor-over-netanyahu-arrest-remarks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 05:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">오피니언 | 소셜미디어 규제는 법정에서 다룰 사안이 아니다</div>
+    <div class="article-title-en">Opinion | Social-Media Regulation Doesn’t Belong in Court</div>
+    <div class="article-keypoint">소셜미디어 규제 법정 다툼 심화 - Meta 대상 주정부 소송이 플랫폼 섹터 규제 리스크 키워</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/social-media-regulation-doesnt-belong-in-court-dd711d19?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/20 05:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">베네수엘라 지진 잔해서 구조된 고양이, '희망의 빛' 선사</div>
+    <div class="article-title-en">Cat rescued from ruins of Venezuela quake offers ‘ray of hope’</div>
+    <div class="article-keypoint">베네수엘라 지진 현장 고양이 구조 - 시장 영향 없는 인간적 관심 기사</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/cat-rescued-from-ruins-of-venezuela-quake-offers-ray-of-hope" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/07/19 17:46 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
