@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-02 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/02 07:48 KST</div>
+    <div class="header-date">2026-08-02</div>
+    <div class="header-headline">Warsh의 Fed 침묵 전략 - S&P 변동성 확대 경고</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Fed 커뮤니케이션 공백 속 Warsh 정책 방향 불확실성 - S&P 급변동 및 금리 경로 재설정 가능성</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Warsh Fed 침묵 전략 - 불확실성이 시장 변동성으로 전이</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#2</span>
+    </div>
+    <div class="theme-summary">Warsh 체제의 Federal Reserve가 정책 의도를 명시적으로 시장에 전달하지 않는 '침묵 전략'을 지속하면서, S&P 트레이더들이 급격한 변동성에 대비하는 움직임이 가시화되고 있다. 전쟁·관세·끈적한 인플레이션이 복합 압박으로 작용하는 가운데 Fed의 커뮤니케이션 공백이 추가 불확실성 레이어를 얹고 있다. 이와 별도로 J&J의 신규 사업 베팅과 함께 Fed의 금리 결정이 비사건(non-event)으로 처리될 수 있었음에도 신뢰성 시험대로 부상했다는 평가도 나온다. 결국 Warsh 하의 Fed는 기존 포워드 가이던스 체계를 해체하고 있어, 금리 민감 자산 전반에서 리스크 프리미엄 재산정이 불가피한 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">中 AI 군사화·AI 헤지펀드 붕괴 - 기술 신뢰 균열의 두 얼굴</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #3~#6</span>
+    </div>
+    <div class="theme-summary">시진핑이 인민해방군에 AI·드론 등 무인 시스템 집중 적용을 직접 지시하며 군사 AI 경쟁이 국가 전략 차원으로 격상됐다. 이는 미국의 반도체 수출통제와 대중 기술 디커플링 압박을 정당화하는 근거로 작용하며 실리콘밸리에서 백악관까지 전방위적 파장을 낳고 있다. 한편 24세 운용역이 이끌던 AI 헤지펀드 'Situational Awareness'가 급부상 후 급격히 붕괴한 사례는, AI 기술 과신에 따른 금융 실패가 현실화됐음을 보여준다. Sam Altman의 ChatGPT 육아 활용 사례 공유는 소비자 저변 확대라는 긍정적 신호지만, 거버넌스 없는 AI 대중화에 대한 경계 목소리와 공존하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">이란·우크라이나·중동 - 전쟁 리스크가 에너지·인플레 경로를 동시 압박</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #7~#9</span>
+    </div>
+    <div class="theme-summary">미-이란 핵 관련 지정학 긴장이 지속되는 가운데 트럼프 대통령이 이란의 핵 보유국화 가능성에 대한 공개 입장을 요구받고 있어 외교·군사 리스크가 혼재한다. 우크라이나 전선에서는 러시아의 미사일 공격 강화에도 불구하고 우크라이나가 전장 모멘텀을 유지 중이며, 미국 및 동맹국의 Patriot 요격체계 조기 공급이 촉구되고 있다. Exxon과 Chevron은 러시아·중동 전쟁으로 글로벌 정제 설비가 심각하게 훼손됐다며 유가 하락 시에도 연료 가격의 고착화를 경고했다. 이처럼 공급망·정제 마진·지정학 리스크 프리미엄이 중첩되며 에너지 섹터 전망이 단기 유가 방향성과 분리되는 구조적 흐름이 형성되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">트럼프 국내정치 마찰 - DoJ·최저임금·민주당 재건 시도</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #10~#12</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령이 법무부의 올림픽 국가대표 선수 기물파손 사건 기소 취하에 강하게 반발하며 행정부 내 사법 통제력 행사 의지를 재확인했다. 캘리포니아 주지사 뉴섬은 최저임금을 미국 최고 수준인 시간당 $17.40로 인상하며 트럼프 행정부를 향한 정치적 대립각을 선명히 했다. 민주당은 펜실베이니아 7선거구를 중심으로 블루칼라 표심 회복 전략을 강화하고 있으며, 트럼프 행정부에 소외감을 느끼는 노동자층 공략에 집중하고 있다. 이러한 흐름은 2026년 중간선거를 앞두고 정치 리스크가 정책 불확실성으로 전이될 가능성을 높인다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Bessent·중국 기술굴기 - 미국의 대중 전략 공백과 동맹 조율 실패</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #13~#14</span>
+    </div>
+    <div class="theme-summary">재무장관 Bessent가 중국을 경계하는 유럽과의 전략적 공조 기회를 살리지 못하며 미국이 독자 노선을 고집하고 있다는 비판이 제기됐다. 중국의 AI 모델·고급 칩·로봇 기술이 연속 도약하며 실리콘밸리 시장과 백악관 정책 모두를 동요시키고 있어, 대중 기술 견제의 전선이 확산되고 있다. 중국 사회 내부에서는 알리바바 회장 조셉 차이의 이혼 보도가 주목을 끌었지만, 경영권·사업 구조에는 영향이 없다는 확인이 나왔다. Bessent의 대중 전략 조율 실패는 달러·무역 협상·반도체 규제 등 복수의 정책 변수에 걸쳐 복합적 불확실성을 증폭시킨다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #15~#24</span>
+    </div>
+    <div class="theme-summary">사회보장 유족급여 수급 자격, 비트코인 가격 지지선 이탈, 웨스트햄 지분 매각, Banco De Chile 실적 호조, 뉴욕타임스 기자 소환, 이탈리아 폭염 최고 경보, M&S 언더웨어 논란, 뉴욕시장 선거 관련 자산가 도입 갈등 등 금융·지정학 메인 테마와 직접 연관성이 낮은 기사들이 포함됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Warsh Fed 침묵 전략 - 불확실성이 시장 변동성으로 전이</span>
+    <span class="theme-label-range">Article #1~#2</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Fed의 신뢰성 시험과 J&J의 새로운 도박</div>
+    <div class="article-title-en">Fed’s Credibility Test and J&J’s New Bet</div>
+    <div class="article-keypoint">Warsh Fed의 금리 결정이 신뢰성 시험대 부상 - 비사건이 시장 리스크로 전환되는 구조</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-08-01/fed-s-credibility-test-and-j-j-s-new-bet" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Warsh의 침묵 전략, S&P 트레이더들 급변동 대비 경계 태세</div>
+    <div class="article-title-en">Warsh’s Silent Treatment Has S&P Traders Bracing for Wild Swings</div>
+    <div class="article-keypoint">Warsh Fed의 침묵 전략 - S&P 트레이더들 급변동 대비 포지션 구축 중</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-01/warsh-s-silent-treatment-has-s-p-traders-bracing-for-wild-swings" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 22:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">中 AI 군사화·AI 헤지펀드 붕괴 - 기술 신뢰 균열의 두 얼굴</span>
+    <span class="theme-label-range">Article #3~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">시진핑, PLA에 '지능형 군사 시스템' 구축 지시 - 中, 드론·AI 군사화 가속</div>
+    <div class="article-title-en">Xi Tells PLA TO Build 'Intelligent Military System' As Beijing Leans Into Drones And AI</div>
+    <div class="article-keypoint">시진핑, PLA에 AI·드론 군사화 직접 지시 - 미중 기술 안보 경쟁 국가전략으로 격상</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/xi-tells-pla-build-intelligent-military-system-beijing-leans-drones-and-ai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 20:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Sam Altman, ChatGPT를 통한 육아 활용법 여전히 홍보 중</div>
+    <div class="article-title-en">Sam Altman is still making the case for parenting via ChatGPT</div>
+    <div class="article-keypoint">Altman, ChatGPT 육아 활용 홍보 - AI 소비자 저변 확대, 거버넌스 우려와 공존</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/01/sam-altman-is-still-making-the-case-for-parenting-via-chatgpt/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 02:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">한 젊은 천재의 AI 헤지펀드가 무너지기까지</div>
+    <div class="article-title-en">Inside the meltdown of a wunderkind’s AI hedge fund</div>
+    <div class="article-keypoint">AI 헤지펀드 Situational Awareness 급부상 후 붕괴 - AI 과신 기반 금융 실패 현실화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/inside-the-meltdown-of-a-wunderkinds-ai-hedge-fund" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 14:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">중국의 기술 굴기, 실리콘밸리부터 백악관까지 혼란 야기</div>
+    <div class="article-title-en">China’s tech advances are causing chaos from Silicon Valley to the White House</div>
+    <div class="article-keypoint">중국 AI·칩·로봇 연속 도약 - 실리콘밸리·백악관 동시 동요, 대중 기술 전선 확산</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/aug/01/china-silicon-valley-white-house" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">이란·우크라이나·중동 - 전쟁 리스크가 에너지·인플레 경로를 동시 압박</span>
+    <span class="theme-label-range">Article #7~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">George의 독자 질문 답변: 미국 대통령과 이란의 핵보유국 가능성</div>
+    <div class="article-title-en">George Answers Your Questions: On the US President and Iran as a Nuclear Power</div>
+    <div class="article-keypoint">트럼프의 이란 핵보유국화 입장 요구 - 핵 외교 방정식이 중동 리스크 프리미엄 좌우</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/george-answers-your-questions-on-the-us-president-and-iran-as-a-nuclear-power/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">우크라이나 전장 우세 - Putin이 압박에 직면하다</div>
+    <div class="article-title-en">Ukraine Gains Ground as Putin Faces Pressure</div>
+    <div class="article-keypoint">우크라이나 전장 모멘텀 유지, Patriot 조기 공급 촉구 - 서방 군사지원 지속 여부 관건</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-01/ukraine-gains-ground-as-putin-faces-pressure-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 23:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Exxon·Chevron, 전쟁發 정제 설비 피해로 유가 하락에도 연료비 지속 고공 경고</div>
+    <div class="article-title-en">Exxon, Chevron Warn Fuel Prices to Endure as War Knocks Refining</div>
+    <div class="article-keypoint">Exxon·Chevron, 전쟁發 정제 설비 훼손으로 유가 하락에도 연료비 고착화 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-01/exxon-chevron-warn-fuel-prices-to-endure-as-war-knocks-refining" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 22:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">트럼프 국내정치 마찰 - DoJ·최저임금·민주당 재건 시도</span>
+    <span class="theme-label-range">Article #10~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">'명백한 기물파손': DoJ의 전 올림픽 선수 반영 수영장 사건 기소 취하에 트럼프 격분</div>
+    <div class="article-title-en">"Pure Case Of Vandalism": Trump Rages As DoJ Drops Reflecting Pool Case Against Former Olympian</div>
+    <div class="article-keypoint">DoJ의 올림픽 선수 기소 취하에 트럼프 반발 - 행정부 내 사법 통제력 충돌 가시화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/pure-case-vandalism-trump-rages-doj-drops-reflecting-pool-vandalism-case-against-former" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 04:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">민주당, 펜실베이니아 중간선거 앞두고 블루칼라 표심 탈환 시도</div>
+    <div class="article-title-en">Democrats seek to win back blue-collar workers ahead of Pennsylvania's midterm elections</div>
+    <div class="article-keypoint">펜실베이니아 민주당 블루칼라 재공략 - 2026년 중간선거 경합 지역 판세 주목</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/08/01/democrats-seek-to-win-back-blue-collar-workers-ahead-of-pennsylvania-s-midterm-elections_6756071_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 02:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">캘리포니아, 주지사 뉴섬이 트럼프 조롱하며 최저임금 인상 발표</div>
+    <div class="article-title-en">California announces minimum wage increase as governor taunts Trump</div>
+    <div class="article-keypoint">캘리포니아 최저임금 $17.40 인상 발표 - 트럼프와 뉴섬 정치 대립 선명화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/01/california-minimum-wage-increase" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 05:39 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Bessent·중국 기술굴기 - 미국의 대중 전략 공백과 동맹 조율 실패</span>
+    <span class="theme-label-range">Article #13~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Bessent, 中 경계하는 유럽과의 공조 기회를 놓치다</div>
+    <div class="article-title-en">Bessent Misses Chance to Coordinate With a China-Wary Europe</div>
+    <div class="article-keypoint">Bessent, 중국 견제 유럽과의 공조 기회 상실 - 미국 독자 대중 전략의 동맹 균열 우려</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-08-01/bessent-misses-chance-to-coordinate-with-a-china-wary-europe" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 19:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">알리바바 회장 Joseph Tsai 부부 이혼 보도</div>
+    <div class="article-title-en">Alibaba chairman Joseph Tsai and wife to divorce: Report</div>
+    <div class="article-keypoint">알리바바 조셉 차이 이혼설 - 경영권 영향 없다 확인, 빅테크 지배구조 주목</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/alibaba-chairman-joseph-tsai-and-wife-to-divorce-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 19:07 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #15~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">62세 여자친구, 사망한 남편의 사회보장 유족급여 전액 수령 가능한가?</div>
+    <div class="article-title-en">My girlfriend is 62. Can she claim her late husband’s full Social Security benefit — or does she have to wait?</div>
+    <div class="article-keypoint">유족 연금 수급 자격 62세 적용 여부 - 사회보장 정책 수혜 범위 판단 필요</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/my-girlfriend-is-62-can-she-claim-her-late-husbands-full-social-security-benefit-or-does-she-have-to-wait-315c0fa1?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Amanda Staveley 컨소시엄, Gold 가문의 West Ham 지분 25.1% 인수 합의</div>
+    <div class="article-title-en">Amanda Staveley consortium set to buy Gold family’s 25.1% stake in West Ham</div>
+    <div class="article-keypoint">West Ham 지분 25.1% Staveley 컨소시엄 인수 - 영국 스포츠 자산 소유권 재편</div>
+    <a class="article-link" href="https://www.theguardian.com/football/2026/aug/01/amanda-staveley-consortium-deal-west-ham-stake-club" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 00:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Banco De Chile, 실적·매출 모두 예상치 상회</div>
+    <div class="article-title-en">Banco De Chile earnings beat, revenue topped estimates</div>
+    <div class="article-keypoint">Banco De Chile 실적 예상 상회 - 중남미 은행주 실적 긍정 서프라이즈</div>
+    <a class="article-link" href="https://www.investing.com/news/earnings/banco-de-chile-earnings-beat-revenue-topped-estimates-4829651" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 20:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">'나는 신상 털렸다': 좌파 팟캐스터 Scott Galloway, 사회주의자 Mamdani의 부유층 타겟 리스트에 오른 후 맹비난</div>
+    <div class="article-title-en">"I've Been Doxed": Lefty Podcaster Scott Galloway Rips Mamdani After Landing On Socialist's Rich Target List</div>
+    <div class="article-keypoint">Mamdani 부유층 타겟 리스트 공개 - 뉴욕 정치 리스크가 자산가·기업 환경에 파장</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/ive-been-doxed-lefty-podcaster-scott-galloway-rips-mamdani-after-landing-socialists-rich" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Bitcoin, $63,139 단순이동평균선 하향 이탈: 실시간 레벨</div>
+    <div class="article-title-en">Bitcoin breaks below $63,139 SMA: Live levels</div>
+    <div class="article-keypoint">Bitcoin $63,139 SMA 하향 이탈 - 단기 기술적 지지선 붕괴로 추가 하락 압력</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-bull-flag-85-complete-at-65414-live-levels-93CH-4813067" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 19:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">새 보고서, 캘리포니아를 35위·가장 비싼 주로 선정</div>
+    <div class="article-title-en">New Report Ranks California 35th Best State And Least Affordable</div>
+    <div class="article-keypoint">캘리포니아 종합 순위 35위·주거 가장 비싼 주 - 기업 이탈 가속화 우려</div>
+    <a class="article-link" href="https://www.zerohedge.com/personal-finance/new-report-ranks-california-35th-best-state-and-least-affordable" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">M&S의 크로치리스 속옷 판매, 왜 생각만큼 충격적이지 않은가</div>
+    <div class="article-title-en">Knickers in a twist: why M&S selling crotchless underwear isn’t as outrageous as it seems</div>
+    <div class="article-keypoint">M&S의 Ann Summers 협업 - 유통 전략 다각화, 브랜드 이미지 리스크와 공존</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/aug/01/marks-and-spencers-ann-summers-lingerie" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 17:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Elon Musk 대 언론의 싸움 - 진실이 패자가 되어선 안 된다</div>
+    <div class="article-title-en">In the battle of Elon Musk v the press, we can’t let truth be the loser | Jane Martinson</div>
+    <div class="article-keypoint">Musk의 Economist 편집장 '서방 배신자' 발언 - 빅테크·언론 갈등 고조</div>
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/2026/aug/01/elon-musk-truth-interview-editor-economist" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">미 법무부, 북한 관련 기사로 NYT 프리랜서 기자에 소환장 발부</div>
+    <div class="article-title-en">US Justice Department subpoenas New York Times freelancer over North Korea story, paper says</div>
+    <div class="article-keypoint">DoJ, NYT 기자에 북한 취재 관련 소환장 - 언론 자유·정보원 보호 법적 긴장 고조</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/us-justice-department-subpoenas-new-york-times-freelancer-over-north-korea-story-paper-says-4829645" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/01 19:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">이탈리아, 8월 3일부터 거의 모든 도시에 폭염 최고 경보 발령</div>
+    <div class="article-title-en">Italy places nearly all cities on highest alert over heat from Aug 3</div>
+    <div class="article-keypoint">이탈리아 27개 주요 도시 중 25개 폭염 최고 경보 - 유럽 에너지 수요 급증 압박</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/italy-places-nearly-all-cities-on-highest-alert-over-heat-from-aug-3" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 00:06 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
