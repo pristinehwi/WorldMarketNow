@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-03 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/03 07:47 KST</div>
+    <div class="header-date">2026-08-03</div>
+    <div class="header-headline">Warsh, Fed 회의 빈도·구조 재편 공식 제기</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh의 Fed 회의 빈도 변경 제안 현실화 여부 - 통화정책 프레임 재설계 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Warsh의 Fed 구조 개편 제안 - 회의 빈도·일정 변경이 정책 프레임을 흔든다</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#3</span>
+    </div>
+    <div class="theme-summary">기존 '침묵 전략'이나 금리 인상 압박 수준을 넘어, Warsh Fed 의장이 이번엔 FOMC 정례회의 빈도와 일정 자체를 바꿀 가능성을 직접 제기했다는 점이 새롭게 부각됐다. 이는 단순한 통화정책 방향성 논쟁을 넘어 Fed의 제도적 틀 자체를 재설계하려는 신호로, 시장의 금리 경로 예측 모델에 근본적 불확실성을 추가한다. 금융주는 이달 시장 최고 성과 섹터로 부상했으나, Fed의 다음 행보가 이 로테이션의 지속성을 결정하는 핵심 변수로 지목되고 있다. 회의 구조 변경이 현실화될 경우 선물 시장의 금리 베팅 포지션과 채권 듀레이션 전략 전반에 재조정 압력이 가해질 수 있다. TikTok의 연방기기 허용이라는 DoJ 결정도 Trump-Fed 정치 마찰의 연장선상에서 제도 신뢰도 논쟁을 자극한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI CapEx 신뢰와 균열 - Amazon 실적 서프라이즈 vs. 반도체 '원웨이 베팅' 붕괴</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #4~#7</span>
+    </div>
+    <div class="theme-summary">Amazon이 Anthropic 투자 평가이익을 포함한 대규모 어닝 서프라이즈를 기록하며 S&P 500 이익 성장률을 끌어올렸지만, 동시에 반도체 섹터에서는 AI 지출 지속성에 대한 회의론이 확산되며 '원웨이 트레이드'가 붕괴하는 엇갈린 신호가 공존한다. Wall Street에서 가장 선호받던 반도체 롱 포지션이 흔들리며 시장 변동성이 급격히 확대되는 구조적 전환이 감지된다. Sam Altman은 AI 개발 속도 조절론을 공개적으로 제기하며 업계 내 'decel 논쟁'을 점화했고, 이는 CapEx 사이클의 지속성에 대한 투자자 불안을 증폭시킨다. Google DeepMind의 Gemini Robotics 2 공개는 AI 응용이 로보틱스로 확장되는 새로운 CapEx 수요 축을 제시하지만, 수익화 경로는 여전히 불투명하다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">SpaceX IPO 현실 검증 - 첫 실적 공개와 Morgan Stanley 자산 유입 효과</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #8~#10</span>
+    </div>
+    <div class="theme-summary">SpaceX가 사상 첫 공개 실적 보고서를 발표하면서 IPO 이후 처음으로 투자자들이 Starship 진척, Starlink 수익성, AI 인프라 투자 등 실체를 검증하는 국면에 진입했다. 이번 실적은 고평가 논란이 지속되던 SpaceX 밸류에이션의 현실 테스트이자, 우주·위성 섹터 전반의 투자심리를 좌우할 분기점이다. Morgan Stanley는 SpaceX를 포함한 IPO 인수 업무를 통해 2분기에만 자산관리 부문으로 740억 달러를 유입시키며 IB-WM 연계 수익 모델의 효과를 입증했다. 로보택시 규제·안전 기준 논쟁과 맞물려 자율주행·우주 등 장기 성장 섹터에 대한 자본 배분 기준이 재설정되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">에너지·지정학 복합 압력 - OPEC+ 증산, 미-일 엔 개입, 헝가리 원전 위기</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #11~#13</span>
+    </div>
+    <div class="theme-summary">OPEC+가 2023년 감산 해소의 마지막 단계로 9월 일일 18만8천 배럴 증산에 합의하며 공급 측 완화 흐름을 이어갔다. 이는 이란 리스크 프리미엄이 잔존하는 가운데 유가 하방 압력을 추가하는 변수로, 에너지 수출국과 수입국 간 인플레 경로가 엇갈리는 구조를 심화시킨다. Trump는 미-일 공동 엔화 개입을 '우정의 신호'로 공개 언급하며 환율 정책을 외교 레버리지로 활용하는 이례적 패턴을 재확인했다. 헝가리는 폭염 속 원전 가동 중단이라는 '에너지 이중 충격'에 직면하며 유럽 전력 공급 리스크를 환기시킨다. 미국 최고위 장성이 이스라엘 방어를 위한 해군 자산 부족을 공개 경고한 것은 중동 지정학 리스크가 미군 전력 배치 한계와 맞닿아 있음을 드러낸다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">글로벌 정치·외교 마찰 - 브라질 대선, 영국-EU 잔류권 박탈, AstraZeneca 메가딜</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #14~#18</span>
+    </div>
+    <div class="theme-summary">브라질 룰라 대통령이 트럼프의 압박을 의식하며 '주권 수호자'를 기치로 4선 캠페인을 공식화했고, 이는 라틴아메리카에서 미국 주도 무역·외교 질서에 대한 저항 축이 재형성되고 있음을 시사한다. 영국 정부가 브렉시트 이후 EU 시민들에게 부여했던 거주권을 '오류로 부여된 것'이라며 취소하기 시작하면서 법적·인도적 파장이 확대되고 있다. AstraZeneca와 Bristol Myers Squibb 간 4000억 달러 규모의 메가딜 협상 보도는 바이오·제약 섹터에서 대형 M&A 사이클이 재점화될 수 있음을 알리는 신호탄이다. Bill Gates의 에너지부 'Q' 기밀취급인가 7년 보유 사실이 뒤늦게 드러나며 민간-정부 기술 협력의 투명성 논쟁을 촉발한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #19~#23</span>
+    </div>
+    <div class="theme-summary">사회적 사건, 개인 재정 상담, 전쟁 이면의 인간 서사 등 직접적인 시장·정책 연관성이 낮은 기사들이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Warsh의 Fed 구조 개편 제안 - 회의 빈도·일정 변경이 정책 프레임을 흔든다</span>
+    <span class="theme-label-range">Article #1~#3</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Warsh, Fed 정례회의 빈도·일정 변경 가능성 제기</div>
+    <div class="article-title-en">Warsh Raises Rethink on Fed’s Policy Meeting Frequency, Timing</div>
+    <div class="article-keypoint">Warsh, Fed 회의 빈도·일정 변경 가능성 제기 - 통화정책 프레임 자체의 재설계 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-02/warsh-raises-rethink-on-fed-s-policy-meeting-frequency-timing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 06:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">투자자들, 금융주 로테이션 가속 - Fed의 다음 행보가 랠리 지속 여부 결정</div>
+    <div class="article-title-en">Investors are rotating into financial stocks. The Fed’s next move could determine how far the rally runs.</div>
+    <div class="article-keypoint">금융주 이달 최고 성과 섹터 부상 - Fed 다음 행보가 로테이션 지속성의 결정 변수</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/investors-are-rotating-into-financial-stocks-the-feds-next-move-could-determine-how-far-the-rally-runs-662c63df?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">오피니언 | Trump, TikTok, 그리고 연방 기기 허용</div>
+    <div class="article-title-en">Opinion | Trump, TikTok and Federal Devices</div>
+    <div class="article-keypoint">DoJ, TikTok 연방기기 허용 - 보안 우려 속 정치적 판단이 사이버 리스크 논쟁 재점화</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/donald-trump-tiktok-federal-devices-bytedance-china-28d21162?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 05:28 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI CapEx 신뢰와 균열 - Amazon 실적 서프라이즈 vs. 반도체 '원웨이 베팅' 붕괴</span>
+    <span class="theme-label-range">Article #4~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">몸을 바꿔도 뇌는 하나: Google DeepMind, 로보틱스의 'Android'를 목표로</div>
+    <div class="article-title-en">A Brain That Can Swap Bodies: Google DeepMind Aims To Be The 'Android' Of Robotics</div>
+    <div class="article-keypoint">Google DeepMind, Gemini Robotics 2 공개 - AI의 로보틱스 확장이 새 CapEx 수요축 형성</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/brain-can-swap-bodies-google-deepmind-aims-be-android-robotics" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 20:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Amazon 실적 반영으로 S&P 500 이익 성장률 더욱 극적으로 확대</div>
+    <div class="article-title-en">S&P 500 profit growth is getting even wilder as Amazon makes its mark</div>
+    <div class="article-keypoint">Amazon, Anthropic 평가이익으로 S&P 500 이익 성장률 견인 - AI 투자 회계 처리 방식 주목</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/s-p-500-profit-growth-is-getting-even-wilder-as-amazon-makes-its-mark-5ddf2082?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Sam Altman과 AI 개발 속도 조절 논쟁</div>
+    <div class="article-title-en">Sam Altman and AI’s decel debate</div>
+    <div class="article-keypoint">Altman, AI 개발 속도 조절론 공개 제기 - CapEx 사이클 지속성에 대한 시장 불안 증폭</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/02/sam-altman-and-ais-decel-debate/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 05:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">월스트리트의 최애 베팅이 무너진다 - 반도체 주가 급등락에 시장 뒤흔들려</div>
+    <div class="article-title-en">Wall Street’s Favorite Bet Comes Undone as Chips Whipsaw Market</div>
+    <div class="article-keypoint">반도체 '원웨이 베팅' 붕괴 - AI 지출 지속성 회의론이 섹터 변동성 급확대 촉발</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-02/wall-street-s-favorite-bet-comes-undone-as-chips-whipsaw-market" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 22:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">SpaceX IPO 현실 검증 - 첫 실적 공개와 Morgan Stanley 자산 유입 효과</span>
+    <span class="theme-label-range">Article #8~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX IPO, 첫 번째 현실 검증에 직면</div>
+    <div class="article-title-en">SpaceX IPO Faces First Reality Check</div>
+    <div class="article-keypoint">SpaceX 첫 공개 실적 발표 - IPO 밸류에이션 현실 검증 및 Starship 진척 여부 시험대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-02/spacex-ipo-faces-first-reality-check-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 21:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">TechCrunch Mobility: 로보택시, 두 갈래 길에 서다</div>
+    <div class="article-title-en">TechCrunch Mobility: Two roads diverged — for robotaxis</div>
+    <div class="article-keypoint">로보택시 두 갈래 길 - 규제·안전 기준 분기점이 자율주행 자본 배분 기준 재설정</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/02/techcrunch-mobility-two-roads-diverged-for-robotaxis/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 01:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Morgan Stanley의 IPO 특수: 자산관리 부문의 대박</div>
+    <div class="article-title-en">Morgan Stanley’s IPO after-party: a wealth management bonanza </div>
+    <div class="article-keypoint">Morgan Stanley, SpaceX 등 IPO로 2Q 자산관리 740억달러 유입 - IB-WM 연계 수익 모델 입증</div>
+    <a class="article-link" href="https://www.ft.com/content/3f651fa0-3362-4a16-9ac1-992291c5f68a?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 19:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">에너지·지정학 복합 압력 - OPEC+ 증산, 미-일 엔 개입, 헝가리 원전 위기</span>
+    <span class="theme-label-range">Article #11~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">헝가리 총리, 원전 가동 중단 임박으로 '중대 국면' 경고</div>
+    <div class="article-title-en">Hungary PM flags ‘critical’ days ahead with looming nuclear shutdown</div>
+    <div class="article-keypoint">헝가리 원전 폭염 속 가동 중단 - 유럽 전력 공급 이중 충격 리스크 부상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/hungary-pm-flags-critical-days-ahead-with-looming-nuclear-shutdown" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 20:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">'이스라엘을 지키느냐, 본토를 지키느냐': 미 최고위 장성, Pentagon에 강력 경고</div>
+    <div class="article-title-en">'Defend Israel Or The Homeland': Top US General Issues Stark Warning To Pentagon Brass</div>
+    <div class="article-keypoint">미 최고위 장성, 이스라엘 방어 해군 자산 부족 경고 - 중동 리스크와 미군 전력 한계의 교차점</div>
+    <a class="article-link" href="https://www.zerohedge.com/military/defend-israel-or-homeland-top-us-general-issues-stark-warning-pentagon-brass" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 00:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">OPEC+, 소폭 쿼터 증대로 2023년 감산 해소 마무리</div>
+    <div class="article-title-en">OPEC+ makes small oil quota hike  to finish unwinding 2023 oil cuts</div>
+    <div class="article-keypoint">OPEC+ 9월 일일 18만8천 배럴 증산 합의 - 2023년 감산 해소 완결, 유가 하방 압력 추가</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/opec-agrees-in-principle-to-small-oil-quota-hike-delegates-say" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 18:33 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">글로벌 정치·외교 마찰 - 브라질 대선, 영국-EU 잔류권 박탈, AstraZeneca 메가딜</span>
+    <span class="theme-label-range">Article #14~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">브라질 룰라, 트럼프의 그림자 속에서 4선 도전 공식화</div>
+    <div class="article-title-en">Brazil's Lula launches fourth term bid as Trump looms over campaign</div>
+    <div class="article-keypoint">룰라, 트럼프 의식하며 4선 도전 공식화 - 라틴아메리카 反미국 외교 축 재형성 가능성</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/08/02/brazil-s-lula-launches-fourth-term-bid-as-trump-looms-over-campaign_6756088_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 23:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">AstraZeneca, Bristol Myers Squibb와 4,000억달러 규모 메가딜 협상 - FT 보도</div>
+    <div class="article-title-en">AstraZeneca holds talks with Bristol Myers Squibb on $400 billion megadeal, FT reports</div>
+    <div class="article-keypoint">AstraZeneca-BMS 4000억달러 메가딜 협상 보도 - 제약 대형 M&A 사이클 재점화 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/astrazeneca-holds-talks-with-bristol-myers-squibb-on-400-billion-megadeal-ft-reports-4829708" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 22:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Trump, 엔화 개입을 일본과의 우호 신호로 해석</div>
+    <div class="article-title-en">Trump Says Yen Intervention Is Signal of Japan Friendship</div>
+    <div class="article-keypoint">Trump, 미-일 엔화 개입을 '우정의 신호'로 공개 언급 - 환율을 외교 레버리지로 활용하는 이례적 패턴</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-02/trump-says-yen-intervention-is-signal-of-friendship-with-japan" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 07:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Bill Gates, 7년간 최고 기밀 'Q' 인가 보유 - 에너지부는 이유 함구</div>
+    <div class="article-title-en">Bill Gates Held A Top Secret 'Q' Clearance For Seven Years - And The DOE Won't Say Why</div>
+    <div class="article-keypoint">Gates, 에너지부 Q등급 기밀취급인가 7년 보유 - 민관 기술 협력 투명성 논쟁 촉발</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/bill-gates-held-top-secret-q-clearance-seven-years-and-doe-wont-say-why" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 05:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">영국 내 EU 시민들, 브렉시트 거주권이 '오류로 부여됐다'는 통보 수령</div>
+    <div class="article-title-en">EU citizens in UK get letters telling them post-Brexit residency rights were given ‘in error’</div>
+    <div class="article-keypoint">영국, EU 시민 거주권 소급 취소 시작 - 브렉시트 후속 법적·인도적 파장 확대</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/aug/02/eu-citizens-uk-letters-post-brexit-residency-rights-given-in-error" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 21:42 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #19~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">62세 여자친구, 사망한 남편의 사회보장 유족연금 전액을 받을 수 있을까요?</div>
+    <div class="article-title-en">My girlfriend is 62. Can she claim her late husband’s full Social Security benefit — or does she have to wait?</div>
+    <div class="article-keypoint">사회보장 유족연금 수급 요건 질의 - 시장 무관 개인 재정 상담 기사</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/my-girlfriend-is-62-can-she-claim-her-late-husbands-full-social-security-benefit-or-does-she-have-to-wait-315c0fa1?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">9/11 희생자 가족들, Mamdani의 추모식 참여 거부</div>
+    <div class="article-title-en">9/11 Families Don't Want Mamdani Participating In Memorial Ceremony</div>
+    <div class="article-keypoint">9/11 25주년 추모식 정치화 - 시장 직접 연관성 낮은 사회 이슈</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/911-families-dont-want-mamdani-participating-memorial-ceremony" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 04:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">바르셀로나에서 교차하는 러시아·우크라이나 망명자들: '목욕탕에서도 전쟁 얘기는 없어요'</div>
+    <div class="article-title-en">In Barcelona, Russian and Ukrainian exiles cross paths at the baths: 'We don't talk about the war, not even at the banya'</div>
+    <div class="article-keypoint">바르셀로나 러·우크라 망명자 공존 - 전쟁의 인간적 단면, 시장 직접 연관성 낮음</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/m-le-mag/article/2026/08/02/in-barcelona-russian-and-ukrainian-exiles-cross-paths-at-the-baths-we-don-t-talk-about-the-war-not-even-at-the-banya_6756093_117.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 03:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Bitcoin, $63,000 상회 유지 - Coldcard 손실 약 $8,900만 육박</div>
+    <div class="article-title-en">Bitcoin holds above $63,000 as Coldcard losses near $89 million</div>
+    <div class="article-keypoint">Bitcoin $63,000 유지, Coldcard 손실 $8,900만 - 크립토 개별 리스크와 가격 지지력 병존</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-holds-above-63000-as-coldcard-losses-near-89-million-4829683" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/02 21:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">총격범, Tesla 슈퍼차저와 In-N-Out 연속 습격 - Twin Falls에서 2명 사망</div>
+    <div class="article-title-en">Gunman Targets Tesla Supercharger And In-N-Out In Twin Falls, Killing Two</div>
+    <div class="article-keypoint">Tesla 충전소 총기 난사 사망 2명 - 브랜드 리스크 연계 가능성, 직접 시장 영향 제한적</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/gunman-targets-tesla-supercharger-and-n-out-twin-falls-killing-two" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/03 01:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
