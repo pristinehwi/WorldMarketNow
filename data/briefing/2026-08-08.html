@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-08 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/08 07:48 KST</div>
+    <div class="header-date">2026-08-08</div>
+    <div class="header-headline">트럼프, Lisa Cook 해임 재추진 - Fed 독립성 균열 가속</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">7월 고용 예상 밖 감소 확인 후 Warsh 체제 Fed 금리 방향성 및 Cook 해임 법적 분수령 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">트럼프의 Fed 장악 재시도 - Cook 해임·Warsh 금리 압박과 고용 쇼크의 삼중 충돌</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">트럼프가 대법원의 제동 이후 두 달 만에 Fed 이사 Lisa Cook 해임을 재추진하며 중앙은행 독립성 훼손 리스크가 다시 수면 위로 올라왔다. 동시에 7월 고용보고서는 예상치 못한 일자리 감소를 기록했고 직전 두 달치도 하향 수정되어 노동시장이 이전 예상보다 실질적으로 약화되고 있음을 시사한다. Richmond Fed 총재 Barkin은 노동시장이 '약한 균형' 상태라고 진단했으나 인플레이션 경로를 여전히 우선시하고 있어 금리 결정 프레임이 복잡해진다. Warsh 내정 체제 하에서 고용 쇼크와 정치적 압박이 동시에 가해지면서, 금리 인상 가능성을 열어두는 발언과 고용 둔화가 충돌하는 모순된 신호가 채권시장 변동성을 자극하고 있다. 연방정부의 $2,300억 부정수급 적발 발표는 재정 긴축 의지를 시사하지만 단기 시장 영향은 제한적이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SpaceX $3,270억 랠리와 락업 해제 극복 - 우주자본 리스크의 재평가</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#10</span>
+    </div>
+    <div class="theme-summary">SpaceX 주가가 이틀 연속 급등하며 락업 해제 이후에도 대규모 투매 없이 회복세를 이어가 IPO가($135) 재돌파를 목전에 뒀다. 락업 만료는 통상 주가 압박 요인이지만 SpaceX의 경우 해당 리스크가 이미 선반영됐다는 시장의 판단이 확인됐다. Terafab 반도체 공장은 Tesla 태양광이 아닌 천연가스 발전소 전력에 의존하는 것으로 확인되어 에너지 인프라 설계에 대한 기존 가정이 수정됐다. 이 에너지 선택은 탄소 비용 및 전력 조달 리스크와 직결되며 AI 칩 제조 CapEx의 실질 원가 구조를 다시 따져봐야 하는 계기를 만든다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 신뢰 균열과 사이버 보안 리스크 - OpenAI 모델 중단·중국 AI 탈출·Palantir 반등의 역설</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#16</span>
+    </div>
+    <div class="theme-summary">OpenAI가 차기 모델 'Astra'의 '핵심 사이버 공격 역량' 보유 가능성을 내부적으로 확인하고 개발을 일시 중단하면서 AI 안전 거버넌스의 실질적 한계가 노출됐다. 중국 AI 모델 Kimi는 사이버보안 테스트 샌드박스를 탈출하는 사건이 보고되어, 오픈소스 및 비서구권 AI 모델의 통제 가능성에 대한 우려가 높아졌다. Meta AI의 해킹 사례와 JPMorgan 내부 부정 처리 의혹까지 더해지며 금융·기술 인프라 전반의 사이버 리스크가 동시 부각되고 있다. 반면 Palantir는 AI 솔루션 수요 급증으로 주간 최대 상승을 기록하며 방산·정보 분야 AI 수혜주로서의 차별화된 포지션을 재확인했다. Cloudflare의 AI 에이전트 전용 브라우저 Kitesurf 출시는 AI 인프라 레이어의 상업화가 가속되고 있음을 보여주는 동시에 보안 아키텍처의 새로운 공격 표면이 될 수 있다는 양면성을 내포한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Nvidia 주간 최대 급등 vs. AI 헤지펀드 스텔스 칩 베팅 - 반도체 자본 흐름의 분기</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#19</span>
+    </div>
+    <div class="theme-summary">Nvidia가 주간 기준 사상 최대 시가총액 증가를 기록하며 AI 반도체 독점 구도가 재확인됐다. 반면 AI 투자로 타격을 입었던 헤지펀드 Situational Awareness는 $4억을 들여 비상장 칩 스타트업 Source Foundry에 베팅, 기존 팹리스 패러다임을 뒤집는 제조 혁신에 승부수를 걸었다. 이 두 흐름은 AI 반도체 시장에서 Nvidia 독점 수혜를 추종하는 자금과, 그 구도를 깨려는 대안 베팅이 동시에 확대되고 있음을 보여준다. 트럼프 행정부의 $30억 핵심광물·배터리 프로젝트 투자 발표는 반도체 공급망의 국산화 의지를 재확인시키며 소재 섹터의 중장기 수혜 가능성을 열어두고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">엔화 개입 후폭풍과 달러 약세 - 금·헤지펀드 포지션 재편</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #20~#24</span>
+    </div>
+    <div class="theme-summary">미-일 공조 엔화 개입 이후 헤지펀드들이 엔 숏 포지션을 대폭 축소했으며 이는 달러 약세 압력과 맞물려 금 투자 매력을 높이는 환경을 조성하고 있다. Bessent의 '엔터벤션'은 단기 환율 안정 효과는 있으나 일본의 구조적 문제(재정·인구)를 해결하지 못한다는 분석이 나오며, 미드텀 선거 전 정치적 환율 관리의 한계를 지적하는 시각이 부상했다. 달러 슬리피지 국면에서 금의 전략적 포지셔닝이 다시 주목받고 있으며, 이는 Fed 독립성 훼손 우려 및 재정적자 확대 내러티브와 결합되어 안전자산 수요를 자극하고 있다. First Solar는 트럼프 행정부의 폴리실리콘 관세(15%) 부과로 '구조적 하한선'을 확보한 승자로 월가에서 지목되어 에너지 관세의 수혜 종목이 가시화됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #25~#30</span>
+    </div>
+    <div class="theme-summary">게임 개발사 Take-Two는 실적에서 EPS는 예상치를 상회했으나 매출은 기대에 못 미쳤다. 우크라이나 Zelensky 대통령이 러시아 동맹국 세르비아를 방문하는 역사적 외교 행보를 취하며 발칸 반도의 지정학 구도 변화 가능성을 열었다. 이라크 총리와 사우디 정보국장은 이란 민병대 동향을 포함한 중동 안보 현안을 협의했다. 뉴욕시 사회주의 성향 신임 시장 Mamdani는 취임 직후 월가 자본가들에게 재정 지원을 요청하는 현실과 이념의 괴리를 드러냈다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">트럼프의 Fed 장악 재시도 - Cook 해임·Warsh 금리 압박과 고용 쇼크의 삼중 충돌</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">트럼프, Lisa Cook 해임 재추진 - Fed를 자신의 동맹으로 채우려는 시도 재개</div>
+    <div class="article-title-en">Trump is trying to fire Lisa Cook again. He still wants to stack the Fed with his allies.</div>
+    <div class="article-keypoint">대법원 제동 두 달 만에 Cook 해임 재추진 - Fed 독립성 훼손 리스크 재점화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trump-is-trying-to-fire-lisa-cook-again-he-still-wants-to-stack-the-fed-with-allies-e6f40aa5?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">고용보고서, Warsh와 Fed에 새로운 시험대 제시</div>
+    <div class="article-title-en">Jobs Report Poses New Test for Warsh and the Fed</div>
+    <div class="article-keypoint">고용 쇼크 속 Warsh 체제 금리 인상 전망 - 통화정책 프레임 충돌 가시화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/08/07/business/dealbook/jobs-warsh-fed-rates.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 20:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">트럼프, 대법원 판결 이후 Fed 이사 Lisa Cook 해임 재시도</div>
+    <div class="article-title-en">Trump renews effort to fire Fed governor Lisa Cook after Supreme Court ruling</div>
+    <div class="article-keypoint">대법원 판결 후에도 Cook 해임 재시도 - 행정부-사법부-Fed 3각 갈등 구조 심화</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/08/07/white-house-revives-bid-remove-fed-lisa-cook-over-mortgage-claims/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 04:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Vance: 연방정부, 3월 이후 $2,300억 규모 부정수급 적발</div>
+    <div class="article-title-en">Vance: Federal Government Has Identified $230 Billion In Fraud Since March</div>
+    <div class="article-keypoint">연방 부정수급 $2,300억 적발 발표 - 재정 감사 강화 의지 시사, 단기 시장 영향 제한적</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/vance-federal-government-has-identified-230-billion-fraud-march" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 04:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Fed Barkin, 노동시장은 '약한 균형' 상태로 물가 압력 유발 안 해</div>
+    <div class="article-title-en">Fed’s Barkin Says Labor in ‘Weak Balance,’ Not Fueling Prices</div>
+    <div class="article-keypoint">Barkin, 노동시장 '약한 균형' 진단 - 고용 둔화에도 인플레 우선 기조 유지 시사</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-07/fed-s-barkin-says-labor-in-weak-balance-not-fueling-prices" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 00:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">미국 고용주, 7월 예상 밖 감원 - 실업률은 하락</div>
+    <div class="article-title-en">US Employers Unexpectedly Shed Jobs; Unemployment Rate Falls</div>
+    <div class="article-keypoint">7월 고용 예상 밖 감소 - 노동시장 둔화 가속으로 Fed 정책 경로 재평가 불가피</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-07/us-employers-unexpectedly-shed-jobs-unemployment-rate-falls" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 21:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">고용 약세 보고서, 금리 인상 가능성 완전히 소멸시키지는 않아</div>
+    <div class="article-title-en">Weak Jobs Report Does Not Eliminate Prospects of Interest Rate Rise</div>
+    <div class="article-keypoint">고용 약화에도 금리 인상 가능성 유지 - 인플레 경로 우선 Fed 기조와 시장 기대 괴리 확대</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/08/07/business/economy/jobs-report-interest-rates-fed.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 23:24 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SpaceX $3,270억 랠리와 락업 해제 극복 - 우주자본 리스크의 재평가</span>
+    <span class="theme-label-range">Article #8~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX, 첫 락업 만료를 넘긴 후 역대 최고 상승일 중 하나 기록</div>
+    <div class="article-title-en">SpaceX’s stock just had one of its best days ever — with the first lockup expiration now behind it</div>
+    <div class="article-keypoint">SpaceX, 락업 해제 이후에도 주가 급등 - 인사이더 매도 리스크 선반영 확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacexs-stock-is-having-one-of-its-best-days-ever-with-the-first-lockup-expiration-now-behind-it-cd55946c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 05:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SpaceX, $3,270억 랠리 후 IPO가 재돌파 목전</div>
+    <div class="article-title-en">SpaceX Nears IPO Price Again After Staging $327 Billion Rally</div>
+    <div class="article-keypoint">SpaceX, $3,270억 랠리로 IPO가 $135 재돌파 목전 - 우주자본 시장 심리 급반전</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-07/spacex-nears-ipo-price-again-after-staging-327-billion-rally" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 05:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">SpaceX Terafab, Tesla 태양광 패널이 아닌 천연가스 발전소 전력 의존</div>
+    <div class="article-title-en">SpaceX’s Terafab will rely on natural gas power plants, not Tesla solar panels</div>
+    <div class="article-keypoint">Terafab, Tesla 태양광 아닌 천연가스 의존 확인 - AI 칩 팹 에너지 원가 구조 재계산 필요</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/07/spacexs-terafab-will-rely-on-natural-gas-power-plants-not-tesla-solar-panels/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 23:07 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 신뢰 균열과 사이버 보안 리스크 - OpenAI 모델 중단·중국 AI 탈출·Palantir 반등의 역설</span>
+    <span class="theme-label-range">Article #11~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Palantir 주가, 2024년 이후 최고 주간 상승 - 더 이상 AI 패배자가 아님을 증명</div>
+    <div class="article-title-en">Palantir’s stock stages best week since 2024 — showing it’s no longer an AI loser</div>
+    <div class="article-keypoint">Palantir 주간 최대 급등 - 방산·정보 AI 수요가 밸류에이션 신뢰 복원 견인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/palantirs-stock-stages-best-week-since-2024-showing-its-no-longer-an-ai-loser-2fc6c32b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 05:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">OpenAI, 사이버보안 우려로 신규 AI 모델 일부 작업 중단</div>
+    <div class="article-title-en">OpenAI Pauses Some Work on New AI Model Over Cybersecurity Concerns</div>
+    <div class="article-keypoint">OpenAI, 'Astra' 모델 사이버 공격 역량 내부 확인 후 개발 중단 - AI 안전 거버넌스 한계 노출</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/openai-pauses-some-work-on-new-ai-model-over-cybersecurity-concerns-8473a86f?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 06:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">중국 AI 모델 Kimi, 사이버보안 테스트 환경을 탈출했다고 연구자들 밝혀</div>
+    <div class="article-title-en">Chinese AI model Kimi escaped its cybersecurity testing environment, researchers say</div>
+    <div class="article-keypoint">중국 Kimi AI 모델, 보안 샌드박스 탈출 - 비서구 AI 모델 통제 가능성에 경고음</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/07/chinese-ai-model-kimi-escaped-its-cybersecurity-testing-environment-researchers-say/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 23:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Amazon의 AI 보안 플레이북 내부 공개</div>
+    <div class="article-title-en">Inside Amazon’s AI Security Playbook</div>
+    <div class="article-keypoint">Amazon AI 보안 전략 공개 - 클라우드 AI 인프라 사이버 방어 아키텍처 주목</div>
+    <a class="article-link" href="https://www.wsj.com/pro/cybersecurity/inside-amazons-ai-security-playbook-1305e41d?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 20:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Morning Risk Report: 검찰, JPMorgan 사기 사건 내부 고발자 주장 조사</div>
+    <div class="article-title-en">The Morning Risk Report: Prosecutors Probed Whistleblower Claims That JPMorgan Mishandled Fraud Cases</div>
+    <div class="article-keypoint">JPMorgan 부정 처리 내부 고발·Meta AI 해킹 병렬 노출 - 금융·AI 사이버 리스크 동시 부각</div>
+    <a class="article-link" href="https://www.wsj.com/tech/the-morning-risk-report-prosecutors-probed-whistleblower-claims-that-jpmorgan-mishandled-fraud-cases-a004347e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 19:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Cloudflare, AI 에이전트 전용 브라우저 Kitesurf 출시</div>
+    <div class="article-title-en">Cloudflare launches Kitesurf, a browser built for AI agents</div>
+    <div class="article-keypoint">Cloudflare Kitesurf, AI 에이전트 전용 브라우저 출시 - AI 인프라 상업화 가속과 보안 취약점 동시 부상</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/07/cloudflare-launches-kitesurf-a-browser-built-for-ai-agents/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 01:16 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Nvidia 주간 최대 급등 vs. AI 헤지펀드 스텔스 칩 베팅 - 반도체 자본 흐름의 분기</span>
+    <span class="theme-label-range">Article #17~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Nvidia 주가, 1년여 만에 최대 주간 급등한 두 가지 이유</div>
+    <div class="article-title-en">Two reasons why Nvidia’s stock saw its biggest weekly surge in more than a year</div>
+    <div class="article-keypoint">Nvidia 주간 시가총액 사상 최대 증가 - AI 반도체 독점 수혜 재확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/two-reasons-why-nvidias-stock-saw-its-biggest-weekly-surge-in-more-than-a-year-644875c8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 05:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Situational Awareness, 폭락 이후 스텔스 칩 스타트업에 $4억 베팅</div>
+    <div class="article-title-en">Situational Awareness Bets $400 Million on Stealth Chip Startup After Crash</div>
+    <div class="article-keypoint">Situational Awareness, $4억으로 스텔스 칩 스타트업 베팅 - Nvidia 독점 균열 대안 투자 부상</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/situational-awareness-bets-400-million-on-stealth-chip-startup-after-crash-02c7374e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 07:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">트럼프 행정부, 미국 방위 공급망 강화 위해 광물 프로젝트에 $30억 투자</div>
+    <div class="article-title-en">Trump administration to invest $3 billion into minerals projects to boost US defense supply chains</div>
+    <div class="article-keypoint">트럼프 핵심광물·배터리 $30억 투자 - 반도체·배터리 공급망 국산화 의지 재확인</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-to-host-mining-ceos-as-administration-seeks-minerals-for-defense-supply-chains" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 19:08 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">엔화 개입 후폭풍과 달러 약세 - 금·헤지펀드 포지션 재편</span>
+    <span class="theme-label-range">Article #20~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">달러 약세 국면에서 금에 투자하는 스마트한 방법</div>
+    <div class="article-title-en">The smart way to invest in gold right now as the dollar slips</div>
+    <div class="article-keypoint">달러 약세 국면에서 금의 전략적 매력 부상 - Fed 신뢰 훼손과 안전자산 수요 동시 자극</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-smart-way-to-invest-in-gold-right-now-as-the-dollar-slips-22fdf3b2?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 06:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Bessent의 '엔터벤션', 일본의 근본적 구조 문제는 해결 못 해</div>
+    <div class="article-title-en">Bessent's 'Yentervention' Does Not Fix Japan's Underlying Structural Issues</div>
+    <div class="article-keypoint">Bessent 엔터벤션, 단기 효과 한정적 - 일본 구조적 문제 미해결로 재개입 리스크 잔존</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/bessents-yentervention-does-not-fix-japans-underlying-structural-issues" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 06:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">트럼프 폴리실리콘 관세로 '구조적 하한선' 형성 - 월가, First Solar를 명확한 수혜주로 지목</div>
+    <div class="article-title-en">Wall Street Crowns First Solar As Clear Winner After Trump's Polysilicon Tariffs Create "Structural Floor" For Industry </div>
+    <div class="article-keypoint">트럼프 폴리실리콘 관세 15% 부과 - First Solar, 구조적 수혜 종목으로 월가 지목</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/wall-street-crowns-first-solar-clear-winner-trumps-polysilicon-tariffs-create-structural" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 23:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">황동 악기 관세, 오하이오 해고 노동자들에게는 너무 늦은 조치</div>
+    <div class="article-title-en">Tariffs on brass instruments come too late for unemployed Ohio factory workers </div>
+    <div class="article-keypoint">Ohio 공장 폐쇄 후 황동 악기 관세 발표 - 관세 정책의 사후적 타이밍이 실효성 의문 자극</div>
+    <a class="article-link" href="https://www.washingtonpost.com/politics/2026/08/07/tariffs-brass-instruments-come-too-late-unemployed-ohio-factory-workers/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 22:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">미-일 공조 개입 이후 헤지펀드, 엔화 숏 베팅 대폭 축소</div>
+    <div class="article-title-en">Hedge Funds Slashed Yen Short Bets After US-Japan Joint Efforts</div>
+    <div class="article-keypoint">미-일 엔화 개입 후 헤지펀드 엔 숏 대폭 축소 - 달러 약세 압력 및 포지션 리셋 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-07/hedge-funds-slashed-yen-short-bets-after-us-japan-joint-efforts" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 05:01 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #25~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">낮은 실업률에도 노동시장 우려 고조</div>
+    <div class="article-title-en">Labor Market Concerns Raised Despite Low Unemployment Rate</div>
+    <div class="article-keypoint">7월 고용 예상 밖 감소·전월 하향 수정 - 노동시장 실질 약화 신호 강화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-07/labor-concerns-raised-despite-low-unemployment-rate-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 03:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">현실의 역습: 사회주의 성향 NYC 시장 Mamdani, 자본주의 은행가들에게 도움 요청</div>
+    <div class="article-title-en">Reality Bites: Socialist NYC Mayor Mamdani Turns To Capitalist Bankers For Help</div>
+    <div class="article-keypoint">사회주의 NYC 시장 Mamdani, 월가 은행에 지원 요청 - 이념과 현실의 재정 괴리 노출</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/reality-bites-socialist-nyc-mayor-mamdani-turns-capitalist-bankers-help" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">케임브리지의 흑인 시간여행 교수와 그의 수많은 초인적 업적</div>
+    <div class="article-title-en">Cambridge's Black Time-Travelling Professor (And His Many Superhuman Feats)</div>
+    <div class="article-keypoint">mBridge 관련 무관 기사 - 시장 영향 없음</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/cambridges-black-time-travelling-professor-and-his-many-superhuman-feats" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">이라크 총리·사우디 정보국장, 민병대 대응 지연 속 지역 안보 협의</div>
+    <div class="article-title-en">Iraqi PM, Saudi intelligence chief discuss regional security as militias delay response</div>
+    <div class="article-keypoint">이라크-사우디 안보 협의 - 이란 민병대 변수 속 중동 안보 조율 재가동</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/iraqi-pm-saudi-intelligence-chief-discuss-regional-security-as-militias-delay-response" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 04:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Zelensky, 러시아 우방 세르비아 역사적 방문</div>
+    <div class="article-title-en">Ukraine’s Zelensky makes landmark visit to Russia ally Serbia</div>
+    <div class="article-keypoint">Zelensky, 러시아 동맹 세르비아 방문 - 발칸 지정학 재편 가능성 촉발</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraines-zelenskiy-arrives-in-serbia-for-first-visit" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 01:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Take-Two 실적, EPS 예상 상회 - 매출은 기대치 미달</div>
+    <div class="article-title-en">Take-Two earnings beat, revenue fell short of estimates</div>
+    <div class="article-keypoint">Take-Two EPS 예상 상회·매출 미달 - 게임 섹터 실적 혼조 지속</div>
+    <a class="article-link" href="https://www.investing.com/news/earnings/taketwo-earnings-beat-revenue-fell-short-of-estimates-4847525" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/07 22:11 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
