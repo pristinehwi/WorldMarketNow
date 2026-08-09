@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-09 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/09 09:03 KST</div>
+    <div class="header-date">2026-08-09</div>
+    <div class="header-headline">7월 미국 고용 -2.3만명 충격 - 노동시장 균열 가시화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">약한 고용지표 속 AI CapEx 낙관론 유지 여부 - 증시 랠리 지속성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">7월 고용 쇼크 - 실업률 하락 이면의 노동시장 균열</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">7월 미국 고용이 예상과 달리 2만3천 명 순감을 기록하며 노동시장의 이면 균열이 가시화됐다. 실업률은 4.1%로 하락했으나 이는 고용 개선이 아닌 노동참가율 하락에 기인한 것으로, 숫자의 왜곡이 실제 경기 신호를 가릴 수 있다는 우려가 제기된다. Bank of America의 Quinlan은 약한 고용지표에도 AI 인프라 투자 지속을 근거로 미국 증시에 낙관적 시각을 유지했으나, 이는 실물 노동시장 약화와 금융시장 낙관론 간의 괴리를 심화시키는 요인이다. 소프트웨어 개발자 등 화이트칼라 직군의 AI 대체 우려가 현실화되는 가운데, 크립토 법안 상원 통과 등 규제 환경 변화도 노동·자본 시장 재편에 복합적으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 리더십 재편 - DeepMind Hassabis 역할 축소와 생태계 권력 이동</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#8</span>
+    </div>
+    <div class="theme-summary">Google DeepMind의 공동창립자 Demis Hassabis가 AI 역할을 축소하며 DeepMind가 사실상 Google 본사의 상업적 논리에 완전히 편입되는 새 국면에 진입했다. 관찰자들은 DeepMind가 독립성을 잃고 상업적 현실에 종속됐다는 우려를 표명하고 있으며, 이는 순수 연구 중심 AI 거버넌스 모델의 후퇴를 의미한다. OpenAI는 프레젠테이션 스타트업 NextSlide를 인수해 ChatGPT 생태계 확장을 가속화하고 있으며, AI 기업들의 인수합병을 통한 수직 통합 전략이 본격화되고 있다. Amazon의 텍사스 데이터센터 계획은 미국 최대 기후 오염원이 될 수 있다는 경고가 나오는 등, AI CapEx 확대가 환경·규제 리스크와 충돌하는 구조적 모순도 부각된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Berkshire 포스트-버핏 시대 - Abel의 $20B 순매수와 자본 배치 전환</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #9~#10</span>
+    </div>
+    <div class="theme-summary">Greg Abel CEO 체제의 Berkshire Hathaway가 버핏의 3년 이상 지속된 순매도 기조를 종료하고 순 200억 달러 규모의 주식 매수에 나서며 자본 배치 철학의 전환을 공식화했다. 자사주 매입으로만 약 45억 달러를 집행하는 등 Abel 체제의 적극적 자본 운용이 구체화되고 있으며, 이는 현금 보유 극대화 전략에서 시장 참여 전략으로의 이행을 시사한다. 이 같은 대형 장기투자자의 포지션 전환은 시장 전반의 위험선호 심리 및 밸류에이션 논쟁에 새로운 변수로 작용할 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">원자재·공급망 리스크 - 희토류 펜타곤 투자와 금 가격 압력</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #11~#13</span>
+    </div>
+    <div class="theme-summary">펜타곤이 호주 희토류 광산에 5억1,100만 달러 투자를 결정하며 중국의 스칸듐 수출 제한에 대한 미국의 공급망 다변화 전략이 실행 단계에 돌입했다. 이는 방산·첨단 제조업의 탈중국 공급망 구축 필요성이 구체적 자본 집행으로 이어진 첫 대규모 사례로, 희토류 지정학 리스크의 현실화를 의미한다. 짐바브웨는 금 매입 정부 지원을 올해 3억 달러로 상한을 설정하고 IMF와의 협의 하에 2027년 예산에서 재검토 예정이라 밝혀, 신흥국 금 정책의 재정 제약이 글로벌 금 수급에 미칠 영향이 주목된다. 영국 도싯 해안의 화석 붐은 희귀 자원의 소셜미디어 기반 가치 재평가라는 흥미로운 미시 트렌드를 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">정치·규제 마찰 - 트럼프 사법 개입·상원 가상자산 법안·EU 빅테크 규제</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #14~#18</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령이 Jeanine Pirro 검사에게 반달 혐의 기각 결정 재검토를 촉구하며 행정부의 사법 개입 논란이 재점화됐고, Todd Blanche의 상원 인준(50대 49)이 민주당의 강한 반발 속에 통과되며 정치적 긴장이 고조되고 있다. 미 상원은 8월 휴회를 앞두고 가상자산 종합 연방 규제법안을 가결했으나, 225억 달러 규모의 로비에도 불구하고 의회 내 이견으로 입법 과정의 불확실성이 여전히 남아 있다. EU는 Meta와 TikTok에 허위정보 모니터링 및 팩트체크 강화를 지시하며 빅테크에 대한 규제 압박을 한층 높였다. 뉴욕시의 비거주용 부동산세(pied-à-terre tax) 도입은 고액자산가의 반발을 사고 있으나 전문가들은 주택난 해소 효과를 긍정적으로 평가하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #19~#24</span>
+    </div>
+    <div class="theme-summary">비트코인 단독 시대의 종언을 선언하는 시각이 제기되며 암호화폐 자산 배분 다변화 논의가 부상하고 있다. 사모 신용 시장에서는 고금리 장기화로 기업들이 사모 대출을 은행 대출로 대거 전환하며 사모신용 섹터가 압박을 받고 있다. 우크라이나 젤렌스키 대통령이 러시아 우방국 세르비아를 방문하며 지정학적 외교 다변화 시도가 이어지고 있으며, 텔레콤 아르헨티나 ADR은 실적이 예상치를 하회하며 신흥국 통신주 투자심리에 부정적 신호를 보냈다. Citi의 Mercedes-Benz 리레이팅 조건 분석과 Delta 항공 긴급 착륙 등 개별 기업·섹터 이슈도 혼재한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">7월 고용 쇼크 - 실업률 하락 이면의 노동시장 균열</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">AI에 회의적인 실직 소프트웨어 개발자 - 여전히 테크 취업 가능한가?</div>
+    <div class="article-title-en">I’m an unemployed software developer who is skeptical of AI. Can I still find a job in tech?</div>
+    <div class="article-keypoint">AI 대체 우려 속 소프트웨어 개발자 취업 시장 구조적 위축 가속화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/im-an-unemployed-software-developer-who-is-skeptical-of-ai-can-i-still-find-a-job-in-tech-4413875e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 03:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">실업률 하락 뒤에 감춰진 약한 고용 지표</div>
+    <div class="article-title-en">Weak Jobs Data Masked by Falling Unemployment</div>
+    <div class="article-keypoint">7월 美 고용 -2.3만명 충격, 실업률 4.1% 하락은 참가율 하락 착시 - 경기 신호 왜곡</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-08/weak-jobs-data-masked-by-falling-unemployment-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 21:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">미 상원, 8월 휴회 전 가상자산 법안 통과 - 업계 첫 포괄적 연방 규제</div>
+    <div class="article-title-en">US Senate advances landmark crypto Bill before heading on August recess</div>
+    <div class="article-keypoint">미 상원 가상자산 연방 규제법안 가결 - 업계 첫 포괄적 룰북 도입 임박</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-senate-advances-landmark-crypto-bill-before-heading-on-august-recess" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">AI 인프라 투자 확대가 Quinlan을 미국 주식에 낙관적으로 유지시키다</div>
+    <div class="article-title-en">AI Buildout Keeps Quinlan Bullish on US Stocks</div>
+    <div class="article-keypoint">약한 고용에도 AI 투자 낙관론 유지 - 실물과 금융시장 간 괴리 심화 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-08/ai-buildout-keeps-quinlan-bullish-on-us-stocks-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 21:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">가상자산 법안, $2.25억 로비에도 미 상원에서 표류</div>
+    <div class="article-title-en">Landmark crypto bill stalls in US Senate despite $225mn spending push</div>
+    <div class="article-keypoint">가상자산 법안 $225mn 로비에도 의회 내 이견 지속 - 입법 불확실성 잔존</div>
+    <a class="article-link" href="https://www.ft.com/content/352a15ac-53c4-46eb-b75e-957f0388dc79?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 20:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 리더십 재편 - DeepMind Hassabis 역할 축소와 생태계 권력 이동</span>
+    <span class="theme-label-range">Article #6~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Google DeepMind, 새 시대 진입 - 공동창립자 Demis Hassabis AI 역할 축소</div>
+    <div class="article-title-en">Google DeepMind enters a new era as co-founder Demis Hassabis shifts AI role</div>
+    <div class="article-keypoint">DeepMind 독립성 사실상 소멸 - AI 순수연구 거버넌스 모델 후퇴 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/aug/08/google-demis-hassabis-deepmind-shifts-role" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">OpenAI, 프레젠테이션 스타트업 NextSlide 인수</div>
+    <div class="article-title-en">OpenAI acquires presentation startup NextSlide</div>
+    <div class="article-keypoint">OpenAI, NextSlide 인수로 ChatGPT 생산성 생태계 수직 통합 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/08/openai-acquires-presentation-startup-nextslide/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 04:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Amazon의 계획 중인 데이터센터, 미국 최대 기후 오염원이 될 수도</div>
+    <div class="article-title-en">Planned Amazon data center could become the biggest climate polluter in the U.S.</div>
+    <div class="article-keypoint">Amazon 텍사스 데이터센터, 美 최대 기후 오염원 가능성 - AI CapEx vs. 환경규제 충돌</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/08/planned-amazon-data-center-could-become-the-biggest-climate-polluter-in-the-u-s/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 06:24 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Berkshire 포스트-버핏 시대 - Abel의 $20B 순매수와 자본 배치 전환</span>
+    <span class="theme-label-range">Article #9~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">CEO Greg Abel, Berkshire에 자신의 색깔을 새기기 시작하다</div>
+    <div class="article-title-en">CEO Greg Abel Starts Making His Mark at Berkshire</div>
+    <div class="article-keypoint">Abel 체제 Berkshire, 자사주 $45억+순매수 $200억 - 포스트버핏 자본전략 공식화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-08/abel-starts-making-his-mark-at-berkshire-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 22:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Greg Abel, 마침내 버핏의 현금 더미를 운용하기 시작하다</div>
+    <div class="article-title-en">Greg Abel finally puts Buffett’s cash pile to work</div>
+    <div class="article-keypoint">Abel, 버핏의 3년 순매도 기조 종료 - $200억 순매수로 자본 배치 철학 전환 선언</div>
+    <a class="article-link" href="https://www.ft.com/content/e164e244-f6de-4e3b-8a67-6bebee1b7bf4?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 00:36 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">원자재·공급망 리스크 - 희토류 펜타곤 투자와 금 가격 압력</span>
+    <span class="theme-label-range">Article #11~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">영국의 쥬라기 골드러시 - 도싯 해변에서 부를 쫓는 화석 사냥꾼들</div>
+    <div class="article-title-en">Britain’s Jurassic gold rush: the fossil hunters chasing fortunes on Dorset’s beaches</div>
+    <div class="article-keypoint">소셜미디어 기반 희귀 자원 가치 재평가 - 英 화석 붐이 보여주는 대체자산 열풍</div>
+    <a class="article-link" href="https://www.theguardian.com/science/2026/aug/09/britain-jurassic-fossil-hunters-dorset-beaches" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">짐바브웨, 올해 금 매입 정부 지원 $3억으로 상한 설정</div>
+    <div class="article-title-en">Zimbabwe to Cap Gold-Buying Support at $300 Million This Year</div>
+    <div class="article-keypoint">짐바브웨 금 매입 지원 $3억 상한 설정 - 신흥국 금 정책 재정 제약 현실화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-08/zimbabwe-to-cap-gold-buying-support-at-300-million-this-year" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 17:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">펜타곤, 호주 희토류 광산에 $5.11억 투자 결정</div>
+    <div class="article-title-en">Pentagon to invest $511 million in Australian rare earth mine</div>
+    <div class="article-keypoint">펜타곤, 호주 희토류 광산 $5.11억 투자 - 중국 스칸듐 수출 제한 대응 공급망 다변화 가속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/pentagon-to-invest-511-million-in-australian-rare-earth-mine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 17:04 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">정치·규제 마찰 - 트럼프 사법 개입·상원 가상자산 법안·EU 빅테크 규제</span>
+    <span class="theme-label-range">Article #14~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">부유층 불만에도 전문가들은 Mamdani의 비거주 부동산세를 환영</div>
+    <div class="article-title-en">Super-rich complain but experts welcome Mamdani’s pied-à-terre tax</div>
+    <div class="article-keypoint">뉴욕 비거주 부동산세 도입 - 고액자산가 과세 강화와 주택시장 재편 시그널</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/08/mamdani-new-york-pied-a-terre-tax" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">트럼프, Pirro에 반영 훼손 용의자 기소 취소 결정 '재검토' 촉구</div>
+    <div class="article-title-en">Trump Urges Pirro To 'Revisit' Decision To Drop Charges Against Accused Reflecting Pool Vandal After New Photos Emerge</div>
+    <div class="article-keypoint">트럼프, Pirro 검사에 기각 결정 재검토 촉구 - 행정부 사법 개입 논란 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/trump-urges-pirro-revisit-decision-drop-charges-against-accused-reflecting-pool-vandal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 00:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">EU, Meta·TikTok에 모니터링 및 팩트체크 강화 지시</div>
+    <div class="article-title-en">EU tells Meta, TikTok to boost monitoring, fact-checking</div>
+    <div class="article-keypoint">EU, Meta·TikTok에 허위정보 모니터링 강화 지시 - 빅테크 규제 압박 강도 상승</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/eu-tells-meta-tiktok-to-boost-monitoring-fact-checking" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 15:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">상원, 중간선거 전 정부 셧다운 방지 법안 통과</div>
+    <div class="article-title-en">Senate passes bill to avert government shutdown before midterm elections</div>
+    <div class="article-keypoint">미 정부 셧다운 방지 법안 상원 통과 - 10월~12월 연방 재정 운용 안정화</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/08/08/senate-passes-bill-avert-government-shutdown-before-midterm-elections/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Blanche 인준으로 트럼프의 '만연한 부패' 지속될 것 - Schumer 비판</div>
+    <div class="article-title-en">Blanche confirmation allows Trump to continue ‘pervasive, breathtaking corruption’, says Schumer – as it happened</div>
+    <div class="article-keypoint">Blanche 인준 50대49 통과 - 트럼프 법무 인사 강행에 민주당 '부패 심화' 강력 반발</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/aug/08/todd-blanche-attorney-general-senate-vote-republicans-save-voting-bill-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 02:05 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #19~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Jeftovic: '비트코인 단독' 시대는 끝났다</div>
+    <div class="article-title-en">Jeftovic: The "Bitcoin Only" Era Is Over...</div>
+    <div class="article-keypoint">비트코인 단독 지배 시대 종언 선언 - 암호화폐 자산 다변화 구조 전환 논의</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/jeftovic-bitcoin-only-era-over" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">은행 리파이낸싱에 압박받는 사모신용 시장 - 크레딧 위클리</div>
+    <div class="article-title-en">Private Credit Squeezed By Bank Refinancings: Credit Weekly</div>
+    <div class="article-keypoint">고금리 장기화 속 사모신용 시장, 은행 대출로의 역전환 가속 - 섹터 구조적 압박</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-08/private-credit-squeezed-by-bank-refinancings-credit-weekly" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 00:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">텔레콤 아르헨티나 ADR, EPS $0.05 미달·매출 예상치 하회</div>
+    <div class="article-title-en">Telecom Argentina ADR earnings missed by $0.05, revenue fell short of estimates</div>
+    <div class="article-keypoint">텔레콤 아르헨티나 ADR 실적 컨센서스 미달 - 신흥국 통신주 투자심리 부정적</div>
+    <a class="article-link" href="https://www.investing.com/news/earnings/telecom-argentina-adr-earnings-missed-by-005-revenue-fell-short-of-estimates-4847686" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 20:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">젤렌스키, 러시아 우방 세르비아 방문 - 모스크바는 키이우 공격 지속</div>
+    <div class="article-title-en">Ukraine's Zelensky visits Russian ally Serbia as Moscow pounds Kyiv</div>
+    <div class="article-keypoint">젤렌스키, 러시아 우방 세르비아 방문 - 전쟁 중 외교 다변화 시도의 지정학적 함의</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/08/08/ukraine-s-zelensky-visits-russian-ally-serbia-as-moscow-pounds-kyiv_6756275_5.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 19:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Delta 항공기, 애틀랜타 비상착륙 - 부상자 없어</div>
+    <div class="article-title-en">Delta flight makes emergency landing in Atlanta, no injuries reported</div>
+    <div class="article-keypoint">Delta 항공 애틀랜타 비상착륙 - 항공 안전 이슈 재부각, 부상자 없음</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/delta-flight-makes-emergency-landing-in-atlanta-no-injuries-reported-4847682" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 19:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Mercedes-Benz 주가 리레이팅을 위한 조건은? Citi의 분석</div>
+    <div class="article-title-en">What would it take for Mercedes Benz stock to re-rate higher? Citi weighs in</div>
+    <div class="article-keypoint">Citi, Mercedes-Benz 리레이팅 조건 분석 - 유럽 자동차주 밸류에이션 회복 가능성 탐색</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/what-would-it-take-for-mercedes-benz-stock-to-rerate-higher-citi-weighs-in-4847687" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/08 20:33 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
