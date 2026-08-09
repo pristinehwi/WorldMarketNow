@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-10 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/10 07:47 KST</div>
+    <div class="header-date">2026-08-10</div>
+    <div class="header-headline">중국 AI 주식 베팅·Apple CXMT 채택 - 반도체 패권 균열 가속</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Senate CLARITY Act 표결 임박 - 크립토 규제 프레임 확정 여부와 Bitcoin $65,500 저항선 돌파 가능성 동시 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">중국 AI·반도체 자본 공세 - 보조금에서 시장 주도로 전략 전환</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#3</span>
+    </div>
+    <div class="theme-summary">이번 사이클에서 새롭게 부각된 점은 중국이 기존 국가보조금 의존에서 벗어나 AI 주식 시장 자체를 전략 무기로 활용하기 시작했다는 것이다. 베이징은 민간 자본을 AI·반도체 생태계로 유인하는 방식으로 미국과의 기술 패권 경쟁에 대응하고 있으며, 이는 정책 도구의 질적 전환을 의미한다. Apple이 공급 부족을 이유로 중국 CXMT 메모리 칩 테스트에 근접했다는 소식은 미국 공급망 정책의 실효성에 의문을 제기한다. 트럼프 행정부의 반도체 수출 통제에도 불구하고 실리콘밸리 최대 기업이 중국산 칩으로 선회를 검토한다는 사실 자체가 공급망 압박의 심각성을 방증한다. 한편 Situational Awareness 헤지펀드가 위기 상황에서도 칩 스타트업 Source Foundry에 4억 달러를 베팅한 것은 AI 인프라 자본 흐름이 여전히 공격적임을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Anthropic·AI 자율화 가속 - 인간 감독 축소가 거버넌스 리스크로 전이</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #4~#6</span>
+    </div>
+    <div class="theme-summary">Anthropic이 Claude Code의 자동 모드를 기본값으로 전환함으로써 AI 코딩 에이전트가 인간 개입 없이 작동하는 구조가 산업 표준으로 굳어지는 흐름이 가속화되고 있다. 이는 AI 거버넌스 공백 논쟁을 실제 제품 레벨에서 구체화한 사례로, 규제 당국이 기술 속도를 따라잡지 못하는 구조적 간극을 다시 노출시킨다. 동시에 Senate가 CLARITY Act를 표결로 이행하는 절차적 단계를 밟으면서 AI·크립토 영역 전반의 규제 프레임 논의가 입법 단계로 진입하고 있다. Bitcoin이 $65,500 저항선에서 과매수 신호를 보이는 시점과 맞물려, 규제 법안 통과 여부가 단기 크립토 방향성을 결정할 핵심 변수로 부상한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Warsh·Bessent 정책 신호 - 채권시장 수익률 상단 관리와 Fed 역할 축소의 충돌</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #7~#9</span>
+    </div>
+    <div class="theme-summary">Warsh가 Fed의 시장 개입 역할을 축소해야 한다는 입장을 재확인하면서, 정밀 정책 도구 포기가 채권·금리 시장에 미치는 함의가 다시 주목받고 있다. 동시에 Wall Street는 Bessent 재무장관의 최근 행보에서 국채 수익률 급등을 억제하려는 의도를 읽어내고 있으며, 이는 재정·통화정책 조율의 새로운 외교적 프레임이 형성되고 있음을 시사한다. 두 신호는 표면적으로 방향이 달라 보이지만, 공통적으로 시장이 정책 불확실성 프리미엄을 재산정해야 할 압력을 높인다. 주식시장에서는 평균 종목이 4년 만에 처음으로 S&P 500을 상회하는 현상이 나타나 지수 집중도 완화와 함께 광범위한 시장 건전성 회복이 관찰된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">중동·에너지 지정학 리스크 - 후티 드론과 이란 압박의 원유 공급 위협 재점화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #10~#14</span>
+    </div>
+    <div class="theme-summary">후티 반군이 사우디 Aramco의 210억 달러 규모 자잔 정유시설을 드론으로 타격하며 화재가 발생, 홍해 에너지 공급망 리스크가 재부상했다. 이란 연계 세력의 사우디 핵심 인프라 직접 공격은 중동 지정학 리스크 프리미엄의 급격한 재산정을 요구하는 이벤트다. 동시에 Netanyahu가 미국 주도의 15개항 가자 평화안을 공개적으로 거부하면서 미-이스라엘 외교 균열이 가시화되었고, 이는 지역 분쟁의 장기화와 에너지 시장 변동성 지속을 시사한다. 북한군 최대 5만 명이 러시아에 추가 배치될 것이라는 Zelensky 발언은 유럽 안보와 에너지 리스크를 복합적으로 자극하는 변수로 작용한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">중국 EV·트럼프 관세·공급망 재편 - 유럽 시장 침투와 무역 전선 확산</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #15~#17</span>
+    </div>
+    <div class="theme-summary">중국 전기차의 유럽 시장 점유율이 올해 14%로 사상 최고치를 기록하면서 관세 실효성 논쟁이 재점화되고 있다. 특히 영국의 낮은 관세와 일부 국가의 수요 급증이 EU의 덤핑 제재 논의를 자극하고 있어, 무역 마찰 전선이 미-중에서 EU-중으로 확산되는 양상이다. 아프가니스탄 금 채굴 러시는 자원 질서 재편이 전통적 공급망 외 지역에서도 진행 중임을 보여준다. Trump의 보안 가드레일 해체에 대한 전직 CIA 관료들의 경고는 정책 불확실성이 산업·공급망 리스크와 중첩되는 구조를 심화시킨다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #18~#25</span>
+    </div>
+    <div class="theme-summary">이번 기사군에서 거시경제·금융·지정학·산업·기술·정치 핵심 테마와 직접적 연관성이 낮은 개인 사건·사회 이슈들이 포함된다. Don Lemon의 연방 기소 기각 신청, 범죄 조직 용의자 두바이 인도, 피싱 이메일 관련 소비자 주의 사항, Zuckerberg 요트 논란, 핵발전소 재가동 절차 등은 시장 임팩트가 제한적인 뉴스다. Trump의 새 백악관 법무고문 임명은 행정부 내부 인사 변화로 정치적 맥락을 가지나 단기 시장 영향은 미미하다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">중국 AI·반도체 자본 공세 - 보조금에서 시장 주도로 전략 전환</span>
+    <span class="theme-label-range">Article #1~#3</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">중국, AI 주식에 베팅하며 미국과 칩·기술 패권 경쟁 가속</div>
+    <div class="article-title-en">China Bets on AI Stocks as It Races Against US for Chip, Tech Dominance</div>
+    <div class="article-keypoint">중국, AI 주식 시장 자체를 기술 패권 전략 도구로 전환 - 보조금 의존 탈피 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/features/2026-08-09/china-bets-on-ai-stocks-as-it-races-against-us-for-chip-tech-dominance" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">위기의 헤지펀드 Situational Awareness, 칩 스타트업 Source Foundry에 $4억 투자</div>
+    <div class="article-title-en">Embattled hedge fund Situational Awareness invests $400M in chip startup Source Foundry</div>
+    <div class="article-keypoint">위기 헤지펀드 Situational Awareness, 칩 스타트업에 $4억 베팅 - AI 인프라 자본 흐름 지속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/09/embattled-hedge-fund-situational-awareness-invests-400m-in-chip-startup-source-foundry/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 05:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">원자력 발전소 재가동에 필요한 것은 무엇인가?</div>
+    <div class="article-title-en">What Does It Take to Reopen a Nuclear Power Plant?</div>
+    <div class="article-keypoint">미국 원자로 재가동 추진 - 안전 심사 장벽이 트럼프 핵 확장 목표 실현 속도 제한</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/What-Does-It-Take-to-Reopen-a-Nuclear-Power-Plant.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 04:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Anthropic·AI 자율화 가속 - 인간 감독 축소가 거버넌스 리스크로 전이</span>
+    <span class="theme-label-range">Article #4~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Anthropic, Claude Code 자동 모드를 기본값으로 전환</div>
+    <div class="article-title-en">Anthropic is turning Claude Code’s auto mode on by default</div>
+    <div class="article-keypoint">Claude Code 자동 모드 기본값 전환 - AI 자율 코딩의 인간 감독 축소 산업 표준화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/09/anthropic-is-turning-claude-codes-auto-mode-on-by-default/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 04:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Senate, 주요 크립토 규제 법안 CLARITY Act 표결 절차 착수</div>
+    <div class="article-title-en">Senate Moves Major Crypto Regulation Bill Toward Vote</div>
+    <div class="article-keypoint">Senate CLARITY Act 표결 절차 착수 - 크립토 규제 프레임 법제화 분기점 진입</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/senate-moves-major-crypto-regulation-bill-toward-vote" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 04:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Bitcoin, $65,500 저항선에서 MFI 과매수 도달 - 실시간 레벨 분석</div>
+    <div class="article-title-en">Bitcoin hits overbought MFI at $65,500 resistance: Live levels</div>
+    <div class="article-keypoint">Bitcoin $65,500에서 MFI 과매수 신호 - CLARITY Act 표결과 맞물려 단기 방향성 분기</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-tests-62k-support-with-breakout-looming-live-levels-93CH-4829888" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 19:02 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Warsh·Bessent 정책 신호 - 채권시장 수익률 상단 관리와 Fed 역할 축소의 충돌</span>
+    <span class="theme-label-range">Article #7~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Warsh, Fed의 시장 개입 역할 축소를 원한다</div>
+    <div class="article-title-en">Warsh wants a Fed that plays a smaller role in markets</div>
+    <div class="article-keypoint">Warsh, Fed의 시장 역할 축소 재확인 - 정밀 정책 도구 포기 시 채권 변동성 확대 우려</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/warsh-wants-a-fed-that-plays-a-smaller-role-in-markets-4847750" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 16:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">S&P 500을 상회하는 종목 수, 4년 만에 최고 - 앞으로 더 늘어날 이유</div>
+    <div class="article-title-en">The number of stocks beating the S&P 500 is the highest in 4 years. Why that number should rise.</div>
+    <div class="article-keypoint">4년 만에 평균 주식이 S&P 500 상회 - 지수 집중도 완화와 시장 저변 확대 신호</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-number-of-stocks-beating-the-s-p-500-is-the-highest-in-4-years-why-that-number-should-rise-b9bd05b3?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 04:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Bessent 행보 이면에서 Wall Street는 채권시장 불안 신호를 읽는다</div>
+    <div class="article-title-en">Behind Bessent Moves, Wall Street Sees Sign of Bond-Market Angst</div>
+    <div class="article-keypoint">Bessent, 국채 수익률 급등 억제 의도 시사 - 재정·통화 조율 새 프레임 형성 주시</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-09/behind-bessent-moves-wall-street-sees-sign-of-bond-market-angst" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 22:36 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">중동·에너지 지정학 리스크 - 후티 드론과 이란 압박의 원유 공급 위협 재점화</span>
+    <span class="theme-label-range">Article #10~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">이란 지원 후티, 드론 공격 주장 - 사우디 Aramco 자잔 정유시설 화재 발생</div>
+    <div class="article-title-en">Fire Erupts At Saudi Aramco's Jazan Refinery As Iran-Backed Houthis Claim Drone Strike</div>
+    <div class="article-keypoint">후티, 사우디 Aramco $210억 자잔 정유시설 드론 타격 - 홍해 에너지 공급 리스크 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/fire-erupts-saudi-aramcos-jazan-refinery-iran-backed-houthis-claim-drone-strike" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 21:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Zelensky, 북한군 최대 5만 명 러시아 추가 배치 전망 발표</div>
+    <div class="article-title-en">Ukraine’s Zelensky says up to 50,000 North Korean troops to be deployed in Russia</div>
+    <div class="article-keypoint">Zelensky, 북한군 5만 명 러시아 배치 전망 발표 - 유럽 안보 리스크 프리미엄 상승 압력</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraines-zelenskiy-says-up-to-50000-north-korean-troops-to-be-deployed-in-russia" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 21:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Netanyahu, 미국 주도 15개항 가자 평화안 공개 거부 - 트럼프와 이례적 균열</div>
+    <div class="article-title-en">Netanyahu rejects US-led 15-point Gaza peace plan in rare public break with Trump</div>
+    <div class="article-keypoint">Netanyahu, 미국 주도 15개항 가자 평화안 공개 거부 - 미-이스라엘 균열 가시화·중동 리스크 지속</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/aug/09/israel-rejects-us-led-15-point-gaza-peace-plan-says-netanyahu" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Netanyahu가 거부한 가자 평화안, '유일한 해결책' - Board of Peace 의장</div>
+    <div class="article-title-en">Gaza plan rejected by Netanyahu ‘only way forward’: Board of Peace chief</div>
+    <div class="article-keypoint">미국·Hamas 포함 평화안에서 이스라엘 제외 - 중동 협상 구도 재편 가능성 부상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/gaza-plan-rejected-by-netanyahu-only-way-forward-trump-peace-board-head" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 05:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">이스라엘군, 팔레스타인 기독교 마을 타이베 폐쇄 - 정착민 공격 이유</div>
+    <div class="article-title-en">Israel military closes Palestinian Christian village Taybeh, citing settler attacks</div>
+    <div class="article-keypoint">이스라엘군, 팔레스타인 기독교 마을 타이베 폐쇄 - 서안 지구 긴장 고조·인권 마찰 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/israel-military-closes-palestinian-christian-village-taybeh-to-halt-settler-attacks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 04:43 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">중국 EV·트럼프 관세·공급망 재편 - 유럽 시장 침투와 무역 전선 확산</span>
+    <span class="theme-label-range">Article #15~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">중국 EV 유럽 판매 사상 최고치 - 관세 실효성 논란 재점화</div>
+    <div class="article-title-en">Chinese EV sales surge to new high in Europe putting tariffs under scrutiny</div>
+    <div class="article-keypoint">중국 EV 유럽 점유율 14% 사상 최고 - 관세 실효성 논쟁 재점화·EU 무역 마찰 확산</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/aug/09/chinese-electric-car-sales-surge-to-a-record-high-in-europe" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 23:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Trump, 미국 안전장치 해체 중 - 전직 안보 관료들의 경고</div>
+    <div class="article-title-en">Trump is dismantling US guardrails, warn former security officials</div>
+    <div class="article-keypoint">전직 CIA, 트럼프 안보 가드레일 해체 경고 - 정책 불확실성과 공급망 리스크 중첩 심화</div>
+    <a class="article-link" href="https://www.ft.com/content/4fc0fdda-0919-4584-9bdd-855e2aaa5c09?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">아프가니스탄 골드러시, 삶과 자연 경관을 뒤흔들다</div>
+    <div class="article-title-en">Afghanistan’s gold rush upends lives and landscapes</div>
+    <div class="article-keypoint">아프가니스탄 금 채굴 러시 - 비전통 지역 자원 질서 재편 진행 중</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/afghanistans-gold-rush-upends-lives-and-landscapes" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 16:31 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #18~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Don Lemon, 미네소타 교회 시위 관련 연방 기소 기각 신청</div>
+    <div class="article-title-en">Don Lemon Seeks Dismissal Of Federal Charges Over Minnesota Church Protest</div>
+    <div class="article-keypoint">Don Lemon 연방 기소 기각 신청 - 정치적 사법 논쟁 지속, 시장 영향 제한적</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/don-lemon-seeks-dismissal-federal-charges-over-minnesota-church-protest" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">러시아, 우크라이나 동부 마을 2곳 점령 주장 - 키이우는 전선 교전 보고</div>
+    <div class="article-title-en">Russia says it captures two villages in eastern Ukraine, Kyiv reports frontline battles</div>
+    <div class="article-keypoint">북한군 최대 5만 명 러시아 추가 배치 전망 - 유럽 안보·에너지 리스크 복합 자극</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/russia-says-it-captures-two-villages-in-eastern-ukraine-kyiv-reports-frontline-battles" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">조직 범죄 용의자 Daniel Kinahan, 두바이에서 아일랜드로 인도</div>
+    <div class="article-title-en">Organised crime suspect Daniel Kinahan extradited from Dubai to Ireland</div>
+    <div class="article-keypoint">범죄 조직 용의자 두바이서 아일랜드 인도 - 국제 사법 협력 진전, 시장 영향 미미</div>
+    <a class="article-link" href="https://www.ft.com/content/a6a000a4-3578-41d0-a898-aeef5f1dbaa0" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 06:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">친구에게서 이메일 초대장 두 통이 왔다. 피싱 사기인가, 아니면 갑자기 인기가 생긴 건가?</div>
+    <div class="article-title-en">I got two email invitations from friends. Is this a phishing scam — or am I suddenly popular?</div>
+    <div class="article-keypoint">AI 피싱 사기 정교화 경고 - 개인 사이버 보안 위협 상승, 직접 시장 영향 제한</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/i-got-two-email-invitations-from-friends-is-this-a-phishing-scam-or-am-i-suddenly-popular-d9680aa8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/09 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Apple, 공급 부족으로 PC 대기업들이 CXMT로 눈 돌리는 가운데 중국산 메모리 칩 테스트</div>
+    <div class="article-title-en">Apple Tests Chinese Memory Chips As Supply Crunch Pushes PC Giants Toward CXMT</div>
+    <div class="article-keypoint">Apple, 공급 부족으로 중국 CXMT 메모리 칩 테스트 근접 - 반도체 수출통제 실효성 균열</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/apple-tests-chinese-memory-chips-supply-crunch-pushes-pc-giants-toward-cxmt" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">재력가 Mamdani 동맹, '임대료 폐지' 주장 - Hawley 개혁 법안, 대학 이념화 저지 가능한가?</div>
+    <div class="article-title-en">Rich-Kid Mamdani Ally Wants To "Abolish Rent"; Could Hawley Reform Bill Stop College Indoctrination?</div>
+    <div class="article-keypoint">Mamdani 동맹 '임대료 폐지' 주장 - 급진 좌파 정치 담론 확산, AMD와 무관한 오분류 주의</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/far-left-mamdani-ally-wants-abolish-rent-has-rich-dad-heres-how-break-marxist-bad-idea" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 03:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Zuckerberg, 조난 선박 구조 거부 의혹 제기 - 슈퍼요트 논란</div>
+    <div class="article-title-en">Zuckerberg faces questions over why superyacht reportedly declined to help stranded boat</div>
+    <div class="article-keypoint">Zuckerberg 요트, 조난 선박 구조 외면 논란 - 사회적 비판 확산, 시장 영향 미미</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/09/zuckerberg-superyacht-boat-alaska" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 04:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Trump, 참모총장실 수석 Will Scharf를 새 백악관 법무고문으로 임명</div>
+    <div class="article-title-en">Trump appoints staff secretary Will Scharf as new White House counsel</div>
+    <div class="article-keypoint">Trump, Will Scharf 백악관 법무고문 임명 - 행정부 인사 교체, 단기 시장 영향 제한적</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/09/trump-will-scharf-white-house-counsel" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 07:28 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
