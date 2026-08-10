@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-11 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/11 07:48 KST</div>
+    <div class="header-date">2026-08-11</div>
+    <div class="header-headline">Nvidia $5000억 AI 파이낸싱 딜 - 반도체 자본 흐름 재편</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">칩메이커 실적·CPI 발표 앞두고 금리 민감주·반도체 섹터 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Nvidia·Micron·AI 파이낸싱 - 반도체 자본 재편의 새 국면</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Nvidia가 Apollo·Blackstone·BlackRock 등 월가 대형 운용사와 $5000억 규모 AI 파이낸싱 딜을 체결하며 반도체 자본 조달이 민간 신용시장으로 확장됐다는 것이다. 동시에 Nvidia의 일부 칩 기능 다운그레이드 조치가 고대역폭 메모리(HBM) 수요 증가로 이어질 수 있다는 분석이 나오며 Micron에 대한 긍정적 재평가가 시작됐다. Discovered Materials는 $900만을 조달해 AI용 차세대 냉각 칩 소재 개발에 나섰고, 주식시장은 칩메이커 실적과 CPI 발표를 앞두고 보합세로 마감했다. 이 흐름은 AI 인프라 투자가 기존 빅테크 자체 CapEx에서 금융자본과의 공동 파이낸싱 구조로 전환되는 구조적 신호로 읽힌다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Meta·OpenAI AI 전략 분기 - 오픈웨이트 vs. 거버넌스 균열</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#10</span>
+    </div>
+    <div class="theme-summary">Meta는 오픈웨이트 모델 Muse Glimmer를 공개하며 Zuckerberg가 6500자 분량의 '퍼스널 AI 선언문'을 발표, 개인 초지능 시스템 구축을 향한 공격적 방향성을 드러냈다. Zuckerberg는 미국 정책 재설계 없이는 국내 기업의 오픈웨이트 주도권 확보가 어렵다고 주장하며 규제 프레임 논쟁을 촉발했다. 반면 OpenAI에서는 윤리 총괄 책임자가 합류 1년도 안 돼 퇴사하며 안전 우려가 누적되는 가운데 고위급 이탈이 이어지고 있다. AI가 실제 일자리를 대규모로 대체하고 있다는 증거는 아직 없지만 노동자 불안은 확산되고 있어, 거버넌스 공백과 사회적 수용성 리스크가 동시에 부각되는 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">SpaceX·Rocket Lab 우주 자본 리스크 - IPO가 현실과 충돌</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#14</span>
+    </div>
+    <div class="theme-summary">SpaceX 주가가 IPO가(약 $135) 수준을 약 한 달 만에 회복했으나 고점 대비로는 여전히 크게 낮은 수준이다. 8월 7일에는 소매투자자들이 처음으로 SpaceX 주식을 순매도($580만)로 전환하며 차익실현 압박이 가시화됐다. Rocket Lab은 유럽 사업 확장과 수주잔고 확대 계획을 발표했음에도 혼조 실적으로 주가가 하락하며, 우주 섹터 전반에 실적 대비 밸류에이션 정당성 검증이 시작됐다. AST SpaceMobile은 실적 미달에도 위성 발사를 지속하는 등 우주 자본 리스크가 개별 기업 차원을 넘어 섹터 전반의 수익성 논란으로 확산 중이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Bessent 엔화 개입 신뢰성과 Fed 인사 리스크 - 통화정책 불확실성 지속</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#17</span>
+    </div>
+    <div class="theme-summary">재무장관 Bessent의 '무제한 엔화 지원' 발언이 시장에서 실탄 부족 의혹과 함께 신뢰성 도전에 직면했다. 시장 참여자들은 Bessent의 실제 개입 수단이 제한적이라고 지적하며, 발언의 상징성과 실행력 간 괴리를 주목하고 있다. 한편 백악관 NEC 국장 Hassett은 Fed 이사 Lisa Cook이 모기지 사기 의혹에서 무고하기를 바란다면서도 그 자리를 대체할 의사가 없음을 밝혀, Fed 이사회 인사 리스크가 정치화되는 양상이 이어지고 있다. Fed 이사 Bowman의 AI 건전 관행 관련 발언과 함께 통화정책 소통 공백이 채권·외환시장 변동성 요인으로 잔존한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학 복합 리스크 - 러시아 드론 테러·북한 병력·리비아 암살</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #18~#21</span>
+    </div>
+    <div class="theme-summary">미국 정보당국이 독일 라이프치히 공항 드론 폭발물 공격의 배후로 러시아를 지목하며 유럽 내 하이브리드 위협이 '새로운 위험 수준'에 도달했다는 경고가 나왔다. Zelensky는 러시아가 추가 북한군 병력과 미사일을 집결시키고 있다고 경고하며 모스크바-평양 군사 협력 심화를 재확인했다. 리비아 동부 군사정보 수장이 차량 폭발로 암살되는 등 중동·북아프리카 불안정이 지속되고 있다. 이 같은 다중 지정학 리스크는 에너지 공급 불확실성과 방산 수요를 동시에 자극하는 배경으로 작용한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #22~#30</span>
+    </div>
+    <div class="theme-summary">영국 유럽선수권 수영 금메달 릴레이와 Marchand 은메달 등 스포츠 이벤트, Bezos의 리버풀 FC 인수 가능성과 LeBron James 지분 가치 상승 전망, Trump 미디어 그룹의 핵융합 사업 진출과 누적 손실, AI가 석유·가스 생산을 재생에너지보다 더 크게 증가시킬 것이라는 보고서, 호주 주택가격 하락의 모기지 보유자 수혜, 그리고 트럼프 중간선거 이후 미국 민주주의 신뢰 관련 정치 분석 등 직접적 시장 임팩트가 낮은 기사들이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Nvidia·Micron·AI 파이낸싱 - 반도체 자본 재편의 새 국면</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">이 Nvidia의 변화가 Micron에 호재로 작용할 수 있는 이유</div>
+    <div class="article-title-en">This Nvidia change could spell good news for Micron</div>
+    <div class="article-keypoint">Nvidia 칩 기능 다운그레이드가 HBM 소비 확대로 연결 - Micron 수혜 기대 상승</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/this-nvidia-change-could-spell-good-news-for-micron-80449e59?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 07:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Nvidia·월가 대형사, AI 파이낸싱 딜 $5000억 규모로 체결</div>
+    <div class="article-title-en">Nvidia, Wall Street Firms Strike AI Financing Deal Targeting $500 Billion</div>
+    <div class="article-keypoint">Nvidia·Apollo·Blackstone·BlackRock $5000억 AI 파이낸싱 딜 - 민간 신용이 AI 인프라 자본원으로 부상</div>
+    <a class="article-link" href="https://www.wsj.com/business/deals/nvidia-wall-street-firms-strike-ai-financing-deal-targeting-500-billion-c50377db?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 06:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">미국 증시, 칩메이커 실적·CPI 발표 앞두고 혼조 마감</div>
+    <div class="article-title-en">US Stocks End Mixed as Chipmaker Earnings, CPI Due to Set Pace</div>
+    <div class="article-keypoint">칩메이커 실적·CPI 발표 대기 속 미국 증시 보합 마감 - 금리 경로 불확실성 유지</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-10/us-futures-drop-as-focus-turns-on-chipmaker-earnings-inflation" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 22:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Discovered Materials, AI로 더 효율적인 칩 소재를 찾는 '두더지 잡기' 게임</div>
+    <div class="article-title-en">Discovered Materials is playing AI whack-a-mole to hunt cooler chips</div>
+    <div class="article-keypoint">Discovered Materials $900만 조달, AI 칩용 신소재 탐색 - 차세대 반도체 소재 투자 초기 단계</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/10/discovered-materials-is-playing-ai-whack-a-mole-to-hunt-cooler-chips/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Meta·OpenAI AI 전략 분기 - 오픈웨이트 vs. 거버넌스 균열</span>
+    <span class="theme-label-range">Article #5~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Meta의 새 AI 모델 Glimmer, Zuckerberg의 퍼스널 초지능 비전을 엿보다</div>
+    <div class="article-title-en">Meta’s new Glimmer AI model offers a hint at Zuckerberg’s personal intelligence vision</div>
+    <div class="article-keypoint">Meta Muse Glimmer 공개 - 오픈웨이트 AI 주도권 경쟁에서 Zuckerberg의 공격적 선제 포지셔닝</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/10/metas-new-glimmer-ai-model-offers-a-hint-at-zuckerbergs-personal-intelligence-vision/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 01:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">OpenAI 윤리 총괄, 합류 1년도 안 돼 퇴사 - 안전 우려 속 고위직 이탈 잇달아</div>
+    <div class="article-title-en">OpenAI’s head of ethics leaves start-up less than one year after joining</div>
+    <div class="article-keypoint">OpenAI 윤리 총괄 1년 미만 퇴사 - 안전 거버넌스 공백 우려가 기업 신뢰도 리스크로 전이</div>
+    <a class="article-link" href="https://www.ft.com/content/e49dfb75-f841-4466-a577-f7aaff8779a0?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 07:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">노동자 불안은 커지지만 AI가 대규모로 일자리를 빼앗는다는 증거는 아직 없어</div>
+    <div class="article-title-en">Workers are worried, but there’s no sign AI is muscling people out of their jobs on a massive scale</div>
+    <div class="article-keypoint">AI 대규모 일자리 대체 증거 미확인, 그러나 노동 불안 심화 - 정책·소비 심리 변수로 잠재</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/workers-are-worried-but-theres-no-sign-ai-is-muscling-people-out-of-their-jobs-on-a-massive-scale-8eb92638?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 05:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Zuckerberg의 AI 선언문, 사람들이 AI를 싫어하는 이유 그 자체</div>
+    <div class="article-title-en">Mark Zuckerberg’s AI manifesto is exactly why people don’t like AI</div>
+    <div class="article-keypoint">Zuckerberg 6500자 AI 선언문, '퍼스널 초지능' 비전 공개 - 오픈웨이트 vs. 클로즈드 AI 논쟁 격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/10/mark-zuckerbergs-ai-manifesto-is-exactly-why-people-dont-like-ai/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 05:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Meta, 새 AI 모델 공개 - Zuckerberg CEO, 오픈웨이트 주도권 위한 정책 재설계 촉구</div>
+    <div class="article-title-en">Meta launches new AI model as CEO Mark Zuckerberg champions open-weight push</div>
+    <div class="article-keypoint">Meta, 오픈웨이트 AI 주도권 위해 미국 정책 재설계 촉구 - 빅테크 로비와 규제 공백 확대</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/meta-launches-new-ai-model-as-ceo-mark-zuckerberg-champions-open-weight-push" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 20:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">모닝 다운로드: Meta, 상시 온 AI 미래의 단편 Glimmer 공개</div>
+    <div class="article-title-en">The Morning Download: Meta Shares Glimmer of Always-On AI Future</div>
+    <div class="article-keypoint">Meta Muse Glimmer, 상시 온(always-on) AI 에이전트 시대 개막 신호 - 유저 소유 AI 시장 분화</div>
+    <a class="article-link" href="https://www.wsj.com/cio-journal/the-morning-download-meta-shares-glimmer-of-always-on-ai-future-6fe21e9f?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 21:53 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">SpaceX·Rocket Lab 우주 자본 리스크 - IPO가 현실과 충돌</span>
+    <span class="theme-label-range">Article #11~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">SpaceX 주가, 약 한 달 만에 처음으로 IPO가 상회</div>
+    <div class="article-title-en">SpaceX’s stock moves above its IPO price for the first time in almost a month</div>
+    <div class="article-keypoint">SpaceX 주가 약 한 달 만에 IPO가 $135 회복, 그러나 고점 대비 하락 지속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacexs-stock-moves-above-its-ipo-price-for-the-first-time-in-almost-a-month-fc3f91b7?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 07:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Rocket Lab, 야심 찬 계획 발표에도 혼조 실적으로 주가 하락</div>
+    <div class="article-title-en">Rocket Lab reveals some big plans, but its stock is dropping on mixed earnings</div>
+    <div class="article-keypoint">Rocket Lab 유럽 확장 계획에도 혼조 실적으로 주가 하락 - 우주 섹터 밸류 검증 압박</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/rocket-lab-reveals-some-big-plans-but-its-stock-is-dropping-on-mixed-earnings-4012ba2b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 06:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">소매투자자, 8월 7일 처음으로 SpaceX 주식 순매도 전환 - 순매도액 $580만</div>
+    <div class="article-title-en">Retail investors dispose of SpaceX shares for first time on Aug 7, with $5.8m in net sales</div>
+    <div class="article-keypoint">소매투자자 SpaceX 주식 첫 순매도($580만) 전환 - 우주 섹터 차익실현 압박 가시화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/retail-investors-dispose-of-spacex-shares-for-first-time-on-aug-7-with-us4-5m-in-net-sales" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 23:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">AST SpaceMobile Q2 2026 실적 발표: 실적 미달에도 위성 발사 지속</div>
+    <div class="article-title-en">AST SpaceMobile Q2 2026 slides: satellites launch despite earnings miss</div>
+    <div class="article-keypoint">AST SpaceMobile 실적 미달에도 위성 발사 강행 - 수익성 대비 공격적 CapEx 지속 여부 주목</div>
+    <a class="article-link" href="https://www.investing.com/news/company-news/ast-spacemobile-q2-2026-slides-satellites-launch-despite-earnings-miss-93CH-4850570" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 22:34 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Bessent 엔화 개입 신뢰성과 Fed 인사 리스크 - 통화정책 불확실성 지속</span>
+    <span class="theme-label-range">Article #15~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Hassett, Cook 무고 희망하며 Fed 자리 대체 가능성 일축</div>
+    <div class="article-title-en">Hassett Hopes Cook Innocent, Rules Out Taking Her Place at Fed</div>
+    <div class="article-keypoint">Hassett, Lisa Cook 교체 부인 - Fed 이사회 인사 불확실성은 지속되나 즉각 교체 리스크는 완화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-10/hassett-hopes-cook-innocent-rules-out-taking-her-place-at-fed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 21:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Bessent의 '무제한' 엔화 지원 약속, 제한된 실탄 앞에 신뢰성 시험대에</div>
+    <div class="article-title-en">Bessent’s Whatever-It-Takes Yen Pledge Masks Limited Firepower</div>
+    <div class="article-keypoint">Bessent '무제한 엔화 지원' 발언, 실탄 부족 지적으로 신뢰성 시험대 - 엔화 변동성 재확대 가능</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-10/bessent-s-whatever-it-takes-yen-pledge-masks-limited-firepower" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 05:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Michelle W Bowman: 인공지능 건전 관행에 관한 개막 발언</div>
+    <div class="article-title-en">Michelle W Bowman: Opening remarks on Sound Practices for Artificial Intelligence</div>
+    <div class="article-keypoint">Fed 이사 Bowman, AI 건전 관행 개막 발언 - AI 금융 규제 프레임 초기 형성 신호</div>
+    <a class="article-link" href="https://www.bis.org/review/r260805c.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 16:54 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학 복합 리스크 - 러시아 드론 테러·북한 병력·리비아 암살</span>
+    <span class="theme-label-range">Article #18~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">미 정보당국, '라이프치히 공항 드론 폭탄의 배후는 러시아'로 판단</div>
+    <div class="article-title-en">US intelligence ‘believes Russia was behind Leipzig airport drone bomb’</div>
+    <div class="article-keypoint">미 정보당국, 독일 공항 드론 폭발 배후로 러시아 지목 - 유럽 하이브리드 위협 수위 상승</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/aug/10/us-intelligence-russia-leipzig-airport-drone-bomb" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 00:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">충격 영상: 중국 Long March-7A 로켓, 발사 직후 폭발</div>
+    <div class="article-title-en">Dramatic Footage: Chinese Long March-7A Rocket Explodes Shortly After Liftoff</div>
+    <div class="article-keypoint">중국 Long March-7A 로켓 발사 폭발 - 미·중 우주 경쟁에서 중국의 기술 격차 확대 가능성</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/dramatic-footage-chinese-long-march-7a-rocket-explode-shortly-after-liftoff" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">리비아 동부 군사정보 수장, 차량 폭탄 테러로 피살</div>
+    <div class="article-title-en">Car bomb kills eastern Libyan military intelligence chief, sources say</div>
+    <div class="article-keypoint">리비아 동부 군사정보 수장 암살 - 북아프리카 불안정 지속, 에너지 공급 리스크 요인</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/car-bomb-kills-eastern-libyan-military-intelligence-chief-sources-say" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 06:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Zelensky, 러시아가 추가 북한군·미사일 집결 준비 중이라고 경고</div>
+    <div class="article-title-en">Ukraine’s Zelensky says Russia readying more North Korean troops, missiles</div>
+    <div class="article-keypoint">Zelensky, 추가 북한군·미사일 집결 경고 - 러·북 군사협력 심화로 동유럽 리스크 프리미엄 재상승</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraines-zelensky-says-russia-readying-more-north-korean-troops-missiles" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 04:47 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">영국, 유럽선수권 금메달 릴레이 2관왕 - Marchand는 은메달에 그쳐</div>
+    <div class="article-title-en">Golden relay double for Britain at European Championships as Marchand takes silver</div>
+    <div class="article-keypoint">스포츠 이벤트 - 직접적 시장 임팩트 없음</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/france/article/2026/08/10/golden-relay-double-for-britain-at-european-championships-as-marchand-takes-silver_6756354_7.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 04:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Jeff Bezos의 Liverpool FC 딜, 누가 가장 큰 수혜를 입나</div>
+    <div class="article-title-en">Here’s who stands to gain the most from a Jeff Bezos-Liverpool FC deal</div>
+    <div class="article-keypoint">Bezos 리버풀 FC 지분 인수 시 LeBron James 지분 가치 급등 가능성 - 스포츠 자산 리밸류에이션</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/heres-who-stands-to-gain-the-most-from-a-jeff-bezos-liverpool-fc-deal-24db9b94?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 07:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">AI 시대의 정보전 | George Friedman ClubGPF 클립</div>
+    <div class="article-title-en">Information Warfare in the AI Age | ClubGPF Clip with George Friedman</div>
+    <div class="article-keypoint">AI 시대 정보전 - 국가 행위자의 AI 무기화가 지정학 리스크 새 차원으로 부상</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/information-warfare-in-the-ai-age-clubgpf-clip-with-george-friedman/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 01:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Trump 미디어 그룹, 손실 누적에도 핵융합 사업 진출</div>
+    <div class="article-title-en">Trump media group racks up losses and pushes into nuclear fusion</div>
+    <div class="article-keypoint">Trump 미디어 그룹, 손실 누적에도 핵융합 진출 - 정치 테마주 리스크 자산 변동성 주의</div>
+    <a class="article-link" href="https://www.ft.com/content/039049ee-bd0b-4e16-8a1c-77704933d56a?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 07:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">트럼프의 마지막 선거</div>
+    <div class="article-title-en">The Last Trump Election</div>
+    <div class="article-keypoint">트럼프 중간선거 이후 미국 민주주의 제도 신뢰 추가 훼손 전망 - 정치 리스크 장기 요인</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/2026-midterms-last-trump-election-by-ian-bremmer-2026-08" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 17:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">모자 사망 뉴욕 전복 사고 선박 운항자, 연방 기소</div>
+    <div class="article-title-en">Boat operator faces federal charges after mother and infant killed in New York capsizing</div>
+    <div class="article-keypoint">연방 법원 기소 관련 FED 키워드 매칭 오류 - 시장 관련성 없음</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/10/man-charged-new-york-harbor-boat-capsizing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 06:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Fabio Panetta: 장기 게임 - 통화정책은 '대재편' 시대에 어떻게 적응해야 하나</div>
+    <div class="article-title-en">Fabio Panetta: Playing the long game - how should monetary policy adapt to the Great Reconfiguration?</div>
+    <div class="article-keypoint">중앙은행 통화정책의 장기 구조 재편 논의 - '대재편' 시대 정책 적응 프레임 제시</div>
+    <a class="article-link" href="https://www.bis.org/review/r260805b.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/10 16:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">AI, 재생에너지보다 석유·가스 생산을 더 크게 늘릴 것 - 보고서</div>
+    <div class="article-title-en">AI will boost oil and gas production more than green energy, report finds</div>
+    <div class="article-keypoint">AI가 재생에너지보다 석유·가스 생산 더 크게 확대 - 에너지 전환 속도 재평가 리스크</div>
+    <a class="article-link" href="https://www.ft.com/content/8f16a902-3e80-462c-add8-b841494d1808?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 02:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">호주 집값 하락, 모기지 보유자에게는 뜻밖의 호재인 이유</div>
+    <div class="article-title-en">Australia’s falling house prices have a silver lining for mortgage holders. Here’s why</div>
+    <div class="article-keypoint">호주 주택가격 하락, RBA 추가 인하 여지 확대 - 아시아·태평양 통화완화 사이클 지속 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/aug/11/australias-falling-house-prices-are-actually-a-good-thing-for-mortgage-holders-heres-why" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/11 00:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
