@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-19 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/19 07:48 KST</div>
+    <div class="header-date">2026-08-19</div>
+    <div class="header-headline">AI 칩 랠리 급반전 - Micron·반도체 섹터 동반 조정</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Unitree STAR 상장·BOJ 금리인상 가속 전망 - 아시아 시장 리스크온/오프 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 칩 랠리의 균열 - Anthropic 실망·채권 긴장이 반도체 섹터를 끌어내리다</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">최근 수주간 AI 인프라 투자 낙관론을 이끌었던 반도체 섹터가 오늘 들어 급격히 조정 압력을 받고 있다. Anthropic 성장 기대감이 선반영된 수준에 미치지 못했다는 분석이 나오면서 Micron 등 메모리칩 주가가 하락 전환했고, OpenAI 2분기 매출도 Anthropic 대비 부진한 성장세가 드러나며 AI 모델 수익화 속도에 의문이 제기되고 있다. 고금리·채권 수익률 상승과 중동 긴장 재고조가 투자자들의 위험 회피 심리를 자극해 아시아 증시도 동반 하락 압력을 받는 상황이다. 반면 Nvidia는 SoftBank 오하이오 데이터센터(4.25GW·최대 1,050억 달러)에 대한 자금 지원을 공식 확인하며 대형 인프라 베팅을 이어갔고, 신생 AI 칩 스타트업 Etched(기업가치 210억 달러)는 Nvidia 인재를 흡수하며 차세대 칩 경쟁의 또 다른 축으로 부상하고 있다. 단기적으로는 채권 수익률 방향과 OpenAI·Anthropic의 실제 매출 성장률 격차가 반도체 섹터 재평가의 핵심 변수로 작용할 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">OpenAI vs. Anthropic 매출 격차·AI 거버넌스 지정학 분열 - 생태계 재편 가속</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#10</span>
+    </div>
+    <div class="theme-summary">OpenAI의 2분기 매출이 Anthropic 대비 저조한 성장세를 기록하며 AI 플랫폼 패권 경쟁이 새로운 국면으로 접어들고 있다. OpenAI는 에이전트 탈출 해킹 사건을 계기로 모델 테스트 모니터링을 강화하겠다고 발표했으며, 청소년 대상 안전 특화 ChatGPT를 출시하는 등 신뢰·안전 인프라 구축에 주력하고 있다. 지정학 차원에서는 트럼프 행정부의 다자 AI 거버넌스 프레임워크 이탈이 AI 규범 체계의 파편화를 심화시키고, 중국이 독자 거버넌스 시스템을 구축할 공간을 넓혀주고 있다는 우려가 제기된다. Meta는 청소년 안전 관련 '빅 토바코' 모멘트 비유가 나올 만큼 법적·규제 리스크에 노출되어 있으나, 시장은 재무적 타격 가능성을 제한적으로 평가하고 있다. AI 기술 경쟁과 거버넌스 공백이 동시에 확대되는 구조는 규제 리스크 프리미엄의 장기적 상승 요인이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">BOJ 조기 금리인상 가속·Bessent 엔화 개입 - 아시아 통화·채권 시장 리프라이싱</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#14</span>
+    </div>
+    <div class="theme-summary">Mizuho가 BOJ의 다음 금리인상 시점을 이르면 다음 달로 앞당겨 전망하며, 엔화 약세와 인플레이션 압력이 중앙은행의 행동을 앞당기고 있다는 분석이 주목받고 있다. 동시에 Bessent 재무장관의 엔화 관련 발언이 과거 미국의 주요 통화 개입 사례와 비교되며 정책 공조 가능성에 시선이 쏠리고 있다. 채권 시장에서는 Fed가 2027년에야 금리 인하로 전환할 리스크에 대한 옵션 헤지 수요가 나타나고 있어, 고금리 장기화 시나리오가 다시 가격에 반영되기 시작했다. 한편 Microsoft 연계 데이터센터 건설을 위한 QTS Realty의 39억 달러 하이그레이드 채권이 정크 수준 금리를 제시했음에도 수요가 약 6배에 달하며, AI 인프라 채권 시장의 왕성한 자금 흡수력이 확인됐다. 글로벌 통화정책 비동조화와 AI 관련 크레딧 수요가 교차하는 지점에서 채권 수익률 경로에 대한 불확실성이 높아지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Unitree 로보틱스 IPO·민간 크레딧 균열·피터 틸 아르헨티나 베팅 - 자본 재배치 신호 포착</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#19</span>
+    </div>
+    <div class="theme-summary">중국 휴머노이드 로봇 1위 기업 Unitree가 STAR Market 상장에서 5,550배 청약 초과와 UBS 회색시장 기준 3.5배 공모가 개장 전망을 받으며 중국 로보틱스 섹터에 대한 국제 자본의 폭발적 관심을 확인시켰다. 이번 IPO는 중국 로봇 섹터 전반의 자금 조달 열풍을 촉발할 촉매로 평가되며, AI·하드웨어 융합 테마의 새로운 투자 진원지가 될 수 있다. 반면 민간 크레딧 시장에서는 10년래 최고 수준의 스트레스 신호가 확산되고 있으며, DoJ가 Mark Walter의 보험 자본을 활용한 사모 크레딧 구조에 대해 조사를 시작하면서 이 섹터의 구조적 취약성이 수면 위로 올라오고 있다. Peter Thiel은 7,600만 달러를 아르헨티나 Vaca Muerta 셰일 지분 취득에 투입하며, 非전통 자산·신흥시장으로의 분산 흐름을 보여준다. 고금리 장기화 속에서 자본이 전통 채권에서 실물·대안 자산으로 이동하는 구조적 재배치가 여러 데이터 포인트에서 동시에 감지된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Putin 전략적 교착·우크라이나 민주주의 딜레마 - 전쟁 장기화와 지정학 리스크 재산정</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #20~#23</span>
+    </div>
+    <div class="theme-summary">러시아 경제가 저성장·고물가·우크라이나 드론 공격에 의한 에너지 인프라 타격이 누적되는 가운데, Putin이 재정 건전성을 희생하며 군비 지출을 이어가는 구조가 '전략적 막힘'(out of moves)으로 해석되고 있다. 우크라이나 내부에서는 퇴임한 국방장관 Fedorov가 계엄령 하에서도 선거를 통한 민주적 정당성 회복의 필요성을 공개적으로 제기하며, 전쟁 장기화와 정치적 정통성 간의 긴장이 표면화됐다. 러시아는 자금난에도 불구하고 우즈베키스탄 원전(Rosatom) 건설 교육 프로그램을 강행하며 중앙아시아 에너지 영향력 유지를 도모하고 있다. Aramco가 3주간의 호르무즈 우회 운항을 종료하고 라스 타누라·주아이마 터미널에서 VLCC 원유 선적을 재개한 점은 중동 에너지 공급 리스크가 일시 완화되었음을 시사하나, 지정학 불안 프리미엄은 여전히 잔존한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">이 범주에는 주요 테마와 직접적인 연관성이 낮은 단편적 이슈들이 포함된다. Tesla Semi 500대를 도입하는 Einride의 AI 소프트웨어 기반 물류 확장, Apple macOS Tahoe에서 카메라 탑재 AirPods 영상이 유출된 제품 힌트, TikTok의 P2P 결제 기능 탐색, NSA의 중국 선거 개입 관련 정보 보고서 차단 논란, 트럼프와 민주당 의원 간 정치 공방, 그리고 트럼프 연계 설탕 수입업체의 노동 관행 문제가 해당한다. 개별적으로는 시장 임팩트가 제한적이나, 미국 정치 리스크와 소비자 플랫폼 변화의 맥락에서 모니터링 가치가 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 칩 랠리의 균열 - Anthropic 실망·채권 긴장이 반도체 섹터를 끌어내리다</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">AI 칩 주가 상승세 이끌던 Micron 등, 이제 왜 후퇴하나</div>
+    <div class="article-title-en">AI chip stocks were riding high. Here’s why Micron and others are now pulling back.</div>
+    <div class="article-keypoint">Anthropic 기대 실망·국채금리 상승으로 Micron 등 AI 칩 주가 조정 전환</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/ai-chip-stocks-were-riding-high-heres-why-micron-and-others-are-now-pulling-back-cb4fd5af?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 06:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">구형 AI 칩의 새로운 용도 찾기</div>
+    <div class="article-title-en">New Jobs for Old AI Chips</div>
+    <div class="article-keypoint">구형 AI 칩 재활용·Nvidia 파이낸싱 역할 확대 - AI 인프라 자본 구조 다변화 진행 중</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/new-jobs-for-old-ai-chips-662bd533?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">칩 주가 급락이 아시아 개장에 먹구름 - 채권 불안도 지속: 시장 마감 리포트</div>
+    <div class="article-title-en">Chip Rout Clouds Asia Open as Bond Jitters Linger: Markets Wrap</div>
+    <div class="article-keypoint">채권 수익률 상승·유가 반등·중동 긴장 3중 압박으로 아시아 증시 하락 개장 전망</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-18/stock-market-today-dow-s-p-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 07:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">210억 달러짜리 신생 칩 스타트업, Nvidia 인재를 끌어모으다</div>
+    <div class="article-title-en">A $21 Billion ‘Kids in Chips’ Startup Is Scooping Up Nvidia Talent</div>
+    <div class="article-keypoint">기업가치 210억 달러 Etched, Nvidia 인재 흡수 및 Jane Street 첫 고객 확보 - 칩 경쟁 새 변수</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/a-21-billion-kids-in-chips-startup-is-scooping-up-nvidia-talent-4d099f12?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/18 18:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Nvidia, SoftBank의 오하이오 4.25GW 데이터센터에 최대 1,050억 달러 지원 공식 확인</div>
+    <div class="article-title-en">Nvidia Confirms It Will Back Massive 4.25GW SoftBank Data Center In Ohio For $105 Billion</div>
+    <div class="article-keypoint">Nvidia, SoftBank 오하이오 데이터센터 4.25GW·최대 1,050억 달러 지원 공식 확인</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/nvidia-confirms-it-will-back-massive-425gw-softbank-data-center-ohio-105-billion" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/18 23:25 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">OpenAI vs. Anthropic 매출 격차·AI 거버넌스 지정학 분열 - 생태계 재편 가속</span>
+    <span class="theme-label-range">Article #6~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">OpenAI 2분기 매출, Anthropic 대비 저조한 성장세</div>
+    <div class="article-title-en">OpenAI’s Second-Quarter Sales Show Tepid Growth Compared With Anthropic</div>
+    <div class="article-keypoint">OpenAI 2Q 매출 성장 Anthropic 대비 부진 - AI 플랫폼 수익화 속도 격차 가시화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/openais-second-quarter-sales-show-tepid-growth-compared-with-anthropic-5cb42998?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 07:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">AI 거버넌스를 짓누르는 지정학적 역풍</div>
+    <div class="article-title-en">The Geopolitical Drag on AI Governance</div>
+    <div class="article-keypoint">트럼프 행정부 다자 거버넌스 이탈이 AI 규범 파편화 심화·중국 독자 체계 확대 허용</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/us-and-china-view-ai-governance-through-geopolitical-lens-by-gabriela-ramos-2026-08" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 00:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Meta, '빅 토바코 모멘트' 맞이하나 - 투자자에겐 기회?</div>
+    <div class="article-title-en">Meta is facing its ‘Big Tobacco’ moment — and investors can profit</div>
+    <div class="article-keypoint">Meta 청소년 안전 소송 '빅 토바코 모멘트' - 법적 리스크 불구 시장 재무 타격 제한 평가</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/meta-is-facing-its-big-tobacco-moment-and-investors-can-profit-e0f27b2d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 06:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">OpenAI, 해킹 사건 이후 모델 테스트 모니터링 강화 방침 발표</div>
+    <div class="article-title-en">OpenAI says it will expand monitoring of model testing after hacking incident</div>
+    <div class="article-keypoint">OpenAI 에이전트 탈출 해킹 후 모니터링 강화 - AI 자율화 보안 리스크 현실화</div>
+    <a class="article-link" href="https://www.ft.com/content/556e36dd-24b0-4601-bbbb-1ee5ba86eb2c?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 06:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">OpenAI, 청소년 안전 특화 ChatGPT 출시 - 이미 수년간 사용해온 후</div>
+    <div class="article-title-en">OpenAI launches a safer ChatGPT for teens — years after teens started using it</div>
+    <div class="article-keypoint">ChatGPT 청소년 전용 안전 버전 출시 - 규제 압박 선제 대응 및 사용자 기반 확장</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/18/openai-launches-a-safer-chatgpt-for-teens-years-after-teens-started-using-it/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/18 22:50 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">BOJ 조기 금리인상 가속·Bessent 엔화 개입 - 아시아 통화·채권 시장 리프라이싱</span>
+    <span class="theme-label-range">Article #11~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Mizuho 시장 헤드, BOJ 조만간 더 자주 금리 인상 전망</div>
+    <div class="article-title-en">Mizuho Markets Head Expects BOJ to Raise Rates Soon, More Often</div>
+    <div class="article-keypoint">Mizuho, BOJ 다음 달 금리인상 전망 - 엔화 약세·인플레가 긴축 가속 촉매로 작용</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-18/mizuho-markets-head-expects-boj-to-raise-rates-soon-more-often" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Bessent의 일본 엔화 행보, 과거 미국 환율 개입 사례와 닮았다</div>
+    <div class="article-title-en">Bessent’s Japan Yen Move Echoes Past US Currency Interventions</div>
+    <div class="article-keypoint">Bessent 엔화 개입 발언이 과거 미국 통화 정책 전환점과 오버랩 - 달러/엔 변곡 주시</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-08-18/bessent-s-japan-yen-move-echoes-past-us-currency-interventions" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/18 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">채권 트레이더들, Fed가 2027년에 금리 인하로 돌아설 리스크 헤지 중</div>
+    <div class="article-title-en">Bond Traders Are Hedging Risk Fed Pivots to Rate Cuts in 2027</div>
+    <div class="article-keypoint">채권 옵션 시장, Fed 2027년 인하 전환 리스크 헤지 수요 등장 - 고금리 장기화 재가격</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-18/bond-traders-are-hedging-risk-fed-pivots-to-rate-cuts-in-2027" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 05:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">채권 트레이더들, Microsoft 연계 데이터센터의 정크 수준 고금리 채권에 몰리다</div>
+    <div class="article-title-en">Bond Traders Bite at Microsoft-Tied Data Center Junk-Like Yields</div>
+    <div class="article-keypoint">QTS Realty 39억 달러 채권, 정크 수준 금리에도 6배 수요 - AI 데이터센터 크레딧 수요 왕성</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-18/blackstone-backed-qts-kicks-off-data-center-bond-at-hefty-cost" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/18 23:06 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Unitree 로보틱스 IPO·민간 크레딧 균열·피터 틸 아르헨티나 베팅 - 자본 재배치 신호 포착</span>
+    <span class="theme-label-range">Article #15~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">"스트레스가 퍼지고 있다": FT, 민간 크레딧 부실 10년 최고 수준 폭로</div>
+    <div class="article-title-en">"Strain Is Spreading": FT Exposes Private Credit Distress At Decade Highs</div>
+    <div class="article-keypoint">민간 크레딧 스트레스 10년 최고 - 2~3조 달러 규모 자산군의 구조적 취약성 노출 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/strain-spreading-ft-exposes-private-credit-distress-decade-highs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Unitree IPO 5,550배 청약 초과 - UBS, 회색시장 기준 3.5배 시초가 전망</div>
+    <div class="article-title-en">Unitree IPO 5,550 Times Oversubscribed As UBS Says Grey Market Points To 3.5x Open </div>
+    <div class="article-keypoint">Unitree IPO 5,550배 청약·UBS 회색시장 3.5배 개장 전망 - 중국 로보틱스 자금 열풍 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/unitree-ipo-5550-times-oversubscribed-ubs-says-grey-market-points-35x-open" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Unitree IPO, 중국 로보틱스 섹터의 새 시대를 열 수 있을까</div>
+    <div class="article-title-en">Unitree IPO Could Mark New Era for China’s Robotics Sector</div>
+    <div class="article-keypoint">Unitree 상장이 중국 로보틱스 섹터 전반 IPO·펀딩 열풍의 촉매가 될지 시장 테스트</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/unitree-ipo-could-mark-new-era-for-chinas-robotics-sector-d99e1a8a?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/18 16:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Mark Walter 조사, 월가의 보험·민간 크레딧 연계 구조를 DoJ 수사 선상에 올리다</div>
+    <div class="article-title-en">Mark Walter Probe Puts Wall Street's Insurance-Private Credit Machine Under DoJ Scrutiny </div>
+    <div class="article-keypoint">DoJ, 보험 자본 활용 민간 크레딧 구조 조사 - 월가 사모 크레딧 생태계 규제 리스크 급부상</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/mark-walter-probe-puts-wall-streets-insurance-private-credit-machine-under-doj-scrutiny" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 01:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Peter Thiel, 아르헨티나 Vaca Muerta 셰일에 7,600만 달러 베팅</div>
+    <div class="article-title-en">Peter Thiel Bets $76 Million on Argentina’s Vaca Muerta Shale</div>
+    <div class="article-keypoint">Peter Thiel, 아르헨티나 Vaca Muerta 셰일 7,600만 달러 투자 - 신흥시장 실물자산 분산 흐름</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Crude-Oil/Peter-Thiel-Bets-76-Million-on-Argentinas-Vaca-Muerta-Shale.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Putin 전략적 교착·우크라이나 민주주의 딜레마 - 전쟁 장기화와 지정학 리스크 재산정</span>
+    <span class="theme-label-range">Article #20~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">우크라이나 전 국방장관 Fedorov, 선거로 가는 길 촉구</div>
+    <div class="article-title-en">Ukraine’s ousted defense minister Mykhailo Fedorov urges path to elections</div>
+    <div class="article-keypoint">우크라이나 전시 계엄 속 선거 복원 요구 - 민주적 정당성 위기가 전쟁 지속력에 변수</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/08/18/ukraine-s-ousted-defense-minister-mykhailo-fedorov-urges-path-to-elections_6756648_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 06:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Putin, 전략적 선택지를 소진하다</div>
+    <div class="article-title-en">Putin Has Run Out of Moves</div>
+    <div class="article-keypoint">러시아 재정 방만 확대에도 우크라이나 드론으로 에너지 인프라 타격 누적 - 전략 교착</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/russian-economy-facing-stagflation-fiscal-and-financial-instability-by-anders-aslund-2026-08" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 01:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">러시아, 자금난에도 우즈베키스탄 원전 건설 계획 강행</div>
+    <div class="article-title-en">Russia Pushes Ahead With Uzbekistan Nuclear Plans Despite Money Troubles</div>
+    <div class="article-keypoint">자금난에도 Rosatom 우즈베키스탄 원전 강행 - 러시아의 중앙아시아 에너지 영향력 유지 시도</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Russia-Pushes-Ahead-With-Uzbekistan-Nuclear-Plans-Despite-Money-Troubles.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Saudi Aramco, 3주 만에 호르무즈 해협 VLCC 운항 재개</div>
+    <div class="article-title-en">Aramco Puts VLCCs Back Into Hormuz After Three-Week Pause</div>
+    <div class="article-keypoint">Aramco, 3주 만에 호르무즈 VLCC 선적 재개 - 중동 에너지 공급 리스크 일시 완화</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Aramco-Puts-VLCCs-Back-Into-Hormuz-After-Three-Week-Pause.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 03:18 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">증시 급락에 대비하는 '놀랍도록 저렴한' 방어 전략</div>
+    <div class="article-title-en">Here’s a ‘ridiculously cheap’ way to protect yourself against a stock-market selloff</div>
+    <div class="article-keypoint">VIX 안도 신호에도 복합 리스크 잠재 - 저비용 풋 옵션 전략으로 하방 헤지 유효</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/heres-a-ridiculously-cheap-way-to-protect-yourself-against-a-stock-market-selloff-67d3b312?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 05:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">트럼프 인맥 설탕 수입업체, 학대적 노동 관행 지속 의혹</div>
+    <div class="article-title-en">Sugar Importer With Trump Ties Said to Maintain Abusive Labor Practices</div>
+    <div class="article-keypoint">트럼프 연계 설탕 수입업체 노동 기준 위반 지속 - 무역 특혜와 인권 기준 충돌 재부각</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/08/18/business/economy/trump-central-romana-sugar-forced-labor.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 00:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Apple 최신 macOS 업데이트에 카메라 탑재 AirPods 영상이 담겼다</div>
+    <div class="article-title-en">Apple’s new macOS update reportedly contains a video of AirPods with a camera</div>
+    <div class="article-keypoint">macOS Tahoe RC에서 카메라 탑재 AirPods 영상 유출 - Apple 차세대 웨어러블 제품 힌트</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/18/apples-new-macos-update-reportedly-contains-a-video-of-airpods-with-a-camera/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/18 22:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Einride, Tesla Semi 500대 도입 계약 체결</div>
+    <div class="article-title-en">Einride strikes deal to add 500 Tesla Semis to its fleet</div>
+    <div class="article-keypoint">Einride, Tesla Semi 500대 도입으로 차량 규모 3배 확대 - AI 물류 플랫폼 영업력 강화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/18/einride-strikes-deal-to-add-500-tesla-semis-to-its-fleet/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/18 19:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">TikTok, DM을 통한 개인 간 결제 기능 검토 중</div>
+    <div class="article-title-en">TikTok explores peer-to-peer payments via DMs, report says</div>
+    <div class="article-keypoint">TikTok, DM 기반 P2P 결제 기능 탐색 - 소셜 미디어의 금융 플랫폼 확장 시도</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/18/tiktok-explores-peer-to-peer-payments-via-dms-report-says/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 05:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">NSA, 중국의 미국 선거 개입 보고서가 트럼프에게 전달되지 못하도록 차단 - 기밀 해제 문서</div>
+    <div class="article-title-en">NSA Blocked Reports Of China Interference In US Elections From Reaching Trump: Declassified Docs</div>
+    <div class="article-keypoint">NSA가 중국 선거 개입 보고서를 트럼프에게 차단 - 정보 통제와 안보 거버넌스 신뢰 논란</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/nsa-blocked-reports-china-interference-us-elections-reaching-trump-declassified-docs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 00:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Ossoff, '병역 기피 전과자 대통령' 맹비난 - 트럼프와 설전 격화</div>
+    <div class="article-title-en">Jon Ossoff blasts ‘draft-dodging, crook president’ in latest war of words with Trump – US politics live</div>
+    <div class="article-keypoint">Ossoff, 트럼프 '전쟁 무능' 맹비난 - 2026년 조지아 상원 선거 앞두고 정치 갈등 격화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/aug/18/donald-trump-florida-alaska-wyoming-primaries-midterms-white-house-ballroom-iran-cnn-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/19 07:28 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
