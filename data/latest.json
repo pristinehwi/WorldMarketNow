@@ -2,56 +2,183 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "AI칩 수요 재평가",
+      "title": "재무부 국채매입",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "AI매출성장둔화",
-          "value": "OpenAI 2Q 성장률 Anthropic 대비 부진",
+          "label": "재무부 국채매입",
+          "value": "수익률 급등 억제 바이백 신호",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n2",
-          "label": "칩수요전망하향",
-          "value": "데이터센터 투자 지속 여부 의구심 확산",
+          "label": "장기금리 급락",
+          "value": "국채 수요 기대 확대로 10Y 수익률 하방 압력",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n3",
-          "label": "반도체차익실현",
-          "value": "AI칩 밸류 프리미엄 축소, 차익실현 압력",
-          "source": "concept",
+          "label": "30년국채ETF(TLT)",
+          "value": "[08/17] $82.52→[08/18] $82.83 (+0.38%)",
+          "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n4",
-          "label": "반도체ETF(SOXX)",
-          "value": "[08/17] $558.07→[08/18] $531.39 (-4.96%)",
+          "label": "10년국채ETF(IEF)",
+          "value": "[08/17] $93.19→[08/18] $93.28 (+0.10%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n5",
-          "label": "혁신성장ETF(ARKK)",
-          "value": "[08/17] $81.74→[08/18] $79.15 (-3.18%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "실질금리 상승",
+          "value": "2.41→2.44 (+0.03%p)",
+          "source": "layer_T0_macro",
           "timestamp": null
         },
         {
           "id": "n6",
-          "label": "SK자사주40조원",
-          "value": "자사주 매입·소각, 하방 완충 시도",
+          "label": "고실질금리 구조",
+          "value": "DFII10 2.44% 고착, 정책개입 효과 제한",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n7",
+          "label": "물가연동채ETF(TIP)",
+          "value": "[08/17] $107.21→[08/18] $107.45 (+0.23%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        },
+        {
+          "id": "n8",
+          "label": "성장주 밸류회복",
+          "value": "실질금리 하락 기대 시 DCF 할인율 완화",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n9",
+          "label": "성장주ETF(IWF)",
+          "value": "$122.96 (-0.09%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "촉발",
+          "mechanism": "바이백 의사 표명이 국채 수요 기대를 자극해 장기금리 즉각 하락"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "label": "실증",
+          "mechanism": "TLT 상승(+0.38%)은 장기금리 하락 압력을 실증"
+        },
+        {
+          "from": "n2",
+          "to": "n4",
+          "label": "실증",
+          "mechanism": "IEF 소폭 상승(+0.10%)으로 10Y 수익률 하방 압력 확인"
+        },
+        {
+          "from": "n6",
+          "to": "n5",
+          "label": "실증",
+          "mechanism": "DFII10 2.44%로 추가 상승, 구조적 고실질금리 국면 지속 확인"
+        },
+        {
+          "from": "n6",
+          "to": "n8",
+          "label": "제약",
+          "mechanism": "구조적 고실질금리가 지속되면 바이백 효과는 단기에 그쳐 성장주 회복 제한"
+        },
+        {
+          "from": "n2",
+          "to": "n7",
+          "label": "실증",
+          "mechanism": "TIP 상승(+0.23%)은 기대인플레 반영 채권 수요 확인"
+        },
+        {
+          "from": "n8",
+          "to": "n9",
+          "label": "반증",
+          "mechanism": "IWF -0.09%로 성장주 밸류회복 기대가 실질금리 재상승에 상쇄됨"
+        }
+      ],
+      "korea_terminal_node": null,
+      "briefing": "재무부 국채매입 신호가 TLT·IEF를 소폭 상승시키며 채권 랠리 기대를 형성했으나, DFII10이 2.44%로 재상승하며 구조적 고실질금리가 정책 개입 효과를 제한하고 성장주 회복도 IWF 소폭 약세(-0.09%)로 반증됨",
+      "_warnings": [
+        "[규칙22 중립] thread=thread_001 \"장기금리 급락\"→\"10년국채ETF(IEF)\" 변화율 0.1% — ETF 노드 제외 권장"
+      ]
+    },
+    {
+      "id": "thread_002",
+      "title": "AI칩 수요 재편",
+      "priority": 2,
+      "frequency": "NOW",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "커스텀ASIC 계약",
+          "value": "Google-Marvell 맞춤형 AI칩 딜",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n2",
+          "label": "AI칩 수요 재편",
+          "value": "범용GPU→커스텀ASIC 수요 이동",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n3",
+          "label": "반도체ETF(SOXX)",
+          "value": "[08/17] $548.38→[08/18] $521.14 (-4.96%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        },
+        {
+          "id": "n4",
+          "label": "OpenAI 성장둔화",
+          "value": "2Q 매출 성장 둔화, AI투자 모멘텀 복잡화",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n5",
+          "label": "HBM수요 분기점",
+          "value": "커스텀ASIC 확산 시 HBM 납품처 다변화",
+          "source": "concept",
+          "timestamp": null
+        },
+        {
+          "id": "n6",
+          "label": "혁신성장ETF(ARKK)",
+          "value": "[08/17] $85.53→[08/18] $82.80 (-3.18%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        },
+        {
+          "id": "n7",
+          "label": "대만ETF(EWT)",
+          "value": "[08/17] $108.37→[08/18] $104.94 (-3.16%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        },
+        {
+          "id": "n8",
           "label": "KOSPI",
-          "value": "6,471.17 (-5.80%)",
+          "value": "6471.17 (-5.80%)",
           "source": "layer_T1_asia_today",
           "timestamp": null
         }
@@ -61,284 +188,118 @@
           "from": "n1",
           "to": "n2",
           "label": "촉발",
-          "mechanism": "AI 플랫폼 성장 둔화가 칩 수요 전망 하향으로 즉각 전이"
+          "mechanism": "커스텀칩 선택이 클라우드 업체들의 탈NVIDIA 수요 신호로 해석됨"
+        },
+        {
+          "from": "n4",
+          "to": "n5",
+          "label": "증폭",
+          "mechanism": "AI 선두주자 매출 둔화가 HBM 수요 기대 조정을 촉발해 납품 구도 불확실성 증폭"
+        },
+        {
+          "from": "n2",
+          "to": "n5",
+          "label": "연결",
+          "mechanism": "ASIC 확산은 HBM 탑재 방식 다변화를 요구해 한국 메모리 업체 구조 변화 압력"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "압박",
-          "mechanism": "수요 재평가로 AI칩 밸류에이션 프리미엄 축소, 차익실현 압력 발생"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
           "label": "실증",
-          "mechanism": "글로벌 AI칩 조정이 SOXX -4.96% 하락으로 실증"
+          "mechanism": "SOXX -4.96%로 AI칩 수요 재편 우려가 반도체 섹터 전반 하락으로 실증"
         },
         {
-          "from": "n3",
-          "to": "n5",
-          "label": "실증",
-          "mechanism": "AI·혁신 테마 조정이 ARKK -3.18% 동반 하락으로 확인"
-        },
-        {
-          "from": "n6",
-          "to": "n7",
-          "label": "완충",
-          "mechanism": "SK하이닉스 자사주 지지에도 글로벌 센티멘트 악화로 KOSPI 하방 압력 지속"
-        },
-        {
-          "from": "n3",
-          "to": "n7",
-          "label": "전이",
-          "mechanism": "T0 반도체주 급락 센티멘트가 T1 KOSPI 반도체 섹터 순매도로 전이"
-        }
-      ],
-      "korea_terminal_node": "n7",
-      "briefing": "AI칩 수요 재평가가 핵심 공통원인. OpenAI 2Q 성장 부진이 SOXX -4.96%·ARKK -3.18% 급락으로 즉각 실증되며, SK하이닉스 자사주 40조 원의 하방 완충에도 KOSPI -5.80% 반도체 순매도 압력 지속.",
-      "_warnings": [
-        "[한국 종착 비율] 3/4 (50% 초과)"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n3(AI칩 밸류에이션 수축) -> n4(SOXX 급락) -> n2(칩 수요 전망 추가 하향) -> n3",
-        "riskLevel": "high",
-        "commentary": "SOXX 급락이 시장 심리를 통해 AI 인프라 투자 계획 재검토를 유발하고, 이는 다시 수요 전망 하향을 심화시켜 밸류에이션 프리미엄을 추가 압축하는 자기강화(self-reinforcing) 매도 루프 형성 위험. 특히 AI 하이프 사이클 후기 국면에서 마진콜 및 패시브 리밸런싱이 루프 속도를 가속할 가능성 존재."
-      },
-      "chainFragility": {
-        "fragileEdge": "n1->n2",
-        "fragileReason": "AI 플랫폼 성장 둔화 내러티브가 일회성 실적 미스(earnings miss)에 기인한 것이라면 칩 수요 전망 하향 전이는 과잉반응으로 조기 소멸 가능하며, 이 링크가 단절될 경우 후속 n2->n3->n4/n5 밸류에이션 압축 체인 전체가 기초 없이 붕괴됨.",
-        "alternativePath": "n6(SK하이닉스 자사주 매입) -> n7 경로가 유일하게 독립적이나 글로벌 센티멘트 악화를 상쇄하기에 구조적으로 역부족이며, n1->n7 직접 매크로 센티멘트 전이 경로가 잠재적 대안으로 존재"
-      },
-      "missingHops": [
-        {
-          "to": "HBM 공급사 주가 (마이크론, SK하이닉스 ADR)",
-          "via": "SOXX 급락 → HBM 탑재 AI칩(H100/B200) 주문 감소 우려 → HBM 공급 계약 재협상 리스크 가격 반영 → HBM 전문 공급사 밸류에이션 직격",
-          "lag_days": 2
-        },
-        {
-          "to": "AI 인프라 관련 전력·냉각 장비주 (Vertiv, Eaton)",
-          "via": "AI칩 수요 재평가 → 데이터센터 신규 착공 및 CapEx 계획 재검토 → 전력 인프라 선행 발주 취소 또는 지연 → 관련 장비주 수주 잔고 우려로 동반 조정",
-          "lag_days": 5
-        }
-      ]
-    },
-    {
-      "id": "thread_002",
-      "title": "글로벌 리스크오프",
-      "priority": 2,
-      "frequency": "NOW",
-      "nodes": [
-        {
-          "id": "n1",
-          "label": "글로벌리스크오프",
-          "value": "EEM·HYG↓ TLT↑, 안전자산 선호 동시 신호",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n2",
-          "label": "신흥국ETF(EEM)",
-          "value": "[08/17] $67.30→[08/18] $65.34 (-2.94%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n3",
-          "label": "하이일드ETF(HYG)",
-          "value": "[08/17] $79.61→[08/18] $79.53 (-0.10%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n4",
-          "label": "미국채30Y(TLT)",
-          "value": "[08/17] $81.35→[08/18] $81.66 (+0.38%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n5",
-          "label": "달러강세압력",
-          "value": "리스크오프 국면 달러 수요 집중",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n6",
-          "label": "달러인덱스(UUP)",
-          "value": "[08/17] $28.10→[08/18] $28.14 (+0.14%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n7",
-          "label": "외국인자금이탈",
-          "value": "달러강세로 EM 자본유출·원화약세 가속",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n8",
-          "label": "KOSPI",
-          "value": "6,471.17 (-5.80%)",
-          "source": "layer_T1_asia_today",
-          "timestamp": null
-        },
-        {
-          "id": "n9",
-          "label": "VIX선물ETF(VIXY)",
-          "value": "[08/17] $18.82→[08/18] $18.86 (+0.21%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        }
-      ],
-      "edges": [
-        {
-          "from": "n1",
-          "to": "n2",
-          "label": "실증",
-          "mechanism": "리스크오프가 EM 전반 자금 이탈로 EEM -2.94% 하락 실증"
-        },
-        {
-          "from": "n1",
-          "to": "n3",
-          "label": "실증",
-          "mechanism": "리스크오프가 하이일드 회사채 이탈로 HYG -0.10% 하락 실증"
-        },
-        {
-          "from": "n1",
-          "to": "n4",
-          "label": "실증",
-          "mechanism": "안전자산 선호로 미국 장기국채 TLT +0.38% 상승 실증"
-        },
-        {
-          "from": "n1",
-          "to": "n9",
-          "label": "실증",
-          "mechanism": "리스크오프 국면 VIX 상승이 VIXY +0.21%로 확인"
-        },
-        {
-          "from": "n1",
-          "to": "n5",
-          "label": "유발",
-          "mechanism": "리스크오프 국면에서 안전통화 달러로 자금 집중, 달러 강세 압력 형성"
-        },
-        {
-          "from": "n5",
+          "from": "n4",
           "to": "n6",
           "label": "실증",
-          "mechanism": "달러 강세 압력이 UUP +0.14% 상승으로 실증"
+          "mechanism": "AI 모멘텀 둔화 우려가 ARKK -3.18% 하락으로 혁신성장주에 반영"
         },
         {
           "from": "n5",
           "to": "n7",
-          "label": "전이",
-          "mechanism": "달러 강세가 EM 자본유출 압력을 심화, 한국 외국인 이탈 가속"
+          "label": "실증",
+          "mechanism": "HBM·파운드리 수요 불확실성이 EWT -3.16% 하락으로 대만 반도체에 선반영"
         },
         {
-          "from": "n7",
+          "from": "n3",
           "to": "n8",
-          "label": "귀결",
-          "mechanism": "외국인 이탈이 KOSPI -5.80% 동반 하락의 공통 원인으로 작용"
+          "label": "선행",
+          "mechanism": "전일 SOXX 급락이 당일 한국 반도체 섹터 하방 압력으로 KOSPI -5.80% 전이"
         }
       ],
       "korea_terminal_node": "n8",
-      "briefing": "글로벌 리스크오프가 공통원인. EEM -2.94%·HYG -0.10%·TLT +0.38% 동시 발생이 안전자산 선호 신호를 확인하고, 달러강세(UUP +0.14%)가 EM 자본유출을 압박하면서 KOSPI -5.80% 외인 순매도로 귀결. 캐나다 관세 보류는 완충 역할에 그침.",
+      "briefing": "Marvell-Google ASIC 계약과 OpenAI 성장 둔화가 SOXX -4.96%, ARKK -3.18% 급락을 촉발했고, HBM 납품 구도 불확실성이 EWT -3.16%를 거쳐 당일 KOSPI -5.80% 하락으로 전이됨",
       "_warnings": [
-        "[규칙22 중립] thread=thread_002 \"글로벌리스크오프\"→\"하이일드ETF(HYG)\" 변화율 -0.1% — ETF 노드 제외 권장"
-      ],
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n5(달러 강세) -> n7(한국 외국인 자본 이탈) -> n8(KOSPI 하락) -> n1(글로벌 리스크오프 심화) -> n5",
-        "riskLevel": "medium",
-        "commentary": "KOSPI 급락이 EM 전반의 리스크오프 센티멘트를 추가 강화하고, 이것이 다시 달러 강세 압력을 심화시키는 경로는 한국 시장 규모(EM 내 약 12% 비중) 대비 전파력이 제한적이나, 원화 약세와 외국인 이탈이 동시에 가속화될 경우 아시아 EM 전반의 커런시 크라이시스 내러티브로 비화될 위험이 medium 수준으로 존재."
-      },
-      "chainFragility": {
-        "fragileEdge": "n7->n8",
-        "fragileReason": "외국인 자본 이탈이 KOSPI 하락의 주요 원인으로 지목되나, 연기금·공제회 등 국내 기관의 저가매수(buy-on-dip) 대응이 집중될 경우 외국인 순매도 충격이 지수 하락으로 완전히 전이되지 않아 체인의 최종 귀결 링크가 약화됨.",
-        "alternativePath": "thread_001의 n3->n7 반도체 센티멘트 직접 전이 경로가 n7->n8 하락 압력을 독립적으로 지지하는 대안 경로로 존재하여, n7->n8 링크 단절 시에도 섹터 주도 하락은 부분 지속 가능"
-      },
-      "missingHops": [
-        {
-          "to": "원·달러 환율 (KRW/USD 추가 절하)",
-          "via": "달러 강세(n5) + 외국인 주식 매도 대금 역송금 수요 급증 → 외환시장 달러 수요 집중 → 원화 추가 절하 압력 → 수입 물가 상승 → 한국 CPI 경로를 통한 한은 통화정책 불확실성 재부각",
-          "lag_days": 1
-        },
-        {
-          "to": "한국 크레딧 스프레드 (회사채·여전채 AA-급)",
-          "via": "리스크오프 글로벌 전이(n1) → 국내 기관 포트폴리오 손실 확대 → 유동성 확보 목적 채권 매도 → 크레딧 스프레드 확대 → 기업 자금조달 비용 상승 → 설비투자 심리 위축",
-          "lag_days": 7
-        }
+        "[?? 복합신호 B안] thread=thread_002 \"반도체ETF(SOXX)\"(down)→\"KOSPI\"(down) ? 동방향 자산 직접 연결. 공통원인 노드 권장."
       ]
     },
     {
       "id": "thread_003",
-      "title": "BOJ 긴축·엔캐리청산",
+      "title": "글로벌 리스크오프",
       "priority": 3,
       "frequency": "WEEKLY",
       "nodes": [
         {
           "id": "n1",
-          "label": "BOJ추가긴축전망",
-          "value": "BOJ 금리인상 빈도 확대 기대 확산",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n2",
-          "label": "일미금리차구조",
-          "value": "미국 고실질금리와 BOJ 긴축 병행, 캐리 수익성 소멸",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n3",
-          "label": "실질금리(DFII10)",
-          "value": "2.41 → 2.44 (+0.03p)",
+          "label": "고실질금리 지속",
+          "value": "DFII10 2.41→2.44 (+0.03%p)",
           "source": "layer_T0_macro",
           "timestamp": null
         },
         {
-          "id": "n4",
-          "label": "엔화강세기대",
-          "value": "BOJ 긴축 기대 대비 실제 엔화 약세 지속",
+          "id": "n2",
+          "label": "HY스프레드 확대",
+          "value": "2.70→2.75 (+0.05%p)",
+          "source": "layer_T0_macro",
+          "timestamp": null
+        },
+        {
+          "id": "n3",
+          "label": "글로벌 리스크오프",
+          "value": "EEM·HYG 동반하락, TLT 안전자산 선호",
           "source": "concept",
           "timestamp": null
         },
         {
+          "id": "n4",
+          "label": "하이일드채ETF(HYG)",
+          "value": "[08/12] $79.61→[08/18] $79.70 (-0.10%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null
+        },
+        {
           "id": "n5",
-          "label": "엔화ETF(FXY)",
-          "value": "[08/12] $57.52→[08/18] $57.48 (-0.07%)",
+          "label": "신흥국ETF(EEM)",
+          "value": "[08/12] $66.46→[08/18] $66.16 (-1.69%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n6",
-          "label": "캐리청산우려",
-          "value": "엔 캐리 청산 가속으로 EM·고위험 변동성 확대",
+          "label": "달러강세 압력",
+          "value": "리스크오프 국면 달러 안전자산 수요",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n7",
-          "label": "MSCI일본ETF(EWJ)",
-          "value": "[08/12] $97.79→[08/18] $95.37 (-2.47%)",
+          "label": "달러ETF(UUP)",
+          "value": "[08/12] $28.20→[08/18] $27.92 (-0.21%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n8",
-          "label": "닛케이225",
-          "value": "65,326.42 (-3.16%)",
-          "source": "layer_T1_asia_today",
+          "label": "외인 EM자금 이탈",
+          "value": "달러강세+스프레드 확대로 신흥국 자본 이탈",
+          "source": "concept",
           "timestamp": null
         },
         {
           "id": "n9",
-          "label": "KOSPI외인압력",
-          "value": "아시아 변동성 확대 속 EM 자금 이탈",
-          "source": "concept",
+          "label": "KOSPI",
+          "value": "6471.17 (-5.80%)",
+          "source": "layer_T1_asia_today",
           "timestamp": null
         }
       ],
@@ -346,122 +307,118 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "구조화",
-          "mechanism": "BOJ 추가 인상 기대와 미국 고실질금리가 결합하여 엔 캐리 매력 구조적 소멸"
+          "label": "촉발",
+          "mechanism": "실질금리 고공행진이 한계기업 이자 부담을 키워 HY 스프레드 확대"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "실증",
-          "mechanism": "미국 실질금리 DFII10 2.44%로 상승, 일미 금리차 구조 부각 실증"
+          "label": "촉발",
+          "mechanism": "HY 스프레드 확대가 포트폴리오 리밸런싱을 유발해 위험자산 이탈 신호"
         },
         {
-          "from": "n1",
+          "from": "n3",
           "to": "n4",
-          "label": "기대",
-          "mechanism": "BOJ 추가 인상 기대가 엔화 강세 전환 가능성을 제기, 캐리 청산 압력 유발"
+          "label": "실증",
+          "mechanism": "HYG 주간 -0.10%로 리스크오프 속 하이일드 채권 약세 실증"
         },
         {
-          "from": "n4",
+          "from": "n3",
           "to": "n5",
-          "label": "반증",
-          "mechanism": "BOJ 긴축 기대에도 FXY -0.07%로 엔화 강세 미실현, 청산 압력 지속 반증"
+          "label": "실증",
+          "mechanism": "EEM 주간 -1.69%로 신흥국 리스크오프 이탈 압력 실증"
         },
         {
-          "from": "n2",
+          "from": "n3",
           "to": "n6",
-          "label": "유발",
-          "mechanism": "일미 금리차 구조가 엔 캐리 청산 우려를 심화, EM 변동성 확대 유발"
+          "label": "연결",
+          "mechanism": "리스크오프 국면에서 달러 안전자산 수요 집중으로 달러강세 압력"
         },
         {
           "from": "n6",
           "to": "n7",
-          "label": "실증",
-          "mechanism": "캐리 청산 우려가 EWJ 주간 -2.47% 하락으로 일본 주식 타격 실증"
-        },
-        {
-          "from": "n1",
-          "to": "n8",
-          "label": "전이",
-          "mechanism": "T0 BOJ 긴축 기대가 T1 닛케이225 -3.16% 하락으로 당일 전이"
+          "label": "반증",
+          "mechanism": "UUP 주간 -0.21%로 달러강세 기대와 달리 달러 약세 확인"
         },
         {
           "from": "n6",
+          "to": "n8",
+          "label": "연결",
+          "mechanism": "달러강세+스프레드 동반 확대가 EM 자본 이탈을 가속"
+        },
+        {
+          "from": "n8",
           "to": "n9",
-          "label": "귀결",
-          "mechanism": "아시아 EM 변동성 확대 속 한국 외국인 비중 축소로 KOSPI 하방 압력 증폭"
+          "label": "전이",
+          "mechanism": "외인 EM 자금 이탈 흐름이 원화약세 및 KOSPI 외인 순매도로 귀결"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "BOJ 추가 긴축 전망과 미국 고실질금리 병행이 공통원인. 일미 금리차 구조가 엔 캐리 청산 우려를 심화시켜 EWJ -2.47%·닛케이 -3.16% 동반 하락. FXY 주간 보합으로 엔화 강세 미실현되며 아시아 EM 변동성 확대."
+      "korea_terminal_node": "n9",
+      "briefing": "글로벌 리스크오프 구조 하에서 DFII10 2.44%·HY스프레드 2.75bp 확대가 EEM -1.69%·HYG -0.10% 하락으로 실증됐고, EM 자금 이탈 압력이 KOSPI -5.80%에 전이됨",
+      "_warnings": [
+        "[규칙22 중립] thread=thread_003 \"글로벌 리스크오프\"→\"하이일드채ETF(HYG)\" 변화율 -0.1% — ETF 노드 제외 권장"
+      ]
     },
     {
       "id": "thread_004",
-      "title": "AI투자정점논쟁",
+      "title": "NATO 방위비 확대",
       "priority": 4,
       "frequency": "MONTHLY",
       "nodes": [
         {
           "id": "n1",
-          "label": "AI수익화지연인식",
-          "value": "AI 매출 성장이 투자 기대치 하회, 재평가 진입",
+          "label": "NATO방위비 확대",
+          "value": "GDP 2% 이상 의무, 유로존 재정 팽창",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n2",
-          "label": "CAPEX성장둔화",
-          "value": "빅테크 데이터센터 투자 성장률 조정 우려",
+          "label": "유럽재정 팽창",
+          "value": "방위비·인프라 지출 증가로 재정 여력 감소",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n3",
-          "label": "칩수요피크논쟁",
-          "value": "HBM·AI가속기 중장기 수요 피크아웃 우려",
+          "label": "ECB완화 여지 제한",
+          "value": "재정팽창·국채금리 상승으로 인하 명분 약화",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n4",
-          "label": "반도체ETF(SOXX)",
-          "value": "[07/20] $524.14→[08/18] $531.39 (+1.38%)",
-          "source": "layer_T0_us_prev_close",
+          "label": "유로화 강세 잠재력",
+          "value": "ECB 긴축 기조 유지 시 유로-달러 지지",
+          "source": "concept",
           "timestamp": null
         },
         {
           "id": "n5",
-          "label": "나스닥ETF(QQQ)",
-          "value": "[07/20] $696.06→[08/18] $717.51 (+3.08%)",
+          "label": "유로화ETF(FXE)",
+          "value": "[07/20] $105.37→[08/18] $107.70 (+1.40%)",
           "source": "layer_T0_us_prev_close",
           "timestamp": null
         },
         {
           "id": "n6",
-          "label": "반도체멀티플압축",
-          "value": "업황 피크아웃 우려로 글로벌 반도체 밸류에이션 조정 진입",
+          "label": "글로벌자금 배분전환",
+          "value": "유럽 비중 확대로 미국·신흥국 상대적 이탈",
           "source": "concept",
           "timestamp": null
         },
         {
           "id": "n7",
-          "label": "한국반도체집중",
-          "value": "수출 30%+ 반도체 비중, 업황 민감도 극대",
-          "source": "concept",
+          "label": "DAX",
+          "value": "26124.52 (-0.01%)",
+          "source": "layer_T1_eu_today",
           "timestamp": null
         },
         {
           "id": "n8",
-          "label": "MSCI한국ETF(EWY)",
-          "value": "[07/20] $162.86→[08/18] $170.05 (+4.41%)",
+          "label": "달러ETF(UUP)",
+          "value": "[07/20] $28.39→[08/18] $27.92 (-0.88%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n9",
-          "label": "KOSPI밸류재평가",
-          "value": "삼성·하이닉스 실적 컨센서스 하향 위험",
-          "source": "concept",
           "timestamp": null
         }
       ],
@@ -469,79 +426,79 @@
         {
           "from": "n1",
           "to": "n2",
-          "label": "유발",
-          "mechanism": "AI 수익화 지연 인식이 빅테크 CAPEX 증분 성장률에 대한 의문으로 확산"
+          "label": "촉발",
+          "mechanism": "NATO 의무 방위비 확대가 유로존 각국 재정 지출을 구조적으로 증가"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "전이",
-          "mechanism": "CAPEX 조정 우려가 HBM·AI가속기 중장기 수요 전망 하향으로 전이"
-        },
-        {
-          "from": "n3",
-          "to": "n6",
-          "label": "압축",
-          "mechanism": "반도체 수요 사이클 피크아웃 논쟁이 글로벌 반도체 주가 멀티플 압축 유발"
+          "label": "연결",
+          "mechanism": "재정팽창·국채금리 상승이 인플레 재점화 우려를 높여 완화 명분 약화"
         },
         {
           "from": "n3",
           "to": "n4",
-          "label": "반증",
-          "mechanism": "월간 SOXX +1.38%로 반도체 조정이 아직 월간 기준 전면화되지 않음을 반증"
+          "label": "연결",
+          "mechanism": "ECB 긴축 기조 유지 신호가 유로화 가치 지지 요인으로 작용"
         },
         {
-          "from": "n2",
+          "from": "n4",
           "to": "n5",
-          "label": "반증",
-          "mechanism": "QQQ 월간 +3.08%로 데이터센터 투자 조정 우려가 월간 기준 미실현 상태 반증"
+          "label": "실증",
+          "mechanism": "FXE 월간 +1.40%로 유로화 강세 잠재력이 중장기 실증"
+        },
+        {
+          "from": "n6",
+          "to": "n4",
+          "label": "증폭",
+          "mechanism": "글로벌 펀드의 유럽 비중 확대가 유로 강세를 추가 지지"
         },
         {
           "from": "n6",
           "to": "n7",
-          "label": "증폭",
-          "mechanism": "글로벌 반도체 업황 악화가 한국 30%+ 수출 집중 구조로 인해 배증 전달"
+          "label": "실증",
+          "mechanism": "DAX 보합(-0.01%)으로 유럽 자금 유입이 지지선 역할 확인"
         },
         {
-          "from": "n7",
+          "from": "n6",
           "to": "n8",
-          "label": "반증",
-          "mechanism": "EWY 월간 +4.41%로 한국 집중도 리스크가 아직 월간 기준 미실현 반증"
-        },
-        {
-          "from": "n7",
-          "to": "n9",
-          "label": "귀결",
-          "mechanism": "삼성·하이닉스 실적 컨센서스 하향과 외국인 비중 축소가 KOSPI 밸류 재평가로 귀결"
+          "label": "실증",
+          "mechanism": "UUP 월간 -0.88%로 유럽 비중 확대에 따른 달러 상대 약세 실증"
         }
       ],
-      "korea_terminal_node": "n9",
-      "briefing": "AI 수익화 지연이 공통원인으로 CAPEX 조정·칩 수요 피크 논쟁으로 확산. 월간 SOXX +1.38%·QQQ +3.08%로 아직 미실현이나, 한국 30%+ 반도체 수출 집중 구조가 KOSPI 밸류에이션 하방 압력을 구조적으로 증폭."
+      "korea_terminal_node": null,
+      "briefing": "NATO 방위비 의무화로 유럽 재정 팽창→ECB 완화 여지 제한→유로화 강세 잠재력으로 이어지며 FXE 월간 +1.40%·UUP -0.88%로 실증됐고, 글로벌 자금 배분 전환이 중장기 유럽 자산 재평가 구조 형성",
+      "_warnings": [
+        "[규칙22 중립] thread=thread_004 \"글로벌자금 배분전환\"→\"DAX\" 변화율 -0.01% — ETF 노드 제외 권장"
+      ]
     }
   ],
   "headlines": [
-    "AI칩 수요 재평가, SOXX -4.96%",
-    "글로벌 리스크오프, KOSPI -5.80%"
+    "재무부 국채매입 신호, 채권 랠리 기대도 실질금리 고착으로 제한",
+    "Marvell-Google ASIC 계약, 반도체·KOSPI 연쇄 급락으로 전이",
+    "고실질금리+HY스프레드 확대, 글로벌 EM 자금 이탈 촉발"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: SOXX -4.96% AI칩 급락, QQQ -1.69% / 당일 아시아: KOSPI -5.80%, 닛케이 -3.16% 동반 하락",
-    "layer2": "반도체·성장주 차익실현(T0 미국 ETF) → 글로벌 리스크오프(EEM -2.94%, TLT +0.38%) 복합 신호가 아시아 외인 순매도로 전이",
-    "layer3": "AI 칩 수요 재평가·달러강세(UUP +0.14%)·BOJ 긴축 기대가 동시 다발적 리스크오프 촉발, 신흥국·한국 자본유출 압력 집중"
+    "layer1": "전일 미국: SOXX -4.96%·EEM -2.94%·GLD -1.71% 급락 속 TLT +0.38% 반등으로 리스크오프 혼재 / 당일 아시아: KOSPI -5.80%·닛케이 -2.54% 급락으로 전이 확인",
+    "layer2": "Marvell-Google ASIC 재편 신호와 OpenAI 성장 둔화가 반도체 섹터 전반 급락을 촉발했고, HY스프레드 확대에 따른 EM 자금 이탈 흐름이 한국으로 전이",
+    "layer3": "미국 장중 S&P500 +0.45% 반등 시도, 재무부 국채매입 신호로 채권·주식·금 동반 반등 기대감 형성 중이나 구조적 고실질금리가 상승폭 제한"
   },
-  "macro_regime_note": "고실질금리(2.44%) 지속과 정상 커브 환경이 성장주·신흥국 자산에 구조적 압박을 가하며, 리스크온 기조가 순간적 리스크오프로 반전되는 불안정성을 증폭.",
-  "generated_at": "2026-08-19T07:49:01.170Z",
+  "macro_regime_note": "고실질금리(DFII10 2.44%) 고착과 HY스프레드(2.75bp) 확대가 신용스트레스 국면을 심화시키며 글로벌 리스크오프 구도를 규정하고 있고, 정책 개입(재무부 바이백)도 단기 완화 효과에 그칠 가능성이 높음",
+  "generated_at": "2026-08-19T15:47:51.060Z",
   "data_as_of": {
-    "timestamp_iso": "2026-08-19T07:49:01.164Z",
-    "display": "8/19 16:49 [ KST +0900 ]",
-    "display_mobile": "8/19 16:49 KST",
-    "timezone": "Asia/Seoul"
+    "timestamp_iso": "2026-08-19T15:47:51.055Z",
+    "display": "8/19 11:47 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "8/19 11:47 뉴욕",
+    "timezone": "America/New_York"
   },
   "meta": {
-    "generated_at": "2026-08-19T07:49:01.170Z",
-    "elapsed_sec": 255,
-    "market_status": [],
+    "generated_at": "2026-08-19T15:47:51.060Z",
+    "elapsed_sec": 261,
+    "market_status": [
+      "유럽(DAX/CAC/FTSE)",
+      "미국(S&P500/NASDAQ)"
+    ],
     "is_weekend": false,
-    "data_note": "T0: 미국 2026-08-18 마감 기준. T1: 한국/일본 2026-08-19, 유럽 2026-08-18 마감 기준. EWY/EWJ/EWT는 leaf node 전용."
-  },
-  "deep_analysis_at": "2026-08-19T07:55:45.934Z"
+    "data_note": "T0=전일 미국 ETF 마감(8/18), T1=당일 한국/일본 현물(8/19 마감). 미국 장중 S&P500/NASDAQ은 당일(8/19) 인트라데이 기준. EWY/EWJ/EWT는 leaf node 전용."
+  }
 }
