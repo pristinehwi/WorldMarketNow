@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-22 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/22 07:49 KST</div>
+    <div class="header-date">2026-08-22</div>
+    <div class="header-headline">Bessent 국채개입·달러약세 - Bitcoin·금 동반 급등</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Bessent 월요일 기자회견 내용 및 장기국채 수익률 반응 - 달러·금·Bitcoin 방향성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Bessent 국채개입 신뢰성 위기 - 달러 약세·금·Bitcoin '가치훼손' 트레이드 폭발</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">이번 주 Bessent 재무장관의 국채시장 직접개입이 달러 약세와 가치훼손(debasement) 트레이드를 촉발하며 Bitcoin이 3년여 만에 최강 주간 상승을 기록하고 금도 동반 급등했다. 시장 전문가들은 Bessent의 개입이 Fed 의장으로 유력한 Warsh의 통화정책 독립성을 구조적으로 훼손하며 재정·통화정책 신뢰도에 이중 균열을 냈다고 평가한다. Trump·Vance·Bessent가 채권시장을 안심시키려 나섰지만 월스트리트는 수치로 반응했고, 전문가들은 Bessent의 실탄이 제한적이라며 추가 수단 모색이 불가피하다고 본다. Standard Chartered는 Bitcoin 연말 목표치 $100K가 '너무 낮을 수 있다'고 상향 압력을 시사했으며, Saylor의 Strategy는 크립토 랠리로 손익분기점 회복에 성공했다. Bessent는 월요일 기자회견을 예고해 시장의 다음 촉매로 주목된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">트럼프 행정부 관세 전선 다변화 - 캐나다 협상·브라질·쇠고기 관세 완화 신호</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#12</span>
+    </div>
+    <div class="theme-summary">트럼프 행정부가 수입 쇠고기 관세 철폐를 전격 발표했으나 축산업계와 공화당 의원들의 역풍에 직면하며 관세정책의 내부 균열이 드러났다. 미·캐나다 무역팀은 관세 데드라인을 앞두고 협상을 재개했으며, Carney 캐나다 총리는 일부 관세 수용을 전제로 투자 확대 딜을 추진 중이다. JD Vance가 Carney를 비공개 행사에서 조롱했다는 유출 음성이 공개되며 외교적 긴장감이 고조됐다. Trump는 브라질 Lula와 통화해 관세 협의 채널을 열었고, 무역 전선이 캐나다·브라질·축산물 등으로 다변화되며 관세 리스크의 구체적 피해 범위가 넓어지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 에이전트 안전성·거버넌스 현실화 - Nvidia 하네스 전략과 OpenAI 내부자 경고</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #13~#16</span>
+    </div>
+    <div class="theme-summary">Nvidia 연구에서 AI 에이전트의 실제 성능은 모델 자체보다 '하네스(harness)' 즉 파인튜닝과 제어 프레임워크에 달려 있다는 결과가 발표되며 AI 인프라 투자 논리가 재편되고 있다. OpenAI 전직 직원 Miles Brundage는 프론티어 AI 기업 직원 1,000명 이상이 미국 정부에 AI 개발 속도조절을 요청한 서한에 서명했다며, 내부로부터의 거버넌스 압력이 현실화되고 있음을 경고했다. Nvidia는 데이터센터 개발사 Cloverleaf와 파트너십을 체결하며 AI 인프라 생태계 확장을 지속하고 있다. 인구 고령화가 노동 절약형 기술 혁신을 가속한다는 연구도 AI 수요의 구조적 배경으로 부각됐다. AI 자율화와 신뢰 인프라 부재 사이의 간극이 규제 현실로 빠르게 접근하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Tesla 로보택시·휴머노이드 - 라스베이거스 승인과 Fremont 생산 가시성 확보</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#19</span>
+    </div>
+    <div class="theme-summary">Tesla가 라스베이거스에서 로보택시 운행 승인을 획득했고, 오스틴 Cybercab 출시도 임박하며 자율주행 상용화 일정이 구체화됐다. JPMorgan 애널리스트들이 Tesla Fremont 공장을 실사한 결과 휴머노이드 로봇 생산이 가시권에 들어온 것으로 평가되며, 로봇 공학 투자 심리를 자극했다. 반면 Tesla의 태양광 루프 사업은 사실상 종료 판정을 받으며 에너지 사업부 전략적 집중도가 로보틱스·자율주행으로 이동하고 있음이 재확인됐다. Tesla 주가는 로보택시 호재로 급등하며 자율주행 모멘텀주로서의 포지션을 강화했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">영국 PMI 서프라이즈·유럽 핵 냉각 위기·베네수엘라 원유 병목 - 실물경제 공급 리스크</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #20~#23</span>
+    </div>
+    <div class="theme-summary">영국 합성 PMI가 4개월 만에 최고치를 기록하며 소비·서비스 중심의 경기 회복세를 확인했다. 반면 유럽 전역의 폭염이 원전 냉각수 부족을 야기하며 핵발전소 가동이 차질을 빚는 에너지 공급 위기가 심화되고 있다. 베네수엘라는 원유 수요는 회복됐지만 노후 항만 인프라와 정전으로 탱커 대기 시간이 최장 30일에 달하며 실질 수출 상한에 부딪혔다. Goldman Sachs는 이란 제재 리스크에 대한 원유 헤지 수단으로 디젤을 권고하며, 에너지 시장의 비대칭 리스크 관리를 부각시켰다. 공급 사이드의 물리적 병목이 인플레이션 압력의 새로운 경로로 작동할 가능성이 높아지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">정치·사회·법률 영역의 주변부 이슈들이 산발적으로 부각됐다. 소셜미디어 중독 소송에서 10대 원고가 재판 직전 Meta·Google·Snap에 대한 소를 취하했고, 스웨덴 경찰은 TikTok과 Meta에 범죄 서비스 광고 30건 삭제를 명령했다. 상원의원 Ron Wyden은 FBI·DEA 등 연방기관의 해킹 툴 사용에 대한 감찰 요청서를 제출했으며, Trump 전 대통령 측은 미국진보센터(CAP)에 $50억 명예훼손 소송을 위협했다. 전직 JPMorgan 임원 Matt Zames가 사회보장청(SSA) 무보수 자문역을 맡게 됐고, Trump는 민간 우주투자 장려와 함께 '황금의 우주여행 시대'를 선언했다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Bessent 국채개입 신뢰성 위기 - 달러 약세·금·Bitcoin '가치훼손' 트레이드 폭발</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Bitcoin·금 급등 - Bessent의 국채시장 개입이 달러 약세를 촉발</div>
+    <div class="article-title-en">Bitcoin and gold surge as Bessent’s intervention in bond market hits dollar</div>
+    <div class="article-keypoint">Bitcoin 3년여 만에 최강 주간 상승 - Bessent 개입發 달러 신뢰 균열이 가치훼손 트레이드 폭발 촉발</div>
+    <a class="article-link" href="https://www.ft.com/content/7e0c8dc0-e957-420a-bba3-d33666d919b8?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 06:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Bessent의 신(新)개입주의 재무부가 Fed(Warsh)의 신뢰성을 어떻게 잠식하는가</div>
+    <div class="article-title-en">Here’s how Bessent’s newly activist Treasury Department is undercutting the Fed’s Warsh</div>
+    <div class="article-keypoint">Bessent 국채개입이 Warsh(차기 Fed 의장 유력)의 통화정책 독립성을 선제적으로 잠식하는 구조적 리스크</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/heres-how-bessents-newly-activist-treasury-department-is-undercutting-the-feds-warsh-480455c2?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 05:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Trump·Vance·Bessent, '대안적 사실'로 채권시장 달래기 시도</div>
+    <div class="article-title-en">Trump, Vance and Bessent try to calm the bond market with ‘alternative facts’</div>
+    <div class="article-keypoint">Trump·Vance·Bessent의 채권시장 달래기 시도가 월스트리트에서 역효과 - 신뢰도 훼손 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trump-vance-and-bessent-try-to-calm-the-bond-market-with-alternative-facts-8e424378?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 03:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Saylor의 Strategy, 크립토 랠리로 손익분기점 회복 - Standard Chartered, Bitcoin 연말 $100K 목표 '너무 낮을 수 있다'</div>
+    <div class="article-title-en">Saylor's Strategy Treasury Back To Breakeven As Crypto Rips, StanChart Says $100k Bitcoin Year-End Call May Be 'Too Low'</div>
+    <div class="article-keypoint">Standard Chartered, Bitcoin 연말 목표 $100K '너무 낮을 수 있다' - 상단 재산정 압력 확대</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/saylors-strategy-treasury-back-breakeven-crypto-rips-stanchart-says-100k-bitcoin-year-end" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 03:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Bessent 재무장관, 월요일 기자회견 개최 예정</div>
+    <div class="article-title-en">US Treasury Secretary Bessent to hold press conference on Monday</div>
+    <div class="article-keypoint">Bessent 월요일 기자회견 예고 - 국채시장 개입 추가 수단 공개 여부가 핵심 촉매</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/us-treasury-secretary-bessentto-hold-press-conference-on-monday-4872200" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 22:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Bessent, 트럼프 하 미국 재정적자가 정점을 지났을 '가능성 높다' 발언</div>
+    <div class="article-title-en">Bessent says there's a 'very good chance' U.S. budget deficit under Trump has peaked</div>
+    <div class="article-keypoint">Bessent, 트럼프 하 재정적자 정점 통과 가능성 시사 - 시장 신뢰 회복 여부는 미지수</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/08/20/bessent-budget-deficit-trump.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 22:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Bessent의 국채시장 개입, 지금까지 효과 미미 - 추가로 활용 가능한 카드는?</div>
+    <div class="article-title-en">Bessent's efforts in the Treasury market so far haven't worked. Here's what else he can try</div>
+    <div class="article-keypoint">Bessent 국채개입 효과 미미 - 전문가들, 추가 정책 수단 제한적이라 경고</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/08/20/bessents-efforts-in-the-treasury-market-so-far-havent-worked-heres-what-else-he-can-try.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 21:43 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">트럼프 행정부 관세 전선 다변화 - 캐나다 협상·브라질·쇠고기 관세 완화 신호</span>
+    <span class="theme-label-range">Article #8~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Trump, 물가 인하 위해 수입 쇠고기 관세 철폐 발표</div>
+    <div class="article-title-en">Trump Announces Move to Lift Ground Beef Tariffs in Bid to Lower Prices</div>
+    <div class="article-keypoint">쇠고기 관세 철폐 시도 - 공화당 내부 역풍으로 관세정책 균열 가시화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/08/21/business/economy/trump-beef-prices.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 05:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">관세 데드라인 임박 속 미·캐나다 무역팀 재협상 재개</div>
+    <div class="article-title-en">US, Canadian trade teams meet again as tariffs deadline looms</div>
+    <div class="article-keypoint">미·캐 관세 데드라인 임박 속 협상 재개 - 합의 여부가 북미 공급망 안정성 분기점</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/us-canadian-trade-teams-to-meet-again-as-tariffs-deadline-looms-4871745" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 22:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Trump, Lula에게 관세 협의를 위한 조기 회동 제안 - 브라질 발표</div>
+    <div class="article-title-en">Trump told Lula that officials should meet soon to discuss tariffs, Brazil says</div>
+    <div class="article-keypoint">Trump-Lula 관세 협의 채널 개설 - 무역 전선이 브라질까지 확장되며 신흥국 영향권 확대</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/lula-trump-discuss-tariffs-in-phone-call-brazil-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 02:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Carney, 캐나다가 관세 일부 수용으로 투자 유치 가능하다는 데 베팅</div>
+    <div class="article-title-en">Carney Bets Canada Can Live With Tariffs to Unlock Investment</div>
+    <div class="article-keypoint">Carney, 일부 관세 수용 조건으로 투자 확대 딜 추진 - 미·캐 타협 가능성 첫 공개 시사</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-21/carney-bets-canada-can-live-with-tariffs-to-unlock-investment" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 19:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">JD Vance, Carney가 Trump에게 '강경 대응'으로 맞서려 한다며 조롱 - 유출 음성 보도</div>
+    <div class="article-title-en">JD Vance reportedly mocks Carney for trying to ‘out-tough’ Trump on trade</div>
+    <div class="article-keypoint">Vance의 Carney 조롱 유출 음성 - 미·캐 관세 협상 분위기를 더욱 복잡하게 만드는 변수</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/21/jd-vance-mark-carney-out-tough-trump-trade" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 00:22 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 에이전트 안전성·거버넌스 현실화 - Nvidia 하네스 전략과 OpenAI 내부자 경고</span>
+    <span class="theme-label-range">Article #13~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">고령화 인구가 반드시 취약한 경제를 의미하지는 않는다</div>
+    <div class="article-title-en">Aging Populations Need Not Mean Frailer Economies</div>
+    <div class="article-keypoint">고령화→노동절약 기술 혁신→생산성 향상 경로, AI 수요의 구조적 정당성 제공</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/what-economists-get-wrong-about-demographic-change-by-andrew-j-scott-2026-08" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 20:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Nvidia, AI 에이전트의 진짜 주인공은 모델이 아닌 '하네스'임을 입증</div>
+    <div class="article-title-en">Nvidia just showed that the harness, not the AI model, is now the real hero</div>
+    <div class="article-keypoint">AI 에이전트 성능의 핵심은 모델이 아닌 하네스(제어 프레임워크) - AI 인프라 투자 논리 재편</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/21/nvidia-just-showed-that-the-harness-not-the-ai-model-is-now-the-real-hero/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 04:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Nvidia, 데이터센터 개발사 Cloverleaf와 파트너십 체결</div>
+    <div class="article-title-en">Nvidia partners with data center developer Cloverleaf</div>
+    <div class="article-keypoint">Nvidia, Cloverleaf와 데이터센터 파트너십 - AI 인프라 생태계 수직 통합 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/21/nvidia-partners-with-data-center-developer-cloverleaf/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 07:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">나는 OpenAI에서 일했다. 지금 우리에게 필요한 안전장치는 이것이다 | Miles Brundage</div>
+    <div class="article-title-en">I worked at OpenAI. Here are the guardrails we need now | Miles Brundage</div>
+    <div class="article-keypoint">OpenAI 전직 직원, AI 개발 속도조절 촉구 - 내부자 경고가 거버넌스 규제 압력으로 현실화</div>
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/2026/aug/21/openai-frontier-ai-speed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 19:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Tesla 로보택시·휴머노이드 - 라스베이거스 승인과 Fremont 생산 가시성 확보</span>
+    <span class="theme-label-range">Article #17~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Tesla, 라스베이거스 로보택시 출시 승인에 주가 급등</div>
+    <div class="article-title-en">Tesla’s stock jumps as the company gets cleared for a Las Vegas robotaxi launch</div>
+    <div class="article-keypoint">Tesla 라스베이거스 로보택시 승인 - 오스틴 Cybercab 출시 임박으로 상용화 일정 구체화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/tesla-stocks-jumps-as-the-company-gets-ready-for-a-robotaxi-push-c680f87f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 05:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">JPMorgan이 Tesla Fremont 공장에서 목격한 것 - 휴머노이드 로봇 생산 임박</div>
+    <div class="article-title-en">What JPMorgan Saw Inside Tesla's Fremont Factory As Humanoid Production Nears</div>
+    <div class="article-keypoint">JPMorgan Fremont 실사 - Tesla 휴머노이드 로봇 생산 가시성 확보로 로보틱스 투자 심리 자극</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/inside-teslas-fremont-factory-model-sx-lines-make-way-huamonid-production" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Tesla의 태양광 루프는 사실상 종료 - 무엇이 잘못됐나</div>
+    <div class="article-title-en">Tesla’s solar roof is dead — here’s what went wrong</div>
+    <div class="article-keypoint">Tesla 태양광 루프 사업 사실상 종료 - 에너지 사업 선택과 집중이 로보틱스로 이동</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/21/teslas-solar-roof-is-dead-heres-what-went-wrong/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 03:09 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">영국 PMI 서프라이즈·유럽 핵 냉각 위기·베네수엘라 원유 병목 - 실물경제 공급 리스크</span>
+    <span class="theme-label-range">Article #20~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Goldman Sachs Struyven: 원유 변동성 헤지 수단으로 디젤을 활용하라</div>
+    <div class="article-title-en">Goldman's Struyven: Hedge Crude's Swings with Diesel</div>
+    <div class="article-keypoint">이란 제재 리스크 원유 헤지 수단으로 Goldman이 디젤 권고 - 비대칭 에너지 리스크 관리 부각</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-21/goldman-s-struyven-hedge-crude-s-swings-with-diesel-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 05:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">낮아진 강수위, 높아지는 위기 - 유럽 원전 냉각 위기</div>
+    <div class="article-title-en">Low Rivers, High Stakes: Europe's Nuclear Cooling Crisis</div>
+    <div class="article-keypoint">유럽 폭염發 원전 냉각수 부족 위기 - 에너지 공급 차질이 전력가격 상승 압력 재점화</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Low-Rivers-High-Stakes-Europes-Nuclear-Cooling-Crisis.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">영국 경기 가속 - PMI, 맑은 날씨·소비 확대에 기업·소비자 지출 동반 증가</div>
+    <div class="article-title-en">UK Economy Speeds Up as Firms and Shoppers Splash Out, PMI Shows</div>
+    <div class="article-keypoint">영국 PMI 4개월 최고치 - 소비·서비스 주도 경기회복이 BOE 금리정책 경로에 영향</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-21/uk-economy-speeds-up-as-firms-and-shoppers-splash-out-pmi-shows" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 17:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">베네수엘라 원유 수출 한계 봉착 - 탱커 한 달씩 대기</div>
+    <div class="article-title-en">Tankers Wait a Month as Venezuela Hits an Oil Export Ceiling</div>
+    <div class="article-keypoint">베네수엘라 탱커 대기 30일 - 원유 수출 인프라 병목이 실질 공급 상한으로 작동</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Tankers-Wait-a-Month-as-Venezuela-Hits-an-Oil-Export-Ceiling.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 03:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">10대 소녀, 10월 재판 앞두고 Meta·Google·Snap 상대 소셜미디어 중독 소송 취하</div>
+    <div class="article-title-en">Teen Drops Social Media Addiction Claims Against Meta, Google, & Snap, Ahead Of October Trial</div>
+    <div class="article-keypoint">소셜미디어 중독 소송 취하 - Meta·Google·Snap 법적 리스크 단기 완화</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/teen-drops-social-media-addiction-claims-against-meta-google-snap-ahead-october-trial" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 22:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">전 JPMorgan 임원, 사회보장청 자문역 취임</div>
+    <div class="article-title-en">Former JPMorgan exec takes on Social Security advisory role</div>
+    <div class="article-keypoint">전 JPMorgan 임원 Matt Zames, SSA 무보수 자문 취임 - 금융권 인사의 정부 영향력 확대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/former-jpmorgan-exec-takes-on-social-security-advisory-role-d0cf6e4f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 04:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Trump, 우주여행 '황금시대' 도래 선언</div>
+    <div class="article-title-en">Trump pledges ‘golden age’ of space travel</div>
+    <div class="article-keypoint">Trump, 민간 우주투자 장려 선언 - 정책적 지원 기대로 우주 섹터 자본 관심 재부각</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-pledges-golden-age-of-space-travel" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 21:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">스웨덴 경찰, TikTok·Meta에 범죄 서비스 광고 30건 삭제 명령</div>
+    <div class="article-title-en">Sweden’s police order Tiktok and Meta to remove 30 ads for criminal services</div>
+    <div class="article-keypoint">스웨덴 경찰, TikTok·Meta에 범죄 서비스 광고 삭제 명령 - 유럽 플랫폼 규제 압력 강화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/swedens-police-order-tiktok-and-meta-to-remove-30-ads-for-criminal-services" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 06:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">상원의원, 연방 당국의 해킹 툴 사용 실태 감찰 촉구</div>
+    <div class="article-title-en">Senator asks US government watchdog to review how feds use hacking tools</div>
+    <div class="article-keypoint">상원의원, 연방기관 해킹 툴 사용 감찰 요청 - 정부 디지털 감시 남용 리스크 부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/21/senator-asks-us-federal-watchdog-to-review-how-feds-use-hacking-tools/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/21 22:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Trump, 진보 성향 National Guard 정책 보고서 관련 $50억 소송 위협</div>
+    <div class="article-title-en">Trump threatens $5bn lawsuit over liberal National Guard policy report</div>
+    <div class="article-keypoint">Trump 측, CAP에 $50억 소송 위협 - 언론·싱크탱크 압박이 정치적 리스크로 확산</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/21/trump-lawsuit-threat-national-guard-deployment-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 06:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Trump, 라디오 인터뷰에서 Michael Cohen에게 '그들이 당신을 무기화했다'며 진술 번복 칭찬</div>
+    <div class="article-title-en">Trump Tells Michael Cohen "They Weaponized You" In Radio Interview, Praises His Recanting</div>
+    <div class="article-keypoint">Trump-Cohen 라디오 인터뷰 - 정치적 노이즈, 시장 직접 영향 제한적</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/trump-tells-michael-cohen-they-weaponized-you-radio-interview-praises-his-recanting" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/22 01:05 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
