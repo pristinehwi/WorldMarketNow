@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-25 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/25 07:49 KST</div>
+    <div class="header-date">2026-08-25</div>
+    <div class="header-headline">Nvidia 실적 발표·Jackson Hole·Core PCE 삼중 이벤트 충돌</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Nvidia 실적 발표와 Jackson Hole 연설이 AI 자본지출 사이클·장기금리 경로 동시 시험</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Nvidia 실적·AI 자본지출 사이클 - 월가의 믿음을 시험하는 주간</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">이번 주 Nvidia 실적 발표를 앞두고 기술주가 일제히 하락하며 AI 붐에 대한 월가의 신뢰가 실전 테스트에 들어갔다. Nvidia 주가는 실적 발표 전날 하락세를 보였고, 한편에서는 Nvidia의 논쟁적 재무 전략이 오히려 시장 지배력 유지에 기여한다는 강세론도 제기되고 있다. SpaceX는 내년 말까지 Nvidia 칩을 탑재한 AI 위성 궤도 데이터센터 발사를 계획해 AI 인프라 수요의 새 수직 계열이 열리고 있다. 한편 대만 검찰은 Nvidia 직원을 포함한 9명을 AI 서버 74대를 중국에 밀반출한 혐의로 기소해, AI 반도체의 지정학적 통제 이슈가 실체화됐다. 나노 핵에너지와 Tillman 간 데이터센터 핵전력 공급 프레임워크 체결은 AI 인프라의 에너지 병목 해소 경쟁이 민간 원자력까지 확산됐음을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">트럼프 관세 전선 다변화 - 캐나다 50% 폭탄관세·40개국 중국 우회 경로 차단</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#11</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령이 내년 1월 1일부터 캐나다산 자동차·트럭·부품·철강에 50% 관세를 부과하겠다고 위협하면서 미·캐 무역 갈등이 전면전 국면으로 격화됐다. 캐나다 총리 Carney의 보복 관세 결정은 중국의 지지를 끌어내며 트럼프 행정부 내 균열을 노출시켰고, 이 구도가 다른 국가들의 동참 여부로 확산될지 주목된다. 미국은 아제르바이잔·조지아·카자흐스탄·우즈베키스탄 등 40개국 이상을 중국의 대미 수출 관세 우회 공모국으로 지목해 관세 압박망을 대폭 확장했다. 트럼프의 캐나다 관세 전쟁이 장기화될 경우 미국이 양적완화로 회귀할 수 있다는 분석도 나오며, 금·장기채·주식에 긍정적 시나리오로 해석되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Bessent 이란 제재·국채 개입 - 달러·유가·장기금리 동시 변수</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#16</span>
+    </div>
+    <div class="theme-summary">Bessent 재무장관이 이란에 대한 광범위한 새 제재를 발표했으나 가장 강력한 조치는 유예함으로써 유가가 3주 만에 최대 낙폭을 기록했고, 이란산 원유의 최대 수입국인 중국의 반응이 실질적 유가 경로를 결정할 핵심 변수로 부각됐다. Trump 행정부는 이란 정권의 '경제적 질식'을 목표로 여러 국가 정상에게 지지를 요청 중이나 구체적 국가명과 시한을 공개하지 않았으며, 미·이란 60일 협상 기한이 종료된 이후 전략 전환 가능성이 제기된다. 국채 시장에서는 Bessent의 장기채 바이백 계획이 '달러 가치훼손' 트레이드를 자극했다는 평가가 나오는 가운데, 컬럼비아 스레드니들의 채권 매니저는 이머징마켓 통화 강세와 캐리 트레이드 지속성에 주목하고 있다. Jackson Hole·Nvidia 실적·Core PCE 발표가 이번 주 집중되면서 장기금리 수요의 방향성 시험이 동시에 진행된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Bitcoin $80K 근접·금 동반 상승 - Treasury 바이백이 '달러 약세' 트레이드 재점화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#18</span>
+    </div>
+    <div class="theme-summary">Bitcoin이 지난 5월 이후 처음으로 $80,000 수준에 근접하며 6개월 기준 주식과 금을 모두 상회하는 수익률을 기록했다. 상승의 직접 촉매는 재무부의 장기 국채 바이백 계획 발표로, 이것이 달러 가치훼손 내러티브를 재점화하면서 금과 Bitcoin이 동반 급등하는 흐름이 나타났다. AI·로보틱스 스타트업 General Intuition이 Valor·Point72 지원으로 $60억 밸류에이션에서 자금 조달 협상 중이라는 소식은 민간 AI 자본이 디지털 자산과 유사한 고밸류에이션 모험자본 영역으로 재배치되고 있음을 시사한다. Stripe의 OpenRouter 인수 등 핀테크-AI 교차 영역 자본 흐름도 이 맥락에서 주목할 신호다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학 다중 균열 - 이란 위협·한반도 군사 공백·우크라이나 내부 균열</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #19~#23</span>
+    </div>
+    <div class="theme-summary">이란이 Barron Trump 감시 영상을 공개 방영하며 대미 심리전을 강화하는 가운데, 미국은 이란과의 긴장 고조를 이유로 9월 한·미 해병대 연합훈련을 취소해 한반도 억지력 약화 우려가 현실화됐다. 트럼프 행정부의 한국 방위 공약 후퇴는 미군 2만8천 명 주둔의 신뢰성을 흔들며 동아시아 안보 아키텍처에 균열을 내고 있다는 비판이 나온다. 우크라이나에서는 전 국방장관 Fedorov의 전시 선거 주장에 Zelensky가 분열 초래를 이유로 거부 의사를 밝혀 내부 정치 갈등이 수면 위로 올라왔다. 아프리카 15개국이 코발트·망간·리튬 수출에 금수 또는 쿼터를 부과하며 핵심 광물을 지정학적 협상 카드로 활용하는 흐름이 가속되고 있어, 글로벌 공급망 재편 압력이 다시 한 번 부각된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">Fed의 조건부 가격 커널 특성화에 관한 학술 논문은 자산가격 결정 모델 연구의 방법론적 진전을 다루며, 실무적 즉시 시장 영향보다는 중장기 정책 모델링에 참고될 기초 연구다. OpenAI의 사이버보안 모델이 Hugging Face를 해킹한 사건에 대해 앨라배마 주 검찰총장이 조사에 착수해 AI 거버넌스 규제 공백이 주(州) 수준 법적 개입으로 이어지는 선례가 만들어졌다. Amodei와 Altman의 AI 패권 경쟁이 안전 리스크를 증폭시키고 있다는 분석과, SpaceX IPO 직후 트럼프 대통령이 $155 수준에서 SpaceX 주식을 매입했으나 현재 IPO가 $135로 마감됐다는 사실은 정치·투자 윤리 논란을 키운다. 연방 항소법원의 James O'Keefe 잠입 취재 승소 판결과 대법원의 우편투표 제한 허용 결정은 미국 정치·사법 지형 변화의 일환으로 시장 간접 변수로 작용할 수 있다. 뇌의 노이즈 압축 방식에 관한 신경과학 연구는 AI 예측 모델 설계에 개념적 시사점을 제공한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Nvidia 실적·AI 자본지출 사이클 - 월가의 믿음을 시험하는 주간</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">SpaceX, 내년 Nvidia AI 탑재 위성 궤도 데이터센터 발사 계획</div>
+    <div class="article-title-en">SpaceX plans to put Nvidia-powered AI satellites in orbit next year</div>
+    <div class="article-keypoint">SpaceX, Nvidia AI 위성 궤도 데이터센터 2026년 발사 계획 - AI 인프라 수요 신규 수직 계열 확장</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacex-plans-to-put-nvidia-powered-ai-satellites-in-orbit-next-year-ab57083c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 06:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">이 애널리스트가 Nvidia에 대규모 베팅을 권고하는 이유 - 시장이 틀렸다</div>
+    <div class="article-title-en">It’s time to bet big on Nvidia’s stock, says this analyst who thinks the market has it all wrong</div>
+    <div class="article-keypoint">Nvidia 논쟁적 재무 전략이 시장 지배력 유지 기여 - 강세론 재점화, 실적 발표 전 포지셔닝 주목</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/its-time-to-bet-big-on-nvidias-stock-says-this-analyst-who-thinks-the-market-has-it-all-wrong-4388d3a6?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 05:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Nvidia 실적 발표 앞두고 하락, 기술주 후퇴 | Closing Bell</div>
+    <div class="article-title-en">Nvidia Slides Ahead of Earnings as Tech Stocks Retreat | Closing Bell</div>
+    <div class="article-keypoint">Nvidia 실적 발표 앞두고 기술주 하락 - AI 붐 지속성에 대한 월가 신뢰 실전 테스트 돌입</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-24/nvidia-slides-ahead-of-earnings-closing-bell-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 05:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Nvidia 실적, AI 붐에 대한 월가의 신뢰를 시험한다</div>
+    <div class="article-title-en">Nvidia’s Earnings Will Test Wall Street’s Faith in the AI Boom</div>
+    <div class="article-keypoint">Nvidia 실적이 AI 붐에 대한 월가 신뢰를 시험 - 캐나다 관세 변수와 맞물려 시장 복합 리스크</div>
+    <a class="article-link" href="https://www.wsj.com/articles/nvidias-earnings-will-test-wall-streets-faith-in-the-ai-boom-09865fea?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/24 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Nano Nuclear Energy, Tillman과 데이터센터 핵전력 공급 상업 프레임워크 체결</div>
+    <div class="article-title-en">Nano Nuclear Energy Signs Commercial Framework With Tillman To Enable Nuclear Power For Data Centers</div>
+    <div class="article-keypoint">나노 핵에너지-Tillman, 데이터센터 핵전력 공급 프레임워크 체결 - AI 에너지 병목 해소 민간 원자력 확산</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/nano-nuclear-energy-signs-commercial-framework-tillman-enable-nuclear-power-data-centers" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/24 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Nvidia 실적·Jackson Hole 앞두고 기술주 하락 주도</div>
+    <div class="article-title-en">Tech Leads US Stocks Lower as Nvidia Earnings, Jackson Hole Loom</div>
+    <div class="article-keypoint">Nvidia 실적 앞두고 기술주 하락 주도 - Jackson Hole·Core PCE와 맞물린 주간 복합 이벤트 리스크</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-24/us-futures-drop-as-investors-prep-for-busy-week-nvidia-earnings" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/24 21:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">대만, Nvidia 직원 포함 9명 AI 서버 중국 불법 수출 혐의로 기소</div>
+    <div class="article-title-en">Taiwan charges nine people, including Nvidia employee, over illegal export of AI servers to China</div>
+    <div class="article-keypoint">Nvidia 직원 포함 9명, AI 서버 74대 중국 밀반출 혐의 - AI 반도체 통제의 지정학적 균열 실체화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/pixels/article/2026/08/24/taiwan-charges-nine-people-over-illegal-export-of-ai-servers-to-china_6756798_13.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/24 20:43 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">트럼프 관세 전선 다변화 - 캐나다 50% 폭탄관세·40개국 중국 우회 경로 차단</span>
+    <span class="theme-label-range">Article #8~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">트럼프, 미·캐 무역전쟁 속 자동차·트럭·철강 관세 50% 인상 위협</div>
+    <div class="article-title-en">Trump Threatens New 50% Tariffs on Cars, Trucks and Steel as U.S.-Canada Trade War Unfolds</div>
+    <div class="article-keypoint">트럼프, 캐나다산 자동차·철강 50% 관세 위협 - 내년 1월 발효 시 미·캐 전면 무역전쟁 현실화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/08/24/business/economy/trump-canada-tariffs.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 03:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">캐나다, 트럼프 관세에 보복 - 다른 나라들도 동참할까?</div>
+    <div class="article-title-en">Canada Is Retaliating Against Trump’s Tariffs. Will Others Follow?</div>
+    <div class="article-keypoint">캐나다 보복 관세에 중국 지지 표명 - 트럼프 행정부 내 균열 노출·동조국 확산 여부 주시</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/08/24/business/dealbook/canada-carney-tariffs-trump.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/24 21:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">트럼프의 캐나다 무역전쟁, 미국을 양적완화로 되돌릴 수 있다</div>
+    <div class="article-title-en">Trump’s trade war with Canada could lead the U.S. back to quantitative easing</div>
+    <div class="article-keypoint">미·캐 관세 전쟁 장기화 시 양적완화 복귀 시나리오 - 금·장기채·주식 동반 수혜 가능성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trumps-canada-trade-war-could-lead-the-u-s-back-to-quantitative-easing-eef9be8b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 04:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">미국, 40개국 이상을 중국의 관세 우회 공모국으로 지목</div>
+    <div class="article-title-en">US Accuses More Than 40 Countries of Helping China Evade Tariffs</div>
+    <div class="article-keypoint">미국, 40개국 이상 중국 관세 우회 공모국 지목 - 대중 관세 압박망 글로벌 확장</div>
+    <a class="article-link" href="https://oilprice.com/Geopolitics/Asia/US-Accuses-More-Than-40-Countries-of-Helping-China-Evade-Tariffs.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 03:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Bessent 이란 제재·국채 개입 - 달러·유가·장기금리 동시 변수</span>
+    <span class="theme-label-range">Article #12~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Bessent의 광범위한 이란 제재 발표에 유가 3주 최대 낙폭 - 긴장 완화 기대도 병존</div>
+    <div class="article-title-en">Bessent’s sweeping sanctions against Iran send oil prices to their biggest drop in 3 weeks, while fueling hopes of de-escalation</div>
+    <div class="article-keypoint">Bessent 이란 제재 발표에 유가 3주 최대 낙폭 - 중국의 이란산 원유 반응이 핵심 변수</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oil-trades-lower-even-as-bessent-promises-economic-d-day-announcement-on-iran-a90d862e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 04:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">채권 투자자 Ed Al-Hussainy가 본 Bessent의 국채 트위스트 전략</div>
+    <div class="article-title-en">Bond Investor Ed Al-Hussainy on Bessent's Treasury Twist</div>
+    <div class="article-keypoint">Bessent 장기채 바이백 달러 약세 트레이드 촉발 - EM 통화 강세·캐리 트레이드 지속 여부 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-24/bond-investor-ed-al-hussainy-on-bessent-s-treasury-twist-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 06:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Bessent, 광범위한 이란 신규 제재 발표 - 최강 조치는 유예</div>
+    <div class="article-title-en">Bessent unveils sweeping new Iran sanctions but delays toughest blow   </div>
+    <div class="article-keypoint">Bessent, 이란 '경제적 질식' 선언 - 최강 조치 유예로 협상 레버리지 유지 전략 채택</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/08/24/bessent-unveil-economic-d-day-sanctions-against-iran/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 07:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">이번 주 주요 이벤트: Jackson Hole·Nvidia 실적·Core PCE</div>
+    <div class="article-title-en">Key Events This Week: Jackson Hole. Nvidia Earnings And Core PCE</div>
+    <div class="article-keypoint">이번 주 Jackson Hole·Nvidia 실적·Core PCE 삼중 이벤트 - 30년물 국채 수익률 5.22%에서 5bps 하락</div>
+    <a class="article-link" href="https://www.zerohedge.com/economics/key-events-week-jackson-hole-nvidia-earnings-and-core-pce" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/24 23:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">60일 평화 협상 기한 종료 - 트럼프의 이란 전략 대전환 가능성</div>
+    <div class="article-title-en">The 60 Day Peace Window Closed, and Trump’s Iran Strategy May Shift Dramatically</div>
+    <div class="article-keypoint">미·이란 60일 협상 기한 종료 - 트럼프 이란 전략 극적 전환 가능성 고조</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/The-60-Day-Peace-Window-Closed-and-Trumps-Iran-Strategy-May-Shift-Dramatically.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 02:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Bitcoin $80K 근접·금 동반 상승 - Treasury 바이백이 '달러 약세' 트레이드 재점화</span>
+    <span class="theme-label-range">Article #17~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Bitcoin, 6개월간 주식·금 모두 앞질러 - $80,000 돌파 임박</div>
+    <div class="article-title-en">Bitcoin has beaten stocks and gold over six months. Now it’s closing in on $80,000.</div>
+    <div class="article-keypoint">Bitcoin $80K 근접, 6개월 기준 주식·금 모두 상회 - Treasury 바이백이 달러 약세 트레이드 재점화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/bitcoin-has-beaten-stocks-and-gold-over-six-months-now-its-closing-in-on-80-000-b8aa48f9?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 05:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Valor·Point72, General Intuition의 $60억 밸류에이션 투자 지원 - AI 스타트업 로보틱스 확장</div>
+    <div class="article-title-en">Valor, Point72 back General Intuition at $6B valuation as AI startup pushes into robotics</div>
+    <div class="article-keypoint">General Intuition, $60억 밸류에이션 자금 조달 - Valor·Point72 지원, AI 로보틱스 민간 자본 집중 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/24/valor-point72-back-general-intuition-at-6b-valuation-as-ai-startup-pushes-into-robotics/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 00:24 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학 다중 균열 - 이란 위협·한반도 군사 공백·우크라이나 내부 균열</span>
+    <span class="theme-label-range">Article #19~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">트럼프의 한국 재앙 - 억지력 약화가 한반도를 더 위험하게 만들다</div>
+    <div class="article-title-en">Trump’s Korean Catastrophe</div>
+    <div class="article-keypoint">트럼프 한국 방위 공약 후퇴 - 미군 2만8천 명 주둔 신뢰성 훼손으로 억지력 약화 우려</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-dangerous-approach-to-korean-peninsula-by-richard-haass-2026-08" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/24 21:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">우크라이나 전 국방장관 Fedorov의 선거 요구, 냉담한 반응에 부딪혀</div>
+    <div class="article-title-en">Ukrainian former defense minister Fedorov's call for elections gets cold reception</div>
+    <div class="article-keypoint">Zelensky, 전시 선거 거부 - Fedorov 주장에 내부 균열 표면화로 정치적 정당성 논란 가속</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/08/24/ukrainian-former-defense-minister-fedorov-s-call-for-elections-gets-cold-reception_6756801_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/24 21:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">이란, Barron Trump 감시 영상 방영 주장 - 보고서</div>
+    <div class="article-title-en">Iran Airs Video Claiming Barron Trump Being Spied On: Report</div>
+    <div class="article-keypoint">이란, Barron Trump 감시 영상 방영 - 미·이란 긴장 심리전 국면 전환 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/iran-airs-distributing-video-claiming-barron-trump-being-spied-offers-10-million" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">미국, 이란전 부담 속 9월 한국 해병대 연합훈련 취소</div>
+    <div class="article-title-en">US Scraps September Korea Marine Drills In Wake Of Iran War Strain</div>
+    <div class="article-keypoint">미국, 9월 한·미 해병대 연합훈련 취소 - 이란 전쟁 부담으로 한반도 억지력 공백 우려</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/us-scraps-september-korea-marine-drills-wake-iran-war-strain" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">아프리카가 핵심 광물을 지정학적 힘의 재균형 수단으로 활용하는 방법</div>
+    <div class="article-title-en">How Africa is using critical minerals to rebalance geopolitical power</div>
+    <div class="article-keypoint">아프리카 15개국 핵심 광물 수출 제한 - 코발트·망간·리튬을 지정학 협상 카드로 활용 가속</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/le-monde-africa/article/2026/08/24/how-africa-is-using-critical-minerals-to-rebalance-geopolitical-power_6756807_124.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 03:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">FEDS 논문: 조건부 가격 커널 특성화 - 새로운 접근법</div>
+    <div class="article-title-en">FEDS Paper: Characterizing the Conditional Pricing Kernel: A New Approach</div>
+    <div class="article-keypoint">Fed 조건부 가격 커널 연구 - 자산가격 모델 방법론 혁신, 중장기 정책 참고 기초 연구</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/characterizing-the-conditional-pricing-kernel-a-new-approach.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">뇌가 노이즈로 가득한 세계를 압축하는 방식에 관한 새로운 프레임워크</div>
+    <div class="article-title-en">A New Framework for How the Brain Compresses Our Noisy World</div>
+    <div class="article-keypoint">뇌의 예측 엔진 모델 - AI 범주화 알고리즘 설계에 신경과학적 개념 전용 가능성</div>
+    <a class="article-link" href="https://www.quantamagazine.org/a-new-framework-for-how-the-brain-compresses-our-noisy-world-20260824/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/24 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Trump, SpaceX 블록버스터 IPO 2주 후 주식 매입</div>
+    <div class="article-title-en">Trump bought SpaceX shares two weeks after blockbuster IPO</div>
+    <div class="article-keypoint">Trump, SpaceX IPO 후 $155 매입 - 현재 $135로 하락, 정치·투자 윤리 논란 가중</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/24/trump-bought-spacex-shares-two-weeks-after-blockbuster-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 06:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">앨라배마, OpenAI의 Hugging Face 해킹 사건 수사 착수</div>
+    <div class="article-title-en">Alabama launches investigation into OpenAI’s hack of Hugging Face</div>
+    <div class="article-keypoint">OpenAI 사이버보안 모델 Hugging Face 해킹 - 앨라배마 주 검찰 수사 착수로 AI 규제 확산</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/24/alabama-launches-investigation-into-openais-hack-of-hugging-face/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 04:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">연방 항소법원, 잠입 취재 관련 James O'Keefe 손 들어줘</div>
+    <div class="article-title-en">Federal Appeals Court Rules In Favor Of James O'Keefe Over Undercover Reporting</div>
+    <div class="article-keypoint">연방 항소법원 James O'Keefe 잠입 취재 승소 - 언론 자유·정치 지형 변화의 사법적 선례</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/federal-appeals-court-rules-favor-james-okeefe-over-undercover-reporting" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 04:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">미국 대법원, 우편투표 제한에 관한 트럼프 행정명령 허용</div>
+    <div class="article-title-en">US Supreme Court allows Trump restrictions on mail-in ballots</div>
+    <div class="article-keypoint">대법원, 트럼프 우편투표 제한 허용 - 미국 선거 시스템 변화의 사법적 확인</div>
+    <a class="article-link" href="https://www.ft.com/content/b89d51c9-2206-4213-b0d3-8a826262c9d8?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 07:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Amodei vs. Altman: AI 패권 경쟁이 어떻게 리스크를 키우고 있나</div>
+    <div class="article-title-en">Amodei vs. Altman: How the Race for AI Dominance Is Increasing the Risks</div>
+    <div class="article-keypoint">Amodei vs. Altman AI 패권 경쟁 - 속도 경쟁이 안전 리스크 증폭시킨다는 경고</div>
+    <a class="article-link" href="https://www.spiegel.de/international/business/amodei-vs-altman-how-the-race-for-ai-dominance-is-increasing-the-risks-a-0aa34d2c-c3a2-466f-9925-831a0e5a2213#ref=rss" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/25 01:57 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
