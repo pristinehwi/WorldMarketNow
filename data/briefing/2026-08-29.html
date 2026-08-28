@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-29 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/29 07:48 KST</div>
+    <div class="header-date">2026-08-29</div>
+    <div class="header-headline">Warsh Jackson Hole 연설 - 금리인상 시사로 시장 충격</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Warsh 매파 연설 후 9월 금리인상 가능성 재부상 - 국채수익률·Bitcoin·위험자산 연쇄 조정 지속 여부</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Warsh Jackson Hole 매파 선회 - '9월 인상' 카드가 시장 재가격에 불을 붙이다</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#9</span>
+    </div>
+    <div class="theme-summary">오늘 가장 큰 시장 충격은 Warsh Fed 의장이 Jackson Hole 연설에서 인플레이션 대응을 최우선으로 천명하고 금리인상 가능성을 시사한 것으로, 이는 최근 시장이 기대해온 '완화 전환' 내러티브와 정면 충돌한다. Warsh는 '아직 해야 할 일이 남아 있다'는 표현으로 추가 긴축 여지를 열었고, 채권시장은 이를 신뢰하며 2년물 국채수익률이 급등하는 등 9월 인상 가능성이 빠르게 재가격됐다. Bessent 재무장관은 별도로 무질서한 엔화 변동이 미국 금리 상승으로 전이될 수 있다며 외환-금리 연동 리스크를 경고했고, 국채수익률 상승 배경에 대한 시장 논의도 가열됐다. 한편 Bitcoin은 Warsh 발언의 매파적 충격으로 3% 이상 급락하며 '달러 가치훼손' 트레이드의 모멘텀이 단기 꺾였고, Fed와 재무부가 재정적자 현실을 외면하고 있다는 구조적 비판도 동시에 제기됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Nvidia·AI 자본지출 사이클 - SpaceX 수요와 버블 논쟁의 교차점</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #10~#13</span>
+    </div>
+    <div class="theme-summary">Nvidia의 매출 가이던스가 월가 예상을 압도하는 수준으로 제시되면서, 그 배경으로 SpaceX의 Nvidia 칩 독점 구매 선언이 주목받고 있다. 동시에 Neocloud Lambda가 10억 달러 부채를 조달해 Nvidia 칩을 매입 후 Microsoft에 임대하는 구조가 등장하는 등, AI 인프라 자본지출이 레버리지 기반으로 빠르게 팽창하고 있다. Microsoft는 AI 소프트웨어 우려 완화 속에 연중 최장 상승 스트릭을 기록하며 AI 생태계 밸류에이션이 재확인됐다. 그러나 Nvidia의 실적이 강력하더라도 1980년대 일본 버블과 유사한 패턴이 반복될 수 있다는 역사적 경고가 제기되고 있어, 자본지출 사이클의 지속 가능성 논쟁이 본격화되는 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 거버넌스·생태계 재편 - Anthropic 법적 승리·자기개선 AI·중국 대역 확산</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #14~#19</span>
+    </div>
+    <div class="theme-summary">AI 거버넌스 전선에서 오늘 Anthropic이 트럼프 행정부의 '공급망 리스크' 낙인에 맞서 연방법원에서 승소한 것이 주목된다. 판사는 행정부의 조치가 위법한 보복이라고 판결해, AI 기업에 대한 정부 규제 권한의 한계를 법적으로 선을 그은 첫 사례가 됐다. Anthropic 연구자들은 자기개선 AI 시스템이 10개 벤치마크 전반에서 성능을 향상시키면서도 전체 성능을 저하시키지 않았다는 실험 결과를 공개해, 자율 AI 개선의 현실화 가능성을 시사했다. 한편 중국에서는 AI 영상 생성 기술이 배우를 대체하는 수준으로 확산되면서 노동 대체 문제가 실물로 전이되고 있고, Meta 임원이 OpenAI로 이직하는 등 AI 인재·거버넌스 판도도 재편되고 있다. ECB는 블록체인 위에 중앙은행 화폐를 올려야 한다는 입장을 공개적으로 밝혀 디지털 통화 인프라 논쟁을 한층 가열시켰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">캐나다 자동차 50% 관세 - 실물 공급망 붕괴 위협과 협상 교착 고착화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #20</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령이 캐나다산 자동차·트럭·부품·철강에 내년 초부터 50% 관세를 부과하겠다고 예고하면서, 캐나다 자동차 산업이 '무릎을 꿇을 수 있다'는 업계 경고가 나왔다. Linamar 임원 Linda Hasenfratz는 50% 관세가 현실화될 경우 캐나다 자동차 생태계가 구조적 붕괴 수순을 밟을 수 있다고 직접 경고했다. 미·캐 무역전쟁은 단순 관세 충돌을 넘어 북미 공급망 전체의 재편을 강제하는 국면으로 진입하고 있으며, 협상 교착이 장기화될수록 실물 경제에 대한 전이 속도가 빨라질 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학·정치 리스크 - 우크라이나 균열·베네수엘라 원유·법원의 트럼프 견제</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#25</span>
+    </div>
+    <div class="theme-summary">우크라이나에서는 해임된 국방장관 Fedorov가 이탈리아 국방부 자문직을 수락하면서 내부 균열의 국제적 가시화가 이어지고 있다. 남미에서는 콜롬비아 갑부 Gilinski 가문과 GeoPark가 베네수엘라 원유 딜을 추진 중이라는 보도가 나와, 제재 환경 속 에너지 공급 우회로 형성 가능성이 부각됐다. 미국 법원은 트럼프 대통령의 연방법원 내 구금 판결 도전을 기각했으며, Chicago PMI가 57.9 예상을 크게 밑돌며 급락해 미국 실물경기 냉각 신호를 보냈다. 트럼프의 뉴욕타임스 150억 달러 명예훼손 소송이 업데이트되는 등 정치·사법 리스크도 병행되고 있어, 행정부 정책 실행력에 대한 불확실성이 복합적으로 누적되는 구도다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #26~#30</span>
+    </div>
+    <div class="theme-summary">영국 AI 및 글로벌 경제 거버넌스 관련 오피니언, AI 비판론의 배경에 대한 논평, Meta의 독점 심화 우려, Zentek의 Nasdaq에서 OTC 시장 이전, 트럼프 기념 아치 건설 논란 등 개별 이슈들이 포함됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Warsh Jackson Hole 매파 선회 - '9월 인상' 카드가 시장 재가격에 불을 붙이다</span>
+    <span class="theme-label-range">Article #1~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Kevin Warsh, Fed 의장이 바라던 것을 얻다 - 그의 말을 신뢰하는 채권시장</div>
+    <div class="article-title-en">Kevin Warsh gets what every Fed chair hopes for: a bond market that trusts his word</div>
+    <div class="article-keypoint">Warsh 연설 후 채권시장이 신뢰 반응 - 2년물 급등, 9월 인상 재가격 국면 진입</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/kevin-warsh-gets-what-every-fed-chair-hopes-for-a-bond-market-that-trust-his-words-5103dad5?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 05:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Warsh, 우리 시대 속으로 (2026 Jackson Hole 기조연설)</div>
+    <div class="article-title-en">Warsh, In Our Time</div>
+    <div class="article-keypoint">Warsh Jackson Hole 연설 전문 공개 - 인플레 미완 강조로 추가 긴축 경로 공식화</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/warsh20260828a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Fed와 재무부는 현실을 부정하고 있다</div>
+    <div class="article-title-en">The Fed and the Treasury Are in Denial</div>
+    <div class="article-keypoint">Fed·재무부가 재정·달러 수요 약화 현실 외면 - 구조적 달러 신뢰 붕괴 리스크 경고</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/fed-treasury-in-denial-about-their-entanglement-in-financial-markets-by-katharina-pistor-2026-08" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 22:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Kevin Warsh, Jackson Hole에서 Donald Trump에 맞서 Fed 신뢰성 강화</div>
+    <div class="article-title-en">Kevin Warsh bolsters Fed's credibility in face of Donald Trump at Jackson Hole</div>
+    <div class="article-keypoint">Warsh, 인플레 대응 최우선 천명 - 금리인상 시사로 '완화 전환' 기대에 정면 충돌</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/08/29/kevin-warsh-bolsters-fed-s-credibility-in-face-of-donald-trump-at-jackson-hole_6756950_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 07:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">2026 Jackson Hole Fed 회의 실시간: Warsh 연설·시장 반응</div>
+    <div class="article-title-en">Jackson Hole Fed Meeting 2026: Live News, Warsh Speech, Market Reaction</div>
+    <div class="article-keypoint">Jackson Hole 2026 실시간 - Warsh 연설·시장 반응 종합 모니터링 필요</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/live-blog/2026-08-28/fed-meeting-at-jackson-hole-and-warsh-speech-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 19:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Bessent, '무질서한 엔화'는 미국 금리 상승 리스크를 초래할 것이라고 경고</div>
+    <div class="article-title-en">Bessent Says a ‘Disorderly Yen’ Would Risk Higher US Rates</div>
+    <div class="article-keypoint">Bessent, 무질서한 엔화 변동이 미국 금리 상승으로 전이될 수 있다고 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-28/bessent-says-a-disorderly-yen-could-ultimately-raise-us-rates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">미국 국채수익률 상승, 2년물 급등 - Warsh 연설 후 9월 인상 가능성 재부각</div>
+    <div class="article-title-en">U.S. Treasury yields rise, 2-yr soars as Sept hike back in play after Warsh speech</div>
+    <div class="article-keypoint">Warsh 매파 발언 후 2년물 국채수익률 급등 - 9월 인상이 시장 기본 시나리오로 부상</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/german-10year-yield-touches-highest-level-since-2011-on-inflation-threats-4880683" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 21:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Bitcoin, 매파적 Warsh 발언에 3% 이상 하락 - 달러 약세 랠리 후 동력 상실</div>
+    <div class="article-title-en">Bitcoin sheds more than 3% on hawkish Warsh, loses steam after debasement rally</div>
+    <div class="article-keypoint">Warsh 매파 신호에 Bitcoin 3% 이상 급락 - '달러 약세' 트레이드 모멘텀 단기 꺾임</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-steadies-near-80k-with-warsh-speech-in-focus-4880563" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 21:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">미국 국채 수익률은 왜 오르고 있는가?</div>
+    <div class="article-title-en">Why Are Yields on U.S. Treasury Bonds Rising?</div>
+    <div class="article-keypoint">국채수익률 상승 원인 분석 - Bessent 재무장관 발언과 재정적자 구조 맞물려 상승 압력 지속</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/08/28/treasury-bonds-bessent-trump-economy/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 05:56 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Nvidia·AI 자본지출 사이클 - SpaceX 수요와 버블 논쟁의 교차점</span>
+    <span class="theme-label-range">Article #10~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Nvidia의 매출 전망이 너무 커서 월가는 SpaceX가 그 배경인지 의심한다</div>
+    <div class="article-title-en">Nvidia’s revenue forecast is so huge that Wall Street wonders if SpaceX is the reason</div>
+    <div class="article-keypoint">SpaceX의 Nvidia 칩 독점 구매 선언이 Nvidia 가이던스 서프라이즈의 핵심 수요처로 부상</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidias-revenue-forecast-is-so-huge-that-wall-street-wonders-if-spacex-is-the-reason-1ee7a8a9?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 05:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Microsoft 주가, AI 소프트웨어 우려 완화 속 연중 최장 상승 스트릭 기록</div>
+    <div class="article-title-en">Microsoft’s stock seals its longest winning streak of the year as AI software fears fade</div>
+    <div class="article-keypoint">Microsoft, AI 소프트웨어 우려 완화로 연중 최장 상승 스트릭 - AI 밸류에이션 재확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microsofts-stock-seals-its-longest-winning-streak-of-the-year-as-ai-software-fears-fade-e5669f5b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 06:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">우리는 AI 버블 속에 있다. 1980년대 일본을 보라.</div>
+    <div class="article-title-en">Yes, We’re in an AI Bubble. Just Look to 1980s Japan.</div>
+    <div class="article-keypoint">Nvidia 실적 강세에도 1980년대 일본 버블과 유사 패턴 경고 - AI 버블 논쟁 점화</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/08/28/nvidia-earnings-quarterly-report-ai-economic-bubble-japan-history/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 05:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">네오클라우드 Lambda, 칩 추가 구매를 위해 10억 달러 부채 조달</div>
+    <div class="article-title-en">Neocloud Lambda secures $1B in debt to buy more chips</div>
+    <div class="article-keypoint">Lambda, 10억 달러 부채로 Nvidia 칩 매입 후 Microsoft 임대 - AI 인프라 레버리지 팽창 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/28/neocloud-lambda-secures-1b-in-debt-to-buy-more-chips/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 05:24 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 거버넌스·생태계 재편 - Anthropic 법적 승리·자기개선 AI·중국 대역 확산</span>
+    <span class="theme-label-range">Article #14~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">AI 대역이 역할을 빼앗기면서 중국 배우들이 드라마에서 퇴출되고 있다</div>
+    <div class="article-title-en">China’s actors written out of dramas as AI doubles ready to take their roles</div>
+    <div class="article-keypoint">중국 AI 영상 기술이 배우 대체 수준으로 확산 - 노동 대체의 실물 전이 가속</div>
+    <a class="article-link" href="https://www.ft.com/content/7117ff02-d495-4936-8f05-fa73a7a5c669?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Meta 임원이 OpenAI로 이직 - 소셜미디어 거인은 인도에서 커지는 규제 압력에 직면</div>
+    <div class="article-title-en">Meta executive leaves for OpenAI as the social media giant faces growing scrutiny in India</div>
+    <div class="article-keypoint">Meta 임원이 OpenAI로 이직 - AI 인재 쟁탈과 빅테크 경쟁 구도 재편 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/28/meta-executive-leaves-for-openai-as-the-social-media-giant-faces-growing-scrutiny-in-india/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 21:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Anthropic 연구자, 자기개선 AI의 첫 실험 결과를 공개하다</div>
+    <div class="article-title-en">An Anthropic researcher just gave us a peek at self-improving AI</div>
+    <div class="article-keypoint">Anthropic 자기개선 AI 실험 성공 - 10개 벤치마크 전부 향상, 자율 AI 현실화 신호</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/28/an-anthropic-researcher-just-gave-us-a-peek-at-self-improving-ai/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 04:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">ECB Schnabel, 블록체인 위에 중앙은행 화폐를 올릴 것을 촉구</div>
+    <div class="article-title-en">ECB’s Schnabel Calls for Central-Bank Money on Blockchain</div>
+    <div class="article-keypoint">ECB Schnabel, 블록체인 기반 중앙은행 화폐 도입 공개 촉구 - 통화정책 인프라 혁신 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-28/ecb-s-schnabel-calls-for-central-bank-money-on-blockchain" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Anthropic, 펜타곤의 공급망 리스크 낙인에 대한 첫 법원 승소 획득</div>
+    <div class="article-title-en">Anthropic gets its first court win over the Pentagon’s supply-chain risk label</div>
+    <div class="article-keypoint">Anthropic, 트럼프 행정부 '공급망 리스크' 낙인 위법 판결 - AI 규제 한계 법적 선긋기</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/28/anthropic-gets-its-first-court-win-over-the-pentagons-supply-chain-risk-label/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 21:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">법원, 트럼프 행정부가 AI 레드라인 이유로 Anthropic에 불법 보복했다고 판결</div>
+    <div class="article-title-en">Judge Rules Trump Admin Illegally Retaliated Against Anthropic Over AI Red Lines</div>
+    <div class="article-keypoint">법원, 트럼프 행정부의 Anthropic 보복 조치 위법 판결 - 행정권 남용 견제 선례</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/judge-rules-trump-admin-illegally-retaliated-against-anthropic-over-ai-red-lines" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 23:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">캐나다 자동차 50% 관세 - 실물 공급망 붕괴 위협과 협상 교착 고착화</span>
+    <span class="theme-label-range">Article #20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">관세가 캐나다 자동차 산업을 '무릎 꿇릴' 수 있다</div>
+    <div class="article-title-en">Tariffs Could Bring Canada Auto "To Its Knees"</div>
+    <div class="article-keypoint">트럼프 캐나다 자동차 50% 관세 예고 - 북미 공급망 구조적 붕괴 위협 현실화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-28/tariffs-could-bring-canada-auto-to-its-knees-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 06:17 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학·정치 리스크 - 우크라이나 균열·베네수엘라 원유·법원의 트럼프 견제</span>
+    <span class="theme-label-range">Article #21~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">해임된 우크라이나 국방장관 Fedorov, 이탈리아 장관 자문직 수락</div>
+    <div class="article-title-en">Ousted Ukraine defense minister Fedorov accepts job advising Italian minister</div>
+    <div class="article-keypoint">Fedorov 이탈리아 자문직 수락 - 우크라이나 내부 균열의 국제적 가시화 진행</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/08/28/ousted-ukraine-defense-minister-fedorov-accepts-job-advising-italian-minister_6756946_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 04:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">억만장자 Gilinski와 GeoPark, 베네수엘라 원유 딜 근접 보도</div>
+    <div class="article-title-en">Billionaire Gilinski, GeoPark Said to Be Near Venezuela Oil Deal</div>
+    <div class="article-keypoint">Gilinski·GeoPark, 베네수엘라 원유 딜 근접 - 제재 환경 속 남미 에너지 우회로 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-28/billionaire-gilinski-geopark-said-to-be-near-venezuela-oil-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 06:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">트럼프, 연방법원에서 구금 판결 이의 신청 기각</div>
+    <div class="article-title-en">Trump loses bid to challenge hush-money conviction in federal court</div>
+    <div class="article-keypoint">연방법원, 트럼프 구금 판결 도전 기각 - 대통령 면책특권 범위 재확인</div>
+    <a class="article-link" href="https://www.ft.com/content/14564843-5960-44c6-8683-944422c042a4?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 03:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Trump, New York Times 상대 150억 달러 명예훼손 소송 업데이트</div>
+    <div class="article-title-en">Trump Updates $15 Billion Libel Lawsuit Against The New York Times</div>
+    <div class="article-keypoint">트럼프, NYT 상대 150억 달러 명예훼손 소송 업데이트 - 언론·사법 리스크 병행 누적</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/08/28/business/media/trump-new-york-times-lawsuit.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 03:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">8월 미국인 신뢰 지수 하락, Chicago PMI 위축 구간으로 급락</div>
+    <div class="article-title-en">Americans' Confidence Dips In August As Chicago PMI Plunges Into Contraction</div>
+    <div class="article-keypoint">Chicago PMI 급락으로 미국 실물경기 냉각 신호 - 경기 vs 인플레 딜레마 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/americans-confidence-dips-august-chicago-pmi-plunges-contraction" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 23:32 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #26~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">영국이 더 공정한 글로벌 경제 구축에 기여할 수 있는 방법</div>
+    <div class="article-title-en">How Britain Can Help Build a Fairer Global Economy</div>
+    <div class="article-keypoint">영국 G20·G7 의장국 지위를 활용한 글로벌 경제 공정성 어젠다 주도 가능성 제시</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/andy-burnham-g7-g20-presidencies-opportunity-to-reshape-global-economy-by-danny-sriskandarajah-2026-08" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 01:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">인공지능에 대한 인위적 비판인가? (오피니언)</div>
+    <div class="article-title-en">Opinion | Artificial Criticism of Artificial Intelligence?</div>
+    <div class="article-keypoint">AI 비판론이 기득권 이해관계에서 비롯됐을 가능성 제기 - 규제 담론의 신뢰성 논쟁</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/artificial-criticism-of-artificial-intelligence-83d794b3?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 07:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">오피니언 | Meta 합의는 빅테크를 더 강하게 만든다</div>
+    <div class="article-title-en">Opinion | The Meta Settlement Makes Big Tech Bigger</div>
+    <div class="article-keypoint">Meta 독점 심화 우려에도 정부 합의가 빅테크 권력 강화로 귀결된다는 역설적 비판</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/the-meta-settlement-makes-big-tech-bigger-874a3e05?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Zentek 주식, 화요일부터 Nasdaq에서 OTC 시장으로 이전</div>
+    <div class="article-title-en">Zentek shares to move from Nasdaq to OTC Markets on Tuesday</div>
+    <div class="article-keypoint">Zentek, Nasdaq에서 OTC 시장으로 이전 - 소형 바이오 자금조달 여건 악화 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/company-news/zentek-shares-to-move-from-nasdaq-to-otc-markets-on-tuesday-93CH-4881848" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/28 21:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Trump 아치가 워싱턴 DC 주요 랜드마크의 시야를 바꿀 것이라는 보고서</div>
+    <div class="article-title-en">Trump arch will alter sightlines of many Washington DC landmarks, report says</div>
+    <div class="article-keypoint">트럼프 기념 아치가 워싱턴 DC 랜드마크 경관 훼손 가능성 - 정치적 상징 논란</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/28/trump-arch-sightlines-washington-dc" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/29 06:36 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
