@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-31 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/08/31 07:48 KST</div>
+    <div class="header-date">2026-08-31</div>
+    <div class="header-headline">Warsh 매파 발언 - 9월 금리인상 베팅 본격화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">G20 Bessent 외교 성과·Warsh 추가 발언 및 이란 군사 긴장 고조 여부 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Warsh Jackson Hole 이후 - '9월 인상' 베팅이 채권·주식시장 동시 압박</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">Warsh의 Jackson Hole 매파 발언 이후 시장에서 9월 금리인상 가능성이 본격 가격에 반영되기 시작했으나, ABN AMRO·Brandywine 등 채권 운용사들이 공개적으로 회의론을 제기하며 시장 내 시각 분열이 뚜렷해지고 있다. 미 주식선물은 일요일 기준 보합권에 머물며 투자자들이 인상 가능성과 이번 주 고용지표·실적 발표를 동시에 소화하는 관망 모드에 진입했다. 달러는 Warsh 발언 이후 강세를 유지했고, 오일 시장도 이란 긴장과 맞물려 상승세를 보이며 매파 통화정책 내러티브가 복합 리스크와 결합되고 있다. Bessent는 G20에서 '엔화 움직임은 질서적'이라고 언급하며 외환 과열 진화에 나섰고, 'Bessent 독트린'으로 불리는 글로벌 환율 정책 틀이 형성되고 있는지 시장이 주목하고 있다. 언론 접근을 일부 차단한 G20 재무장관 회의 자체가 투명성 논란을 낳으며 정책 불확실성을 가중시키는 요인으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">이란 군사 충돌 격화 - 유가 상승과 중동 리스크 프리미엄 재점화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#13</span>
+    </div>
+    <div class="theme-summary">미군이 수주 만에 처음으로 이란령 섬 목표물을 타격하며 중동 긴장이 다시 급격히 고조되고 있다. 트럼프 행정부의 '이란에 대한 경제적 디데이' 전략이 실질적 군사 행동과 결합되면서 호르무즈 해협 리스크 프리미엄이 유가에 빠르게 반영되고 있으며, 아시아 초반 유가가 이란 긴장을 빌미로 급등했다. 전문가들은 미국의 이란 압박이 진짜 전략이라기보다 압력 수단에 가깝다고 평가하며, 테헤란 역시 대응 카드를 보유하고 있어 갈등 확전 가능성을 배제할 수 없다고 경고한다. 한편 트럼프 행정부는 베네수엘라 원유 자산(65억 배럴 규모)에 Pentagon이 35% 지분을 확보하고 전략비축유(SPR) 충전 의지를 밝히며 대안적 공급원 확보를 병행하고 있어, 에너지 지정학이 다층적으로 전개되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI·에너지 인프라 병목 - Musk 터빈 공장과 희토류 공급망이 새 변수로 부상</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #14~#17</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 포인트는 AI 붐의 병목이 GPU가 아닌 전력 터빈 블레이드 부족으로 이동하고 있다는 것으로, Musk가 SpaceX 명의로 비밀 터빈 블레이드 주조 공장을 추진해 가스터빈 도입 기간을 18개월 단축할 수 있다고 밝혔다. 그러나 이 전략은 탄소 배출·소송·보건 리스크를 수반하며, 가스 연료에 대한 장기 의존 베팅이 환경 규제 역풍에 노출될 수 있다는 우려도 제기된다. 희토류 공급망 측면에서는 유럽 언론이 중국 의존 지속 불가능성을 재경고했고, 미국 대안에도 기댈 수 없다는 현실 인식이 확산되며 서방 공급망 자립 압박이 커지고 있다. Meta의 AI 전략 평가와 Nvidia의 로봇 시장 진출 야심도 언급되며, AI 자본지출 생태계가 데이터센터·전력·로봇으로 수직 확장하는 흐름이 뚜렷해지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">금·Bitcoin 동반 강세 - 재정·통화 불안 속 희소 자산 트레이드 지속</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#20</span>
+    </div>
+    <div class="theme-summary">금 강세론자들이 미 재무부의 국채 바이백(차입비용 억제) 조치를 배경으로 이색 옵션·스프레드 전략으로 전환하며 상승 베팅을 정교화하고 있다. Bitcoin은 $79K 수준에서 횡보하며 모멘텀이 다소 식었지만 금과의 동반 자금유입 기조는 유지되고 있어, 달러 신뢰 약화와 재정 불안이 두 자산 모두를 지지하는 구조가 지속되고 있다. 한편 월가 주요 IB들(Barclays·UBS·HSBC·JPMorgan·Goldman)이 원자재의 역사적 저평가를 공동으로 지적하며 '상품 대비 주식의 극단적 고평가' 역전 가능성을 경고하고 있어, 실물 희소성 테마가 금·원자재 전반으로 확산되는 모습이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">CIA 모스크바 방문·Zelensky 내부 균열 - 우크라이나 협상 지형 급변 신호</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#23</span>
+    </div>
+    <div class="theme-summary">CIA 국장 Ratcliffe가 극비리에 모스크바를 방문해 트럼프-푸틴-젤렌스키 3자 정상회담을 추진했다는 보도가 나오며 우크라이나 종전 협상의 무게추가 이동하고 있다는 신호가 포착됐다. 이번 방문은 젤렌스키 내부의 균열 보도와 맞물려, 우크라이나 방어 전선과 정치적 결속 모두에 의문이 제기되는 시점에 등장해 지정학 불확실성을 증폭시키고 있다. 우크라이나 전직 국방장관이 미국 자본을 유치해 방산 기술 펀드를 설립하려 한다는 보도도 나와, 전쟁 장기화를 전제로 한 민간 방산 투자 기회가 새로운 각도로 부각되고 있다. Netanyahu의 이중 행보(정착민 폭력 비난 vs 극우 지지)도 중동 정치 리스크의 복잡성을 더하는 요인이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">부동산 증여와 양도세 절감 전략, 트럼프의 언론인 처벌 요구, 로보택시 인간 비용 문제, 미국인의 캐나다 시민권 취득 급증, USDA 식중독 연구 폐지, 트럼프 측근의 강제추방 논란 등 직접적인 시장 임팩트는 낮지만 사회·정치적 맥락을 구성하는 기사들이 포함된다. Faraday Future의 중동 로보틱스 사업 확장도 틈새 모빌리티 동향으로 분류된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Warsh Jackson Hole 이후 - '9월 인상' 베팅이 채권·주식시장 동시 압박</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Warsh의 Jackson Hole 발언 후 금리인상 가능성 상승 - 미 주식선물 보합세</div>
+    <div class="article-title-en">U.S. stock futures flat as chances of rate hike rise after Warsh’s Jackson Hole comments</div>
+    <div class="article-keypoint">Warsh 매파 발언 후 9월 인상 베팅 확산, 주식선물 보합·노동지표 대기 모드</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/u-s-stock-futures-flat-as-chances-of-rate-hike-rise-after-warshs-jackson-hole-comments-1f5287f2?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 07:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Fed 금리인상 설 확산, 그러나 투자자들은 여전히 회의적</div>
+    <div class="article-title-en">Fed Rate Hike Speculation Grows, But Investors Remain Skeptical</div>
+    <div class="article-keypoint">ABN AMRO·Brandywine, Warsh 인상 가능성에 공개 회의론 - 채권시장 내 시각 분열 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-30/bond-investors-wary-after-warsh-fans-wagers-fed-poised-to-hike" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Bessent 재무장관, 관세·이란 전쟁·채권 혼란 속 G20 외교 시험대</div>
+    <div class="article-title-en">US Treasury's Bessent faces G20 diplomacy test amid tariffs, Iran war, bond turmoil</div>
+    <div class="article-keypoint">Bessent, G20서 무역불균형·성장·이란 등 다중 의제 직면 - 경제외교 역량 시험대</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-treasurys-bessent-faces-g20-diplomacy-test-amid-tariffs-iran-war-bond-turmoil" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 19:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Bessent '엔화 움직임 비교적 안정적, 무질서하지 않다'</div>
+    <div class="article-title-en">Bessent says yen moves ’pretty contained’ and not disorderly</div>
+    <div class="article-keypoint">Bessent '엔화 움직임 질서적' 발언 - 환율 개입 우려 차단, 달러 강세 용인 시사</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/bessent-says-yen-moves-pretty-contained-and-not-disorderly-4882076" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">미 재무부, G20 정상회의서 Bloomberg·WSJ 등 일부 언론 취재 배제</div>
+    <div class="article-title-en">US Treasury Bars Reporters From Some Outlets From G20 Summit</div>
+    <div class="article-keypoint">Bloomberg·WSJ 등 주요 언론 G20 취재 배제 - 정책 투명성 논란으로 불확실성 가중</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-30/us-treasury-bars-reporters-from-several-outlets-from-g20-meeting" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 06:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">'Bessent 독트린'이 글로벌 외환정책에서 형태를 갖춰가고 있는가?</div>
+    <div class="article-title-en">Is a ‘Bessent doctrine’ taking shape in global FX policy?</div>
+    <div class="article-keypoint">'Bessent 독트린' 윤곽 형성 여부 - 달러·엔·글로벌 FX 정책 재설계 가능성 주목</div>
+    <a class="article-link" href="https://www.investing.com/news/forex-news/is-a-bessent-doctrine-taking-shape-in-global-fx-policy-4882074" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 21:58 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">이란 군사 충돌 격화 - 유가 상승과 중동 리스크 프리미엄 재점화</span>
+    <span class="theme-label-range">Article #7~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Pentagon, 베네수엘라 원유 35% 지분 확보 - Trump, SPR '가득 채우겠다' 공언</div>
+    <div class="article-title-en">Pentagon Grabs 35% Equity Stake In Venezuelan Oil As Trump Vows To "Fill Up" The SPR</div>
+    <div class="article-keypoint">Pentagon, 베네수엘라 원유 35% 지분 확보 + SPR 충전 의지 - 에너지 지정학 다층화</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/pentagon-grabs-35-stake-venezuelan-oil-trump-vows-fill-spr" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">베네수엘라 오일딜, 미국의 역할에 의문 제기</div>
+    <div class="article-title-en">Venezuela Oil Deal Raises Questions Over US Role</div>
+    <div class="article-keypoint">베네수엘라 65억 배럴 미국 접근권 - 정치 내구성·내부 반발 등 실행 불확실성 상존</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-08-30/venezuela-oil-deal-raises-questions-over-us-role-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 22:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">트럼프의 이란 '경제적 디데이', 오히려 판돈을 높일 위험</div>
+    <div class="article-title-en">Trump’s ‘economic D-day’ against Iran risks driving the stakes even higher | Sina Toossi</div>
+    <div class="article-keypoint">미국의 이란 압박, 압력 수단에 불과 - 테헤란 대응 카드 보유로 확전 리스크 잔존</div>
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/2026/aug/30/trump-economic-d-day-iran-stakes-higher-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 16:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">이란 긴장에 유가 상승·미 주식선물 하락: 시장 동향</div>
+    <div class="article-title-en">Oil Rises on Iran Tensions, US Stock Futures Dip: Markets Wrap</div>
+    <div class="article-keypoint">이란 긴장에 아시아 초반 유가 급등·달러 강세 - Warsh 매파 발언과 복합 리스크 결합</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-30/stock-market-today-dow-s-p-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 07:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">논란의 베네수엘라 사업가, 트럼프 오일딜 이후 투자자 유치 나서</div>
+    <div class="article-title-en">Controversial Venezuelan executive courts investors after Trump oil deal</div>
+    <div class="article-keypoint">베네수엘라 Betancourt, 투자자 유치 나서 - 미국 파트너십 실체화 여부가 관건</div>
+    <a class="article-link" href="https://www.ft.com/content/458940e7-0754-42e3-aa33-f1f9e3e710b7?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 21:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">베네수엘라 Maduro, 미국 오일딜 체결 후 SNS에 재등장</div>
+    <div class="article-title-en">Venezuela’s Maduro resurfaces on social media amid US oil deal</div>
+    <div class="article-keypoint">Maduro, SNS 복귀 - 미국 오일딜 배경의 베네수엘라 내부 권력 역학 변화 주목</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/venezuelas-maduro-resurfaces-on-social-media-amid-us-oil-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 07:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Pentagon, 이란령 섬 목표물 타격 - 수주 만의 첫 미군 군사 행동</div>
+    <div class="article-title-en">Pentagon Strikes Iranian Island Target, In First US Military Action In Weeks</div>
+    <div class="article-keypoint">미군, 이란령 섬 타격 재개 - 수주 만의 군사 행동으로 중동 긴장 급재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/iranian-gasoline-shortages-grow-us-blockade-bites" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 05:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI·에너지 인프라 병목 - Musk 터빈 공장과 희토류 공급망이 새 변수로 부상</span>
+    <span class="theme-label-range">Article #14~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">"게임 체인저": Musk, AI 붐 위협하는 터빈 블레이드 부족 해결 위해 신규 공장 추진</div>
+    <div class="article-title-en">"Profound Game-Changer": Musk Launching New Turbine Blade Factory To Solve Shortage Threatening AI Boom</div>
+    <div class="article-keypoint">Musk, SpaceX 터빈 블레이드 공장으로 AI 전력 병목 18개월 단축 - 가스 의존 리스크 병존</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/profound-game-changer-musk-launching-new-turbine-blade-factory-solve-shortage" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 03:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">희토류에 관한 Guardian의 시각: 핵심 공급망 확보는 상식의 문제</div>
+    <div class="article-title-en">The Guardian view on rare earths: it’s common sense to secure essential supply chains | Editorial</div>
+    <div class="article-keypoint">희토류 중국 의존 탈피 시급 - 미국 대안도 불확실, 유럽 공급망 자립 압박 고조</div>
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/2026/aug/30/the-guardian-view-on-rare-earths-its-common-sense-to-secure-essential-supply-chains" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Meta의 심판의 날</div>
+    <div class="article-title-en">Meta’s Day of Reckoning</div>
+    <div class="article-keypoint">Meta AI 전략 평가·Nvidia 로봇 진출 - AI 자본지출이 하드웨어·로봇으로 수직 확장</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/metas-day-of-reckoning-aec1f826?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 23:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Musk의 가스터빈 확보 가속 전략, 오염 문제라는 대가 수반</div>
+    <div class="article-title-en">Musk’s faster path to more gas turbines comes with pollution problem</div>
+    <div class="article-keypoint">Musk 가스터빈 공장, AI 전력 공급 가속 vs 환경 소송·보건 리스크 상충</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/30/musks-faster-path-to-more-gas-turbines-comes-with-pollution-problem/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 01:54 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">금·Bitcoin 동반 강세 - 재정·통화 불안 속 희소 자산 트레이드 지속</span>
+    <span class="theme-label-range">Article #18~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">금 강세론자들, '질서 있는' 랠리 속 이색 옵션·스프레드 전략으로 전환</div>
+    <div class="article-title-en">Gold Bulls Turn to Exotic Options, Spreads in ‘Orderly’ Rally</div>
+    <div class="article-keypoint">금 강세론자, 이색 옵션·스프레드로 전략 정교화 - Treasury 바이백이 상승 촉매로 작동</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-08-30/gold-bulls-turn-to-exotic-options-spreads-in-orderly-rally" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">역대급 평균 회귀: 원자재, 주식 대비 사상 최저 수준으로 저평가</div>
+    <div class="article-title-en">The Mother Of All Mean Reversions: Commodities Have Never Been This Cheap Versus Stocks</div>
+    <div class="article-keypoint">원자재, 주식 대비 역사적 저평가 - 월가 IB들 '물리적 희소성' 기반 대역전 경고</div>
+    <a class="article-link" href="https://www.zerohedge.com/commodities/mother-all-mean-reversions-commodities-have-never-been-cheap-versus-stocks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 05:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Bitcoin, $79K서 횡보 - 모멘텀 둔화: 실시간 레벨</div>
+    <div class="article-title-en">Bitcoin consolidates at $79K as momentum cools: Live levels</div>
+    <div class="article-keypoint">Bitcoin $79K 횡보·모멘텀 둔화 - 금 동반 상승 기조는 유지, 방향성 분기점 대기</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-stalls-below-78500-resistance-live-hourly-levels-93CH-4872743" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 19:02 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">CIA 모스크바 방문·Zelensky 내부 균열 - 우크라이나 협상 지형 급변 신호</span>
+    <span class="theme-label-range">Article #21~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">우크라이나 前 국방장관, 방산 기술 펀드를 위한 미국 투자 유치 추진</div>
+    <div class="article-title-en">Ukraine’s former defence chief seeks US investment for defence tech fund, report says</div>
+    <div class="article-keypoint">우크라이나 전직 국방장관, 미 자본 유치해 방산 기술 펀드 추진 - 전쟁 장기화 가정한 민간 투자 부상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraines-former-defence-chief-seeks-us-investment-for-defence-tech-fund-ft-reports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 03:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">CIA 국장, 모스크바 방문 중 트럼프-푸틴-젤렌스키 정상회담 추진 - 보도</div>
+    <div class="article-title-en">CIA Director Pushed Trump-Putin-Zelensky Summit During Moscow Visit: Report</div>
+    <div class="article-keypoint">CIA 국장 모스크바 방문·3자 정상회담 추진설 - 우크라이나 협상 지형 급변 가능성</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/cia-director-pushed-trump-putin-zelensky-summit-during-moscow-visit-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Netanyahu의 두 얼굴: 이스라엘 정착민 폭력을 비난하면서 극우 지지</div>
+    <div class="article-title-en">Netanyahu’s two faces: Condemning violent Israeli settlers while backing far-right extremists</div>
+    <div class="article-keypoint">Netanyahu, 정착민 폭력 비난·극우 지지 이중 행보 - 이스라엘 정치 리스크 복잡성 심화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/netanyahus-two-faces-condemning-violent-israeli-settlers-while-backing-far-right-extremists" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 06:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">'최고의 재선물': 어머니가 집을 증여해줬는데, 양도세 절감을 위해 다시 돌려드려야 할까요?</div>
+    <div class="article-title-en">‘It’s the ultimate regifting’: My mom gave me a house. Should I transfer it back to her to reduce capital gains?</div>
+    <div class="article-keypoint">부동산 증여 후 재양도 시 양도세 절감 가능 여부 - 세무 전략 실효성 논쟁</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/its-the-ultimate-regifting-my-mom-gave-me-a-house-should-i-transfer-it-back-to-her-to-reduce-capital-gains-e357f49c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 07:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Faraday Future, 중동 로보틱스 사업 확장 및 신제품 출시 예정</div>
+    <div class="article-title-en">Faraday Future expands robotics push in Middle East, set to launch new products</div>
+    <div class="article-keypoint">Faraday Future, 중동 로보틱스 시장 확장 및 신제품 출시 - 틈새 모빌리티 전략 선회</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/faraday-future-expands-robotics-push-in-middle-east-set-to-launch-new-products-4882072" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/30 21:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">USDA, 인력 재배치·예산 삭감 속 사이클로스포라 연구 사실상 중단</div>
+    <div class="article-title-en">USDA reportedly shelves cyclospora research amid relocations and fund cuts</div>
+    <div class="article-keypoint">USDA 식중독 연구 2건 폐지 - 예산 삭감이 공중보건 인프라 훼손으로 이어지는 사례</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/30/usda-cyclospora-research-projects-shelved" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 06:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">트럼프, NBC 기자 '처벌' 촉구</div>
+    <div class="article-title-en">Trump calls for ‘punishment’ of NBC reporter</div>
+    <div class="article-keypoint">트럼프, NBC 기자 '처벌' 촉구 - 언론 자유 압박이 정치 리스크 지표로 부상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-calls-for-punishment-of-nbc-reporter" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 04:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">TechCrunch Mobility: 로보택시의 숨겨진 인간적 비용</div>
+    <div class="article-title-en">TechCrunch Mobility: The hidden human cost of robotaxis</div>
+    <div class="article-keypoint">로보택시 확산 이면의 인적 비용 - 안전·노동 리스크가 규제 강화 촉매로 작용 가능</div>
+    <a class="article-link" href="https://techcrunch.com/2026/08/30/techcrunch-mobility-the-hidden-human-cost-of-robotaxis/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 01:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">'미국이 덜 안전해지면 대안': 미국인들, 캐나다 혈통 찾아 시민권 신청 급증</div>
+    <div class="article-title-en">'It's our plan B if it becomes less safe in the US': Americans seek Canadian ancestry to apply for citizenship</div>
+    <div class="article-keypoint">미국인 캐나다 시민권 신청 급증 - 트럼프 정책 불안이 인적 자본 이탈로 연결되는 신호</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/08/30/it-s-our-plan-b-if-it-becomes-less-safe-in-the-us-americans-seek-canadian-ancestry-to-apply-for-citizenship_6756997_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 06:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">트럼프 '국경 차르', Milo Yiannopoulos 신속 추방이 ICE 구금 면제 위한 특혜라는 주장 부인</div>
+    <div class="article-title-en">Trump ‘border czar’ denies Milo Yiannopoulos was deported quickly to spare him from ICE detention</div>
+    <div class="article-keypoint">Milo Yiannopoulos 하루 만에 추방 - ICE 특혜 논란으로 이민 정책 신뢰성 의문</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/aug/30/trump-border-czar-tom-homan-milo-yiannopoulos-arrest-deportation" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/08/31 04:36 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
