@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-09-04 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/09/04 07:49 KST</div>
+    <div class="header-date">2026-09-04</div>
+    <div class="header-headline">Waller 동결 시사 vs Warsh 매파 - Fed 내부 균열 확대</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Waller 9월 동결 시사 후 달러 급락 - Warsh 매파 노선과의 Fed 내부 갈등이 채권·외환 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Waller 동결 시사 vs Warsh 매파 - Fed 내부 균열이 달러·채권 시장 재가격 촉발</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">Warsh 의장의 잭슨홀 매파 선회 이후 처음으로, Waller Fed 이사가 9월 회의에서 금리 동결을 지지할 것임을 명시적으로 시사하며 Fed 내부 균열이 표면화됐다. Waller는 인플레이션 둔화 진전에 신뢰를 표명했으며, 이는 지난주 Warsh의 공격적 발언과 정면으로 배치된다. 시장은 즉각 9월 인상 베팅을 축소하며 달러가 5월 이래 최저치로 급락했고, 엔화는 한 달 이상 최대 상승폭을 기록했다. 아시아 증시는 Fed 인상 베팅 완화를 호재로 반등세를 나타냈으며, Bessent 재무장관이 수익률 하락을 원한다는 발언도 채권 시장에 동반 지지 요인으로 작용했다. FEDS 논문은 팬데믹기 임대료 급등이 지역별 임차인 이동에 미친 영향을 분석해 주거 인플레이션의 구조적 잔존 리스크를 조명하며 Fed 정책 판단에 추가 맥락을 제공했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">OpenAI AGI 선언·Nvidia $13B Hugging Face 인수 - AI 생태계 권력 재편 가속</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#14</span>
+    </div>
+    <div class="theme-summary">오늘 OpenAI 사장 Greg Brockman이 GPT-6 Astra 출시와 함께 'AGI 시대의 공식 개막'을 선언하며 AI 산업의 이정표적 발언을 내놨다. Nvidia는 13억 달러 규모의 Hugging Face 인수를 통해 오픈소스 AI 생태계의 핵심 거점을 확보, GPU 하드웨어를 넘어 소프트웨어·모델 플랫폼 지배력으로 영역을 확장하고 있다. Nvidia 주도로 Magnificent 7 ETF가 5월 고점에 근접하며 AI 트레이드가 빅테크 전반의 랠리를 이끌고 있다. 한편 OpenAI, Claude, Grok의 동시 서비스 장애와 Cloudflare 이슈가 발생해 AI 인프라의 집중화 리스크와 안정성 우려를 동시에 부각시켰다. Microsoft는 AI·Azure 모멘텀 가시성을 높이는 방향으로 사업 부문 보고 방식을 변경해 투자자들의 AI 수익화 추적이 용이해질 전망이다. Meta는 신규 Muse Spark 모델에 대해 사용자 프롬프트 공유 조건으로 최대 95% 할인을 제공하며 데이터 수집과 모델 개선을 병행하는 전략을 구사하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">USS 에이브러햄 링컨 장기 파병 - 이란 전쟁 장기화와 중동 지정학 리스크 현실화</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #15~#18</span>
+    </div>
+    <div class="theme-summary">USS 에이브러햄 링컨 항모가 태국 항구에 예인되는 이미지가 상징하듯, 트럼프 행정부가 예상했던 단기 분쟁을 훨씬 초과하는 미·이란 교전이 장기화 국면으로 접어들었다. 이란 전쟁의 예상 외 장기화는 중동 에너지 공급망과 호르무즈 해협 리스크 프리미엄을 구조적으로 재설정하는 요인으로 작용하고 있다. 미-사우디 핵 협력 협정이 공개되며 우라늄 농축 20% 허용 검토 등 핵 비확산 리스크가 추가로 부각됐고, 향후 2년간 경제성·리스크 타당성 검토가 진행될 예정이다. 러-우크라이나 전선에서는 러시아 드론이 코카콜라 공장을 타격하며 민간 인프라를 겨냥한 공세를 지속하는 한편, Putin은 동방경제포럼에서 평화 '기회'를 언급해 협상 지형의 미묘한 변화 신호를 내비쳤다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">금 탈(脫)미국 가속 - 네덜란드 90톤 이전과 Goldman '지리적 집중 리스크' 경고</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #19~#21</span>
+    </div>
+    <div class="theme-summary">네덜란드 중앙은행이 뉴욕 Fed에 보관 중이던 금 약 90톤을 영국으로 이전했으며, 올해 들어 미국 금 보관분을 줄이거나 없앤 두 번째 유럽 국가가 됐다. Goldman Sachs는 이를 '지리적 집중 리스크'로 규정하고 경고를 발령했으며, 이는 달러 기반 안전자산 체계에 대한 유럽 기관들의 신뢰 균열을 반영한다. 베네수엘라에서는 카타르 기반 기업이 금 채굴 인력 채용 공고를 내며 트럼프 행정부의 대베네수엘라 투자 유치 압박에 호응하는 움직임이 포착됐다. 이러한 금 수요 분산과 달러 이탈 흐름은 Waller 발언 후 달러 급락과 맞물려 대안 가치저장 자산 수요를 추가로 자극할 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">SpaceX $2조 클럽 복귀·로보택시 확장 - 우주·모빌리티 산업의 정치화 리스크 동시 부상</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#25</span>
+    </div>
+    <div class="theme-summary">SpaceX가 약 두 달 만에 시가총액 2조 달러 클럽에 재진입하며 기술 섹터 반등의 상징적 지표가 됐다. 그러나 프랑스 파리 우주 서밋에서 SpaceX와 Blue Origin이 참가를 취소한 사실이 공개되며, 백악관의 미국 기업 대외 행사 참가 통제가 우주 산업의 '정치화' 리스크로 부상했다. Amazon의 Zoox는 라스베이거스 공항으로 로보택시 서비스를 확장해 유료 운행 개시 수주 만에 핵심 교통 거점을 확보했다. Palantir는 런던 시장 Sadiq Khan과의 법적 분쟁에서 Khan의 이메일·문자 열람에 합의를 받아내며 공공 AI 조달 분쟁의 새 국면을 열었다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #26~#30</span>
+    </div>
+    <div class="theme-summary">수학의 AI 시대 역할을 논한 ICM 2026 특별 세션, 헬시 스낵 트렌드에 대응한 Goldfish 크래커 리뉴얼, 트럼프 행정부의 소수집단 지원 학교 면세 박탈 규정, Reform UK에 대한 암호화폐 억만장자의 400만 파운드 추가 기부, 한국 금융노조의 공공기관 이전 반대 파업 예고 등 거시·금융 주류 테마와 직접 연관성이 낮은 기사들을 묶었다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Waller 동결 시사 vs Warsh 매파 - Fed 내부 균열이 달러·채권 시장 재가격 촉발</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">FEDS 논문: 팬데믹 임대료 급등이 지역별 임차인 이동에 미친 영향</div>
+    <div class="article-title-en">FEDS Paper: The Flight to Affordability: Effects of Pandemic Rent Increases on Renters By Geography</div>
+    <div class="article-keypoint">팬데믹 임대료 급등이 지역 간 인구 이동 유발 - 주거 인플레 구조적 잔존 리스크 재확인</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/the-flight-to-affordability-effects-of-pandemic-rent-increases-on-renters-by-geography.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Waller 이사, 경제 전망 및 정책 커뮤니케이션 발언</div>
+    <div class="article-title-en">Waller, The Economic Outlook and Some Comments on My Policy Communication</div>
+    <div class="article-keypoint">Waller, 9월 동결 지지 시사 - Warsh 매파 노선과 Fed 내부 분열 표면화</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/waller20260903a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/03 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Fed 인상 베팅 완화·달러 하락에 아시아 증시 상승 전망 - 시장 동향</div>
+    <div class="article-title-en">Asia Stocks to Gain as Fed Bets Cool, Dollar Drops: Markets Wrap</div>
+    <div class="article-keypoint">Waller 동결 시사 후 아시아 증시 상승·엔화 급등 - Fed 인상 베팅 축소로 위험선호 회복</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-03/stock-market-today-dow-s-p-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 07:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Waller 발언과 엔화 강세에 달러, 5월 이래 최저치로 급락</div>
+    <div class="article-title-en">Dollar Falls to Lowest Since May on Waller Remarks, Yen Gain</div>
+    <div class="article-keypoint">Waller 발언 후 달러 5월 이래 최저 급락 - Fed 내부 갈등이 외환시장 변동성 직접 촉발</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-03/dollar-falls-to-weakest-since-may-on-waller-comments-yen-surge" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 02:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Fed 이사 Waller, 9월 회의 금리 동결 지지 시사</div>
+    <div class="article-title-en">Fed Governor Waller indicates he will support holding rates steady at September meeting</div>
+    <div class="article-keypoint">Waller, 9월 동결 지지 명시 - Warsh 매파 발언과 정면 배치되며 정책 불확실성 증폭</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/09/03/fed-governor-waller-indicates-he-will-support-holding-rates-steady-at-september-meeting.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/03 23:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Bessent, '금리 하락 주도' 목표 천명 - Brill 분석</div>
+    <div class="article-title-en">Bessent 'Wants To Win', Drive Yields Lower: Brill</div>
+    <div class="article-keypoint">Bessent, 수익률 하락 목표 재확인 - Fed 동결 기대와 맞물려 채권시장 지지 요인으로 작용</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-03/bessent-wants-to-win-drive-yields-lower-brill-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 05:14 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">OpenAI AGI 선언·Nvidia $13B Hugging Face 인수 - AI 생태계 권력 재편 가속</span>
+    <span class="theme-label-range">Article #7~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">AI 트레이드 주도권 재탈환한 Nvidia, 빅테크 사상 최고치 재접근</div>
+    <div class="article-title-en">Nvidia takes back control of the AI trade as Big Tech nears record highs</div>
+    <div class="article-keypoint">Nvidia 주도 Magnificent 7 ETF, 5월 고점 재접근 - AI 트레이드 랠리 재점화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidia-takes-back-control-of-the-ai-trade-as-big-tech-nears-record-highs-c0dfed9d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 06:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Nvidia의 $130억 Hugging Face 인수가 AI 생태계에 의미하는 것</div>
+    <div class="article-title-en">Here’s what Nvidia’s $13 billion Hugging Face deal means for the world of AI</div>
+    <div class="article-keypoint">Nvidia, Hugging Face $13B 인수 - 오픈소스 AI 생태계 거점 확보로 플랫폼 지배력 확장</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/heres-what-nvidias-13-billion-hugging-face-deal-means-for-the-world-of-ai-360e9fd1?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 06:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">OpenAI, Astra 모델 출시와 함께 '인공일반지능 새 시대' 선언</div>
+    <div class="article-title-en">OpenAI hails ‘new era of artificial general intelligence’ with Astra model release</div>
+    <div class="article-keypoint">OpenAI, GPT-6 Astra 출시 후 'AGI 시대 개막' 선언 - AI 산업 이정표 발언으로 시장 기대 자극</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/sep/03/openai-artificial-general-intelligence-astra-release" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 03:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">OpenAI·Claude·Grok 장애 속 Cloudflare도 서비스 이상 보고</div>
+    <div class="article-title-en">Cloudflare Reports Issues Amid OpenAI, Claude, And Grok Glitch</div>
+    <div class="article-keypoint">OpenAI·Claude·Grok 동시 장애 - AI 인프라 집중화 및 단일 장애점 리스크 현실화</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/downdetector-reports-outages-across-openai-claude-grok" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 01:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">OpenAI, 최신 AI 모델로 Anthropic 추월했다고 주장</div>
+    <div class="article-title-en">OpenAI says it has overtaken Anthropic with its latest AI model</div>
+    <div class="article-keypoint">OpenAI, Astra로 Anthropic 추월 주장 - AGI 경쟁 격화로 AI 섹터 투자 심리 자극</div>
+    <a class="article-link" href="https://www.ft.com/content/55ab40c0-59e2-4c0b-97c9-4f4f5a71a8bb?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">OpenAI 사장, 'AGI 시대 공식 개막' 선언</div>
+    <div class="article-title-en">OpenAI President Declares The "AGI Era" Has Officially Begun</div>
+    <div class="article-keypoint">Greg Brockman, 'AGI 시대 공식 개막' 선언 - 시장의 AI 내러티브를 새로운 국면으로 전환</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/openai-declares-agi-era-has-officially-begun" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 06:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">투자자에게 호재될 수 있는 Microsoft의 미묘한 사업 보고 방식 변경</div>
+    <div class="article-title-en">This subtle Microsoft change could be a big win for investors</div>
+    <div class="article-keypoint">Microsoft, AI·Azure 모멘텀 추적 위한 사업 보고 방식 변경 - AI 수익화 가시성 제고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/this-subtle-microsoft-change-could-be-a-big-win-for-investors-bfacfb17?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 05:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Meta, 최신 AI 모델 사용자에게 데이터 제공 조건으로 비용 지불</div>
+    <div class="article-title-en">Meta is paying to peek at how you use their latest AI model</div>
+    <div class="article-keypoint">Meta, Muse Spark 모델에 95% 할인 제공 - 데이터 확보와 모델 개선 병행하는 이중 전략</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/03/meta-is-paying-to-peek-at-how-you-use-their-latest-ai-model/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 03:19 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">USS 에이브러햄 링컨 장기 파병 - 이란 전쟁 장기화와 중동 지정학 리스크 현실화</span>
+    <span class="theme-label-range">Article #15~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">데일리 메모: 미-사우디 핵 협력과 Rosatom의 카자흐스탄 신규 계약</div>
+    <div class="article-title-en">Daily Memo: US-Saudi Nuclear Cooperation, Rosatom Signs New Contract in Kazakhstan</div>
+    <div class="article-keypoint">미-사우디 핵 협정에 우라늄 20% 농축 허용 검토 - 핵 비확산 레드라인 후퇴 우려 부상</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/daily-memo-us-saudi-nuclear-cooperation-rosatom-signs-new-contract-in-kazakhstan/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 00:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">USS 에이브러햄 링컨, 이란전쟁 장기화의 불편한 은유</div>
+    <div class="article-title-en">The USS Abraham Lincoln Is a Troubling Metaphor</div>
+    <div class="article-keypoint">USS 에이브러햄 링컨 장기 파병 - 이란 전쟁 장기화로 중동 리스크 프리미엄 구조적 재설정</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/09/03/uss-abraham-lincoln-iran-war-trump-hegseth-driscoll/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 06:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Putin, 평화 '기회' 언급 - 우크라이나는 '새로운 역학' 기반 협상 테이블 복귀 시사</div>
+    <div class="article-title-en">Putin Floats 'Chance' At Peace, While Ukraine Cites 'New Dynamic' To Get To Table</div>
+    <div class="article-keypoint">Putin, 평화 '기회' 언급 - 협상 지형 미묘한 변화 신호로 시장 주시 필요</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/putin-floats-chance-peace-while-ukraine-cites-new-dynamic-get-table" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Zelensky, 러시아 드론이 키이우 인근 코카콜라 공장 타격했다고 밝혀</div>
+    <div class="article-title-en">Ukraine’s Zelensky says Russian drones hit Coca-Cola plant outside Kyiv</div>
+    <div class="article-keypoint">러시아 드론, 코카콜라 공장 타격 - 민간 인프라 대상 공세로 확전 우려 및 미국 기업 리스크 부각</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraines-zelensky-says-russian-drones-hit-coca-cola-plant-outside-kyiv" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 06:44 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">금 탈(脫)미국 가속 - 네덜란드 90톤 이전과 Goldman '지리적 집중 리스크' 경고</span>
+    <span class="theme-label-range">Article #19~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">네덜란드 중앙은행, '지정학적 불안' 이유로 미국 내 금 보유량 축소</div>
+    <div class="article-title-en">Dutch Central Bank Cuts Gold Reserves in U.S., Citing ‘Geopolitical Unrest’</div>
+    <div class="article-keypoint">네덜란드, 뉴욕 Fed 금 90톤 영국 이전 - 지정학적 불안 속 탈달러 금 수요 분산 가속</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/09/03/world/europe/netherlands-gold-reserves-us.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 05:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">베네수엘라의 골드러시? 트럼프의 투자 유치 압박에 글로벌 기업들 조심스럽게 접근</div>
+    <div class="article-title-en">A Gold Rush in Venezuela?</div>
+    <div class="article-keypoint">카타르 기업, 베네수엘라 금 채굴 인력 모집 - 트럼프 투자 압박에 호응하는 첫 민간 움직임</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/09/03/ucc-gold-mining-venezuela/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 05:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">네덜란드, Goldman '지리적 집중 리스크' 경고 속 수십억 달러 금을 미국 밖으로 이전</div>
+    <div class="article-title-en">'Crisis Preparedness': Dutch Move Billions In Gold Out Of US As Goldman Warns Of 'Geographic Concentration Risk'</div>
+    <div class="article-keypoint">Goldman, 금 지리적 집중 리스크 경고 - 유럽 중앙은행들의 탈미국 금 이전 트렌드 강화</div>
+    <a class="article-link" href="https://www.zerohedge.com/precious-metals/crisis-preparedness-dutch-move-billions-gold-out-us-goldman-warns-geographic" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 03:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">SpaceX $2조 클럽 복귀·로보택시 확장 - 우주·모빌리티 산업의 정치화 리스크 동시 부상</span>
+    <span class="theme-label-range">Article #22~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">SpaceX, 두 달 만에 시총 2조 달러 클럽 재진입</div>
+    <div class="article-title-en">SpaceX is back in the $2 trillion club after nearly two months</div>
+    <div class="article-keypoint">SpaceX, 2조 달러 클럽 재진입 - 기술 섹터 반등의 바로미터로 부상</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacex-is-back-in-the-2-trillion-club-after-nearly-two-months-25632255?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 06:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Sadiq Khan, Palantir 법적 분쟁에서 문자·이메일 열람 허용에 합의</div>
+    <div class="article-title-en">Sadiq Khan agrees to have his texts and emails searched in Palantir legal battle</div>
+    <div class="article-keypoint">Palantir, Khan 이메일 열람 합의 획득 - 공공 AI 조달 분쟁의 법적 선례 형성 가능성</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/sep/03/sadiq-khan-agrees-have-texts-emails-searched-palantir-legal-battle" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 07:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">프랑스 정부, SpaceX와 Blue Origin의 파리 우주 서밋 불참 공식 확인</div>
+    <div class="article-title-en">French government says SpaceX and Blue Origin pull out of Paris space summit</div>
+    <div class="article-keypoint">SpaceX·Blue Origin, 파리 우주 서밋 불참 - 백악관 개입으로 우주 산업 정치화 리스크 현실화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/09/03/white-house-pressures-us-companies-to-avoid-paris-space-summit-report-says_6757128_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 00:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Amazon의 Zoox, 라스베이거스 공항으로 로보택시 서비스 확장</div>
+    <div class="article-title-en">Amazon’s Zoox expands its robotaxi service to Las Vegas airport</div>
+    <div class="article-keypoint">Zoox, 라스베이거스 공항 로보택시 확장 - 유료화 개시 수주 만에 핵심 교통 거점 선점</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/03/amazons-zoox-expands-its-robotaxi-service-to-las-vegas-airport/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/03 21:12 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #26~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Goldfish 크래커, 건강 트렌드에 맞춰 리뉴얼 - 글루텐프리·통곡물·고단백 버전 출시</div>
+    <div class="article-title-en">Goldfish crackers are getting a makeover as new health trends reshape the snack aisle</div>
+    <div class="article-keypoint">Goldfish, 글루텐프리·고단백 버전 출시 - 건강 스낵 트렌드가 CPG 제품군 재편 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/goldfish-crackers-are-getting-a-makeover-as-new-health-trends-reshape-the-snack-aisle-32e89644?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 06:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">ICM 2026 현장 중계: AI 시대에 수학은 무엇을 위한 것인가</div>
+    <div class="article-title-en">Live from ICM 2026: What Is Math For in the Age of AI?</div>
+    <div class="article-keypoint">ICM 2026: 수학자들이 AI 시대 수학의 본질적 가치를 재정의하려는 시도</div>
+    <a class="article-link" href="https://www.quantamagazine.org/live-from-icm-2026-what-is-math-for-in-the-age-of-ai-20260903/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/03 22:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">한국 금융노조, 공공기관 지방 이전 계획에 반발해 파업 예고</div>
+    <div class="article-title-en">Korea’s Financial Labor Union to Strike Against Relocation Plans</div>
+    <div class="article-keypoint">한국 금융노조, 공공기관 이전 반대 파업 예고 - 정부 지역 분산 정책과 금융업계 마찰 고조</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-03/korea-s-financial-labor-union-to-strike-against-relocation-plans" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">트럼프 신규 규정, 소수집단 지원 학교의 면세 자격 박탈 위협</div>
+    <div class="article-title-en">Schools Giving Aid to Minority Students Could Lose Tax Exemptions Under Trump’s New Rules</div>
+    <div class="article-keypoint">트럼프, 소수집단 지원 학교 면세 박탈 규정 발표 - 고등교육 재정 모델에 구조적 위협</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/09/03/business/economy/trump-irs-college-nonprofits.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/04 02:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">트럼프 사면 받은 암호화폐 억만장자, Reform UK에 400만 파운드 추가 기부</div>
+    <div class="article-title-en">Crypto billionaire pardoned by Trump gives Reform UK another £4m</div>
+    <div class="article-keypoint">암호화폐 억만장자 Ben Delo, Reform UK에 400만 파운드 추가 기부 - 해외 자금의 영국 정치 개입 논란</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/sep/03/reform-uk-crypto-billionaire-ben-delo-pardoned-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/03 21:28 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
