@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-09-07 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/09/07 07:48 KST</div>
+    <div class="header-date">2026-09-07</div>
+    <div class="header-headline">Amazon 화물기 Miami 추락 - 5명 사망·공항 마비</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Miami 공항 사고 수습 속 Boeing·Amazon 주가 반응 및 우크라이나 협상 돌파구 여부 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Amazon 화물기 Miami 추락 - Boeing·항공 공급망 충격</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#3</span>
+    </div>
+    <div class="theme-summary">최근 반복되던 지정학·금융 테마와 달리, 오늘 가장 갑작스럽게 부각된 이벤트는 Miami 국제공항에서 발생한 Amazon 브랜드 Boeing 767 화물기 추락 사고다. 일요일 오후 착륙 중 활주로를 이탈한 항공기는 Tesla Cybercab 주차구역까지 돌진했으며, 5명이 사망하고 5명이 부상을 입었다. 사고 여파로 미국 주요 화물 허브 중 하나인 Miami 공항 운항이 전면 중단됐으며, 비상 대응 당국이 현장을 통제하고 있다. Boeing 767 기체 안전성과 Amazon 물류 네트워크 신뢰성에 대한 시장 우려가 동시에 제기될 수 있어, 항공·물류·방산 섹터 전반에 단기 변동성 확대가 예상된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Witkoff·Kushner 키이우 첫 방문 - 우크라이나 협상 지형 급변</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #4~#6</span>
+    </div>
+    <div class="theme-summary">모스크바를 8차례 방문했으나 키이우는 한 번도 찾지 않았던 Trump 특사 Steve Witkoff와 Jared Kushner가 처음으로 Zelensky와 직접 회담을 가졌다는 점이 오늘 새롭게 부각됐다. 양측 모두 '실질적(substantial)' 대화였다고 평가했으나 구체적 돌파구 발표는 없었으며, 유럽 국가안보 자문단도 회의에 참석해 다자 협의 구도가 가시화됐다. 이번 접촉은 그간 '친러 편향' 비판을 받아온 미국 중재팀이 균형을 맞추려는 시도로 해석되며, 협상 구도가 모스크바 일변도에서 탈피할 수 있는 분기점이 될 수 있다. 다만 구체적 휴전 조건이나 핵 인프라 보호 합의는 아직 가시화되지 않아 향후 48시간 내 추가 발표 여부가 핵심 변수다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Tesla Cybercab·로보택시 경쟁 - Goldman 비용 우위론과 신시장 진입자</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #7~#9</span>
+    </div>
+    <div class="theme-summary">Goldman Sachs가 Tesla Cybercab이 로보택시 시장에서 구조적 비용 우위를 가질 것이라는 분석을 발표하며, 자율주행 모빌리티 섹터에 대한 투자 재평가 흐름이 강화되고 있다. 동시에 Uber 창업자 Travis Kalanick의 신생 벤처 Atoms가 로보택시 사업 진출을 검토 중이라는 보도가 나오며 경쟁 구도가 다변화되고 있다. TechCrunch는 Cybercab 초기 도로 운행에서 일부 기술적 문제가 발생했다고 보도해, 상용화 일정에 대한 현실적 점검이 필요함을 시사한다. Miami 사고로 Cybercab 주차장이 직접 피해를 입은 점도 단기 주가 변수로 작용할 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">달러 안전자산 지위 균열 - 금 본국 송환과 EM 채권 재평가</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #10~#13</span>
+    </div>
+    <div class="theme-summary">네덜란드 중앙은행이 프랑스에 이어 뉴욕에 보관 중인 금을 본국으로 이전하는 움직임이 이어지면서, 글로벌 중앙은행들의 탈(脫)미국 안전자산 재편 흐름이 가속화되고 있다. 미국의 안전자산 지위 약화 우려는 달러 패권 균열 트레이드와 맞물리며 금·Bitcoin 동반 강세 기조를 뒷받침하고 있다. 한편 Bitcoin은 $79,955 부근에서 과매수 신호를 보이며 단기 조정 가능성이 시사된다. 채권시장에서는 주요국 국채 변동성이 확대되는 가운데 BlackRock·JPMorgan 등 대형 운용사들이 신흥시장(EM) 채권에서 의외의 수익 기회를 포착하고 있어, 자산배분 관점의 EM 재평가 흐름이 주목된다. Bond traders들은 단기·장기물 양 끝단에서 추가 변동성을 대비하는 포지셔닝을 취하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">이란 핵협상 교착·EU 공급망 중국 종속 - 지정학 리스크 실물 전이</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #14~#17</span>
+    </div>
+    <div class="theme-summary">미국 에너지장관 Chris Wright가 이란과의 핵합의 도달이 불가능할 수 있다고 공개 발언하면서, 중동 지정학 리스크 프리미엄이 다시 주목받고 있다. 협상 실패 시 이란 제재 강화 또는 군사 옵션 재부각으로 유가 상방 압력이 재점화될 수 있어 에너지·방산 섹터 변동성이 확대될 수 있다. EU 제조업 단체는 중국 부품 제조사들이 유럽 공급망을 '식민화'하고 있다고 경고하며, 이를 방치할 경우 30만 개 공장 일자리가 사라질 수 있다고 밝혔다. 캐나다와의 관세 갈등으로 미시간 자동차 공급망이 직접 압박을 받고 있다는 의원 발언도 나와, 미국발 보호무역 기조의 실물 전이가 동시다발적으로 확인되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #18~#30</span>
+    </div>
+    <div class="theme-summary">Anthropic 저작권 합의 배분을 둘러싼 저자·출판사 간 분쟁, Nike의 S&P 100 퇴출, 독일 AfD의 작센안할트 충격 승리와 Merz 연립정부 위기, 희소자원의 에너지 전환 기여도 과장 논란, Pete Hegseth의 펜타곤 인사 숙청과 군 리더십 공백, Netanyahu의 서안 정착촌 일부 철거 명령, Phil Schiller의 App Store 갈등 등 다양한 정치·산업 이슈가 혼재한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Amazon 화물기 Miami 추락 - Boeing·항공 공급망 충격</span>
+    <span class="theme-label-range">Article #1~#3</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Amazon 화물기 Miami 활주로 이탈·Tesla Cybercab 주차장 돌진 - 5명 사망</div>
+    <div class="article-title-en">5 Dead As Amazon-Branded Cargo Jet Overshoots Miami Runway, Plows Into Tesla Cybercab Lot</div>
+    <div class="article-keypoint">Amazon 화물기 Miami 활주로 이탈·Cybercab 주차장 충돌 - 5명 사망, Boeing 안전성 재부각</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/amazon-branded-cargo-jet-overshoots-miami-runway-plows-tesla-cybercab-lot" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 07:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Amazon 화물기, Miami 공항 추락 - 최소 5명 사망</div>
+    <div class="article-title-en">At least five dead after Amazon cargo plane crashes at Miami airport</div>
+    <div class="article-keypoint">Amazon Boeing 767 Miami 추락 - 5명 사망·공항 운항 전면 중단, 물류망 신뢰성 타격</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/sep/06/amazon-cargo-plane-crashes-miami-airport" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 06:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Amazon 로고 부착 Boeing 767 화물기, Miami 활주로 이탈 - 운항 전면 중단</div>
+    <div class="article-title-en">Boeing 767 cargo plane bearing Amazon logo overruns Miami runway, halts flights</div>
+    <div class="article-keypoint">Amazon 브랜드 Boeing 767 Miami 활주로 오버런 - 항공 운항 중단·기체 안전 조사 착수</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/amazon-cargo-plane-reportedly-crashes-near-miami-airport-4890316" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 20:50 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Witkoff·Kushner 키이우 첫 방문 - 우크라이나 협상 지형 급변</span>
+    <span class="theme-label-range">Article #4~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Zelensky, 미국 특사와 신규 회담 - 우크라이나 당국자 확인</div>
+    <div class="article-title-en">Zelensky in fresh talks with US envoys, says Ukraine official</div>
+    <div class="article-keypoint">Witkoff·Zelensky 회담 '긍정적' 평가에도 돌파구 부재 - 협상 타임라인 불확실성 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelensky-warns-war-likely-to-continue-into-winter-after-us-talks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 03:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Trump 특사들, 모스크바 회담 후 키이우서 Zelensky와 협상</div>
+    <div class="article-title-en">Trump envoys hold talks with Zelenskyy in Kyiv after meeting Putin in Moscow</div>
+    <div class="article-keypoint">Trump 특사 Zelensky·Putin 연속 회담 - 미국 중재 신뢰성 회복 시도 본격화</div>
+    <a class="article-link" href="https://www.ft.com/content/1e2d9db0-cb2c-4c79-942b-f0aff960e4c5?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 02:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump 특사 Kushner·Witkoff, 첫 키이우 방문서 Zelensky와 '중요한' 회담</div>
+    <div class="article-title-en">Trump's envoys Kushner and Witkoff hold 'important' talks with Zelensky on first Kyiv visit</div>
+    <div class="article-keypoint">Kushner·Witkoff 키이우 첫 방문 - 우크라이나 협상 지형 대칭성 회복 여부 분기점</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/09/06/trump-s-envoys-arrive-in-kyiv-for-first-ukraine-visit_6757217_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 20:14 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Tesla Cybercab·로보택시 경쟁 - Goldman 비용 우위론과 신시장 진입자</span>
+    <span class="theme-label-range">Article #7~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Goldman, Cybercab이 Tesla에 로보택시 비용 우위 제공할 것으로 전망</div>
+    <div class="article-title-en">Goldman sees Cybercab giving Tesla a cost advantage in robotaxis</div>
+    <div class="article-keypoint">Goldman, Cybercab이 로보택시 시장에서 구조적 비용 우위 확보 전망 - Tesla 재평가 트리거</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/goldman-sees-cybercab-giving-tesla-a-cost-advantage-in-robotaxis-4890319" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 21:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">TechCrunch Mobility: Tesla Cybercab, 도로에 나왔지만 난관에 봉착</div>
+    <div class="article-title-en">TechCrunch Mobility: Tesla Cybercab hits the road — and a snag</div>
+    <div class="article-keypoint">Cybercab 초기 도로 운행 중 기술적 결함 발생 - 상용화 일정 현실성 점검 필요</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/06/techcrunch-mobility-tesla-cybercab-hits-the-road-and-a-snag/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 01:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Travis Kalanick의 Atoms, 로보택시 사업 진출 검토 중</div>
+    <div class="article-title-en">Travis Kalanick’s Atoms might be getting into the robotaxi business</div>
+    <div class="article-keypoint">Uber 창업자 Kalanick, 로보택시 시장 재진출 검토 - 경쟁 구도 다변화 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/06/travis-kalanicks-atoms-might-be-getting-into-the-robotaxi-business/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 01:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">달러 안전자산 지위 균열 - 금 본국 송환과 EM 채권 재평가</span>
+    <span class="theme-label-range">Article #10~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">미국의 안전자산 지위 흔들리나 - 글로벌 중앙은행들이 뉴욕에서 금을 빼가는 이유</div>
+    <div class="article-title-en">Is the U.S. losing its safe-haven status? Why global central banks are pulling gold out of New York.</div>
+    <div class="article-keypoint">네덜란드·프랑스 금 본국 송환 가속 - 달러 안전자산 지위 균열 신호로 시장 해석 확산</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/is-the-u-s-losing-its-safe-haven-status-why-global-central-banks-are-pulling-gold-out-of-new-york-3e24d510?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Bitcoin, $79,955 부근에서 과매수 신호와 함께 횡보 - 실시간 레벨</div>
+    <div class="article-title-en">Bitcoin consolidates near $79,955 with overbought signals: Live levels</div>
+    <div class="article-keypoint">Bitcoin $79,955 부근 과매수 신호 - 단기 조정 압력 vs. 희소자산 트레이드 지속 갈등</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-consolidates-at-76200-support-live-levels-93CH-4882214" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 19:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">채권 트레이더들, 미국 수익률 곡선 양 끝단의 추가 변동성에 대비</div>
+    <div class="article-title-en">Bond Traders Brace for More Swings at Both Ends of US Yield Curve</div>
+    <div class="article-keypoint">채권 트레이더들, 단기·장기물 양 끝단 변동성 동시 대비 - 정책 불확실성 반영</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-06/bond-traders-brace-for-more-swings-at-both-ends-of-us-yield-curve" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">BlackRock·JPMorgan, 글로벌 채권 혼란 속 신흥시장에 베팅</div>
+    <div class="article-title-en">BlackRock to JPMorgan Bet on EM as Turmoil Seizes Global Bonds</div>
+    <div class="article-keypoint">BlackRock·JPMorgan, 주요국 국채 변동성 회피해 EM 채권으로 이동 - 자산배분 패러다임 전환</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-06/blackrock-to-jpmorgan-bet-on-em-as-turmoil-seizes-global-bonds" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 21:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">이란 핵협상 교착·EU 공급망 중국 종속 - 지정학 리스크 실물 전이</span>
+    <span class="theme-label-range">Article #14~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">중국의 공급망 '식민화'로 EU 제조업 일자리 30만 개 위기 - 업계 경고</div>
+    <div class="article-title-en">EU faces 300,000 factory job cuts as China ‘colonises’ supply chains, industry warns</div>
+    <div class="article-keypoint">중국의 EU 공급망 '식민화' 경고 - 30만 개 제조업 일자리 위기, 보호무역 압력 상승</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/sep/06/eu-factory-job-cuts-china-colonises-supply-chains-industry-warns" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">에너지장관, 미국이 이란과 핵합의에 도달하지 못할 수도 있다고 발언</div>
+    <div class="article-title-en">Energy secretary says US might not reach nuclear agreement with Iran</div>
+    <div class="article-keypoint">에너지장관 Wright '이란 핵합의 불가 가능성' 공개 발언 - 유가 상방 리스크 재점화</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/sep/06/us-iran-nuclear-agreement-chris-wright" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 02:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Stevens 의원, 캐나다 관세가 Michigan 제조업 압박한다고 경고</div>
+    <div class="article-title-en">Rep. Stevens Says Canadian Tariffs Are Squeezing Michigan</div>
+    <div class="article-keypoint">캐나다 관세가 미시간 자동차 공급망 직접 압박 - 실물 경제 타격 가시화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-06/rep-stevens-says-tariffs-are-squeezing-michigan-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 23:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Jaguar Land Rover 수천 명 감원 보도에도 정부 구제금융 없다 - 영국 장관</div>
+    <div class="article-title-en">No bailouts for Jaguar Land Rover amid reports of thousands of job cuts, says minister</div>
+    <div class="article-keypoint">JLR 수천 명 감원 위기에도 영국 정부 구제금융 거부 - 관세·중국 경쟁 압박 속 구조조정 가속</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/sep/06/bailouts-jaguar-land-rover-redundancies-cuts-business-secretary" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 22:24 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #18~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Anthropic 저작권 합의금에 출판사·에이전트가 지나친 몫을 주장한다는 저자들의 반발</div>
+    <div class="article-title-en">Authors push back as publishers and agents make claims on Anthropic settlement</div>
+    <div class="article-keypoint">Anthropic 저작권 합의금 배분서 저자 몫 축소 우려 - AI 수익 생태계 공정성 논란 확대</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/06/authors-push-back-as-publishers-and-agents-seek-share-of-anthropic-settlement/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 05:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">'불공평하다': 쌍둥이 형제와 부모 유산 주택 상속 - 세금·유지비 부담 분담 요구 가능한가</div>
+    <div class="article-title-en">‘It’s not fair’: My twin brother and I were left houses by our parents. Can I make him pay his share for taxes and upkeep?</div>
+    <div class="article-keypoint">상속 부동산 세금·유지비 분담 갈등 - 개인 재산권 분쟁 사례</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/its-not-fair-my-twin-brother-and-i-were-left-houses-by-our-parents-can-i-make-him-pay-his-share-for-taxes-and-upkeep-43feb780?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">유럽의 SpaceX 경쟁자, 로켓 궤도 진입 성공</div>
+    <div class="article-title-en">European SpaceX rival launches rocket into orbit</div>
+    <div class="article-keypoint">유럽 첫 민간 상업 로켓 발사 성공(Isar Aerospace) - SpaceX 독점에 도전하는 구도 본격화</div>
+    <a class="article-link" href="https://www.ft.com/content/fb5be0ff-5a5c-4006-98c5-2ddcfa3c1175?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 20:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">연방정부, AR-15 금지령에 대한 대법원 심리 지지 입장 표명</div>
+    <div class="article-title-en">Federal Government Backs Supreme Court Challenge To AR-15 Bans</div>
+    <div class="article-keypoint">연방정부 AR-15 금지령 위헌 소송 지지 - 대법원 판결이 총기 규제 지형 전환점 될 수 있어</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/federal-government-backs-supreme-court-challenge-ar-15-bans" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">핵심 광물 대부분이 에너지 전환에 쓰이지 않는다</div>
+    <div class="article-title-en">Most Critical Minerals Aren’t Going to the Energy Transition</div>
+    <div class="article-keypoint">희소자원 대부분 에너지전환 아닌 여타 산업으로 흡수 - 청정에너지 공급망 전제 재검토 필요</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Most-Critical-Minerals-Arent-Going-to-the-Energy-Transition.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">외교 총력전: Witkoff·Kushner, Putin 면담 후 우크라이나에서 '실질적' 회담 진행</div>
+    <div class="article-title-en">Diplomatic Blitz: Witkoff, Kushner Hold "Substantial" Ukraine Talks After Putin Meeting</div>
+    <div class="article-keypoint">Witkoff·Kushner, 모스크바 회담 후 키이우 첫 방문 - 우크라이나 협상 구도 균형 전환 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/diplomatic-blitz-witkoff-kushner-hold-substantial-ukraine-talks-after-putin-meeting" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 02:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Trump 행정부, 우편투표 제한 허용 대법원 심리 요청</div>
+    <div class="article-title-en">Trump administration asks Supreme Court to allow mail ballot limits</div>
+    <div class="article-keypoint">Trump 행정부, 우편투표 제한 대법원 심리 요청 - 선거법 지형 변화 가능성</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/trump-administration-asks-supreme-court-to-allow-mail-ballot-limits-93CH-4890313" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 16:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">'고집 부리다 망한' 세대 최대 사례: S&P, Nike를 엘리트 블루칩 지수에서 퇴출</div>
+    <div class="article-title-en">Biggest 'Go Woke, Get Broke' Story Of A Generation: S&P Nukes Nike From Elite Blue-Chip Index</div>
+    <div class="article-keypoint">Nike, S&P 100 퇴출 - 브랜드 가치 하락이 블루칩 지위 상실로 이어진 상징적 사례</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/biggest-go-woke-go-broke-story-generation-sp-nukes-nike-elite-blue-chip-index" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 04:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Phil Schiller의 App Store 이사 사임, 미래 수익화 계획에 대한 우려가 원인인 듯</div>
+    <div class="article-title-en">Phil Schiller’s App Store exit reportedly driven by wariness over future plans</div>
+    <div class="article-keypoint">Phil Schiller, App Store 수익화 방향 이견으로 Apple 이사회 퇴진 전망</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/06/phil-schillers-app-store-exit-reportedly-driven-by-wariness-over-future-plans/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 06:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Pete Hegseth의 펜타곤 인사 숙청</div>
+    <div class="article-title-en">Pete Hegseth’s Pentagon purge</div>
+    <div class="article-keypoint">Hegseth 펜타곤 인사 숙청 가속 - Driscoll 퇴진으로 미군 리더십 공백 심화 우려</div>
+    <a class="article-link" href="https://www.ft.com/content/6ea98322-96a3-408a-87e4-eb5e4eb05b52" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/06 22:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">극우 AfD의 충격 승리로 수세에 몰린 독일 Merz</div>
+    <div class="article-title-en">Germany’s Merz on the ropes after far right delivers devastating blow </div>
+    <div class="article-keypoint">AfD, 작센안할트 압승으로 Merz 연립정부 위기 심화 - 독일 정치 중심 붕괴 가속</div>
+    <a class="article-link" href="https://www.ft.com/content/48e7b92b-affc-4fd0-8de1-ae8765e5c799?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 06:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Netanyahu, 서안 일부 정착촌 철거 명령</div>
+    <div class="article-title-en">Netanyahu orders evacuation of some West Bank settler outposts</div>
+    <div class="article-keypoint">Netanyahu, 미국 압력에 서안 정착촌 일부 철거 명령 - 중동 외교 변수로 부상</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/09/06/netanyahu-orders-evacuation-of-some-west-bank-settler-outposts_6757226_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 05:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Trump 행정부, 전업 부모 가정 보육보조금 확대 검토</div>
+    <div class="article-title-en">Trump Admin Weighs Child Care Subsidies For Stay-At-Home Parents</div>
+    <div class="article-keypoint">Trump 행정부, 전업 부모 가구 보육보조금 확대 검토 - 재정지출 방향 재편 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/trump-administration-weighs-child-care-subsidies-stay-home-parents" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/07 06:30 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
