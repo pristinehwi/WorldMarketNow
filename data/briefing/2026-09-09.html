@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-09-09 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/09/09 07:48 KST</div>
+    <div class="header-date">2026-09-09</div>
+    <div class="header-headline">구리 $14,500 사상 최고·Brent $100 동시 돌파</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Brent $100 안착 여부 및 구리 공급 절벽 지속성 - 원자재 인플레 전이 속도 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 반도체·메모리 패권 - Micron·Qualcomm·Huawei 삼각 구도 재편</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Qualcomm이 Amazon과의 칩 협력 계약으로 기존 AI 반도체 랠리에서 소외됐던 주가를 회복하는 계기를 마련했다는 것이다. 반도체 산업 전체 매출이 올해 $1.5조에 달할 것으로 예상되는 가운데, 메모리 칩이 AI 붐의 핵심 수혜 영역으로 자리잡으며 Micron의 구조적 지위가 재조명되고 있다. 한편 중국의 Huawei가 국내 칩 생태계 구축을 주도하며 3년치 제재 완충 재고를 확보했다는 보도는, 2027년 이후 Nvidia 지배력에 실질적 균열이 생길 수 있음을 시사한다. 아시아 칩 주식은 AI 테마 지속 수요를 반영해 강세 출발이 예상되나, 중동 리스크로 인한 유가 급등이 전반적 시장 압박 요인으로 작용 중이다. Intel도 공급망 비용 상승을 명분으로 PC 칩 가격을 추가 인상할 예정이어서, 칩 업체들의 가격 전가력이 동시에 시험대에 오르고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 생태계 확장 - OpenAI 수학 난제 해결·Meta Muse·Oracle 수혜 집중</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#11</span>
+    </div>
+    <div class="theme-summary">OpenAI가 100만 달러 현상금이 걸린 Navier-Stokes 수학 난제를 AI로 풀었다고 발표하며 AGI 전환점 논쟁이 재점화됐으나, 뉴욕대 수학자의 '반칙' 주장이 제기되어 결과의 신뢰성 논란이 동반 부상했다. OpenAI 생태계 회복 기대감은 Oracle 주가 상승으로 즉각 연결됐으며, Oracle이 ChatGPT 인프라에 집중 노출돼 있다는 점에서 AI 인프라 수요 사이클의 바로미터로 작동하고 있다. Meta는 이메일·캘린더·결제·건강 서비스에 접근하는 개인 AI 에이전트 'Muse'를 출시하며 AI 수익화의 소비자 영역 진출을 본격화했고, 데이터 신뢰 리스크라는 새로운 거버넌스 이슈를 동시에 부각시켰다. AI 인프라 비용이 수조 달러 규모로 계속 확대될 것이라는 전망도 제기되며, Google Cloud와 Accenture의 현장 AI 엔지니어 배치 모델처럼 인프라 수요가 클라우드·서비스 영역으로 분산되는 구조 변화가 감지된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">구리 $14,500 사상 최고·Brent $100 근접 - 원자재 동시 급등의 복합 회로</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#13</span>
+    </div>
+    <div class="theme-summary">구리 선물이 런던 시장에서 $14,500를 돌파해 사상 최고치를 기록했으며, 미국 관세 선취 수요가 해상 물량을 미국 창고로 집중시키면서 여타 지역 공급을 급격히 타이트하게 만들고 있다. 동시에 중동 군사적 긴장 고조로 Brent 유가가 $100에 근접하며 에너지 리스크 프리미엄이 재점화됐고, 이 두 원자재의 동반 급등은 글로벌 인플레이션 재가속 우려를 높이고 있다. 구리는 AI 데이터센터·전력망·전기차 등 에너지 전환 인프라의 핵심 소재인 만큼, 공급 절벽이 장기화될 경우 AI 인프라 구축 비용 상승으로 직접 전이될 수 있다. 에너지 가격 급등은 NY Fed 소비자 서베이에서 이미 악화된 것으로 나타난 미국 가계 재정 심리를 추가로 압박할 리스크가 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Bessent 채권 바이백·달러·엔화 - 재무부 시장 개입의 신뢰성 시험</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #14~#15</span>
+    </div>
+    <div class="theme-summary">Bessent 재무장관이 '내가 지금은 내부 정보를 가진 하우스'라며 엔화 강세 베팅에 도전하는 트레이더들에게 직접 경고를 날린 것이 오늘 신규 발언으로 부각됐다. 동시에 Bessent는 채권시장 과열을 식히기 위한 국채 바이백 프로그램의 구체적 규모를 곧 공개할 예정으로, 월가 딜러들이 촉각을 곤두세우고 있다. 재무장관이 통화정책(엔)과 재정정책(바이백)을 동시에 시장에 직접 신호를 보내는 이례적 행보는, Bessent의 시장 신뢰성 자체가 달러·채권 변동성의 핵심 변수로 부상했음을 의미한다. NY Fed 서베이에서 미국 소비자들의 재정 상황 인식이 8월 들어 추가 악화된 것으로 나타나, 재무부의 금리 억제 노력과 실물 경기 간 괴리가 확대되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">우크라이나·동아시아 지정학 - Trump-Putin 통화와 한국 안보 딜레마</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #16~#20</span>
+    </div>
+    <div class="theme-summary">Trump와 Putin이 '긍정적' 전화 통화를 통해 우크라이나 전쟁의 신속한 종전과 미·러 관계 복원을 모색했다는 사실이 오늘 협상 지형의 핵심 변화로 떠올랐다. Putin은 유럽에 대한 '하이브리드 전쟁' 수행을 부인하며 미국의 평화 노력을 칭찬했으나, Zelensky는 노르웨이 국왕 장례식 참석 중 노르웨이 총리와 방위 협력 회담을 병행하며 서방 안보 네트워크 강화를 지속하고 있다. Trump가 한미 연합 군사훈련 두 건을 취소하면서 동아시아 동맹 구조에 균열 신호가 발생했고, 한국과 일본이 독자 안보 역량 강화를 검토해야 하는 상황으로 몰리고 있다. 한국이 우크라이나 방공망 지원에 나서야 한다는 전략 논의도 등장하며, 방산 투자 재편과 지정학적 포지셔닝 변화가 동시에 진행되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #21~#30</span>
+    </div>
+    <div class="theme-summary">우주 발사체 경쟁에서 유럽 스타트업 The Exploration Company가 $4.5억 시리즈 C를 유치하고, Stoke Space가 $10억 시리즈 E를 마감하며 SpaceX 대항마 육성 흐름이 가속화되고 있다. 캐나다 보복 관세 발효와 함께 Trump의 Bombardier 판매 금지 요구에 공화당 내에서도 반발이 나오며 무역 갈등이 국내 정치 부담으로 전환되고 있다. 핵에너지 섹터에서는 소형 모듈 원자로 건설 MOU, Holtec IPO 가격, 연방 대출 재건 등 연휴 기간 복수의 이벤트가 집중됐고, 핵 스타트업 Bluecore Energy가 론칭 2개월 만에 $5천만 시드 라운드를 마감했다. 중국 인민은행이 8월 금 보유량을 2023년 이후 최대인 65만 온스(약 20톤) 늘렸음에도 금 가격이 $4,400 위에서 버티지 못하는 모습을 보이며, 중앙은행 매수와 가격 간 괴리가 주목된다. Trump의 미국 핵심광물 채굴 드라이브가 인력 부족이라는 구조적 병목에 막혀 있다는 분석과, 영국 청년 실업 검토에서 최저임금 인상 속도 조절 가능성이 제기된 것도 주요 정책 이슈로 부각됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 반도체·메모리 패권 - Micron·Qualcomm·Huawei 삼각 구도 재편</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">메모리 칩이 AI 붐을 지배하게 된 이유 - Micron의 왕좌는 지속될 것인가</div>
+    <div class="article-title-en">Memory chips have come to rule the AI boom. Why Micron’s reign could be here to stay.</div>
+    <div class="article-keypoint">반도체 매출 $1.5조 시대 - AI 수요 속 메모리 칩 Micron 구조적 지위 재확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/memory-chips-have-come-to-rule-the-ai-boom-why-microns-reign-could-be-here-to-stay-607a4622?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 06:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Amazon 칩 계약으로 Qualcomm 주가 상승 - 투자자에게 오랜만의 호재</div>
+    <div class="article-title-en">Qualcomm’s stock climbs as Amazon chip deal offers investors much-needed good news</div>
+    <div class="article-keypoint">Qualcomm-Amazon 칩 협력 계약 - AI 랠리 소외주의 반등 모멘텀 확보</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/qualcomms-stock-climbs-as-amazon-chip-deal-offers-investors-some-much-needed-good-news-5b6a95ca?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 06:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">아시아 칩 주식 강세 전망, Brent 유가 $100 근접 - 시장 종합</div>
+    <div class="article-title-en">Asian Chip Stocks Set for Gains, Brent Nears $100: Markets Wrap</div>
+    <div class="article-keypoint">Brent $100 근접·아시아 칩 강세 - 에너지 리스크와 AI 수요가 시장을 동시에 압박</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-08/stock-market-today-dow-s-p-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 07:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Intel 주가 상승 - 공급망 비용 상승 속 PC 칩 추가 가격 인상 전망</div>
+    <div class="article-title-en">Intel’s stock is rising as the company looks primed to boost prices even more</div>
+    <div class="article-keypoint">Intel, 공급망 비용 상승 명분으로 PC 칩 가격 추가 인상 예정 - 가격 전가력 시험대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/intels-stock-is-rising-as-the-company-looks-primed-to-boost-prices-even-more-8b8dfc99?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">중국 칩 업체들, Huawei 주도로 3년치 제재 완충 재고 확보</div>
+    <div class="article-title-en">Chinese Chipmakers Buy 3-Year Sanctions Buffer As Huawei Spearheads Domestic Juggernaut</div>
+    <div class="article-keypoint">Huawei 주도 중국 칩 독립 생태계, 3년치 제재 완충 재고 확보 - 2027년 Nvidia 지배력 균열 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/chinese-chipmakers-buy-3-year-sanctions-buffer-huawei-spearheads-domestic-juggernaut" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 생태계 확장 - OpenAI 수학 난제 해결·Meta Muse·Oracle 수혜 집중</span>
+    <span class="theme-label-range">Article #6~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">OpenAI 생태계 회복 기대감에 Oracle 주가 상승</div>
+    <div class="article-title-en">Oracle’s stock gets a boost as the OpenAI ecosystem comes back into favor</div>
+    <div class="article-keypoint">OpenAI 생태계 회복 기대감이 Oracle 주가 상승으로 직접 연결되는 인프라 수혜 구도</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oracles-stock-gets-a-boost-as-the-openai-ecosystem-comes-back-into-favor-f53c8024?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 06:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Meta, 쉽게 쓸 수 있는 개인 AI 에이전트 출시</div>
+    <div class="article-title-en">Meta Launches a Personal AI Agent Designed to Be Easy to Use</div>
+    <div class="article-keypoint">Meta Muse 출시 - 이메일·결제·건강 데이터 접근 요구로 AI 수익화와 데이터 신뢰 리스크 동시 부상</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/meta-launches-a-personal-ai-agent-designed-to-be-easy-to-use-3eb5cfac?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">AI, 수학계 100만 달러 현상금 밀레니엄 난제 중 하나를 풀다</div>
+    <div class="article-title-en">AI Has Solved One of Math’s $1 Million Millennium Prize Problems</div>
+    <div class="article-keypoint">OpenAI, Navier-Stokes 수학 난제 AI 해결 주장 - AGI 전환점 논쟁과 방법론 논란 동반</div>
+    <a class="article-link" href="https://www.quantamagazine.org/ai-has-solved-one-of-maths-1-million-millennium-prize-problems-20260908/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/08 17:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Meta, Muse AI 에이전트 공개 - 소비자들이 신뢰할 수 있을까</div>
+    <div class="article-title-en">Meta debuts its Muse AI agent. Will consumers trust it?</div>
+    <div class="article-keypoint">Meta Muse, 개인 데이터 광범위 접근 요구 - 소비자 신뢰가 AI 수익화 성패 좌우</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/08/meta-debuts-its-muse-ai-agent-will-consumers-trust-it/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">뉴욕대 수학자 'OpenAI가 수학 난제 풀이 과정에서 반칙을 저질렀다'</div>
+    <div class="article-title-en">OpenAI fought dirty on career-making math problem, says NYU mathematician</div>
+    <div class="article-keypoint">OpenAI 수학 해법 검증 논란 - AI 과학적 신뢰성과 학계 갈등이 AGI 내러티브에 변수</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/08/openai-fought-dirty-on-career-making-math-problem-says-nyu-mathematician/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 02:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">AI 인프라에 수조 달러가 추가로 필요하다</div>
+    <div class="article-title-en">AI Infrastructure Will Cost Trillions More</div>
+    <div class="article-keypoint">AI 인프라 비용 수조 달러 확대 전망 - Google·Accenture 현장 배치 모델로 수요 분산 구조화</div>
+    <a class="article-link" href="https://www.wsj.com/cio-journal/ai-infrastructure-will-cost-trillions-more-f16af49a?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/08 22:11 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">구리 $14,500 사상 최고·Brent $100 근접 - 원자재 동시 급등의 복합 회로</span>
+    <span class="theme-label-range">Article #12~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">구리, $14,500 돌파하며 사상 최고치 - 공급 절벽 심화</div>
+    <div class="article-title-en">Copper Surges Above $14,500 as Supply Squeeze Deepens</div>
+    <div class="article-keypoint">구리 $14,500 사상 최고 - 미 관세 선취 수요가 글로벌 공급 타이트화 동시 촉발</div>
+    <a class="article-link" href="https://oilprice.com/Metals/Commodities/Copper-Surges-Above-14500-as-Supply-Squeeze-Deepens.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">NY Fed 서베이: 미국인들의 8월 가계 재정 심리 추가 악화</div>
+    <div class="article-title-en">NY Fed Survey: Americans Feeling Worse About Finances in August</div>
+    <div class="article-keypoint">NY Fed 서베이 - 미국 소비자 재정 심리 8월 추가 악화, 가계 압박 현실화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-08/americans-feeling-worse-about-finances-in-august-ny-fed-survey" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 00:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Bessent 채권 바이백·달러·엔화 - 재무부 시장 개입의 신뢰성 시험</span>
+    <span class="theme-label-range">Article #14~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Bessent, 엔화 약세 베팅 트레이더에 경고: '이제 내가 하우스다'</div>
+    <div class="article-title-en">Bessent Dares Traders to Bet Against Yen: ‘I Am the House Now’</div>
+    <div class="article-keypoint">Bessent '내가 하우스' 발언 - 재무장관의 직접 시장 개입 의지로 달러·엔 변동성 촉발</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-08/bessent-dares-traders-to-bet-against-yen-i-am-the-house-now" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 07:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Bessent의 채권시장 과열 식히기 바이백, 월가를 긴장시키다</div>
+    <div class="article-title-en">Bessent’s ‘Fever’-Cooling Debt Buybacks Put Wall St. on Edge</div>
+    <div class="article-keypoint">Bessent 국채 바이백 규모 곧 공개 - 채권시장 금리 억제 의지와 딜러 포지션 조정 분기점</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-08/bessent-s-fever-quelling-debt-buybacks-put-wall-street-on-edge" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 04:17 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">우크라이나·동아시아 지정학 - Trump-Putin 통화와 한국 안보 딜레마</span>
+    <span class="theme-label-range">Article #16~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">동아시아에 불어닥친 Trump 충격</div>
+    <div class="article-title-en">The Trump Shock in East Asia</div>
+    <div class="article-keypoint">Trump 한미 연합훈련 취소 - 동아시아 동맹 구조 균열과 한국·일본 독자 안보 검토 압박</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-may-eventually-force-japan-south-korea-to-cooperate-by-ian-buruma-2026-09" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/08 23:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Putin과의 통화에서 Trump, 우크라이나 전쟁 신속 종전과 미·러 관계 복원 추진</div>
+    <div class="article-title-en">In Putin Call, Trump Seeks Swift End To Ukraine War & Restoration Of US-Russia Ties</div>
+    <div class="article-keypoint">Trump-Putin 전화 통화 - 우크라이나 종전 협상 재점화와 미·러 관계 복원 시도</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/new-putin-call-trump-seeks-swift-end-ukraine-war-restoration-us-russia-ties" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 01:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Putin, Trump와의 통화에서 미국의 평화 노력 칭찬</div>
+    <div class="article-title-en">Putin praises US peace efforts in call with Trump</div>
+    <div class="article-keypoint">Putin, 미국 평화 노력 칭찬하며 하이브리드 전쟁 부인 - 협상 신호인지 전술적 외교인지 불확실</div>
+    <a class="article-link" href="https://www.ft.com/content/76d33021-57c6-4240-ae0b-cd4a79a24980?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 00:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">한국은 우크라이나 방공망 방어를 지원해야 한다</div>
+    <div class="article-title-en">South Korea Should Help Defend Ukraine’s Skies</div>
+    <div class="article-keypoint">한국의 우크라이나 방공망 지원 논의 - 방산 수출 확대와 대러 관계 리스크 사이 전략적 기로</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/09/08/russia-ukraine-war-south-korea-air-defense-interceptors/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/08 22:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Zelensky, 노르웨이 국왕 장례식 및 방위 협력 회담 참석</div>
+    <div class="article-title-en">Ukraine’s Zelensky in Norway for king’s funeral, defence talks</div>
+    <div class="article-keypoint">Zelensky, 노르웨이 국왕 장례식 계기로 방위 협력 회담 - 서방 안보 네트워크 유지 행보 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraines-zelensky-in-norway-for-kings-funeral-defence-talks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 05:08 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #21~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">The Exploration Company, SpaceX에 도전하기 위해 $4.5억 조달</div>
+    <div class="article-title-en">The Exploration Company nabs $450 million to challenge SpaceX</div>
+    <div class="article-keypoint">유럽 우주 스타트업 TEC, $4.5억 시리즈 C - SpaceX 대항마 육성 경쟁 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/08/the-exploration-company-nabs-450-million-to-challenge-spacex/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 05:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">캐나다 보복관세 발효 속 Trump의 무역전쟁이 공화당 선거 전략에 부담</div>
+    <div class="article-title-en">As Canada’s tariffs take effect, Trump’s trade war complicates GOP election pitch</div>
+    <div class="article-keypoint">캐나다 보복관세 발효 속 Bombardier 금지 요구에 공화당 내 반발 - 무역전쟁 국내 정치 부담 전환</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/09/08/trump-threatens-ban-bombardier-jet-sales-canadas-tariffs-take-effect/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 06:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Nutanix, Goldman Sachs 컨퍼런스에서 클라우드 전환 가속 행보 제시</div>
+    <div class="article-title-en">Nutanix at Goldman Sachs conference: cloud push gains pace</div>
+    <div class="article-keypoint">Nutanix, Goldman Sachs 컨퍼런스서 클라우드 AI 전환 가속 전략 제시</div>
+    <a class="article-link" href="https://www.investing.com/news/transcripts/nutanix-at-goldman-sachs-conference-cloud-push-gains-pace-93CH-4892569" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/08 22:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">핵 스타트업 Bluecore Energy, 출시 두 달 만에 $5천만 시드 라운드 마감</div>
+    <div class="article-title-en">Nuclear startup Bluecore Energy raises $50M seed round, just two months after launch</div>
+    <div class="article-keypoint">Bluecore Energy, 출시 2개월 만에 $5천만 시드 마감 - 핵에너지 AI 수요 연계 투자 과열 신호</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/08/nuclear-startup-bluecore-energy-raises-50m-seed-round-just-two-months-after-launch/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/08 23:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Stoke Space, SpaceX 대항 재사용 로켓 개발을 위해 추가 $10억 조달</div>
+    <div class="article-title-en">Stoke Space raises another billion to rival SpaceX at re-flying rockets</div>
+    <div class="article-keypoint">Stoke Space $10억 시리즈 E - SpaceX 대항 재사용 로켓 경쟁에 자본 집중 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/08/stoke-space-raises-another-billion-to-rival-spacex-at-re-flying-rockets/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/08 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">영국 청년 실업 담당 차르, 최저임금 인상 정책 변화 가능성 시사</div>
+    <div class="article-title-en">UK Youth Unemployment Czar Hints at Change in Minimum Wage</div>
+    <div class="article-keypoint">영국 청년 실업 검토, 최저임금 인상 속도 조절 가능성 시사 - 고용 정책 전환 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-08/uk-youth-unemployment-czar-hints-at-change-in-minimum-wage" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">핵에너지의 노동절 뉴스 폭탄: 원자로 9기와 IPO</div>
+    <div class="article-title-en">Nuclear's Labor Day News Dump: Nine Reactors And An IPO</div>
+    <div class="article-keypoint">핵에너지 섹터 연휴 기간 복수 이벤트 집중 - SMR MOU·Holtec IPO·연방 대출 재개 동시 부각</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/nuclears-labor-day-news-dump-nine-reactors-and-ipo" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 02:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">중국, 2023년 이후 최대 규모로 8월 금 65만 온스 매입</div>
+    <div class="article-title-en">China Adds 650,000 Ounces of Gold in Biggest Monthly Buy Since 2023</div>
+    <div class="article-keypoint">중국 PBoC, 8월 금 65만 온스 매입(2023년 이후 최대)에도 $4,400 돌파 실패 - 가격 괴리 주목</div>
+    <a class="article-link" href="https://oilprice.com/Metals/Gold/China-Adds-650000-Ounces-of-Gold-in-Biggest-Monthly-Buy-Since-2023.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Trump는 미국인들을 다시 광부로 만들 수 있을까</div>
+    <div class="article-title-en">Can Trump Make Americans Mine Again?</div>
+    <div class="article-keypoint">미국 핵심광물 채굴 드라이브, 인력 부족이 구조적 병목 - 공급망 자립 목표 실현 가능성 의문</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/09/08/critical-minerals-mining-workforce-schools-education/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 01:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Mamdani 뉴욕 시장, 시청을 사회주의적 노조 조직 지원 기구로 전환</div>
+    <div class="article-title-en">Mamdani Turns City Hall Into A Socialist Union-Organizing-Machine</div>
+    <div class="article-keypoint">뉴욕시, 시청 주도 노조 조직 지원 사무소 신설 - 노동·임금 정책 좌편향 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/mamdani-turns-city-hall-socialist-union-organizing-machine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/09 03:40 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
