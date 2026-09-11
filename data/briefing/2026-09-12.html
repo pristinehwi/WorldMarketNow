@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-09-12 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/09/12 07:48 KST</div>
+    <div class="header-date">2026-09-12</div>
+    <div class="header-headline">Fed 금리인상 재점화 - CPI 서프라이즈와 채권시장 동시 압박</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Fed 다음 회의 25bp 인상 확정 여부 및 국채 수익률 추가 상승이 위험자산 전반에 미칠 파급 경로 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Fed 금리인상 재점화 - CPI 서프라이즈·Bessent 개입 실패의 채권시장 이중 압박</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#8</span>
+    </div>
+    <div class="theme-summary">CPI가 예상을 상회하며 Fed의 다음 회의 25bp 금리인상이 사실상 기정사실화되는 흐름이 형성됐다. Bill Dudley 전 뉴욕 연은 총재는 25bp 인상을 하지 않으면 충격이라고 단언했으며, 달러는 CPI 발표 후 금리인상 베팅 강화에도 불구하고 방향성을 잡지 못하고 혼조세를 보였다. Bessent 재무장관은 $60억 규모의 국채 바이백 오퍼레이션을 단행했으나 채권시장의 '발열'을 꺾기에는 역부족이라는 평가가 지배적이며, 국채 수익률은 계속 상승했다. Bessent가 엔화 개입에는 일정 성과를 거뒀지만 정작 국채시장에서는 '잘못된 전쟁에서 이기는' 역설적 상황에 처했다는 분석도 제기됐다. Fed의 제3자 리스크 관리 지침 의견수렴 절차도 진행 중으로, 통화정책 긴축과 규제 강화가 동시에 진행되는 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Anthropic Claude 무기화 - 국가 행위자의 AI 악용과 거버넌스 한계 노출</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #9~#15</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 것은 Anthropic이 구체적 위협 행위자별 Claude 악용 사례를 공식 보고서로 공개했다는 점이다. 러시아·중국 위협 행위자들이 Claude를 악성 캠페인에 활용했으며, 이란은 미 해군 군함을 표적 삼는 데 Claude를 사용하려 했고, 후티 반군은 탄도미사일 개발에 Claude를 동원하려 했으나 실험이 실패한 것으로 나타났다. 중국 AI 기업들이 미국 AI 모델을 복제하려는 시도도 병행 보고됐으며, 이는 AI 안전장치의 실질적 한계를 시장에 재확인시켰다. OpenAI는 수학자 25인의 공개서한을 받으며 AI 모델이 수학자의 지적 작업을 위협한다는 거버넌스 논란에도 휘말렸다. JPMorgan이 Leopold Aschenbrenner의 AI 헤지펀드 'Situational Awareness'에 대한 대출을 수십억 달러 손실 이후 중단했다는 사실도 AI 투자 리스크의 실물 전이를 보여주는 사례로 부각됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 인프라 수요 가시화 - Oracle 실적과 Salesforce·Dell·HPE 생태계 파급</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #16~#20</span>
+    </div>
+    <div class="theme-summary">Oracle은 최신 실적에서 AI 지출 우려를 정면 돌파했다는 애널리스트 평가를 받았으나 주가는 하락 마감해 기대치와 현실의 간극을 드러냈다. Oracle 실적은 하드웨어 공급업체인 Dell과 HPE에는 긍정적 신호로 작용해 두 종목이 S&P 500 내 당일 최고 상승률을 기록했다. Salesforce는 다음 주 Dreamforce 컨퍼런스에서 Anthropic과의 'Claudeforce' 파트너십 구체화 방안을 제시할 것으로 기대되며, AI 낙관론의 다음 촉매가 될 전망이다. AI의 정부 서비스 도입이 가속화되고 있으나 인간 감독 병목이 새로운 비효율을 창출할 수 있다는 구조적 경고도 제기됐다. 초지능을 향한 고위험 질주에 대한 우려도 병행 부상하며 AI 인프라 투자 사이클의 양면성이 동시에 부각된 하루였다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">이란 전쟁·에너지 인플레 - 9/11 25주년에 디젤 $6 사상 최고치 중첩</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #21~#24</span>
+    </div>
+    <div class="theme-summary">9/11 25주년 기념식에서 Trump와 Hegseth가 이란과의 전쟁을 정당화하는 발언을 함으로써 군사적 충돌 지속 의지를 재확인했다. 이란과의 전쟁 여파로 디젤 가격이 $6 사상 최고치를 경신했으며, 이는 물류·공급망 전반의 비용 상승을 통해 인플레이션 압력을 실물경제로 직접 전이시키는 경로가 되고 있다. Putin은 우크라이나에 유럽군 배치는 러시아에 대한 전쟁이라고 경고해 지정학 리스크가 중동에서 유럽으로도 동시 확산되는 구도가 형성됐다. 전직 CIA 요원의 $4,000만 상당 금괴 절도 혐의 합의 소식은 안전자산 수요 및 금 시장 심리와 교차하는 이색 사건으로 주목됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Tesla Semi·SpaceX 인재 유입 - 에너지 비용 급등이 EV 전환 모멘텀 재점화</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #25~#27</span>
+    </div>
+    <div class="theme-summary">Tesla는 디젤 가격 급등 국면에서 Semi 트럭 사업의 상업적 기회를 재조명 받고 있으며, Morgan Stanley는 이를 잠재적 대형 기회로 평가했다. 높은 디젤 가격은 전통 운송업의 비용 압박을 심화시켜 전기 트럭으로의 전환 인센티브를 구조적으로 강화한다. SpaceX는 Lone Pine의 공동 CIO가 초기 SpaceX 투자사 Atreides Management에 합류한다는 소식으로 투자 생태계 내 존재감을 이어갔다. 한편 영국 Reform UK 당이 미국에서 자금세탁 방지 위반으로 유죄 판결을 받은 후 Trump에 의해 사면된 영국 암호화폐 억만장자로부터 £3,600만 역대 최대 기부를 받아 암호화폐 자금과 정치 영향력 확장이라는 논란을 낳았다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #28~#30</span>
+    </div>
+    <div class="theme-summary">브라질 대선 여론조사에서 Lula가 Flavio Bolsonaro를 상대로 수치상 우위를 유지하며 10월 선거 국면이 이어지고 있다. Trump는 공화당이 의회 다수를 유지할 경우 $5,000 지급을 공약으로 내세우고 있으나 당내에서도 재원 마련 실현 가능성에 의문이 제기됐다. 정치적 불확실성과 무관한 안전 투자처로 4.7% 수익률 상품이 조명됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Fed 금리인상 재점화 - CPI 서프라이즈·Bessent 개입 실패의 채권시장 이중 압박</span>
+    <span class="theme-label-range">Article #1~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Fed, 수년 만에 첫 금리인상 단행 임박</div>
+    <div class="article-title-en">The Fed Is Poised to Raise Interest Rates for the First Time in Years</div>
+    <div class="article-keypoint">Fed 금리인상이 수년 만에 첫 인상으로 확정 수순, 유가·정치 변수와 교차</div>
+    <a class="article-link" href="https://www.wsj.com/economy/central-banking/the-fed-is-poised-to-raise-interest-rates-for-the-first-time-in-years-b9629772?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 06:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Bill Dudley, Fed의 25bp 금리인상 전망</div>
+    <div class="article-title-en">Bill Dudley Expects Fed to Raise Rate by 25 Bps</div>
+    <div class="article-keypoint">Dudley, 25bp 인상 불이행 시 충격 수준이라 단언 - 인상 기정사실화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-11/dudley-expects-fed-to-raise-rate-by-25-bps-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 06:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Bessent, 채권 자경단에 맞서다</div>
+    <div class="article-title-en">Bessent Takes on the Bond Vigilantes</div>
+    <div class="article-keypoint">Bessent $60억 바이백 실패 - 국채시장 '발열' 진압 역부족, 수익률 상승 지속</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/09/11/business/dealbook/bessent-bond-vigilantes.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/11 20:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Scott Bessent, 미국 채권시장의 '발열' 진정 실패</div>
+    <div class="article-title-en">Scott Bessent fails to break ‘fever’ in US bond market</div>
+    <div class="article-keypoint">Bessent $60억 오퍼레이션 불충분 - 채권시장 차입비용 급등 억제 실패</div>
+    <a class="article-link" href="https://www.ft.com/content/dd4cc4a0-844e-486a-b99c-b379d457019b?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 01:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">CPI가 금리인상 베팅 키우는 가운데 달러 혼조, 유가 하락</div>
+    <div class="article-title-en">Dollar Wavers as CPI Adds to Fed Hike Bets While Oil Falls</div>
+    <div class="article-keypoint">CPI 예상 상회로 달러 혼조 - 금리인상 베팅 강화에도 불확실성 잔존</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-11/dollar-wavers-as-inflation-aids-fed-hike-bets-while-oil-falls" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/11 22:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Fed의 금리 결정, 통신 요금제 변화에서 판가름 났을 수도</div>
+    <div class="article-title-en">Fed’s Rate Decision May Have Come Down to Phone Plan Changes</div>
+    <div class="article-keypoint">통신비 급등이 CPI를 예상 상회로 이끌어 Fed 금리인상 결정적 촉매 역할</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-11/fed-s-rate-decision-may-have-come-down-to-phone-plan-changes" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 00:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Bessent, 틀린 전쟁에서 이기고 있는가</div>
+    <div class="article-title-en">Is Bessent winning the wrong battle in markets?</div>
+    <div class="article-keypoint">엔화 개입 효과와 국채시장 실패의 역설 - Bessent, 잘못된 전쟁 승리 비판</div>
+    <a class="article-link" href="https://www.ft.com/content/c3740cd0-3c4c-44d0-b3e8-4ccb1bac65b0?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">금융당국, 제3자 리스크 관리 지침 의견수렴 개시 및 지역은행 핵심 서비스 제공업체 관련 성명 발표</div>
+    <div class="article-title-en">Agencies seek comment on proposed third-party risk management guidance and issue statement on community bank engagement with core service providers</div>
+    <div class="article-keypoint">Fed, 제3자 리스크 관리 지침 의견수렴 개시 - 금융기관 규제 강화 병행 진행</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260911a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/11 23:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Anthropic Claude 무기화 - 국가 행위자의 AI 악용과 거버넌스 한계 노출</span>
+    <span class="theme-label-range">Article #9~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Anthropic, 러시아·중국 위협 행위자가 AI 모델 Claude를 악성 활동에 사용했다고 밝혀</div>
+    <div class="article-title-en">Anthropic Says Russian, Chinese Threat Actors Used Its AI Model Claude For Malicious Activity</div>
+    <div class="article-keypoint">러시아·중국 국가 행위자, Anthropic Claude 악성 캠페인 활용 공식 확인</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/anthropic-says-russian-chinese-threat-actors-used-its-ai-model-claude-malicious-activity" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 02:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">OpenAI와 수학자들의 갈등, 오히려 격화</div>
+    <div class="article-title-en">OpenAI’s feud with mathematicians is only escalating</div>
+    <div class="article-keypoint">수학자 25인 공개서한 - AI 모델의 지적재산권 침해 거버넌스 갈등 확대</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/11/openais-feud-with-mathematicians-is-only-escalating/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 05:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Anthropic, 이란이 자사 AI 모델로 미 해군 군함 표적 시도했다고 밝혀</div>
+    <div class="article-title-en">Anthropic Says Iran Used Its American AI Model to Target U.S. Navy Warships</div>
+    <div class="article-keypoint">이란, Claude로 미 해군 군함 표적 시도 - AI 안전장치 국가안보 위협 현실화</div>
+    <a class="article-link" href="https://www.wsj.com/politics/national-security/anthropic-says-iran-used-its-american-ai-model-to-target-u-s-navy-warships-67583e05?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/11 22:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">JPMorgan, AI 손실 이후 Situational Awareness 대출 중단</div>
+    <div class="article-title-en">JPMorgan cut off Situational Awareness lending after AI losses</div>
+    <div class="article-keypoint">JPMorgan, AI 헤지펀드 Situational Awareness 대출 중단 - 수십억 달러 손실 여파</div>
+    <a class="article-link" href="https://www.ft.com/content/916eea1b-d483-49e1-9a70-53b4df8f9870?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 05:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Anthropic, Claude가 무기·스파이·사이버 작전에 활용된 경위 공개</div>
+    <div class="article-title-en">How Anthropic says Claude was used for weapons, spying and cyber operations</div>
+    <div class="article-keypoint">국가·테러 행위자의 Claude 무기·사이버·감시 활용 전모 공식 보고 - AI 안전 경고</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/how-anthropic-says-claude-was-used-for-weapons-spying-and-cyber-operations" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 04:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">후티 반군, Anthropic AI로 탄도미사일 개발 시도</div>
+    <div class="article-title-en">Houthis used Anthropic AI to try to build ballistic missiles</div>
+    <div class="article-keypoint">후티 반군, Claude로 탄도미사일 개발 시도 - 실패했으나 AI 안전장치 한계 노출</div>
+    <a class="article-link" href="https://www.ft.com/content/8310cf56-ce60-4e6e-8254-5bb470e9a880?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/11 18:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">모닝 리스크 리포트: 중국 AI 기업들이 미국 AI 모델을 복제하려 한 방법</div>
+    <div class="article-title-en">The Morning Risk Report: How Chinese AI Firms Tried to Clone U.S. AI Models</div>
+    <div class="article-keypoint">중국 AI 기업들의 미국 모델 복제 시도 - AI 기술 패권 경쟁 심화 재확인</div>
+    <a class="article-link" href="https://www.wsj.com/risk-compliance-journal/the-morning-risk-report-how-chinese-ai-firms-tried-to-clone-u-s-ai-models-32b77c8f?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/11 20:31 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 인프라 수요 가시화 - Oracle 실적과 Salesforce·Dell·HPE 생태계 파급</span>
+    <span class="theme-label-range">Article #16~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">AI가 오히려 정부를 더 느리게 만들 수 있다</div>
+    <div class="article-title-en">AI Could Make Governments Slower</div>
+    <div class="article-keypoint">AI가 정부 효율화보다 감독 병목 확대 초래 가능성 - 공공 AI 도입의 역설</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/by-speeding-up-routine-tasks-ai-may-end-up-overwhelming-human-decision-makers-by-sami-mahroum-2026-09" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 01:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Oracle, AI 지출 우려 불식했으나 주가는 하락</div>
+    <div class="article-title-en">Oracle shook off fears about AI spending, but its stock still loses ground</div>
+    <div class="article-keypoint">Oracle, AI 지출 우려 정면 돌파 평가에도 주가 하락 - 기대와 현실 간극 노출</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oracle-shares-are-climbing-after-results-what-wall-street-analysts-are-saying-now-0d4517ae?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 05:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Salesforce 주가, AI 낙관론에 올라탔다 - Wall Street가 다음으로 주목하는 것은</div>
+    <div class="article-title-en">Salesforce’s stock has been riding a wave of AI optimism. Here’s what Wall Street wants to see next.</div>
+    <div class="article-keypoint">Salesforce-Anthropic 'Claudeforce' 파트너십, Dreamforce에서 구체화 여부 주목</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/salesforces-stock-has-been-riding-a-wave-of-ai-optimism-heres-what-wall-street-wants-to-see-next-72f20e95?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 05:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">오늘 S&P 500 최고 상승주가 Dell과 HPE인 이유</div>
+    <div class="article-title-en">Why Dell and HPE were the S&P 500’s top-performing stocks today</div>
+    <div class="article-keypoint">Oracle 실적 긍정 파급으로 Dell·HPE S&P 500 당일 상승률 1위 기록</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-dell-and-hpe-were-the-s-p-500s-top-performing-stocks-today-13d1dd14?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 05:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">초지능을 향한 고위험 질주</div>
+    <div class="article-title-en">The High-Risk Sprint to Superintelligence</div>
+    <div class="article-keypoint">초지능 질주의 고위험성 경고 - AI 개발 속도와 안전성 간 딜레마 부각</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/the-high-risk-sprint-to-superintelligence-a366be66?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 00:55 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">이란 전쟁·에너지 인플레 - 9/11 25주년에 디젤 $6 사상 최고치 중첩</span>
+    <span class="theme-label-range">Article #21~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">전직 CIA 요원, 금괴 절도 혐의로 잠정 유죄 합의 도달</div>
+    <div class="article-title-en">Ex-CIA officer accused of stealing gold bars reaches tentative plea deal</div>
+    <div class="article-keypoint">전직 CIA 요원 $4,000만 금괴 절도 혐의 합의 - 제도권 내 금 자산 유출 사례</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/sep/11/cia-officer-gold-bars-tentative-plea-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Putin, 우크라이나 유럽군 배치는 러시아에 대한 전쟁이라고 경고</div>
+    <div class="article-title-en">Putin says European troop deployment in Ukraine would be 'war against Russia'</div>
+    <div class="article-keypoint">Putin, 우크라이나 유럽군 배치는 러시아에 대한 전쟁 경고 - 지정학 리스크 확산</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/09/11/putin-says-european-troop-deployment-in-ukraine-would-be-war-against-russia_6757434_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 06:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">이란과의 전쟁 속 디젤 가격 $6 사상 최고치 기록</div>
+    <div class="article-title-en">Diesel price hits $6 record high amid war with Iran</div>
+    <div class="article-keypoint">이란전쟁 여파 디젤 $6 사상 최고치 - 물류 비용 상승으로 인플레 실물 전이 가속</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/09/11/diesel-price-hits-6-record-high-amid-war-with-iran/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/11 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Trump와 Hegseth, Pentagon 9/11 추모 발언에서 이란전 정당화</div>
+    <div class="article-title-en">Trump and Hegseth use 9/11 memorial remarks at Pentagon to defend war on Iran</div>
+    <div class="article-keypoint">Trump·Hegseth, 9/11 기념식에서 이란전 정당화 - 군사 충돌 지속 의지 재확인</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/sep/11/trump-hegseth-911-memorial" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 03:06 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Tesla Semi·SpaceX 인재 유입 - 에너지 비용 급등이 EV 전환 모멘텀 재점화</span>
+    <span class="theme-label-range">Article #25~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Tesla, 트럭 운송업을 혁신할 수 있다 - 디젤 고가 환경에서 수익 기회 포착</div>
+    <div class="article-title-en">Tesla could transform the trucking business — and capitalize on high diesel prices</div>
+    <div class="article-keypoint">디젤 $6 최고가 국면에서 Tesla Semi, 전기 트럭 전환 모멘텀 가속 가능성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/tesla-could-transform-the-trucking-business-and-capitalize-on-high-diesel-prices-e4c48d79?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 05:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Lone Pine 공동 CIO, SpaceX 초기 투자사 Atreides Management 합류</div>
+    <div class="article-title-en">Lone Pine’s co-CIO to join early SpaceX backer Atreides Management</div>
+    <div class="article-keypoint">SpaceX 초기 투자사로 Lone Pine 공동 CIO 합류 - 우주 섹터 인재 유입 가속</div>
+    <a class="article-link" href="https://www.ft.com/content/282a7b82-49b1-48ce-b645-737da2ff093a?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 05:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Reform UK, 영국 암호화폐 억만장자로부터 £3,600만 역대 최대 기부 수령</div>
+    <div class="article-title-en">Reform UK given record £36m donation by British crypto billionaire</div>
+    <div class="article-keypoint">영국 Reform UK, Trump 사면 암호화폐 억만장자로부터 £3,600만 역대 최대 기부</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/sep/11/reform-uk-given-record-36m-donation-by-british-crypto-billionaire" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #28~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Trump도 민주당도 무관한 안전한 투자처 - 수익률 4.7%</div>
+    <div class="article-title-en">This investment is safe from both Trump and the Democrats — and it pays 4.7%</div>
+    <div class="article-keypoint">정치 리스크 무관 4.7% 수익률 투자처 - 고금리 환경에서 안전자산 대안 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/this-investment-is-safe-from-both-trump-and-the-democrats-and-it-pays-4-7-4b76c2f3?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 07:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Trump, 공화당 의회 장악 시 $5,000 지급 공약 반복 - 당내에서도 실현 가능성 의문</div>
+    <div class="article-title-en">Trump keeps touting $5,000 payments if Republicans retain control of Congress as some in his party question feasibility – live</div>
+    <div class="article-keypoint">Trump $5,000 지급 공약, 당내에서도 $1조 재원 실현 가능성 의구심 표출</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/sep/11/september-11-anniversary-memorials-world-trade-center-pentagon-vance-trump-us-politics-live" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 06:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Datafolha 여론조사, Lula 브라질 대선에서 Flavio Bolsonaro 상대 우위 유지</div>
+    <div class="article-title-en">Lula maintains lead over Flavio Bolsonaro ahead of Brazil election, Datafolha poll shows</div>
+    <div class="article-keypoint">Lula, Flavio Bolsonaro 대비 수치 우위 유지 - 브라질 10월 대선 구도 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/lula-maintains-lead-over-flavio-bolsonaro-ahead-of-brazil-election-datafolha-poll-shows" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 07:21 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
