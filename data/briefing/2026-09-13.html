@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-09-13 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/09/13 07:48 KST</div>
+    <div class="header-date">2026-09-13</div>
+    <div class="header-headline">AI 주요 CEO 일제히 개발 속도 조절 촉구 - 업계 패러다임 전환</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">AI 개발 속도 조절 합의 후 규제 입법화 가능성과 빅테크 밸류에이션 조정 여부 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 개발 속도 조절 합의 - 빅테크 CEO 동시 경고와 거버넌스 압박 가속</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">오늘 가장 두드러진 변화는 Anthropic·OpenAI·Tesla의 CEO들이 동시에 AI 개발 속도 감축에 동의했다는 점으로, 경쟁사 수장들이 한목소리를 낸 것은 이례적이다. Anthropic CEO Dario Amodei가 '프론티어 속도 조절'을 공개 제안했고, 오랜 라이벌인 Elon Musk와 Sam Altman이 이에 지지 의사를 밝히며 AI 업계 내 자율적 거버넌스 논의가 급부상했다. Altman은 OpenAI IPO가 현시점에서 '시기상조'라고 명언했으며, AI 안전 우려가 공모 추진의 장애물임을 직접 인정했다. OpenAI 모델이 수십 년간 수학자들을 괴롭혀온 밀레니엄 문제를 풀어내며 기술 발전 속도에 대한 불안감이 고조된 시점과 맞물려, 업계·학계 모두 규제 필요성을 재인식하는 계기가 되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">G7 중앙은행 금리인상 압박 확산 - ECB 인상 단행과 Warsh 통화정책 경로 재해석</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#11</span>
+    </div>
+    <div class="theme-summary">ECB Lagarde 총재가 인플레이션 2% 목표 달성을 이유로 기준금리 인상을 단행했고, G7 전반에 걸쳐 금리인상 압박이 동시에 확산되는 구도가 형성되었다. 신임 Fed 의장 후보로 거론되는 Warsh에 대한 시장의 시선이 집중되며, 미국의 통화정책 경로 재해석 움직임이 가시화되고 있다. Bessent 재무장관의 부채 자연 성장론에 대한 비판도 제기되어, 연방 부채 $40조 돌파 이후 재정 건전성에 대한 시장 신뢰가 흔들리는 모습이다. 채권시장은 ECB 인상과 미국 재정 불안의 이중 압박을 받고 있으며, 헤지펀드의 프랑스 국채 투기 비중이 유럽 채권 거래의 절반 이상으로 확대되어 유럽 채권시장 불안정 리스크도 동반 부상했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">BRICS 확장과 다극 질서 모색 - 인도·중국 관계 해빙과 미국 패권 도전 구도</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#17</span>
+    </div>
+    <div class="theme-summary">뉴델리 BRICS 정상회의에서 Xi Jinping이 레드카펫 영접을 받으며 2020년 국경 충돌 이후 인도·중국 관계의 공식 해빙 국면이 개막되었다. 러시아·이란을 포함한 신흥국 지도자들이 미국의 중동 전쟁·관세 정책·제재에 반대하는 공동성명을 채택하며 대미 연대 전선을 구축했다. Iran과 UAE가 BRICS 공동성명에 참여해 전쟁 자제를 촉구한 것은 이란 핵 우려와 Houthi 공격 재개라는 지정학 리스크와 교차하며 복합적 신호를 발산한다. Modi 인도 총리는 확대 BRICS 내 이견을 조율하는 중재자 역할을 모색하고 있으며, 이 회의는 달러 패권 균열과 다극 금융 질서 형성의 상징적 이정표로 해석된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">이란 핵·Houthi 위협과 중동 에너지 리스크 프리미엄 재점화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#21</span>
+    </div>
+    <div class="theme-summary">이란의 핵 활동 재개 우려가 고조되는 가운데 Houthi의 홍해 공격 재개가 미국의 역내 에너지 안정화 전략에 중대한 차질을 빚고 있다. Trump 대통령은 9/11 25주년 펜타곤 행사에서 이란과 9/11을 연결 짓는 발언을 시도했으나, 한편으로는 Houthi가 미국의 예멘 주둔에 반대하지 않는다며 홍해 통항 허용 신호를 보낸다는 상반된 메시지를 동시에 내놓았다. 핵에너지에 대한 글로벌 관심도 재부상하고 있어, 이란 리스크로 인한 공급 불안과 탈탄소 수요의 교차점에서 핵에너지 섹터 투자 논의가 가속될 수 있다. 중동 지정학 불안은 에너지 수입국 인플레이션 압력으로 직결되며 G7 중앙은행의 고금리 장기화 명분을 강화하는 요인으로 작용한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">우크라이나 종전 협상 재가동 신호 - Zelensky G20 회담 제안과 10월 협상 준비</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#23</span>
+    </div>
+    <div class="theme-summary">우크라이나가 10월 종전 협상 재개를 준비 중이라는 Zelensky 측근의 발언이 나왔고, Zelensky는 G20에서 Putin과의 직접 회담 의사도 밝혔다. 다만 크렘린은 이를 거부해 협상 재가동의 실질적 진전은 아직 불투명하다. 미국이 Witkoff·Kushner를 통해 외교적 접촉을 재개한 가운데, Trump와 Putin 간의 통화 신호가 포착되는 등 미국발 중재 노력이 가시화되고 있다. 협상 분위기가 조성될 경우 방산·에너지 섹터 포지셔닝에 변화가 생길 수 있어 향후 48시간 내 러시아의 공식 반응이 핵심 변수다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">Oracle 창업자 Larry Ellison이 75억 달러 규모 주식 매각 계획을 하루 만에 철회하며 주주 신뢰 관리에 나섰다. SpaceX는 Nasdaq 100 리밸런싱으로 가중치가 확대되어 패시브 펀드의 수십억 달러 매수 유입이 기대된다. Tesla는 2017년 발표 이후 수차례 연기된 2세대 Roadster를 10월 1일 마침내 공개할 예정이다. 멕시코 산악지대와 글로벌 각지에서 불법 암호화폐 채굴장이 적발되며 전력 도용 문제가 국제적 이슈로 부각되었다. Meta의 팩트체킹 대체 시스템에 대해 감독위원회가 'Community Notes는 충분하지 않다'며 제동을 걸었다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 개발 속도 조절 합의 - 빅테크 CEO 동시 경고와 거버넌스 압박 가속</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">OpenAI Sam Altman, 금년 IPO 계획 없는 이유 밝혀</div>
+    <div class="article-title-en">Why OpenAI’s Sam Altman says an IPO isn’t in the cards this year</div>
+    <div class="article-keypoint">Altman, AI 안전 우려로 OpenAI IPO 금년 추진 '시기상조' 직접 선언</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-openais-sam-altman-says-an-ipo-isnt-in-the-cards-this-year-229de89c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 06:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Elon Musk, AI 인터넷 장악 전 Anthropic의 개발 속도 조절 요구 지지</div>
+    <div class="article-title-en">Elon Musk backs Anthropic’s call to slow down AI progress before rogue bots take over the entire internet</div>
+    <div class="article-keypoint">Musk·Altman, 경쟁사 Anthropic의 AI 개발 속도 감축 요구에 이례적 공동 지지</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/elon-musk-backs-anthropics-call-to-slow-down-ai-progress-before-rogue-bots-take-over-the-entire-internet-46f12d98?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 02:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Anthropic CEO, AI 개발 속도 조절 계획 제시</div>
+    <div class="article-title-en">Anthropic CEO outlines plan to slow AI development</div>
+    <div class="article-keypoint">Anthropic CEO, AI 프론티어 속도 조절 공식 제안 - 업계 자율 규제 논의 분기점</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 04:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">라이벌 Altman·Musk, Dario Amodei의 AI 속도 조절 요구에 동참</div>
+    <div class="article-title-en">Rivals Altman and Musk rally behind Dario Amodei’s call for an AI slowdown </div>
+    <div class="article-keypoint">AI 최대 경쟁사 CEO들, 기술 통제 상실 위험 경고하며 속도 조절 전선 형성</div>
+    <a class="article-link" href="https://www.ft.com/content/31220b59-b0c6-401c-a146-2b7b5d138837?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 03:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">AI 최대 경쟁사들, 개발 속도 늦춰야 한다는 데 합의</div>
+    <div class="article-title-en">Biggest AI Rivals Agree They Need to Slow It Down</div>
+    <div class="article-keypoint">Musk·Altman, Anthropic AI 속도 조절론 지지 - 빅테크 자율 규제 연대 신호</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/anthropic-boss-warns-ai-industry-must-slow-the-pace-a4267b56?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 06:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">'미숙한 과시' - OpenAI의 최신 수학 쾌거에 수학자들 불안감 표출</div>
+    <div class="article-title-en">‘Immature playground boasting’: Mathematicians uneasy at OpenAI’s latest scalp</div>
+    <div class="article-keypoint">OpenAI 모델, 수십 년 난제 밀레니엄 수학 문제 해결 - AI 능력 가속에 학계 충격</div>
+    <a class="article-link" href="https://www.theguardian.com/science/2026/sep/12/openai-mathematicians-millennium-prize-problem" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 17:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">G7 중앙은행 금리인상 압박 확산 - ECB 인상 단행과 Warsh 통화정책 경로 재해석</span>
+    <span class="theme-label-range">Article #7~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Christine Lagarde: Ouest-France 인터뷰</div>
+    <div class="article-title-en"> Christine Lagarde: Interview with Ouest-France</div>
+    <div class="article-keypoint">ECB Lagarde, 인플레 대응 금리 인상 단행 - 부동산·투자 비용 상승 직접 경고</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/inter/date/2026/html/ecb.in260912~3cc706f4d6.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">헤지펀드의 프랑스 국채 투기 확대 - 위기 재연 우려 고조</div>
+    <div class="article-title-en">Hedge funds increasingly speculate on French debt, raising specter of crisis</div>
+    <div class="article-keypoint">헤지펀드, 유럽 채권 거래의 50% 이상 점유 - 프랑스 고부채 취약성 재부각</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/09/12/hedge-funds-increasingly-speculate-on-french-debt-raising-specter-of-crisis_6757450_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 20:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Warsh에 쏠린 시선 - G7 중앙은행 전반에 금리인상 열풍 확산</div>
+    <div class="article-title-en">All Eyes on Warsh as Rate-Hike Fever Spreads Across G7 Central Banks</div>
+    <div class="article-keypoint">G7 전반 금리인상 압박 확산 속 Warsh 신임 Fed 의장 통화정책 경로 재해석 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-12/all-eyes-on-warsh-as-rate-hike-fever-spreads-across-g7-central-banks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Bessent 장관, 부채를 성장으로 해소한다는 환상에서 벗어나야</div>
+    <div class="article-title-en">No Secretary Bessent, We Aren't Magically Growing Our Way Out Of Debt</div>
+    <div class="article-keypoint">연방 부채 $40조 돌파 - Bessent 성장론 비판 고조, 재정 신뢰 균열 가속</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/no-secretary-bessent-we-arent-magically-growing-our-way-out-debt" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 23:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">이번엔 다를까 - 기업 이익과 주가, 90년 추세를 이탈하다</div>
+    <div class="article-title-en">This Time Is Different? Earnings & Price Break 90-Year Trends</div>
+    <div class="article-keypoint">S&P 500, 90년 추세 이탈 국면 진입 - 9월 변동성 확대 속 50일 이평선 지지 여부 관건</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/time-different-earnings-price-break-90-year-trends" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 01:50 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">BRICS 확장과 다극 질서 모색 - 인도·중국 관계 해빙과 미국 패권 도전 구도</span>
+    <span class="theme-label-range">Article #12~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">이란·UAE, 전쟁 자제 촉구 BRICS 공동성명 지지</div>
+    <div class="article-title-en">Iran and UAE back joint BRICS statement urging restraint in war</div>
+    <div class="article-keypoint">이란·UAE, BRICS 전쟁 자제 공동성명 참여 - 중동 내 다극 외교 질서 재편 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/brics-agrees-on-joint-declaration-before-new-delhi-summit-sources-say-4898638" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 15:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">베이징, 미국의 대만 무기 판매 승인 시 Trump-Xi 정상회담 취소 위협</div>
+    <div class="article-title-en">Beijing Threatens To Cancel Trump-Xi Summit If US Approves New Arms Sales To Taiwan </div>
+    <div class="article-keypoint">베이징, 대만 무기 판매 시 Trump-Xi 정상회담 취소 위협 - 미중 갈등 고조 변수</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/beijing-threatens-cancel-trump-summit-if-us-approves-new-arms-sale-taiwan" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 01:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Modi, 글로벌 긴장 고조 속 BRICS 결속 모색</div>
+    <div class="article-title-en">Modi Seeks BRICS Unity as Global Tensions Rise</div>
+    <div class="article-keypoint">Modi, 확장 BRICS 내 갈등 조율 나서 - 인도의 중재자 역할과 다극 질서 주도권 모색</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-12/modi-seeks-brics-unity-as-global-tensions-rise-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 21:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump 견제 세력, Modi의 뉴델리 정상회의에서 공동 전선 형성</div>
+    <div class="article-title-en">Trump’s Foes Find Common Ground at Modi’s New Delhi Summit</div>
+    <div class="article-keypoint">러·이란 포함 신흥국 지도자, 뉴델리서 미국 관세·제재 반대 공동전선 구축</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-12/trump-s-foes-find-common-ground-at-modi-s-new-delhi-summit" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 00:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Xi Jinping, BRICS 정상회의서 레드카펫 영접 - 인도·중국 관계 해빙 가시화</div>
+    <div class="article-title-en">Xi Jinping gets red carpet at Brics summit amid thaw in India-China relations</div>
+    <div class="article-keypoint">Xi, 뉴델리 레드카펫 영접 - 2020년 충돌 후 인도·중국 관계 공식 해빙 개막</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/sep/12/xi-jinping-brics-summit-delhi-india-china-relations" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 21:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">인도 Modi·중국 Xi, 비즈니스 연계 강화·국경 평화 추진하며 관계 복원 가속</div>
+    <div class="article-title-en">India’s Modi and China’s Xi push business links, border peace as ties revive</div>
+    <div class="article-keypoint">Modi·Xi, 국경 평화·비즈니스 연계 강화 합의 - 인도·중국 경제 협력 재개 가속</div>
+    <a class="article-link" href="https://www.investing.com/news/economic-indicators/indias-modi-and-chinas-xi-push-business-links-border-peace-as-ties-revive-4898675" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 16:54 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">이란 핵·Houthi 위협과 중동 에너지 리스크 프리미엄 재점화</span>
+    <span class="theme-label-range">Article #18~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">이란 핵 활동, 새로운 우려 제기</div>
+    <div class="article-title-en">Iran Nuclear Activity Raises New Concerns</div>
+    <div class="article-keypoint">Houthi 공격 재개로 미국 홍해 안정화 전략 차질 - 이란 핵 우려와 에너지 리스크 동반 상승</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-12/iran-nuclear-activity-raises-new-concerns-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 22:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">핵에너지 최대 난제 해결을 향한 경쟁</div>
+    <div class="article-title-en">The Race to Solve Nuclear Energy’s Biggest Problem</div>
+    <div class="article-keypoint">핵에너지 인기 재부상 - 탈탄소·에너지 안보 수요가 글로벌 원전 확장 모멘텀 견인</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/The-Race-to-Solve-Nuclear-Energys-Biggest-Problem.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump·Hegseth, 9/11 25주년 펜타곤 행사에서 이란과의 연루 주장 시도</div>
+    <div class="article-title-en">Trump & Hegseth Try To Tie Iran To 9/11 At Pentagon Ceremony</div>
+    <div class="article-keypoint">Trump, 9/11 25주년에 이란 연루 주장 - 중동 군사 긴장 고조 리스크 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/trump-hegseth-try-tie-iran-911-pentagon-ceremony" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 03:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Trump: Houthi, 미국의 예멘 주둔 반대 안 해 - 홍해 선박 대부분 통항 허용 중</div>
+    <div class="article-title-en">Trump: Houthis 'Don't Want' US In Yemen - So They're Letting Most Red Sea Shipping Through</div>
+    <div class="article-keypoint">Trump, Houthi 홍해 통항 허용 신호 - 대이란 강경 기조와의 모순적 메시지</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/trump-houthis-dont-want-us-yemen-so-theyre-letting-most-red-sea-shipping-through" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 05:55 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">우크라이나 종전 협상 재가동 신호 - Zelensky G20 회담 제안과 10월 협상 준비</span>
+    <span class="theme-label-range">Article #22~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">우크라이나, 10월 종전 협상 재개 준비 중 - Zelensky 측근 밝혀</div>
+    <div class="article-title-en">Ukraine preparing for war-ending talks to resume in October, Zelensky aide says</div>
+    <div class="article-keypoint">우크라이나, 10월 종전 협상 재개 준비 - Zelensky 측 공식화로 협상 모멘텀 형성</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/kyiv-preparing-for-talks-to-resume-in-october-senior-ukrainian-official-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 04:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Zelensky, G20서 Putin과 회담 의사 밝혀 - 크렘린 거부</div>
+    <div class="article-title-en">Zelensky willing to meet Putin at G-20 ‘to make decisions’; Kremlin refuses</div>
+    <div class="article-keypoint">Zelensky, G20서 Putin 직접 회담 의사 - 크렘린 거부로 협상 재가동 불투명</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelensky-says-willing-to-meet-putin-at-g-20-to-make-decisions" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 20:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">SpaceX, 리밸런싱 후 Nasdaq 100 내 가중치 확대 전망</div>
+    <div class="article-title-en">SpaceX to Get Weighting Boost in Nasdaq 100 After Rebalance</div>
+    <div class="article-keypoint">SpaceX, Nasdaq 100 리밸런싱으로 가중치 확대 - 패시브 자금 수십억 달러 유입 전망</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-12/spacex-to-get-weighting-boost-in-nasdaq-100-after-rebalance" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 02:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">멕시코 산악지대 은닉 암호화폐 채굴장, 카르텔 자금 조달 의혹 부각</div>
+    <div class="article-title-en">Hidden crypto farm in Mexican mountains puts spotlight on cartel funding</div>
+    <div class="article-keypoint">멕시코 카르텔 연루 불법 암호화폐 채굴장 적발 - 글로벌 전력 도용 이슈 부상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/hidden-crypto-farm-in-mexican-mountains-puts-spotlight-on-cartel-funding" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 20:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">전 세계 불법 암호화폐 채굴장, 전력 절도로 운영 중</div>
+    <div class="article-title-en">Stolen Electricity is Powering Illegal Crypto Farms Across the Globe</div>
+    <div class="article-keypoint">글로벌 불법 채굴장의 전력 도용 심화 - 신흥국 전력망 안정성 리스크 확대</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Stolen-Electricity-is-Powering-Illegal-Crypto-Farms-Across-the-Globe.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Larry Ellison, 75억 달러 Oracle 주식 매각 계획 철회</div>
+    <div class="article-title-en">Larry Ellison cancels $7.5bn Oracle share sale</div>
+    <div class="article-keypoint">Ellison, 75억 달러 Oracle 주식 매각 계획 하루 만에 철회 - 내부자 신뢰 시그널</div>
+    <a class="article-link" href="https://www.ft.com/content/05e61eb8-9273-4b9a-a356-47f525b7d506?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 02:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Tesla, 2세대 Roadster 10월 1일 드디어 공개 예정</div>
+    <div class="article-title-en">Tesla says it will finally unveil the second generation Roadster on October 1</div>
+    <div class="article-keypoint">Tesla 2세대 Roadster 10월 1일 공개 확정 - 8년 만의 공개 이벤트로 브랜드 모멘텀 시험</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/12/tesla-says-it-will-finally-unveil-the-second-generation-roadster-on-october-1/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 04:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Meta 감독위원회, 팩트체킹을 Community Notes로 대체하지 말라고 요구</div>
+    <div class="article-title-en">Oversight board asks Meta not to replace fact-checking with Community Notes</div>
+    <div class="article-keypoint">Meta 감독위원회, Community Notes의 팩트체킹 대체 부적합 판정 - 플랫폼 책임 논쟁 재점화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/oversight-board-asks-meta-not-to-replace-fact-checking-with-community-notes" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/12 18:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">전직 미국 구금 시설 직원, 위조 서명 20건으로 중범죄 기소</div>
+    <div class="article-title-en">Former US detention officer charged with 20 counts of felony forgery</div>
+    <div class="article-keypoint">미국 구금 시설 직원, ICE 인계 위한 서명 위조 20건 기소 - 이민 단속 절차 위법 논란</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/sep/12/former-detention-officer-north-carolina-charged-felony-forgery" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/13 03:56 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
