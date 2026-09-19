@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-09-20 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/09/20 07:48 KST</div>
+    <div class="header-date">2026-09-20</div>
+    <div class="header-headline">Fed 금리인상 단행 + 미중 정상회담 동시 충격</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Bessent-He JPMorgan 회동 결과 및 Trump-Xi 정상회담 의제 구체화 여부 — 관세·AI·에너지 패키지 합의 범위가 위험자산 방향 결정</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Fed 금리인상 현실화 — Warsh 체제 첫 인상과 채권시장 임계점</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">Fed가 2023년 7월 이후 처음으로 금리를 인상하고 2026년 추가 인상까지 예고하면서, 통화정책 정상화 경로가 시장 예상보다 가파르게 재설정되고 있다. Warsh 의장 체제에서의 만장일치 결정은 Fed 신뢰성 측면에서 긍정적이나, Trump 백악관의 즉각적 반발이 정치적 압박 리스크를 높이고 있다. Citi는 매파적 Fed가 AI 외 전통 경제 섹터의 성장을 둔화시킬 것이라고 경고하며 섹터 간 이분화를 전망했다. 10년물 금리의 5% 돌파 여부가 S&P 500 추가 조정의 분기점으로 작용할 가능성이 높으며, 고금리 장기화 프레임이 부채 비용에 민감한 오라클 등 AI 인프라 기업에도 압력을 가중시키고 있다. 고금리 지속의 구조적 원인에 대한 시장 내 해석 분분으로 정책 가시성이 제한되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">미중 정상회담 전야 — Bessent-He 회동과 관세·AI·에너지 협상 패키지</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#8</span>
+    </div>
+    <div class="theme-summary">Bessent 재무장관과 중국 He 부총리가 JPMorgan 본사에서 일요일 회동을 가지며, Trump-Xi 정상회담을 앞두고 관세·AI·이란 에너지 의제가 동시에 테이블에 오르고 있다. 뉴욕 무역팀 회의에서는 관세 인하 유인으로 에너지·농산물이 우선 거론되고 있어, 협상 타결 시 원자재 시장의 즉각적 반응이 예상된다. AI 거버넌스와 이란 핵 문제가 기술·지정학 교차 의제로 포함되면서 단순 무역협상을 넘어 전략적 프레임워크 협상으로 격상된 양상이다. 미중 관계 해빙 신호가 일부 감지되나, AI 칩 수출통제와 희토류 보복 가능성은 합의의 구조적 걸림돌로 잔존한다. 회담 결과는 위험자산·달러·원자재 전방위에 걸쳐 48시간 내 가장 강력한 가격 촉매로 작용할 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 거버넌스 압박 가속 — 'AI Force' 창설·해킹 현실화·트릴리언달러 버블 논쟁</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #9~#14</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 연방 차원의 AI 감독 기구인 'AI Force' 창설을 발표하면서, 빅테크의 자율규제에서 정부 주도 거버넌스로의 전환 신호가 강화됐다. Gemini가 타사 시스템 해킹에 실제로 활용된 사례가 확인되며 AI 모델 악용 리스크가 거버넌스 공백 문제로 직결되고 있다. AI 벤치마킹의 중립성 문제를 겨냥한 Vals AI(Andreessen Horowitz 투자)의 등장은 평가 표준 선점 경쟁이 본격화됨을 시사한다. Altman·Amodei 등 CEO들의 'Rogue AI' 위험 경고가 실제 안전 우려인지 독점적 시장지위 보호를 위한 내러티브인지에 대한 비판적 시각도 확산되고 있어, AI 투자 버블 논쟁이 정책 어젠다와 맞물려 복잡해지고 있다. Nvidia CEO Jensen Huang이 AI 종말론에 정면 반박하며 낙관론을 유지하는 등 업계 내 온도차도 선명하게 드러나고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Berkshire 승계 완료 — 포스트 버핏 시대 자본배분 재편 가능성</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15</span>
+    </div>
+    <div class="theme-summary">Warren Buffett이 60년 넘게 이끌어온 Berkshire Hathaway 이사회 의장직을 공식 내려놓고 아들 Howard Buffett이 의장을, Greg Abel이 CEO를 맡는 승계 구도가 확정됐다. 버핏의 퇴진은 단순한 경영권 이전을 넘어 Berkshire의 장기 포트폴리오 전략, 특히 AI·기술주에 대한 보수적 접근 방식이 변화할 가능성을 시장이 주목하는 계기가 된다. 수십억 달러 규모의 현금성 자산 운용 방향과 인수합병 철학의 연속성 여부가 향후 주요 관전 포인트다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">에너지·핵·원자재 — IAEA 원전 전망 상향과 그린란드 투자 전환</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #16~#20</span>
+    </div>
+    <div class="theme-summary">IAEA가 소형모듈원자로(SMR) 개발 가시화를 배경으로 장기 원자력 발전 전망을 재차 상향 조정하면서, 핵에너지가 AI 데이터센터 전력 수요의 구조적 해법으로 부상하는 흐름이 강화되고 있다. 미국·덴마크·그린란드 간 안보 협정 체결로 그린란드 의제가 군사적 야욕 논쟁에서 광업·인프라 투자 기회로 초점이 이동하고 있어, 희토류·광물 공급망 재편과 연동될 가능성이 있다. 금 $155,000 시나리오라는 극단적 사고 실험이 회자되는 배경에는 Bessent의 달러 신뢰성 딜레마와 안전자산 재배분 압력이 자리하고 있다. SpaceX의 Nasdaq 100 편입 비중이 1.28%에서 2.82%로 확대되는 리밸런싱이 월요일 발효되어 패시브 자금 흐름의 즉각적 변화가 예상된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #21~#30</span>
+    </div>
+    <div class="theme-summary">다양한 정치·사회·법률 이슈가 혼재하며 직접적인 시장 영향은 제한적이나 배경 맥락으로 참고할 만한 기사들이다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Fed 금리인상 현실화 — Warsh 체제 첫 인상과 채권시장 임계점</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Citi, 매파적 Fed가 AI 외 경제 성장 둔화 유발할 것으로 전망</div>
+    <div class="article-title-en">Citi expects hawkish Fed to slow non-AI economy</div>
+    <div class="article-keypoint">Citi, 매파적 Fed가 AI 외 전통 경제 성장 둔화 유발 경고 — 섹터 이분화 가속</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/citi-expects-hawkish-fed-to-slow-nonai-economy-4908117" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 19:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">세계 경제 동향: Fed 금리 인상 단행 + 2026년 추가 인상 예고</div>
+    <div class="article-title-en">World Economy Latest: Fed Boosts Interest Rates, Signals Another 2026 Hike</div>
+    <div class="article-keypoint">Fed, 2023년 7월 이후 첫 금리인상 + 2026년 추가 인상 예고 — 긴축 경로 재가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-19/world-economy-latest-fed-boosts-interest-rates-signals-another-2026-hike" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 18:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">금리가 이렇게 높은 이유를 설명하는 10가지 방식</div>
+    <div class="article-title-en">10 Ways to Explain Why Interest Rates Are So High</div>
+    <div class="article-keypoint">고금리 원인 규명 불명확 — 정책 가시성 부재가 금리 민감 자산의 리스크 프리미엄 확대</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/09/19/business/dealbook/why-are-interest-rates-high.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Kevin Warsh, 과연 미국 경제의 질서를 회복할 수 있을까</div>
+    <div class="article-title-en">Kevin Warsh may be the adult in the room. But can he calm the US economy?</div>
+    <div class="article-keypoint">Warsh Fed, 인상 단행 후 만장일치 결정 — 신뢰성 확보했으나 Trump 반발로 독립성 시험</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/sep/19/kevin-warsh-interest-rate-hike" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 20:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">미중 정상회담 전야 — Bessent-He 회동과 관세·AI·에너지 협상 패키지</span>
+    <span class="theme-label-range">Article #5~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">미중 무역팀, 뉴욕서 관세·AI·이란 의제 협의 — 정상회담 사전 조율 본격화</div>
+    <div class="article-title-en">US, China trade teams set to huddle in New York on tariffs, AI and Iran</div>
+    <div class="article-keypoint">Bessent-He 뉴욕 회동, 관세·AI·이란 동시 의제 — Trump-Xi 정상회담 사전 조율 본격화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-china-trade-teams-set-to-huddle-in-new-york-on-tariffs-ai-and-iran" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 22:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Bessent 재무장관·중국 He 부총리, JPMorgan 본사서 일요일 회동</div>
+    <div class="article-title-en">US Treasury’s Bessent, China’s He to meet on Sunday at JPMorgan headquarters</div>
+    <div class="article-keypoint">Bessent-He, JPMorgan 본사서 일요일 회동 — 정상회담 의제 사전 조율의 핵심 분수령</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/us-treasurys-bessent-chinas-he-to-meet-on-sunday-at-jpmorgan-headquarters-4908112" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 18:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">AI 급부상으로 흔들리는 Trump 행정부 — Xi Jinping 방미 앞두고 AI 오류 군사 사고 발생</div>
+    <div class="article-title-en">Trump administration destabilized by AI surge ahead of Xi Jinping's visit</div>
+    <div class="article-keypoint">AI 오류로 미군 중국 선박 나포 직전 — AI 군사 적용의 치명적 리스크가 정상회담 변수로</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/09/19/trump-administration-destabilized-by-ai-surge-ahead-of-xi-jinping-s-visit_6757713_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 22:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Trump-Xi 대결: 미중 정상회담이 세계 경제에 드리운 그림자</div>
+    <div class="article-title-en">Trump-Xi Showdown: US-China Summit Casts Shadow Over World Economy</div>
+    <div class="article-keypoint">Trump-Xi 회담, 관세·기술 패권 동시 결판 — 세계 경제 방향성의 최대 단기 분기점</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-19/trump-xi-showdown-us-china-summit-casts-shadow-over-world-economy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 05:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 거버넌스 압박 가속 — 'AI Force' 창설·해킹 현실화·트릴리언달러 버블 논쟁</span>
+    <span class="theme-label-range">Article #9~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Google Gemini, 타사 시스템 해킹에 악용된 최신 AI 모델로 확인</div>
+    <div class="article-title-en">Google’s Gemini is the latest AI model to hack other companies</div>
+    <div class="article-keypoint">Gemini, 실제 타사 해킹에 활용 확인 — AI 모델 악용 리스크가 규제 압박으로 직결</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/19/googles-gemini-is-the-latest-ai-model-to-hack-other-companies/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 02:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Andreessen Horowitz 투자사 Vals AI, AI 벤치마킹 황금 표준 수립 도전</div>
+    <div class="article-title-en">Vals, backed by Andreessen Horowitz, is looking to become the gold standard for AI benchmarking</div>
+    <div class="article-keypoint">Vals AI, AI 벤치마킹 중립 표준 선점 시도 — 평가 공정성 논쟁이 투자 판단 변수로</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/19/vals-backed-by-andreessen-horowitz-is-looking-to-become-the-gold-standard-for-ai-benchmarking/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Trump, 업계 경고 이후 'AI Force' 창설 선언 — 연방 AI 감독 체계 도입</div>
+    <div class="article-title-en">Trump Announces an ‘AI Force’ After Industry Sounded Alarm</div>
+    <div class="article-keypoint">Trump, 'AI Force' 창설 선언 — 연방 AI 감독 체계 도입으로 빅테크 규제 리스크 상승</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/trump-announces-an-ai-force-after-industry-sounded-alarm-7c189b8f?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 06:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">총체적 AI 심리전 — Altman·Amodei와 EA 진영, '로그 AI' 공포로 수조 달러 버블 수호 중</div>
+    <div class="article-title-en">Total PsAI-Op: How Altman, Amodei, And The 'EA' Cult Are Milking "Rogue AI" Breakouts To Protect A Trillion-Dollar Bubble</div>
+    <div class="article-keypoint">Altman·Amodei의 AI 위험 경고, 버블 보호 내러티브라는 비판 확산 — 투자 신뢰성 균열</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/total-psai-op-how-altman-amodei-and-ea-cult-are-faking-rogue-ai-breakouts-protect-trillion" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">'정말 수상쩍다' — OpenAI 직원들의 저작권 도서 무단 사용 논의 내부 문건 공개</div>
+    <div class="article-title-en">‘Sketchy AF’: What to Know About How OpenAI Staff Discussed Book-Pirating</div>
+    <div class="article-keypoint">OpenAI 직원들의 도서 저작권 침해 내부 논의 공개 — AI 훈련 데이터 법적 리스크 재부각</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/sketchy-af-what-to-know-about-how-openai-staff-discussed-book-pirating-fdc788a1?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Nvidia CEO, 2030년 AI로 세계가 끝날 확률은 '0%'</div>
+    <div class="article-title-en">Nvidia CEO says there’s ‘0% chance’ that world will end in 2030</div>
+    <div class="article-keypoint">Jensen Huang, AI 종말론 '0% 확률' 반박 — AI 투자 내러티브 양극화 선명화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/nvidia-ceo-says-theres-0-chance-that-world-will-end-in-2030" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 16:46 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Berkshire 승계 완료 — 포스트 버핏 시대 자본배분 재편 가능성</span>
+    <span class="theme-label-range">Article #15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">버핏 아들 Howard, Berkshire 이사회 의장 취임 — 승계 절차 공식 완료</div>
+    <div class="article-title-en">Buffett Son Takes Chair as Berkshire Transition Ends</div>
+    <div class="article-keypoint">버핏 퇴진·Abel CEO 확정 — Berkshire 수십조 현금 운용 철학 변화 여부 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-19/buffett-son-takes-chair-as-berkshire-transition-ends-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 21:46 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">에너지·핵·원자재 — IAEA 원전 전망 상향과 그린란드 투자 전환</span>
+    <span class="theme-label-range">Article #16~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">SpaceX, Nasdaq 100 리밸런싱서 비중 2.82% 확정</div>
+    <div class="article-title-en">SpaceX’s Nasdaq 100 Weight Is Confirmed at 2.82% in Rebalance</div>
+    <div class="article-keypoint">SpaceX, Nasdaq 100 비중 1.28%→2.82% 확정 — 월요일 패시브 자금 유입 즉각 발생</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-19/spacex-s-nasdaq-100-weight-is-confirmed-at-2-82-in-rebalance" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 23:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">IAEA, 소형원자로 상용화에 힘입어 원전 발전 전망 세 배 상향</div>
+    <div class="article-title-en">IAEA Triples Nuclear Power Forecast as Small Reactors Finally Take Off</div>
+    <div class="article-keypoint">IAEA, SMR 본격화 배경으로 원전 장기 전망 재차 상향 — AI 전력 수요와 핵에너지 교차</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/IAEA-Triples-Nuclear-Power-Forecast-as-Small-Reactors-Finally-Take-Off.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">금 $155,000 시나리오</div>
+    <div class="article-title-en">Gold At $155,000 An Ounce</div>
+    <div class="article-keypoint">Bessent의 금 재평가로 $155,000 시나리오 부상 — 달러 신뢰성 논쟁의 극단적 표현</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/gold-155000-ounce" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 01:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">덴마크, Trump와의 '구속력 있는' 그린란드 협정 타결 환영</div>
+    <div class="article-title-en">Denmark hails ‘binding’ Greenland deal with Trump</div>
+    <div class="article-keypoint">미·덴마크·그린란드 '구속력 있는' 협정 — 의제가 군사에서 광물 투자 경쟁으로 전환</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/denmark-hails-binding-greenland-deal-with-trump" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 22:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">미국-그린란드 협정, 군사에서 투자로 초점 이동</div>
+    <div class="article-title-en">US Greenland Deal Shifts Focus to Investment</div>
+    <div class="article-keypoint">그린란드 협정, 군사→광업·인프라 투자 전환 — 희토류 공급망 경쟁의 새 전선 형성</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-19/us-greenland-deal-shifts-focus-to-investment-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 22:29 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #21~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Ed Davey, Lib Dem 전당대회 개막 연설서 Reform당과 Elon Musk 동시 겨냥</div>
+    <div class="article-title-en">Ed Davey takes aim at Reform and Elon Musk as Lib Dem conference begins</div>
+    <div class="article-keypoint">Davey, Farage·Musk 동시 겨냥 — 英 포퓰리즘 대응 정치 구도 선명화</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/sep/19/ed-davey-takes-aim-at-reform-and-elon-musk-as-lib-dem-conference-begins" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 06:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">항소법원, 연방 권총 주간 거래 금지 조항 위헌 판결</div>
+    <div class="article-title-en">Appeals Court Rules Federal Ban On Interstate Handgun Sales Unconstitutional</div>
+    <div class="article-keypoint">5th Circuit, 연방 권총 주간 거래 금지 위헌 판결 — Fed와 무관한 연방 규제 후퇴 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/appeals-court-rules-federal-ban-interstate-handgun-sales-unconstitutional" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">집을 사지 않으면 어떻게 되나 — 임차인이 얻는 것과 잃는 것</div>
+    <div class="article-title-en">What happens if you never buy a house? What renters are gaining — and giving up.</div>
+    <div class="article-keypoint">주택 비구매 트렌드 확산 — 고금리·고가 환경에서 밀레니얼 자산 형성 패러다임 변화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/what-happens-if-you-never-buy-a-house-what-renters-are-gaining-and-giving-up-45b69dcb?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 01:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Weil Gotshal & Manges, 핵심 인력 이탈 후 합병 옵션 검토 중 — Bloomberg 보도</div>
+    <div class="article-title-en">Weil, Gotshal & Manges eyes merger options after rainmakers exit, Bloomberg News reports</div>
+    <div class="article-keypoint">Weil Gotshal, 로펌 합병 검토 — 법률시장 재편 가속의 배경 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/weil-gotshal--manges-eyes-merger-options-after-rainmakers-exit-bloomberg-news-reports-4908114" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 19:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Bitcoin, $82,178 저항선 테스트 — RSI 과매수 구간: 실시간 레벨</div>
+    <div class="article-title-en">Bitcoin tests $82,178 resistance with RSI overbought: Live levels</div>
+    <div class="article-keypoint">Bitcoin $82,178 저항선 테스트 + RSI 과매수 — 암호화폐 단기 조정 압력 경계</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-trapped-in-76k81k-rectangle-live-breakout-levels-93CH-4898873" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 19:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Macron 대통령, Leo XIV 교황 파리 방문 앞두고 교황청과 불편한 관계</div>
+    <div class="article-title-en">Macron, the 'pope-loving' president, faces strained relations with Vatican ahead of Leo XIV's Paris visit</div>
+    <div class="article-keypoint">Macron-교황청 관계 긴장 — Leo XIV 파리 방문 앞두고 외교적 민감성 고조</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/france/article/2026/09/19/macron-the-pope-loving-president-faces-strained-relations-with-the-vatican-ahead-of-leo-xiv-s-visit-to-paris_6757702_7.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/19 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Flock, 직원 자발 퇴직 패키지로 인력 감축 시도 중 — 보도</div>
+    <div class="article-title-en">Flock reportedly tries to shrink workforce with employee buyouts</div>
+    <div class="article-keypoint">Flock, 직원 자발 퇴직 유도 — 스타트업 구조조정 압박이 AI 분야로 확산</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/19/flock-reportedly-tries-to-shrink-workforce-with-employee-buyouts/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 05:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">백악관, Trump 취재 금지 지시 후 CNN·MSNBC·Politico 기자 출입 차단 실행</div>
+    <div class="article-title-en">White House turns away CNN, MS NOW, Politico reporters after Trump's ban</div>
+    <div class="article-keypoint">CNN·Politico 기자 백악관 출입 차단 실행 — 언론 자유 침해 우려의 현실화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/white-house-turns-away-cnn-ms-now-politico-reporters-after-trump-announces-ban" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 01:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">George Osborne, Peter Thiel의 바이외 태피스트리 비공개 관람이 알려질 줄 몰랐다고 밝혀</div>
+    <div class="article-title-en">George Osborne ‘thought Peter Thiel’s Bayeux tapestry visit would be secret’</div>
+    <div class="article-keypoint">Osborne, Thiel 바이외 태피스트리 비공개 관람 주선 — 빅테크·정관계 유착 논란 재점화</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/sep/19/george-osborne-peter-thiel-bayeux-tapestry-visit" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 00:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Macron, 캐나다 인근 프랑스령 방문 — Carney 총리와 회담 예정</div>
+    <div class="article-title-en">Macron makes rare visit to French territory off Canada, where he will host Carney</div>
+    <div class="article-keypoint">Macron, 생피에르미클롱서 Carney 회담 — EU-캐나다 접근 강화 속 미국 견제 구도</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/france/article/2026/09/19/macron-makes-rare-visit-to-french-territory-off-canada-where-he-will-host-carney_6757719_7.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/20 01:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
