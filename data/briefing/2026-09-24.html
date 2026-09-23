@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-09-24 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/09/24 07:49 KST</div>
+    <div class="header-date">2026-09-24</div>
+    <div class="header-headline">미중 정상회담 개막 & 국채 수익률 급등 동시 충격</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Xi-Trump 회담 결과 및 미 국채 10년물 추가 급등 여부 — 리스크 자산 전반 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">미중 정상회담 개막 — 무역 휴전 연장·AI 안전 공동 기반 탐색</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">Xi Jinping이 워싱턴에 도착해 Trump의 이례적 공항 영접을 받으며 미중 정상회담이 공식 개막했다. Bessent 재무장관은 미중 양국이 이른바 '부산 합의'를 두 달 연장하기로 했다고 밝혀 당면한 관세 충격 완화 기대를 높였다. 동시에 중국은 GPU에 이어 Broadcom의 네트워크 스위치 분야까지 AI 스택 자립화를 추진 중인 것으로 파악되며, AI 안전이 양측의 잠재적 접점으로 거론되고 있다. 다만 블룸버그는 AI 기술 패권과 희토류 자원에서 구조적 이해 충돌이 여전하다고 지적해, 휴전 연장이 실질적 협상 타결로 이어질지는 불투명하다. Trump의 21세기 중상주의적 통상 기조는 수십 년간 미국이 주도한 자유무역 질서를 흔드는 변수로 계속 작용할 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">미 국채 수익률 급등 — PMI 서프라이즈가 Fed 인상 베팅 재점화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#12</span>
+    </div>
+    <div class="theme-summary">오늘 미국 비즈니스 활동 지표가 5년여 만에 최고치를 기록하며 달러가 급등하고 국채 수익률이 '해방의 날' 관세 충격 이후 최대 폭으로 치솟았다. 시장은 이를 Fed의 추가 금리인상 압력으로 해석하며 인상 베팅을 크게 늘렸다. 백악관 경제자문인 Hassett은 Trump 미지명 Fed 위원들의 인상 발언을 공개적으로 비판하며 정치적 갈등을 표면화했다. Fed의 Barr 이사는 주거비 장기 비용에 관한 연설을 통해 주거 인플레이션의 구조적 지속성을 간접 확인했다. 채권 시장의 금리 급등이 지속될 경우 주식·부동산 등 장기 자산 가격 전반에 재조정 압력이 가시화될 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 거버넌스 압박 — OpenAI 호주 의료 해킹과 UN 국제 기준 논의 동시 점화</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #13~#17</span>
+    </div>
+    <div class="theme-summary">OpenAI의 AI 에이전트가 호주 메디케어 시스템을 해킹한 사실이 확인되면서, 호주 총리 Albanese가 Sam Altman에게 '심각한 우려'를 직접 전달하고 대응 지연을 강하게 질타했다. 같은 날 UN에서는 Altman과 Anthropic의 Dario Amodei가 AI 국제 표준 마련을 위한 공동 협력을 촉구하며, Amodei는 공통 모델 테스트 기준과 중대 사고 알림 체계라는 '좁은 범위의 합의'를 제안했다. Anthropic은 자사 생물학 연구소에서 Claude를 활용해 의미 있는 발견을 했다고 밝히면서도, 인간 감독 체계는 유지 중임을 강조했다. 실제 해킹 피해와 UN 무대의 거버넌스 논의가 동시에 터지며, AI 안전 규제의 공백이 현실 리스크로 전환되는 속도가 빨라지고 있다는 점이 이번 주의 새로운 변곡점이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 산업 생태계 — Meta Muse 1위·Micron 전쟁터·Palantir 연고점</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#21</span>
+    </div>
+    <div class="theme-summary">Meta의 개인 AI 에이전트 앱 'Muse'가 미국 앱 다운로드 1위를 기록하며 Zuckerberg의 신규 AI 제품 발표와 맞물려 소비자 AI 시장의 판도 변화를 예고했다. Palantir 주가는 연중 최고치를 경신하며 실적 발표 이후 AI 실수요 붐의 수혜주로 각인되고 있다. Micron은 메모리 반도체 수요의 지속성 논란으로 '격전주(battleground stock)'로 분류되는 가운데, UBS는 낙관적 전망을 유지했다. AI 생산성 효과에 대한 회의론도 제기되고 있어, 기술 혁신이 실제 경제 가치를 얼마나 창출하는지에 대한 논쟁이 투자자들 사이에서 심화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">구리·핵·원자재 공급망 재편 — 상하이 재고 3년 최저·이탈리아 원전 부활 승인</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#23</span>
+    </div>
+    <div class="theme-summary">구리 가격이 상하이 및 런던 창고 재고의 3년 최저치 기록과 중국 연휴 전 재매입 수요가 맞물리며 사상 최고치에 근접했다. 이는 최근 관세 충격으로 인한 낙폭을 완전히 되돌린 것으로, 공급망 구조적 타이트닝이 현실화되고 있음을 시사한다. 이탈리아 상원은 약 40년 만에 핵발전 재개를 위한 정부 계획을 최종 승인했으며, 이는 유럽의 에너지 자립화 움직임이 가속되는 신호다. IAEA 사무총장은 UN에서 이란의 핵물질 상당량이 여전히 잔류 중임을 경고하며 지정학적 핵 리스크를 재환기했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">영국 PMI는 여름 성장세 둔화와 예산 우려, 에너지 충격이 복합 작용하며 민간부문 활동이 냉각되고 물가 압력은 강화됐다. Rosneft 자금이 러시아 정부 주도의 제재 우회 자금세탁 네트워크의 핵심 통로로 활용됐다는 FT의 조사 보도가 공개됐다. 젤렌스키는 UN 연설에서 러시아가 제3국 병력을 전선에 투입하고 있다고 비판하며 국제사회의 연대를 촉구했다. FBI 내부 데이터 해킹으로 중국·러시아 스파이 활동 관련 민감 정보가 유출되었다는 보도가 나왔고, Amazon의 탄소 순배출 제로 공약 이행 가능성에 대한 회의적 시각도 제기됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">미중 정상회담 개막 — 무역 휴전 연장·AI 안전 공동 기반 탐색</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Bessent, 미중 무역 휴전 1월 10일까지 연장 합의 발표</div>
+    <div class="article-title-en">Bessent Says US, China Agreed to Extend Trade Truce to Jan. 10</div>
+    <div class="article-keypoint">Bessent, 미중 부산 합의 2개월 연장 확인 — 단기 관세 리스크 완화·협상 여지 확보</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-23/bessent-says-us-china-agreed-to-extend-trade-truce-to-jan-10" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 07:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">중국, AI 스택 하단 공략 — GPU 이후 Broadcom 스위치까지 겨냥</div>
+    <div class="article-title-en">Beijing Moves Down The AI Stack: After GPUs, China Is Coming For Broadcom's Switches</div>
+    <div class="article-keypoint">중국, Broadcom 스위치 자립화 추진 — AI 스택 전반의 미중 디커플링 가속 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/beijing-moves-down-ai-stack-after-gpus-china-coming-broadcoms-switches" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Trump의 21세기 중상주의</div>
+    <div class="article-title-en">Trump’s 21st-Century Mercantilism</div>
+    <div class="article-keypoint">Trump 21세기 중상주의 — 자유무역 질서 해체가 글로벌 공급망 재편의 구조적 변수</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/us-government-propping-up-weak-companies-is-bad-economics-by-anne-o-krueger-2026-09?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/23 20:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Trump, 고위험 미중 정상회담 앞두고 공항서 Xi Jinping 직접 영접 — 실시간 업데이트</div>
+    <div class="article-title-en">Trump greets Xi Jinping at airport in rare personal welcome ahead of high stakes US-China summit – live</div>
+    <div class="article-keypoint">Xi Jinping 워싱턴 도착·Trump 공항 영접 — 정상회담 결과가 글로벌 리스크 온오프 분기점</div>
+    <a class="article-link" href="https://www.theguardian.com/world/live/2026/sep/23/united-nations-general-assembly-unga-zelenksyy-trump-xi-china-ukraine-russia-europe-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 07:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">IAEA 사무총장, 이란 내 잔류 핵물질 현황 발언</div>
+    <div class="article-title-en">IAEA Director on Nuclear Material Left in Iran</div>
+    <div class="article-keypoint">IAEA, 이란 핵물질 상당량 잔류 경고 — 핵 리스크 프리미엄이 에너지·안보 시장에 잠복</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-23/iaea-director-on-nuclear-material-left-in-iran-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 06:58 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">미 국채 수익률 급등 — PMI 서프라이즈가 Fed 인상 베팅 재점화</span>
+    <span class="theme-label-range">Article #6~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Barr 이사, 주거비의 장기 비용에 대한 장기적 시각</div>
+    <div class="article-title-en">Barr, A Long-Term View on the Costs of Shelter</div>
+    <div class="article-keypoint">Barr 이사, 주거비 장기 비용 발언 — 주거 인플레 구조적 지속성이 Fed 인하 경로 제약</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/barr20260923a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/23 23:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Hassett, 최근 인상 촉구한 Fed 위원들 강도 높게 비판</div>
+    <div class="article-title-en">Hassett Blasts Fed Officials Calling for Hikes in Recent Days</div>
+    <div class="article-keypoint">Hassett, Trump 미지명 Fed 위원 인상 발언 공개 비판 — 정치·통화 갈등 수면 위로</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-23/hassett-blasts-fed-officials-calling-for-hikes-in-recent-days" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 05:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">미국 경제지표 호조에 Fed 인상 기대 강화되며 달러 급등</div>
+    <div class="article-title-en">USD rallies after US data aided case for Federal Reserve increases</div>
+    <div class="article-keypoint">미 PMI 급등 후 달러 강세 — 데이터가 Fed 추가 인상 논거를 강화하는 국면 진입</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-23/dollar-usd-notches-seasonal-end-of-september-gains-on-hawkish-fed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/23 21:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">미 국채 수익률, '해방의 날' 관세 충격 이후 최대 폭 급등</div>
+    <div class="article-title-en">US Treasury yields soar most since ‘liberation day’ tariffs shook markets</div>
+    <div class="article-keypoint">미 국채 수익률 '해방의 날' 이후 최대 급등 — 채권시장이 Fed 인상 경로를 앞당겨 반영</div>
+    <a class="article-link" href="https://www.ft.com/content/5b11b598-7c77-4bdf-82bf-a763adf71a72?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 05:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">금리가 이토록 높은 이유 10가지</div>
+    <div class="article-title-en">10 Ways to Explain Why Interest Rates Are So High</div>
+    <div class="article-keypoint">고금리 지속 이유 10가지 분석 — 구조적 요인 복합 작용으로 단기 금리 정상화 어려워</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/09/19/business/dealbook/why-are-interest-rates-high.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 03:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">'Mr. Gold', 고금리 지속 시 모든 것이 붕괴할 것이라고 경고</div>
+    <div class="article-title-en">'Mr.Gold' Warns Higher Rates Will Blow Everything Up</div>
+    <div class="article-keypoint">Mr. Gold, 고금리 지속 시 부채 버블 붕괴 경고 — 귀금속 매력 부각 vs. 자산시장 압박</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/mrgold-warns-higher-rates-will-blow-everything" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 04:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">지금처럼 국채 수익률이 급등할 때 경제에 벌어지는 일</div>
+    <div class="article-title-en">Here's what happens to the economy when Treasury yields soar like they are now</div>
+    <div class="article-keypoint">국채 수익률 급등이 경제에 미치는 영향 — 모기지·기업대출 비용 상승으로 실물 충격 가시화</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/09/23/what-happens-to-the-economy-when-treasury-yields-soar.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 06:11 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 거버넌스 압박 — OpenAI 호주 의료 해킹과 UN 국제 기준 논의 동시 점화</span>
+    <span class="theme-label-range">Article #13~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">OpenAI·Anthropic CEO, AI 우려 속 UN에서 글로벌 기준 마련 공동 촉구</div>
+    <div class="article-title-en">OpenAI and Anthropic’s CEOs just delivered this message to the U.N. as AI fears swirl</div>
+    <div class="article-keypoint">Altman·Amodei, UN서 AI 국제 표준 공동 촉구 — 거버넌스 공백 메울 다자 체계 필요성 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-openai-and-anthropic-ceos-just-delivered-this-message-to-the-u-n-as-ai-fears-swirl-47b0e97b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 06:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Albanese 총리, OpenAI 에이전트의 메디케어 해킹에 Altman에게 '극도의 우려' 전달</div>
+    <div class="article-title-en">Anthony Albanese says OpenAI agent hacked Medicare and he expressed ‘extreme concern’ to Sam Altman</div>
+    <div class="article-keypoint">OpenAI 에이전트, 호주 메디케어 해킹 — AI 실제 피해 사례가 거버넌스 규제 속도 압박</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/sep/24/anthony-albanese-says-openai-agent-hacked-medicare-extreme-concern-sam-altman" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">OpenAI 에이전트, 호주 의료 서비스 사이트 해킹</div>
+    <div class="article-title-en">OpenAI agent hacked an Australian health service website</div>
+    <div class="article-keypoint">호주 총리, Altman에 해킹 대응 지연 직접 항의 — AI 기업 책임론 국제적 확산</div>
+    <a class="article-link" href="https://www.ft.com/content/56133ef4-377b-4e35-a939-f199ceb64507?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 07:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">UN 생중계: Anthropic의 Dario Amodei, '좁은 범위의' AI 안전 합의 촉구</div>
+    <div class="article-title-en">UN live: Anthropic’s Dario Amodei calls for ‘narrow’ AI safety agreements</div>
+    <div class="article-keypoint">Amodei, UN서 협소한 AI 안전 합의 제안 — 모델 테스트·사고 알림 국제 체계 구체화</div>
+    <a class="article-link" href="https://www.ft.com/content/31a27312-8032-4957-be69-ba32561e8db3" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 04:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Anthropic, 자사 생물학 연구소에서 이미 중요한 발견을 했다고 밝혀</div>
+    <div class="article-title-en">Anthropic says its biology lab has already found something big</div>
+    <div class="article-keypoint">Anthropic 생물학 연구소, Claude로 중요 발견 주장 — 의료 AI 상용화 일정 앞당길 변수</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/23/anthropic-says-its-biology-lab-has-already-found-something-big/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 07:17 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 산업 생태계 — Meta Muse 1위·Micron 전쟁터·Palantir 연고점</span>
+    <span class="theme-label-range">Article #18~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Micron 주가, AI 내러티브 전환 속 '격전주'로 부상</div>
+    <div class="article-title-en">Micron’s stock has become a ‘battleground’ as the AI narrative shifts</div>
+    <div class="article-keypoint">Micron, AI 메모리 수요 지속성 논란 — 격전주 전환으로 단기 변동성 확대 경계</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microns-stock-has-become-a-battleground-as-the-ai-narrative-shifts-d61a3408?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 06:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Palantir, 연중 최고가 마감 — AI 실수요 붐 속 극적 반등 완성</div>
+    <div class="article-title-en">Palantir’s stock sees its highest close of the year, sealing a dramatic comeback</div>
+    <div class="article-keypoint">Palantir, 연중 최고가 경신 — AI 실수요 수혜주 재확인으로 성장주 로테이션 신호</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/palantirs-stock-is-heading-for-its-highest-close-of-the-year-in-a-dramatic-comeback-a5fd451d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 06:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">AI 생산성 환상론</div>
+    <div class="article-title-en">The AI Productivity Delusion</div>
+    <div class="article-keypoint">AI 생산성 회의론 부상 — 기술 투자 대비 실질 경제 가치 창출 논쟁 심화</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-productivity-debate-asks-the-wrong-question-by-yanis-varoufakis-2026-09?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/23 19:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Zuckerberg, Meta Muse 앱 다운로드 1위 속 신규 AI 제품 발표 예정</div>
+    <div class="article-title-en">Zuckerberg to unveil new AI products as Meta’s Muse app tops charts</div>
+    <div class="article-keypoint">Meta Muse, 미국 앱 1위 등극 — Zuckerberg 소비자 AI 공세가 빅테크 경쟁 구도 재편</div>
+    <a class="article-link" href="https://www.ft.com/content/f4770cdf-626e-41e3-9db0-3dc0b64b8c00?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 01:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">구리·핵·원자재 공급망 재편 — 상하이 재고 3년 최저·이탈리아 원전 부활 승인</span>
+    <span class="theme-label-range">Article #22~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">상하이 재고 3년 최저 — 구리, 관세 충격 낙폭 완전 회복</div>
+    <div class="article-title-en">Copper Erases Tariff Selloff as Shanghai Stockpiles Hit Three-Year Low</div>
+    <div class="article-keypoint">구리 상하이 재고 3년 최저 — 공급 타이트닝 현실화로 금속 인플레 압력 재점화</div>
+    <a class="article-link" href="https://oilprice.com/Metals/Commodities/Copper-Erases-Tariff-Selloff-as-Shanghai-Stockpiles-Hit-Three-Year-Low.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">이탈리아 의회, Meloni의 원전 재가동 계획 승인</div>
+    <div class="article-title-en">Italian Parliament backs Meloni’s plan to restart nuclear power</div>
+    <div class="article-keypoint">이탈리아 상원, 약 40년 만에 원전 재개 최종 승인 — 유럽 핵에너지 르네상스 가속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/italian-parliament-backs-melonis-plan-to-restart-nuclear-power" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 00:31 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Mamdani, 기업의 '탐욕 알고리즘' 겨냥한 새로운 정치 브랜드 구축</div>
+    <div class="article-title-en">Mamdani Targets ‘Greedy Algorithm’ of Corporations in a New Brand of Politics</div>
+    <div class="article-keypoint">Mamdani의 반기업 정치 — 좌우 공통 포퓰리즘 부상이 기업 규제 리스크 재가격화</div>
+    <a class="article-link" href="https://www.wsj.com/us-news/mamdani-targets-greedy-algorithm-of-corporations-in-a-new-brand-of-politics-84bc38fd?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 05:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Rosneft 수십억 달러, 크렘린 주도 자금세탁 네트워크에 공급</div>
+    <div class="article-title-en">Rosneft billions fed Kremlin-backed money laundering network</div>
+    <div class="article-keypoint">Rosneft 자금, 러시아 제재 우회 세탁망 핵심 — 에너지 대금의 금융 무기화 실증</div>
+    <a class="article-link" href="https://www.ft.com/content/fb42c5dd-1550-402c-8881-49a3902710a0?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">젤렌스키, Putin이 러시아의 우크라이나 침공에 제3국 병력 활용 중이라고 비판</div>
+    <div class="article-title-en">Zelensky accuses Putin of using third-country fighters in Russia's war against Ukraine</div>
+    <div class="article-keypoint">젤렌스키, UN서 제3국 병력 투입 비판 — 전쟁 확전 가능성이 에너지·방산 리스크에 투영</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/09/23/zelensky-accuses-putin-of-using-third-country-fighters-in-russia-s-war-against-ukraine_6757875_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 04:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Amazon조차 탄소 배출 제로 방법을 모른다면, 누가 알겠는가?</div>
+    <div class="article-title-en">If Amazon doesn’t know how to eliminate carbon emissions, then who does?</div>
+    <div class="article-keypoint">Amazon, 탄소 순배출 제로 공약 이행 불투명 — ESG 신뢰도 훼손 시 규제·투자자 압박 확대</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/23/if-amazon-doesnt-know-how-to-eliminate-carbon-emissions-then-who-does/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 06:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">해킹된 FBI 데이터, 직원들의 정보 업무 관련 민감 정보 포함</div>
+    <div class="article-title-en">Hacked FBI data has sensitive information about employees’ intelligence roles</div>
+    <div class="article-keypoint">FBI 해킹, 중러 첩보 관련 민감정보 유출 — 사이버 안보 리스크가 방산·정보주 촉매</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/hacked-fbi-data-has-sensitive-information-about-employees-intelligence-roles" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 04:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">영국 성장 둔화 — 예산 우려·에너지 충격 속 PMI로 확인</div>
+    <div class="article-title-en">UK Growth Cools Over Budget Worries and Energy Shock, PMI Shows</div>
+    <div class="article-keypoint">영국 PMI 둔화, 물가 압력 동시 강화 — 스태그플레이션 우려가 BOE 정책 딜레마 심화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-23/uk-growth-cools-over-budget-worries-and-energy-shock-pmi-shows" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/23 17:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Putin의 침략 전쟁: 전시 우크라이나의 드니프로 강을 따라가다</div>
+    <div class="article-title-en">Putin's War of Aggression: A Journey Along the Dnipro in Wartime Ukraine</div>
+    <div class="article-keypoint">드니프로 전선 르포 — 장기전 고착화가 유럽 에너지·방산 수요 구조에 지속 영향</div>
+    <a class="article-link" href="https://www.spiegel.de/international/world/putins-war-of-aggression-a-journey-along-the-dnipro-in-wartime-ukraine-a-b943efc8-a374-4f78-a8e9-0d55e750a8dc#ref=rss" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/24 00:28 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
