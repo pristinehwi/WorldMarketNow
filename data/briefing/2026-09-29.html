@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-09-29 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/09/29 07:50 KST</div>
+    <div class="header-date">2026-09-29</div>
+    <div class="header-headline">미중 관세 대폭 인하 합의 — 무역 휴전 공식화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">미중 관세 인하 이행 범위·소외 품목(대두 등) 및 이란 리스크가 유가·달러에 미칠 24시간 내 반응 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">미중 관세 인하 합의와 지정학 리스크의 동시 압박</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">오늘 최대 신규 변수는 미국과 중국이 600억 달러 규모 상품에 대한 관세를 대폭 인하하기로 합의한 것으로, 무역 휴전이 사실상 공식화되었다. 그러나 대두 등 핵심 농산물이 합의에서 제외되어 실질적 시장 영향은 제한적일 수 있다는 평가가 나온다. 동시에 트럼프 대통령은 이란과의 협상이 사실상 단절된 상황에서 '어떤 방식으로든 이길 것'이라고 강조하며 호르무즈 해협 리스크를 고조시키고 있다. Bessent 재무장관은 연준에 완화적 기조를 촉구했으나, 이란발 유가 상승 압력이 스태그플레이션 시나리오를 강화하는 모순적 구도가 형성되고 있다. Hassett NEC 국장은 대외 변수가 3% 성장 목표를 위협할 수 있다고 시인하며 성장 전망에 균열이 생겼음을 인정했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 하드웨어·칩 생태계 재편 — AMD의 World Labs 인수와 Nvidia 대규모 자사주 매입</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#12</span>
+    </div>
+    <div class="theme-summary">오늘 AI 하드웨어 전선에서 가장 두드러진 변화는 AMD가 Fei-Fei Li가 창업한 World Labs를 82억 달러에 인수하며 물리적 AI·로보틱스 분야로 전략 축을 이동한 것이다. AMD는 이번 딜로 칩 설계 역량에 AI 소프트웨어·시스템 통합 능력을 결합해 Nvidia와의 격차 축소를 노린다. Nvidia는 역대 최대 규모인 1,500억 달러 자사주 매입 계획을 발표하며 장기 성장 자신감을 시장에 강하게 피력했고, 에이전트형 AI의 오작동 문제에 대응한 새로운 플랫폼도 함께 선보였다. 엣지 컴퓨팅 스타트업 SiMa AI는 Fidelity 주도로 시리즈 C 1억 5,000만 달러를 유치하며 기업가치 14억 5,000만 달러를 인정받아 물리적 AI 칩 시장의 자금 유입이 가속화되고 있음을 보여준다. SpaceX는 데이터센터 컴퓨팅 파워를 경쟁사에 임대하는 방식으로 AI 인프라 수익원 다각화에 나설 것으로 분석되며, 로켓 이외의 성장 동력으로 주목받는다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 거버넌스·안전 위기 — OpenAI GPT-6.1 Astra 출시 전격 철회와 생태계 신뢰 균열</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #13~#18</span>
+    </div>
+    <div class="theme-summary">OpenAI가 10월 ChatGPT·Codex 탑재 예정이던 GPT-6.1 Astra 모델을 내부 안전성 테스트 결과를 이유로 출시 직전 전격 취소한 것이 오늘 AI 거버넌스 논의의 핵심으로 부상했다. 이는 단순한 일정 지연이 아니라 프런티어 모델의 안전성 기준과 출시 속도 간 구조적 긴장을 공개적으로 드러낸 사건으로, 규제 당국과 기업 신뢰에 동시 파장을 미친다. Fed 총재 Cook은 AI가 경제 생산성에 미치는 영향을 업데이트하는 연설을 했고, ECB 라가르드 총재는 유럽의회 청문회에서 2026년 기업 투자의 10%, 기업 신용 증가의 약 25%가 AI 관련임을 밝히며 AI가 금융시스템 깊숙이 침투했음을 공식 확인했다. Anthropic은 TechCrunch Disrupt 2026에서 기업 실제 배포 경험을 공유하며 엔터프라이즈 AI 시장 확대를 가속화하는 한편, 모델 훈련 방식 자체의 왜곡 문제(Distorted Intelligence)가 프런티어 랩의 근본 리스크로 재조명되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Meta의 엔터프라이즈 AI 플랫폼 공세 — MongoDB CEO 영입과 기업 고객 수익화 가속</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #19~#21</span>
+    </div>
+    <div class="theme-summary">오늘 Meta는 MongoDB CEO CJ Desai를 영입해 개발자 대상 엔터프라이즈 플랫폼 사업부를 신설한다고 발표했으며, 이로 인해 MongoDB 주가는 장중 약 18~20% 급락했다. 이는 Meta가 수천억 달러 규모의 AI 투자를 실제 기업 매출로 전환하려는 본격적인 수익화 전략의 신호탄으로 해석된다. Meta는 Llama 기반 AI 도구와 서비스를 기업 고객에게 판매하는 구조로 빅테크 AI 생태계 경쟁의 전선이 소비자에서 B2B로 이동하고 있음을 명확히 보여준다. CEO 이탈로 인한 MongoDB의 경영 공백 우려와 함께 Meta의 엔터프라이즈 진입이 Salesforce, ServiceNow 등 기존 SaaS 플레이어에 대한 경쟁 압력으로 작용할 가능성이 높다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Fed·통화정책 구조 점검 — Bessent의 완화 압박과 스테이블코인·유동성 리스크</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#24</span>
+    </div>
+    <div class="theme-summary">Bessent 재무장관이 공개적으로 연준에 금리 인하를 촉구하는 이례적 행보를 보인 가운데, 이란발 유가 급등과 스태그플레이션 압력이 연준의 정책 공간을 심각하게 좁히고 있다. Fed 내부 감사에서는 퇴직 직원이 기밀 정보를 유출했을 가능성이 제기되며 제도적 신뢰에도 균열이 가고 있다. 스테이블코인 전선에서는 상원 민주당 보고서가 Tether USDT가 이란과 헤즈볼라 자금 조달의 '핵심 생명줄'로 활용되고 있다고 밝혀, GENIUS Act 규제 프레임워크 논의와 맞물려 디지털 결제 인프라 통제 압박이 강화될 전망이다. Bitcoin 장기 보유 행태에 관한 개인 투자자 담론도 암호화산 시장의 구조적 수요 기반을 재확인시킨다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #25~#30</span>
+    </div>
+    <div class="theme-summary">구리 수요 급증이 호주 광산주 랠리의 새로운 동력으로 부상하고 있으며, AI 인프라 및 전력망 투자 확대가 구조적 수요를 뒷받침하는 것으로 분석된다. CTA 롱 포지션 과집중이 유가 상승폭을 제한하는 기술적 저항으로 작용 중이다. 이탈리아 멜로니 총리 연립정부는 칼라브리아 보궐선거에서 신흥 극우 경쟁자를 물리치며 내년 총선 전 정치적 입지를 굳혔다. Tesla는 기상 악화로 Roadster 2 공개 행사를 재차 연기하며 SpaceX 추진기를 활용한 비행 시연에 대한 시장의 관심이 지속되고 있다. Golden Gate Capital이 소유한 보험사 PHL Variable Insurance Co.가 22억 달러 자본 부족으로 청산 위기에 처해 보험계약자 소송이 제기되었다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">미중 관세 인하 합의와 지정학 리스크의 동시 압박</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Bessent, 연준에 금리 인하 간청</div>
+    <div class="article-title-en">Bessent Begs Fed For Mercy</div>
+    <div class="article-keypoint">Bessent, 연준에 공개 완화 압박 — 이란발 유가 급등과 스태그플레이션 속 Fed 딜레마 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/bessent-begs-fed-mercy-hormuz-stand-sends-oil-soaring-and-10-year-yield-nearly-20-year" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 00:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Hassett, '외부' 요인이 재정적자 감소·GDP 성장 목표를 위협할 수 있다고 시사</div>
+    <div class="article-title-en">Hassett Signals ‘Outside’ Factors May Hit Deficit, GDP Goals</div>
+    <div class="article-keypoint">Hassett, 외부 변수로 3% 성장 목표 달성 불확실 시인 — 미국 경제 성장 전망 균열 가시화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-28/hassett-says-outside-factors-could-upset-growth-deficit-goals" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 02:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">미국과 중국, 관세 대폭 인하 합의</div>
+    <div class="article-title-en">The U.S. and China Agree to Slash Tariffs</div>
+    <div class="article-keypoint">미중, 600억 달러 규모 관세 대폭 인하 합의 — 무역 휴전 공식화, 단 대두 제외로 실효성 논란</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/09/28/us-china-tariffs-soybeans-trade-war-truce-taiwan-selling-weapons/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 05:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">트럼프, '어떻게든 이란과의 전쟁에서 이길 것' 주장 반복 — 협상 불투명 속 강경 발언 지속</div>
+    <div class="article-title-en">Trump doubles down on claims US will win war with Iran ‘one way or another’ as talks are in doubt – US politics live</div>
+    <div class="article-keypoint">트럼프, 이란과 협상 사실상 단절 속 '어떻게든 이긴다' 강경 발언 — 유가 리스크 프리미엄 확대</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/sep/28/donald-trump-iran-negotiations-fuel-deportations-media-china-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 07:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Standard Chartered: CTA의 기록적인 원유 롱 베팅이 유가 상승폭을 제한</div>
+    <div class="article-title-en">Standard Chartered: Record CTA Long Bets Are Capping Oil's Upside</div>
+    <div class="article-keypoint">CTA 극단적 원유 롱 포지션 집중, 유가 추가 상승 기술적 제한 — 이란 리스크 대비 상승 여력 축소</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Oil-Prices/Standard-Chartered-Record-CTA-Long-Bets-Are-Capping-Oils-Upside.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 하드웨어·칩 생태계 재편 — AMD의 World Labs 인수와 Nvidia 대규모 자사주 매입</span>
+    <span class="theme-label-range">Article #6~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">SpaceX의 차세대 성장 동력은 로켓이 아닌 AI 컴퓨팅 임대, 애널리스트들 주목</div>
+    <div class="article-title-en">SpaceX’s next big growth engine isn’t rockets — it’s this play on AI power, analysts say</div>
+    <div class="article-keypoint">SpaceX, 경쟁사에 데이터센터 컴퓨팅 임대로 AI 인프라 수익원 다각화 추진 가시화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacexs-next-big-growth-engine-isnt-rockets-its-this-play-on-ai-power-analysts-say-11963aeb?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 07:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">AMD, World Labs 인수로 차세대 AI 시대에 대규모 베팅</div>
+    <div class="article-title-en">AMD makes a big bet on the next era of AI with World Labs acquisition</div>
+    <div class="article-keypoint">AMD, World Labs 82억 달러 인수·Fei-Fei Li 수석과학자 영입 — 물리적 AI·로보틱스로 전략 확장</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/amd-makes-a-big-bet-on-the-next-era-of-ai-7f8a3b3c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 06:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Nvidia, 역사적인 1,500억 달러 자사주 매입 계획 발표</div>
+    <div class="article-title-en">Nvidia makes a statement with historic $150 billion buyback announcement</div>
+    <div class="article-keypoint">Nvidia, 1,500억 달러 역대 최대 자사주 매입 — AI 사이클 장기 지속에 대한 경영진 강한 자신감 표명</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidia-makes-a-statement-with-historic-150-billion-buyback-announcement-bfab5a22?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 06:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SpaceX Starship, 궤도 진입 성공 및 Starlink V3 위성 26기 배치</div>
+    <div class="article-title-en">SpaceX Sends Starship to Orbit and Deploys 26 Starlink V3 Satellites</div>
+    <div class="article-keypoint">SpaceX Starship, 14차 테스트 비행 궤도 진입 성공·Starlink V3 26기 배치 — 상업화 가속</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/SpaceX-Sends-Starship-to-Orbit-and-Deploys-26-Starlink-V3-Satellites.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Nvidia, 오작동 AI 에이전트 제어를 위한 새 플랫폼 출시</div>
+    <div class="article-title-en">Nvidia launches new platform for reining in rogue AI agents</div>
+    <div class="article-keypoint">Nvidia, 에이전트 AI 오작동 제어 플랫폼 출시 — AI 신뢰성 문제가 새 하드웨어·소프트웨어 수요 창출</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/28/nvidia-launches-new-platform-for-reining-in-rogue-ai-agents/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 03:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">물리적 AI 칩 개발사 SiMa AI, 기업가치 14.5억 달러 달성</div>
+    <div class="article-title-en">Physical AI chip developer SiMa AI hits $1.45B valuation</div>
+    <div class="article-keypoint">SiMa AI, 시리즈 C 1.5억 달러 유치·기업가치 14.5억 달러 — 엣지 물리적 AI 칩 투자 급가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/28/physical-ai-chip-developer-sima-ai-hits-1-45b-valuation/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 00:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">AMD, World Labs를 82억 달러에 인수 합의</div>
+    <div class="article-title-en">AMD to Acquire World Labs for $8.2 Billion</div>
+    <div class="article-keypoint">AMD, World Labs 82억 달러 인수 — 물리적 AI·로보틱스용 하드웨어·소프트웨어 통합 역량 확보</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/amd-to-acquire-world-labs-for-8-2-billion-a8d03d11?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 06:34 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 거버넌스·안전 위기 — OpenAI GPT-6.1 Astra 출시 전격 철회와 생태계 신뢰 균열</span>
+    <span class="theme-label-range">Article #13~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Cook 총재, AI와 경제에 관한 업데이트 연설</div>
+    <div class="article-title-en">Cook, An Update on AI and the Economy</div>
+    <div class="article-keypoint">Fed 총재 Cook, AI가 경제 구조 전반에 미치는 영향 공식 업데이트 — 정책 대응 방향성 주목</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/cook20260928a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Christine Lagarde: 유럽의회 경제통화위원회 청문회 발언</div>
+    <div class="article-title-en"> Christine Lagarde: Hearing of the Committee on Economic and Monetary Affairs of the European Parliament</div>
+    <div class="article-keypoint">라가르드, 유럽기업 투자의 10%·신용증가의 25%가 AI 관련 — 금융시스템 AI 노출 공식 확인</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp260928~a875675544.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/28 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">AI 프런티어에서의 왜곡된 지능</div>
+    <div class="article-title-en">Distorted Intelligence at the AI Frontier</div>
+    <div class="article-keypoint">프런티어 AI 모델의 훈련 방식 왜곡 문제 제기 — 안전성 논쟁이 규제·투자 리스크로 확산</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/distorted-intelligence-training-byproduct-may-explain-ai-security-breaches-by-daron-acemoglu-2026-09?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/28 21:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">OpenAI, 안전 우려로 신규 AI 모델 출시 전격 철회</div>
+    <div class="article-title-en">OpenAI Scraps Release of New AI Model Over Safety Concerns</div>
+    <div class="article-keypoint">OpenAI, GPT-6.1 Astra 출시 전격 취소 — 안전성 우려가 AI 모델 출시 속도를 제어하는 새 변수로 부상</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/openai-chatgpt-model-release-cancel-safety-5a2f9f42?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 07:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">OpenAI, 내부 안전 테스트 결과로 신규 AI 모델 출시 보류 — WSJ 보도</div>
+    <div class="article-title-en">OpenAI shelves new AI model after internal safety tests, WSJ reports</div>
+    <div class="article-keypoint">OpenAI, 안전 우려로 신규 AI 모델 출시 보류 — 기술 출시 일정과 안전 기준 간 긴장 공식화</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/openai-shelves-new-ai-model-after-internal-safety-tests-wsj-reports-4921332" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/28 22:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Anthropic·Gamma·Clay, TechCrunch Disrupt 2026에서 기업 AI 실제 배포 노하우 공유</div>
+    <div class="article-title-en">Anthropic, Gamma, and Clay share what happens when enterprises actually deploy AI at TechCrunch Disrupt 2026</div>
+    <div class="article-keypoint">Anthropic, TechCrunch Disrupt서 실제 엔터프라이즈 AI 배포 경험 공유 — B2B AI 시장 실전 전환 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/28/anthropic-gamma-and-clay-share-what-happens-when-enterprises-actually-deploy-ai-at-techcrunch-disrupt-2026/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 00:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Meta의 엔터프라이즈 AI 플랫폼 공세 — MongoDB CEO 영입과 기업 고객 수익화 가속</span>
+    <span class="theme-label-range">Article #19~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">MongoDB 주가 약 20% 급락 — CEO가 Meta로 이직</div>
+    <div class="article-title-en">MongoDB’s stock is down nearly 20% as CEO decamps to Meta</div>
+    <div class="article-keypoint">MongoDB CEO Meta 이적에 주가 약 20% 급락 — 인재 유출이 기업가치 직격하는 AI 인재전쟁 현실화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/mongodbs-stock-is-down-more-than-20-as-ceo-decamps-to-meta-ad66a942?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 06:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">MongoDB 18% 급락 — Meta, CEO를 새 AI 플랫폼 수장으로 영입 | Closing Bell</div>
+    <div class="article-title-en">MongoDB Plunges 18% as Meta Taps CEO To Lead New AI Platform | Closing Bell</div>
+    <div class="article-keypoint">OpenAI GPT-6.1 Astra 내부 안전 테스트 실패로 출시 철회 — 프런티어 AI 거버넌스 위기 재점화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-28/mongodb-plunges-18-closing-bell-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 05:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Meta, AI 투자 수익화를 위해 기업 고객 공략 본격화</div>
+    <div class="article-title-en">Meta Seeks Payoff From AI Spending With New Push for Business Customers</div>
+    <div class="article-keypoint">Meta, MongoDB CEO 영입해 엔터프라이즈 AI 플랫폼 신설 — AI 수익화 전선이 B2B로 본격 이동</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/meta-seeks-payoff-from-ai-spending-with-new-push-for-business-customers-8b9ca5bc?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/28 21:32 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Fed·통화정책 구조 점검 — Bessent의 완화 압박과 스테이블코인·유동성 리스크</span>
+    <span class="theme-label-range">Article #22~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">'절대 팔지 않겠다': 47세의 나는 버는 돈 전부로 비트코인을 산다. 미친 걸까?</div>
+    <div class="article-title-en">‘I’m never selling’: I’m 47 and buy bitcoin with every dollar I earn. Am I crazy?</div>
+    <div class="article-keypoint">비트코인 전액 적립식 매수 행태 — 암호화산 구조적 장기 수요 기반의 지속성 확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/im-never-selling-im-47-and-buy-bitcoin-with-every-dollar-i-earn-am-i-crazy-364d2a64?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 07:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Tether USDT, 이란 자금 지원에 활용 — 상원 보고서 경고</div>
+    <div class="article-title-en">Tether USDT aids Iran funding, Senate report says</div>
+    <div class="article-keypoint">Tether USDT, 이란·헤즈볼라 자금 조달 핵심 수단 — 스테이블코인 규제 강화 압력 급상승</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/tether-usdt-aids-iran-funding-senate-report-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 02:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Fed 감사실, 전직 직원의 기밀 파일 유출 가능성 경고</div>
+    <div class="article-title-en">Fed’s Watchdog Warns of Classified File Breach by Former Staffer</div>
+    <div class="article-keypoint">Fed 내부 감사, 퇴직 직원 기밀 유출 가능성 경고 — 중앙은행 정보보안 거버넌스 취약점 노출</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-28/fed-s-watchdog-warns-of-classified-file-breach-by-former-staffer" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 00:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #25~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Nandy, 페어퍼드 사건 관련 Farage를 '음모론의 달인'이라 비판</div>
+    <div class="article-title-en">Nandy labels Farage ‘master of conspiracy theory’ over Fairford claims</div>
+    <div class="article-keypoint">영국 보궐선거 관련 정치 담론 — 시장 직접 영향 제한적</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/sep/28/nandy-labels-farage-master-of-conspiracy-theory-over-fairford-claims" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 02:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Tesla, 기상 악화로 Roadster 2 공개 행사 재차 연기</div>
+    <div class="article-title-en">Tesla delays Roadster 2 event again due to bad weather</div>
+    <div class="article-keypoint">Tesla Roadster 2 공개 행사 재연기 — SpaceX 추진기 비행 시연 지연으로 기술 신뢰도 의문 지속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/28/tesla-delays-roadster-2-event-again-due-to-bad-weather/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 04:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">구리, 호주 광산주 랠리의 새 성장 동력으로 부상</div>
+    <div class="article-title-en">Copper Set to Give Australia’s Mining Stock Rally a New Engine</div>
+    <div class="article-keypoint">AI·전력 인프라 수요가 호주 구리 광산주 랠리 새 엔진으로 부상 — 원자재 구조적 수요 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-28/copper-set-to-give-australia-s-mining-stock-rally-a-new-engine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Golden Gate, 보험사 22억 달러 자본 부족 사태로 소송 피소</div>
+    <div class="article-title-en">Golden Gate Sued Over Insurer’s $2.2 Billion Capital Shortfall</div>
+    <div class="article-keypoint">PHL Variable Insurance, 22억 달러 자본 부족으로 청산 위기 — PE 소유 보험사 리스크 재조명</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-28/golden-gate-sued-over-insurer-s-2-2-billion-capital-shortfall" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 06:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">어닝콜 기록: Vail Resorts, 2026년 4분기 소폭 어닝 비트에도 주가 하락</div>
+    <div class="article-title-en">Earnings call transcript: Vail Resorts posts modest beat in Q4 2026 as shares slip</div>
+    <div class="article-keypoint">Vail Resorts, Q4 2026 소폭 어닝 비트에도 주가 하락 — 실적 대비 밸류에이션 부담 확인</div>
+    <a class="article-link" href="https://www.investing.com/news/transcripts/earnings-call-transcript-vail-resorts-posts-modest-beat-in-q4-2026-as-shares-slip-93CH-4921319" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/28 22:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">멜로니, 신흥 극우 경쟁자에 맞선 보궐선거 테스트 통과</div>
+    <div class="article-title-en">Italy's Meloni passes by-election test against new far-right rival</div>
+    <div class="article-keypoint">멜로니 연립, 칼라브리아 보궐선거 승리 — 이탈리아 총선 전 극우 경쟁자에 우위 확인</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/italys-meloni-passes-by-election-test-against-new-far-right-rival" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 01:07 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
