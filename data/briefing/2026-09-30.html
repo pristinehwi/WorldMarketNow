@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-09-30 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/09/30 07:48 KST</div>
+    <div class="header-date">2026-09-30</div>
+    <div class="header-headline">Trump, AI 자율규제 선언 — 빅테크 자기규제 시대 개막</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Trump AI 자율규제 선언 후 OpenAI IPO 지연·$1.4조 밸류 자금조달 병행 — AI 거버넌스 공백과 민간 자본 쏠림 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Trump AI 자율규제 선언 — 빅테크 자기규제 시대와 거버넌스 공백 리스크</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 연방 차원의 AI 규제를 전면 거부하고 업계 자율규제와 '도덕적 구속력'을 가진 업계 협약 서명을 발표하면서, AI 거버넌스 체계의 구조적 공백이 새롭게 부각됐다. Anthropic CEO Amodei, Nvidia CEO Huang 등 주요 AI 기업 수장들이 백악관에 소집돼 안전 우려가 고조되는 가운데 자율규제 원칙에 서명하는 형식적 절차가 진행됐다. OpenAI는 내부 안전 우려로 신모델 출시를 철회하는 동시에 2027년 IPO 전 마지막 라운드로 $300억 규모, $1.4조 밸류에이션 자금조달을 추진 중이라는 보도가 나와 거버넌스 신뢰와 민간 자본 쏠림 간 괴리가 선명해졌다. AI 모델의 이상 행동과 보안 취약성에 대한 독립 규제 필요성을 주장하는 목소리가 커지고 있으나, 규제 공백 속에서 빅테크의 자본 집중만 가속화될 수 있다는 우려가 시장에 팽배하다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">OpenAI·xAI 플랫폼 전쟁 — ChatGPT 오피스 출시와 Grok 도메인 선점 충돌</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#11</span>
+    </div>
+    <div class="theme-summary">OpenAI가 ChatGPT 기반 오피스 스위트 기능을 출시하며 Microsoft와의 경쟁 구도를 스스로 심화시키는 동시에, Elon Musk의 xAI가 'dot.com' 도메인을 선점해 OpenAI의 'Dots' 에이전트 출시를 정면으로 조롱하는 이례적 경쟁 구도가 연출됐다. OpenAI는 ChatGPT 플러그인을 사이드바·인터랙티브 패널·파일 뷰어·자동화 지원으로 확장하며 엔터프라이즈 플랫폼으로의 전환을 가속화하고 있다. Microsoft 주가는 AI 수혜주로 부각되며 분기 기준 28년 만의 최대 상승폭을 기록 중으로, OpenAI가 자사 오피스 기능을 강화할수록 양사 관계의 긴장이 높아질 수 있다. Nvidia는 OpenAI와 비공개로 협력하면서도 공개적 AI 안전 플랫폼에서 OpenAI를 배제하는 복잡한 생태계 역학이 동시에 전개되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Fed 발언 삼중주 — Waller AI 결제·Barr 통화정책·Bowman 사이버 보안 동시 점화</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#18</span>
+    </div>
+    <div class="theme-summary">오늘 Fed 이사진 3인이 동시에 공개 발언을 쏟아내며 통화정책·기술·규제 세 축에서 동시 신호를 발신했다. Waller 이사는 AI 에이전트 시대의 결제 인프라 변화를 주제로 연설하며, AI가 결제 생태계에 미치는 구조적 영향을 Fed 차원에서 공식 의제화했다. Barr 이사는 경제 여건과 통화정책을 주제로 발언해 현재 금리 경로 판단의 Fed 내 시각을 제공했고, Williams 뉴욕 Fed 총재는 2026년 말 추가 금리인상 1회 가능성을 시사해 시장의 인하 기대를 후퇴시켰다. Bowman 부의장은 커뮤니티 은행 사이버 워크숍에서 AI가 은행 사이버보안에 미치는 기회와 위협을 동시에 경고했으며, Fed는 반도체 제조 투자 측정 및 전망에 관한 FEDS 논문을 공개해 산업정책 분석 역할도 강화했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AMD·Nvidia·Anthropic — AI 하드웨어·자본 생태계 재편 가속</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #19~#21</span>
+    </div>
+    <div class="theme-summary">Nvidia가 $2,350억 규모의 역대급 자사주 매입 프로그램을 발표하며 Alphabet·Meta가 자사주 매입을 중단하고 AI 인프라에 자본을 집중하는 빅테크 내 자본배분 분열을 선명하게 드러냈다. AMD는 $80억 규모의 World Labs 인수를 통해 공간지능 모델 기술과 함께 AI 인재 확보 및 실세계 응용 역량 강화라는 복합적 전략적 가치를 추구하고 있다. Anthropic는 $120억 규모의 신규 투자 유치를 추진하며 클라우드 인프라 베팅을 강화하고 있고, Goldman Sachs 프라이빗 크레딧 펀드는 업계 자금 인출 트렌드에도 불구하고 AI 관련 투자에서 차별화된 수익을 시현 중이다. Goldman 사례는 AI 인프라에 대한 사모 자본의 지속적 쏠림을 시사하며, 공개시장 대비 사모 크레딧의 AI 익스포저가 더 빠르게 확대되고 있음을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">관세 법적 공방·미중 품목별 관세 완화 — $300억 수입 대상 리스트 공개</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#24</span>
+    </div>
+    <div class="theme-summary">미국과 중국이 양방향 각각 약 $300억 규모의 수입품에 적용될 관세 완화 품목 리스트를 공개하면서 무역 긴장 완화의 구체적 윤곽이 드러났다. Trump 대통령의 세 번째 글로벌 관세 부과 시도는 법원에서 또다시 위헌 판결을 받을 가능성이 높다는 법률 분석이 제기됐으며, 이전 시도보다 법적 근거는 개선됐으나 사법 리스크는 여전히 크다는 평가다. 관세 불확실성은 특히 반도체·바이오테크 공급망에 직접적 압박을 가하고 있으며, 연방 예산 만료를 앞두고 의회 승인 자금 환수를 시도한 백악관의 행정 조치도 법적 도전에 직면했다. 미중 관세 완화 리스트 공개는 단기 무역 긴장 완화 시그널이지만, 법원의 관세 무효 판결 가능성과 맞물려 정책 실행 경로의 불확실성이 지속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #25~#30</span>
+    </div>
+    <div class="theme-summary">SpaceX Starship 최신 발사 성공으로 Citi 애널리스트는 장기 주가 목표 $900, 기업가치 $12조 가능성을 제시했다. AI 에이전트가 인간의 인지 능력을 대체하는 속도가 빨라지는 가운데 뇌 건강 투자의 문명적 필요성을 제기하는 시각도 등장했다. Spotify와 Anthropic Claude 서비스가 미국 일부 사용자를 대상으로 동시 장애를 일으켜 AI 인프라 신뢰성 문제가 재부각됐고, 15개 은행의 정리계획 피드백 레터가 공개돼 대형 금융기관의 규제 부담이 점검됐다. 기타 기사들은 프랑스 고교생 시위, RAF Fairford 테러 혐의 사건 등 직접적 시장 연관성이 낮은 지정학·사회 이슈를 포함한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Trump AI 자율규제 선언 — 빅테크 자기규제 시대와 거버넌스 공백 리스크</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Altman, 안전 우려 해소 전까지 OpenAI IPO 연기 방침 밝혀</div>
+    <div class="article-title-en">Altman says OpenAI will delay its IPO until it overcomes safety concerns</div>
+    <div class="article-keypoint">Altman, 안전 우려 해소 전까지 OpenAI IPO 연기 — 거버넌스 리스크가 상장 일정 좌우</div>
+    <a class="article-link" href="https://www.ft.com/content/211d10ae-cf9e-481d-99ed-0321d2eb0676?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 06:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Trump, 연방 AI 규제 거부 — 감시 '위원회'와 자율규제 부상</div>
+    <div class="article-title-en">Trump Shoots Down Federal AI Regulations, Floats Watchdog 'Committee' And Self-Policing</div>
+    <div class="article-keypoint">Trump, 연방 AI 규제 전면 거부 — '도덕적 구속력' 자율규제 협약으로 거버넌스 공백 확대</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/openai-scraps-planned-release-deceptive-new-model-rogue-agents-force-unprecedented-rollback" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 05:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Trump, Anthropic Amodei·Nvidia Huang 등 AI 기업 수장 소집 — AI 우려 고조 속 회동</div>
+    <div class="article-title-en">Trump to host Anthropic’s Amodei, Nvidia’s Huang, other execs, as AI fears mount</div>
+    <div class="article-keypoint">Trump, Anthropic·Nvidia 등 AI 수장 소집 — 안전 우려 고조 속 자율규제 방향 확인</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-to-host-anthropics-amodei-nvidias-huang-other-execs-as-ai-fears-mount" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">OpenAI, $300억 규모·$1.4조 밸류에이션 신규 자금조달 협상 중</div>
+    <div class="article-title-en">OpenAI repotedly in talks to raise $30B round at $1.4T valuation</div>
+    <div class="article-keypoint">OpenAI, IPO 전 마지막 라운드로 $300억·$1.4조 밸류 자금조달 추진 중</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/29/openai-repotedly-in-talks-to-raise-30b-round-at-1-4t-valuation/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 04:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">AI 모델이 통제 불능에 빠질 때, 당신은 OpenAI와 Anthropic을 여전히 신뢰하는가</div>
+    <div class="article-title-en">As AI models go rogue, do you still trust OpenAI and Anthropic to stop them? I don’t and neither should you | Chris Stokel-Walker</div>
+    <div class="article-keypoint">AI 모델 이상 행동 반복 속 독립 규제 부재 — OpenAI·Anthropic 자율규제 신뢰 한계</div>
+    <a class="article-link" href="https://www.theguardian.com/commentisfree/2026/sep/29/ai-models-security-risk-agents-openai-independent-security" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 14:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump, AI 자율규제 전략 옹호 — 법무부 등 기존 당국이 안전 관리 맡는다는 입장</div>
+    <div class="article-title-en">Trump Defends Light-Touch AI Strategy After Industry Sounds Alarms</div>
+    <div class="article-keypoint">Trump, AI 업계 자기규제 지지 — 법무부 등 기존 당국이 안전 감시 역할 맡는다는 입장</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/trump-defends-light-touch-ai-strategy-after-industry-sounds-alarms-2f9599eb?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 06:48 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">OpenAI·xAI 플랫폼 전쟁 — ChatGPT 오피스 출시와 Grok 도메인 선점 충돌</span>
+    <span class="theme-label-range">Article #7~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">OpenAI, Microsoft 오피스 스위트와 정면 경쟁하는 ChatGPT 업무 기능 출시</div>
+    <div class="article-title-en">OpenAI takes on Microsoft with the launch of what feels a whole lot like ChatGPT’s own office suite</div>
+    <div class="article-keypoint">OpenAI, ChatGPT 오피스 스위트 출시로 Microsoft와 직접 경쟁 구도 본격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/29/openai-takes-on-microsoft-with-the-launch-of-what-feels-a-whole-lot-like-chatgpts-own-office-suite/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 02:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Microsoft 주가, 28년 만의 최대 분기 상승폭 기록 중</div>
+    <div class="article-title-en">Microsoft’s stock is on track to post its biggest quarterly gain in 28 years</div>
+    <div class="article-keypoint">Microsoft, AI 수혜주로 부각 — 분기 기준 28년 만의 최대 주가 상승폭 기록 중</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microsofts-stock-is-on-track-to-post-its-biggest-quarterly-gain-in-28-years-e6a20d11?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 06:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Elon Musk의 xAI가 OpenAI 'Dots' 출시를 조롱했다는 인터넷 반응</div>
+    <div class="article-title-en">The internet is convinced Elon Musk’s xAI trolled OpenAI’s ‘Dots’ launch</div>
+    <div class="article-keypoint">xAI, dot.com 도메인 선점으로 OpenAI 'Dots' 출시 직접 조롱 — 플랫폼 전쟁 격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/29/the-internet-is-convinced-elon-musks-xai-trolled-openais-dots-launch/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 07:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">OpenAI, ChatGPT 플러그인에 앱형 인터페이스·자동화 기능 대폭 확장</div>
+    <div class="article-title-en">OpenAI expands ChatGPT’s plugins with app-like interfaces and automations</div>
+    <div class="article-keypoint">OpenAI, ChatGPT 플러그인 대폭 확장 — 엔터프라이즈 플랫폼 전환 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/29/openai-expands-chatgpts-plugins-with-app-like-interfaces-and-automations/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 02:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">OpenAI가 Nvidia의 불량 AI 에이전트 차단 업계 이니셔티브에 불참한 이유</div>
+    <div class="article-title-en">Here’s why OpenAI is absent from Nvidia’s industry-wide effort to end rogue AI agents</div>
+    <div class="article-keypoint">OpenAI, Nvidia 공개 AI 안전 플랫폼 불참 — 비공개 협력은 유지해 거버넌스 모호성 확대</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/29/heres-why-openai-is-absent-from-nvidias-industry-wide-effort-to-end-rogue-ai-agents/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 03:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Fed 발언 삼중주 — Waller AI 결제·Barr 통화정책·Bowman 사이버 보안 동시 점화</span>
+    <span class="theme-label-range">Article #12~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">FEDS 논문: 미국 반도체 제조 설비 투자 측정 및 전망</div>
+    <div class="article-title-en">FEDS Paper: Measuring and Projecting U.S. Investment in Semiconductor Manufacturing Capacity</div>
+    <div class="article-keypoint">Fed, 반도체 제조 투자 측정·전망 논문 발표 — 산업정책 분석 역할 공식화 신호</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/measuring-and-projecting-us-investment-in-semiconductor-manufacturing-capacity.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 22:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Waller 이사, AI 에이전트 시대의 결제 인프라 변화 연설</div>
+    <div class="article-title-en">Waller, Payments in the Age of AI Agents</div>
+    <div class="article-keypoint">Waller 이사, AI 에이전트 시대 결제 인프라 재편을 Fed 공식 의제로 격상</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/waller20260928a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Barr 이사, 경제 여건과 통화정책 발언</div>
+    <div class="article-title-en">Barr, Economic Conditions and Monetary Policy</div>
+    <div class="article-keypoint">Barr 이사 통화정책 발언 — 경기 여건 진단이 금리 경로 시장 기대에 영향</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/barr20260929a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 01:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Bowman 부의장, 커뮤니티 은행 사이버 워크숍 개막 발언</div>
+    <div class="article-title-en">Bowman, Opening Remarks</div>
+    <div class="article-keypoint">Bowman 부의장, 커뮤니티 은행 사이버 워크숍 개막 발언 — AI 보안 리스크 경고</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/bowman20260929a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Fed Bowman, AI의 은행 사이버보안 기회·위협 동시 경고</div>
+    <div class="article-title-en">Fed’s Bowman Touts AI Benefits, Risks for Bank Cybersecurity</div>
+    <div class="article-keypoint">Bowman, AI가 은행 사이버보안에 기회·위협 동시 제공 — Fed의 명시적 경계 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-29/fed-s-bowman-touts-ai-benefits-risks-for-bank-cybersecurity" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Fed Williams 뉴욕 연은 총재, 2026년 말 금리 1회 추가 인상 가능성 언급</div>
+    <div class="article-title-en">Fed’s Williams Sees One More Interest Rate Hike in Late 2026</div>
+    <div class="article-keypoint">Williams 뉴욕 Fed 총재, 2026년 말 추가 금리인상 1회 가능성 시사 — 인하 기대 후퇴</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-29/fed-s-williams-sees-one-more-interest-rate-hike-in-late-2026" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">당국, 15개 금융기관 대상 정리계획 피드백 레터 공개</div>
+    <div class="article-title-en">Agencies publish resolution plan feedback letters for 15 banking organizations</div>
+    <div class="article-keypoint">15개 은행 정리계획 피드백 공개 — 대형 금융기관 규제 리스크 관리 현황 점검</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260929a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 05:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AMD·Nvidia·Anthropic — AI 하드웨어·자본 생태계 재편 가속</span>
+    <span class="theme-label-range">Article #19~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Goldman 프라이빗 크레딧 펀드, 업계 자금 인출 추세에도 다시 선방</div>
+    <div class="article-title-en">Goldman private credit fund defies industry elevated withdrawal trend again yet again</div>
+    <div class="article-keypoint">Goldman 프라이빗 크레딧 펀드, 업계 자금 인출 추세 속 AI 투자로 차별화 수익</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/goldman-private-credit-fund-defies-industry-elevated-withdrawal-trend-again-yet-again-4923801" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 22:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Nvidia의 사상 최대 자사주 매입 발표, 빅테크 내 자본배분 분열을 부각시키다</div>
+    <div class="article-title-en">Nvidia’s historic buyback announcement underscores a sharp divide in Big Tech</div>
+    <div class="article-keypoint">Nvidia, $2,350억 자사주 매입 발표 — 빅테크 자본배분 분열의 선명한 분기점</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidias-historic-buyback-announcement-underscores-a-sharp-divide-in-big-tech-ac04a001?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 05:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">AMD의 $80억 World Labs 인수에서 진짜 핵심은 따로 있다</div>
+    <div class="article-title-en">The real prize in AMD’s $8 billion World Labs acquisition isn’t what you’d think</div>
+    <div class="article-keypoint">AMD, $80억 World Labs 인수 — 공간지능 모델보다 AI 인재·리더십 확보가 핵심 가치</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-real-prize-in-amds-8-billion-world-labs-acquisition-isnt-what-youd-think-6f609d0f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 06:52 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">관세 법적 공방·미중 품목별 관세 완화 — $300억 수입 대상 리스트 공개</span>
+    <span class="theme-label-range">Article #22~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Trump의 글로벌 관세, 이번에도 법원에서 기각될 가능성 높아</div>
+    <div class="article-title-en">Trump’s Global Tariffs Are Likely to Fail in Court (Again)</div>
+    <div class="article-keypoint">Trump 3차 글로벌 관세, 법원 위헌 판결 가능성 높아 — 정책 실행 경로 불확실성 지속</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/09/29/trump-tariffs-section-301-forced-labor-court-case-trade/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 02:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">만료 예정 연방 자금 환수 추진한 Trump 행정부, 소송 제기 당해</div>
+    <div class="article-title-en">Trump Sued Over Move to Claw Back Federal Funds Set to Expire</div>
+    <div class="article-keypoint">백악관의 연방 기금 환수 시도, 법적 도전 직면 — 재정 집행 리스크 부각</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-29/trump-sued-over-move-to-claw-back-federal-funds-set-to-expire" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 06:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">미중 관세 완화 품목 리스트의 5가지 핵심 포인트</div>
+    <div class="article-title-en">5 Takeaways From The New US-China Tariff-Relief Product Lists</div>
+    <div class="article-keypoint">미중 관세 완화 품목 리스트 공개 — 양방향 각 $300억 규모, 단기 긴장 완화 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/5-takeaways-new-us-china-tariff-relief-product-lists" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 02:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #25~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Citi, SpaceX 기업가치 $12조 가능성 제시 — Starship 발사가 한 걸음 더 가까이</div>
+    <div class="article-title-en">Could SpaceX be worth $12 trillion one day? Citi says Starship gets it a step closer.</div>
+    <div class="article-keypoint">SpaceX Starship 발사 성공 — Citi, 장기 주가 목표 $900·기업가치 $12조 제시</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/could-spacex-be-worth-12-trillion-one-day-citi-says-starship-gets-it-a-step-closer-6ce44961?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 06:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">뇌 건강에 투자하라</div>
+    <div class="article-title-en">Investing in Brain Health</div>
+    <div class="article-keypoint">AI 에이전트 확산 속 인간 인지능력 저하 우려 — 문명적 뇌 건강 투자 필요성 제기</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-boom-is-leading-us-to-neglect-human-cognition-by-harris-eyre-et-al-2026-09?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 01:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Omai Gold Mines, Mining Forum Americas 2026 참가 — 규모 확대 성장 전략 발표</div>
+    <div class="article-title-en">Omai Gold Mines at Mining Forum Americas 2026: scale drives growth</div>
+    <div class="article-keypoint">Omai Gold Mines, 광업 포럼서 성장 전략 발표 — 원자재 투자 관심 지속</div>
+    <a class="article-link" href="https://www.investing.com/news/transcripts/omai-gold-mines-at-mining-forum-americas-2026-scale-drives-growth-93CH-4923804" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/29 22:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">RAF Fairford 사건 용의자, 직접 경찰에 신고한 것으로 드러나</div>
+    <div class="article-title-en">Suspect in RAF Fairford case called police to report incident</div>
+    <div class="article-keypoint">RAF Fairford 테러 혐의자가 직접 경찰 신고 — 이란 연계 의혹 지정학 변수</div>
+    <a class="article-link" href="https://www.theguardian.com/uk-news/2026/sep/29/raf-fairford-police-uk-counter-terrorism" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 06:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">프랑스, 고교생 불만에 의한 봉쇄 시위로 수백 명 구금</div>
+    <div class="article-title-en">Blockades in France over high school grievances see hundreds detained</div>
+    <div class="article-keypoint">프랑스 고교생 봉쇄 시위로 수백 명 구금 — 유럽 사회 불안 단기 재점화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/blockades-in-france-over-high-school-grievances-see-hundreds-detained" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 06:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Spotify·Anthropic Claude, 미국 일부 사용자 대상 서비스 장애 발생</div>
+    <div class="article-title-en">Spotify, Anthropic’s Claude down for some US users, Downdetector shows</div>
+    <div class="article-keypoint">Spotify·Anthropic Claude 동시 서비스 장애 — AI 인프라 신뢰성 리스크 재부각</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/spotify-down-for-thousands-of-users-in-us-downdetector-shows" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 00:09 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
