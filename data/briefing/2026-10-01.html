@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-01 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/01 07:48 KST</div>
+    <div class="header-date">2026-10-01</div>
+    <div class="header-headline">Trump, Powell 사퇴 요구 — Fed 독립성 위기 재점화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Trump의 Powell 축출 압박 현실화 여부 및 Fed 독립성 훼손이 달러·금리에 미칠 파급 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Trump-Powell 충돌 — 감사원 보고서가 촉발한 Fed 독립성 위기</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Fed 감사원(Inspector General)이 연준 청사 리노베이션 관련 비용 초과를 지적하면서도 Powell의 형사적 비위는 없다고 결론 내렸음에도, Trump가 즉각 Powell의 이사회직 강제 해임 또는 소송을 촉구하며 대립 수위를 높인 것이다. 감사원은 25억 달러 규모 리노베이션 프로젝트의 관리 결함을 인정했으나 형사적 위반 증거는 부재하다고 명시했고, 법무부도 이미 관련 수사를 종결한 상태다. Trump는 보고서 공개 직후 Powell이 Fed 이사회에서 물러나야 한다고 요구하며 소송 가능성도 열어뒀다. 이는 단순한 정치적 설전을 넘어 Fed 독립성에 대한 구조적 압박으로 해석되며, 달러 신인도와 장기금리 경로에 직접적 불확실성을 가중시킨다. Fed는 별도로 스트레스 테스트 투명성 강화 및 자본 요건 변동성 축소를 위한 최종 규정 개정을 발표하며 독립적 정책 운영 의지를 재확인했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 거버넌스·경쟁 심화 — FTC 조사 확대·Google Gemini 신모델·OpenAI 에이전트 전략</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#10</span>
+    </div>
+    <div class="theme-summary">FTC가 Anthropic과 OpenAI에 대한 조사를 확대하며 임원 증언 요구까지 나서는 등 AI 규제 압박이 전례 없는 수준으로 강화되고 있다. Google은 '아르곤(Argon)'으로 명명된 최신 Gemini 모델을 출시하며 AI 프런티어 경쟁에서의 위상 회복을 시도하고 있고, OpenAI는 'Decisions API'를 통해 빠르고 저렴한 에이전트 인텔리전스 확보에 집중하는 모습이다. Meta는 Muse AI 에이전트의 사용자 개인 메시지 무단 접근 주장을 반박하며 AI 프라이버시 논란에 대응하고 있다. Pentagon은 자율·로봇 역량 전담 군사 사령부 'Autowarcom'을 창설하며 국방 AI 확대를 공식화했다. 이처럼 민간·정부·규제 세 축 모두에서 AI 거버넌스와 경쟁 구도가 동시에 재편되는 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Micron 실적 서프라이즈 — AI 데이터센터 메모리 수요가 반도체 사이클을 바꾸다</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#14</span>
+    </div>
+    <div class="theme-summary">Micron이 AI 데이터센터향 매출 급증을 바탕으로 시장 예상치를 상회하는 실적을 발표하며 메모리 반도체 업황 반전의 신호탄을 쐈다. 강력한 매출 가이던스에도 불구하고 소폭의 마진 미스로 주가는 보합권에 머물렀으나, AI 인프라 투자 사이클 속에서 메모리가 핵심 병목으로 부상하고 있음을 재확인했다. 아울러 양자컴퓨팅이 AI의 에너지 소비 문제를 해결할 수 있는지에 대한 논의가 부상하며 미국 에너지부(DoE)의 2억 1,500만 달러 양자컴퓨팅 지원 계획이 주목받고 있다. Amazon은 Maryland 핵 발전소에서 Constellation Energy의 Calvert Cliffs 설비 확장과 신규 원자로 추가를 검토하며 AI 데이터센터 전력 수요 대응에 나서고 있다. 반도체·에너지 인프라가 AI 성장의 실질적 제약 변수로 부각되는 흐름이 뚜렷해지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">ECB·SNB 통화정책 — 중첩 충격 속 인플레 재점화와 스테이블코인 리스크 경고</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#18</span>
+    </div>
+    <div class="theme-summary">ECB 집행이사회 멤버 Isabel Schnabel은 팬데믹 이후 에너지·원자재·중동 갈등까지 충격이 연쇄적으로 이어지는 환경에서 통화정책의 복잡성이 커졌다고 경고하며, ECB가 2023년부터 반응함수를 명문화해 투명성을 높였음을 강조했다. ECB 총재 Christine Lagarde는 La Croix 인터뷰에서 2008년 금융위기부터 코로나·우크라이나 전쟁·중동 분쟁까지 위기가 구조적으로 연결되어 있다고 진단하며 중앙은행의 대응 프레임 전환 필요성을 시사했다. SNB는 스테이블코인이 통화정책 전달 메커니즘을 복잡하게 만들 수 있다며 정책 당국의 영향력을 보호하는 규제 체계 구축을 촉구했다. Fed의 Cook 총재는 농촌 미국을 주제로 이중 책무(물가 안정·최대 고용)의 지역적 불균형 문제를 조명하며 광범위한 통화정책 파급 효과를 검토했다. 스테이블코인을 포함한 디지털 결제 인프라가 중앙은행 통화정책 전달에 미치는 리스크가 글로벌 의제로 격상되는 흐름이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Trump 외교·관세 — 미-인도 통화·멕시코 철강 협상과 걸프 에너지 복원</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #19~#23</span>
+    </div>
+    <div class="theme-summary">Trump와 Modi 인도 총리가 6월 이후 첫 전화 통화를 갖고 국방·무역·에너지·핵심 기술 협력을 논의했으나 새로운 관세 부과 가능성이 배경에 깔려 있어 긴장이 지속되고 있다. 멕시코 정부는 철강·알루미늄·경차에 대한 미국과의 관세 인하 협상 타결에 대한 자신감이 높아지고 있다고 밝히며 북미 무역 재편 기대를 키우고 있다. Trump-시진핑 정상회담은 실질적 성과 없이 '허영 정상회담'이라는 비판을 받으며 무역 교착이 이어지고 있다. Goldman Sachs는 걸프 지역 원유 수출이 전쟁 이전 수준으로 회복됐다고 분석했으며, Trump가 호르무즈 해협에서 우위를 점하고 있다는 시각도 제시됐다. Trump는 알래스카 가스 프로젝트를 한국 투자 패키지의 일환으로 제시하는 등 에너지를 외교 레버리지로 활용하는 행보를 이어가고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">이스라엘-이란 분쟁이 8개월째 지속되는 가운데 UAE발 항공편 긴급 상황이 이스라엘 총리의 주목을 받는 등 중동 리스크가 다방면에서 가시화되고 있다. Hegseth 국방장관은 군 고위직 20% 감축 계획을 확인하며 반DEI 기조를 강화하고, 사이버사령부에 중간선거 외국 위협 대응 임무를 부여했다. S&P 500은 9월 한 달간 구성 종목의 4분의 3이 하락하는 부진한 성과를 기록했으며, 뉴욕시 제2주택 세금 고지서 발송 절차를 둘러싼 법원 판결이 지역 부동산 시장에 영향을 미치고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Trump-Powell 충돌 — 감사원 보고서가 촉발한 Fed 독립성 위기</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Powell, 비위 혐의 없다는 감사원 보고서 후 Trump '사퇴해야' 발언</div>
+    <div class="article-title-en">Trump says Powell should resign after Fed watchdog clears ex-chair of misconduct</div>
+    <div class="article-keypoint">감사원 무혐의에도 Trump의 Powell 해임·소송 요구 — Fed 독립성 훼손 리스크 최고조</div>
+    <a class="article-link" href="https://www.ft.com/content/78431eef-50ee-4ec9-9ca6-af801da1e617?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 05:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">감사원, Trump가 Powell 축출 빌미로 삼은 연준 청사 리노베이션 부실 관리 확인</div>
+    <div class="article-title-en">Watchdog finds Fed mishandled renovations that Trump tried to oust Powell over</div>
+    <div class="article-keypoint">연준 감사원, 청사 리노베이션 관리 결함 인정하나 형사 위반 증거 부재 결론</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/09/30/watchdog-finds-fed-mishandled-renovations-that-trump-tried-oust-powell-over/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 05:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Trump, 감사원 보고서에 반응: Powell을 Fed 이사회에서 퇴진시키거나 소송하라</div>
+    <div class="article-title-en">Trump Responds To Watchdog Report: Force Powell Off The Fed Board - Or Sue Him</div>
+    <div class="article-keypoint">Trump, Powell 이사회 퇴진 또는 소송 촉구 — 감사원 보고서 발표 직후 즉각 대응</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/fed-watchdog-finds-no-crimes-24-billion-renovation-just-everything-else" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 04:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">연준, 스트레스 테스트 투명성 강화 및 자본 요건 변동성 축소 위한 규정 변경 최종 확정</div>
+    <div class="article-title-en">Federal Reserve Board finalizes changes to enhance the transparency and public accountability of its stress test and reduce volatility in its stress test-related capital requirements</div>
+    <div class="article-keypoint">Fed, 스트레스 테스트 투명성 강화·자본 요건 변동성 축소 최종 규정 확정</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260930a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 22:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 거버넌스·경쟁 심화 — FTC 조사 확대·Google Gemini 신모델·OpenAI 에이전트 전략</span>
+    <span class="theme-label-range">Article #5~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">놀랍도록 복잡한 뇌파가 밝혀내는 뇌의 내부 작동 원리</div>
+    <div class="article-title-en">Surprisingly Complex Waves Reveal the Brain’s Inner Workings</div>
+    <div class="article-keypoint">뇌파 복잡 패턴 연구 — AI 신경망 설계에 영감을 줄 수 있는 기초과학 발견</div>
+    <a class="article-link" href="https://www.quantamagazine.org/surprisingly-complex-waves-reveal-the-brains-inner-workings-20260930/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 23:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">미 경쟁 감시기구, Anthropic 및 OpenAI 조사 확대</div>
+    <div class="article-title-en">US competition watchdog expands investigation of Anthropic and OpenAI  </div>
+    <div class="article-keypoint">FTC, Anthropic·OpenAI 조사 확대 및 임원 증언 요구 — AI 규제 강도 전례 없이 상승</div>
+    <a class="article-link" href="https://www.ft.com/content/a3075bf9-5b6c-40c8-bb6b-aca4422d1cbb?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 06:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Google, 최신 고성능 Gemini AI 모델 출시</div>
+    <div class="article-title-en">Google releases most advanced Gemini AI model</div>
+    <div class="article-keypoint">Google, Gemini '아르곤' 모델 출시 — AI 프런티어 경쟁 선두 탈환 시도</div>
+    <a class="article-link" href="https://www.ft.com/content/46194a0b-a0e4-42cc-ad40-0df753492768?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 06:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">OpenAI의 Jev 클론, 선도 AI 연구소의 에이전트 난립 문제 해결 가능성</div>
+    <div class="article-title-en">OpenAI’s Jev clone could help the frontier lab stop its swarming agents</div>
+    <div class="article-keypoint">OpenAI Decisions API 출시 — 저비용·고속 에이전트 인텔리전스 확보 전략 본격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/30/openais-jev-clone-could-help-the-frontier-lab-stop-its-swarming-agents/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Meta, Muse가 사용자 허가 없이 개인 메시지 열람했다는 주장 반박</div>
+    <div class="article-title-en">Meta disputes claim that Muse read a user’s private messages without permission</div>
+    <div class="article-keypoint">Meta, Muse AI 에이전트 개인 메시지 무단 접근 의혹 반박 — AI 프라이버시 신뢰 공방</div>
+    <a class="article-link" href="https://techcrunch.com/2026/09/30/meta-disputes-claim-that-muse-read-a-users-private-messages-without-permission/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 01:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Pentagon, AI·드론 역량 확대를 위한 'Autowarcom' 창설</div>
+    <div class="article-title-en">Pentagon creates 'Autowarcom' to expand AI and drone capabilities</div>
+    <div class="article-keypoint">Pentagon, AI·드론 전담 사령부 'Autowarcom' 창설 — 국방 자율화 공식 제도화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/pentagon-creates-autowarcom-to-expand-ai-and-drone-capabilities" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 07:23 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Micron 실적 서프라이즈 — AI 데이터센터 메모리 수요가 반도체 사이클을 바꾸다</span>
+    <span class="theme-label-range">Article #11~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">양자컴퓨팅, AI의 에너지 과소비 문제를 해결할 수 있을까?</div>
+    <div class="article-title-en">Can Quantum Computing Tame AI's Energy Appetite?</div>
+    <div class="article-keypoint">DoE $2.15억 양자컴퓨팅 지원 — AI 에너지 소비 해결사로 양자 기술 부상 가능성</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Can-Quantum-Computing-Tame-AIs-Energy-Appetite.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">AI 데이터센터 매출 급증으로 추정치 상회한 Micron | Closing Bell</div>
+    <div class="article-title-en">Micron Beats Estimates as AI Data Center Revenue Surges | Closing Bell</div>
+    <div class="article-keypoint">Micron, AI 데이터센터 매출 급증으로 추정치 상회 — 메모리 사이클 반전 신호</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-09-30/micron-beats-estimates-closing-bell-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 05:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Amazon, Maryland 핵발전소 계약 무산 후 핵에너지 확대 추진</div>
+    <div class="article-title-en">Amazon Tries to Boost Nuclear Power in Maryland After Scrapping Data Center Deal</div>
+    <div class="article-keypoint">Amazon, Constellation Energy 핵발전소 확장 지원 — AI 데이터센터 전력 수요 핵에너지로 대응</div>
+    <a class="article-link" href="https://www.wsj.com/business/energy-oil/amazon-tries-to-boost-nuclear-power-in-maryland-after-scrapping-data-center-deal-d551385e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Micron, 강력한 매출 가이던스가 마진 소폭 미스 상쇄하며 주가 보합</div>
+    <div class="article-title-en">Micron Flat After Strong Revenue Guidance Offsets Slight Margin Miss</div>
+    <div class="article-keypoint">Micron, 강력한 매출 가이던스에도 마진 소폭 미스로 주가 보합 — AI 수혜 반영 선반영 부담</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/micron-rises-after-strong-revenue-guidance-offsets-slight-margin-miss" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 05:28 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">ECB·SNB 통화정책 — 중첩 충격 속 인플레 재점화와 스테이블코인 리스크 경고</span>
+    <span class="theme-label-range">Article #15~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Cook 총재, 농촌 미국의 이중 책무 연설</div>
+    <div class="article-title-en">Cook, The Dual Mandate in Rural America</div>
+    <div class="article-keypoint">Cook 총재, 농촌 미국의 이중 책무 불균형 조명 — 지역별 통화정책 파급 격차 부각</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/cook20260930a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 04:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Isabel Schnabel: 중첩 충격 환경 속의 통화정책</div>
+    <div class="article-title-en"> Isabel Schnabel: Monetary policy in a world of overlapping shocks</div>
+    <div class="article-keypoint">Schnabel, 중첩 충격 환경에서 ECB 반응함수 명문화로 통화정책 신뢰성 제고 강조</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp260930_1~7c6c120482.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 00:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">SNB, 스테이블코인이 통화정책 전달에 악영향 줄 수 있다고 경고</div>
+    <div class="article-title-en">Stablecoins Could Harm Monetary Policy Transmission, SNB Says</div>
+    <div class="article-keypoint">SNB, 스테이블코인이 통화정책 전달 복잡화 경고 — 디지털 화폐 규제 시급성 강조</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-30/stablecoins-could-harm-monetary-policy-transmission-snb-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 01:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Christine Lagarde: La Croix 인터뷰</div>
+    <div class="article-title-en"> Christine Lagarde: Interview with La Croix</div>
+    <div class="article-keypoint">Lagarde, 반복되는 글로벌 위기 구조적 연결성 진단 — ECB 대응 프레임 전환 시사</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/inter/date/2026/html/ecb.in260930~10084a5f3d.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 02:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Trump 외교·관세 — 미-인도 통화·멕시코 철강 협상과 걸프 에너지 복원</span>
+    <span class="theme-label-range">Article #19~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Trump의 허영 정상회담 — 시진핑과의 실속 없는 만남</div>
+    <div class="article-title-en">Trump’s Vanity Summit With Xi</div>
+    <div class="article-keypoint">Trump-시진핑 정상회담 실질 성과 부재 — 무역 교착 지속으로 시장 불확실성 유지</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-vanity-summit-with-xi-washington-by-stephen-s-roach-2026-09?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 23:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump·Modi, 새 관세 임박 속 무역·에너지 협력 논의</div>
+    <div class="article-title-en">Trump, Modi Discuss Trade, Energy Ties as New Tariffs Loom</div>
+    <div class="article-keypoint">Trump-Modi 6월 이후 첫 통화 — 새 관세 부과 가능성 속 인도-미국 협력 재확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-30/trump-modi-discuss-trade-energy-ties-as-new-us-tariffs-loom" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Goldman, 걸프 원유 수출 전쟁 전 수준 회복 — Blas '호르무즈에서 Trump 우위' 분석</div>
+    <div class="article-title-en">Gulf Exports Roar Back To Pre-War Levels, Goldman Says; Blas Sees "Trump Has Advantage" On Hormuz</div>
+    <div class="article-keypoint">Goldman, 걸프 원유 수출 전쟁 전 수준 회복 — 호르무즈 리스크 프리미엄 재평가 필요</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/gulf-exports-roar-back-pre-war-levels-goldman-says-blas-sees-trump-has-advantage-hormuz" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Trump, 한국 투자 패키지의 일환으로 알래스카 가스 프로젝트 제안</div>
+    <div class="article-title-en">Trump Dangles Alaska Gas Project as Part of Korean Investment Package</div>
+    <div class="article-keypoint">Trump, 알래스카 LNG 프로젝트를 한국 투자 패키지로 제안 — 에너지 외교 레버리지 활용</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/09/30/business/economy/alaska-lng-south-korea-trump.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 07:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">멕시코, 철강·자동차 관세 인하 포함한 미국과의 협상 타결 자신감 상승</div>
+    <div class="article-title-en">Mexico Grows Confident on US Deal to Cut Steel, Auto Tariffs</div>
+    <div class="article-keypoint">멕시코, 미국과 철강·자동차 관세 인하 협상 타결 자신감 상승 — 북미 무역 재편 기대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-09-30/mexico-grows-confident-on-us-deal-to-cut-steel-auto-tariffs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/09/30 23:03 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">우크라이나, 러시아의 Starlink 대항 위성망 지원 기업 제재를 미국에 촉구</div>
+    <div class="article-title-en">Ukraine urges US to sanction entities supporting Russia’s Starlink rival</div>
+    <div class="article-keypoint">우크라이나, 러시아 Starlink 대항 위성망 연계 기업 대미 제재 요청 — 기술 지정학 확대</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraine-urges-us-to-sanction-entities-supporting-russias-starlink-rival" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 06:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Hegseth, 미 군 고위직 20% 감축 계획 확인하며 반DEI 강경 발언</div>
+    <div class="article-title-en">Hegseth confirms plan to cut 20% of US top military brass and rails at ‘beardos, weirdos and wimps’</div>
+    <div class="article-keypoint">Hegseth, 군 고위직 20% 감축 확인 — 국방 구조 재편이 AI·사이버 역량 집중 가속화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/sep/30/hegseth-military-personnel-cuts" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Hegseth, 사이버사령부·정보기관에 중간선거 외국 위협 대응 지시</div>
+    <div class="article-title-en">Hegseth Orders Cyber Command, Intel Agencies To Counter Foreign Threats To Midterms</div>
+    <div class="article-keypoint">Hegseth, 사이버사령부에 중간선거 외국 위협 대응 지시 — 군 정보기관 선거 개입 우려</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/hegseth-orders-cyber-command-intel-agencies-counter-foreign-threats-midterms" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 05:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">부진했던 9월 S&P 500 최악의 하위 15개 종목</div>
+    <div class="article-title-en">The 15 worst-performing S&P 500 stocks during a dismal September</div>
+    <div class="article-keypoint">9월 S&P 500 구성 종목 75% 하락 — 지수 소폭 플러스에도 광범위한 약세 확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-15-worst-performing-s-p-500-stocks-during-a-dismal-september-991f8a07?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 06:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">법원, 뉴욕시에 Mamdani 제2주택세 고지서 발송 중단 명령</div>
+    <div class="article-title-en">Judge Orders New York City To Scrap Notices For Mamdani's Tax On Second Homes</div>
+    <div class="article-keypoint">뉴욕시 제2주택 세금 고지서 절차 법원 무효화 — 지역 부동산 정책 불확실성 확대</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/judge-orders-new-york-city-scrap-notices-mamdanis-tax-second-homes" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">'비범한 용기': 이스라엘 총리, 긴급 항로 변경 항공편의 인도 조종사 격찬</div>
+    <div class="article-title-en">‘Extraordinary bravery’: Israel PM hails Indian pilot of rerouted flydubai flight for averting disaster</div>
+    <div class="article-keypoint">긴급 착륙 인도 조종사 이스라엘 총리 면담 — 중동 분쟁 속 민항기 안전 리스크 가시화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/extraordinary-bravery-israels-pm-hails-indian-pilot-of-rerouted-flydubai-flight-for-averting" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 07:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">이스라엘 Netanyahu, 텔아비브 공항에서 항로 변경 flydubai 항공편 승객 면담</div>
+    <div class="article-title-en">Israel’s Netanyahu meets passengers of diverted flydubai flight at Tel Aviv airport</div>
+    <div class="article-keypoint">Netanyahu, 긴급 착륙 항공편 승객 면담 — 이란 분쟁 8개월째 중동 긴장 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/israels-netanyahu-meets-passengers-of-diverted-flydubai-flight-at-tel-aviv-airport" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/01 03:20 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
