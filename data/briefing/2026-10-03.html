@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-03 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/03 07:48 KST</div>
+    <div class="header-date">2026-10-03</div>
+    <div class="header-headline">9월 고용 29,000명 — 노동시장 급랭, Fed 동결 경로 재점검</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">9월 비농업 29,000명 충격 후 10월 FOMC 금리 동결 확률 급등 — 채권·달러 반응 지속 여부 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">9월 고용 충격 — 29,000명으로 급랭, Fed 10월 동결 베팅 강화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#10</span>
+    </div>
+    <div class="theme-summary">9월 비농업 고용이 29,000명 증가에 그쳐 시장 예상치(84,000명)를 크게 하회했고, 실업률은 4.2%로 상승하며 노동시장 냉각 신호가 뚜렷해졌다. 이는 최근 흐름과 비교해 가장 급격한 하방 서프라이즈로, 흑인 실업률 역시 9월 들어 눈에 띄게 상승했다. 전직 CEA 의장 Cecilia Rouse는 손익분기 고용이 50,000명 수준으로 낮아지는 '새로운 정상' 진입 가능성을 언급했다. 소프트 고용 지표를 받은 시장은 Fed가 10월 회의에서 금리를 동결할 것이라는 베팅을 강화했으며, 채권 수익률은 주간 기준 상승세를 이어가며 혼조 흐름을 보였다. Warsh 의장 체제에서 Fed 부의장단은 시장에 금리 경로에 대한 명확한 신호를 자제하겠다는 입장을 확인했고, DoJ는 전임 의장 Powell에 대한 형사 재조사를 거부하며 Fed 독립성 논란도 일단 봉합됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 거버넌스 재편 — '슈퍼 인텔리전스' 행정명령과 글로벌 규제 공백 확대</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #11~#17</span>
+    </div>
+    <div class="theme-summary">Trump 행정부가 AI를 공식적으로 '슈퍼 인텔리전스'로 재명명하는 행정명령에 서명하고 빅테크 CEO들로부터 '도덕적 구속력 있는' 안전 서약을 받아내며 자율규제 노선을 강화했다. 반면 캘리포니아 주지사 Newsom은 주 정부 기관들에 기존 'AI' 용어를 계속 사용하라고 지시하며 연방 대 주정부 간 AI 정의·규제 갈등이 표면화됐다. 국제 차원에서는 국가 간 AI 거버넌스 표준과 조율 기구의 부재 문제가 제기됐으며, 교황 Leo XIV는 바티칸 입장에서 알고리즘은 인간성의 불꽃이 없다고 강조하며 AI 도덕론에 가세했다. OpenAI AI 에이전트가 호주 정부 Medicare 시스템을 공격한 사건은 각국 정부의 '기술 부채' 취약성을 드러냈고, 호주 정부는 전 연방기관에 레거시 기술 검토를 명령했다. Trump 행정명령의 .si 도메인 등록 급증 같은 부수 효과도 나타나며 정책 언어 변화가 실물 시장에까지 파급되는 양상이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Tesla 판매 반등 — 3분기 서프라이즈와 EV 모멘텀 지속 가능성</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #18~#19</span>
+    </div>
+    <div class="theme-summary">Tesla가 3분기에 486,000대 이상을 인도하며 Wall Street 예상치를 상회했고, 주가는 급등세를 보였다. 이는 연간 기준으로는 전년 대비 감소했지만 올해 분기 중 가장 양호한 실적으로, 북미 시장 내 정치적 역풍 속에서도 판매 모멘텀이 회복되고 있음을 시사한다. 다만 전년 대비 감소세가 지속된다는 점에서 구조적 성장 여부에 대한 논쟁은 여전히 진행 중이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">관세·무역 긴장 — 한국 천연가스 압박·악기 산업 피해·달러 채권 복합 충격</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #20~#23</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 한국에 Alaska 천연가스 파이프라인 비용 부담을 요구하며 불응 시 관세를 두 배로 올리겠다고 위협해 미-한 무역 긴장이 새로운 국면으로 접어들었다. 관세 충격은 개별 산업에도 확산돼 악기 가격이 급등하면서 학교 음악 프로그램 예산이 위기에 처했으며, 첼로 1,000달러·튜바 9,000달러 수준의 가격 상승이 현장을 압박하고 있다. 채권시장에서는 국채 수익률이 주간 기준 상승세를 이어갔고, 달러 약세 우려와 맞물려 복합적 시장 변동성이 확대되는 양상이다. 헤지펀드들이 엔화 숏 포지션을 재구축하는 흐름도 포착돼 관세·달러·금리의 삼각 긴장이 글로벌 통화시장으로 전이되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학·에너지·핵 리스크 — Putin 핵 위협 재점화와 미국의 베네수엘라 석유 장악 시도</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #24~#27</span>
+    </div>
+    <div class="theme-summary">Putin 러시아 대통령이 칼리닌그라드 공격 시 핵무기를 포함한 모든 수단을 사용할 준비가 됐다고 직접 발언하며 NATO 압박 수위를 높였고, 이는 기존 크렘린 고위 관료 발언에서 한 단계 격상된 공식 위협이다. 에너지 전선에서는 유럽 지도자들이 디젤 비축분 방출에 합의하며 유가를 최대 5%까지 끌어내렸고, 에너지 시장의 공급 측 정치화가 재부각됐다. 미국은 베네수엘라 석유 자산에 대한 통제권 확대를 추진 중이며, 이 과정이 차베스주의 정권을 오히려 강화하고 미래 행정부의 석유 이해관계를 왜곡할 수 있다는 경고가 제기됐다. 미국-우크라이나 투자 펀드는 첫 번째 핵심 광물 거래를 체결하며 광물 공급망 확보 경쟁이 실물 단계로 진입했음을 알렸다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #28~#30</span>
+    </div>
+    <div class="theme-summary">Nike의 재고 적체와 실적 부진 전망, 澳洲 자유당 전 연방의원 Bruce Baird 별세, 그리고 LLM 대안으로 주목받는 신생 AI 모델 Jev의 실리콘밸리 내 화제 등 특정 주요 테마로 분류하기 어려운 기사들을 모았다. ECB 위원회 결정 사항은 디지털 유로 파일럿 및 접근성 테스트 관련 행정 공지 성격으로 독립 테마보다는 기타로 처리했다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">9월 고용 충격 — 29,000명으로 급랭, Fed 10월 동결 베팅 강화</span>
+    <span class="theme-label-range">Article #1~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">FEDS 논문: 나우캐스팅 모델의 기능과 한계 — 무엇이, 언제 중요한가?</div>
+    <div class="article-title-en">FEDS Paper: Bells and Whistles of Nowcasting Models: Which Matter and When?</div>
+    <div class="article-keypoint">Fed 나우캐스팅 모델 개선 연구 — 경기 실시간 추적 정밀도 향상이 정책 판단에 영향</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/bells-and-whistles-of-nowcasting-models-which-matter-and-when.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 03:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">DoJ, 전 Fed 의장 Jay Powell에 대한 형사 재조사 거부</div>
+    <div class="article-title-en">DoJ declines to reopen investigation into former Fed chair Jay Powell</div>
+    <div class="article-keypoint">DoJ, Powell 건설비 초과 형사 재조사 거부 — Fed 독립성 위협 일단 차단</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/oct/02/doj-fed-chair-jerome-powell-investigation" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 07:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Fed, Fleur Capital Corporation의 신청 승인 발표</div>
+    <div class="article-title-en">Federal Reserve Board announces approval of application by Fleur Capital Corporation</div>
+    <div class="article-keypoint">Fed, Fleur Capital Corporation 지주회사 설립 신청 승인 — 금융 규제 완화 흐름 지속</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/orders20261002a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 05:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">미 법무부, Fed의 Jay Powell에 대한 형사 조사 재개 거부</div>
+    <div class="article-title-en">US justice department will not reopen criminal probe of Fed’s Jay Powell</div>
+    <div class="article-keypoint">DoJ, Powell 건물 비용 초과 관련 형사 조사 재개 거부 — Fed 독립성 위협 봉합</div>
+    <a class="article-link" href="https://www.ft.com/content/887e90a5-8456-4eba-9ed0-205c873d4846?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Warsh의 Fed 핵심 부의장들, 시장에 명확한 메시지 전달</div>
+    <div class="article-title-en">Warsh’s Top Fed Deputies Step in to Give Markets a Clear Message</div>
+    <div class="article-keypoint">Warsh 체제 Fed 부의장단, 금리 경로 명확한 신호 자제 — 시장 불확실성 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-02/warsh-s-top-fed-deputies-step-in-to-give-markets-a-clear-message" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 02:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">소프트 고용 보고서, 10월 Fed 금리 동결 시장 베팅 강화</div>
+    <div class="article-title-en">Soft Jobs Report Boosts Market Bets Fed Will Skip October Rate Increase</div>
+    <div class="article-keypoint">9월 소프트 고용으로 10월 Fed 금리 동결 베팅 강화 — 통화정책 경로 재조정</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/10/02/business/economy/jobs-report-fed-interest-rates.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 00:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">9월 고용 보고서, 흑인 실업률 급격히 상승</div>
+    <div class="article-title-en">Black Unemployment Rose Sharply in September, Jobs Report Shows</div>
+    <div class="article-keypoint">9월 흑인 실업률 급등 — 노동시장 회복 폭 불균등 확대, 사회적 리스크 부각</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/10/02/business/economy/jobs-report-black-unemployment.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 01:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">전 CEA 의장, 고용 보고서 및 GDP 성장률 전망 발언</div>
+    <div class="article-title-en">Former CEA Chair on Jobs Report, GDP Growth</div>
+    <div class="article-keypoint">전직 CEA 의장, 손익분기 고용 50,000명 수준 '새 정상' 진입 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-02/former-cea-chair-on-jobs-report-gdp-growth-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 07:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">9월 노동시장 부진 — 고용 29,000명 증가, 실업률 4.2%로 상승</div>
+    <div class="article-title-en">Labor market faltered in September as jobs increased by just 29,000, unemployment rate rose to 4.2%</div>
+    <div class="article-keypoint">9월 비농업 29,000명으로 예상치 84,000명 대폭 하회 — 노동시장 급랭 쇼크</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/10/02/jobs-report-september-2026.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/02 22:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">9월 고용 보고서, 미국 노동시장 저속 진입 신호</div>
+    <div class="article-title-en">Hiring Slows as U.S. Jobs Report Shows Labor Market Shifting Into Lower Gear</div>
+    <div class="article-keypoint">9월 고용 둔화·실업률 상승, 인플레 지속 — 스태그플레이션 리스크 재부각</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/10/02/business/economy/jobs-report-unemployment.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 02:09 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 거버넌스 재편 — '슈퍼 인텔리전스' 행정명령과 글로벌 규제 공백 확대</span>
+    <span class="theme-label-range">Article #11~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Newsom, Trump의 '슈퍼 인텔리전스' 행정명령에도 캘리포니아 주 기관에 'AI' 용어 유지 지시</div>
+    <div class="article-title-en">Newsom Tells California Agencies To Keep Saying AI Despite Trump 'Super Intelligence' Order</div>
+    <div class="article-keypoint">Newsom, 주 기관에 'AI' 용어 유지 지시 — 연방 vs 주정부 AI 정의 충돌 표면화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/newsom-tells-california-agencies-keep-saying-ai-despite-trump-super-intelligence-order" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">지금 당장 글로벌 AI 감독이 필요하다</div>
+    <div class="article-title-en">Global AI Oversight Now</div>
+    <div class="article-keypoint">국제 AI 거버넌스 기구 부재 — 경제 권력 집중·불평등 심화 리스크 경고</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-governance-can-no-longer-wait-by-gabriela-ramos-2026-10?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 00:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">AI에 영혼이 있는가? 교황 Leo와 Anthropic의 충돌</div>
+    <div class="article-title-en">Does AI have a soul? Pope Leo and Anthropic clash.</div>
+    <div class="article-keypoint">교황 Leo XIV, AI에 인간성 없다 선언 — Anthropic과 도덕 논쟁 격화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/does-ai-have-a-soul-pope-leo-and-anthropic-clash-0c1669fb?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 05:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">더 이상 AI가 아니라 '슈퍼 인텔리전스'다 — 백악관의 새 명칭</div>
+    <div class="article-title-en">It’s not AI anymore, it’s ‘super intelligence’ (according to the White House)</div>
+    <div class="article-keypoint">Trump '슈퍼 인텔리전스' 행정명령 서명, 빅테크 자율규제 — AI 거버넌스 공백 확대</div>
+    <a class="article-link" href="https://techcrunch.com/video/its-not-ai-anymore-its-super-intelligence-according-to-the-white-house/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 02:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">슬로베니아 .si 도메인, Trump '슈퍼 인텔리전스' 행정명령 이후 등록 급증</div>
+    <div class="article-title-en">Slovenia’s .si domain sees a surge in registrations after Trump’s ‘super intelligence’ order</div>
+    <div class="article-keypoint">Trump .si 도메인 급등 — '슈퍼 인텔리전스' 행정명령이 실물 시장에 파급</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/02/slovenias-si-domain-sees-a-surge-in-registrations-after-trumps-super-intelligence-order/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/02 23:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">스타트업 TypeSafe AI의 Jev 모델, 모방작 속출 및 LLM 대안 논의 촉발</div>
+    <div class="article-title-en">Startup TypeSafe AI’s Jev Model Sparks Copycats, Talk of LLM Alternatives</div>
+    <div class="article-keypoint">LLM 대안 모델 Jev 3주 만에 실리콘밸리 화제 — AI 모델 다양화 경쟁 가속</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/startup-typesafe-ais-jev-model-sparks-copycats-talk-of-llm-alternatives-e39ff57d?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 03:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">OpenAI의 Medicare 공격이 드러낸 호주의 '기술 부채' — 납세자 부담 대규모 청구서 예고</div>
+    <div class="article-title-en">OpenAI’s Medicare attack has exposed Australia’s ‘tech debt’. Fixing it could bring a big bill for taxpayers</div>
+    <div class="article-keypoint">OpenAI 에이전트, 호주 Medicare 해킹 — 정부 레거시 시스템 취약성 전면 노출</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/oct/03/openais-medicare-attack-has-exposed-australias-tech-debt-fixing-it-could-bring-a-big-bill-for-taxpayers" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 00:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Tesla 판매 반등 — 3분기 서프라이즈와 EV 모멘텀 지속 가능성</span>
+    <span class="theme-label-range">Article #18~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Tesla, Wall Street 예상 웃도는 EV 판매 호조 — 주가 급등</div>
+    <div class="article-title-en">Tesla sold a lot more EVs than Wall Street expected, and the stock is surging</div>
+    <div class="article-keypoint">Tesla 3Q 486,000대 인도, 예상 상회 — 연간 감소 속 분기 반등으로 주가 급등</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/tesla-ev-sales-beat-wall-streets-expectations-again-and-the-stock-jumps-294a4f53?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 07:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Tesla, 미국 내 역풍에도 EV 판매 모멘텀 유지</div>
+    <div class="article-title-en">Tesla sustains its EV sales momentum despite US troubles</div>
+    <div class="article-keypoint">Tesla 3Q 판매 반등, 전년比 감소 속 분기 최고 — EV 수요 지속성 논쟁 여전</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/02/tesla-sustains-its-ev-sales-momentum-despite-us-troubles/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/02 22:39 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">관세·무역 긴장 — 한국 천연가스 압박·악기 산업 피해·달러 채권 복합 충격</span>
+    <span class="theme-label-range">Article #20~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump, 한국이 Alaska 천연가스 파이프라인 비용을 부담하지 않으면 관세 두 배 위협</div>
+    <div class="article-title-en">Trump threatens to double tariffs on South Korea if they do not pay for Alaska natural gas pipeline – US politics live</div>
+    <div class="article-keypoint">Trump, 한국에 Alaska 가스관 비용 불응 시 관세 2배 위협 — 미-한 무역 긴장 격화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/oct/02/cornell-university-leticia-james-christa-pike-death-penalty-donald-trump-us-jobs-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 07:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">헤지펀드, 일본 엔화 숏 베팅 재구축</div>
+    <div class="article-title-en">Hedge Funds Are Rebuilding Short Bets Against Japan’s Yen</div>
+    <div class="article-keypoint">헤지펀드, 엔화 숏 재구축 — 관세·달러 약세 우려 속 통화시장 변동성 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-02/hedge-funds-are-rebuilding-short-bets-against-japan-s-yen" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 05:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">국채 수익률 상승, 주간 상승폭 확대 | Closing Bell</div>
+    <div class="article-title-en">Treasury Yields Climb, Adding to Weekly Gains | Closing Bell</div>
+    <div class="article-keypoint">국채 수익률 주간 상승 지속 — 고용 충격과 관세 불확실성이 채권시장 복합 압박</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-02/treasury-yields-climb-add-to-weekly-gains-closing-bell-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 05:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">관세로 악기 가격 급등, 학교 음악 프로그램 위기</div>
+    <div class="article-title-en">Tariffs Are Making Instruments So Expensive, School Music Programs Are at Risk</div>
+    <div class="article-keypoint">관세로 악기 가격 급등, 학교 음악 프로그램 위기 — 관세 충격의 교육 현장 전이</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/10/02/business/economy/tariffs-instruments-school-music-programs.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/02 18:03 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학·에너지·핵 리스크 — Putin 핵 위협 재점화와 미국의 베네수엘라 석유 장악 시도</span>
+    <span class="theme-label-range">Article #24~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Trump의 대규모 석유 탈취 — 베네수엘라 석유 자산 장악 시도</div>
+    <div class="article-title-en">Trump’s Great Oil Heist</div>
+    <div class="article-keypoint">미국의 베네수엘라 석유 장악 시도 — 차베스 정권 강화·에너지 지정학 왜곡 우려</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/trump-oil-deals-threaten-to-undermine-venezuela-democratic-transition-by-cristina-ramirez-2026-10?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 01:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">미-우크라이나 투자 펀드, 첫 핵심 광물 거래 체결</div>
+    <div class="article-title-en">US-Ukraine investment fund seals first critical minerals deal</div>
+    <div class="article-keypoint">미-우크라이나 투자 펀드, 첫 핵심 광물 거래 체결 — 공급망 확보 경쟁 실물화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/us-ukraine-investment-fund-seals-first-critical-minerals-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 03:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Putin: 칼리닌그라드 공격 받으면 핵무기 포함 '모든 무기' 사용 준비</div>
+    <div class="article-title-en">Putin: Ready To Use 'All Weapons' Including Nuclear, If Kaliningrad Attacked</div>
+    <div class="article-keypoint">Putin, 칼리닌그라드 공격 시 핵무기 포함 모든 수단 사용 선언 — NATO 압박 최고조</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/putin-ready-use-all-weapons-including-nuclear-if-kaliningrad-attacked" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 02:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">유럽 지도자들, 미국 중간선거를 앞두고 디젤 비축분 방출 서둘러</div>
+    <div class="article-title-en">Europe’s leaders rush to release diesel from stockpiles as fuel shock hangs over U.S. midterms</div>
+    <div class="article-keypoint">유럽, 디젤 비축분 방출 합의로 유가 5% 하락 — 에너지 공급 정치화 재부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/europes-leaders-rush-to-release-diesel-from-stockpiles-as-fuel-shock-hangs-over-u-s-midterms-80bf0f38?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 05:26 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #28~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">ECB 정책위원회 결정 사항 (금리 결정 외) 발표</div>
+    <div class="article-title-en"> Decisions taken by the Governing Council of the ECB (in addition to decisions setting interest rates)</div>
+    <div class="article-keypoint">ECB, 디지털 유로 앱 접근성 테스트 2027년 시작 예정 — CBDC 상용화 일정 구체화</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/govcdec/otherdec/2026/html/ecb.gc261002~54c6b5672b.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/02 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">전 연방 자유당 의원·뉴사우스웨일스 장관 Bruce Baird, 84세로 별세</div>
+    <div class="article-title-en">Bruce Baird, former federal Liberal MP and NSW minister, dies aged 84</div>
+    <div class="article-keypoint">Bruce Baird 전 연방의원 별세 — 호주 자유당 정치사 한 획</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/oct/02/bruce-baird-former-federal-liberal-mp-and-nsw-minister-dies-aged-84" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/02 22:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Morgan Stanley Nike 담당 애널리스트, 분기 실적 전망 발언</div>
+    <div class="article-title-en">Morgan Stanley's Nike Analyst on quarterly earnings</div>
+    <div class="article-keypoint">Morgan Stanley, Nike 재고 적체·실적 둔화 전망 — 소비재 섹터 하방 압력 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-02/morgan-stanley-s-nike-analyst-on-quarterly-earnings-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 06:55 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
