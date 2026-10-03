@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-04 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/04 07:48 KST</div>
+    <div class="header-date">2026-10-04</div>
+    <div class="header-headline">후티 Aramco 타격·Putin 핵 위협 동시 점화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Aramco 정유시설 피격 후 원유 공급 차질 현실화 여부 및 사우디 후티 보복 규모 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">중동 에너지 인프라 타격과 핵 위협 동시 점화 — 지정학 리스크 프리미엄 재가속</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 후티 반군이 사우디 Aramco 리야드 정유시설을 미사일·드론으로 직접 타격했다는 보고가 나오며 글로벌 원유 공급 차질 우려가 급부상했다는 것이다. 검은 연기가 Aramco 핵심 정유시설 상공에서 목격됐고, 사우디는 후티에 대한 대규모 공세를 검토 중인 것으로 전해진다. 동시에 Putin은 칼리닌그라드 공격 시 핵을 포함한 '모든 무기'를 사용할 준비가 됐다고 직접 발언하며 NATO를 압박했고, 전직 러시아 총리는 Putin이 이란 갈등으로 인한 고유가에 힘입어 우크라이나 전쟁 실책을 인정할 수 없는 처지임을 지적했다. 중동과 동유럽에서 지정학 리스크가 동시 점화된 이날 구도는 에너지·방산 섹터 변동성을 단기 확대할 핵심 변수다. Flydubai 항공편 조종석 도끼 테러 사건까지 더해지며 걸프·중동 불안 심리가 복합적으로 고조되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 거버넌스 균열 심화 — OpenAI 안전리더 이탈·백악관 태스크포스 출범·자율규제 한계 노출</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#12</span>
+    </div>
+    <div class="theme-summary">OpenAI에서 또 한 명의 안전 책임자가 '조직 문화가 망가졌고 AI 기업들이 충분히 신중하지 않다'는 경고와 함께 사직하며, 최근 반복되는 내부 이탈 흐름이 단순 인사 문제를 넘어 구조적 거버넌스 실패임을 재확인시켰다. 전직 OpenAI 엔지니어는 AI 에이전트가 인류를 위협할 수 있다며 원자력 발전소 수준의 다층 안전 체계가 필요하다고 촉구했다. 백악관은 Jay Clayton 국가정보국장을 AI 차르로 하는 AI 태스크포스를 신설해 기술 리스크 보고를 의무화했지만, Trump 행정부는 동시에 자발적 업계 자율규제 기조를 고수하며 거버넌스 공백을 방치한다는 비판을 받고 있다. Bessent 재무장관은 AI 버블 우려를 일축하고 미 국채 금리 상승도 글로벌 트렌드 반영일 뿐이라며 진화에 나섰으나, 안전 연구 인력 이탈이 가속되는 상황에서 시장 신뢰 회복은 쉽지 않을 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">터키 헤지펀드 $200억 멜트다운과 글로벌 금 시장 법적 위기 — 비주류 금융 취약성 경보</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #13~#14</span>
+    </div>
+    <div class="theme-summary">터키에서 이스탄불 자산운용사 다수가 환매를 중단하며 시장 전체 서킷브레이커가 발동되고 131개 펀드가 청산되는 $200억 규모의 헤지펀드 멜트다운이 발생했다. 당국이 '승자들에게 수익을 반환해달라고 요청'하는 이례적 처방을 내놓으며 시장 메커니즘 자체에 대한 신뢰가 훼손됐다. 동시에 세계 최대 금 시장의 규칙을 설정하는 런던 업계 단체가 공급망 감독을 둘러싼 법적 분쟁에 휘말리며 불리온 시장 구조 전체가 위협받고 있다. 두 사건 모두 고금리·지정학 불확실성 환경에서 비전통 금융 인프라의 취약성이 동시에 노출되고 있다는 점에서 안전자산 수요 재점검 계기가 될 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">ECB 총재 교체 레이스와 Oracle·Ellison 부채 리스크 — 유럽·빅테크 거버넌스 구조 변화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#16</span>
+    </div>
+    <div class="theme-summary">독일 총리 Merz가 ECB 총재 Lagarde 후임 유력 후보 두 명과 면담을 준비하고 있다는 소식이 전해지며, 유럽 통화정책 리더십 교체 레이스가 본격화됐다. ECB 총재직은 유로존 금리 경로와 유럽 자산 전반에 직결되는 만큼, 후임 인선 방향이 시장 기대를 선제적으로 재조정할 수 있다. 한편 Larry Ellison이 지배하는 Oracle과 Paramount Skydance가 미국 기업 중 최대 수준의 채권 발행에 나서며 월가에서 동일인 집중 리스크에 대한 경계심이 고조되고 있다. 두 이슈는 각각 유럽 통화정책과 빅테크 자본구조라는 다른 영역이지만, 모두 기존 거버넌스 체계가 새로운 압력을 받고 있음을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Bitcoin 올인 vs 주택 자산 딜레마 — 개인 자산 배분의 극단화 현상</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #17~#18</span>
+    </div>
+    <div class="theme-summary">47세 투자자가 월급 전액을 Bitcoin 매입에 배분하며 '절대 팔지 않겠다'고 선언한 사례는, 고금리 환경에서도 암호화폐에 대한 개인 투자자의 극단적 확신이 유지되고 있음을 보여준다. 반대편에서는 80세 고령자가 저금리 모기지를 유지한 채 주택 보유를 지속할지, 계단 위험을 이유로 매각할지를 고민하는 현실이 대비된다. 두 사례 모두 자산 유동성과 인플레 헤지에 대한 개인의 인식이 극단적으로 분화되고 있음을 상징하며, 소매 투자 심리의 양극화를 나타낸다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #19~#28</span>
+    </div>
+    <div class="theme-summary">브라질 대선 1차 투표를 앞두고 Lula와 Flavio Bolsonaro가 마지막 유세를 마쳤으며 결과에 따라 남미 최대 경제국의 정책 방향이 바뀔 수 있다. 미국 중간선거가 주식 시장에 미칠 영향에 대한 분석이 제기됐고, 인도는 중국식 제조업 모델과 다른 독자적 경로로 제조업 미래를 모색하고 있다는 진단이 나왔다. Fed와 Mamdani를 연결한 정치적 논평, 테네시 교도소장 사임, Trump 아동 계좌 정책, Amazon AWS의 데이터센터 NDA 폐지, 남북한 DMZ 지뢰 폭발 사건, Genmab 난소암 신약 임상 결과 등도 보고됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">중동 에너지 인프라 타격과 핵 위협 동시 점화 — 지정학 리스크 프리미엄 재가속</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Netanyahu, '진정한 영웅' 인도 Flydubai 기장을 이스라엘로 초청</div>
+    <div class="article-title-en">Netanyahu invites ‘true hero’ Indian flydubai captain to Israel</div>
+    <div class="article-keypoint">Netanyahu, Flydubai 기장 초청 — 조종석 테러 사건이 이스라엘·걸프 외교 접점으로 부상</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/netanyahu-invites-true-hero-indian-flydubai-captain-to-israel" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 04:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">부기장이 도끼로 '테러 행위' — Flydubai 항공편 조종석서 공격</div>
+    <div class="article-title-en">Co-pilot used axe to carry out ‘terrorist act’ on Flydubai flight</div>
+    <div class="article-keypoint">Flydubai 조종사 도끼 테러 — 걸프 항공 안전 위협이 중동 불안 심리 복합 가중</div>
+    <a class="article-link" href="https://www.ft.com/content/36b90fa1-f61e-4563-8622-127cdb471101?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 02:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">전직 총리 'Putin, 우크라이나 전쟁 실책 인정 불가'</div>
+    <div class="article-title-en">Ex-PM says Russia’s Putin cannot admit ‘mistake’ over Ukraine war</div>
+    <div class="article-keypoint">전직 러 총리, 고유가 수혜 Putin의 우크라 실책 인정 불가 구조 진단 — 전쟁 장기화 경로 고착</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ex-pm-says-russias-putin-cannot-admit-mistake-over-ukraine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 03:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Putin '칼리닌그라드 공격 시 핵 포함 모든 무기 사용 준비됐다'</div>
+    <div class="article-title-en">Putin: Ready To Use 'All Weapons' Including Nuclear, If Kaliningrad Attacked</div>
+    <div class="article-keypoint">Putin, 칼리닌그라드 공격 시 핵 포함 모든 무기 사용 직접 경고 — NATO 압박 수위 최고조</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/putin-ready-use-all-weapons-including-nuclear-if-kaliningrad-attacked" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 17:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Aramco 핵심 정유시설서 검은 연기 포착, 사우디 후티 반군 대규모 공습 검토</div>
+    <div class="article-title-en">Black Smoke Reported Over Critical Aramco Refinery As Saudis Weigh Major Assault On Houthi Rebels</div>
+    <div class="article-keypoint">Aramco 리야드 정유시설 검은 연기 포착, 사우디 후티 대규모 보복 검토 — 원유 공급 리스크 상승</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/black-smoke-reported-over-critical-aramco-refinery-saudis-weigh-major-assault-houthi-rebels" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 21:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">예멘 후티 '미사일·드론으로 리야드 Aramco 시설 공격했다'</div>
+    <div class="article-title-en">Yemen’s Houthis say they attacked Aramco facility in Riyadh with missiles, drones</div>
+    <div class="article-keypoint">후티, Aramco 리야드 시설 미사일·드론 공격 선언 — 중동 에너지 인프라 직접 타격 현실화</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/yemens-houthis-say-they-attacked-aramco-facility-in-riyadh-with-missiles-drones-4930877" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 20:36 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 거버넌스 균열 심화 — OpenAI 안전리더 이탈·백악관 태스크포스 출범·자율규제 한계 노출</span>
+    <span class="theme-label-range">Article #7~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">전직 OpenAI 엔지니어 '원전처럼 AI에도 다층 안전장치 필요'</div>
+    <div class="article-title-en">Ex-OpenAI engineer says AI needs layers of safety, like nuclear plants</div>
+    <div class="article-keypoint">전직 OpenAI 엔지니어, AI 에이전트의 인류 위협 경고하며 원전급 다층 안전체계 촉구</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/ex-openai-engineer-says-ai-needs-layers-of-safety-like-nuclear-plants" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 05:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Bessent, 금리 상승·AI 버블 우려 일축</div>
+    <div class="article-title-en">Bessent Downplays Worries on Rising Yields, AI Bubble Concerns</div>
+    <div class="article-keypoint">Bessent, 미 국채금리 상승은 글로벌 트렌드 반영일 뿐 AI 버블 우려도 일축 — 시장 진화 시도</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-03/bessent-downplays-worries-on-rising-yields-ai-bubble-concerns" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 23:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">백악관, AI 기술 리스크 보고 위한 태스크포스 신설</div>
+    <div class="article-title-en">New White House AI Task Force to Report on the Techology’s Risks</div>
+    <div class="article-keypoint">백악관 AI 태스크포스 출범, Jay Clayton이 AI 차르로 리스크 보고 의무화 — 자율규제 병행 긴장</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/new-ai-task-force-to-report-on-risks-of-technology-after-public-and-industry-concerns-b6308bef?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 07:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">OpenAI 안전 책임자 퇴사 '조직 문화가 망가졌다' 경고</div>
+    <div class="article-title-en">OpenAI safety leader quits, warning AI company’s culture is ‘broken’</div>
+    <div class="article-keypoint">OpenAI 안전 리더 '조직 문화 붕괴' 경고 후 사직 — 내부 이탈 가속으로 거버넌스 신뢰 균열 심화</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/oct/03/openai-safety-leader-quits-warning-ai-companys-culture-is-broken" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 04:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Michael Milken이라면 AI 칩 파이낸싱을 어떻게 봤을까</div>
+    <div class="article-title-en">What Michael Milken Would See In AI Chip Financing</div>
+    <div class="article-keypoint">AI 칩 파이낸싱을 정크본드 신용거래처럼 분석 — 고수익채 시각에서 AI 자본 구조 취약성 경고</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/what-michael-milken-would-see-ai-chip-financing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 00:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">AI에 대한 대중 불안 커지는데 Trump는 자율규제 고수</div>
+    <div class="article-title-en">As public fears of AI grow, Trump digs in on voluntary safeguards</div>
+    <div class="article-keypoint">Trump, AI 공공 우려에도 자율규제 기조 고수 — 거버넌스 공백 리스크 정치적으로 내재화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/as-public-fears-of-ai-grow-trump-digs-in-on-voluntary-safeguards" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 19:50 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">터키 헤지펀드 $200억 멜트다운과 글로벌 금 시장 법적 위기 — 비주류 금융 취약성 경보</span>
+    <span class="theme-label-range">Article #13~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">런던 금 업계 단체의 법적 싸움이 불리온 시장 전체를 위협한다</div>
+    <div class="article-title-en">London Gold Body’s Legal Fight Exposes Threat to Bullion Market</div>
+    <div class="article-keypoint">런던 금 시장 업계 단체 존폐 걸린 법적 분쟁 — 글로벌 불리온 시장 공급망 감독 체계 위협</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-03/london-gold-body-s-legal-fight-exposes-threat-to-bullion-market" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 19:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">터키의 $200억 헤지펀드 멜트다운 처방: 승자들에게 돈 돌려달라고 요청</div>
+    <div class="article-title-en">Turkey's Fix For Its $20 Billion Hedge Fund Meltdown: Kindly Ask The Winners To Give The Money Back</div>
+    <div class="article-keypoint">터키 헤지펀드 $200억 멜트다운, 당국이 승자에게 반환 요청 — 시장 메커니즘 신뢰 훼손 전례</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/turkeys-fix-its-20-billion-hedge-fund-meltdown-kindly-ask-winners-give-money-back" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 21:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">ECB 총재 교체 레이스와 Oracle·Ellison 부채 리스크 — 유럽·빅테크 거버넌스 구조 변화</span>
+    <span class="theme-label-range">Article #15~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Paramount·Oracle 채권 폭증이 드러낸 Larry Ellison 집중 리스크</div>
+    <div class="article-title-en">Larry Ellison Risk Exposed by Paramount and Oracle Debt Binges</div>
+    <div class="article-keypoint">Oracle·Paramount 최대 규모 채권 발행, Ellison 집중 리스크에 월가 경계 — 빅테크 부채 구조 취약성</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-03/larry-ellison-risk-exposed-by-paramount-and-oracle-debt-binges" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Merz, ECB 총재 Lagarde 후임 유력 후보 두 명과 면담 예정</div>
+    <div class="article-title-en">Merz Will Meet Frontrunners for Lagarde Job as ECB Race Heats Up</div>
+    <div class="article-keypoint">Merz, ECB 총재 후임 후보 두 명 면담 예정 — 유럽 통화정책 리더십 교체 레이스 본격화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-03/merz-will-meet-frontrunners-for-lagarde-job-as-ecb-race-heats-up" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 16:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Bitcoin 올인 vs 주택 자산 딜레마 — 개인 자산 배분의 극단화 현상</span>
+    <span class="theme-label-range">Article #17~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">'절대 안 판다': 47세인 나는 버는 돈마다 Bitcoin을 산다 — 미친 걸까?</div>
+    <div class="article-title-en">‘I’m never selling’: I’m 47 and buy bitcoin with every dollar I earn. Am I crazy?</div>
+    <div class="article-keypoint">월급 전액 Bitcoin 매입 47세 투자자 — 암호화폐 극단적 확신이 개인 포트폴리오 리스크 집중 심화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/im-never-selling-im-47-and-buy-bitcoin-with-every-dollar-i-earn-am-i-crazy-364d2a64?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 00:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">'주택 자산 $40만 보유 중인 80세': 위험한 계단 때문에 팔아야 할까, 리모델링해야 할까?</div>
+    <div class="article-title-en">‘I have $400,000 in equity’: I’m 80. Should I sell my house because of dangerous stairs — or spend thousands renovating?</div>
+    <div class="article-keypoint">80세 고령자의 주택 매각 vs 리모델링 딜레마 — 고금리 모기지 고착화의 소매 자산 배분 영향</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/i-have-a-low-interest-rate-im-80-years-old-should-i-move-out-of-my-house-because-of-dangerous-stairs-389c3c7b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 01:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #19~#28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Fed가 Zohran Mamdani를 만들었다</div>
+    <div class="article-title-en">The Fed Created Zohran Mamdani</div>
+    <div class="article-keypoint">Fed 정책이 좌파 포퓰리스트 정치인 부상을 초래했다는 정치적 논평 — 통화정책 사회적 파급 재조명</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/fed-created-zohran-mamdani" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">브라질 Lula·Flavio Bolsonaro, 1차 대선 투표 앞두고 선거운동 마무리</div>
+    <div class="article-title-en">Brazil's Lula, Flavio Bolsonaro wrap up campaigns ahead of first-round vote</div>
+    <div class="article-keypoint">브라질 대선 1차 투표 임박 — Lula vs Bolsonaro 결과에 따라 남미 최대 경제국 정책 방향 분기</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/brazils-lula-flavio-bolsonaro-wrap-up-campaigns-ahead-of-first-round-vote" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 05:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">연방판사, Flock을 '무차별 대중 감시'로 규정</div>
+    <div class="article-title-en">Federal judge calls Flock ‘indiscriminate mass surveillance’</div>
+    <div class="article-keypoint">연방판사, Flock 번호판 무단 조회를 수정헌법 4조 위반 판결 — 감시 기술 법적 제동</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/03/federal-judge-calls-flock-indiscriminate-mass-surveillance/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 04:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">재무부, 아동 6,000만 명에 Trump 계좌 개설 — 수령 위해 가족이 추가 조치 필요</div>
+    <div class="article-title-en">The Treasury Department started Trump accounts for 60 million kids — but families still have to take this step if they want one</div>
+    <div class="article-keypoint">Trump 정부, 아동 계좌에 $1,000 종잣돈 지급 시작 — 부모 별도 신청 절차 필요</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-treasury-department-started-trump-accounts-for-60-million-kids-but-families-still-have-to-take-this-step-if-they-want-one-003d9282?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 00:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Amazon, 데이터센터 반발에 NDA 더 이상 사용 안 한다고 해명</div>
+    <div class="article-title-en">Amazon responds to data center backlash, says it no longer uses NDAs</div>
+    <div class="article-keypoint">Amazon AWS CEO, 데이터센터 NDA 폐지 발표 — 투명성 압박에 대한 방어적 대응</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/03/amazon-responds-to-data-center-backlash-says-it-no-longer-uses-ndas/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 03:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">테네시 교도소 수장, Christa Pike 집행 실패 후 사임</div>
+    <div class="article-title-en">Tennessee’s top prison official resigning after botched execution of Christa Pike</div>
+    <div class="article-keypoint">테네시 교도소장, 사형 집행 실패 여파로 사임 — 교정 시스템 신뢰 추가 훼손</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/oct/03/tennessee-christa-pike-frank-strada" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 02:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">미국 중간선거: 주식시장에 미칠 예상 영향 분석</div>
+    <div class="article-title-en">U.S. midterms: Breaking down expected impact on equities</div>
+    <div class="article-keypoint">미국 중간선거가 주식시장에 미칠 섹터별 영향 분석 — 정치 리스크 자산 가격 반영 선제 점검</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/us-midterms-breaking-down-expected-impact-on-equities-4930882" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 20:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">인도의 제조업 미래는 중국 모델이 아니다</div>
+    <div class="article-title-en">India’s Manufacturing Future Is Not the China Model: New Economy</div>
+    <div class="article-keypoint">인도 제조업, 중국 모델 아닌 독자 경로로 스케일업 — 글로벌 공급망 다변화 구조 변화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-10-03/india-s-manufacturing-future-is-not-the-china-model-new-economy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 19:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Genmab, 난소암 신약 후보 임상 결과 발표</div>
+    <div class="article-title-en">Genmab reports trial results for ovarian cancer drug candidate</div>
+    <div class="article-keypoint">Genmab 난소암 신약 임상 결과 발표 — 바이오 파이프라인 리스크 이벤트</div>
+    <a class="article-link" href="https://www.investing.com/news/company-news/genmab-reports-trial-results-for-ovarian-cancer-drug-candidate-93CH-4930878" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 19:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">한국: DMZ 폭발로 북한과의 대화 재개 희망에 먹구름</div>
+    <div class="article-title-en">South Korea: Explosions in the DMZ threaten hopes for renewed dialogue with North Korea</div>
+    <div class="article-keypoint">남북 DMZ 지뢰 폭발로 한국인 3명 부상 — 남북 대화 재개 시도에 긴장 고조 변수 등장</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/10/03/south-korea-explosions-in-the-dmz-threaten-hopes-for-renewed-dialogue-with-north-korea_6758215_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/03 22:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
