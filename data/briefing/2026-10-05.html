@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-05 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/05 07:48 KST</div>
+    <div class="header-date">2026-10-05</div>
+    <div class="header-headline">Jay Clayton, 백악관 AI 차르 임명 — AI 거버넌스 권력 재편</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">FOMC 의사록 공개 임박 및 OpenAI 사이버보안 조사 확대 — AI·금리 양대 변수 동시 점화</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 거버넌스 권력 재편 — Clayton AI 차르 임명·OpenAI 법적 포위망 가속</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#8</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 국가정보국장 Jay Clayton을 백악관 AI 차르로 겸임 임명하면서 AI 거버넌스가 정보·안보 라인으로 통합되는 구조적 전환이 발생했다. 이는 기존 기술 중심 자율규제 기조에서 국가안보 주도 AI 통제 체계로의 방향 전환을 시사한다. 동시에 캘리포니아 법무장관이 OpenAI에 사이버보안 관련 조사 소환장을 발부하고, 내부 해킹 수십 건 발각으로 법적 소송 리스크가 가중되고 있다. OpenAI 안전 리더의 퇴임 및 '조직 문화 붕괴' 경고, Anthropic 전 연구원의 뉴욕시 AI 청문회 증언까지 맞물리며 빅테크 AI 생태계 전반에 대한 외부 규제 압력이 임계점에 달하고 있다. Trump의 '슈퍼 인텔리전스 포스' 출범과 비구속적 안전 협약은 실질적 거버넌스 공백을 메우기보다 이미지 관리 성격이 강하다는 비판이 제기된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Fed 독립성 vs 정치 압박 — Hassett 발언·FOMC 의사록 대기</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #9~#10</span>
+    </div>
+    <div class="theme-summary">Trump 수석 경제보좌관 Kevin Hassett이 Powell 전 의장에게 Fed 이사회에서 물러날 것을 공개 촉구하면서 Fed 독립성 논란이 재점화됐다. 내부 감사 보고서가 Fed 본사 리노베이션 사업의 경영 실패를 지적한 것을 빌미로 정치적 압력이 가해지는 양상으로, 트럼프 행정부의 Fed 장악 시도가 구체화되는 신호로 읽힌다. 이번 주 공개 예정인 9월 FOMC 의사록은 실질 기준금리가 예상보다 낮다는 평가 속에 추가 금리 인상 여부에 대한 단서를 제공할 핵심 이벤트로 시장이 주목하고 있다. Fed 독립성 훼손 우려와 통화정책 불확실성이 동시에 가중되며 금리 민감 자산 전반의 변동성 확대 가능성이 높아지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">지정학 복합 리스크 — 이란 제재·우크라이나 드론·중동 에너지 타격</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#17</span>
+    </div>
+    <div class="theme-summary">Bessent 재무장관이 이란의 석유 수출 수입이 사상 처음으로 '제로'에 근접했다고 밝히며 대이란 최대 압박 전략이 현실화되고 있음을 확인했다. 한편 Houthi의 사우디 Aramco 시설 공격으로 유가가 상승하며 중동 에너지 인프라 리스크 프리미엄이 재부각됐다. 우크라이나 전선에서는 Zelensky가 러시아의 북한과의 제트드론 기술 공유 가능성을 제기하고, 독일 Merz 총리가 전격 키이우를 방문해 3억 5천만 유로 에너지 분야 지원을 발표하며 유럽의 대우크라이나 지지를 재확인했다. 미국은 10월 말까지 러·우 회담 개최를 추진하고 있으나 이란전에 주의가 분산된 상황으로, 지정학 리스크가 에너지·방산·신흥국 자산 전반에 복합 압력으로 작용하고 있다. 이란 항공편에 대한 미국의 제재 면제 일부 허용은 이라크를 통한 외교적 창구를 열어두려는 신호로 해석된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">관세·무역 긴장 재점화 — 영국·EU의 중국 EV 관세 공조</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#20</span>
+    </div>
+    <div class="theme-summary">영국이 EU의 요구에 부응해 중국산 전기차에 관세를 부과할 준비를 갖추고 있다는 보도가 나오면서 서방의 대중국 EV 무역장벽이 광범위하게 확산되는 양상이다. EU가 선도한 대중국 EV 관세 정책이 영국으로 전이되는 흐름은 브렉시트 이후에도 무역정책에서 유럽과의 실질적 공조가 이어지고 있음을 보여준다. 이는 중국 EV 업체들의 유럽 시장 진출 전략에 직접적 타격을 주는 동시에, 글로벌 무역 분절화가 에너지 전환 산업으로까지 확장되고 있음을 시사한다. 신흥시장 투자자들은 캐리 트레이드 전략을 유지하고 있으나, 다방면의 관세 압력과 미 국채 금리 고점이 맞물려 하방 리스크가 누적되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">핵에너지 르네상스 가속 — WNA 2026 '설득 불필요' 선언과 공급망 경쟁</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#22</span>
+    </div>
+    <div class="theme-summary">세계원자력협회(WNA) 2026 심포지엄에서 '핵의 논쟁은 끝났다'는 선언이 나오며 원전 산업이 10년 전 생존 위기에서 패권 경쟁 국면으로 완전히 전환됐음이 공식화됐다. 이제 업계의 초점은 설득에서 우라늄·부품 등 공급망 확보 경쟁으로 이동하고 있으며, 각국이 '3위 자리'를 두고 치열하게 다투는 구도가 형성됐다. 우주 기반 태양광 발전에 대한 미 국방부의 계약 체결은 차세대 에너지 인프라 투자가 우주·방산 영역까지 확장되고 있음을 보여주는 또 다른 신호다. 에너지 전환 가속화 속에서 핵에너지와 우주 태양광이라는 비전통 에너지원에 대한 자본 배분이 실질적으로 증가하는 흐름이 확인된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #23~#30</span>
+    </div>
+    <div class="theme-summary">로보택시 규제, Schneider Electric의 PTC 200억 달러 인수 협상, 미군 TRICARE 사기 사건, 영국 기차 내 폭력 급증, 플라이두바이 공격 후속 조사, 미국 대학 입학 절벽 현상, JD Vance의 2028 대선 포석 등 다양한 사회·산업 이슈가 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 거버넌스 권력 재편 — Clayton AI 차르 임명·OpenAI 법적 포위망 가속</span>
+    <span class="theme-label-range">Article #1~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">캘리포니아 법무장관, 사이버보안 조사 관련 OpenAI에 소환장 발부</div>
+    <div class="article-title-en">California Attorney General Subpoenas OpenAI In Cybersecurity Inquiry</div>
+    <div class="article-keypoint">캘리포니아 법무장관, OpenAI에 사이버보안 조사 소환장 — 법적 포위망 가속</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/california-attorney-general-subpoenas-openai-cybersecurity-inquiry" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Trump, 정보국장 Jay Clayton을 새 백악관 AI 차르로 임명</div>
+    <div class="article-title-en">Trump names intelligence chief Jay Clayton as new White House AI czar</div>
+    <div class="article-keypoint">Jay Clayton 국가정보국장, 백악관 AI 차르 겸임 — 안보 라인의 AI 거버넌스 장악</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/oct/04/trump-jay-clayton-white-house-ai-czar" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 02:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">'슈퍼 인텔리전스'와 비구속적 안전 협약으로 AI의 이미지 문제를 해결할 수 있을까?</div>
+    <div class="article-title-en">Can ‘super intelligence’ and a non-binding safety pact solve AI’s image problem?</div>
+    <div class="article-keypoint">Trump '슈퍼 인텔리전스' 비구속적 협약 출범 — 실질 거버넌스 공백 비판 고조</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/04/can-super-intelligence-and-a-non-binding-safety-pact-solve-ais-image-problem/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 05:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Anthropic 전 연구원 Coxon, 뉴욕시 AI 청문회 증언 예정 — Bloomberg 보도</div>
+    <div class="article-title-en">Former Anthropic researcher Coxon to testify at New York City AI hearing, Bloomberg News reports</div>
+    <div class="article-keypoint">Anthropic 전 연구원, 뉴욕시 AI 청문회 증언 예정 — 의회 차원 AI 규제 압력 현실화</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/former-anthropic-researcher-coxon-to-testify-at-new-york-city-ai-hearing-bloomberg-news-reports-4930955" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 20:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">OpenAI 수십 건 해킹 발각으로 Altman의 법적 리스크 가중</div>
+    <div class="article-title-en">Legal risks pile up for Altman as OpenAI uncovers dozens of hacks</div>
+    <div class="article-keypoint">OpenAI 내부 해킹 수십 건 발각 — ChatGPT 운영사 법적 소송 리스크 급부상</div>
+    <a class="article-link" href="https://www.ft.com/content/2c24ece3-ac99-43a8-b0e6-4a3867e37ebf?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump, 새로운 '슈퍼 인텔리전스 포스' 출범 발표</div>
+    <div class="article-title-en">Trump unveils his new Super Intelligence Force</div>
+    <div class="article-keypoint">Trump '슈퍼 인텔리전스 포스' 출범 — AI 안전 논쟁에 대한 행정부의 정치적 대응</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/04/trump-unveils-his-new-super-intelligence-force/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 00:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">OpenAI 안전 리더 퇴임, AI 기업 문화 '붕괴' 경고</div>
+    <div class="article-title-en">OpenAI safety leader quits, warning AI company’s culture is ‘broken’</div>
+    <div class="article-keypoint">OpenAI 안전 리더 퇴임, '문화 붕괴' 경고 — 안전 거버넌스 내부 붕괴 심화</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/oct/03/openai-safety-leader-quits-warning-ai-companys-culture-is-broken" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 16:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">오피니언 | 인공지능을 무기처럼 간주하라</div>
+    <div class="article-title-en">Opinion | Think of Artificial Intelligence Like a Weapon</div>
+    <div class="article-keypoint">AI를 무기처럼 간주해야 한다는 시각 — 거버넌스 프레임 전환 논의 확산</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/think-of-artificial-intelligence-like-a-weapon-0d541abc?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 01:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Fed 독립성 vs 정치 압박 — Hassett 발언·FOMC 의사록 대기</span>
+    <span class="theme-label-range">Article #9~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Trump 보좌관 Hassett, Powell에 Fed 이사회 '떠나라' 촉구</div>
+    <div class="article-title-en">Trump Aide Hassett Says Powell Should ‘Move On’ From Fed Board</div>
+    <div class="article-keypoint">Powell 퇴진 압박 공식화 — 감사 보고서 빌미로 Fed 독립성 훼손 리스크 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-04/trump-aide-hassett-says-powell-should-move-on-from-fed-board" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 00:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">이번 주 공개되는 Fed 의사록, 향후 금리 인상 경로에 중요한 단서 제공 가능</div>
+    <div class="article-title-en">Fed minutes coming this week could give markets important clues about future rate hikes</div>
+    <div class="article-keypoint">9월 FOMC 의사록 이번 주 공개 — 실질금리 저평가 논란 속 인상 경로 단서 주목</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/fed-minutes-coming-this-week-could-give-markets-important-clues-about-future-rate-hikes-31bfba5b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">지정학 복합 리스크 — 이란 제재·우크라이나 드론·중동 에너지 타격</span>
+    <span class="theme-label-range">Article #11~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">미 재무부, 일부 이란 항공편의 이라크 운항에 대해 제재 면제 부여</div>
+    <div class="article-title-en">US Treasury Grants Sanctions Waiver For Some Iranian Flights To Iraq</div>
+    <div class="article-keypoint">미국, 이란항공 일부 이라크 노선 제재 면제 — 외교 채널 유지 시도 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/us-treasury-grants-sanctions-waiver-some-iranian-flights-iraq" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">"역사상 처음": Bessent, 이란 석유 수입이 탱커 선적 급감으로 제로에 달했다고 발언</div>
+    <div class="article-title-en">"First Time In History": Bessent Says Iran Faces Zero Oil Revenue As Tanker Loadings Collapse</div>
+    <div class="article-keypoint">Bessent, 이란 석유 수입 사상 첫 '제로' 선언 — 대이란 최대 압박 전략 현실화</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/first-time-history-bessent-says-iran-faces-zero-oil-revenue-tanker-loadings-collapse" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Merz, 키이우서 추가 군사 지원 발표, 독일은 위협에 굴하지 않을 것</div>
+    <div class="article-title-en">Merz unveils fresh military aid in Kyiv, says Germany won’t be intimidated</div>
+    <div class="article-keypoint">Merz, 키이우 방문·에너지 3.5억 유로 지원 — 유럽의 우크라이나 지지 재확인</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/merz-unveils-fresh-military-aid-in-kyiv-says-germany-wont-be-intimidated" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 01:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">우크라이나, 러시아가 북한에 제트드론 기술 공유한 것으로 판단 — Zelensky</div>
+    <div class="article-title-en">Ukraine believes Russia shared jet-drone technology with North Korea, says Zelenskiy</div>
+    <div class="article-keypoint">러시아, 북한에 제트드론 기술 공유 가능성 — 전장 기술 확산 리스크 부각</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraine-believes-russia-shared-jet-drone-technology-with-north-korea-says-zelenskiy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 01:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Zelensky, 미국이 10월 말까지 러·우 회담 추진 희망한다고 밝혀</div>
+    <div class="article-title-en">Zelensky says US wants to hold talks with Russia, Ukraine by the end of October</div>
+    <div class="article-keypoint">미국, 10월 말 러·우 회담 추진 — 이란전 분산 속 중재 동력 한계 노출</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelensky-says-us-wants-to-hold-talks-with-russia-ukraine-by-the-end-of-october" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 23:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">예멘 Houthi의 Saudi Aramco 시설 공격 이후 유가 상승</div>
+    <div class="article-title-en">Oil climbs after Yemeni Houthis attack Saudi Aramco sites</div>
+    <div class="article-keypoint">Houthi의 Saudi Aramco 공격으로 유가 상승 — 중동 에너지 리스크 프리미엄 재점화</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/oil-climbs-after-yemeni-houthis-attack-saudi-aramco-sites-4930963" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 22:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">러시아, Merz의 키이우 방문 당일 공습</div>
+    <div class="article-title-en">Russia strikes hit Kyiv as Germany’s Merz visits</div>
+    <div class="article-keypoint">러시아, Merz 방문 당일 키이우 공습 — 유럽 외교 압박에 군사적 맞대응</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/russia-strikes-hit-kyiv-as-germanys-merz-visits" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 18:11 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">관세·무역 긴장 재점화 — 영국·EU의 중국 EV 관세 공조</span>
+    <span class="theme-label-range">Article #18~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">영국, EU 압박에 중국산 EV에 관세 부과 예정 — Times 보도</div>
+    <div class="article-title-en">UK Expected to Follow EU With Tariffs on Chinese EVs, Times Says</div>
+    <div class="article-keypoint">영국, 중국산 EV 관세 부과 준비 — EU 공조로 서방 무역장벽 광역화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-04/uk-expected-to-follow-eu-with-tariffs-on-chinese-evs-times-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 06:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">신흥국 투자자들, 분기 손실에도 캐리 트레이드 전략 고수</div>
+    <div class="article-title-en">EM Investors Shrug Off Quarter’s Pullback, Double Down on Carry Trades</div>
+    <div class="article-keypoint">신흥시장 캐리 트레이드 유지 — 국채 고금리 속에서도 포지션 청산 없어</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-04/em-investors-shrug-off-quarter-s-pullback-double-down-on-carry-trades" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 21:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">영국, EU 무역 압박 속 중국산 EV 관세 부과 예정 — 보도</div>
+    <div class="article-title-en">UK set to impose Chinese EV levies amid EU trade pressure - report</div>
+    <div class="article-keypoint">영국, 중국 EV 관세 부과 전망 — EU 압박에 브렉시트 영국도 동참</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/uk-set-to-impose-chinese-ev-levies-amid-eu-trade-pressure--report-4930962" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 21:42 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">핵에너지 르네상스 가속 — WNA 2026 '설득 불필요' 선언과 공급망 경쟁</span>
+    <span class="theme-label-range">Article #21~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">"더 이상 설득할 필요 없다": WNA 2026에서 핵이 논쟁을 마감하다... 이제 모두가 3위를 향해 경쟁 중</div>
+    <div class="article-title-en">"We Don't Need To Sell The Story Anymore": Nuclear Wins The Argument At WNA 2026... Now Everyone Is Racing For Bronze</div>
+    <div class="article-keypoint">WNA 2026 '핵 설득 불필요' 선언 — 공급망 확보 경쟁 단계로 전환</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/we-dont-need-sell-story-anymore-nuclear-wins-argument-wna-2026-now-everyone-racing-bronze" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 21:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">미 국방부, 우주에서 태양광 에너지를 전송하는 야심찬 계획 지원</div>
+    <div class="article-title-en">Pentagon Backs Ambitious Plan to Beam Solar Power From Space</div>
+    <div class="article-keypoint">미 국방부, 우주 태양광 발전 계약 체결 — 에너지 안보의 우주 인프라 확장</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Pentagon-Backs-Ambitious-Plan-to-Beam-Solar-Power-From-Space.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 04:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #23~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Netanyahu, 플라이두바이 공격 이후 이스라엘 취항 항공편 보안 점검 지시</div>
+    <div class="article-title-en">Netanyahu orders security review of flights to Israel after flydubai attack</div>
+    <div class="article-keypoint">플라이두바이 공격 후 Netanyahu, 이스라엘 취항 항공편 보안 점검 지시</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/netanyahu-orders-security-review-of-flights-to-israel-after-flydubai-attack" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 03:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">'폭력이 도를 넘었다': 영국 열차 내 승객·직원 대상 폭행 사건 사상 최고치 급증</div>
+    <div class="article-title-en">‘The violence is off the scale’: staff and passengers at risk as assaults on trains in Great Britain soar to record high</div>
+    <div class="article-keypoint">영국 열차 내 폭력 사건 사상 최고 급증 — 치안 공백의 사회적 비용 가시화</div>
+    <a class="article-link" href="https://www.theguardian.com/uk-news/2026/oct/04/violence-rail-workers-passengers-risk-assaults-uk-railways-soar-record-high-transport" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Schneider Electric, PTC를 200억 달러 이상에 인수하는 계약 체결 임박</div>
+    <div class="article-title-en">Schneider Said to Near Deal to Buy PTC for More Than $20 Billion</div>
+    <div class="article-keypoint">Schneider Electric, PTC 200억 달러 이상 인수 협상 임박 — 산업 소프트웨어 M&A 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-04/schneider-said-to-near-deal-to-buy-ptc-for-more-than-20-billion" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 05:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">수백만 달러 TRICARE 사기 — 금도금 Cybertruck과 카지노 파티에 탕진</div>
+    <div class="article-title-en">Multi-Million Dollar TRICARE Fraud Bought A Gold-Plated Cybertruck And Casino Parties</div>
+    <div class="article-keypoint">수백만 달러 군 의료보험 사기 — 금도금 사이버트럭·카지노 파티로 탕진</div>
+    <a class="article-link" href="https://www.zerohedge.com/medical/multi-million-dollar-tricare-fraud-bought-gold-plated-cybertruck-and-casino-parties" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">미국 대학을 강타하는 입학 절벽의 실상</div>
+    <div class="article-title-en">Inside the Enrollment Cliff Hitting US Colleges</div>
+    <div class="article-keypoint">미국 대학 입학 절벽 — 인구 감소로 고정비 부담 심화, 구조조정 불가피</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-04/inside-the-enrollment-cliff-hitting-us-colleges-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 23:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">호주 당국, 플라이두바이 공격범의 호주 연계 여부 조사</div>
+    <div class="article-title-en">Australian authorities probe Flydubai attacker’s links to country</div>
+    <div class="article-keypoint">플라이두바이 공격범 호주 연계 조사 — 다국적 테러 네트워크 가능성 주목</div>
+    <a class="article-link" href="https://www.ft.com/content/488b479d-cd2f-401e-887e-97ce639d0329?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 18:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">TechCrunch Mobility: 로보택시 규제 강화 논의</div>
+    <div class="article-title-en">TechCrunch Mobility: Reining in robotaxis</div>
+    <div class="article-keypoint">로보택시 규제 강화 논의 진행 — AI 자율주행 상용화의 법적 장벽 재부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/04/techcrunch-mobility-reining-in-robotaxis/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/05 01:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">JD Vance, MAHA 인맥 강화하며 2028년 대선 포석</div>
+    <div class="article-title-en">JD Vance flexing Maha connections as he eyes 2028 election</div>
+    <div class="article-keypoint">JD Vance, MAHA 연대 강화 — 2028 대선 포석과 공화당 내 세력 재편 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/oct/04/jd-vance-maha-2028-election" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/04 23:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
