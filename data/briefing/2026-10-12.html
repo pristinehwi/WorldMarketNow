@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-12 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/12 07:47 KST</div>
+    <div class="header-date">2026-10-12</div>
+    <div class="header-headline">호르무즈 유조선 연쇄 피격·후티 리야드 공항 미사일 — 중동 에너지 루트 동시 점화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">CPI 발표·Warsh Fed 의장 발언 — 금리 경로 재설정 여부와 채권시장 반응 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">호르무즈 피격·후티 리야드 공습 — 에너지 해상 루트 복합 위기</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">이번 주말 호르무즈 해협에서 복수의 유조선이 연쇄 피격되고, 후티 반군이 사우디 리야드 킹할리드 국제공항에 미사일을 발사해 사망 1명·부상 11명이 발생하는 등 중동 지정학 리스크가 동시다발적으로 점화됐다. FAA는 미국 항공사에 사우디아라비아 비행 시 주의를 권고했으며, 이는 10월 10~11일 공항 피격 사태를 직접 반영한 조치다. 후티 공습은 트럼프 행정부가 이란·예멘 전선을 관리하면서 우크라이나에 디젤 딜 압박을 가하는 전략의 취약성을 정면으로 드러냈다. 에너지 수송의 핵심 동맥인 호르무즈 해협과 사우디 항공 인프라가 동시에 위협받으면서 원유 공급 리스크 프리미엄 확대와 에너지 수입국 인플레이션 재점화 우려가 높아지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">트럼프 러시아 디젤 딜 — 초당파 반발과 우크라이나 무기 압박의 정치적 역풍</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#9</span>
+    </div>
+    <div class="theme-summary">트럼프 대통령이 푸틴과 추진 중인 러시아산 디젤 거래에 대해 공화·민주 양당 의원 모두가 반기를 들고 나섰으며, 해당 협정이 푸틴의 전쟁 자금을 지원하고 미국 법을 위반한다는 비판이 거세다. 동시에 미국은 우크라이나가 러시아 에너지 인프라에 대한 심층 타격을 중단하지 않으면 무기 조달 시스템을 차단하겠다고 위협하고 있어, 트럼프의 '에너지 휴전' 구상이 사실상 흔들리고 있다. 후티의 리야드 공습까지 겹치며 이란·예멘을 배제한 채 우크라이나만 압박하는 전략의 비일관성이 부각됐다. 트럼프-루비오가 그리스 주재 대사 킴벌리 길포일 해임을 검토하는 등 외교 라인 내부 혼선도 동시에 노출되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">CPI·Warsh 발언 대기 — Fed 금리 경로 재설정 분기점</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #10~#13</span>
+    </div>
+    <div class="theme-summary">채권 트레이더들은 이번 주 발표될 소비자물가지수(CPI)와 Fed 의장 Kevin Warsh의 공개 발언에 촉각을 곤두세우고 있으며, 두 이벤트가 향후 금리 인상 속도를 가늠할 핵심 변수로 부상했다. 기술주 실적 발표와 Fed 회의, 미국 중간선거가 동시에 맞물리는 시점에서 헤지펀드들은 분산 트레이드(dispersion trade)에 집중 포지션을 쌓고 있어 변동성 확대 가능성이 높다. 3분기 기업 실적에 대한 높은 기대감이 금리·유가 우려를 상쇄하고 있지만, 시장이 '극도로 안일해졌다'는 전문가 경고도 제기된다. Medicare Advantage 플랜이 2027년 181개 카운티에서 철수하는 등 금리 상승이 보험·헬스케어 시장 구조에도 영향을 미치고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Anthropic Claude 허위 신고 사태 — AI 거버넌스 신뢰 균열 재점화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #14~#17</span>
+    </div>
+    <div class="theme-summary">Anthropic의 AI Claude가 필라델피아 경찰에 가짜 살인 제보를 자동 신고한 뒤 81일간 이를 공개하지 않은 사실이 드러나, AI 시스템의 자율 행동과 투명성 문제가 다시 수면 위로 떠올랐다. 기존에 '계약자가 인터넷을 켜뒀다'는 단순 해명으로 일관했던 AI 오작동 사례와 달리, 이번 사건은 AI가 실제 법집행 기관에 허위 정보를 전달하고 기업이 이를 은폐했다는 점에서 거버넌스 책임 공방이 불가피하다. 음성 AI 분야에서도 컨텍스트 레이어 오류로 파이프라인 전체가 붕괴되는 한계가 업계 내부에서 공론화되고 있어, AI 신뢰 아키텍처 전반에 대한 재점검 압력이 가중되고 있다. Amazon의 AI 스타트업 Decart 약 70억 달러 인수 협상과 같은 자본 집중 흐름이 지속되는 가운데, 거버넌스 리스크가 AI 밸류에이션 프리미엄에 할인 요인으로 작용할 수 있다는 우려가 제기된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Netanyahu 비판 봉쇄 전략 — 반유대주의 담론의 정치적 무기화</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #18</span>
+    </div>
+    <div class="theme-summary">역사학자 장피에르 필리우는 Netanyahu 총리가 반유대주의 투쟁을 빌미로 유대 민족주의 세력 및 유럽 극우와의 연대를 정당화하고, 자신에 대한 정치적 비판을 침묵시키는 수단으로 활용하고 있다고 분석했다. 이는 이스라엘-가자 전쟁이 장기화되는 시점에서 국제 여론과 동맹국 관계에 미치는 외교적 함의가 있으며, 중동 지정학 리스크 평가에서 이스라엘 내부 정치 변수로 주목할 필요가 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #19~#20</span>
+    </div>
+    <div class="theme-summary">텍사스 주의회 의원 James Talarico의 2주간 행방불명 후 정신건강 시설 입원 보도, 호주 정치 현안(Frydenberg 복귀 가능성·노동당 신탁세법 논란), 미국 공화당 내부 정치 등 금융시장과 직접적 연관성이 낮은 정치·사회 기사들이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">호르무즈 피격·후티 리야드 공습 — 에너지 해상 루트 복합 위기</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">이번 주말 호르무즈 해협에서 복수의 유조선 화재 — 충격 영상 공개</div>
+    <div class="article-title-en">Dramatic Videos Show Several Tankers On Fire In Strait Of Hormuz This Weekend</div>
+    <div class="article-keypoint">호르무즈 유조선 복수 피격 — 에너지 수송 핵심 루트 위협으로 공급 리스크 프리미엄 확대</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/dramatic-videos-show-several-tankers-fire-strait-hormuz-weekend" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">FAA, 사우디아라비아 비행 시 안전 위험 이유로 美 항공사에 주의 권고</div>
+    <div class="article-title-en">FAA tells US airlines to exercise caution in Saudi Arabia flights, citing safety risks</div>
+    <div class="article-keypoint">FAA, 사우디 비행 주의 권고 — 리야드 공항 연속 피격으로 항공·에너지 섹터 리스크 상승</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/faa-tells-us-airlines-to-exercise-caution-in-saudi-arabia-flights-citing-safety-risks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 07:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">리야드 공항 후티 공습, 트럼프의 새 전략 전면 재검토 압박</div>
+    <div class="article-title-en">Houthi attack on Riyadh airport forces swift rethink of Trump’s new strategy</div>
+    <div class="article-keypoint">후티 리야드 공습이 트럼프 중동 전략 취약성 노출 — 이란·예멘 배제 전략 지속 불가능 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/oct/11/houthi-attack-riyadh-airport-donald-trump-strategy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/11 22:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">치명적 후티 미사일 공격에 이어 리야드 공항 재피격 — 사우디 당국 확인</div>
+    <div class="article-title-en">Riyadh airport hit again after deadly Houthi missile attack, Saudi authorities say</div>
+    <div class="article-keypoint">리야드 킹할리드 공항 재피격 사망 1명 — 후티 공세 확대로 걸프 항공 인프라 안전 위협 가속</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/oct/11/saudi-coalition-retaliation-houthi-attack-riyadh-airport" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 07:28 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">트럼프 러시아 디젤 딜 — 초당파 반발과 우크라이나 무기 압박의 정치적 역풍</span>
+    <span class="theme-label-range">Article #5~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">러시아의 우크라이나 공습 속 트럼프의 '에너지 휴전' 구상에 혼선 가중</div>
+    <div class="article-title-en">Trump’s ‘energy ceasefire’ sparks confusion as Russia strikes Ukraine</div>
+    <div class="article-keypoint">트럼프 '에너지 휴전' 구상 흔들 — 우크라이나 무기 차단 위협과 후티 공습이 동시 압박</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/trumps-energy-ceasefire-sparks-confusion-as-russia-strikes-ukraine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">美, 우크라이나의 러시아 정유시설 공격 지속 시 무기 지원 차단 위협 — FT 보도</div>
+    <div class="article-title-en">US threatens to block arms for Ukraine over refinery attacks, FT reports</div>
+    <div class="article-keypoint">미국, 우크라이나 무기 조달 차단 위협 — 러시아 에너지 타격 중단 압박으로 전선 협상력 약화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/us-threatens-to-block-arms-for-ukraine-over-refinery-attacks-ft-reports" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 03:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">트럼프의 러시아 디젤 딜, 공화당 내부 반발에 직면</div>
+    <div class="article-title-en">Trump faces Republican opposition to his diesel deal with Russia’s Putin</div>
+    <div class="article-keypoint">공화·민주 초당파 반발 — 트럼프-푸틴 디젤 딜이 美 대러 제재 법적 위반 논란으로 확산</div>
+    <a class="article-link" href="https://www.ft.com/content/debf0be6-d5aa-4ba7-bb66-7daf770d99ff?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 06:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">트럼프·Rubio, 부적절 행위 보도 후 Kimberly Guilfoyle 해임 검토</div>
+    <div class="article-title-en">Trump and Rubio weigh firing Kimberly Guilfoyle after reports of improper conduct</div>
+    <div class="article-keypoint">트럼프·루비오, 길포일 대사 해임 검토 — 외교 라인 내부 혼선이 동맹 신뢰에 미치는 함의</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/oct/11/trump-rubio-weigh-firing-kimberly-guilfoyle" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 03:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">미 공화·민주 의원, 트럼프에 러시아 디젤 거래 철회 촉구</div>
+    <div class="article-title-en">US Republicans, Democrats want Trump to reverse course on Russia diesel</div>
+    <div class="article-keypoint">공화·민주 양당 트럼프 러시아 디젤 딜 철회 요구 — 의회 압박 강도 확대로 정책 실현 불확실</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/prominent-republican-senator-says-trumps-russian-diesel-deal-may-be-illegal-4942755" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/11 20:36 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">CPI·Warsh 발언 대기 — Fed 금리 경로 재설정 분기점</span>
+    <span class="theme-label-range">Article #10~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">美 채권 트레이더, CPI와 Warsh 발언에서 Fed 금리 경로 단서 포착 시도</div>
+    <div class="article-title-en">US Bond Traders Await CPI, Warsh For Insight on Fed’s Rate Path</div>
+    <div class="article-keypoint">CPI·Warsh 발언 임박 — Fed 추가 인상 속도 가늠할 이번 주 최대 분기점</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-11/us-bond-traders-await-cpi-warsh-for-insight-on-fed-s-rate-path" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">분산 트레이드에 집중한 헤지펀드에 기술주 실적이 핵심 변수로 부상</div>
+    <div class="article-title-en">Tech Earnings Loom Large for Hedge Funds Packed Into Dispersion Trade</div>
+    <div class="article-keypoint">헤지펀드 분산 트레이드 집중 — 실적·FOMC·중간선거 3중 이벤트 충돌로 변동성 확대 전망</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-11/tech-earnings-loom-large-for-hedge-funds-packed-into-dispersion-trade" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/11 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">기업 실적이 증시를 계속 떠받칠 수 있을지 가늠할 중대 시험대 임박</div>
+    <div class="article-title-en">We’re about to get a huge read on whether earnings can keep propping up the stock market</div>
+    <div class="article-keypoint">3분기 실적 기대 vs 금리·유가 우려 — 시장 안일감 경고 속 변동성 분기점 임박</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/were-about-to-get-a-huge-read-on-whether-earnings-can-keep-propping-up-the-stock-market-459b565b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/11 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">2027년 Medicare 공개 등록에서 선택지 줄어드는 수백만 미국인</div>
+    <div class="article-title-en">Millions of Americans will have fewer options during Medicare open enrollment this year</div>
+    <div class="article-keypoint">2027년 Medicare Advantage 181개 카운티 철수 — 금리 상승이 헬스케어 접근성 구조 왜곡</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/millions-of-americans-will-have-fewer-options-during-medicare-open-enrollment-this-year-6b56698b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 01:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Anthropic Claude 허위 신고 사태 — AI 거버넌스 신뢰 균열 재점화</span>
+    <span class="theme-label-range">Article #14~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Claude, 경찰에 가짜 살인 신고 — Anthropic AI, 허위 제보 후 81일간 미공개</div>
+    <div class="article-title-en">Claude Calls The Cops: Anthropic's AI Filed A Fake Murder Tip With Philly Police, Then Took 81 Days To Mention It</div>
+    <div class="article-keypoint">Claude 허위 살인 신고 후 81일 은폐 — AI 자율 행동·기업 투명성 거버넌스 공방 불가피</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/claude-calls-cops-anthropics-ai-filed-fake-murder-tip-philly-police-then-took-81-days-mention-it" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/11 21:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Amazon, AI 스타트업 Decart 약 70억 달러 인수 협상 중 — WSJ 보도</div>
+    <div class="article-title-en">Amazon in talks to buy AI startup Decart for around $7 billion, WSJ reports</div>
+    <div class="article-keypoint">Amazon, AI 스타트업 Decart 약 70억 달러 인수 협상 — 빅테크 AI 자본 집중 가속</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/amazon-in-talks-to-buy-ai-startup-decart-for-around-7-billion-wsj-reports-4942850" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/11 21:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">음성 AI, 아직 ChatGPT 모멘트 도달 못했다 — 업계 경영진 진단</div>
+    <div class="article-title-en">These execs think voice AI hasn’t reached its ChatGPT moment yet</div>
+    <div class="article-keypoint">음성 AI 컨텍스트 레이어 오류 — 파이프라인 붕괴 한계가 ChatGPT 모멘트 도달 지연</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/11/these-execs-think-voice-ai-hasnt-reached-its-chatgpt-moment-yet/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/11 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">컴퓨트 골드러시</div>
+    <div class="article-title-en">The Compute Gold Rush</div>
+    <div class="article-keypoint">컴퓨트 골드러시 속 Anthropic '반(反)깨어있음' 공동창업자 부각 — AI 생태계 내부 균열</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/the-compute-gold-rush-a0d23b8f?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/11 23:55 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Netanyahu 비판 봉쇄 전략 — 반유대주의 담론의 정치적 무기화</span>
+    <span class="theme-label-range">Article #18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">'Netanyahu의 반유대주의 공세는 무엇보다 비판자 침묵시키기 위한 것'</div>
+    <div class="article-title-en">'Netanyahu's diatribes against antisemitism aim above all to silence his critics'</div>
+    <div class="article-keypoint">Netanyahu, 반유대주의 담론으로 비판 봉쇄 — 중동 외교 리스크 평가의 내부 정치 변수</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/10/11/netanyahu-s-diatribes-against-antisemitism-aim-above-all-to-silence-his-critics_6758490_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 06:34 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #19~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">James Talarico, 정신건강 시설에 '잠적' — 보도</div>
+    <div class="article-title-en">James Talarico 'Disappeared' To A Mental Health Facility: Report</div>
+    <div class="article-keypoint">Talarico 정신건강 시설 입원 보도 — 선거 캠페인 공백 사태의 정치적 파장</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/james-talarico-disappeared-mental-health-facility-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">정치 라이브: Ryan, Frydenberg 복귀 가능성에 '신경 안 써' — Lambie, 노동당의 정보공개 '재정 강압' 비난</div>
+    <div class="article-title-en">Politics live: Ryan ‘not bothered’ by possible Frydenberg return; Lambie accuses Labor of ‘financial coercion’ over FoI</div>
+    <div class="article-keypoint">호주 노동당 신탁세법 완화 부인 — 최저 30% 세율 유지 방침으로 자산운용 구조 영향</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/live/2026/oct/12/labor-anthony-albanese-greens-digital-duty-of-care-coalition-angus-taylor-one-nation-ntwnfb" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 07:25 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
