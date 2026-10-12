@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-13 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/13 07:51 KST</div>
+    <div class="header-date">2026-10-13</div>
+    
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">전체 뉴스</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#30</span>
+    </div>
+    <div class="theme-summary"></div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">전체 뉴스</span>
+    <span class="theme-label-range">Article #1~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Nvidia and AMD shares fall as new AI announcements fail to re-energize investors</div>
+    <div class="article-title-en">Nvidia and AMD shares fall as new AI announcements fail to re-energize investors</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidia-and-amd-shares-fall-as-new-ai-announcements-fail-to-re-energize-investors-4a0dd766?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 06:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Is ‘Attention’ the Essence of Intelligence?</div>
+    <div class="article-title-en">Is ‘Attention’ the Essence of Intelligence?</div>
+    
+    <a class="article-link" href="https://www.quantamagazine.org/is-attention-the-essence-of-intelligence-20261012/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 23:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">"Memory Remains The Epicenter": Micron Tumbles Below $1,000 As Kospi Catches-Down And CXMT Shrinks The DRAM Cell</div>
+    <div class="article-title-en">"Memory Remains The Epicenter": Micron Tumbles Below $1,000 As Kospi Catches-Down And CXMT Shrinks The DRAM Cell</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/markets/memory-remains-epicenter-micron-tumbles-blwo-1000-kospi-catches-down-and-cxmt-shrinks-dram" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">BofA Bets On Copper And Uranium As Higher Rates Put Gold Under Pressure</div>
+    <div class="article-title-en">BofA Bets On Copper And Uranium As Higher Rates Put Gold Under Pressure</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/commodities/bofa-bets-copper-and-uranium-higher-rates-put-gold-under-pressure" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 02:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Meta says its new AI models on par with OpenAI, Anthropic</div>
+    <div class="article-title-en">Meta says its new AI models on par with OpenAI, Anthropic</div>
+    
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/meta-says-its-new-ai-models-on-par-with-openai-anthropic" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 04:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Anthropic Bans "Sustained And Needless" Cruelty Toward Claude In New Usage Policy</div>
+    <div class="article-title-en">Anthropic Bans "Sustained And Needless" Cruelty Toward Claude In New Usage Policy</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/ai/anthropic-bans-sustained-and-needless-cruelty-toward-claude-new-usage-policy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 07:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Bipartisan Senators Challenge Trump's Russian Diesel Deal, Claim It Violates Federal Law</div>
+    <div class="article-title-en">Bipartisan Senators Challenge Trump's Russian Diesel Deal, Claim It Violates Federal Law</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/political/bipartisan-senators-challenge-trumps-russian-diesel-deal-claim-it-violates-federal-law" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Meta is back on the AI leaderboard with its new family of Wonder models</div>
+    <div class="article-title-en">Meta is back on the AI leaderboard with its new family of Wonder models</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/meta-is-back-on-the-ai-leaderboard-with-its-new-family-of-wonder-models-a704b6cc?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 04:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Fmr. Fed Governor Betsy Duke on CPI Amid Bank Results</div>
+    <div class="article-title-en">Fmr. Fed Governor Betsy Duke on CPI Amid Bank Results</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-12/fmr-fed-governor-betsy-duke-on-cpi-amid-bank-results-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 06:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Feds Raid Ilhan Omar's DC Home As Immigration Fraud Investigation Heats Up</div>
+    <div class="article-title-en">Feds Raid Ilhan Omar's DC Home As Immigration Fraud Investigation Heats Up</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/political/feds-raid-ilhan-omars-dc-home-immigration-fraud-investigation-heats" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 04:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Modi’s Free Trade Push Could Lead to $140 Billion GDP Gain for India</div>
+    <div class="article-title-en">Modi’s Free Trade Push Could Lead to $140 Billion GDP Gain for India</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-12/modi-s-free-trade-push-could-lead-to-140-billion-gdp-gain-for-india" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Why Ciena, Lumentum and other optical stocks were among the market’s biggest losers on Monday</div>
+    <div class="article-title-en">Why Ciena, Lumentum and other optical stocks were among the market’s biggest losers on Monday</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/why-ciena-lumentum-and-other-optical-stocks-were-among-the-markets-biggest-losers-on-monday-b3e53f6a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 05:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Zuckerberg says Meta has reached AI ‘frontier’</div>
+    <div class="article-title-en">Zuckerberg says Meta has reached AI ‘frontier’</div>
+    
+    <a class="article-link" href="https://www.ft.com/content/fca23e77-be57-4d7e-ae61-74ff299e25cb?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Microsoft hits a big milestone that solidifies its revival</div>
+    <div class="article-title-en">Microsoft hits a big milestone that solidifies its revival</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/microsoft-is-nearing-a-big-milestone-that-solidifies-its-revival-580d1ba8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 05:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">How the AI Boom Is Fueling Global Financial Risks</div>
+    <div class="article-title-en">How the AI Boom Is Fueling Global Financial Risks</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/features/2026-10-12/how-the-ai-boom-is-fueling-global-financial-risks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Poland says two Turks detained in Germany over Starlink fire it blames on Russia</div>
+    <div class="article-title-en">Poland says two Turks detained in Germany over Starlink fire it blames on Russia</div>
+    
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/poland-says-two-turkish-nationals-detained-in-germany-over-starlink-station-fire" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 02:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Gold prices muted amid firmer dollar and rising oil, ahead of CPI this week</div>
+    <div class="article-title-en">Gold prices muted amid firmer dollar and rising oil, ahead of CPI this week</div>
+    
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/gold-edges-higher-near-4200-as-traders-weigh-energy-truce-mideast-risks-4942969" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 21:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Microsoft president says UK is best placed to drive AI regulation</div>
+    <div class="article-title-en">Microsoft president says UK is best placed to drive AI regulation</div>
+    
+    <a class="article-link" href="https://techcrunch.com/2026/10/12/microsoft-president-says-uk-is-best-placed-to-drive-ai-regulation/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 00:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Trump rewards Putin and betrays Ukraine with Russia diesel deal - The Latest</div>
+    <div class="article-title-en">Trump rewards Putin and betrays Ukraine with Russia diesel deal - The Latest</div>
+    
+    <a class="article-link" href="https://www.theguardian.com/news/video/2026/oct/12/trump-rewards-putin-and-betrays-ukraine-with-russia-diesel-deal-the-latest" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 02:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">OpenAI's latest blow to mathematicians: 'They have annihilated my field of research'</div>
+    <div class="article-title-en">OpenAI's latest blow to mathematicians: 'They have annihilated my field of research'</div>
+    
+    <a class="article-link" href="https://www.lemonde.fr/en/science/article/2026/10/12/openai-s-latest-blow-to-mathematicians-they-have-annihilated-my-field-of-research_6758515_10.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">$4,000 Gold Could Be Wall Street's Next Big Buying Opportunity</div>
+    <div class="article-title-en">$4,000 Gold Could Be Wall Street's Next Big Buying Opportunity</div>
+    
+    <a class="article-link" href="https://oilprice.com/Metals/Gold/4000-Gold-Could-Be-Wall-Streets-Next-Big-Buying-Opportunity.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Asian Stocks to Fall After US Chipmaker Selloff: Markets Wrap</div>
+    <div class="article-title-en">Asian Stocks to Fall After US Chipmaker Selloff: Markets Wrap</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-12/stock-market-today-dow-s-p-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 07:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Houthi official warns of ‘swift, painful response’ if US enters Yemen war</div>
+    <div class="article-title-en">Houthi official warns of ‘swift, painful response’ if US enters Yemen war</div>
+    
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/houthi-official-warns-of-swift-painful-response-if-us-enters-yemen-war" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 04:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Trump’s ‘energy ceasefire’ collides with real-world problems of dwindling fuel supplies</div>
+    <div class="article-title-en">Trump’s ‘energy ceasefire’ collides with real-world problems of dwindling fuel supplies</div>
+    
+    <a class="article-link" href="https://www.marketwatch.com/story/trumps-energy-ceasefire-collides-with-real-world-problems-of-dwindling-fuel-supplies-8ba3993b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 03:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Federal agents search home of Trump critic Ilhan Omar</div>
+    <div class="article-title-en">Federal agents search home of Trump critic Ilhan Omar</div>
+    
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/10/12/federal-agents-search-home-of-trump-critic-ilhan-omar_6758521_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 01:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Musk injects $275mn into Republicans’ fight to retain Congress</div>
+    <div class="article-title-en">Musk injects $275mn into Republicans’ fight to retain Congress</div>
+    
+    <a class="article-link" href="https://www.ft.com/content/3e2a900f-e5a9-4aed-b773-ed6175460f7c?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 03:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Bitcoin slips to $82.6k as rise in oil prices weigh on risk sentiment</div>
+    <div class="article-title-en">Bitcoin slips to $82.6k as rise in oil prices weigh on risk sentiment</div>
+    
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-recovers-to-near-84k-as-falling-oil-prices-offer-some-support-4943235" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/12 22:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Ukraine's EU accession bid advances with new chapter</div>
+    <div class="article-title-en">Ukraine's EU accession bid advances with new chapter</div>
+    
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/10/12/ukraine-s-eu-accession-bid-advances-with-new-chapter_6758527_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 03:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Meta releases its first frontier model, Muse Wonder</div>
+    <div class="article-title-en">Meta releases its first frontier model, Muse Wonder</div>
+    
+    <a class="article-link" href="https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 02:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Bank Stocks Mired in Correction Into Earnings as Yields Rise</div>
+    <div class="article-title-en">Bank Stocks Mired in Correction Into Earnings as Yields Rise</div>
+    
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-12/bank-stocks-mired-in-correction-as-yields-surge-before-earnings" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/13 00:48 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
