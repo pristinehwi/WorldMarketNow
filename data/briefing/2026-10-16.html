@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-16 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/16 07:48 KST</div>
+    <div class="header-date">2026-10-16</div>
+    <div class="header-headline">AI 생태계 수익성 균열 — Anthropic 지표가 칩 섹터 전방위 압박</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Anthropic 재무 세부지표·CoreWeave 밸류에이션 논쟁 — AI 캐펙스 내러티브 지속 여부 48시간 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 수익성 균열 — Anthropic·CoreWeave 지표가 칩·인프라 섹터 전방위 압박</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 것은 Anthropic의 재무 세부 지표가 AI 생태계 전반의 건전성에 대한 우려를 촉발하며 Nvidia를 포함한 칩 섹터에 연쇄 매도 압력을 가하고 있다는 점이다. CoreWeave 주가는 Wall Street 내에서 강세·약세 진영이 극명하게 갈리는 가운데 반등세를 보이고 있으나, AI 인프라 기업의 재무 디테일에 대한 투자자 시선이 그 어느 때보다 예리해졌다. 한편 Anthropic은 외부 비영리 기관 METR에 '직원 수준'의 접근권을 부여해 AI 리스크 모니터링을 강화하는 거버넌스 조치를 발표했으며, 미드텀 선거를 앞두고 Claude에 투표 정보를 추가하는 공공 안전 이니셔티브도 진행 중이다. AI 독립 감사 필요성에 대한 논의가 동시에 확산되고 있어, 모델 역량뿐 아니라 개발사의 투명성과 안전 커뮤니케이션이 산업 신뢰의 핵심 변수로 부상하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SpaceX·Tesla 생태계 재편 — Starlink 확장·합병설·에너지 사업 이탈</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#12</span>
+    </div>
+    <div class="theme-summary">Barclays가 Tesla와 SpaceX의 연내 합병 가능성을 제기한 노트가 시장의 주목을 받는 가운데, 투자자 Ross Gerber는 합병에 회의적 시각을 유지하며 Tesla 연간 주주총회 전 Roadster 공개에 주목하고 있다. SpaceX의 Starlink는 로보틱스 수요 폭증을 겨냥한 대담한 연결성 확장 전략을 추진 중이며, Harvard 기금이 AI·SpaceX 투자로 27.1% 수익률을 기록해 총 자산 680억 달러를 달성한 것이 민간 자본 수익 기준점으로 부각되고 있다. Tesla에서는 에너지·충전 부문 부사장 Mike Snyder가 퇴임하며 Tesla가 AI 중심으로 전략 축을 급격히 이동하고 있음이 확인됐다. 우크라이나에서는 Starlink 서비스가 복구됐으나 영국 국방장관이 미·영 회담에서 중단 경위에 대한 명확한 설명을 얻지 못해 지정학적 무기화 우려가 지속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">반도체 공급망 재편 — SK Hynix 대중 장비·DRAM 수요·미 핵연료 독립</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #13~#16</span>
+    </div>
+    <div class="theme-summary">SK Hynix의 자회사 Solidigm이 미국 내 NAND 공장 건설을 조건으로 대중 반도체 장비 수출 승인을 협상 중인 것으로 알려져, 미·중 기술 디커플링과 공급망 재편의 복합 방정식이 다시 주목받고 있다. DRAM 신규 수요원이 2030년까지 20배 급증할 수 있다는 전망은 AI 인프라 투자 사이클과 맞물려 메모리 섹터의 중장기 수급 구조를 근본적으로 바꿀 변수로 부상하고 있다. 미국은 Urenco USA의 우라늄 농축 시설 확장이 75%에 도달하며 핵연료 자급도 제고에 한걸음 다가섰고, 이는 에너지 안보와 AI 데이터센터 전력 수요를 동시에 겨냥한 실물 인프라 투자 테마를 강화한다. 미 재무부가 중국 로보틱스·AI 딜에 대한 해외 투자 제재를 최초로 부과하며 첨단 기술 분야 자본 통제의 실질적 집행력을 시장에 확인시켰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 플랫폼 경쟁 — Meta·Amazon·Cohere의 엣지·웨어러블·사이버보안 확전</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#20</span>
+    </div>
+    <div class="theme-summary">Meta가 Apple 실리콘에서 로컬 실행되는 오픈웨이트 모델 Muse Spark Open을 출시하며 Apple과의 협력을 공식화, 온디바이스 AI 생태계 주도권 경쟁이 새로운 국면으로 진입했다. Amazon 산하 Bee는 75달러부터 시작하는 웨어러블과 스마트폰 부착형 레코더 두 종의 퍼스널 AI 디바이스를 출시해 AI 하드웨어 대중화를 가속화하고 있으며, Amazon 디바이스 총괄 Panos Panay는 실패 학습 문화를 강조해 제품 혁신 속도 유지 의지를 내비쳤다. Cohere는 AI 사이버보안 스타트업 Aisle 인수를 추진하며 엔터프라이즈 AI 보안 영역으로 전선을 확장하고 있다. 이들 움직임은 생성 AI 경쟁이 클라우드 API 중심에서 엣지 디바이스·보안·오픈소스 생태계로 동시 다변화되고 있음을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">지정학·통화정책 복합 리스크 — 우크라이나 정보 공백·PPI 쇼크·중동 해상 위협</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#25</span>
+    </div>
+    <div class="theme-summary">Trump 대통령이 우크라이나에 대한 정보 공유가 지속되고 있다고 부인했으나, Zelenskyy는 러시아의 수도 공습 전 사전 경고를 받지 못했다고 밝혀 동맹 정보 공유 체계의 신뢰성에 심각한 균열이 노출됐다. 프랑스 군함이 Bab el-Mandeb 해협에서 CMA CGM 컨테이너선을 겨냥한 드론을 격추해 홍해 해상 루트 위협이 지속되고 있음을 재확인했다. PPI 지표가 예상을 상회하며 연방준비제도의 추가 금리 인상 가능성을 재점화시키고 있고, 일부 Fed 관계자들은 '2주 내 추가 인상 가능성'을 명시적으로 경고하고 있다. Spain이 국제법 준수를 명분으로 Trump 행정부에 공개적으로 맞서는 등 미국 주도 서방 외교 질서에 대한 균열이 유럽 내에서 가시화되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #26~#30</span>
+    </div>
+    <div class="theme-summary">Bitcoin이 장기적으로 금보다 큰 자산이 될 것이라는 주장이 재부각되고 있으며, 미 법무부의 캘리포니아 비시민권자 유권자 긴급 구제 요청, Alcoa의 분기 실적, 오레곤 초등학교 총격 사건, Nvidia의 기후 스타트업 투자 등 개별 이슈가 혼재한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 수익성 균열 — Anthropic·CoreWeave 지표가 칩·인프라 섹터 전방위 압박</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Nvidia 등 칩 섹터, AI 생태계 건전성 우려 재부상으로 재차 하락 압력</div>
+    <div class="article-title-en">Nvidia and other chip stocks face renewed pressure as AI fears swell</div>
+    <div class="article-keypoint">Anthropic 재무지표 부진이 AI 생태계 건전성 우려 확산 → 칩 섹터 전방위 하락 압력</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/micron-nvidia-and-other-chip-stocks-face-renewed-pressure-as-ai-fears-swell-4e0dc989?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 06:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">CoreWeave 주가 반등, AI 지출 두고 Wall Street 강·약세 진영 정면 충돌</div>
+    <div class="article-title-en">CoreWeave’s polarizing stock rebounds as Wall Street squares off about AI spending</div>
+    <div class="article-keypoint">CoreWeave 주가 반등에도 AI 인프라 기업 재무 투명성 논쟁 가열 — 밸류에이션 분기점</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/coreweave-investors-are-feeling-spooked-as-the-companys-stock-and-bonds-see-fresh-pressure-ba39a931?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">지금 당장 필요한 AI 독립 감사</div>
+    <div class="article-title-en">Independent AI Auditing Now</div>
+    <div class="article-keypoint">OpenAI 도청 사태 이후 AI 독립 감사 필요성 논의 확산 — 거버넌스 규제 가속화 시그널</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/independent-ai-auditing-possible-and-necessary-by-angela-huyue-zhang-and-yue-zhao-2026-10?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/15 22:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Anthropic, 비영리 기관 METR에 AI 리스크 모니터링을 위한 '직원급' 접근권 부여</div>
+    <div class="article-title-en">Anthropic grants non-profit METR ‘employee-like’ access to monitor AI risks</div>
+    <div class="article-keypoint">Anthropic, 비영리 METR에 직원급 AI 리스크 모니터링 접근권 부여 — 외부 감사 선도 사례</div>
+    <a class="article-link" href="https://www.ft.com/content/a3a389d2-7796-4f40-98d3-8986f26f6513?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 04:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Anthropic, 미드텀 선거 앞두고 Claude에 투표 정보 추가 예정</div>
+    <div class="article-title-en">Anthropic to add US voting information to Claude before midterms (Oct 14)</div>
+    <div class="article-keypoint">Anthropic, 미드텀 선거 앞두고 Claude에 투표 정보 추가 — AI 플랫폼의 선거 개입 리스크·책임 논의 촉발</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/anthropic-to-add-us-voting-information-to-claude-before-midterms-oct-14-4952758" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/15 22:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">OpenAI 도청 의혹이 AI 산업에 던지는 함의</div>
+    <div class="article-title-en">What Allegations of Spying at OpenAI Mean for the A.I. Industry</div>
+    <div class="article-keypoint">OpenAI 직원 도청 사건 체포 — AI 기업 내부 보안 취약성과 산업 신뢰 훼손 우려 동시 부각</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/10/14/business/dealbook/openai-espionage.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/15 20:58 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SpaceX·Tesla 생태계 재편 — Starlink 확장·합병설·에너지 사업 이탈</span>
+    <span class="theme-label-range">Article #7~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Ross Gerber, Tesla Roadster와 SpaceX 합병 가능성에 대해 발언</div>
+    <div class="article-title-en">Ross Gerber on Tesla Roadster, Potential SpaceX Merger</div>
+    <div class="article-keypoint">Barclays, Tesla·SpaceX 연내 합병 가능성 제기 — 빅테크 구조 재편 시나리오 시장 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-15/ross-gerber-on-tesla-roadster-potential-spacex-merger-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 06:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Harvard 기금, AI·SpaceX 투자 호조로 수익률 27.1% 급등</div>
+    <div class="article-title-en">Harvard’s endowment returns surge on back of AI and SpaceX investments </div>
+    <div class="article-keypoint">Harvard 기금, AI·SpaceX 투자로 27.1% 수익률·총 자산 680억 달러 — 민간 AI 투자 수익 기준점 제시</div>
+    <a class="article-link" href="https://www.ft.com/content/50c694da-c485-4176-853b-daf643eabb5c?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 05:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">SpaceX의 Starlink 확장 — 미래를 건 대담한 도박</div>
+    <div class="article-title-en">
+        SpaceX’s Starlink expansion is a bold gamble on the future
+      </div>
+    <div class="article-keypoint">SpaceX, 로보틱스 수요 겨냥 Starlink 공격적 확장 — 위성 연결성 생태계 지각변동 가속</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/10/15/spacexs-starlink-expansion-is-a-bold-gamble-on-the-future" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/15 21:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">영국 Streeting, 미국과의 회담서 우크라이나 Starlink 복구 환영 입장 밝혀</div>
+    <div class="article-title-en">UK's Streeting says he and Hegseth welcomed Starlink restoration in Ukraine</div>
+    <div class="article-keypoint">영국, 미·영 회담서 Starlink 복구 환영했으나 중단 경위 설명 못 받아 — 지정학 무기화 우려 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/uks-streeting-says-he-and-hegseth-welcomed-starlink-restoration-in-ukraine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 05:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Wes Streeting, Starlink 갈등 이후 워싱턴 방문서 미국에 우크라이나 지원 촉구</div>
+    <div class="article-title-en">Wes Streeting urges US to back Ukraine on Washington visit after Starlink row</div>
+    <div class="article-keypoint">영국 국방장관, 워싱턴서 우크라이나 지원이 미국 경제 이익에 부합한다며 동맹 결속 촉구</div>
+    <a class="article-link" href="https://www.theguardian.com/politics/2026/oct/15/wes-streeting-us-support-ukraine--washington-visit" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 03:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Tesla 에너지 총괄 VP 퇴임</div>
+    <div class="article-title-en">Tesla’s Energy Boss Leaves the Company</div>
+    <div class="article-keypoint">Tesla 에너지·충전 부문 VP 퇴임 — AI 전략 집중 속 핵심 사업 리더십 공백 우려</div>
+    <a class="article-link" href="https://www.wsj.com/business/autos/teslas-energy-boss-leaves-the-company-a90d8f2b?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 07:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">반도체 공급망 재편 — SK Hynix 대중 장비·DRAM 수요·미 핵연료 독립</span>
+    <span class="theme-label-range">Article #13~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">SK Hynix, 미국 공장 건설 조건으로 중국 시설 대상 칩 장비 수출 승인 협상</div>
+    <div class="article-title-en">SK Hynix bargains for chip equipment exports to its China facility in return for building a factory in US</div>
+    <div class="article-keypoint">SK Hynix, 미국 공장 건설 조건으로 대중 반도체 장비 수출 승인 협상 — 기술 디커플링 속 공급망 레버리지 부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/15/sk-hynix-bargains-for-chip-equipment-exports-to-its-china-facility-in-return-for-building-a-factory-in-us/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 01:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">미국, 중국 로보틱스 AI 딜 관련 해외 투자 최초 제재 부과</div>
+    <div class="article-title-en">US Issues First Outbound Investment Penalty Over Chinese Robotics AI Deal</div>
+    <div class="article-keypoint">미 재무부, 중국 로보틱스 AI 딜 첫 해외투자 제재 부과 — 기술 자본통제 실질 집행력 확인</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/us-issues-first-outbound-investment-penalty-over-chinese-robotics-ai-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 02:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">미국 핵연료 자급 목표 가시권 — Urenco 확장 공사 75% 달성</div>
+    <div class="article-title-en">U.S. Nuclear Fuel Independence Edges Closer as Urenco Expansion Hits 75%</div>
+    <div class="article-keypoint">Urenco USA 우라늄 농축 시설 75% 확장 완료 — 미국 핵연료 자급도 제고 및 에너지 안보 강화</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/US-Nuclear-Fuel-Independence-Edges-Closer-as-Urenco-Expansion-Hits-75.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">DRAM 신규 수요원, 2030년까지 20배 급증 전망</div>
+    <div class="article-title-en">New DRAM Demand Source Could Surge 20-Fold By 2030 </div>
+    <div class="article-keypoint">DRAM 신규 수요원 2030년까지 20배 급증 전망 — AI 인프라 투자 사이클과 메모리 섹터 수급 재편</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/new-dram-demand-source-could-surge-20-fold-2030" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 03:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 플랫폼 경쟁 — Meta·Amazon·Cohere의 엣지·웨어러블·사이버보안 확전</span>
+    <span class="theme-label-range">Article #17~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Amazon 산하 Bee, 75달러부터 시작하는 퍼스널 AI 신규 디바이스 2종 출시</div>
+    <div class="article-title-en">Amazon’s Bee launches two new personal AI devices, starting at $75</div>
+    <div class="article-keypoint">Amazon Bee, 75달러 웨어러블 출시 — AI 하드웨어 대중화 경쟁 본격화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/15/amazons-bee-launches-two-new-personal-ai-devices-starting-at-75/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/15 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Cohere, AI 사이버보안 스타트업 Aisle 인수 추진</div>
+    <div class="article-title-en">Cohere moves to buy AI cybersecurity startup Aisle</div>
+    <div class="article-keypoint">Cohere, AI 사이버보안 스타트업 Aisle 인수 추진 — 엔터프라이즈 AI 보안 시장 구도 변화</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/cohere-moves-to-buy-ai-cybersecuritystartup-aisle-4950863" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/15 22:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Meta, Mac에서 구동되는 오픈웨이트 AI 모델 출시</div>
+    <div class="article-title-en">Meta launches an open-weight AI model that runs on Macs</div>
+    <div class="article-keypoint">Meta, Apple 실리콘 기반 오픈웨이트 모델 출시 — 온디바이스 AI 주도권 경쟁 새 국면</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 05:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Amazon 디바이스 총괄 Panos Panay, 실패와 재기의 중요성을 말하다</div>
+    <div class="article-title-en">Amazon devices chief Panos Panay on the importance of failure and bouncing back from it </div>
+    <div class="article-keypoint">Amazon 디바이스 총괄, 실패 학습 문화 강조 — AI 하드웨어 혁신 속도 유지 의지 확인</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/15/amazon-devices-chief-panos-panay-on-the-importance-of-failure-and-bouncing-back-from-it/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 05:38 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">지정학·통화정책 복합 리스크 — 우크라이나 정보 공백·PPI 쇼크·중동 해상 위협</span>
+    <span class="theme-label-range">Article #21~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Trump, 위성 접근 제한 속 우크라이나 정보 공유 중단 의혹 부인</div>
+    <div class="article-title-en">Trump Denies Cutting Ukraine Intelligence Amid Satellite Restrictions</div>
+    <div class="article-keypoint">Trump, 우크라이나 정보 공유 지속 주장하나 Zelenskyy 사전 경고 부재 공개 — 동맹 신뢰 균열 심화</div>
+    <a class="article-link" href="https://oilprice.com/Geopolitics/Europe/Trump-Denies-Cutting-Ukraine-Intelligence-Amid-Satellite-Restrictions.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">프랑스 군함, Bab el-Mandeb 해협서 CMA CGM 컨테이너선 위협 드론 격추</div>
+    <div class="article-title-en">French warship shoots drone threatening CMA CGM container ship at Bab el-Mandeb</div>
+    <div class="article-keypoint">프랑스 군함, Bab el-Mandeb서 CMA CGM 겨냥 드론 격추 — 홍해 해상 루트 위협 지속 확인</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/10/15/french-warship-shoots-drone-threatening-cma-cgm-container-ship-at-bab-el-mandeb_6758647_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 01:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">이코노미스트들 "뜨거운 PPI, Fed의 할 일이 아직 남았다"</div>
+    <div class="article-title-en">Economists: Hot PPI shows Fed's work is not done</div>
+    <div class="article-keypoint">PPI 서프라이즈로 Fed 추가 인상 가능성 재점화 — '2주 내 인상' 경고 시장 채권 포지션 재조정 촉구</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/10/15/pce-ppi-september-fed-reserve-rate-hike.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 00:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Pentagon, Trump·Hegseth 처형 생중계 취소 결정 '완전히 공동 입장' 확인</div>
+    <div class="article-title-en">Pentagon says Trump and Hegseth ‘completely aligned’ on decision to cancel livestream of firing squad execution – live</div>
+    <div class="article-keypoint">Pentagon, Trump·Hegseth 처형 생중계 취소 결정 공동 입장 확인 — 행정부 내부 결집 신호</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/oct/15/donald-trump-midterms-rallies-iran-ukraine-starlink-intelligence-fuel-gas-cost-of-living-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 06:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">스페인은 왜 Trump에 맞서는가</div>
+    <div class="article-title-en">Why Spain Is Standing Up to Trump</div>
+    <div class="article-keypoint">스페인, 국제법 원칙 내세워 Trump에 공개 저항 — 미국 주도 서방 외교 질서 균열 가시화</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/10/15/jose-manuel-albares-spain-foreign-policy-nato-trump-international-law/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/15 23:52 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #26~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Bitcoin, 더 낮은 변동성으로 금보다 커질 것 — '비트코인 스탠더드' 저자 전망</div>
+    <div class="article-title-en">Bitcoin Will Become "Less Volatile" And Larger Than Gold: 'The Bitcoin Standard' Author</div>
+    <div class="article-keypoint">Bitcoin, 금보다 커질 것이라는 주장 재부각 — 디지털 자산 변동성 축소 내러티브 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/bitcoin-will-become-less-volatile-and-larger-gold-bitcoin-standard-author" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 03:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Nvidia 지원 기후 AI 스타트업 — 기후 사업을 접고 투자 유치에 성공한 사연</div>
+    <div class="article-title-en">An AI-for-Climate Startup Won Nvidia’s Backing—After Putting the Climate Part on Ice</div>
+    <div class="article-keypoint">Nvidia 지원 기후 스타트업, 기후 사업 축소 후 AI 전환 — AI 투자 쏠림의 그린워싱 리스크</div>
+    <a class="article-link" href="https://www.wsj.com/business/energy-oil/an-ai-for-climate-startup-won-nvidias-backingafter-putting-the-climate-part-on-ice-8b4eced2?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/15 22:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">오레곤 초등학교 총격 — 경찰 "다수 피해자" 발표</div>
+    <div class="article-title-en">‘Multiple victims’ in Oregon elementary school shooting: Police </div>
+    <div class="article-keypoint">오레곤 초등학교 총격 — 총기 규제 논쟁 재점화 가능성</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/multiple-victims-in-oregon-elementary-school-shooting-police" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 07:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">시간 다 됐다! DOJ, 비시민권자 유권자 의혹으로 캘리포니아에 '긴급 구제' 요청</div>
+    <div class="article-title-en">Time's Up! DOJ To Seek 'Emergency Relief' Against California Over Suspected Non-Citizen Voters</div>
+    <div class="article-keypoint">DOJ, 캘리포니아 비시민권자 유권자 의혹으로 긴급 구제 요청 — 선거 정치화 리스크 부각</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/times-doj-seek-emergency-relief-against-california-over-suspected-non-citizen-voters" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/16 04:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Alcoa Q3 2026 실적 발표: 강한 운영 성과가 금속 가격 하락 압력 상쇄</div>
+    <div class="article-title-en">Alcoa Q3 2026 slides: strong operations offset metal price pressure</div>
+    <div class="article-keypoint">Alcoa Q3, 강한 운영 실적이 금속 가격 하락 압력 상쇄 — 원자재 섹터 실적 방어력 확인</div>
+    <a class="article-link" href="https://www.investing.com/news/company-news/alcoa-q3-2026-slides-strong-operations-offset-metal-price-pressure-93CH-4952756" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/15 22:09 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
