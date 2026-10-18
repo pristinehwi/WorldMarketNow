@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-19 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/19 07:49 KST</div>
+    <div class="header-date">2026-10-19</div>
+    <div class="header-headline">구리 강세론 균열·S&P 500 내부 로테이션 경고 동시 점화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">관세 부과 지연 속 구리 포지션 이탈 가속·S&P 500 트리플탑 패턴 현실화 여부</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">구리·관세·무역 압박 — 강세론 균열과 포지션 이탈 가속</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#2</span>
+    </div>
+    <div class="theme-summary">트럼프 2기 취임 이후 관세 리스크로 급등했던 구리 시장에서 강세 포지션 이탈이 가시화되고 있다. 트럼프가 임기 절반에 접어들었음에도 구리 관세 부과 징후가 없자, 시장 참여자들이 선제적으로 쌓아뒀던 롱 포지션을 청산하는 움직임이 감지된다. 캐나다에서는 관세 여파로 촉발된 철강업체 감원 사태에 정부가 제재를 경고하며 무역 분쟁의 실물 파급이 확산되고 있다. 이는 원자재 섹터 전반에 걸쳐 정책 불확실성이 가격 변동성을 증폭시키는 구조적 리스크를 재확인시킨다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">우크라이나·Starlink·트럼프 외교 — 정보 공유 재개와 동맹 균열 봉합 시도</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #3~#6</span>
+    </div>
+    <div class="theme-summary">미국이 일시 중단했던 우크라이나 정보 공유를 재개했고, Zelensky는 공개적으로 감사를 표명했다. 그러나 트럼프는 Zelensky를 비판하고 러시아 제재 면제를 옹호하며 외교적 긴장이 완전히 해소되지 않았음을 시사했다. Starlink 접근 제한을 둘러싼 미-EU 갈등도 재점화됐는데, 미국 대사가 유럽의 위성통신 스펙트럼 규제에 '심각한 보복' 가능성을 경고했다. 이번 정보 공유 재개는 단기적 봉합이지만, 머스크-트럼프 연계 지정학 무기화 우려는 여전히 시장의 잠재적 리스크로 잔존한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">S&P 500 내부 로테이션·AI 밸류에이션 — 어닝 서프라이즈와 금리 상승의 충돌</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #7~#10</span>
+    </div>
+    <div class="theme-summary">이번 주 S&P 500은 AI 트레이드 면역론이 흔들리는 가운데 기업 어닝 시즌과 금리 상승 압력이 정면충돌하는 국면에 진입했다. 기술주 중심의 지수 내부에서 '트리플탑' 반전 패턴이 포착되며 중기 약세 가능성이 제기됐다. Boeing·Meta·EchoStar 등 기저효과가 큰 종목들이 어닝 성장을 견인할 것으로 예상되지만, 이는 실적 개선이 아닌 전년도 대형 손실의 역기저 효과임에 유의해야 한다. 금요일 기술주 주도 매도세 이후 선물은 반등했으나, AI 채권 금리 상승과 밸류에이션 재평가 압력은 지속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 거버넌스·안전 균열 — Anthropic 자기복제 경고·공익 펀드 설립 동시 부각</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #11~#13</span>
+    </div>
+    <div class="theme-summary">Anthropic이 AI 자기복제 웜의 연내 실현 가능성을 공개 경고하며 AI 안전 리스크가 구체적 위협 단계로 격상됐다. 동시에 Anthropic은 주식 5%를 공익 펀드에 출연하겠다고 발표, 거버넌스 신뢰 회복을 위한 선제적 조치에 나섰다. Charles Schwab CEO는 AI 에이전트의 자율 주식 거래에 회의적 입장을 표명하며, AI 금융 활용에 대한 제도권의 신중론도 확인됐다. 이처럼 AI 능력 확장과 거버넌스 리스크가 동시에 부각되는 구조는 규제 불확실성을 높이며 AI 섹터 투자 심리에 복합적으로 작용한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Tesla·Meta·Kioxia — 빅테크·반도체 개별 이슈와 플랫폼 신뢰 리스크</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #14~#16</span>
+    </div>
+    <div class="theme-summary">Tesla는 캘리포니아 FSD 허위광고 집단소송에서 집단 소송 자격 취소 판결을 받아 법적 리스크가 일부 완화됐으나, 자율주행 신뢰 문제는 지속된다. Meta는 전국 민주주의 시위 주최 단체의 Instagram 계정을 수 시간 정지시켜 콘텐츠 검열 논란과 플랫폼 신뢰 균열이 재부각됐다. Kioxia는 마진콜 압박 속 추가 주가 하락 위험에 직면, 레버리지 포지션 청산 우려가 반도체 섹터 심리를 압박하고 있다. 이들 개별 이슈는 각기 다른 섹터에서 규제·신뢰·유동성 리스크가 동시에 표면화되는 양상을 보인다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #17~#29</span>
+    </div>
+    <div class="theme-summary">이번 분류에서 거시·금융·지정학·산업·기술·정치 주요 테마와 직접적 연관성이 낮은 기사들을 묶었다. 뉴질랜드 달러는 5분기 연속 약세 속 CPI 발표를 앞두고 팬데믹 저점 테스트 가능성이 제기됐다. Warren Buffett의 추정 자산 1,500억 달러 분배 과제와 세 자녀의 역할이 조명됐고, 트럼프의 역사적 골프 코스 법원 명령 무시 개조 강행, Netanyahu 지지 선언, 스페인 홍수, 프랑스 마크롱 정치 위기, 브라질 대선 토론, 플라이두바이 조종석 도끼 공격 사건 등 다양한 글로벌 이슈가 포함됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">구리·관세·무역 압박 — 강세론 균열과 포지션 이탈 가속</span>
+    <span class="theme-label-range">Article #1~#2</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">관세 부과 징후 없자 구리 강세론에 경계감 확산</div>
+    <div class="article-title-en">Traders Grow Wary of Copper Bull Market With No Sign of Tariffs</div>
+    <div class="article-keypoint">관세 부과 지연으로 구리 강세론 균열, 롱 포지션 청산 압력 가속화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-18/traders-grow-wary-of-copper-bull-market-with-no-sign-of-tariffs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">캐나다 정부, 관세 여파 감원 단행한 철강업체에 제재 경고</div>
+    <div class="article-title-en">Canadian Government Threatens To Punish Steel Maker Over Tariff Layoffs</div>
+    <div class="article-keypoint">캐나다 정부, 관세 여파 감원 철강사 제재 경고로 무역 갈등 실물 전이 심화</div>
+    <a class="article-link" href="https://www.zerohedge.com/economics/canadian-government-threatens-punish-steel-maker-over-tariff-layoffs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 03:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">우크라이나·Starlink·트럼프 외교 — 정보 공유 재개와 동맹 균열 봉합 시도</span>
+    <span class="theme-label-range">Article #3~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Zelensky, 미국의 Starlink '메시지' 이후 정보 공유 재개에 Trump에 감사</div>
+    <div class="article-title-en">Zelenskyy thanks Trump for resumed intelligence sharing after US Starlink ‘message’</div>
+    <div class="article-keypoint">미-우크라이나 정보 공유 재개로 단기 봉합, 트럼프 대러 유화 기조는 지속</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/oct/18/killed-injured-russia-ukraine-strikes-power-infrastructure" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 01:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">미국, 우크라이나와 정보 공유 재개 — Zelensky 확인</div>
+    <div class="article-title-en">US resumes intelligence-sharing with Ukraine after pause, Zelensky says</div>
+    <div class="article-keypoint">우크라이나, 미 정보 재개로 러시아 탄도미사일 조기 탐지 역량 회복</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/us-resumes-intelligence-sharing-with-ukraine-after-pause-zelenskiy-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/18 23:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Trump, Zelensky 비판하며 러시아 제재 면제 옹호</div>
+    <div class="article-title-en">Trump bashes Zelensky, defends waiving sanctions on Russia</div>
+    <div class="article-keypoint">트럼프, Zelensky 비판·러시아 제재 면제 옹호로 동맹 균열 지속 신호</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/trump-bashes-zelensky-defends-waiving-sanctions-on-russia" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">미국, Starlink 제한 추진하는 유럽에 경고 메시지</div>
+    <div class="article-title-en">US threatens Europe over Starlink restrictions</div>
+    <div class="article-keypoint">미국, EU의 Starlink 스펙트럼 규제에 '심각한 보복' 경고로 위성통신 패권 갈등 격화</div>
+    <a class="article-link" href="https://www.ft.com/content/d1e28d93-8574-4a46-946a-b261c401d6fa?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 01:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">S&P 500 내부 로테이션·AI 밸류에이션 — 어닝 서프라이즈와 금리 상승의 충돌</span>
+    <span class="theme-label-range">Article #7~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">S&P 500 어닝 성장을 이끌 의외의 종목들</div>
+    <div class="article-title-en">These surprising stocks could be some of the biggest drivers of S&P 500 earnings growth</div>
+    <div class="article-keypoint">Boeing·Meta 기저효과 반사이익으로 S&P 500 어닝 성장 왜곡 가능성 경고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/these-surprising-stocks-could-be-some-of-the-biggest-drivers-of-s-p-500-earnings-growth-ea073a07?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/18 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">강한 어닝과 차입 비용 상승의 충돌 — 증시 고위험 대결 국면 진입</div>
+    <div class="article-title-en">Stocks are heading for a high-stakes showdown, as strong earnings collide with rising borrowing costs</div>
+    <div class="article-keypoint">AI 면역론 붕괴 조짐, 금리 상승과 어닝 시즌 충돌로 기술주 변동성 확대 임박</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/stocks-are-heading-for-a-high-stakes-showdown-as-strong-earnings-collide-with-rising-borrowing-costs-6f8ea5b8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/18 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">S&P 500 내부의 조용한 시장 로테이션이 추가 약세를 경고하고 있다</div>
+    <div class="article-title-en">There is a silent market rotation inside the S&P 500 that’s warning of more weakness ahead</div>
+    <div class="article-keypoint">S&P 500 내부 트리플탑 패턴 감지, 섹터 로테이션 심화 시 지수 중기 약세 가능성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/there-is-a-silent-market-rotation-inside-the-s-p-500-thats-warning-of-more-weakness-ahead-549e7650?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/18 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">미국 주식 선물, 기술주 폭락 후 반등 — 유가 하락: 마켓 랩</div>
+    <div class="article-title-en">US Stock Futures Bounce From Tech Rout, Oil Slips: Markets Wrap</div>
+    <div class="article-keypoint">기술주 매도 후 선물 반등, 어닝 시즌·중국 경제 지표가 방향성 결정 변수</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-18/stock-market-today-dow-s-p-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 07:07 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 거버넌스·안전 균열 — Anthropic 자기복제 경고·공익 펀드 설립 동시 부각</span>
+    <span class="theme-label-range">Article #11~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">자기복제 'AI 웜'이란 무엇인가, Anthropic은 왜 우려하나</div>
+    <div class="article-title-en">What are self-replicating ‘AI worms’, and why is Anthropic worried about them?</div>
+    <div class="article-keypoint">Anthropic, AI 자기복제 웜의 연내 실현 가능성 경고로 규제 압력 선제 부각</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/oct/18/anthropic-ai-worm-worries" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/18 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">AI 에이전트가 잠자는 동안 주식을 거래한다고? Charles Schwab CEO는 회의적</div>
+    <div class="article-title-en">AI Agents Trading Stocks While You Sleep? Charles Schwab’s CEO Is Skeptical</div>
+    <div class="article-keypoint">Schwab CEO, AI 자율 주식 거래에 회의적 입장 표명으로 제도권 AI 금융 적용 제동</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/ai-agents-trading-stocks-while-you-sleep-charles-schwabs-ceo-is-skeptical-3ff1b5c3?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 05:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Anthropic, 주식 5%를 '공익 펀드'에 출연하기로 결정</div>
+    <div class="article-title-en">Anthropic says it’s committing 5% of its shares to a ‘public benefit fund’</div>
+    <div class="article-keypoint">Anthropic, 주식 5% 공익 펀드 출연 선언으로 거버넌스 신뢰 회복 선제 대응</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 05:37 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Tesla·Meta·Kioxia — 빅테크·반도체 개별 이슈와 플랫폼 신뢰 리스크</span>
+    <span class="theme-label-range">Article #14~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Kioxia 주가, 빚내서 산 투자자들의 손절 매도 압력에 추가 하락 위험</div>
+    <div class="article-title-en">Kioxia Shares Face Headwinds From Margin-Buying Gone Wrong</div>
+    <div class="article-keypoint">Kioxia 레버리지 포지션 강제 청산 위험, 반도체 섹터 유동성 리스크 확대 우려</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-18/kioxia-shares-face-headwinds-from-margin-buying-gone-wrong" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Tesla, FSD 허위광고 소송에서 집단 소송 자격 취소로 일부 승소</div>
+    <div class="article-title-en">Tesla Wins Round In FSD False-Ad Suit As Court Tosses Class Certification</div>
+    <div class="article-keypoint">Tesla, FSD 허위광고 집단소송 자격 취소로 법적 부담 완화, 자율주행 신뢰는 잔존</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/tesla-wins-round-fsd-false-ad-suit-court-tosses-class-certification" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 05:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Meta, 'No Kings' 시위 단체 Instagram 계정 정지로 공분 확산</div>
+    <div class="article-title-en">Outrage after Meta suspends No Kings Instagram account during protests</div>
+    <div class="article-keypoint">Meta, 시위 단체 계정 수 시간 정지로 플랫폼 검열 논란 재점화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/oct/18/no-kings-instagram-account-suspended-during-protests" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 04:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #17~#29</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">CBS 기자, Abdul El-Sayed 야유꾼 칭찬 게시물 삭제 후 사과</div>
+    <div class="article-title-en">CBS reporter apologizes and deletes post praising Abdul El-Sayed heckler</div>
+    <div class="article-keypoint">CBS 기자 SNS 논란, 미디어 신뢰도 하락 및 AI 콘텐츠 규범 공방과 맞물려 주목</div>
+    <a class="article-link" href="https://www.theguardian.com/media/2026/oct/18/cbs-reporter-apologizes-abdul-el-sayed-post" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 06:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">'제대로 살았는데 왜 실패자 취급받나': 50대 임차인, 대침체 내 집 잃은 사연</div>
+    <div class="article-title-en">‘Some people did everything right’: I lost my home in the Great Recession. I rent in my 50s. Why is that judged as failure?</div>
+    <div class="article-keypoint">연소득 $110K 임차인 사례로 주거 자산 불평등과 소비 심리 구조 균열 부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/i-earn-110-000-a-year-i-lost-my-home-in-the-great-recession-im-renting-in-my-50s-why-is-that-judged-as-failure-d1371d67?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 01:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">스페인, 바르셀로나 인근 사망자 발생 후 추가 홍수 대비 태세</div>
+    <div class="article-title-en">Spain braces for more floods after woman dies near Barcelona</div>
+    <div class="article-keypoint">스페인 홍수 확산, 기후 리스크로 인한 남유럽 인프라·보험 손실 우려 재점화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/spain-braces-for-more-floods-after-woman-dies-near-barcelona" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 06:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">미국 전력망에 기가와트를 더할 수 있는 핵발전 출력 증설 지름길</div>
+    <div class="article-title-en">The Nuclear Power Shortcut That Could Add Gigawatts to the U.S. Grid</div>
+    <div class="article-keypoint">핵발전소 출력 증설 허가 추진, 미 전력 공급 부족 해소의 단기 현실적 대안 부상</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/The-Nuclear-Power-Shortcut-That-Could-Add-Gigawatts-to-the-US-Grid.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">플라이두바이 기장, 부기장의 도끼 공격을 온몸으로 막아낸 순간을 증언</div>
+    <div class="article-title-en">Flydubai captain describes blocking axe blows as co-pilot attacked him</div>
+    <div class="article-keypoint">플라이두바이 조종석 도끼 공격 재조명, 항공 안전 및 승무원 정신 건강 관리 강화 촉구</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/oct/18/flydubai-captain-smit-machchhar-blocking-axe-blows-flight-fz1073" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 02:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">미국을 저렴하게 만들겠다는 Trump의 구상은 실패했다</div>
+    <div class="article-title-en">Trump’s bid to make America cheap again has failed</div>
+    <div class="article-keypoint">에너지 가격 상승으로 트럼프 '물가 인하' 공약 신뢰도 하락, 지지층 이탈 리스크</div>
+    <a class="article-link" href="https://www.ft.com/content/52a5e9df-cd9a-4951-99b5-2364e575bb44?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Bitcoin, $80,500 지지선에 갇혀 하락 위험 잠복: 실시간 레벨 점검</div>
+    <div class="article-title-en">Bitcoin trapped at $80,500 support, breakdown risk: Live levels</div>
+    <div class="article-keypoint">Bitcoin $80,500 지지선 유지 실패 시 추가 하락 위험, 암호화폐 시장 분기점 임박</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-wedged-at-84175-between-key-support-and-resistance-live-93CH-4943299" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/18 19:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">뉴질랜드 CPI 테스트, 뉴질랜드 달러 하락세의 분수령이 될 전망</div>
+    <div class="article-title-en">CPI Test Set to Make or Break New Zealand Dollar’s Losing Run</div>
+    <div class="article-keypoint">뉴질랜드 CPI 발표 앞두고 NZD 5분기 연속 약세, 팬데믹 저점 테스트 가능성 주시</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-18/cpi-test-set-to-make-or-break-new-zealand-dollar-s-losing-run" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Buffett 세 자녀, 1,500억 달러 Warren 재산 분배라는 퍼즐과 씨름하다</div>
+    <div class="article-title-en">For Three Buffetts, a $150 Billion Puzzle Over Warren’s Riches</div>
+    <div class="article-keypoint">Buffett 자산 $1,500억 분배 딜레마, 빅테크 자산 집중과 자선 거버넌스 구조 조명</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-18/for-three-buffetts-a-150-billion-puzzle-over-warren-s-riches" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Trump, 법원 명령에도 불구하고 역사적 골프 코스 대규모 개조 강행</div>
+    <div class="article-title-en">Trump to begin transforming historic golf course despite court order</div>
+    <div class="article-keypoint">트럼프, 법원 명령 무시하고 역사적 골프장 개조 강행으로 법치 리스크 재부각</div>
+    <a class="article-link" href="https://www.ft.com/content/39a1f29b-1248-4785-8aa3-0e7c29b5bf35?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 07:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Trump, 이스라엘 선거에서 Netanyahu 지지 선언</div>
+    <div class="article-title-en">Trump endorses Netanyahu in Israeli election</div>
+    <div class="article-keypoint">트럼프, Netanyahu 이스라엘 선거 공개 지지로 중동 외교 편향성 논란 확대</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-endorses-netanyahu-in-israeli-election" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 00:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Macron, 폭동 후 정치적 격랑에 휩싸여</div>
+    <div class="article-title-en">Macron faces political firestorm after riots</div>
+    <div class="article-keypoint">마크롱, 총선 6개월 전 폭력 시위로 정치적 위기, 유럽 정국 불안 확대 우려</div>
+    <a class="article-link" href="https://www.ft.com/content/19495e50-0f55-44b1-8d19-19244163a4e8?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 04:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">브라질 Bolsonaro-Lula, 지지자들이 거리를 메운 가운데 첫 토론 격돌</div>
+    <div class="article-title-en">Brazil's Bolsonaro, Lula face off in first debate as supporters fill streets</div>
+    <div class="article-keypoint">브라질 Lula-Bolsonaro 첫 TV 토론, 1주일 앞 대선 결선 최종 분수령</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/brazils-bolsonaro-lula-head-into-first-debate-a-week-before-vote" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/19 02:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
