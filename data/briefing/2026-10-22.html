@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-22 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/22 07:48 KST</div>
+    <div class="header-date">2026-10-22</div>
+    <div class="header-headline">Tesla 어닝 서프라이즈 + SpaceX 합병설 — AI 랠리 재점화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Tesla-SpaceX 합병 특별위원회 설치 여부 및 주주 동의 가능성 — 빅테크 밸류에이션 재편 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Tesla 어닝 서프라이즈·SpaceX 합병설 — AI 랠리 재점화와 밸류에이션 재편</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">Tesla가 Q3 실적에서 EPS와 잉여현금흐름(FCF) 모두 시장 예상을 크게 상회하며 AI 투자 심리를 되살렸다. 특히 Tesla는 시장이 약 $50억 현금 소진을 예상한 것과 달리 $15억의 FCF를 창출했고, Musk는 SpaceX와의 합병에 '상당한 근거가 있다'고 언급하며 Tesla 주주 50% 동의 조건을 제시했다. SpaceX 역시 독자적으로 AI 컴퓨팅 역량을 대규모 확장 중이나 전력·칩 공급 확보가 관건으로 지목된다. 합병 가능성에 대해 월가 일각은 Tesla 주주 가치 희석 우려를 근거로 회의적 시각을 유지하고 있으며, Nasdaq은 이날 금요일 하락분 대부분을 되돌리며 반등에 성공했다. SpaceX 실적 호조와 Anthropic·Nvidia의 강세 신호가 AI 체인 전반에 걸쳐 복합적 상승 동력을 제공했다는 평가다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI CapEx 수요 집중·기업 지출 정체 — OpenAI·Anthropic 소비 구조 균열 신호</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#13</span>
+    </div>
+    <div class="theme-summary">기업용 카드 데이터 분석업체 Ramp에 따르면 OpenAI·Anthropic 지출의 80%가 전체 기업의 단 1%에서 발생하며, 최근 이 지출 증가세가 둔화 조짐을 보이고 있어 AI 수요 저변의 취약성이 부각됐다. 아시아 반도체 수출은 급증세를 이어가고 있어 AI 인프라 투자 자체는 계속되고 있지만, 실제 엔터프라이즈 채택이 소수 대형 고객에 편중된 구조적 문제가 드러났다. Bessent 재무장관은 투자자 컨퍼런스에서 AI의 '시스템적' 리스크를 일축했으나, 시장은 AI 투자 수익성 균열 가능성을 주시하고 있다. Meta는 대규모 AI 인프라 투자 재원 마련을 위해 무의결권 신주 발행 계획을 추진 중이며, Zuckerberg의 경영권은 유지하되 캘리포니아 부유세 회피 목적도 겸하는 구조다. Walmart가 AI 에이전트의 구매 대행을 허용하는 반면 Amazon은 이를 차단하는 등 AI 플랫폼 상용화 전략도 엇갈리고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 거버넌스·보안·서사 균열 — PHP 취약점·신화 담론·에이전트 리스크</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #14~#16</span>
+    </div>
+    <div class="theme-summary">OpenAI와 Google Wiz가 PHP에서 수십 년간 방치된 보안 취약점을 AI를 통해 발견했으나, 이는 동시에 AI가 대규모 사이버 위협을 가속할 수 있다는 양면성을 드러냈다. AI 시대의 '신화 서사' — 즉 유토피아적 비전 대 현실적 리스크 — 에 대한 비판적 담론이 부상하며 AI 투자 심리의 서사적 기반 자체를 흔드는 논의가 확산되고 있다. AI 거버넌스 측면에서 스마트시티 감시 기술의 정치적 남용 사례(우간다 등 아프리카)가 조명되며 AI 인프라 확산의 부작용에 대한 경계심도 높아지고 있다. 이러한 흐름은 AI 규제 강화 압력과 맞물려 장기적으로 빅테크 플랫폼의 운영 리스크를 높이는 요인으로 작용할 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">우크라이나·러시아 외교 — 미 정보 공유 복원과 Trump-Putin 교섭 진전</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#19</span>
+    </div>
+    <div class="theme-summary">Zelenskyy 우크라이나 대통령은 오슬로에서 미국 특사 Witkoff·Kushner와 회담 후 러시아 미사일 타격 관련 미국 정보 공유가 재개됐다고 밝혀 방어 공백이 일부 해소됐음을 확인했다. Putin은 미국 특사 면담에 맞춰 미국인 Stephen Hubbard를 석방하는 제스처를 취했으며, Witkoff 특사는 ICC 전범 기소 대상인 Putin을 '인도주의적 인물'로 칭해 외교적 논란을 야기했다. 이번 정보 공유 재개는 Starlink 및 정보망 차단 이후 첨예했던 미·우크라이나 동맹 균열을 봉합하려는 신호로 해석되나, 트럼프 행정부의 대러 협상 기조가 동맹국들의 신뢰를 지속적으로 시험하고 있다. 중동 긴장 심화 보도로 미 국채가 하락하고 유가가 상승하는 등 지정학적 리스크가 채권·에너지 시장에도 전이됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">통화정책·연준 독립성 — BOE Bailey의 Powell 방어와 주택 경기 경보</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #20~#22</span>
+    </div>
+    <div class="theme-summary">영란은행(BOE) 총재 Bailey는 Trump의 Powell 비판에 공개적으로 반박한 자신의 행동이 정당했다고 재확인하며 중앙은행 독립성 수호 의지를 강조했다. 미국 주택 지표는 9월 들어 추가 악화되며 연준의 추가 금리 인상 검토 환경에서 경기 하방 리스크를 부각시키고 있다. 기술주 어닝 랠리가 진행 중임에도 불구하고 미국 증시 선물이 하락 반전한 것은 금리 상승 부담과 어닝 모멘텀 지속성에 대한 시장의 이중적 시각을 반영한다. 연준 독립성 훼손 우려와 재정 건전성 논란은 달러·국채 시장의 구조적 불확실성 요인으로 잔존하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #23~#30</span>
+    </div>
+    <div class="theme-summary">미국 정치·사회 이슈로 분류되는 기사들이 다수 포함됐다. Ramaswamy 선거 광고 논란, JD Vance의 공화당 내부 비판 발언, Trump 행정부의 트랜스젠더 연방 수용자 정책 대법원 기각, 이민·중간선거 이슈, Musk의 텍사스 정치 개입, 데이터센터 자가발전 관련 Trump 발언, 로보틱스 스타트업 GMEX 등은 직접적인 금융시장 임팩트가 제한적인 항목들이다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Tesla 어닝 서프라이즈·SpaceX 합병설 — AI 랠리 재점화와 밸류에이션 재편</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">SpaceX·Anthropic·Nvidia, 최근 부진했던 기술주를 동반 반등으로 이끌다</div>
+    <div class="article-title-en">SpaceX, Anthropic and Nvidia Help Snap Tech Stocks Out of Their Recent Malaise</div>
+    <div class="article-keypoint">SpaceX·Anthropic·Nvidia 동반 강세로 Nasdaq 금요일 하락분 대부분 복구</div>
+    <a class="article-link" href="https://www.wsj.com/finance/stocks/spacex-anthropic-and-nvidia-help-snap-tech-stocks-out-of-their-recent-malaise-66e1693c?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 06:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Tesla, Musk의 SpaceX 합병 검토 발언 속 어닝 서프라이즈 달성</div>
+    <div class="article-title-en">Tesla beats earnings projections after Musk floats SpaceX merger plan</div>
+    <div class="article-keypoint">Tesla Q3 EPS·FCF 시장 예상 상회 + Musk SpaceX 합병 검토 발언으로 주가 급등</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/oct/21/elon-musk-tesla-spacex" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 06:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Tesla-SpaceX 합병 가능성에 투자자들이 회의적이어야 하는 이유</div>
+    <div class="article-title-en">Why investors should be skeptical of a potential Tesla-SpaceX merger</div>
+    <div class="article-keypoint">SpaceX 합병이 Tesla 주주가치에 희석 리스크 — 월가 회의론 확산 중</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-investors-should-be-skeptical-of-a-potential-tesla-spacex-merger-9e119d32?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 06:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">SpaceX의 야심찬 AI 목표, 현실의 한계를 시험하다</div>
+    <div class="article-title-en">SpaceX’s massive AI targets will test the limits of reality</div>
+    <div class="article-keypoint">SpaceX AI 컴퓨팅 대규모 확장 목표, 전력·칩 공급 한계가 핵심 병목으로 부상</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/spacexs-massive-ai-targets-will-test-the-limits-of-reality-4f23a624?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 05:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Tesla, EPS 어닝 서프라이즈 — 예상보다 $30억 적게 쓰며 FCF 추정치 대폭 상회</div>
+    <div class="article-title-en">Tesla Gains On EPS Beat, Crushes FCF Estimates... By Spending $3 Billion Less Than Expected</div>
+    <div class="article-keypoint">Tesla Q3 FCF +$15억 — 시장 예상 현금소진 $50억 대비 극적 역전으로 신뢰 회복</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/tsla-jumps-3-month-highs-after-big-margin-free-cash-flow-beat" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 05:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">SpaceX, AI 랠리에 불을 지피다</div>
+    <div class="article-title-en">SpaceX Boosts the A.I. Rally</div>
+    <div class="article-keypoint">SpaceX 어닝 호조 + Tesla 합병설이 AI 랠리의 복합 점화제로 작용</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/10/21/business/dealbook/spacex-musk-tesla.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/21 22:37 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI CapEx 수요 집중·기업 지출 정체 — OpenAI·Anthropic 소비 구조 균열 신호</span>
+    <span class="theme-label-range">Article #7~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">전체 기업의 1%가 OpenAI·Anthropic 지출의 80%를 차지 — 그리고 그 증가세가 꺾였다</div>
+    <div class="article-title-en">1% Of Companies Account For 80% Of OpenAI And Anthropic Spending - And It Just Stalled</div>
+    <div class="article-keypoint">OpenAI·Anthropic 기업 지출 80%가 상위 1% 집중 — 수요 저변 취약성 확인</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/1-companies-account-80-openai-and-anthropic-spending-and-it-just-stalled" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 05:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Meta, AI 대규모 투자 재원 마련 위해 신규 주식 클래스 발행 추진</div>
+    <div class="article-title-en">Meta wants to pay for its broad AI buildout with a newly created class of stock</div>
+    <div class="article-keypoint">Meta, AI 투자 재원 위해 무의결권 신주 발행 추진 — 창업자 지배력 유지 병행</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/21/meta-wants-to-pay-for-its-broad-ai-buildout-with-a-newly-created-class-of-stock/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 07:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Bessent, 비공개 투자자 컨퍼런스에서 AI의 '시스템적' 리스크 일축</div>
+    <div class="article-title-en">Bessent shrugs off ‘systemic’ AI risks at closed-door investor conference</div>
+    <div class="article-keypoint">Bessent, AI 시스템 리스크 일축 — 정부의 AI 규제 완화 기조 재확인</div>
+    <a class="article-link" href="https://www.ft.com/content/5b7c2fdf-2300-4208-860e-6389ceb18886?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 03:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">AI 버블 논쟁 속에서도 아시아 반도체 수출은 급증세</div>
+    <div class="article-title-en">Asia’s Chip Exports Soar as AI Bubble Debate Rages</div>
+    <div class="article-keypoint">아시아 반도체 수출 급증 vs. AI 버블 논쟁 — AI 수요 실체 검증 분기점</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-10-21/asia-s-chip-exports-soar-as-ai-bubble-debate-rages" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/21 20:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Amazon은 AI 에이전트 쇼핑을 차단하는 반면, Walmart는 적극 수용</div>
+    <div class="article-title-en">While Amazon blocks AI agents, Walmart rolls out the welcome mat</div>
+    <div class="article-keypoint">Walmart AI 에이전트 구매 허용 vs. Amazon 차단 — 플랫폼 전략 대분기 가시화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/21/while-amazon-blocks-ai-agents-walmart-rolls-out-the-welcome-mat/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 04:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Meta, Zuckerberg의 캘리포니아 잔류를 위해 부유세 대응 신주 발행 합의</div>
+    <div class="article-title-en">Meta agrees deal to keep Zuckerberg in California despite wealth tax proposal</div>
+    <div class="article-keypoint">Meta 무의결권 신주로 Zuckerberg 지배력 유지 + 캘리포니아 부유세 회피 구조 확정</div>
+    <a class="article-link" href="https://www.ft.com/content/b34502b6-38dc-4a46-a8e7-d9131726cd31?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 06:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Meta, Muse 사용자 1,000만 명 돌파 — 쇼핑이 주요 활동으로 부상</div>
+    <div class="article-title-en">Meta says Muse has over 10M users, with shopping a top activity</div>
+    <div class="article-keypoint">Meta Muse 월간 사용자 1,000만 돌파 — AI앱 상용화 초기 단계 성과 확인</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/21/meta-says-muse-has-over-10m-users-with-shopping-a-top-activity/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 06:14 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 거버넌스·보안·서사 균열 — PHP 취약점·신화 담론·에이전트 리스크</span>
+    <span class="theme-label-range">Article #14~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">우리는 어떤 AI 신화를 선택할 것인가</div>
+    <div class="article-title-en">Which AI Myth Will We Embrace?</div>
+    <div class="article-keypoint">AI 시대 유토피아 서사 vs. 현실 리스크 — 투자 심리의 서사적 기반 균열 경고</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-founding-myth-profit-or-social-cooperation-by-richard-k-sherwin-2026-10?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/21 22:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">PHP 대란: OpenAI·Google Wiz, 수십 년 된 취약점 발견 — 인터넷 보안 비상</div>
+    <div class="article-title-en">PHP armageddon: OpenAI, Google’s Wiz find ancient holes, panicking the internet</div>
+    <div class="article-keypoint">AI가 PHP 고위험 취약점 발견·차단, 동시에 사이버 공격 가속 양면성 부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/21/php-armageddon-openai-googles-wiz-find-ancient-holes-panicking-the-internet/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 02:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">스마트시티가 위협이 될 때</div>
+    <div class="article-title-en">When Smart Cities Turn Menacing</div>
+    <div class="article-keypoint">아프리카 스마트시티 감시 확산 — AI 인프라 정치적 남용 리스크 글로벌 사례화</div>
+    <a class="article-link" href="https://www.project-syndicate.org/onpoint/africa-smart-city-tools-from-china-used-for-surveillance-political-control-by-wairagala-wakabi-2026-10?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/21 17:22 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">우크라이나·러시아 외교 — 미 정보 공유 복원과 Trump-Putin 교섭 진전</span>
+    <span class="theme-label-range">Article #17~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Putin, Trump 특사 우크라이나 협상 회동에 맞춰 미국인 수감자 석방 지시</div>
+    <div class="article-title-en">Putin orders release of jailed American as he meets Trump envoy for Ukraine talks</div>
+    <div class="article-keypoint">Putin, 미국인 Hubbard 석방 — 우크라이나 협상 국면에서 대미 유화 제스처</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/oct/21/putin-witkoff-russia-ukraine-trump-stephen-hubbard-release" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 06:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">우크라이나, 러시아 공습 속 미국의 정보 공유 재개를 환영</div>
+    <div class="article-title-en">Ukraine Welcomes Restored U.S. Intelligence Amid Russian Attacks</div>
+    <div class="article-keypoint">미 정보 공유 재개 확인 — 우크라이나 방어 공백 해소와 동맹 균열 봉합 시도</div>
+    <a class="article-link" href="https://oilprice.com/Geopolitics/Europe/Ukraine-Welcomes-Restored-US-Intelligence-Amid-Russian-Attacks.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/21 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">중동 갈등 심화 보도에 유가 상승 — 미 국채 동반 하락</div>
+    <div class="article-title-en">Treasuries Slide After Middle East Strife Report Spurs Oil Gains</div>
+    <div class="article-keypoint">중동 갈등 심화 보고에 국채 하락·유가 상승 — 지정학 리스크의 채권·에너지 동시 전이</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-21/treasuries-slide-after-middle-east-strife-report-spurs-oil-gains" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 04:46 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">통화정책·연준 독립성 — BOE Bailey의 Powell 방어와 주택 경기 경보</span>
+    <span class="theme-label-range">Article #20~#22</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">BOE Bailey 총재, Trump의 Powell 공격에 맞선 자신의 발언 정당성 재확인</div>
+    <div class="article-title-en">BOE’s Bailey Defends Speaking Out Over Trump Attacks on Powell</div>
+    <div class="article-keypoint">BOE Bailey, Trump의 Powell 압박에 공개 반박 — 중앙은행 독립성 논쟁 재점화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-21/boe-s-bailey-defends-speaking-out-over-trump-attacks-on-powell" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 00:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">기술주 어닝 랠리 소강 — 미 증시 선물 하락 반전</div>
+    <div class="article-title-en">US Stock Futures Slip as Tech Earnings Rally Fades: Markets Wrap</div>
+    <div class="article-keypoint">기술주 어닝 랠리에도 미 선물 하락 반전 — 금리 부담과 모멘텀 지속성에 시장 의구심</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-21/stock-market-today-dow-s-p-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 07:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">연준 추가 금리 인상 검토 국면에서 주택 경기 경보음 울리다</div>
+    <div class="article-title-en">Housing is flashing warning signs just as the Fed weighs more interest rate hikes</div>
+    <div class="article-keypoint">9월 주택 지표 추가 악화 — Fed 추가 금리 인상 검토 국면에서 경기 하방 리스크 부각</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/10/20/housing-mortgage-rates-real-estate-federal-reserve.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/21 20:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #23~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Vivek Ramaswamy 캠프, 공격 광고 논란으로 홍역</div>
+    <div class="article-title-en">Vivek Ramaswamy’s campaign engulfed by controversy over attack ad</div>
+    <div class="article-keypoint">Ramaswamy 선거 광고 논란 — 바이오텍 억만장자의 정치적 리스크 부각</div>
+    <a class="article-link" href="https://www.ft.com/content/93ba5184-e21c-4af2-8121-c92df82a95f3?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 02:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">연방 수사당국, Ilhan Omar '오빠와 결혼' 의혹에 DNA 조사 착수 — 공모 혐의 검토 중</div>
+    <div class="article-title-en">Feds Using DNA To Probe Ilhan Omar 'Married Her Brother' Claim, Eye Conspiracy Charge: Report</div>
+    <div class="article-keypoint">Ilhan Omar DNA 수사 보도 — 연방 기소 가능성과 정치적 파장 주목</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/feds-using-dna-probe-ilhan-omar-married-her-brother-claim-eye-conspiracy-charge-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 00:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">대법원, 트랜스젠더 연방 수용자 호르몬 치료 종료 요구한 Trump 행정부 신청 기각</div>
+    <div class="article-title-en">Supreme Court Rejects Trump Bid To End Hormone Treatments For Transgender Federal Inmates</div>
+    <div class="article-keypoint">대법원, 트랜스젠더 연방 수용자 호르몬 치료 중단 행정명령 즉각 집행 기각</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/supreme-court-rejects-trump-bid-end-hormone-treatments-transgender-federal-inmates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">GMEX Robotics, LD Micro 행사에서 주방 로봇 상업화 진전 보고 — 리스크는 여전</div>
+    <div class="article-title-en">GMEX Robotics at LD Micro: kitchen robot gains traction, risks remain</div>
+    <div class="article-keypoint">주방 로봇 스타트업 GMEX, LD Micro에서 상업화 진전 보고 — 리스크 상존</div>
+    <a class="article-link" href="https://www.investing.com/news/transcripts/gmex-robotics-at-ld-micro-kitchen-robot-gains-traction-risks-remain-93CH-4964358" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/21 22:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Trump, 데이터센터 자가 발전 촉구 — 전문가들 '州만이 의무화 가능' 반박</div>
+    <div class="article-title-en">Trump says data centers should generate their own electricity — but experts say only states can mandate that</div>
+    <div class="article-keypoint">Trump 데이터센터 자가발전 지시, 주(州) 권한과 충돌 — 에너지 인프라 정책 불확실성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/trump-says-data-centers-should-generate-their-own-electricity-but-experts-say-only-states-can-mandate-that-415dcaad?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 06:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Trump의 대규모 추방 정책이 중간선거를 어떻게 바꾸고 있나 — 기자들의 질문 답변</div>
+    <div class="article-title-en">How will Trump’s mass deportation agenda shape the US midterm elections? Our reporters answer your questions</div>
+    <div class="article-keypoint">ICE 체포 최고 수준 — 이민 이슈가 중간선거 2주 전 핵심 변수로 부상</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/oct/21/immigration-ice-mass-deportation-trump-midterm-elections" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 07:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">'순수한 악': Musk, Talarico에 맹공 — George W. Bush 동생은 돌연 입장 선회</div>
+    <div class="article-title-en">"Pure Evil": Musk Goes Nuclear On Talarico As George W.'s Brother Does 180</div>
+    <div class="article-keypoint">Musk, 텍사스 선거전 공개 개입 — 정치 리스크가 Tesla·SpaceX 브랜드에 전이 가능</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/pure-evil-musk-goes-nuclear-talarico-george-ws-brother-does-180" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 04:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">JD Vance, Ramaswamy 선거 광고 비판한 공화당 의원들에 '다소 역겨움' 표명</div>
+    <div class="article-title-en">JD Vance says he is ‘a little bit disgusted’ by Republicans who criticized Ramaswamy campaign ad – live</div>
+    <div class="article-keypoint">Vance, 공화당 내 Ramaswamy 광고 비판에 반박 — 당내 갈등 표면화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/oct/21/donald-trump-south-carolina-data-centers-midterms-ukraine-witkoff-russia-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/22 07:33 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
