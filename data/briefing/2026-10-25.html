@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-25 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/25 07:48 KST</div>
+    <div class="header-date">2026-10-25</div>
+    <div class="header-headline">이란, 미국인 대상 공격 '고도화' — 중동 리스크 프리미엄 재점화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">이란의 미국인 대상 공격 계획 구체화 여부 및 Starlink 우크라이나 접근 정상화 지속성 확인</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">이란 공격 계획 고도화 — 중동 지정학 리스크 재점화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">이란이 중동 및 유럽 내 미국인과 미국 관리를 대상으로 한 공격 계획이 '고도화 단계'에 진입했다는 미 정보기관 메모가 공개되며 지정학 리스크가 재부각됐다. Trump는 관련 발언에서 또 다른 군사적 대응 가능성을 시사하며 긴장을 고조시켰다. 이스라엘은 IDF 병사 2명이 사망한 직후 서안지구 전역을 봉쇄하고 대규모 군사작전을 개시해 중동 긴장이 복합적으로 확대되고 있다. 이란의 이스라엘 핵 협상 교착과 맞물려 에너지·방산 섹터의 리스크 프리미엄 상승 압력이 커지는 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Starlink 우크라이나 복원·OpenAI 도청 스파이 — Musk 지정학 무기화와 AI 신뢰 균열</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#8</span>
+    </div>
+    <div class="theme-summary">Musk가 이용약관 위반을 이유로 우크라이나 군용 Starlink를 제한한 후 서비스가 재개됐다는 보도가 나왔으나, Musk 측은 약관 위반을 공식 이유로 내세워 논란이 지속되고 있다. Starlink의 지정학 무기화 가능성이 재부각되면서 NATO 동맹국들의 위성통신 의존도에 대한 우려가 커지고 있다. 한편 OpenAI 직원이 제한된 회의실에 도청 장치를 설치한 혐의로 FBI 수사를 받고 있어 AI 기업 내부 보안 신뢰 균열이 동시에 부각됐다. Musk의 SpaceX 지분을 미국 아이들에게 약속하는 발언도 나왔으나 시장에서는 실현 가능성에 회의적 시각이 지배적이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Fed·G7 중앙은행 동결 기조 — 매파적 관망 속 금리 경로 재해석</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #9~#10</span>
+    </div>
+    <div class="theme-summary">Fed를 포함한 유로존·일본 중앙은행이 이번 주 금리를 동결할 것으로 예상되며, 시장은 추가 인상 가능성을 열어둔 매파적 관망 국면에 진입했다. 은(Silver)의 최근 급락이 경기 선행 지표로서 경기 둔화 신호를 보내는지 여부에 대해 UBS가 분석을 제시하며 귀금속 시장의 방향성 논쟁이 가열되고 있다. 금리 동결이 장기화될 경우 금리 민감 섹터의 밸류에이션 재조정 압력이 지속될 수 있어, 이번 주 중앙은행 성명 문구 변화가 핵심 관전 포인트다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">핵 에너지·자원 공급망 — Amazon·해군·캐나다의 인디애나 원전 경쟁과 신흥 에너지 이니셔티브</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #11~#14</span>
+    </div>
+    <div class="theme-summary">Amazon, 캐나다 기업, 미 해군이 인디애나주에서 960MW 규모 원자로 계획을 동시에 추진하며 민간·군·외국 자본이 미국 핵 에너지 인프라에 집중되는 새로운 국면이 열렸다. 이는 AI 데이터센터의 전력 수요 급증과 맞물려 민간 빅테크의 핵 에너지 직접 투자 트렌드가 가속화되고 있음을 보여준다. 인도네시아가 에너지 안보를 이유로 싱가포르에 대한 파이프라인 가스 수출을 축소하고, 베네수엘라는 중국의 도움으로 대형 발전소를 재가동하려는 움직임이 맞물려 글로벌 에너지 공급망 재편이 동시다발적으로 진행 중이다. 시애틀 스타트업의 해저 화산 지열 에너지 상용화 첫 단계 달성도 장기 에너지 다변화 투자 테마를 강화한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">트럼프 정치 행보·브라질 볼소나루 복귀 공작 — 미국발 정치 개입 리스크</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #15~#19</span>
+    </div>
+    <div class="theme-summary">미 국무부 관리들이 브라질 볼소나루 일가의 권력 복귀를 위해 제재 추진 등 선거 개입을 시도했다는 폭로가 나오며 미국의 대외 정치 개입 리스크가 부각됐다. Trump가 플로리다 집회에서 추가 군사 행동을 시사하는 발언을 이어가는 가운데 중간선거를 앞두고 정치적 불확실성이 고조되고 있다. Kamala Harris가 중간선거와 2028년을 염두에 두고 유세를 재개하며 민주당의 의회 탈환 시도가 가시화되고 있고, Trump의 조기 투표 참여도 주목받고 있다. 이스라엘에서는 Netanyahu가 암호화폐를 제재 우회 수단으로 활용하려는 계획을 중앙은행이 공식 거부하며 제도 리스크가 새롭게 부각됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #20~#25</span>
+    </div>
+    <div class="theme-summary">금속 트레이더들이 2년 연속 기록적 수익을 달성하며 원자재 시장 강세가 이어지고 있다. Woori Financial의 실적이 예상치를 상회하며 한국 금융주 어닝 시즌의 긍정적 신호를 제공했다. 이탈리아 주요 도시에서 대규모 시위가 발생하고 브라질 대선 전날 룰라 지지자 100만 명 이상이 결집하는 등 유럽·남미 정치 불안이 병존하고 있다. 계부 유산으로 남겨진 주택 $85만 달러 매입 제안에 관한 개인 재무 상담 기사, Putin의 협상 전술에 대한 Gershkovich의 증언도 수집됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">이란 공격 계획 고도화 — 중동 지정학 리스크 재점화</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Trump, 또 다른 '소규모 대응' 시사 — Intel, 해외 미국 관리 대상 '고도화' 암살 계획 경고</div>
+    <div class="article-title-en">Trump Floats Another 'Little Epic Fury' As Intel Warns Of 'Advanced' Plots To Kill US Officials Abroad</div>
+    <div class="article-keypoint">Trump, 이란 대응 군사 행동 재시사 — 중동 긴장 고조 속 에너지·방산 리스크 프리미엄 상승 우려</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/trump-floats-another-little-epic-fury-intel-warns-advanced-plots-kill-us-officials" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 04:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">정보 메모, 이란의 중동 내 미국인 대상 공격 계획 경고</div>
+    <div class="article-title-en">Intelligence memo warns Iran is plotting to kill Americans in Middle East</div>
+    <div class="article-keypoint">이란, 중동 내 미국인 대상 공격 '고도화 단계' — 에너지 루트·방산 섹터 리스크 프리미엄 급부상</div>
+    <a class="article-link" href="https://www.ft.com/content/e2e82393-c7ca-4bc1-b270-022b3702d9e7?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 00:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">이란, 미국인 대상 공격 '고도화 단계' — 유럽도 잠재 표적</div>
+    <div class="article-title-en">Iran in ‘advanced stages’ of planning attacks against Americans, officials say</div>
+    <div class="article-keypoint">이란, 유럽 포함 미국인 공격 계획 구체화 — 나토 동맹국 안보 우려 동반 확산</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/iran-in-advanced-stages-of-planning-attacks-against-americans-officials-say" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/24 14:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Netanyahu, 서안지구 전면 봉쇄·대규모 작전 개시 — IDF 병사 2명 사망 직후</div>
+    <div class="article-title-en">Netanyahu Locks Down West Bank, Launches Massive Operation After Two IDF Soldiers Killed</div>
+    <div class="article-keypoint">Netanyahu, IDF 병사 2명 사망 후 서안지구 봉쇄·대규모 작전 개시 — 중동 긴장 복합 확대</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/netanyahu-puts-west-bank-lockdown-orders-huge-operation-after-two-idf-soldiers-killed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 00:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Starlink 우크라이나 복원·OpenAI 도청 스파이 — Musk 지정학 무기화와 AI 신뢰 균열</span>
+    <span class="theme-label-range">Article #5~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Musk, 미국 모든 아이에게 SpaceX 주식 약속 — 기대는 금물</div>
+    <div class="article-title-en">Elon Musk promised a SpaceX share to every kid in America — don’t hold your breath</div>
+    <div class="article-keypoint">Musk의 SpaceX 지분 약속, 과거 공언 패턴상 실현 가능성 극히 낮아 시장 신뢰도 경계</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/elon-musk-promised-a-spacex-share-to-every-kid-in-america-dont-hold-your-breath-d6572cdf?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 01:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Starlink, 우크라이나에서 정상 작동 재개된 듯</div>
+    <div class="article-title-en">Starlink seems to be working normally again in Ukraine</div>
+    <div class="article-keypoint">Starlink 우크라이나 서비스 재개 — 민간 위성망의 전쟁 무기화 논란 지속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/24/starlink-seems-to-be-working-normally-again-in-ukraine/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 05:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">우크라이나, 군용 Starlink 서비스 복원 확인 — Musk는 약관 위반 이유 제시</div>
+    <div class="article-title-en">Ukraine says military Starlink service restored as Musk cites terms violations</div>
+    <div class="article-keypoint">약관 위반 명목 Starlink 제한 후 복원 — Musk의 지정학 레버리지 활용 패턴 재확인</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/ukraine-says-military-starlink-service-restored-after-10day-disruption-4970760" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/24 19:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">FBI, 사우디 출신 OpenAI 직원 스파이 혐의 수사 착수</div>
+    <div class="article-title-en">FBI Explores Espionage Case Against Saudi OpenAI Suspect</div>
+    <div class="article-keypoint">OpenAI 회의실 도청 사건 — AI 기업 내부 보안 취약성과 기업 신뢰 균열 현실화</div>
+    <a class="article-link" href="https://www.wsj.com/us-news/law/fbi-explores-espionage-case-against-saudi-openai-suspect-fbaedefe?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 02:07 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Fed·G7 중앙은행 동결 기조 — 매파적 관망 속 금리 경로 재해석</span>
+    <span class="theme-label-range">Article #9~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Fed, G7 트리오 중 매파적 동결 선두 전망 — 이번 주 경제 일정</div>
+    <div class="article-title-en">Fed Set to Lead G7 Trio in Hawkish Rate Pause: Eco Week Ahead</div>
+    <div class="article-keypoint">Fed·ECB·BOJ 동결 예상 — 매파적 관망 장기화 시 금리 민감 섹터 재조정 압력 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-24/fed-set-to-lead-g7-trio-in-hawkish-rate-pause-eco-week-ahead" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">은(Silver), 최근 급락 후 회복 가능할까? UBS 분석</div>
+    <div class="article-title-en">Can silver recover from its latest sell-off? UBS weighs in</div>
+    <div class="article-keypoint">은(Silver) 급락 이후 UBS 회복 가능성 분석 — 경기 선행 지표로서 귀금속 방향성 분기점</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/can-silver-recover-from-its-latest-selloff-ubs-weighs-in-4970956" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/24 20:34 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">핵 에너지·자원 공급망 — Amazon·해군·캐나다의 인디애나 원전 경쟁과 신흥 에너지 이니셔티브</span>
+    <span class="theme-label-range">Article #11~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Amazon·캐나다·미 해군, 인디애나 원자로 유치 경쟁</div>
+    <div class="article-title-en">Amazon, Canadians, And The Navy All Want Reactors In Indiana</div>
+    <div class="article-keypoint">Amazon·캐나다·미 해군, 인디애나 960MW 원전 동시 추진 — AI 전력 수요 대응 핵에너지 투자 가속</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/amazon-canadians-and-navy-all-want-reactors-indiana" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">해저 화산으로 도시에 전력 공급 가능할까? 시애틀 스타트업, 첫 단계 달성</div>
+    <div class="article-title-en">Can Undersea Volcanoes Power Cities? A Seattle Startup Just Took the First Step</div>
+    <div class="article-keypoint">해저 화산 지열 에너지 상용화 첫 단계 달성 — 장기 청정 기저 전력 다변화 투자 테마 강화</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Can-Undersea-Volcanoes-Power-Cities-A-Seattle-Startup-Just-Took-the-First-Step.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">베네수엘라, 중국 지원으로 핵심 발전소 재가동 추진</div>
+    <div class="article-title-en">Venezuela to Restart a Crucial Power Plant With China’s Help</div>
+    <div class="article-keypoint">베네수엘라, 중국 지원으로 대형 발전소 재가동 추진 — 중남미 에너지 공급망 내 중국 영향력 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-24/venezuela-to-restart-a-crucial-power-plant-with-china-s-help" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/24 23:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">인도네시아, 싱가포르 대상 파이프라인 가스 수출 축소 시작</div>
+    <div class="article-title-en">Indonesia Begins Trimming Pipeline Gas Exports to Singapore</div>
+    <div class="article-keypoint">인도네시아, 싱가포르 가스 수출 축소 — 동남아 에너지 안보 재편과 지역 공급망 리스크 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-24/indonesia-begins-trimming-pipeline-gas-exports-to-singapore" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/24 16:48 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">트럼프 정치 행보·브라질 볼소나루 복귀 공작 — 미국발 정치 개입 리스크</span>
+    <span class="theme-label-range">Article #15~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump 행정부의 브라질 볼소나루 일가 권력 복귀 공작 내막</div>
+    <div class="article-title-en">Inside the Trump-administration campaign to return Brazil’s Bolsonaro clan to power</div>
+    <div class="article-keypoint">미 국무부의 브라질 선거 개입 폭로 — 미국발 대외 정치 개입 리스크와 외교 신뢰 손상 우려</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/inside-the-trump-administration-campaign-to-return-brazils-bolsonaro-clan-to-power" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 06:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">이스라엘 중앙은행, Netanyahu의 제재 우회 암호화폐 활용 계획 거부</div>
+    <div class="article-title-en">Israeli central bank rejects Netanyahu’s plan to use crypto to evade sanctions</div>
+    <div class="article-keypoint">Netanyahu의 암호화폐 제재 우회 계획을 이스라엘 중앙은행이 거부 — 제도적 견제 작동</div>
+    <a class="article-link" href="https://www.ft.com/content/39e475e7-0392-4856-aaaf-5ab3e35b8215?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 04:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">사회보장청, 'Trump 계좌' 신규 가입 확대 추진 — 그러나 여전히 한계 존재</div>
+    <div class="article-title-en">The Social Security Administration wants more babies signed up for ‘Trump accounts.’ But there’s still a catch.</div>
+    <div class="article-keypoint">Trump 계좌(Trump Accounts) 가입 속도 저조 — 사회보장 정책 실효성 의문 고조</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-social-security-administration-wants-more-babies-signed-up-for-trump-accounts-but-theres-still-a-catch-4096f16e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 01:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Trump, 플로리다에서 미국 중간선거 조기 투표 참여</div>
+    <div class="article-title-en">Trump votes early in Florida for US midterm elections</div>
+    <div class="article-keypoint">Trump 중간선거 조기 투표 — 의회 권력 구도 변화 가능성 주시</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-votes-early-in-florida-for-us-midterm-elections" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">전 부통령 Kamala Harris, 중간선거·2028 대선 염두에 두고 유세 재개</div>
+    <div class="article-title-en">Former US vice-president Kamala Harris returns to US campaign trail with midterms, 2028 in view</div>
+    <div class="article-keypoint">Harris, 중간선거·2028 동시 겨냥 유세 재개 — 민주당 의회 탈환 전략 가시화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/former-us-vice-president-kamala-harris-returns-to-us-campaign-trail-with-midterms-2028-in-view" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 00:21 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #20~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">'꿈을 살고 있는 것': 계모가 유년 시절 집을 $85만에 사라고 했다 — 이용당하는 건 아닐까?</div>
+    <div class="article-title-en">‘She’s living the dream’: My stepmother said I can buy my childhood home for $850,000. Is she taking advantage of me?</div>
+    <div class="article-keypoint">부동산 자산 $85만 달러 세대간 이전 — 고금리 주택시장 내 가족간 거래 리스크 사례</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/shes-living-the-dream-my-stepmother-said-i-can-buy-my-childhood-home-for-850-000-is-she-taking-advantage-of-me-1fdda7b5?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">금속 트레이더, 2년 연속 기록적 수익 달성</div>
+    <div class="article-title-en">Metals Traders Reap Bonanza With Another Year of Record Profits</div>
+    <div class="article-keypoint">금속 트레이더 2년 연속 기록적 수익 — 원자재 강세 구조 지속 여부 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-24/metals-traders-reap-bonanza-with-another-year-of-record-profits" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/24 23:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Woori Financial ADR 실적, 예상치 $0.29 상회·매출도 컨센서스 초과</div>
+    <div class="article-title-en">Woori Financial ADR earnings beat by $0.29, revenue topped estimates</div>
+    <div class="article-keypoint">Woori Financial 실적 예상치 $0.29 상회 — 한국 금융주 어닝 서프라이즈 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/earnings/woori-financial-adr-earnings-beat-by-029-revenue-topped-estimates-4970952" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/24 20:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">이탈리아 주요 도시 시위 확산 — 강경 경비 속 일부 충돌 발생</div>
+    <div class="article-title-en">Protests sweep Italian cities amid heavy security presence, some violence reported</div>
+    <div class="article-keypoint">이탈리아 주요 도시 대규모 시위 — 유럽 정치 불안 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/protests-sweep-italian-cities-amid-heavy-security-presence-some-violence-reported" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 03:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">룰라 지지자 100만 명 이상, 브라질 대선 결선투표 전날 결집</div>
+    <div class="article-title-en">More than one million Lula supporters rally on eve of Brazilian election runoff</div>
+    <div class="article-keypoint">브라질 대선 전날 룰라 지지자 100만 명 결집 — 남미 정치 지형 분수령</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/oct/24/lula-da-silva-supporters-rally-eve-brazil-election-runoff-bolsonaro" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 06:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Gershkovich, Putin은 합의보다 자국 조건 관철을 원한다</div>
+    <div class="article-title-en">Gershkovich Says Putin Seeks His Terms, Not a Deal</div>
+    <div class="article-keypoint">Gershkovich, Putin은 거래보다 자국 조건 관철 추구 — Trump 행정부의 협상 전략 오판 가능성 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-24/gershkovich-says-putin-seeks-his-terms-not-a-deal-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/24 20:54 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
