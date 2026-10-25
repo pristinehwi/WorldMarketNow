@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-26 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/26 07:48 KST</div>
+    <div class="header-date">2026-10-26</div>
+    <div class="header-headline">SpaceX $400억 부채조달·군 추적데이터 접근 — Musk 우주 독점 가속</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">S&P 500 1/3 이상 실적 발표 임박 — 어닝 서프라이즈 vs 매크로 균열 충돌 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Musk 제국 확장 — SpaceX $400억 부채·군 데이터 독점·Starlink 우크라이나 제한 해명</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#3</span>
+    </div>
+    <div class="theme-summary">이번 사이클에서 새롭게 부각된 것은 SpaceX가 $400억 규모 부채 딜을 통해 자금을 조달했다는 Musk의 직접 공개 발언으로, 네오클라우드 시장 재편 가능성을 예고했다는 점이다. 동시에 미 군이 SpaceX에 민감한 우주 추적 데이터 접근권을 부여함으로써 국가안보 우려와 우주산업 내 독점 통제 공포가 커지고 있다. Starlink의 우크라이나 속도 제한 논란에서는 Musk가 직접 SpaceX의 결정임을 인정하며 워싱턴과의 책임 공방을 사실상 마무리했으나, 민간 인프라의 지정학 무기화 우려는 지속된다. 세 이슈가 동시에 부각되며 Musk 생태계가 AI·우주·통신·국방을 아우르는 단일 권력 구조로 수렴하는 리스크가 시장 참여자들의 핵심 모니터링 대상으로 떠올랐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">S&P 500 실적 시즌 개막 — 시장 신뢰 균열 속 빅테크·AI 지출 검증대</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #4~#7</span>
+    </div>
+    <div class="theme-summary">이번 주 S&P 500 기업 중 1/3 이상이 실적을 발표하면서 '신중하거나 부정적인 시장 심리' 속 변동성 확대가 경고되고 있다. Meta의 끝없는 AI 지출 확대는 투자자들의 CapEx 수익성 검증 요구를 강화하고 있으며, Goldman Sachs는 AI 트레이드 약화를 이유로 한국 Kospi 12개월 목표치를 25% 대폭 하향 조정했다. Goldman은 동시에 금·원자재 롱 포지션을 지지하는 3가지 요인을 제시하며 실물자산으로의 로테이션 논거를 강화하고 있다. 실적 발표와 매크로 불확실성이 교차하는 이번 주는 AI 밸류에이션의 지속 가능성을 시장이 직접 검증하는 분기점이 될 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">통화정책 재해석 — Warsh 발언·BOE 금리 경로 하향 전망·캐나다 관세 역풍</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #8~#11</span>
+    </div>
+    <div class="theme-summary">Fed 내 매파 후보로 거론되는 Warsh가 트레이더들에게 데이터를 보라고 경고했음에도 시장은 여전히 Fed 신호에 수동적으로 반응하고 있어 통화정책 기대 형성 구조의 취약성이 드러난다. 영국 시장은 BOE가 내년 여름까지 금리를 4.75%까지 올릴 것이라는 전망을 과대평가하고 있으며, 시티 이코노미스트들은 오히려 2027년 말까지 인하 가능성을 제시하고 있다. 캐나다의 대미 보복관세는 주당 1억 캐나다달러의 소비자 비용을 유발하고 있어, 관세 전쟁이 중앙은행 정책 여력을 잠식하는 복합 압력으로 작용하고 있다. 미·캐나다 무역협상이 '매우 근접'했다는 백악관 발언은 단기 완화 기대를 자극하지만 구체적 합의 내용은 미공개 상태다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">중동·우크라이나 지정학 — 이란 핵 레드라인·젤렌스키 3자 회담·이스라엘 선거 불확실성</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #12~#16</span>
+    </div>
+    <div class="theme-summary">Trump가 이란 전쟁은 핵 위협이 제거될 때까지 끝나지 않을 것이라고 발언하며 이란 핵 리스크에 대한 레드라인을 재확인했고, 당장 공격은 없다는 단서가 붙었으나 지정학 프리미엄은 유지되고 있다. 젤렌스키는 11월 미·우크라이나·러시아 3자 회담 개최를 공식화하며 교착 국면의 외교적 돌파구를 모색 중이다. 이스라엘에서는 Netanyahu가 암호화폐를 통한 경제 제재 우회 방안을 제안해 경제학자와 정치권의 반발을 샀으며, 네게브 사막의 Likud 핵심 지지층에서도 이탈 조짐이 나타나고 있다. 빌 에크먼은 Ben-Gvir·Smotrich의 차기 내각 참여에 반대하며 극우 연정 리스크를 공개 경고해 이스라엘 정치 지형의 복잡성을 부각시켰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">미국 정치 지형 변화 — 중간선거 공화당 이탈·Trump 지지율 균열·BYD 한국 침투</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #17~#21</span>
+    </div>
+    <div class="theme-summary">2026년 중간선거를 앞두고 텍사스·오하이오·미시간의 유권자들이 Trump와 공화당에서 이탈하는 경향이 실증 데이터로 확인되기 시작했으며, 이는 트럼프 2기 정책의 의회 추진력에 영향을 줄 수 있다. Trump는 미시간 유세에서 Mike Rogers 지원 유세를 펼쳤으나 정책 메시지보다 개인적 발언이 부각되어 메시지 규율 리스크가 노출됐다. BYD는 한국 시장에서 Hyundai의 홈그라운드를 직접 공략하며 가격·기능 경쟁력으로 소비자를 유인하고 있어, 현대차의 국내 전기차 지배력이 처음으로 외부 도전에 직면했다. 브라질에서는 룰라 대통령이 전임 볼소나루 지지자들과의 결선투표에서 이변 가능성이 제기되며 중남미 정치 리스크가 재부상하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #22~#28</span>
+    </div>
+    <div class="theme-summary">이번 분류에서 주요 거시·금융·지정학·산업 테마와 직접적 연관성이 낮은 기사들이 포함됐다. 빌 게이츠의 코로나 백신 관련 법적 분쟁, 의붓어머니의 부동산 거래 윤리 질의, 우간다의 에볼라 예방 격리 조치, 뉴욕시장의 ICE 대응 지침 영상 논란, 서호주 정부의 Deloitte 보고서 환급 요구, 베네수엘라 야권 지도자 귀국 등 개별 사안들이 해당한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Musk 제국 확장 — SpaceX $400억 부채·군 데이터 독점·Starlink 우크라이나 제한 해명</span>
+    <span class="theme-label-range">Article #1~#3</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Musk, SpaceX의 $400억 부채 딜 공개 — 네오클라우드 시장 재편 예고</div>
+    <div class="article-title-en">Musk says SpaceX raised $40 billion in debt deal, predicts neocloud shakeout</div>
+    <div class="article-keypoint">SpaceX $400억 부채 조달 공개 — 네오클라우드 시장 구조 재편 신호탄</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/musk-says-spacex-raised-40-billion-in-debt-for-gpus-4971248" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 22:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">미 군, Elon Musk의 SpaceX에 민감한 우주 추적 데이터 접근 허용</div>
+    <div class="article-title-en">US military gives Elon Musk’s SpaceX access to sensitive tracking data</div>
+    <div class="article-keypoint">미 군, SpaceX에 민감 우주 추적 데이터 접근 허용 — 국가안보·독점 통제 우려 부상</div>
+    <a class="article-link" href="https://www.theguardian.com/science/2026/oct/25/spacex-access-sensitive-tracking-data" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">'지옥불에 타버려라': Musk, 우크라이나 Starlink 속도 제한 이유 직접 해명</div>
+    <div class="article-title-en">"May You Burn In Hell": Musk Clarifies Why Starlink Speed Limits Were Throttled In Ukraine</div>
+    <div class="article-keypoint">Musk, Starlink 우크라이나 속도 제한 SpaceX 결정임을 인정 — 민간 인프라 지정학 무기화 확인</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/musk-admits-spacex-throttled-starlink-ukraine-because-kiev-violated-terms-service" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 00:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">S&P 500 실적 시즌 개막 — 시장 신뢰 균열 속 빅테크·AI 지출 검증대</span>
+    <span class="theme-label-range">Article #4~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">S&P 500 기업 1/3 이상 실적 발표 임박 — 시장 신뢰 균열 속 불안한 시즌 개막</div>
+    <div class="article-title-en">More than a third of S&P 500 companies are about to report earnings as market confidence cracks</div>
+    <div class="article-keypoint">S&P 500 1/3 실적 발표 임박 — 부정적 센티먼트 속 어닝 시즌 변동성 확대 경고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/more-than-a-third-of-s-p-500-companies-are-about-to-report-earnings-as-market-confidence-cracks-03b7a8f1?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Goldman, 원자재 롱 포지션을 지지하는 3가지 요인 제시</div>
+    <div class="article-title-en">Goldman lists 3 factors that support long commodities positions</div>
+    <div class="article-keypoint">Goldman, 금·원자재 롱 포지션 지지 3대 요인 제시 — 실물자산 로테이션 논거 강화</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/goldman-lists-3-factors-that-support-long-commodities-positions-4971269" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 21:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Goldman, AI 트레이드 약화로 Kospi 12개월 목표치 25% 하향 조정</div>
+    <div class="article-title-en">Goldman Cuts Kospi 12-Month Target by 25% as AI Trade Unravels</div>
+    <div class="article-keypoint">Goldman, Kospi 12개월 목표 25% 하향 — AI 트레이드 약화가 한국 증시 직격</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-25/goldman-cuts-kospi-12-month-target-by-25-as-ai-trade-unravels" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 16:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Meta의 끝없는 AI 지출</div>
+    <div class="article-title-en">Meta’s Unending AI Spending</div>
+    <div class="article-keypoint">Meta의 무제한 AI 지출 지속 — CapEx 수익성 검증 압박 강화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/metas-unending-ai-spending-34e53011?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 23:55 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">통화정책 재해석 — Warsh 발언·BOE 금리 경로 하향 전망·캐나다 관세 역풍</span>
+    <span class="theme-label-range">Article #8~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Warsh, 트레이더들에게 '데이터를 보라' 경고 — 그래도 시장은 Fed만 따른다</div>
+    <div class="article-title-en">Warsh Tells Traders to Watch the Data. They Still Follow the Fed</div>
+    <div class="article-keypoint">Warsh, 데이터 추종 촉구에도 시장은 Fed 신호 의존 지속 — 통화정책 기대 구조 취약</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-25/warsh-tells-traders-to-watch-the-data-they-still-follow-the-fed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">캐나다의 對美 보복관세, 주당 1억 달러 소비자 부담 — 이코노미스트 경고</div>
+    <div class="article-title-en">Ottawa's Counter-Tariffs On US Costing Canadians $100 Million Weekly, Economist Says</div>
+    <div class="article-keypoint">캐나다 보복관세, 주당 $1억 소비자 비용 유발 — 관세 전쟁의 내수 압박 현실화</div>
+    <a class="article-link" href="https://www.zerohedge.com/economics/ottawas-counter-tariffs-us-costing-canadians-100-million-weekly-economist-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">미·캐나다 무역협상 '매우 근접' — 백악관 Hassett 발언</div>
+    <div class="article-title-en">U.S, Canada “very close” to trade deal, White House’s Hassett says</div>
+    <div class="article-keypoint">미·캐나다 무역협상 '매우 근접' — 관세 완화 기대 자극하나 구체성 미흡</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/us-canada-very-close-to-trade-deal-white-houses-hassett-says-4971239" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 18:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">금리, 내년 여름까지 4.75% 도달 어렵다 — 시티 이코노미스트 전망</div>
+    <div class="article-title-en">Interest rates unlikely to reach 4.75% by next summer, say City economists</div>
+    <div class="article-keypoint">BOE 금리 4.75% 도달 불가 전망 — 시장 과대평가 수정 시 금리 민감주 재조정 유발</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/oct/25/interest-rates-bank-of-england-rises-summer-2027" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">중동·우크라이나 지정학 — 이란 핵 레드라인·젤렌스키 3자 회담·이스라엘 선거 불확실성</span>
+    <span class="theme-label-range">Article #12~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Trump, '핵 위협 제거 전 이란 전쟁 끝나지 않는다' — 오늘 공격은 없어</div>
+    <div class="article-title-en">Trump says Iran war won’t end until nuclear threat gone; no strike today</div>
+    <div class="article-keypoint">Trump, 이란 핵 위협 제거 전 전쟁 종식 없다 선언 — 중동 지정학 프리미엄 유지</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/yemens-houthis-renew-threat-against-riyadh-airport-as-flights-set-to-resume-4971006" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 22:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">젤렌스키, 11월 미국-우크라이나-러시아 3자 회담 개최 예정 발표</div>
+    <div class="article-title-en">Zelensky says trilateral US-Ukraine-Russia meeting to take place in November</div>
+    <div class="article-keypoint">젤렌스키, 11월 미·우크라·러 3자 회담 공식화 — 교착 외교의 새 분기점</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelensky-says-trilateral-us-ukraine-russia-meeting-to-take-place-in-november" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 05:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Netanyahu, 암호화폐로 경제 제재 우회 방안 제안 — 경제학자·정치권 강한 반발</div>
+    <div class="article-title-en">Netanyahu rebuked for plan to use crypto to bypass economic sanctions</div>
+    <div class="article-keypoint">Netanyahu, 암호화폐로 국제 제재 우회 제안 — 경제·정치적 반발 가중</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/netanyahu-rebuked-for-plan-to-use-crypto-to-bypass-economic-sanctions" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 20:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump 후원 억만장자, Ben-Gvir·Smotrich의 이스라엘 차기 내각 참여 반대</div>
+    <div class="article-title-en">Billionaire Trump backer says Ben-Gvir, Smotrich should not serve in next Israeli government</div>
+    <div class="article-keypoint">Ackman, Ben-Gvir·Smotrich 이스라엘 내각 참여 공개 반대 — 극우 연정 리스크 경고</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/billionaire-trump-backer-says-ben-gvir-smotrich-should-not-serve-in-next-israeli-government" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 00:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">실망한 Netanyahu 지지자들, 이스라엘 선거 캠페인의 핵심 변수로 부상</div>
+    <div class="article-title-en">Disenchanted Netanyahu supporters are prize of Israel election campaign</div>
+    <div class="article-keypoint">Netanyahu 핵심 지지기반 네게브에서 이탈 조짐 — 이스라엘 정치 불확실성 심화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/disenchanted-netanyahu-supporters-are-prize-of-israel-election-campaign" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 16:10 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">미국 정치 지형 변화 — 중간선거 공화당 이탈·Trump 지지율 균열·BYD 한국 침투</span>
+    <span class="theme-label-range">Article #17~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">BYD의 한국 시장 확장, 현대차 홈그라운드 지배력에 도전</div>
+    <div class="article-title-en">BYD’s Korea Expansion Challenges Hyundai Dominance on Home Turf</div>
+    <div class="article-keypoint">BYD, 현대차 홈그라운드 한국 전기차 시장 직접 침투 — 경쟁 지형 변화 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-25/byd-s-korea-expansion-challenges-hyundai-dominance-on-home-turf" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">텍사스·오하이오·미시간 유권자, 2026 중간선거 앞두고 Trump·공화당 이탈</div>
+    <div class="article-title-en">Texas, Ohio, Michigan Voters Turn Away From Trump, GOP in Midterm Elections 2026</div>
+    <div class="article-keypoint">텍사스·오하이오·미시간 유권자 공화당 이탈 조짐 — 2026 중간선거 공화당 리스크 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/features/2026-us-midterm-election-affordability/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">중간선거 9일 전, 빅테크 실적 발표 시즌 개막</div>
+    <div class="article-title-en">9 Days to Midterm Elections, Big Tech Earnings</div>
+    <div class="article-keypoint">중간선거 9일 전 빅테크 실적 발표 — 정치·시장 이벤트 복합 변동성 주의</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-25/bloomberg-this-weekend-10-25-2026-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 00:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">브라질 대선 결선투표 — 좌파 룰라 vs 극우 볼소나루 격돌</div>
+    <div class="article-title-en">Brazilians vote in presidential election runoff pitting leftist Lula against far-right Bolsonaro</div>
+    <div class="article-keypoint">브라질 룰라-볼소나루 결선투표 — 중남미 정치 리스크 재부상</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/oct/25/lula-da-silva-flavio-bolsonaro-brazil-presidential-election" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 23:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Trump, 미시간 유세에서 Mike Rogers 지원 — 그리고 Nicki Minaj 발언</div>
+    <div class="article-title-en">Trump rallies for Mike Rogers – and Nicki Minaj’s derriere – in Michigan</div>
+    <div class="article-keypoint">Trump 미시간 유세, 정책 메시지 규율 리스크 노출 — 공화당 선거 전략 불안</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/oct/25/trump-nicki-minaj-mike-rogers-michigan-rally" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 07:36 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">'그녀는 꿈을 살고 있다': 새어머니가 내 어린 시절 집을 $85만에 사라고 한다 — 나를 이용하는 건가?</div>
+    <div class="article-title-en">‘She’s living the dream’: My stepmother said I can buy my childhood home for $850,000. Is she taking advantage of me?</div>
+    <div class="article-keypoint">부동산 거래 윤리 질의 — 시장 외적 개인 재무 사안</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/shes-living-the-dream-my-stepmother-said-i-can-buy-my-childhood-home-for-850-000-is-she-taking-advantage-of-me-1fdda7b5?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 05:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Ilhan Omar의 삭제된 2013년 트윗, 연방 수사의 핵심 증거 될 수 있어</div>
+    <div class="article-title-en">Ilhan Omar's Deleted 2013 Tweet Could Be Key Evidence In Federal Probe</div>
+    <div class="article-keypoint">Ilhan Omar 삭제 트윗, 연방 수사 증거 가능성 — 정치적 리스크 개별 사안</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/ilhan-omars-deleted-2013-tweet-could-be-key-evidence-federal-probe" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Mamdani, 이민자에게 ICE 차단 지침 스페인어 영상 배포 — '선동' 논란</div>
+    <div class="article-title-en">Mamdani Drops Spanish-Language Video Telling Migrants To Keep The Door Shut On ICE, Sparking Cries Of 'Sedition'</div>
+    <div class="article-keypoint">뉴욕시장 ICE 대응 스페인어 영상 — 이민 정책 갈등 개별 사안</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/mamdani-drops-spanish-language-video-telling-migrants-keep-door-shut-ice-sparking-cries" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 04:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Bill Gates, 코로나 백신이 '치명적 생물 무기'라는 주장으로 법정에 서다</div>
+    <div class="article-title-en">Bill Gates Faces Court Over Claims COVID Jabs Were 'Lethal Biological Weapons'</div>
+    <div class="article-keypoint">Bill Gates, 코로나 백신 법적 분쟁 — 시장 외적 개인 법률 사안</div>
+    <a class="article-link" href="https://www.zerohedge.com/covid-19/bill-gates-faces-court-over-claims-covid-jabs-were-lethal-biological-weapons" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 04:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">베네수엘라 야권 지도자 Machado, 망명지에서 귀국</div>
+    <div class="article-title-en">Venezuelan opposition leader Machado returns from exile</div>
+    <div class="article-keypoint">베네수엘라 야권 Machado 귀국 — Trump 지지 임시정부와의 긴장 고조 가능성</div>
+    <a class="article-link" href="https://www.ft.com/content/f691e41e-dd01-4ac0-ade7-5f7ca23d6135?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">우간다, 콩고 방문 이력 귀국자에 21일 격리 조치 시행</div>
+    <div class="article-title-en">Uganda imposes 21-day quarantine on citizens returning from Congo</div>
+    <div class="article-keypoint">우간다, 콩고 방문자 21일 격리 — 에볼라 예방 조치 강화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/uganda-imposes-21-day-quarantine-on-citizens-returning-from-congo" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 07:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">'매우 실망': 서호주 정부, Deloitte의 부실 대학 보고서 환급 요구</div>
+    <div class="article-title-en">‘Extremely disappointed’: WA government seeks reimbursement from Deloitte over flawed university report</div>
+    <div class="article-keypoint">서호주 정부, Deloitte에 대학 보고서 환급 요구 — 공공 컨설팅 신뢰 이슈</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/oct/26/deloitte-report-wa-university-mergers-260m-discrepancy-ai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/25 23:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
