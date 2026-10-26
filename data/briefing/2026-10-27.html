@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-27 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/27 07:48 KST</div>
+    <div class="header-date">2026-10-27</div>
+    <div class="header-headline">Meta $950억 주식 공모·Anthropic S-1 공개 — AI 자금조달 구조 재편</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Anthropic IPO S-1 세부 내용 검증 및 Meta $950억 공모 수요 확인 — AI 밸류에이션 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 자금조달 빅뱅 — Meta $950억 공모·Anthropic S-1·SpaceX $400억 GPU 금융</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#9</span>
+    </div>
+    <div class="theme-summary">오늘 Anthropic이 S-1을 공식 제출하면서 영업이익 $9.74억, 컴퓨트 비용 $8,000억 규모의 충격적 수치가 시장에 공개되었고, Meta는 Nvidia·AMD·Broadcom을 코너스톤 투자자로 한 $950억 규모 주식 관련 딜을 추진 중임이 확인됐다. SpaceX는 Apollo와 $400억 GPU 금융 계약을 체결했으며, Pimco가 이 중 $40억을 인수한 것으로 알려졌다. 별도로 주요 은행과 Blackstone이 Broadcom AI 인프라 구매·Anthropic 임대 구조로 $630억 금융 비히클을 구성하는 등 AI 인프라 자금조달 생태계가 전례 없는 속도로 팽창하고 있다. Anthropic S-1에는 Elon Musk가 임대인으로 등장하는 점도 주목되며, IPO 성공 여부는 AI 섹터 전반의 밸류에이션 기준점이 될 전망이다. Lumentum 등 광학주가 Anthropic IPO 기대감에 S&P 500 상승을 견인하는 등 AI 자금조달 이벤트가 즉각적인 섹터 랠리를 촉발하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Fed 관망 속 긴축 리스크 — Warsh 메시지·Sahm 인상론·2년물 국채 부진</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #10~#13</span>
+    </div>
+    <div class="theme-summary">이번 주 FOMC 결정을 앞두고 시장의 초점이 Kevin Warsh의 커뮤니케이션 전략으로 이동하고 있다. Warsh는 금리 동결을 유지하면서도 인플레이션 억제 의지를 재확인해야 하는 이중 과제에 직면해 있으며, 12월 인상 가능성을 열어두는 매파적 관망 기조가 예상된다. Claudia Sahm은 에너지 비용 상승과 캐나다 관세 인상 가능성이 인플레이션 상방 리스크를 높이며 10월 인상을 정당화할 수 있다고 주장해 시장 긴장을 고조시켰다. 2년물 국채 경매에서 외국인 수요가 급감하며 추하게 테일링되는 등 FOMC 전 채권 시장 불안이 가시화됐다. $2조 재정적자와 5% 국채 수익률의 조합은 가계와 정부 모두의 차입 비용을 압박하며 미국 경제의 구조적 취약성으로 부상하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 노동 대체·거버넌스 균열 — Microsoft 6만명 바이아웃·AI 사법 오류</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #14~#17</span>
+    </div>
+    <div class="theme-summary">Microsoft가 AI 지출 붐에 따른 비용 절감 명목으로 6만 명에게 바이아웃을 제안하며 AI가 기업 인력 구조를 실질적으로 재편하고 있음을 재확인했다. AI 인프라에 연간 최대 $1,750억을 투자하면서도 대규모 인력 감축을 병행하는 것은 AI CapEx가 반드시 고용 창출로 이어지지 않는다는 점을 보여준다. 한편 미시시피 DEI 금지 소송에서 AI 오류로 가득 찬 판사 판결이 항소법원에서 뒤집히는 사태가 발생하며, AI의 사법·행정 영역 침투에 따른 거버넌스 리스크가 현실화됐다. AI 전환이 기업 재무와 공공기관 신뢰 모두에 미치는 부작용이 동시에 가시화되는 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">관세 정치학 — 미·캐나다 철강·자동차 협상과 USTR의 단기 고통 방어론</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#20</span>
+    </div>
+    <div class="theme-summary">미국과 캐나다가 철강·자동차 관세 완화를 위한 물밑 협상을 진행 중인 것으로 전해지며, 관세 전선에서 부분적 균열 가능성이 부상했다. USTR Jamieson Greer는 관세의 단기 고통이 과장됐으며 장기 이익이 크다는 입장을 고수하며 트럼프 행정부의 공식 서사를 방어하고 있다. 그러나 캐나다 관세 추가 인상 가능성이 인플레이션 상방 리스크로 Fed 의사결정에도 영향을 미치고 있어 관세 정책이 통화정책과 교차하는 복합 변수로 작용 중이다. DoorDash-Instacart 딜 논의도 Walmart·Amazon 대항이라는 관세·경쟁 환경 변화에 대응한 유통 재편으로 해석된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">중동·이스라엘-이란 긴장 — Netanyahu 선거 압박과 군사 행동 리스크</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#23</span>
+    </div>
+    <div class="theme-summary">Netanyahu가 선거를 앞두고 이란에 대한 군사 행동을 이스라엘군에 압박한 것으로 보도되며, 중동 지정학 리스크가 선거 정치와 결합해 예측 불가능성이 높아졌다. Trump-Netanyahu의 이란 에스컬레이션 정치는 두 지도자가 선거에서 패하더라도 군사 계획이 중단되지 않을 수 있다는 분석이 제기되며 시장의 지정학 프리미엄 재반영 가능성을 높인다. SpaceX 국유화 논쟁에서 Musk가 전 노동장관 Robert Reich를 강하게 비판하는 등 Musk의 정치적 행보도 지정학·산업 경계를 교란하는 변수로 지속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">브라질 Lula 대통령의 재선과 트럼프의 라틴아메리카 전략 균열, 옵션 트레이더의 S&P 500 변동성 억제 현상, 트럼프의 유권자 부정 신고 $100만 현상금 발표, 화석연료 지역사회의 지속가능 전환 모델 논의, Macron의 마르세유 치안 실패 인정 등 다양한 정치·사회 이슈가 혼재한다. 이들 기사는 개별 시장 임팩트는 제한적이나 정치 리스크 및 사회 변동성의 배경으로 작용한다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 자금조달 빅뱅 — Meta $950억 공모·Anthropic S-1·SpaceX $400억 GPU 금융</span>
+    <span class="theme-label-range">Article #1~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Nvidia·AMD·Broadcom, Meta $350억 주식 공모 참여 가능성</div>
+    <div class="article-title-en">Nvidia, AMD and Broadcom could buy Meta shares as part of $35 billion stock offering</div>
+    <div class="article-keypoint">Nvidia·AMD·Broadcom이 Meta $350억 주식 공모 코너스톤 — AI 칩-플랫폼 자본 동맹 형성</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidia-amd-and-broadcom-could-buy-meta-shares-as-part-of-35-billion-stock-offering-d816fec2?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 06:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Anthropic IPO, 악마는 디테일에 있다</div>
+    <div class="article-title-en">With the Anthropic IPO, the devil is in the details</div>
+    <div class="article-keypoint">Anthropic S-1 첫 공개, 세부 정보 부족으로 IPO 밸류에이션 불확실성 잔존</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/with-the-anthropic-ipo-the-devil-is-in-the-details-239d571d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 05:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Pimco, SpaceX 대규모 AI 부채 패키지 중 $40억 인수</div>
+    <div class="article-title-en">Pimco Scoops Up $4 Billion of Massive SpaceX AI Debt Package</div>
+    <div class="article-keypoint">Pimco, SpaceX AI 부채 패키지 중 $40억 인수 — 사모 AI 인프라 채권 수요 확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-26/pimco-scoops-up-4-billion-of-massive-spacex-ai-debt-package" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 06:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Lumentum 주가가 월요일 S&P 500 상승을 이끈 이유</div>
+    <div class="article-title-en">Why Lumentum’s stock led the S&P 500 higher on Monday</div>
+    <div class="article-keypoint">Anthropic IPO 기대감에 Lumentum 등 광학주가 S&P 500 상승 견인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-lumentums-stock-led-the-s-p-500-higher-on-monday-0dff125b?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 06:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Meta, AI 확장 자금 마련 위해 $950억 주식 공모 추진</div>
+    <div class="article-title-en">Meta plans $95bn stock offering to bankroll AI expansion</div>
+    <div class="article-keypoint">Meta, AI 확장 위해 $950억 주식 딜 추진 — 역대급 AI 자본 조달 구조 가시화</div>
+    <a class="article-link" href="https://www.ft.com/content/94e5a0ae-874d-447a-bbfc-cd465a1a7555?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 05:49 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">은행·Blackstone, Broadcom AI 기술 위한 $630억 금융 비히클 구성</div>
+    <div class="article-title-en">Banks, Blackstone Form $63 Billion Financing Vehicle for Broadcom AI Tech</div>
+    <div class="article-keypoint">은행·Blackstone, Broadcom AI 인프라·Anthropic 임대 구조로 $630억 금융 비히클 구성</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/banks-blackstone-form-63-billion-financing-vehicle-for-broadcom-ai-tech-0438f6d2?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Anthropic 상장에 걸린 것은 거의 모든 것</div>
+    <div class="article-title-en">What’s Riding on Anthropic Going Public? Nearly Everything.</div>
+    <div class="article-keypoint">Anthropic IPO, AI 공급망 전반의 바로미터 — 실패 시 섹터 전반 밸류에이션 압박</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/10/26/technology/anthropic-going-public-stakes.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 03:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">SpaceX, Apollo와 $400억 GPU 금융 계약 체결 확정</div>
+    <div class="article-title-en">SpaceX locks in $40B GPU financing deal with Apollo</div>
+    <div class="article-keypoint">SpaceX, Apollo와 $400억 GPU 금융 체결 — 전통 채권 시장 우회한 AI 자금 조달 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/26/spacex-locks-in-40b-gpu-financing-deal-with-apollo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 01:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Anthropic S-1 공개: 영업이익 $9.74억, 컴퓨트 비용 $8,000억, 그리고 임대인은 Elon Musk</div>
+    <div class="article-title-en">Anthropic's S-1 Is Out: A $974 Million Operating Profit, An $800 Billion Compute Bill, And Elon Musk As Landlord</div>
+    <div class="article-keypoint">Anthropic S-1: 영업이익 $9.74억, 컴퓨트 비용 $8,000억, Musk가 임대인으로 등장</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/anthropics-s-1-out-974-million-operating-profit-800-billion-compute-bill-and-elon-musk-landlord" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 00:42 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Fed 관망 속 긴축 리스크 — Warsh 메시지·Sahm 인상론·2년물 국채 부진</span>
+    <span class="theme-label-range">Article #10~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">외국인 수요 급감으로 2년물 국채 경매 부진 — FOMC 결정 앞두고 긴장 고조</div>
+    <div class="article-title-en">Foreign Demand Craters For Ugly, Tailing 2Y Treasury Auction Ahead Of Fed Decision</div>
+    <div class="article-keypoint">FOMC 전 2년물 국채 경매에서 외국인 수요 급감 — 금리 불확실성 반영</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/foreign-demand-craters-ugly-tailing-2y-treasury-auction-ahead-fed-decision" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 05:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Fed 회의 초점, 12월을 겨냥한 Warsh의 메시지로 이동</div>
+    <div class="article-title-en">Fed Meeting Focus Turns to Warsh Messaging With December in Mind</div>
+    <div class="article-keypoint">Warsh, FOMC서 동결 유지하면서 12월 인상 가능성 열어두는 메시지 전달 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-26/fed-meeting-focus-turns-to-warsh-messaging-with-december-in-mind" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Claudia Sahm, 10월 Fed 금리 인상 논거를 제시하다</div>
+    <div class="article-title-en">Claudia Sahm Makes the Case for an October Fed Rate Hike</div>
+    <div class="article-keypoint">Sahm, 에너지·캐나다 관세 발 인플레로 10월 Fed 인상 가능성 제기</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-26/claudia-sahm-makes-case-for-an-october-fed-rate-hike-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 23:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">분석: $2조 적자와 5% 국채 수익률이 미국 최대 경제 도전으로 부상하는 이유</div>
+    <div class="article-title-en">Analysis: Why a $2 trillion deficit and 5% Treasury yields are becoming America's biggest economic challenge</div>
+    <div class="article-keypoint">$2조 재정적자·5% 국채 수익률 조합이 미국 경제의 구조적 취약성으로 부상</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/10/15/treasury-yields-deficit-national-debt-ai.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 03:33 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 노동 대체·거버넌스 균열 — Microsoft 6만명 바이아웃·AI 사법 오류</span>
+    <span class="theme-label-range">Article #14~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Microsoft, AI 지출 붐으로 인력 재편 — 6만 명에 바이아웃 제안</div>
+    <div class="article-title-en">60,000 Microsoft Workers Offered Buyouts As AI Spending Boom Reshapes Workforce</div>
+    <div class="article-keypoint">Microsoft, AI 비용 절감 명목으로 6만 명 바이아웃 제안 — AI가 고용 구조 직접 재편</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/60000-microsoft-workers-offered-buyouts-ai-spending-boom-reshapes-workforce" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 04:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">'엉터리 판결': AI 오류 투성이 판사 판결 후 항소법원, 미시시피 DEI 금지 발효 허용</div>
+    <div class="article-title-en">'Botch Job': After Judge's Ruling Riddled With AI Errors, Appeals Court Allows Mississippi DEI Ban To Take Effect</div>
+    <div class="article-keypoint">AI 오류 판결로 항소법원이 미시시피 DEI 금지 집행 허용 — AI 사법 신뢰성 위기</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/botch-job-after-judges-ruling-riddled-ai-errors-appeals-court-allows-mississippi-dei-ban" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Microsoft, 최신 감원으로 6만 명에게 바이아웃 제안 예정</div>
+    <div class="article-title-en">Microsoft to reportedly offer buyouts to 60,000 employees in latest cuts</div>
+    <div class="article-keypoint">Microsoft 6만 명 바이아웃, AI 인프라 투자와 인력 감축의 역설적 공존</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/oct/26/microsoft-buyout-offers-ai-cuts" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 03:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Microsoft, 직원 6만 명에게 바이아웃 제안</div>
+    <div class="article-title-en">Microsoft offers buyouts to 60,000 staff </div>
+    <div class="article-keypoint">Microsoft, AI 인프라 $1,750억 투자 병행 6만 명 감축 — AI 전환의 고용 충격 현실화</div>
+    <a class="article-link" href="https://www.ft.com/content/2ef29406-f2f8-413f-81f6-5ae098c97569?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 05:22 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">관세 정치학 — 미·캐나다 철강·자동차 협상과 USTR의 단기 고통 방어론</span>
+    <span class="theme-label-range">Article #18~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">DoorDash-Instacart 인수 협상, Walmart·Amazon 대항이 핵심 — 애널리스트 분석</div>
+    <div class="article-title-en">A possible DoorDash-Instacart deal is all about keeping up with Walmart and Amazon, analysts say</div>
+    <div class="article-keypoint">DoorDash-Instacart 협상, Walmart·Amazon 대항 유통 재편 신호</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/a-possible-doordash-instacart-deal-is-all-about-keeping-up-with-walmart-and-amazon-analysts-say-17049bb1?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 06:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Trump의 관세 세일즈맨과 무역의 선거 정치학</div>
+    <div class="article-title-en">Trump’s tariff salesman and election politics of trade</div>
+    <div class="article-keypoint">USTR Greer, 관세 단기 고통 과장 주장 — 트럼프 무역 서사 방어 강화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-10-26/trump-s-tariff-salesman-and-election-politics-of-trade" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">단독 — 미국·캐나다, 철강·자동차 관세 완화 협상 중</div>
+    <div class="article-title-en">Exclusive-US, Canada working on deal to ease steel, auto tariffs, sources say</div>
+    <div class="article-keypoint">미·캐나다, 철강·자동차 관세 완화 협상 진행 — 관세 전선 부분 균열 가능성</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/exclusiveus-canada-working-on-deal-to-ease-steel-auto-tariffs-sources-say-4973470" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 22:36 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">중동·이스라엘-이란 긴장 — Netanyahu 선거 압박과 군사 행동 리스크</span>
+    <span class="theme-label-range">Article #21~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">'제국을 위한 감옥': Musk, SpaceX 국유화 주장한 전 노동장관 강하게 비판</div>
+    <div class="article-title-en">'Prison For Reich': Musk Slams Former Labor Secretary Over Commie Fever Dream To Nationalize SpaceX</div>
+    <div class="article-keypoint">SpaceX 국유화 주장에 Musk 강경 반발 — 정치 리스크가 민간 우주기업 거버넌스 위협</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/prison-reich-musk-slams-former-labor-secretary-over-commie-fever-dream-nationalize-spacex" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Trump·Netanyahu와 이란을 향한 에스컬레이션의 정치학</div>
+    <div class="article-title-en">Trump, Netanyahu and the politics of escalation against Iran</div>
+    <div class="article-keypoint">Trump·Netanyahu의 이란 에스컬레이션 정치, 선거 패배 후에도 군사 계획 지속 가능성</div>
+    <a class="article-link" href="https://www.ft.com/content/7b3c17e7-c0bf-4e93-bc5d-17f86fa1b2a5?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 20:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Netanyahu, 선거 직전 이란 공격을 위해 군에 압박 가했다는 보도</div>
+    <div class="article-title-en">Netanyahu reportedly pressured military to attack Iran in run-up to election</div>
+    <div class="article-keypoint">Netanyahu, 선거 전 이란 공격 군 압박 보도 — 중동 지정학 리스크 프리미엄 재점화</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/oct/26/netanyahu-reportedly-pressured-israel-military-attack-iran-runup-to-election" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 04:21 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">지속 가능한 생계를 근본부터 재설계하라</div>
+    <div class="article-title-en">Rethinking Sustainable Livelihoods From the Ground Up</div>
+    <div class="article-keypoint">화석연료 의존 지역의 공정 전환 — 지역 기금 모델이 대안 생계 해법으로 부상</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/post-coal-fossil-fuel-livelihoods-requires-community-input-regional-endowment-funds-by-grita-anindarini-2026-10?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/26 21:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Lula가 먼로 독트린을 무력화했다</div>
+    <div class="article-title-en">Lula Killed the Donroe Doctrine</div>
+    <div class="article-keypoint">Lula 재선으로 트럼프의 라틴아메리카 반구 전략에 균열 발생</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/donroe-doctrine-trump-latin-america-strategy-derailed-by-jeremy-adelman-2026-10?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 02:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">옵션 트레이더들이 S&P 500을 장악하고 있다</div>
+    <div class="article-title-en">Options traders are seizing control of the S&P 500</div>
+    <div class="article-keypoint">옵션 트레이더가 S&P 500 변동성을 억제 — 지수 6월 이후 횡보의 구조적 원인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/options-traders-are-seizing-control-of-the-s-p-500-1add94ca?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 07:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Trump, 가톨릭 주교를 정치적 이익을 위해 '이용'했다는 비판</div>
+    <div class="article-title-en">Trump accused of ‘manipulating’ Catholic bishops for political gain</div>
+    <div class="article-keypoint">Trump, 가톨릭 주교 이용 정치 공작 논란 — 종교계와 행정부 신뢰 균열</div>
+    <a class="article-link" href="https://www.ft.com/content/d8e6fac8-9c71-4e0d-9639-b8cf1d5617b4?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 06:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">사회 시위: 마르세유에서 Macron, 국가 실패를 인정</div>
+    <div class="article-title-en">Social protests: In Marseille, Emmanuel Macron admits state failures</div>
+    <div class="article-keypoint">Macron, 마르세유 치안 실패 공식 인정 — 프랑스 내부 정치 리스크 확대</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/politics/article/2026/10/26/social-protests-in-marseille-emmanuel-macron-admits-state-failures_6764947_5.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 07:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Trump, 과거 및 향후 선거 유권자 부정 신고에 $100만 현상금 발표</div>
+    <div class="article-title-en">Trump issues $1m reward for reporting voter fraud in past or upcoming elections</div>
+    <div class="article-keypoint">Trump, 유권자 부정 신고에 $100만 현상금 — 중간선거 전 정치 불확실성 고조</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/oct/26/trump-reward-reporting-voter-fraud" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 07:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Lula, 라틴아메리카의 친트럼프 물결에 맞서다</div>
+    <div class="article-title-en">Lula Defies Latin America’s Pro-Trump Wave</div>
+    <div class="article-keypoint">Lula 4선 재집권으로 트럼프 라틴아메리카 전략에 최대 변수 등장</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/10/26/brazil-election-lula-flavio-bolsonaro-far-right-trump/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 04:20 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
