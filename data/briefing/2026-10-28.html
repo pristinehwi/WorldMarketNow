@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-28 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/28 07:48 KST</div>
+    <div class="header-date">2026-10-28</div>
+    <div class="header-headline">Broadcom $630억 Anthropic 칩 금융 딜 — AI 자금조달 구조 대전환</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Anthropic IPO 거버넌스 구조·$630억 부채 딜 소화 여부 및 국채시장 매파 리스크 반응 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Anthropic IPO·Broadcom $630억 딜 — AI 자금조달 구조의 질적 전환</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#8</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Broadcom CEO가 직접 개입해 성사시킨 $630억 규모의 Anthropic 칩 금융 패키지로, 이는 AI 인프라 역사상 최대 단일 조달 딜이다. 은행들은 이 패키지의 일환으로 최대 $210억 규모의 고등급 채권 발행을 내년 초 계획 중이며, Nvidia도 Meta의 지분 공모에 $30억을 투자하며 AI 파트너십을 확대하고 있다. Anthropic의 S-1 공시 이후 투자자들은 AI 지출 지속성에 대한 신뢰를 회복하며 CoreWeave 등 AI 관련주가 반등했다. 다만 Anthropic의 거버넌스 구조가 극도로 복잡하고, S-1에는 자사 제품이 인류에 재앙이 될 수 있다는 리스크 경고가 포함돼 있어 IPO 이후 지배구조 우려는 지속될 전망이다. Anthropic의 '조정 이익' 지표 사용도 월가의 회계 관행 논란을 재점화시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Fed 매파 리스크 — 금리 인상론 재부상과 국채 강세 포지션 취약성</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #9~#11</span>
+    </div>
+    <div class="theme-summary">Stifel 수석 이코노미스트 Lindsey Piegza는 인플레이션을 2% 목표로 되돌리려면 두 차례 이상의 금리 인상이 필요하다고 주장하며, Fed가 행동에 나서야 하지만 실제로는 그러지 않을 것이라는 진단을 내놓았다. 이에 따라 현재 미국 국채 강세 베팅은 Fed가 다음 회의에서 더 공격적인 입장을 취할 경우 급격한 되돌림 위험에 노출돼 있다는 경고가 나오고 있다. 캐나다 중앙은행도 관세 역풍 속에서 금리 인상 가능성을 시장이 반영하는 상황으로, 선진국 전반의 통화정책 경로 불확실성이 동시에 확대되고 있다. 이 같은 매파적 신호는 AI 자금조달 붐과 맞물려 장기금리 상승 압력을 높여 성장주 밸류에이션에 이중 압박으로 작용할 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">트럼프 관세 법적 패배 누적 — 무역정책 불확실성 장기화</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#14</span>
+    </div>
+    <div class="theme-summary">트럼프 행정부는 무역 관련 소송에서 5연패를 기록한 데 이어 추가 패소 가능성에 직면해 있어, 관세 정책의 법적 지속 가능성에 근본적 의문이 제기되고 있다. 한편 중국은 유럽의 전기차 관세를 우회하기 위해 모로코 등 제3국에 생산 거점을 구축하는 '관세 회피 산업 플레이북'을 고도화하고 있어, 관세의 실효성 자체가 글로벌 공급망 재편으로 무력화되는 양상이다. Trump는 텍사스 유세에서 이란과의 전쟁 및 베네수엘라의 '51번째 주' 편입론을 언급하며 지정학적 강경 발언을 이어갔으나, 이는 에너지 가격 변동성과 중동 리스크 프리미엄을 동시에 자극하는 요인이다. 관세 정책의 법적 불안정성과 지정학 리스크의 복합 작용은 기업 투자 결정을 지연시키는 구조적 불확실성으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">이스라엘 총선·우크라이나-러시아 외교 — 지정학 분기점 동시 도래</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#17</span>
+    </div>
+    <div class="theme-summary">이스라엘 총선에서 Gadi Eisenkot의 중도 블록이 출구조사 선두를 기록했으나, Netanyahu 퇴진 후에도 이스라엘의 근본적 정책 변화 가능성은 낮다는 분석이 지배적이다. 이스라엘의 외교·안보 노선은 구조적 요인에 의해 결정되는 측면이 강해 정권 교체만으로는 중동 지정학 리스크가 해소되지 않을 전망이다. 우크라이나 전선에서는 핀란드·노르웨이 정상이 Putin과 전화 통화를 갖고 다음 달 예정된 우크라이나-러시아 회동 준비 작업에 나서는 등 외교 채널이 조심스럽게 재가동되고 있다. 콩고 동부에서는 이슬람국가(IS) 연계 무장세력이 금 밀수로 자금을 조달한다는 보고서가 나와 아프리카 자원 공급망의 지정학적 위험도 동시에 부각되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">칩·방산 제조 재편 — Broadcom 밸류에이션 재평가와 미국산 하드웨어 독립 시도</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #18~#20</span>
+    </div>
+    <div class="theme-summary">Broadcom 주가는 연초 대비 제자리걸음이나, 애널리스트는 Nvidia 등 고품질 칩주와 함께 밸류에이션 재평가(리레이팅)가 임박했다고 진단하며 '시장 내 최대 미스프라이싱' 종목으로 지목하고 있다. Anduril과 Qualcomm은 공동으로 미국산 노트북 'BlueChip'을 출시하며, 현재 중국 독점 부품을 포함한 모든 구성요소의 국내 제조를 선언했다. 이는 반도체 공급망의 지정학적 디리스킹 흐름이 소비자·방산 하드웨어로 확산되는 신호로, 미국 제조업 부활 내러티브를 강화한다. 소매 투자자들은 최근 칩 주가 조정 시 저가 매수에 나섰으며, Robinhood CFO는 투자자들이 충분한 리서치를 바탕으로 칩주를 매수했다고 평가했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #21~#30</span>
+    </div>
+    <div class="theme-summary">Boeing은 737 Max 인도 목표 미달로 실적 발표 후 주가가 큰 폭 하락하며 사업 정상화 일정에 의구심이 커지고 있다. 미 국방부는 전력망 붕괴 대비 90일 자급 시나리오를 위해 군 기지 내 소형 핵 원자로 도입을 검토 중이며, NANO Nuclear는 한국 건설사와 MOU를 체결해 SMR 협력을 확대했다. Visa는 2026년 4분기 실적에서 컨센서스를 상회했으나 시간 외 주가는 소폭 하락했다. 이탈리아 하원 사이버 공격으로 Meloni 총리 이메일이 표적이 됐으며, 볼소나루는 룰라 정부의 정치적 압박을 피해 미국행을 택한 것으로 알려졌다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Anthropic IPO·Broadcom $630억 딜 — AI 자금조달 구조의 질적 전환</span>
+    <span class="theme-label-range">Article #1~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Anthropic IPO 공시가 AI 지출 지속성 신뢰 회복시키며 CoreWeave 등 AI주 반등</div>
+    <div class="article-title-en">CoreWeave and other AI stocks rise as Anthropic restores the market’s faith in sustained spending</div>
+    <div class="article-keypoint">Anthropic IPO 공시 후 AI 지출 지속성 신뢰 회복, CoreWeave 등 AI주 반등 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/coreweave-and-other-ai-stocks-rise-as-anthropic-restores-the-markets-faith-in-sustained-spending-c71d7186?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 06:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">재앙, 불량 AI — Anthropic IPO의 리스크 경고들</div>
+    <div class="article-title-en">Catastrophe, Rogue AI and Other Anthropic IPO Risks</div>
+    <div class="article-keypoint">Anthropic S-1, '제품이 인류에 재앙' 리스크 경고 포함 — AI 거버넌스 규제 압력 선제 반영</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-27/catastrophe-rogue-ai-and-other-anthropic-ipo-risks-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 06:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">은행들, Broadcom 칩 금융 딜 위해 최대 $210억 채권 발행 계획</div>
+    <div class="article-title-en">Banks Eye $21 Billion Bonds for Broadcom Chip-Financing Deal</div>
+    <div class="article-keypoint">Broadcom, Anthropic 위해 $630억 금융 패키지 조성 — AI 인프라 역대 최대 단일 딜</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-27/banks-eye-21-billion-of-bonds-for-broadcom-chip-financing-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 05:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Broadcom CEO가 직접 개입해 $630억 Anthropic 부채 딜 성사</div>
+    <div class="article-title-en">Broadcom CEO Intervened to Seal $63 Billion Anthropic Debt Deal</div>
+    <div class="article-keypoint">Broadcom CEO 직접 개입으로 $630억 Anthropic 딜 성사 — AI 자금조달 생태계 판도 변화</div>
+    <a class="article-link" href="https://www.wsj.com/finance/broadcom-ceo-intervened-to-seal-63-billion-anthropic-debt-deal-c807754f?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 02:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Nvidia, Meta 지분 공모에 $30억 투자 — AI 파트너십 확대</div>
+    <div class="article-title-en">Nvidia to Invest $3 Billion in Meta’s Equity Offering as They Expand AI Partnership</div>
+    <div class="article-keypoint">Nvidia, Meta 지분 공모에 $30억 투자 — 빅테크 간 AI 생태계 교차 지분 구조 심화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/nvidia-to-invest-3-billion-in-metas-equity-offering-as-they-expand-ai-partnership-e8d3850a?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 16:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">IPO 이후 Anthropic의 실질 지배자는 누구인가</div>
+    <div class="article-title-en">Who’s really in charge at Anthropic after the IPO?</div>
+    <div class="article-keypoint">Anthropic 거버넌스 구조 극도로 복잡 — IPO 이후 실질 지배력 소재 불투명</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/27/whos-really-in-charge-at-anthropic-after-the-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 06:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Anthropic의 '조정 이익' 지표, 월가 실적 게임의 민낯을 드러내다</div>
+    <div class="article-title-en">Anthropic’s ‘Adjusted’ Profit Exposes Wall Street’s Earnings Game</div>
+    <div class="article-keypoint">Anthropic '조정 이익' 지표 사용 — AI 기업 회계 불투명성과 손실 과소 표시 논란</div>
+    <a class="article-link" href="https://www.wsj.com/finance/investing/anthropics-adjusted-profit-exposes-wall-streets-earnings-game-40cbcef1?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 18:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">아침 리스크 브리핑: Anthropic IPO 투자설명서의 핵심 시사점</div>
+    <div class="article-title-en">The Morning Risk Report: The Biggest Takeaways From Anthropic’s IPO Prospectus</div>
+    <div class="article-keypoint">Anthropic IPO 공시 핵심 — 복잡한 거버넌스와 AI 위험 경고가 투자자 판단의 분수령</div>
+    <a class="article-link" href="https://www.wsj.com/risk-compliance-journal/the-morning-risk-report-the-biggest-takeaways-from-anthropics-ipo-prospectus-f786ea5e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 20:24 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Fed 매파 리스크 — 금리 인상론 재부상과 국채 강세 포지션 취약성</span>
+    <span class="theme-label-range">Article #9~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Stifel의 Piegza, Fed가 금리를 올려야 하지만 실제로는 그러지 않을 것</div>
+    <div class="article-title-en">Stifel's Piegza Says Fed Should Raise Rates But Likely Won’t</div>
+    <div class="article-keypoint">Stifel, 2% 목표 복귀에 2회 이상 인상 필요 — Fed 매파 전환 리스크 재부각</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-27/stifel-s-piegza-says-fed-should-hike-rates-likely-won-t-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 23:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">매파적 Fed 리스크에 취약한 국채 강세 베팅</div>
+    <div class="article-title-en">Bullish Treasury Bets Face Reversal Risk From Hawkish Fed</div>
+    <div class="article-keypoint">국채 강세 포지션, Fed 매파 전환 시 급격한 되돌림 위험 노출 경고</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-27/bullish-treasury-bets-face-reversal-risk-from-hawkish-fed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 05:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">캐나다 중앙은행 결정: 시장, 금리 인상 가능성 반영 시작</div>
+    <div class="article-title-en">Bank of Canada Decision: Markets Prepare for Higher Interest Rates </div>
+    <div class="article-keypoint">캐나다 중앙은행, 관세 역풍 속 금리 인상 가능성 시장 반영 시작</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-10-27/bank-of-canada-decision-markets-prepare-for-higher-interest-rates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 06:26 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">트럼프 관세 법적 패배 누적 — 무역정책 불확실성 장기화</span>
+    <span class="theme-label-range">Article #12~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">트럼프 관세, 법정에서 또 다시 심판대에</div>
+    <div class="article-title-en">Trump’s Tariffs Will Have Another Day in Court</div>
+    <div class="article-keypoint">트럼프 관세 소송 5연패, 추가 패소 임박 — 무역정책 법적 기반 균열 가속</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/10/27/trump-tariffs-trade-war-court-ieepa/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 05:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">트럼프, 텍사스 유세에서 이란 전쟁·베네수엘라 '51번째 주' 발언 — '유가 상승 알고 있었다'</div>
+    <div class="article-title-en">Trump, campaigning in Texas for Republicans, touts Iran war and ‘51st state’ Venezuela: ‘I knew that oil would go up’ – live</div>
+    <div class="article-keypoint">Trump, 이란 전쟁·베네수엘라 편입 발언 — 에너지·중동 리스크 프리미엄 재자극</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/oct/27/comey-trump-rubio-texas-vance-israel-midterms-politics-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 07:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">중국, 모로코 공장으로 유럽 전기차 관세 우회 전략 구체화</div>
+    <div class="article-title-en">China Is Building Its Way Around Europe’s EV Tariffs</div>
+    <div class="article-keypoint">중국, 모로코 공장으로 EU 전기차 관세 우회 — 관세 정책 실효성 근본 의문 제기</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/10/27/china-europe-morocco-electric-vehicle-manufacturing-industrial-policy/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 18:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">이스라엘 총선·우크라이나-러시아 외교 — 지정학 분기점 동시 도래</span>
+    <span class="theme-label-range">Article #15~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Netanyahu 퇴진 후에도 이스라엘의 극적 변화는 어렵다</div>
+    <div class="article-title-en">Dramatic Changes Are Unlikely in Israel, Even if Netanyahu Is Ousted</div>
+    <div class="article-keypoint">이스라엘 총선 Eisenkot 중도 블록 선두, 그러나 정책 방향 대전환 가능성 낮아</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/10/27/israel-election-netanyahu-eisenkot-palestinians-gaza/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 05:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">금 밀수가 콩고 동부 IS 연계 무장세력 자금줄 — 보고서</div>
+    <div class="article-title-en">Gold smuggling funds Islamic State-linked insurgency in eastern Congo, report says</div>
+    <div class="article-keypoint">IS 연계 무장세력, 콩고 금 밀수로 자금 조달 — 아프리카 자원 공급망 지정학 리스크 부각</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/gold-smuggling-funds-islamic-state-linked-insurgency-in-eastern-congo-report-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 22:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">데일리 메모: Putin과의 회담, 카자흐스탄 드론 프로그램</div>
+    <div class="article-title-en">Daily Memo: Talks With Putin, Kazakh Drone Program</div>
+    <div class="article-keypoint">핀란드·노르웨이, Putin과 통화 — 우크라이나 종전 외교 채널 조심스럽게 재가동</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/daily-memo-talks-with-putin-kazakh-drone-program/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 00:07 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">칩·방산 제조 재편 — Broadcom 밸류에이션 재평가와 미국산 하드웨어 독립 시도</span>
+    <span class="theme-label-range">Article #18~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">소매 투자자들, 칩주 저가 매수 — Robinhood는 크립토 시장에서 손실</div>
+    <div class="article-title-en">Retail traders buy the dip on chip stocks — but Robinhood gets burned by the crypto market</div>
+    <div class="article-keypoint">칩주 조정 시 소매 투자자 저가 매수 유입, 리테일 수요가 하방 지지선 역할</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/retail-traders-buy-the-dip-on-chip-stocks-but-robinhood-gets-burned-by-the-crypto-market-33cea913?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 06:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Anduril·Qualcomm, 미국산 신형 노트북 BlueChip 출시</div>
+    <div class="article-title-en">Anduril, Qualcomm launch BlueChip, a new kind of US-made laptop</div>
+    <div class="article-keypoint">Anduril·Qualcomm, 미국산 노트북 BlueChip 출시 — 반도체 공급망 탈중국 하드웨어로 확산</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/27/anduril-qualcomm-launch-bluechip-a-new-kind-of-us-made-laptop/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Broadcom 주가가 '시장 최대 미스프라이싱'을 극복하고 급등할 수 있는 이유</div>
+    <div class="article-title-en">How Broadcom’s stock can surge and overcome ‘the biggest dislocation in the market’</div>
+    <div class="article-keypoint">Broadcom, 연초 대비 주가 정체 — AI 칩 수요 폭증 대비 밸류에이션 미스프라이싱 지적</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/how-broadcoms-stock-can-surge-and-overcome-the-biggest-dislocation-in-the-market-9719e2a8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 05:40 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #21~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Boeing 실적 발표 후 주가 급락의 핵심 원인</div>
+    <div class="article-title-en">The big reason Boeing’s stock is falling so hard after earnings</div>
+    <div class="article-keypoint">Boeing 737 Max 인도 미달 확인, 사업 정상화 타임라인 재점검 불가피</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-big-reason-boeings-stock-is-falling-so-hard-after-earnings-d31b400d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 05:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">'계모가 나를 이용하는 건가': 계모가 어린 시절 집을 $85만에 살 수 있다고 했습니다</div>
+    <div class="article-title-en">‘She’s living the dream’: My stepmother said I can buy my childhood home for $850,000. Is she taking advantage of me?</div>
+    <div class="article-keypoint">주택 가격 $85만 상속 딜레마 — 부동산 거품과 세대 간 자산 이전 갈등 상징</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/shes-living-the-dream-my-stepmother-said-i-can-buy-my-childhood-home-for-850-000-is-she-taking-advantage-of-me-1fdda7b5?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 07:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Meta AI 디렉터 Rohit Patel, Microsoft Office·Google Workspace 대항 스타트업 창업 위해 퇴사</div>
+    <div class="article-title-en">Meta AI director Rohit Patel leaves to take on Microsoft Office and Google Workspace</div>
+    <div class="article-keypoint">Meta AI 디렉터 Patel 퇴사·Microsoft Office 대항 스타트업 창업 — AI 인재 이탈 구조화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/27/meta-ai-director-rohit-patel-leaves-to-take-on-microsoft-office-and-google-workspace/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 23:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">TD Cowen, 연료비 압박에도 United·Delta를 최선호 항공주로 유지</div>
+    <div class="article-title-en">TD Cowen keeps United, Delta top airline picks as fuel costs threaten earnings</div>
+    <div class="article-keypoint">TD Cowen, 항공주 실적 시즌 진입 — 연료비 상승이 Delta·United 수익성 핵심 변수</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/td-cowen-keeps-united-delta-top-airline-picks-as-fuel-costs-threaten-earnings-4977155" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 22:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">NANO Nuclear, $3천만 베팅한 한국 건설사와 원자로 협력 MOU 체결</div>
+    <div class="article-title-en">NANO Nuclear Taps The Korean Builder That Already Bet $30 Million On Its Reactor</div>
+    <div class="article-keypoint">NANO Nuclear, 한국 건설사와 MOU — SMR 상업화 경쟁에서 한·미 협력 구체화</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/nano-nuclear-taps-korean-builder-already-bet-30-million-its-reactor" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 00:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">가짜 무장강도 조직해 $3만 취한 시카고 남성, 사건이 살인으로 번져 2년형 선고</div>
+    <div class="article-title-en">Chicago Man Who Staged Fake Armed Robberies For $30K Gets Two Years After Botched Job Turns Deadly</div>
+    <div class="article-keypoint">시카고 보험 사기 피의자 2년 선고 — 시장 무관, 사회면 기사</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/chicago-man-who-staged-fake-armed-robberies-30k-gets-two-years-after-botched-job-turns" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">미 군, 전력망 없이 90일 생존 위한 소형 핵원자로 도입 검토</div>
+    <div class="article-title-en">U.S. Military Eyes Nuclear Reactors to Survive 90 Days Without the Grid</div>
+    <div class="article-keypoint">미 국방부, 전력망 붕괴 대비 군 기지 소형 핵원자로 도입 검토 — 에너지 안보 전략 확대</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/US-Military-Eyes-Nuclear-Reactors-to-Survive-90-Days-Without-the-Grid.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 01:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">이탈리아 하원 사이버 공격, Meloni 총리 이메일 표적 피해</div>
+    <div class="article-title-en">PM Giorgia Meloni’s email targeted in cyberattack on Italy’s Lower House</div>
+    <div class="article-keypoint">이탈리아 하원 사이버 공격, Meloni 이메일 표적 — 유럽 정치 인프라 취약성 노출</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/melonis-email-targeted-in-cyberattack-on-italian-lower-house" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 22:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">볼소나루, 룰라 '사회주의 정권' 정치 탄압 우려 속 미국행 보도</div>
+    <div class="article-title-en">Bolsonaro Reportedly Heading To US As Lula's Socialist Regime Stokes Fears Of Political Crackdown</div>
+    <div class="article-keypoint">볼소나루, 룰라 정치 탄압 피해 미국 망명 시도 — 남미 정치 양극화 지속</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/bolsonaro-drops-annulment-bid-party-concedes-lula-vows-congressional-fortress-against" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/28 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">실적 발표 요약: Visa, 2026년 4분기 컨센서스 상회 — 시간 외 주가는 소폭 하락</div>
+    <div class="article-title-en">Earnings call transcript: Visa tops Q4 2026 estimates, shares slip after hours</div>
+    <div class="article-keypoint">Visa Q4 2026 실적 컨센서스 상회, 시간 외 주가 소폭 하락 — 소비 모멘텀 점검 필요</div>
+    <a class="article-link" href="https://www.investing.com/news/transcripts/earnings-call-transcript-visa-tops-q4-2026-estimates-shares-slip-after-hours-93CH-4977161" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/27 22:27 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
