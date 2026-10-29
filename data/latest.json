@@ -2,576 +2,589 @@
   "threads": [
     {
       "id": "thread_001",
-      "title": "FOMC매파충격",
+      "title": "ECB 매파·달러약세",
       "priority": 1,
       "frequency": "NOW",
       "nodes": [
         {
           "id": "n1",
-          "label": "FOMC동결+매파",
-          "value": "동결 결정, 추가인상 가능성 시사",
+          "label": "ECB 매파신호",
+          "value": "12월 인상 준비 발언",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "ECB Officials Are Ready to Raise Interest Rates in December (Bloomberg Econ, 10/29)",
+            "Christine Lagarde, Boris Vujčić: Monetary policy statement with Q&A (ECB, 10/29)"
+          ]
         },
         {
           "id": "n2",
-          "label": "단기금리기대상승",
-          "value": "금리인하 기대 후퇴, 2Y금리 상방 압력",
+          "label": "유로화강세압력",
+          "value": "금리차축소→유로매수",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "The politics of President Lagarde's European Central Bank early exit (CNBC, 10/29)"
+          ]
+        },
+        {
+          "id": "n2_etf",
+          "label": "유로화ETF(FXE)",
+          "value": "[10/28] $103.03->[10/29] $103.01 (-0.02%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n3",
-          "label": "기대인플상승",
-          "value": "2.35 -> 2.38 (+0.03%p)",
-          "source": "layer_T0_macro",
-          "timestamp": null
+          "label": "달러상대약세",
+          "value": "EUR/USD↑→달러지수하락",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n3_etf",
+          "label": "달러인덱스ETF(UUP)",
+          "value": "[10/28] $29.06->[10/29] $29.04 (-0.07%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n4",
-          "label": "장기채가격하락",
-          "value": "[10/27] $81.09->[10/28] $81.45 (-0.78%)",
+          "label": "EM통화반사이익",
+          "value": "달러약세→신흥국통화숨통",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "n4_etf",
+          "label": "신흥국ETF(EEM)",
+          "value": "[10/28] $63.52->[10/29] $62.72 (-1.26%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
           "id": "n5",
-          "label": "달러강세압력",
-          "value": "미국 금리우위 지속 기대로 달러 수요 확대",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n6",
-          "label": "달러인덱스(UUP)",
-          "value": "[10/27] $29.11->[10/28] $29.05 (-0.21%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n7",
-          "label": "외국인자금이탈",
-          "value": "달러강세+고금리로 EM 자본유출 및 한국 자산 동반 매도",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n8",
-          "label": "신흥국ETF(EEM)",
-          "value": "[10/27] $61.81->[10/28] $62.80 (+1.60%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n9",
-          "label": "KOSPI",
-          "value": "5937.66 (-1.24%)",
-          "source": "layer_T1_asia_today",
-          "timestamp": "15:35"
+          "label": "DAX당일상승",
+          "value": "DAX +1.31%",
+          "source": "layer_T1_eu_today",
+          "timestamp": null,
+          "related_news": []
         }
       ],
       "edges": [
         {
           "from": "n1",
           "to": "n2",
-          "label": "유발",
-          "mechanism": "매파 포워드 가이던스가 단기 금리인하 기대를 억제해 2Y 상방 압력"
+          "label": "촉발",
+          "mechanism": "ECB 인상 기대가 유로존 단기금리 상승→유로화 매수세 유입"
+        },
+        {
+          "from": "n2",
+          "to": "n2_etf",
+          "label": "반증",
+          "mechanism": "유로화 강세 기대에도 FXE 일간 -0.02% 미미, 단기 실증력 제한"
         },
         {
           "from": "n2",
           "to": "n3",
-          "label": "실증",
-          "mechanism": "금리인하 기대 후퇴 시 기대인플레이션 2.35→2.38로 상승"
+          "label": "전이",
+          "mechanism": "유로 강세는 달러인덱스 구성상 달러 약세로 직결"
         },
         {
-          "from": "n2",
+          "from": "n3",
+          "to": "n3_etf",
+          "label": "실증",
+          "mechanism": "달러 약세 압력이 UUP -0.07% 하락으로 반영"
+        },
+        {
+          "from": "n3",
           "to": "n4",
-          "label": "실증",
-          "mechanism": "금리 상방 압력으로 장기채 가격 하락, TLT -0.78% 반영"
+          "label": "파급",
+          "mechanism": "달러 약세 국면에서 EM 통화 전반 상승 압력 완화 기대"
         },
         {
-          "from": "n2",
+          "from": "n4",
+          "to": "n4_etf",
+          "label": "반증",
+          "mechanism": "EEM -1.26% 하락, 달러약세 반사이익보다 리스크오프가 우세"
+        },
+        {
+          "from": "n1",
           "to": "n5",
-          "label": "유발",
-          "mechanism": "미-타국 금리차 확대 기대가 달러 캐리 매력을 높여 달러강세 유도"
-        },
-        {
-          "from": "n5",
-          "to": "n6",
-          "label": "반증",
-          "mechanism": "달러강세 기대에도 UUP -0.21% 하락, 단기 달러 강세 기대 약화 시사"
-        },
-        {
-          "from": "n5",
-          "to": "n7",
-          "label": "유발",
-          "mechanism": "달러강세가 신흥국 조달비용 상승과 자본유출 압력으로 연결"
-        },
-        {
-          "from": "n7",
-          "to": "n8",
-          "label": "반증",
-          "mechanism": "이탈 압력에도 EEM +1.60% 상승, 단기 리스크온 신호와 혼재"
-        },
-        {
-          "from": "n7",
-          "to": "n9",
           "label": "실증",
-          "mechanism": "외국인 매도 압력이 KOSPI -1.24% 하방으로 당일 현실화"
+          "mechanism": "ECB 매파 신호가 유럽증시 DAX +1.31% 상승으로 선반영"
         }
       ],
-      "korea_terminal_node": "n9",
-      "briefing": "FOMC 동결 후 Warsh 매파 기자회견이 핵심 트리거. 공통원인 '외국인자금이탈'로 달러강세 압력과 고금리가 신흥국 자본유출을 유발. EEM은 단기 리스크온으로 반증하나 KOSPI -1.24% 하락으로 한국 매도 압력 당일 실증.",
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n5(달러강세) -> n7(신흥국 자본유출) -> n9(KOSPI 하락) -> 글로벌 리스크오프 심화 -> n2(추가 금리인하 기대 후퇴 재확인) -> n5(달러 캐리 수요 재강화)",
-        "riskLevel": "medium",
-        "commentary": "달러강세→신흥국 자본유출→KOSPI 하락이 글로벌 리스크오프 심리를 재강화하고, 이것이 다시 연준 긴축 기조에 대한 시장 신뢰를 높여 달러 캐리 수요를 재점화하는 자기강화 루프. 단, UUP -0.21% 반증 신호가 루프 강도를 현재 억제 중이므로 medium 수준."
-      },
-      "chainFragility": {
-        "fragileEdge": "n2->n5",
-        "fragileReason": "매파 FOMC가 금리 상방 압력을 유발하더라도, 미국 경기침체 우려나 연준 피벗 기대가 동시에 부각될 경우 미-타국 금리차 확대 내러티브가 달러 강세보다 달러 약세(안전자산 회피) 방향으로 역전될 수 있어, 금리 상승→달러 강세 연결 고리가 단절될 취약성이 높음.",
-        "alternativePath": "n2->n4(TLT 하락) 경로에서 채권시장 변동성(MOVE Index 급등) → 크레딧 스프레드 확대 → 달러 안전자산 수요 경로로 우회 가능하나, 방향성이 동일하지 않아 불완전 대안."
-      },
-      "missingHops": [
-        {
-          "to": "Gold(GLD) / 엔화(USDJPY)",
-          "via": "달러강세(n5) 지속 시 실질금리 상승이 금 가격 하방 압력으로 연결되는 한편, 엔 캐리 트레이드 언와인딩 리스크가 동시에 부각되어 엔화 강세→글로벌 레버리지 축소→리스크자산 동반 매도 연쇄 가능.",
-          "lag_days": 3
-        },
-        {
-          "to": "원자재(DBC) / 유가(WTI)",
-          "via": "달러강세(n5)가 달러 표시 원자재 가격에 하방 압력을 가하고, 신흥국 자본유출(n7)로 인한 신흥국 수요 둔화 우려가 겹쳐 에너지·원자재 섹터 추가 약세 → 에너지 수출 신흥국 재정 악화 → 2차 신흥국 리스크 확산.",
-          "lag_days": 5
-        }
+      "korea_terminal_node": null,
+      "briefing": "ECB 12월 인상 신호가 유로화 강세·달러 약세 압력 조성했으나, FXE -0.02%·UUP -0.07% 미미하고 EEM -1.26% 하락으로 글로벌 리스크오프가 EM 반사이익을 압도했다.",
+      "_warnings": [
+        "[규칙22 중립] thread=thread_001 \"달러상대약세\"→\"달러인덱스ETF(UUP)\" 변화율 -0.07% — ETF 노드 제외 권장",
+        "[한국 종착 비율] 3/4 (50% 초과)"
       ]
     },
     {
       "id": "thread_002",
-      "title": "AI반도체차별화",
+      "title": "글로벌리스크오프",
       "priority": 2,
       "frequency": "NOW",
       "nodes": [
         {
-          "id": "n1",
-          "label": "빅테크실적분기",
-          "value": "MS호조·구글쇼크 동시 발표",
+          "id": "d1",
+          "label": "복합리스크오프",
+          "value": "EM·HY하락+안전자산상승",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "Earnings call transcript: Intel beats Q3 2026 estimates, but stock sinks (Investing.com, 10/29)",
+            "Federal Reserve issues FOMC statement (Fed, 10/28)"
+          ]
         },
         {
-          "id": "n2",
-          "label": "AI수요확대",
-          "value": "MS클라우드 급성장→HBM·고사양칩 수요",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n3",
-          "label": "반도체ETF(SOXX)",
-          "value": "[10/27] $507.44->[10/28] $518.21 (+2.13%)",
+          "id": "d1_vix",
+          "label": "VIX공포지수",
+          "value": "$17.20 (+1.71pt)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n4",
-          "label": "나스닥ETF(QQQ)",
-          "value": "[10/27] $713.41->[10/28] $717.70 (+0.60%)",
+          "id": "d1_tlt",
+          "label": "미30년국채ETF(TLT)",
+          "value": "[10/28] $81.00->[10/29] $81.49 (+0.62%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n5",
-          "label": "광고플랫폼리스크",
-          "value": "구글 검색광고 둔화, AI검색 대체 우려",
+          "id": "d2",
+          "label": "신흥국자본유출",
+          "value": "EM주식·채권동반매도",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n6",
-          "label": "테크섹터ETF(XLK)",
-          "value": "[10/27] $189.23->[10/28] $187.47 (-0.93%)",
+          "id": "d2_eem",
+          "label": "신흥국ETF(EEM)",
+          "value": "[10/28] $63.52->[10/29] $62.72 (-1.26%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n7",
-          "label": "한국반도체수혜",
-          "value": "HBM 수요→삼성·하이닉스 상방 지지",
+          "id": "d3",
+          "label": "HY스프레드재평가",
+          "value": "신용리스크프리미엄상향",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n8",
-          "label": "KOSPI",
-          "value": "5937.66 (-1.24%)",
+          "id": "d3_hyg",
+          "label": "하이일드ETF(HYG)",
+          "value": "[10/28] $77.59->[10/29] $77.58 (-0.01%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "d3_macro",
+          "label": "HY신용스프레드",
+          "value": "3.18 -> 3.14 (-0.04bp)",
+          "source": "layer_T0_macro",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "d4",
+          "label": "외인한국순매도",
+          "value": "KOSPI -1.24% / KOSDAQ -2.34%",
           "source": "layer_T1_asia_today",
-          "timestamp": "15:35"
-        },
-        {
-          "id": "n9",
-          "label": "KOSDAQ",
-          "value": "753.23 (-2.34%)",
-          "source": "layer_T1_asia_today",
-          "timestamp": "15:35"
+          "timestamp": null,
+          "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n1",
-          "to": "n2",
-          "label": "유발",
-          "mechanism": "MS 클라우드 급성장이 AI 인프라 수요 확대의 핵심 트리거"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
+          "from": "d1",
+          "to": "d1_vix",
           "label": "실증",
-          "mechanism": "AI 반도체 수요 재확인으로 SOXX +2.13% 상승 실증"
+          "mechanism": "리스크오프 심화 시 VIX +1.71pt 급등으로 공포심리 확인"
         },
         {
-          "from": "n2",
-          "to": "n4",
+          "from": "d1",
+          "to": "d1_tlt",
           "label": "실증",
-          "mechanism": "AI 인프라 수혜 기대로 QQQ +0.60% 동반 상승"
+          "mechanism": "안전자산 선호로 미국 장기채 TLT +0.62% 상승"
         },
         {
-          "from": "n1",
-          "to": "n5",
-          "label": "유발",
-          "mechanism": "구글 검색 광고 둔화가 광고 플랫폼 리스크로 부각"
+          "from": "d1",
+          "to": "d2",
+          "label": "전이",
+          "mechanism": "글로벌 리스크오프 심화 시 신흥국 자산 선제 매도 발생"
         },
         {
-          "from": "n5",
-          "to": "n6",
+          "from": "d2",
+          "to": "d2_eem",
           "label": "실증",
-          "mechanism": "구글 쇼크로 대형 테크 섹터 XLK -0.93% 하락 실증"
+          "mechanism": "신흥국 자본유출이 EEM -1.26% 하락으로 실증"
         },
         {
-          "from": "n2",
-          "to": "n7",
-          "label": "유발",
-          "mechanism": "글로벌 HBM 수요 확대가 삼성전자·SK하이닉스 섹터 프리미엄 지지"
+          "from": "d1",
+          "to": "d3",
+          "label": "전이",
+          "mechanism": "리스크오프가 하이일드 스프레드 재평가 압력으로 신용시장 전파"
         },
         {
-          "from": "n7",
-          "to": "n8",
+          "from": "d3",
+          "to": "d3_hyg",
+          "label": "반증",
+          "mechanism": "HYG -0.01%로 스프레드 확대 신호 미미, 신용경색 제한적"
+        },
+        {
+          "from": "d3",
+          "to": "d3_macro",
+          "label": "반증",
+          "mechanism": "HY 스프레드 3.18→3.14 오히려 축소, 신용시장은 안정세"
+        },
+        {
+          "from": "d2",
+          "to": "d4",
           "label": "급등후조정",
-          "mechanism": "반도체 수혜 기대에도 FOMC 매파 충격이 KOSPI 하방 압도, -1.24%"
-        },
-        {
-          "from": "n7",
-          "to": "n9",
-          "label": "급등후조정",
-          "mechanism": "KOSDAQ -2.34%는 반도체 수혜 상쇄하는 매파 리스크오프 반영"
+          "mechanism": "전일 EM 이탈 압력이 당일 KOSPI·KOSDAQ 하락으로 귀결"
         }
       ],
-      "korea_terminal_node": "n8",
-      "briefing": "MS 클라우드 급성장이 AI 인프라 수요 차별화 트리거. SOXX +2.13%, QQQ +0.60% 실증. 구글 쇼크는 XLK -0.93% 실증. 한국 반도체 수혜 기대에도 FOMC 매파 리스크오프가 KOSPI·KOSDAQ 동반 하락 압도.",
-      "feedbackRisk": {
-        "hasFeedback": true,
-        "loop": "n2(AI 인프라 수요 확대) -> n3(SOXX 상승) -> 반도체 섹터 시가총액 증가 -> 기관 AI 인프라 투자 확대 기대 재강화 -> n1(MS 클라우드 성장 내러티브 강화) -> n2",
-        "riskLevel": "high",
-        "commentary": "AI 인프라 수요 확인이 반도체 주가 상승을 유발하고, 주가 상승이 다시 AI 투자 사이클의 '자기실현적 기대'를 강화하여 추가 자본배분을 유도하는 강한 양의 피드백 루프. 단, n7->n8/n9 경로에서 FOMC 매파 충격이 외부 단절 요인으로 작용하고 있어 루프가 억제될 리스크도 공존. 버블 형성 구조적 위험 내재."
-      },
-      "chainFragility": {
-        "fragileEdge": "n2->n7",
-        "fragileReason": "글로벌 HBM 수요 확대가 삼성전자·SK하이닉스 섹터 프리미엄으로 연결되는 경로는 엔비디아·TSMC 등 직접 수혜 업체와 달리 국내 메모리 업체의 HBM 공급 적기 확보 여부(수율·인증 일정)라는 실행 리스크에 전적으로 의존하며, 인증 지연 시 수요 확대 내러티브가 국내 주가로 전달되지 않고 단절됨.",
-        "alternativePath": "n2->n4(QQQ 상승) 경로를 통해 글로벌 테크 유동성이 국내 반도체 ETF(TIGER 반도체 등)로 간접 유입되는 패시브 리밸런싱 경로가 부분 대안이나, 개별 종목 디커플링 위험 상존."
-      },
-      "missingHops": [
-        {
-          "to": "전력 인프라 / 유틸리티 섹터(XLU, 한국 전력)",
-          "via": "AI 데이터센터 전력 수요 급증(n2 파생) → 전력망 설비투자 확대 수혜 기대 → 유틸리티·전력기기 섹터 재평가. 특히 국내에서는 HD현대일렉트릭·효성중공업 등 전력기기 종목이 반도체 수혜 내러티브의 2차 수혜처로 부상 가능.",
-          "lag_days": 7
-        },
-        {
-          "to": "구글 광고 경쟁사 / 메타(META) 섹터 내 상대 수혜",
-          "via": "구글 검색 광고 둔화(n5) → 디지털 광고 예산의 메타·아마존 DSP 플랫폼으로의 이전 가속 → META·AMZN 광고 매출 추정치 상향 → 대형 테크 내 섹터 로테이션 압력 발생. XLK 하락(n6)과 달리 메타 개별 종목 상대 강세 가능.",
-          "lag_days": 4
-        }
-      ]
+      "korea_terminal_node": "d4",
+      "briefing": "복합 리스크오프(VIX +1.71pt·EEM -1.26%·TLT +0.62%)가 신용시장은 안정적이나 신흥국 자본유출 압박이 전일 저가에서 당일 KOSPI -1.24%·KOSDAQ -2.34% 추가 조정으로 귀결됐다."
     },
     {
       "id": "thread_003",
-      "title": "ECB정책불확실성",
-      "priority": 3,
+      "title": "FOMC중립·테크분화",
+      "priority": 1,
       "frequency": "WEEKLY",
       "nodes": [
         {
-          "id": "n1",
-          "label": "ECB정책전환기",
-          "value": "ECB 성명·라가르드 총재 교체 불확실성",
+          "id": "w1",
+          "label": "FOMC중립재확인",
+          "value": "금리동결·경로불확실성",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "Federal Reserve issues FOMC statement (Fed, 10/28)",
+            "Kevin Warsh is keeping Wall Street guessing (CNBC, 10/29)"
+          ]
         },
         {
-          "id": "n2",
-          "label": "유럽금리경로불투명",
-          "value": "ECB 추가 인하 가이던스 약화, 정책 연속성 의구심",
-          "source": "concept",
-          "timestamp": null
+          "id": "w1_dfii",
+          "label": "실질금리(10Y)",
+          "value": "2.64 -> 2.67 (+0.03bp)",
+          "source": "layer_T0_macro",
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n3",
-          "label": "유로약세압력",
-          "value": "미-EU 금리차 확대 우려로 유로화 약세",
+          "id": "w2",
+          "label": "성장주밸류압박",
+          "value": "고실질금리→할인율상승",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n4",
-          "label": "유로화ETF(FXE)",
-          "value": "[10/22] $103.53->[10/28] $103.07 (-0.48%)",
+          "id": "w2_iwf",
+          "label": "성장주ETF(IWF)",
+          "value": "$121.11 (-1.54%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n5",
-          "label": "유럽성장둔화우려",
-          "value": "신용 긴축+소비 부진→유로존 성장 하방",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n6",
-          "label": "DAX",
-          "value": "26091.44 (+1.51%)",
-          "source": "layer_T1_eu_today",
-          "timestamp": null
-        },
-        {
-          "id": "n7",
-          "label": "글로벌리스크재평가",
-          "value": "유럽 불확실성→글로벌 위험자산 선호 억제",
-          "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n8",
-          "label": "글로벌주식(ACWI)",
-          "value": "[10/22] $157.41->[10/28] $159.10 (+1.15%)",
+          "id": "w2_qqq",
+          "label": "나스닥ETF(QQQ)",
+          "value": "[10/23] $704.40->[10/29] $715.34 (+1.55%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w3",
+          "label": "테크빅테크분화",
+          "value": "MS↑·구글↓실적차별화",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": [
+            "Microsoft Up, Google Down. A Tale of Two Hyperscalers. (NYT Dealbook, 10/29)"
+          ]
+        },
+        {
+          "id": "w3_xlk",
+          "label": "테크섹터ETF(XLK)",
+          "value": "$188.74 (-1.18%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w4",
+          "label": "반도체수급분화",
+          "value": "HBM·DRAM수요전망차별",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w4_soxx",
+          "label": "반도체ETF(SOXX)",
+          "value": "[10/23] $478.20->[10/29] $513.86 (+7.46%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "w5",
+          "label": "KOSDAQ반도체조정",
+          "value": "KOSDAQ -2.34% 당일",
+          "source": "layer_T1_asia_today",
+          "timestamp": null,
+          "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n1",
-          "to": "n2",
-          "label": "유발",
-          "mechanism": "라가르드 퇴임 가능성이 ECB 정책 연속성 의구심을 키우며 금리 경로 불확실성 증폭"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
-          "label": "유발",
-          "mechanism": "ECB 인하 경로 불투명 속 미-EU 금리차 장기화 기대가 유로화 약세 압력으로 전환"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
+          "from": "w1",
+          "to": "w1_dfii",
           "label": "실증",
-          "mechanism": "유로 약세 압력이 FXE 주간 -0.48% 하락으로 실증"
+          "mechanism": "FOMC 불확실성 지속이 실질금리 2.64→2.67 상승으로 반영"
         },
         {
-          "from": "n2",
-          "to": "n5",
-          "label": "유발",
-          "mechanism": "대출 긴축 심화가 설비투자·소비를 억제해 유로존 성장 하방 압력 강화"
+          "from": "w1",
+          "to": "w2",
+          "label": "전이",
+          "mechanism": "고실질금리 장기화 우려가 성장주 할인율 상승 압력으로 작용"
         },
         {
-          "from": "n5",
-          "to": "n6",
+          "from": "w2",
+          "to": "w2_iwf",
+          "label": "실증",
+          "mechanism": "실질금리 상승이 Russell1000 성장주 IWF -1.54%로 실증"
+        },
+        {
+          "from": "w2",
+          "to": "w2_qqq",
           "label": "반증",
-          "mechanism": "성장 둔화 우려에도 DAX +1.51% 상승, 단기 매수세와 혼재"
+          "mechanism": "QQQ 주간 +1.55%로 성장주 압박 단기 반등, 주간 흐름은 긍정"
         },
         {
-          "from": "n3",
-          "to": "n7",
-          "label": "유발",
-          "mechanism": "유로 약세와 유럽 성장 우려가 결합해 글로벌 위험자산 리스크 재평가 신호"
+          "from": "w1",
+          "to": "w3",
+          "label": "촉발",
+          "mechanism": "금리 불확실성 속 실적 가시성 차별화가 빅테크 분화 심화"
         },
         {
-          "from": "n5",
-          "to": "n7",
-          "label": "유발",
-          "mechanism": "유럽 성장 둔화가 글로벌 수요 감소 우려로 연결되어 위험자산 선호 억제"
+          "from": "w3",
+          "to": "w3_xlk",
+          "label": "실증",
+          "mechanism": "테크 분화 속 XLK 전체 -1.18%, 섹터 평균 하락 확인"
         },
         {
-          "from": "n7",
-          "to": "n8",
-          "label": "반증",
-          "mechanism": "리스크 재평가 우려에도 ACWI 주간 +1.15%, 미국 빅테크 상승이 상쇄"
+          "from": "w3",
+          "to": "w4",
+          "label": "파급",
+          "mechanism": "MS↑·구글↓ AI 클라우드 차별화가 HBM·DRAM 수요 전망 분화로 이어짐"
+        },
+        {
+          "from": "w4",
+          "to": "w4_soxx",
+          "label": "실증",
+          "mechanism": "반도체 수급 분화 기대에도 SOXX 주간 +7.46% 반등 확인"
+        },
+        {
+          "from": "w4",
+          "to": "w5",
+          "label": "급등후조정",
+          "mechanism": "전일 반도체 센티멘트 혼조가 당일 KOSDAQ -2.34% 하락으로 귀결"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "ECB 성명과 라가르드 퇴임 불확실성이 공통원인. 유로화 주간 -0.48% 실증. 유럽 성장 둔화 우려에도 DAX +1.51%, ACWI +1.15%는 단기 혼조. 글로벌 리스크 재평가 흐름은 구조적으로 진행 중."
+      "korea_terminal_node": "w5",
+      "briefing": "FOMC 중립 재확인으로 실질금리 2.67% 지속되며 IWF·XLK 하락, MS·구글 실적 차별화가 반도체 수급 분화를 촉발해 SOXX 주간 +7.46% 반등에도 KOSDAQ -2.34% 조정으로 귀결됐다."
     },
     {
       "id": "thread_004",
-      "title": "Fed신뢰약화구조리스크",
-      "priority": 4,
+      "title": "ECB긴축·수출압박",
+      "priority": 1,
       "frequency": "MONTHLY",
       "nodes": [
         {
-          "id": "n1",
-          "label": "Fed독립성훼손",
-          "value": "이사 해임 압박·재무장관 정책개입 우려",
+          "id": "e1",
+          "label": "ECB긴축재개",
+          "value": "12월인상신호·사이클진입",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": [
+            "ECB Officials Are Ready to Raise Interest Rates in December (Bloomberg Econ, 10/29)"
+          ]
         },
         {
-          "id": "n2",
-          "label": "인플레기대불안정",
-          "value": "2.35 -> 2.38 (+0.03%p)",
+          "id": "e1_fxe",
+          "label": "유로화ETF(FXE)",
+          "value": "[09/30] $104.55->[10/29] $103.01 (-1.47%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "e2",
+          "label": "글로벌장기금리",
+          "value": "주요국동시긴축→장기물↑",
+          "source": "concept",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "e2_tlt",
+          "label": "미30년국채ETF(TLT)",
+          "value": "[09/30] $77.78->[10/29] $81.49 (+4.77%)",
+          "source": "layer_T0_us_prev_close",
+          "timestamp": null,
+          "related_news": []
+        },
+        {
+          "id": "e2_dfii",
+          "label": "실질금리(10Y)",
+          "value": "2.64 -> 2.67 (+0.03bp)",
           "source": "layer_T0_macro",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n3",
-          "label": "장기금리상방압력",
-          "value": "인플레 프리미엄 확대→10Y 금리 상방",
+          "id": "e3",
+          "label": "유럽성장둔화위험",
+          "value": "긴축강화→실물냉각",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n4",
-          "label": "장기채ETF(TLT)",
-          "value": "[09/29] $78.23->[10/28] $81.45 (+3.53%)",
+          "id": "e3_eem",
+          "label": "신흥국ETF(EEM)",
+          "value": "[09/30] $66.79->[10/29] $62.72 (-6.09%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n5",
-          "label": "대체자산수요확대",
-          "value": "달러 신뢰 하락→금·실물자산 구조적 확대",
+          "id": "e4",
+          "label": "한국수출유럽노출",
+          "value": "對유럽자동차·반도체둔화",
           "source": "concept",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n6",
-          "label": "금ETF(GLD)",
-          "value": "[09/29] $382.89->[10/28] $368.80 (-2.45%)",
+          "id": "e4_ewy",
+          "label": "한국ETF(EWY)",
+          "value": "[09/30] $182.78->[10/29] $161.83 (-11.46%)",
           "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         },
         {
-          "id": "n7",
-          "label": "달러준비통화리스크",
-          "value": "Fed 신뢰 저하→준비통화 지위 재평가",
+          "id": "e5",
+          "label": "원화구조약세",
+          "value": "원/달러 1,336.8원",
           "source": "concept",
-          "timestamp": null
-        },
-        {
-          "id": "n8",
-          "label": "달러ETF(UUP)",
-          "value": "[09/29] $28.75->[10/28] $29.05 (+1.08%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
-        },
-        {
-          "id": "n9",
-          "label": "성장주밸류압박",
-          "value": "실질금리 2.66→2.64 (-0.02%p) 소폭 완화",
-          "source": "layer_T0_macro",
-          "timestamp": null
-        },
-        {
-          "id": "n10",
-          "label": "성장주ETF(IWF)",
-          "value": "[09/29] $122.89->[10/28] $121.61 (-1.04%)",
-          "source": "layer_T0_us_prev_close",
-          "timestamp": null
+          "timestamp": null,
+          "related_news": []
         }
       ],
       "edges": [
         {
-          "from": "n1",
-          "to": "n2",
-          "label": "유발",
-          "mechanism": "Fed 독립성 훼손 우려가 장기 인플레 기대 형성 메커니즘을 불안정하게 만듦"
-        },
-        {
-          "from": "n2",
-          "to": "n3",
-          "label": "유발",
-          "mechanism": "기대인플 상승이 장기 국채 인플레 프리미엄 요구를 높여 10Y 금리 상방 압력"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
+          "from": "e1",
+          "to": "e1_fxe",
           "label": "반증",
-          "mechanism": "장기금리 상방 압력에도 TLT 월간 +3.53%, 안전자산 수요가 혼재"
+          "mechanism": "ECB 긴축 재개에도 FXE 월간 -1.47%, 성장 우려가 유로화 약세 압도"
         },
         {
-          "from": "n3",
-          "to": "n7",
-          "label": "유발",
-          "mechanism": "미국 금리 신뢰 약화와 장기금리 급등이 달러 준비통화 지위 재평가 촉발"
+          "from": "e1",
+          "to": "e2",
+          "label": "전이",
+          "mechanism": "ECB 추가 인상 시사가 글로벌 장기금리 기대경로 구조적 상향 조정"
         },
         {
-          "from": "n7",
-          "to": "n5",
-          "label": "유발",
-          "mechanism": "달러 신뢰 하락 우려가 금·비달러 실물자산으로 구조적 자금 이동 유발"
-        },
-        {
-          "from": "n7",
-          "to": "n8",
+          "from": "e2",
+          "to": "e2_tlt",
           "label": "반증",
-          "mechanism": "준비통화 우려에도 UUP 월간 +1.08%, 단기 달러 강세 병존"
+          "mechanism": "TLT 월간 +4.77%는 금리하락(채권가격 상승), 장기금리 상승 체제와 모순"
         },
         {
-          "from": "n5",
-          "to": "n6",
-          "label": "반증",
-          "mechanism": "대체자산 수요 확대 기대에도 GLD 월간 -2.45%, 실질금리 고점 부담 반증"
-        },
-        {
-          "from": "n2",
-          "to": "n9",
-          "label": "유발",
-          "mechanism": "인플레 기대 상승이 실질금리 경로를 통해 성장주 밸류에이션 압박"
-        },
-        {
-          "from": "n9",
-          "to": "n10",
+          "from": "e2",
+          "to": "e2_dfii",
           "label": "실증",
-          "mechanism": "실질금리 부담이 성장주 IWF -1.04% 하락으로 실증"
+          "mechanism": "미국 10Y 실질금리 2.67%로 고수준 유지, 긴축 장기화 확인"
+        },
+        {
+          "from": "e1",
+          "to": "e3",
+          "label": "파급",
+          "mechanism": "유로존 신용 긴축 심화로 기업투자·소비 냉각 압력 현실화"
+        },
+        {
+          "from": "e3",
+          "to": "e3_eem",
+          "label": "실증",
+          "mechanism": "유럽 성장 둔화 우려가 EM 자산 월간 -6.09% 이탈로 반영"
+        },
+        {
+          "from": "e3",
+          "to": "e4",
+          "label": "파급",
+          "mechanism": "유로존 수요 냉각이 한국 對유럽 자동차·반도체 수출 감소로 파급"
+        },
+        {
+          "from": "e4",
+          "to": "e4_ewy",
+          "label": "실증",
+          "mechanism": "한국 수출 둔화 우려가 EWY 월간 -11.46% 급락으로 실증"
+        },
+        {
+          "from": "e4",
+          "to": "e5",
+          "label": "귀결",
+          "mechanism": "수출 감소→경상수지 흑자 축소→원화 약세 구조적 압력 심화"
         }
       ],
-      "korea_terminal_node": null,
-      "briefing": "Fed 독립성 훼손 우려가 공통원인. 기대인플 상승 2.38%로 실질금리 경로 압박. TLT +3.53%는 안전자산 수요 혼재. GLD -2.45%는 대체자산 수요 반증. UUP +1.08%는 달러 강세 병존. 구조적 달러 신뢰 약화 경로 진행 중."
+      "korea_terminal_node": "e5",
+      "briefing": "ECB 긴축 재개가 유로존 성장 냉각·EEM 월간 -6.09% 이탈로 파급되며, 한국 對유럽 수출 둔화가 EWY -11.46% 월간 급락과 원/달러 1,336원대 원화 약세 구조적 압력으로 귀결된다."
     }
   ],
   "headlines": [
-    "FOMC매파+외국인이탈, KOSPI -1.24%",
-    "MS클라우드급성장, 반도체ETF +2.13%",
-    "라가르드불확실성, 유로화 주간 -0.48%"
+    "FOMC 후 테크약세 심화, KOSDAQ -2.34% 조정",
+    "ECB 12월 인상신호에도 글로벌 리스크오프 우세",
+    "한국 수출주 月 -11.46% 약세, 원화약세 구조화"
   ],
   "layer_summary": {
-    "layer1": "전일 미국: FOMC 동결 후 Warsh 매파 발언·기대인플 상승 / 당일 아시아: KOSPI -1.24%, KOSDAQ -2.34% 하락",
-    "layer2": "FOMC 매파 신호→기대인플 상승(2.38%)·달러강세 압력·외국인 자금이탈 경로 확립. MS 클라우드 호조는 반도체 수요 재확인(SOXX +2.13%).",
-    "layer3": "KOSPI·KOSDAQ 동반 하락 속 달러강세·고금리 환경 지속. DAX +1.51% 반등도 유럽 성장 둔화 우려 내재. 글로벌 리스크오프-리스크온 혼조 진행."
+    "layer1": "전일 미국: FOMC 중립·테크분화(SOXX +7.46% vs XLK -1.18%), 복합 리스크오프(VIX +1.71pt·EEM -1.26%) / 당일 아시아: KOSPI -1.24%·KOSDAQ -2.34% 조정",
+    "layer2": "VIX 급등과 EM 자본유출 압력이 아시아 개장 직전 시장심리 악화로 전달, ECB 긴축신호는 DAX +1.31% 반등으로 선반영되며 지역 분화 확대",
+    "layer3": "글로벌 리스크오프·테크센티멘트 악화·ECB 긴축 구조가 한국 KOSDAQ 반도체주 조정과 원화약세 압박으로 수렴"
   },
-  "macro_regime_note": "고실질금리·신용스프레드 축소·Fed 중립 기조가 깨지면서 매파 충격과 인플레 기대 불안정이 성장주·신흥국 자산 압박으로 직결됨.",
-  "generated_at": "2026-10-29T15:48:13.019Z",
+  "macro_regime_note": "고실질금리(2.67%) 지속과 평탄커브·온건 신용환경이 성장주 압박과 EM 이탈을 용인하면서도 안전자산 수요로 채권강세(TLT +4.77%)를 견인, 리스크온·오프 사이 진동폭이 확대되는 국면을 조성했다.",
+  "generated_at": "2026-10-29T22:47:29.463Z",
   "data_as_of": {
-    "timestamp_iso": "2026-10-29T15:48:12.942Z",
-    "display": "10/29 11:48 [ 뉴욕 현지 시각 ]",
-    "display_mobile": "10/29 11:48 뉴욕",
+    "timestamp_iso": "2026-10-29T22:47:29.461Z",
+    "display": "10/29 18:47 [ 뉴욕 현지 시각 ]",
+    "display_mobile": "10/29 18:47 뉴욕",
     "timezone": "America/New_York"
   },
   "meta": {
-    "generated_at": "2026-10-29T15:48:13.019Z",
-    "elapsed_sec": 298,
-    "market_status": [
-      "미국(S&P500/NASDAQ)",
-      "유럽(DAX/CAC/FTSE)"
-    ],
+    "generated_at": "2026-10-29T22:47:29.463Z",
+    "elapsed_sec": 276,
+    "market_status": [],
     "is_weekend": false,
-    "data_note": "T0: 전일 미국 ETF 마감(10/28) + 미국 지수 장중(10/29). T1: 한국/일본 당일 마감(10/29), 유럽 장중(10/29). FOMC 성명 발표(10/28) 및 워시 의장 기자회견 결과 반영."
-  },
-  "deep_analysis_at": "2026-10-29T15:54:12.906Z"
+    "data_note": "전일 미국 장(T0) 확정 기준. FOMC 성명 발표(10/28) 및 ECB 라가르드 통화정책 회견(10/29) 결과 반영. 한국장(T1)은 당일 마감 기준."
+  }
 }
