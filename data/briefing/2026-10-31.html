@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-31 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/10/31 07:48 KST</div>
+    <div class="header-date">2026-10-31</div>
+    <div class="header-headline">AI 어닝 실망·Anthropic 정크 등급 — 빅테크 $1조 시가총액 증발</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Anthropic IPO 신용등급 확정 및 AMD 실적 발표 — AI 투자 수익성 재평가 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 실적 충격과 빅테크 $1조 매도 — 수익화 불신 정점</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">이번 실적 시즌에서 Amazon·Intel 등 빅테크 어닝이 시장 기대를 하회하며 단 하루 만에 미국 증시에서 약 1조 달러에 달하는 시가총액이 증발했다. AI 인프라에 수천억 달러를 투입했음에도 수익 회수 속도가 지나치게 느리다는 투자자 불신이 매도세를 촉발했으며, Anthropic의 S-1 제출 초기 기대감도 빠르게 희석됐다. Intel은 수십 년 만의 최악의 하루를 기록하며 시가총액 1,400억 달러가 사라졌고, AI 서버 칩 공급 부족과 PC 시장 부진이 AMD에도 연쇄 압력을 가하고 있다. AI 버블 우려가 재점화된 가운데, 차입 의존 확대가 금융위기 가능성을 높인다는 경고도 등장하며 섹터 전반의 리스크 프리미엄이 재조정되는 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Anthropic 정크 등급 전망·IPO 리스크 — AI 자금조달 구조의 신용 균열</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#10</span>
+    </div>
+    <div class="theme-summary">Anthropic이 IPO를 앞두고 Blackstone으로부터 투자등급 미달의 '하이 정크' 신용등급을 받을 것으로 전망되면서, AI 스타트업의 자금조달 구조에 대한 신뢰가 흔들리고 있다. 92페이지 분량의 리스크 팩터 문서에서 Anthropic 스스로 AI가 사회와 인간에게 초래할 수 있는 위험을 인정한 점도 투자자 경계심을 높이고 있다. 높은 정크 등급은 향후 자본 조달 비용을 대폭 상승시켜 막대한 운영 지출을 뒷받침하는 능력을 제약할 수 있다. Microsoft가 클라우드 경쟁에서 우위를 점하며 월가의 새로운 총아로 부상한 것과 대조적으로, 순수 AI 플레이 기업들의 재무 건전성에 대한 차별화된 평가가 본격화되는 시점이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">ECB Lagarde 사임 발표·Warsh Fed 투명성 축소론 — 주요국 통화정책 거버넌스 변수 부상</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#13</span>
+    </div>
+    <div class="theme-summary">ECB 총재 Christine Lagarde가 2027년 2월 7일 자로 사임할 것임을 유럽이사회에 공식 통보하면서, ECB의 향후 통화정책 방향성에 대한 불확실성이 새롭게 부각됐다. 동시에 미국에서는 Kevin Warsh가 Fed의 커뮤니케이션을 줄여야 한다고 주장하는 가운데, 다른 Fed 인사들은 오히려 인플레이션 대응을 위한 추가 금리 인상 필요성과 투명성 강화를 역설하며 내부 노선 충돌이 표면화되고 있다. 두 중앙은행 모두 리더십 또는 정책 메시지 공백이 시장의 금리 경로 해석에 혼선을 줄 수 있는 시기에 접어들었다. 신용카드 데이터를 활용한 소비 측정 연구 등 Fed 내부적으로는 대안적 경제지표 탐색도 병행되고 있어, 정책 판단 근거의 다변화 흐름도 주목된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">호르무즈 해협 유조선 공격·Brent $117 — 중동 에너지 리스크 프리미엄 급재점화</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #14~#16</span>
+    </div>
+    <div class="theme-summary">호르무즈 해협에서 폭발물이 부착된 유조선 화재 사건이 발생하면서 Brent 원유 가격이 117달러까지 급등했고, 중동 에너지 공급망 차단 리스크가 다시 최전선으로 부상했다. 이와 대조적으로 안전자산인 금은 중간선거 이후 이란 관련 긴장에도 불구하고 연중 최저가로 하락해, 달러 강세와 실질금리 상승이 전통적 안전자산 수요를 압도하는 구조가 지속되고 있음을 보여줬다. Trump 행정부의 에너지 가격 안정화 시도가 모스크바 유화 및 이란 압박 완화로도 원유 시장을 진정시키지 못했다는 분석이 나오면서, 에너지 정책의 실효성에 대한 의문도 커지고 있다. 해협 봉쇄 가능성이 현실화될 경우 에너지 수입국의 인플레이션 재점화와 중앙은행 정책 경로에 직접적 압력이 가해질 수 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">북한 $63억 크립토 해킹·브라질 헤지펀드 24% 손실 — 비전통 금융 리스크의 동시 폭발</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #17~#21</span>
+    </div>
+    <div class="theme-summary">Binance에서 역사상 최대 규모인 63억 달러 상당의 크립토 해킹이 발생했으며, 북한이 유력 배후로 지목되면서 탈중앙화 자산의 구조적 보안 취약성과 지정학적 악용 문제가 동시에 부각됐다. Binance는 고객 손실을 자체 부담하겠다고 밝혔으나, 이번 사건은 규제 당국의 디지털 자산 보안 요구를 강화하는 트리거가 될 가능성이 높다. 한편 브라질에서는 Lula 정부의 재정 정책 충격으로 헤지펀드들이 3주 만에 24%의 손실을 기록하며 급격한 포지션 청산에 나서고 있고, 반대로 미국 내 헤지펀드들은 이상 난동으로 천연가스 숏 포지션을 사상 최대 수준으로 확대하는 등 글로벌 대안투자 지형이 동시다발적으로 요동치고 있다. 북한의 크립토 수익이 핵 프로그램 외화 조달의 절반을 차지한다는 추산은 제재 체제의 실효성에 근본적 의문을 제기한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #22~#30</span>
+    </div>
+    <div class="theme-summary">이번 주기 기사 중 주요 거시·금융·지정학·산업 테마와 직접 연관이 낮은 기사들이 포함된다. 냉핵융합 연구의 물리학적 가능성 재탐색, 일본 사진을 통해 본 핵 트라우마와 예술, 캘리포니아 고속철도 CEO 사임 스캔들, 실패한 사형 집행으로 고통받는 여성의 사연, 영국 온라인안전법을 둘러싼 Meta·TikTok·X의 법적 패배, 2026년 미국 중간선거 상원 경쟁, 래퍼 Rick Ross 기소 취소, Trump 임명 주택기관장의 감사 방해 의혹, Muhammad Ali 아마존 다큐 소식 등 다양한 비금융 이슈가 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 실적 충격과 빅테크 $1조 매도 — 수익화 불신 정점</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Intel 실적이 드러낸 두 가지 핵심 문제로 AMD 주가 급락</div>
+    <div class="article-title-en">AMD’s stock slides after Intel earnings reveal two big issues</div>
+    <div class="article-keypoint">Intel 어닝 쇼크가 AMD로 전이 — AI 서버칩 공급 부족·PC 부진 이중 압박 현실화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/amds-stock-slides-after-intel-earnings-reveal-two-big-issues-d3afed91?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 05:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Intel 주가, 수십 년 만의 최악 하루 — $1,400억 시가총액 증발</div>
+    <div class="article-title-en">Why Intel’s stock saw its worst day in decades — and a $140 billion wipeout</div>
+    <div class="article-keypoint">Intel 시가총액 하루 $1,400억 소멸 — 수십 년 만의 최악 주가 하락으로 AI 전환 실패 가시화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-intels-stock-is-sinking-toward-its-worst-drop-in-two-years-492d71a7?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 05:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">AI 버블이 터질 때</div>
+    <div class="article-title-en">When the AI Bubble Bursts</div>
+    <div class="article-keypoint">AI 버블 붕괴 시 차입 의존 구조가 금융위기 리스크로 전이될 수 있다는 경고 부상</div>
+    <a class="article-link" href="https://www.project-syndicate.org/onpoint/ai-infrastructure-could-outlast-the-bubble-that-financed-it-by-william-h-janeway-2026-10?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/30 18:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">실적 발표로 AI 우려 심화 — 테크주 급락</div>
+    <div class="article-title-en">Earnings stoke AI fears and send tech stocks tumbling</div>
+    <div class="article-keypoint">Anthropic IPO 기대감도 실적 쇼크 앞에 무력화 — 빅테크 AI 투자 수익성 불신 정점</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/10/30/markets-lashed-by-tech-rout-as-earnings-fan-ai-fears_6767686_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 06:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">기대 이하 실적에 테크 셀오프 심화 — 미국 증시 약 $1조 하락</div>
+    <div class="article-title-en">Tech sell-off drives US markets down by nearly $1tn after subpar earnings reports</div>
+    <div class="article-keypoint">빅테크 어닝 실망으로 하루 $1조 시가총액 증발 — AI 지출 ROI 불신이 전방위 매도 촉발</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/oct/30/tech-stocks-drop-earnings-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 03:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">실적 쇼크에 테크 셀오프 심화 — Binance $63억 해킹 추산</div>
+    <div class="article-title-en">Tech Selloff Intensifies on Earnings; Binance Estimates $6.3B Hacked</div>
+    <div class="article-keypoint">Amazon·Intel 어닝 실망 + Binance $63억 해킹 — 테크·크립토 동반 패닉 셀 압력 극대화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-30/bloomberg-brief-10-30-2026-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/30 20:47 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Anthropic 정크 등급 전망·IPO 리스크 — AI 자금조달 구조의 신용 균열</span>
+    <span class="theme-label-range">Article #7~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Microsoft, 클라우드 전쟁 승기 잡고 월가의 새 총아로 부상</div>
+    <div class="article-title-en">Microsoft is winning the cloud wars and becoming Wall Street’s new golden child</div>
+    <div class="article-keypoint">Microsoft, 클라우드 경쟁 우위 확인 — AI 투자 ROI 차별화 속 월가 최선호주 부상</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microsoft-is-winning-the-cloud-wars-and-becoming-wall-streets-new-golden-child-62eecbbd?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 05:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Anthropic, IPO 후 신용평가사로부터 높은 '정크' 등급 받을 전망 — FT 보도</div>
+    <div class="article-title-en">Anthropic expected to receive high ‘junk’ rating from credit agencies following IPO, FT report says</div>
+    <div class="article-keypoint">Anthropic, IPO 후 '하이 정크' 등급 전망 — 자금조달 비용 급등으로 AI 지출 지속가능성 위협</div>
+    <a class="article-link" href="https://techcrunch.com/2026/10/30/anthropic-expected-to-receive-high-junk-rating-from-credit-agencies-following-ipo-report-says/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 06:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Anthropic의 92페이지 리스크 팩터 문서를 대신 읽었습니다 — 영상 해설</div>
+    <div class="article-title-en">I read Anthropic's 92-page risk factor document, so you don't have to – video explainer</div>
+    <div class="article-keypoint">Anthropic S-1의 92페이지 리스크 문서 — AI 위험 자인이 IPO 투자자 심리 냉각 요인</div>
+    <a class="article-link" href="https://www.theguardian.com/global/video/2026/oct/30/anthropic-92-page-risk-factor-document-ipo-filing-video-explainer" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 04:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Anthropic, IPO 후 투자등급 확보 불투명 — Blackstone 전망</div>
+    <div class="article-title-en">Anthropic may not secure investment-grade rating after IPO, Blackstone says</div>
+    <div class="article-keypoint">Anthropic, IPO 후 투자등급 미달 전망 — Blackstone 평가가 AI 스타트업 신용 구조 취약성 노출</div>
+    <a class="article-link" href="https://www.ft.com/content/59383c7f-8d82-493f-bf01-d2e862a1018f?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 03:19 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">ECB Lagarde 사임 발표·Warsh Fed 투명성 축소론 — 주요국 통화정책 거버넌스 변수 부상</span>
+    <span class="theme-label-range">Article #11~#13</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">FEDS 논문: 신용카드 데이터를 활용한 소비 측정 — 벤치마킹과 그 너머</div>
+    <div class="article-title-en">FEDS Paper: Measuring Consumption with Credit Card Data: Benchmarking and Beyond</div>
+    <div class="article-keypoint">Fed, 신용카드 데이터로 소비 측정 정밀화 — 대안 경기지표 신뢰도 제고 시도</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/measuring-consumption-with-credit-card-data-benchmarking-and-beyond.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 02:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Warsh, Fed의 발언 축소 요구 — 두 관리는 투명성 강화 역설</div>
+    <div class="article-title-en">Warsh wants the Fed to say less. Two officials are pushing for more transparency.</div>
+    <div class="article-keypoint">Warsh의 Fed 소통 축소론 vs 인상 강경파 — 내부 노선 균열이 금리 경로 불확실성 확대</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-fed-held-interest-rates-steady-but-these-officials-see-more-hikes-coming-soon-2098bbd8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 06:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">ECB 운영이사회 결정사항 (금리 결정 외) — Lagarde 총재 2027년 2월 사임 발표</div>
+    <div class="article-title-en"> Decisions taken by the Governing Council of the ECB (in addition to decisions setting interest rates)</div>
+    <div class="article-keypoint">Lagarde 2027년 2월 사임 공식화 — ECB 리더십 공백이 통화정책 경로 불확실성 확대</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/govcdec/otherdec/2026/html/ecb.gc261030~e40f864093.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/30 23:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">호르무즈 해협 유조선 공격·Brent $117 — 중동 에너지 리스크 프리미엄 급재점화</span>
+    <span class="theme-label-range">Article #14~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">이란 긴장 재고조에도 금값 연중 최저로 급락한 이유</div>
+    <div class="article-title-en">Why gold plunged to its lowest price in a year despite renewed Iran jitters</div>
+    <div class="article-keypoint">금 연중 최저 하락 — 이란 긴장에도 달러·실질금리가 안전자산 수요 압도</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-gold-plunged-to-its-lowest-price-in-a-year-despite-renewed-iran-jitters-365be0e2?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 06:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump의 유가 안정화 승부수가 실패한 이유</div>
+    <div class="article-title-en">Why Trump’s Hail Mary on Fuel Prices Fell Short</div>
+    <div class="article-keypoint">Trump의 유가 안정화 전략 실패 — 러시아 유화·이란 압박 완화도 에너지 시장 진정 불가</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/10/30/trump-russia-diesel-deal-putin-prices-midterms-iran-war/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 02:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">호르무즈 해협 유조선 화재로 Brent $117 돌파</div>
+    <div class="article-title-en">Brent Hits $117 as Tanker Catches Fire in Strait of Hormuz</div>
+    <div class="article-keypoint">호르무즈 해협 유조선 화재로 Brent $117 급등 — 해협 봉쇄 현실화 시 글로벌 에너지 공급 위기</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Brent-Hits-117-as-Tanker-Catches-Fire-in-Strait-of-Hormuz.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/30 21:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">북한 $63억 크립토 해킹·브라질 헤지펀드 24% 손실 — 비전통 금융 리스크의 동시 폭발</span>
+    <span class="theme-label-range">Article #17~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">크립토 해킹이 고립된 북한 핵 프로그램에 자금을 대는 방식</div>
+    <div class="article-title-en">How crypto hacking funds isolated North Korea’s nuclear programme</div>
+    <div class="article-keypoint">북한 크립토 해킹이 핵 프로그램 외화의 절반 — 제재 체제 실효성에 근본 의문</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/oct/30/how-crypto-hacking-funds-isolated-north-korea-nuclear-programme" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 02:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">크립토 해킹 재발로 규제 논쟁 재점화</div>
+    <div class="article-title-en">Crypto Hack Reignites Regulatory Debate</div>
+    <div class="article-keypoint">$63억 크립토 해킹 — 디지털 자산 보안 규제 강화 논의 재점화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-30/crypto-hack-reignites-regulatory-debate-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 07:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Brazil 헤지펀드, Lula 충격 후 24% 손실로 휘청</div>
+    <div class="article-title-en">Brazil Hedge Funds Reel as Losses Reach 24% After Lula Shock</div>
+    <div class="article-keypoint">브라질 헤지펀드 3주 만에 24% 손실 — Lula 재정 충격이 신흥국 대안투자 신뢰 붕괴 촉발</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-30/hedge-funds-in-brazil-reel-as-losses-reach-24-after-lula-shock" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/30 23:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">헤지펀드, 천연가스 숏 포지션 사상 최대 수준으로 확대</div>
+    <div class="article-title-en">Hedge Funds Boost Natural Gas Short Positions to Most on Record</div>
+    <div class="article-keypoint">헤지펀드, 미국 천연가스 숏 사상 최대 — 이상 난동 기대가 에너지 선물 수급 왜곡 심화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-10-30/hedge-funds-boost-natural-gas-short-positions-to-most-on-record" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 05:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">북한, $63억 크립토 해킹 유력 배후 — '역사상 최대 강도 사건'</div>
+    <div class="article-title-en">North Korea is likely culprit behind $6.3bn crypto hack, ‘largest heist in history’</div>
+    <div class="article-keypoint">북한 배후 $63억 Binance 해킹 — 역사상 최대 크립토 탈취로 지정학적 사이버 위협 최고조</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/oct/29/binance-crypto-exchange-hack" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 01:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">냉핵융합에 실패와 사기 그 이상이 있을까?</div>
+    <div class="article-title-en">Is There More to Cold Fusion Than Failure and Fraud?</div>
+    <div class="article-keypoint">냉핵융합 연구 재조명 — 에너지 위기 해법 아닌 물리학 경계 확장 수준</div>
+    <a class="article-link" href="https://www.quantamagazine.org/is-there-more-to-cold-fusion-than-failure-and-fraud-20261030/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 04:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">컨설턴트 나이트클럽·시가 라운지 비용 폭로 후 캘리포니아 고속철도 CEO 사임</div>
+    <div class="article-title-en">California High-Speed Rail CEO Resigns After Reporter Confronts Board Over Consultants' Nightclub And Cigar-Lounge Tabs</div>
+    <div class="article-keypoint">캘리포니아 고속철도 CEO 사임 — 컨설턴트 비용 스캔들로 대형 공공 인프라 사업 신뢰 추락</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/california-high-speed-rail-ceo-resigns-after-reporter-confronts-board-over-consultants" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">실패한 사형 집행에서 살아남은 미국 여성, 지속적인 고통 호소</div>
+    <div class="article-title-en">US woman who survived botched execution says she’s in constant pain</div>
+    <div class="article-keypoint">사형 집행 실패 후 지속 통증 호소 — 형사사법 윤리 논쟁 재점화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-woman-who-survived-botched-execution-says-shes-in-constant-pain" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 02:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">BnF에서 만나는 일본 사진의 숨막히는 여정 — 핵 트라우마에서 선 미니멀리즘까지</div>
+    <div class="article-title-en">At the BNF, a breathtaking journey through Japanese photography, from nuclear trauma to Zen minimalism</div>
+    <div class="article-keypoint">BnF 일본 사진전, 핵 트라우마에서 선 미니멀리즘까지 — 문화적 기록의 역사적 가치</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/culture/article/2026/10/30/at-the-bnf-a-breathtaking-journey-through-japanese-photography-from-nuclear-trauma-to-zen-minimalism_6767720_30.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 07:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Meta·TikTok·X, 온라인 안전 데이터 요구에 맞선 영국 감독당국 법적 도전에서 패소</div>
+    <div class="article-title-en">Meta, TikTok, X lose legal challenge against British watchdog over online safety data demands</div>
+    <div class="article-keypoint">Meta·TikTok·X, 영국 온라인안전법 데이터 요구 소송 패소 — 글로벌 콘텐츠 규제 강화 가속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/meta-tiktok-x-lose-legal-challenge-against-british-watchdog-over-online-safety-data-demands" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/30 23:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Lonnie Ali & Marc Rosen, 신작 Muhammad Ali Amazon 시리즈에 대해</div>
+    <div class="article-title-en">Lonnie Ali & Marc Rosen on New Muhammad Ali Amazon Show</div>
+    <div class="article-keypoint">Muhammad Ali Amazon 시리즈 — 스포츠 IP 콘텐츠 수익화 사례로 스트리밍 경쟁 속 주목</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-10-30/lonnie-ali-marc-rosen-on-new-muhammad-ali-amazon-show-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Florida 검찰, 가정폭력 사건 Rick Ross에 대한 중범죄 기소 취하</div>
+    <div class="article-title-en">Florida prosecutors drop felony charge against Rick Ross in domestic violence case</div>
+    <div class="article-keypoint">Rick Ross 가정폭력 중범죄 기소 취하 — 증거 불충분으로 법적 절차 종결</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/oct/30/rick-ross-felony-charge-dropped-domestic-violence" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/31 03:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">2026년 미국 중간선거: 민주당의 상원 탈환 희망은 Maine에 달려 있다</div>
+    <div class="article-title-en">2026 US midterm elections: Democrats' hopes of retaking the Senate run through Maine</div>
+    <div class="article-keypoint">2026년 미국 중간선거 상원 Maine 경쟁 — 민주당 상원 탈환 가능성의 핵심 변수</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/10/30/2026-us-midterm-elections-democrats-hopes-of-retaking-the-senate-run-through-maine_6767467_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/30 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">단독 — Trump 임명 Bill Pulte의 주택기관, 감사관 활동 방해 의혹 보고서</div>
+    <div class="article-title-en">Exclusive-Trump appointee Bill Pulte’s housing agency obstructed watchdog, report says</div>
+    <div class="article-keypoint">Trump 임명 주택기관장의 감사 방해 의혹 — 행정부 내 견제 시스템 무력화 리스크 부각</div>
+    <a class="article-link" href="https://www.investing.com/news/economy-news/exclusivetrump-appointee-bill-pultes-housing-agency-obstructed-watchdog-report-says-4988831" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/10/30 22:12 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
