@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-02 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/02 07:48 KST</div>
+    <div class="header-date">2026-11-02</div>
+    <div class="header-headline">ChatGPT 의료 오조언 사망 소송 — AI 법적 책임 현실화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Nvidia 실적 발표 임박 — 빅테크 AI 지출 정당성 최종 검증대이자 시장 방향성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">ChatGPT 사망 소송과 AI 법적 책임 현실화 — 수익화 신뢰의 균열</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#4</span>
+    </div>
+    <div class="theme-summary">이번 사이클에서 처음으로 AI 오조언에 의한 사망이 실제 법적 소송으로 이어지며 OpenAI의 제품 책임 리스크가 구체화됐다. 시애틀의 31세 여성이 ChatGPT가 제공한 항경련제 감량 스케줄을 따른 후 발작으로 사망했고, 유족이 OpenAI를 상대로 소송을 제기했다. Anthropic IPO 추진과 맞물려 AI 기업의 법적 면책 구조와 거버넌스 불투명성에 대한 시장의 신뢰 비용이 가시화되고 있다. Anthropic IPO는 창업자들에게 수천억 달러의 부를 안겨줄 전망이나, 효과적 이타주의 기반 지배구조와 수익화 모델의 검증이 동시에 요구된다. 사이버보안 영역에서 AI를 해킹 도구로 활용하는 사례가 급증하는 가운데 OpenAI·Anthropic은 이를 신규 수익원으로 포지셔닝 중이나, 책임 범위 논란이 동시에 확대되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Nvidia 실적 앞 빅테크 AI 지출 ROI 검증 — 테크 셀오프와 Fed 압력 교차</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #5~#10</span>
+    </div>
+    <div class="theme-summary">Google과 Amazon의 실적 부진이 선행된 가운데 Nvidia 실적 발표가 AI 인프라 투자 정당성의 최종 심판대로 부상했으며, 시장 일각에서는 'Nvidia 실적 미스 시 시장 붕괴' 수준의 경고가 나오고 있다. Apple의 새 CEO John Ternus 체제 첫 실적 발표도 메모리 가격 상승과 소비 둔화 속에서 빅테크 실적 시즌의 또 다른 변수로 작용한다. BMO Capital Markets는 AI 투자 과열이 금리와 인플레이션 상방 압력을 높여왔으며, 테크 셀오프가 Fed의 긴축 부담을 일부 완화할 수 있다고 분석했다. 로보택시 확대에 대한 런던 시장의 규제 요구 등 AI·자율주행 플랫폼 전반의 정책 마찰도 섹터 리스크로 누적되고 있다. Amazon을 겨냥한 쇼핑봇의 부상은 e-커머스 수익 구조 재편 가능성을 예고하며 빅테크 플랫폼 해자에 대한 재평가를 자극한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">미국 중간선거 임박 — 채권시장 관망·트럼프 비시민권자 투표 논란</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#15</span>
+    </div>
+    <div class="theme-summary">중간선거를 앞두고 채권 투자자들이 결과 불확실성과 경제지표 발표를 앞두고 '일시 정지' 모드에 들어서며 국채 포지션 조정이 제한되고 있다. 트럼프 행정부가 작성한 비시민권자 유권자 명단이 선거 결과 이의 제기 수단으로 활용될 가능성이 부각되며 선거 후 정치적 혼란 리스크가 가시화됐다. 트럼프는 공화당 의회 장악 방어를 위한 막판 유세에서 경제 성과를 전면에 내세웠으나, 실제 수혜층이 그가 겨냥하는 유권자층과 괴리된다는 분석이 나온다. 인도에서는 Modi 정권에 반대하는 대규모 시위가 델리에서 열리며 신흥국 정치 불안도 동시에 확산되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">지정학 복합 리스크 — 우크라이나 협상 조건·이란-Netanyahu·라트비아 영공 침범</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #16~#19</span>
+    </div>
+    <div class="theme-summary">젤렌스키가 Patriot 미사일 지원 시 러시아 정유시설 공격 중단 의사를 밝히며 우크라이나-러시아 전쟁에서 새로운 협상 변수가 등장했다. 트럼프-Netanyahu 통화에서 트럼프는 이란과의 협상 여지를 남기는 신중한 태도를 보였으나, 이스라엘 내부 정치 압박이 군사 행동 리스크를 상존시킨다. 라트비아 러시아·벨라루스 접경 지역에서 단기 영공 침범 사건이 발생하며 NATO 동쪽 측면의 긴장이 재부각됐다. 이 세 개의 지정학 축이 동시에 활성화되면서 에너지·방산·안전자산 수요에 복합적 상방 압력이 가해지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">북한 $60억 Binance 해킹·민간신용 디폴트 신기록 — 비전통 금융 리스크 동시 폭발</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #20~#23</span>
+    </div>
+    <div class="theme-summary">FBI가 북한을 Binance에서 60억 달러 이상을 탈취한 주체로 공식 지목하며 국가 후원 사이버 금융범죄의 규모가 전례 없는 수준임이 확인됐다. Bitcoin은 Binance 해킹 충격과 공포 심리 확산으로 추가 하락 압력에 직면해 있으며, 크립토 시장 전반의 구조적 취약성이 재노출됐다. 이와 동시에 월가의 관심이 테크·AI 충격에 집중된 사이 민간신용(Private Credit) 디폴트가 역대 최고치를 경신하며 비가시적 신용 리스크가 조용히 누적되고 있다. 인도네시아에서는 워시트레이드와 5,000% 주가 급등으로 조장된 시장 조작이 MSCI 편입 강등 위기를 초래하며 신흥국 시장 구조의 신뢰성 문제도 부각됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#26</span>
+    </div>
+    <div class="theme-summary">스페인 열차 충돌 사고로 Cambridge 대학 과학자 Dr. Marta Shahbazi가 사망하며 학계에 큰 충격을 안겼다. 미국 핵에너지 분야에서는 중국의 기술 추격에 대응해 신소재 개발 경쟁이 가속화되고 있으며, 이는 장기적 에너지 안보 경쟁의 새로운 전선으로 부상하고 있다. 호주 주택 가격은 7개월 연속 하락하며 금리 인상 누적 효과가 부동산 수요에 뚜렷하게 반영되고 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">ChatGPT 사망 소송과 AI 법적 책임 현실화 — 수익화 신뢰의 균열</span>
+    <span class="theme-label-range">Article #1~#4</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">ChatGPT 오조언으로 발작 사망한 여성의 부모, OpenAI 상대 소송 제기</div>
+    <div class="article-title-en">Parents of woman who died of seizure after ChatGPT misguidance sue OpenAI</div>
+    <div class="article-keypoint">ChatGPT 의료 오조언 사망 소송 제기 — AI 제품 법적 책임 현실화의 첫 사례</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/nov/01/chatgpt-woman-seizure-lawsuit-openai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 07:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">해커들의 AI 악용 급증 — AI 기업들은 이를 사이버보안 사업 기회로 포착</div>
+    <div class="article-title-en">
+        Hackers are running riot with AI. Its makers want to cash in
+      </div>
+    <div class="article-keypoint">AI 해킹 도구 급증 속 OpenAI·Anthropic 사이버보안을 신수익원으로 포지셔닝</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/11/01/hackers-are-running-riot-with-ai-its-makers-want-to-cash-in" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 06:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">ChatGPT 의료조언 따르다 여성 사망</div>
+    <div class="article-title-en">Woman Dies After Following Medical Advice Provided By ChatGPT</div>
+    <div class="article-keypoint">31세 여성 ChatGPT 의료조언 따르다 발작 사망 — AI 오남용 법적·규제 리스크 가속화</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/woman-dies-after-following-medical-advice-provided-chatgpt" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Anthropic IPO, 효과적 이타주의 창업자들을 수천억 달러 자산가로 만들 전망</div>
+    <div class="article-title-en">Anthropic's IPO Will Make Its Effective Altruist-Aligned Founders Worth Hundreds Of Billions</div>
+    <div class="article-keypoint">Anthropic IPO, 창업자 수천억 달러 부 실현 전망 — 지배구조·수익화 검증 동시 요구</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/anthropics-ipo-will-make-its-effective-altruist-aligned-founders-worth-hundreds-billions" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 06:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Nvidia 실적 앞 빅테크 AI 지출 ROI 검증 — 테크 셀오프와 Fed 압력 교차</span>
+    <span class="theme-label-range">Article #5~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">OpenAI, 데이터센터를 'AI 컴퓨트 캠퍼스'로 리브랜딩 추진 가능성</div>
+    <div class="article-title-en">OpenAI might rebrand its data centers as ‘AI compute campuses’</div>
+    <div class="article-keypoint">OpenAI, 데이터센터를 'AI 컴퓨트 캠퍼스'로 리브랜딩 추진 — 여론 수용성 확보 시도</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/01/openai-might-rebrand-its-data-centers-as-ai-compute-campuses/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Apple, 빅테크에 중요한 시점에 새 실적 발표 시대 개막</div>
+    <div class="article-title-en">Apple’s new earnings era begins at a critical time for Big Tech</div>
+    <div class="article-keypoint">Apple CEO 교체 후 첫 실적 발표 — 메모리 가격 상승과 소비 둔화 속 빅테크 건전성 점검</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/apples-new-earnings-era-begins-at-a-critical-time-for-big-tech-2236a44e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Nvidia가 실적을 놓치면 세상이 끝난다</div>
+    <div class="article-title-en">The World Will End If Nvidia Misses Earnings</div>
+    <div class="article-keypoint">Nvidia 실적 미스 시 시장 붕괴 수준 경고 — AI 인프라 투자 정당성 최종 검증대</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/world-will-end-if-nvidia-misses-earnings" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 00:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">테크 셀오프, Fed의 긴축 압력 완화 가능성</div>
+    <div class="article-title-en">Tech Selloff Could Ease Pressure on the Fed</div>
+    <div class="article-keypoint">테크 셀오프가 Fed 긴축 부담 일부 완화 가능 — AI 과잉투자와 금리 압력의 역설적 연결</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-01/tech-selloff-could-ease-pressure-on-the-fed-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/01 22:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">쇼핑봇이 Amazon을 겨냥하고 있다</div>
+    <div class="article-title-en">The Shopping Bots Are Coming for Amazon</div>
+    <div class="article-keypoint">AI 쇼핑봇의 Amazon 대항 부상 — e-커머스 수익 구조 재편과 플랫폼 해자 재평가</div>
+    <a class="article-link" href="https://www.wsj.com/tech/the-shopping-bots-are-coming-for-amazon-701caa57?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/01 19:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Sadiq Khan, 런던 거리 로보택시 수 상한제 촉구</div>
+    <div class="article-title-en">Sadiq Khan calls for cap on numbers of robotaxis on London streets</div>
+    <div class="article-keypoint">런던 시장, 로보택시 수 상한제 요구 — AI 자율주행 플랫폼 규제 마찰 가속화</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/nov/01/sadiq-khan-calls-cap-numbers-robotaxis-london-streets" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/01 19:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">미국 중간선거 임박 — 채권시장 관망·트럼프 비시민권자 투표 논란</span>
+    <span class="theme-label-range">Article #11~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">트럼프, 중간선거 앞두고 이탈 유권자 상대 막판 유세</div>
+    <div class="article-title-en">Trump makes final pitch to restive voters in midterms campaign</div>
+    <div class="article-keypoint">중간선거 D-1, 트럼프 막판 유세 — 공화당 의회 장악 여부가 관세·재정정책 분기점</div>
+    <a class="article-link" href="https://www.ft.com/content/75e8405b-124f-44aa-9c5e-0a33d0ee5b92?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 07:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">트럼프 행정부의 비시민권자 유권자 명단이 중간선거에 미칠 영향</div>
+    <div class="article-title-en">Explainer-How Trump’s noncitizen voter lists could affect the midterms</div>
+    <div class="article-keypoint">비시민권자 유권자 명단, 중간선거 결과 이의 제기 수단 활용 가능성 — 선거 후 정치 혼란 리스크</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/explainer-how-trumps-noncitizen-voter-lists-could-affect-the-midterms" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 02:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">트럼프 경제의 실질 수혜자는? 그를 싫어하는 연안 자유주의 엘리트들</div>
+    <div class="article-title-en">Who really wins under Trump’s economy? Coastal liberal elites who hate him.</div>
+    <div class="article-keypoint">트럼프 감세·관세 수혜층이 연안 고소득 엘리트 — 지지 기반과 정책 효과의 괴리</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/who-really-wins-under-trumps-economy-coastal-liberal-elites-who-hate-him-d74c63cb?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/01 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">수만 명 델리서 Modi 정권 반대 시위</div>
+    <div class="article-title-en">Tens of thousands protest against Narendra Modi regime in Delhi</div>
+    <div class="article-keypoint">인도 델리 Modi 정권 반대 대규모 시위 — 유권자 명부 1.3억명 삭제 논란 촉발</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/nov/01/india-opposition-protest-rally-delhi" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 01:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">채권 투자자들, '수십 년 내 가장 중요한' 미국 중간선거 앞두고 관망</div>
+    <div class="article-title-en">Bond investors sit out ‘most consequential’ US midterm elections in years</div>
+    <div class="article-keypoint">중간선거 앞 채권 투자자 관망 모드 — 정치 불확실성과 경제지표 앞두고 포지션 동결</div>
+    <a class="article-link" href="https://www.ft.com/content/937308d7-aa2e-4dac-b19b-423d83bc1253?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/01 14:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">지정학 복합 리스크 — 우크라이나 협상 조건·이란-Netanyahu·라트비아 영공 침범</span>
+    <span class="theme-label-range">Article #16~#19</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">젤렌스키, 미국이 미사일 제공 시 러시아 정유시설 공격 중단 의사 표명</div>
+    <div class="article-title-en">Zelensky says Ukraine will stop hitting Russia’s refineries if US provides missiles</div>
+    <div class="article-keypoint">젤렌스키, Patriot 미사일 제공 시 러 정유시설 공격 중단 의사 — 협상 레버리지 공개</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelensky-says-ukraine-will-stop-hitting-russias-refineries-if-us-provides-missiles" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">트럼프, 이란 전쟁 관련 Netanyahu와 통화 — 협상 여지 유지 보도</div>
+    <div class="article-title-en">Trump holds call with Netanyahu over state of Iran war: Report</div>
+    <div class="article-keypoint">트럼프-Netanyahu 통화, 이란 협상 여지 유지 — 군사 행동 억제 vs. 이스라엘 내부 압박 충돌</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/trump-holds-call-with-netanyahu-over-state-of-iran-war-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 07:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">라트비아, 러시아·벨라루스 국경 인근 일시적 영공 침범 사건 보고</div>
+    <div class="article-title-en">Latvia reports brief airspace intrusion near Russia, Belarus borders</div>
+    <div class="article-keypoint">라트비아 러시아·벨라루스 접경 영공 침범 — NATO 동쪽 측면 긴장 재부각</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/latvia-reports-brief-airspace-intrusion-near-russia-belarus-borders" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 03:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">'Netanyahu 반대 세력도 팔레스타인 문제에서 그만큼 타협을 거부해왔다'</div>
+    <div class="article-title-en">'The opposition to Netanyahu has too often chosen to be as uncompromising as he is toward the Palestinians'</div>
+    <div class="article-keypoint">Netanyahu 반대 세력의 타협 거부가 이스라엘 민주주의 위기 심화 — 연립정부 구성 난항</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/11/01/the-opposition-to-netanyahu-has-too-often-chosen-to-be-as-uncompromising-as-he-is-toward-the-palestinians_6769105_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 06:57 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">북한 $60억 Binance 해킹·민간신용 디폴트 신기록 — 비전통 금융 리스크 동시 폭발</span>
+    <span class="theme-label-range">Article #20~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Bitcoin, 공포 심리 급등·Binance 해킹 충격에 추가 하락 리스크</div>
+    <div class="article-title-en">Bitcoin faces further downside risks as fear surges, Binance hack rattles markets</div>
+    <div class="article-keypoint">Binance 해킹 충격·공포 심리 확산으로 Bitcoin 추가 하락 압력 직면</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-faces-further-downside-risks-as-fear-surges-binance-hack-rattles-markets-4989389" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/01 19:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">참고로, 민간신용 디폴트가 방금 사상 최고치를 기록했다</div>
+    <div class="article-title-en">Oh, By The Way, Private Credit Defaults Just Hit A Record...</div>
+    <div class="article-keypoint">민간신용 디폴트 역대 최고치 경신 — 테크 혼란에 가려진 비가시적 신용 리스크 누적</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/oh-way-private-credit-defaults-just-hit-record" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 01:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">인도네시아 MSCI 위기, 워시트레이드와 5,000% 주가 급등이 배경</div>
+    <div class="article-title-en">Indonesia’s MSCI Crisis Driven By Wash Trades and 5,000% Rallies</div>
+    <div class="article-keypoint">인도네시아 워시트레이드·5000% 급등 시장조작으로 MSCI 강등 위기 — 신흥국 신뢰성 타격</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/features/2026-11-01/indonesia-s-msci-crisis-driven-by-wash-trades-and-5-000-rallies" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">FBI, 북한이 Binance $60억 해킹 배후라고 발표</div>
+    <div class="article-title-en">FBI Says North Korea Behind $6 Billion Binance Heist</div>
+    <div class="article-keypoint">FBI, 북한이 Binance서 $60억 탈취 공식 확인 — 국가 후원 사이버 금융범죄 규모 전례 없는 수준</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/fbi-says-north-korea-behind-6-billion-binance-heist" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 02:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#26</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">스페인 열차 충돌 사망한 '영감을 주는' Cambridge 과학자에 추모 물결</div>
+    <div class="article-title-en">Tributes paid to ‘inspiring’ Cambridge scientist who died in Spain train crash</div>
+    <div class="article-keypoint">스페인 열차 충돌 69명 사망 — Cambridge 과학자 포함, 유럽 인프라 안전 우려</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/nov/01/tributes-marta-shahbazi-university-of-cambridge-scientist-spanish-train-crash" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 04:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">미국 연구소들, 중국의 핵 기술 우위에 맞서 신소재 개발에 주력</div>
+    <div class="article-title-en">U.S. Labs Look to New Materials to Close China's Nuclear Lead</div>
+    <div class="article-keypoint">미국, 중국 핵기술 추격 대응 신소재 개발 경쟁 가속 — 에너지 안보의 새 전선</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/US-Labs-Look-to-New-Materials-to-Close-Chinas-Nuclear-Lead.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">주택 가격 7개월 연속 하락 — 금리 인상이 수요 위축 초래</div>
+    <div class="article-title-en">House prices fall for seventh consecutive month as interest rates dent demand</div>
+    <div class="article-keypoint">호주 주택가격 7개월 연속 하락 — 금리 인상 누적 효과가 부동산 수요에 본격 전이</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/nov/02/home-values-fall-for-seventh-month-interest-rates-dent-property-demand" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/01 23:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
