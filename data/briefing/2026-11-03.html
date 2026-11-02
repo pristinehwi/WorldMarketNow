@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-03 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/03 07:48 KST</div>
+    <div class="header-date">2026-11-03</div>
+    <div class="header-headline">Marvell-Lumentum $80B 딜 — AI 칩 M&A 빅뱅</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">미국 중간선거 개표 결과 및 상원 세력 판도 — 재정·규제 정책 방향성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">AI 자금조달·M&A 가속 — Marvell $80B 딜·Oracle $200억 채권·Anthropic IPO 경고</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Marvell이 Lumentum을 약 $80~115B 규모로 인수하기로 합의하면서 AI 인프라 M&A가 역사상 최대급 거래 반열에 오른 것이다. 두 회사 모두 Nvidia가 전략적 투자자로 참여해 있어 AI 생태계 수직 통합 흐름을 상징한다. Oracle은 AI 성장 자금 조달을 위해 $200억 규모 채권 발행을 추진 중이며, Meta도 신규 부채를 검토하는 등 빅테크가 일제히 채권시장으로 복귀하는 흐름이 확인된다. 반면 Anthropic S-1에서는 의결권 구조·스카이넷 리스크·스파이 우려 등 10대 레드플래그가 공개돼 AI 자금조달의 질적 신뢰성에 균열 신호가 동시에 포착된다. White House는 AI 자금 조달에 충분한 자본이 있다며 우려를 일축했으나, 시장은 ROI 검증과 신용 리스크를 동시에 주시하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Palantir 어닝 서프라이즈와 AI 수익화 양극화 — 상업 부문이 정부 부문 첫 역전</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#11</span>
+    </div>
+    <div class="theme-summary">Palantir가 3분기 실적에서 미국 상업 부문 매출이 처음으로 정부 부문을 초과하며 AI 플랫폼의 민간 수익화 전환점을 실증했다. 이는 기존 '정부 계약 의존형 AI 기업'이라는 인식을 뒤집는 구조적 전환 신호로 시장의 주목을 받고 있다. 반면 영국 NHS에서는 Palantir AI 플랫폼을 도입했다고 주장한 29개 병원 트러스트 중 상당수가 실제로는 거의 사용하지 않는 것으로 드러나 공공 부문 AI 수익화의 허수 논란도 동시에 부각됐다. 칩 섹터 전반에서는 수요 지속성에 대한 '신뢰의 위기'가 거론되지만, 대형 테크 기업의 지출은 여전히 견조하다는 분석도 병존한다. Anthropic은 자가 학습 AI(RSI) 임계점 근접을 공개 경고하며 AI 능력 가속의 리스크를 공식화했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">미국 중간선거 전야 — 여론·시장 관망과 트럼프의 마지막 메시지</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#16</span>
+    </div>
+    <div class="theme-summary">미국 중간선거가 임박한 가운데 여론조사는 민주당 우세를 시사하지만 상원 단일 의석이 판세를 가를 수 있는 초박빙 구도가 형성돼 있다. Trump는 선거 전날 워싱턴 DC 인프라 프로젝트(링컨 기념관 반영 풀 $1,400만 리모델링)를 부각하는 마지막 유세로 경제 성과를 어필했다. Wall Street는 개표 결과 집계에 수 주가 걸릴 수 있다는 점을 인지하면서도 정치적 불확실성보다 경제적 불확실성이 실제 시장을 움직이는 변수라고 보며 과도한 불안감을 경계하고 있다. Trump의 관세 정책은 물가 상승과 제조업 일자리 창출 실패로 여론의 역풍을 맞고 있으며, 역설적으로 글로벌 자유무역 회복의 촉매가 될 수 있다는 분석도 제기된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">이란·중동 지정학 — Trump '서두르지 않겠다' 발언과 유가 하락 압력</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #17~#18</span>
+    </div>
+    <div class="theme-summary">Trump가 이란에 대한 군사 행동 재개에 '서두를 필요가 없다'고 밝히며 외교 우선 기조를 재확인하고 유가가 '돌처럼 떨어지고 있다'고 언급했다. 이는 Netanyahu의 군사 행동 압박에도 불구하고 미국이 즉각적 분쟁 확대를 억제하는 방향으로 움직임을 시사한다. 중간선거를 앞두고 이란 리스크가 재부각될 경우 에너지 가격과 방산 섹터에 직접적 영향을 미칠 수 있어, 향후 48시간 내 Trump의 외교 메시지 변화가 핵심 변수다. 러시아의 우크라이나 공습이 심화되면서 우크라이나의 외국 원조 의존도가 더욱 깊어지고 있다는 보고서도 지정학 리스크 스펙트럼을 넓히고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">SpaceX·Starlink 사업 확장 — Boost Mobile 인수 추진과 통신 생태계 재편</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #19~#21</span>
+    </div>
+    <div class="theme-summary">SpaceX가 Boost Mobile 인수를 추진 중인 것으로 알려지며 위성 인터넷 기업이 지상 이동통신 시장까지 넘보는 전방위적 통신 생태계 재편 시도가 가시화됐다. Starlink 네트워크와 지상파 셀룰러를 결합할 경우 AT&T·T-Mobile·Verizon과 정면 경쟁 구도가 형성되며 통신 섹터 밸류에이션에 구조적 도전이 된다. 한편 Musk는 Grok Bot의 비용이 '지속 불가능하게 높다'며 이용 한도를 축소했는데, AI 서비스 확장과 수익성 간 긴장이 Musk 생태계 내에서도 현실화되고 있음을 보여준다. 한국은 2027년 예산을 12.8% 증액한 820.9조 원으로 편성하고 반도체·물리적 AI·AI 데이터센터에 21.3조 원을 투자하는 세계 최고 성능 국산 AI 모델 개발 계획을 발표해 AI 주권 경쟁이 국가 예산 레벨로 격상됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #22~#30</span>
+    </div>
+    <div class="theme-summary">ATM 수수료 민감도에 관한 Fed 이코노미스트 페이퍼는 금융 포용성 관련 학술 연구로 직접적 시장 임팩트는 제한적이다. 스테이블코인 기업 Tether CEO는 Asimov의 '파운데이션' 개념을 인용해 AI 시대 문명 보존을 위한 비전을 제시했다. Acrisure는 내부 정보 유출 논란 속에서도 3분기 브로커 유지율 개선을 기록했다. 레버리지 Nasdaq-100 ETF 추종 투자자들이 지난달 기술주 저점 매수 베팅에서 손실을 입었으며, Hillman Solutions 실적은 예상치를 $0.01 상회했으나 매출은 부진했다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">AI 자금조달·M&A 가속 — Marvell $80B 딜·Oracle $200억 채권·Anthropic IPO 경고</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Oracle, AI 성장 위해 $200억 채권 추진 — Meta도 신규 부채 검토</div>
+    <div class="article-title-en">Oracle Seeks $20 Billion for AI Growth as Meta Weighs New Debt</div>
+    <div class="article-keypoint">Oracle $200억·Meta 신규 채권 추진 — 빅테크 채권시장 복귀로 AI 자금조달 재가열</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-02/oracle-is-offering-10-billion-of-high-grade-dollar-bonds" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 21:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">White House의 Hassett, AI 자금조달 우려 일축 — '시스템 내 자본 충분'</div>
+    <div class="article-title-en">White House’s Hassett Dismisses Concern Over Financing of AI</div>
+    <div class="article-keypoint">White House, AI 자금조달 우려 일축 — 정책 지원 기조 확인이나 시장 신뢰는 별개</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-02/white-house-s-hassett-dismisses-concern-over-financing-of-ai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 22:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">칩 메이커 Marvell, Lumentum을 $80B에 인수 합의</div>
+    <div class="article-title-en">Chip Maker Marvell Agrees to Buy Lumentum in $80 Billion Deal</div>
+    <div class="article-keypoint">Marvell, Lumentum $80B 인수 합의 — AI 인프라 M&A 사상 최대급 거래 등장</div>
+    <a class="article-link" href="https://www.wsj.com/business/deals/marvell-to-buy-lumentum-for-80-billion-in-all-stock-ai-deal-c9fd43a6?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 22:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Anthropic ETF 노출, 정치 펀드, BOJ ETF 언와인드</div>
+    <div class="article-title-en">ETF Anthropic Exposure, Political Funds, BOJ Unwinds ETFs</div>
+    <div class="article-keypoint">BOJ ETF 언와인드와 Anthropic ETF 노출 — 글로벌 ETF 수급에 비전통 리스크 유입</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-02/etf-iq-10-2-2026-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 05:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Marvell, $115B에 Lumentum 인수 — 테크 역사상 최대 딜 중 하나</div>
+    <div class="article-title-en">In one of the largest deals in tech history, Marvell buys Lumentum for $115B</div>
+    <div class="article-keypoint">Marvell-Lumentum 딜 $115B — 공통 전략 투자자 Nvidia 통해 AI 생태계 수직 통합</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/02/in-one-of-the-largest-deals-in-tech-history-marvell-buys-lumentum-for-115b/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 02:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Skynet·스파이·의결권 없음 — Anthropic IPO 신청서의 10대 최대 경고 신호</div>
+    <div class="article-title-en">Skynet, Spies, And Your Vote Doesn't Count: The 10 Biggest Red Flags In Anthropic's IPO Filing</div>
+    <div class="article-keypoint">Anthropic S-1 10대 레드플래그 — 의결권·안보 리스크 공개로 IPO 밸류 신뢰성 균열</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/skynet-spies-and-your-vote-doesnt-count-10-biggest-red-flags-anthropics-ipo-filing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 03:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Palantir 어닝 서프라이즈와 AI 수익화 양극화 — 상업 부문이 정부 부문 첫 역전</span>
+    <span class="theme-label-range">Article #7~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Palantir 실적, AI의 주요 전환점을 드러내다</div>
+    <div class="article-title-en">Palantir earnings reveal a major AI turning point</div>
+    <div class="article-keypoint">Palantir 상업 매출이 정부 매출 첫 역전 — AI 민간 수익화 구조 전환 실증</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/palantir-earnings-reveal-a-major-ai-turning-point-db766110?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 06:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">AI가 우리 대신 생각한다면 민주주의는 위험해진다</div>
+    <div class="article-title-en">If AI Thinks for Us, Democracy Will Suffer</div>
+    <div class="article-keypoint">AI가 민주주의적 판단력을 대체할 위험 — AI 거버넌스 규제 논의 가속화 압력</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-democracy-demands-we-think-for-ourselves-by-john-palfrey-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 21:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Anthropic, 자가 학습 AI(RSI) 능력에 매우 근접했다고 경고</div>
+    <div class="article-title-en">Anthropic warns that it’s very close to RSI capability, aka self-building AI</div>
+    <div class="article-keypoint">Anthropic, 자가진화 AI(RSI) 임계점 근접 공식 경고 — AI 능력 가속 리스크 현실화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/02/anthropic-warns-that-its-very-close-to-rsi-capability-aka-self-building-ai/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 07:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">칩 주식, '신뢰의 위기' 겪고 있지만 상황이 보이는 것만큼 어둡지는 않다</div>
+    <div class="article-title-en">Chip stocks are suffering from a ‘crisis of confidence’ — but things aren’t as gloomy as they seem</div>
+    <div class="article-keypoint">칩 섹터 '신뢰의 위기' vs 빅테크 지출 견조 — 수요 지속성 판단이 반도체 투자 분기점</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/chip-stocks-are-suffering-from-a-crisis-of-confidence-but-things-arent-as-gloomy-as-they-seem-6ed14ea9?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 05:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Palantir AI 기술, 혜택을 받는다고 알려진 NHS 29개 트러스트에서 미사용 또는 거의 미사용</div>
+    <div class="article-title-en">Palantir AI tech unused or little used by 29 NHS trusts said to be benefiting from it</div>
+    <div class="article-keypoint">NHS 29개 트러스트 Palantir AI 미사용 노출 — 공공 AI 계약 실효성·과대 계상 리스크</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/nov/02/palantir-unused-nhs-hospital-trusts" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 19:19 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">미국 중간선거 전야 — 여론·시장 관망과 트럼프의 마지막 메시지</span>
+    <span class="theme-label-range">Article #12~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Trump의 관세 실패가 자유무역을 구할 수 있다</div>
+    <div class="article-title-en">Trump’s Tariff Fiasco Could Save Free Trade</div>
+    <div class="article-keypoint">Trump 관세 실효성 부재 노출 — 역설적으로 글로벌 자유무역 회복 촉매 가능성</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/failure-of-trump-trade-agenda-could-pave-way-for-retreat-from-protectionism-by-anne-o-krueger-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 01:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">블루웨이브냐 레드 서프라이즈냐 — 미국 역대 최고 관심·최대 비용 중간선거, 박빙 결말 예고</div>
+    <div class="article-title-en">Blue wave or red surprise? America’s most exciting and expensive midterms promise nail-biting finish</div>
+    <div class="article-keypoint">중간선거 상원 단일 의석 판세 결정 — 재정·규제 정책 방향 최대 불확실성</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/blue-wave-or-a-red-surprise-americas-most-exciting-and-expensive-midterm-elections-promise-a" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">중간선거 결과 집계에 수 주 걸릴 수 있다 — Wall Street가 우려하지 않는 이유</div>
+    <div class="article-title-en">It may take weeks to tally the midterm election results. Here’s why Wall Street isn’t worried.</div>
+    <div class="article-keypoint">Wall Street, 정치 불확실성보다 경제 불확실성이 진짜 시장 변수임을 재확인</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/it-may-take-weeks-to-tally-the-midterm-election-results-heres-why-wall-street-isnt-worried-ed9313fd?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 03:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump, 중간선거 전날 워싱턴 DC 건설 프로젝트에 집중 — 민주당은 여론조사서 상승세</div>
+    <div class="article-title-en">Trump focuses on Washington DC construction projects on eve of midterm election as Democrats climb in polls – live</div>
+    <div class="article-keypoint">Trump, 선거 전날 DC 인프라 성과 부각 — 경제 메시지로 중간선거 막판 어필</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/nov/02/democrats-haley-stevens-mike-rogers-abdul-el-sayed-michigan-midterms-trump-rallies-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Trump의 중간선거 마지막 메시지</div>
+    <div class="article-title-en">Trump’s Closing Midterm Message</div>
+    <div class="article-keypoint">Trump 중간선거 마지막 유세 — 민주당 우세 여론 속 정책 어젠다 향방 주시</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/11/02/us-midterm-elections-trump-speech-reflecting-pool-democrats-republicans/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 07:03 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">이란·중동 지정학 — Trump '서두르지 않겠다' 발언과 유가 하락 압력</span>
+    <span class="theme-label-range">Article #17~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">러시아 공습으로 우크라이나의 외국 원조 필요성 심화 — 보고서</div>
+    <div class="article-title-en">Russian Strikes Deepen Ukraine’s Foreign-Aid Needs, Report Says</div>
+    <div class="article-keypoint">러시아 공습 심화로 우크라이나 외국 원조 의존 가속 — 글로벌 재정 부담 장기화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-02/russian-strikes-deepen-ukraine-s-foreign-aid-needs-report-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 16:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Trump, 이란 전쟁 재개에 '서두를 필요 없다' — 유가는 '돌처럼 떨어지는 중'</div>
+    <div class="article-title-en">Trump Says 'No Rush' On Renewing Iran War, Oil Prices 'Dropping Like A Rock'</div>
+    <div class="article-keypoint">Trump '이란 군사 행동 서두르지 않겠다' — 유가 하락 압력 지속·에너지 리스크 프리미엄 완화</div>
+    <a class="article-link" href="https://www.zerohedge.com/energy/brent-wti-futs-tumble-trump-may-give-diplomacy-chance-iran-floats-two-day-hormuz-reopening" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 05:50 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">SpaceX·Starlink 사업 확장 — Boost Mobile 인수 추진과 통신 생태계 재편</span>
+    <span class="theme-label-range">Article #19~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">SpaceX, AT&T·T-Mobile·Verizon 경쟁 위해 Boost Mobile 인수 추진 보도</div>
+    <div class="article-title-en">SpaceX reportedly wants to buy Boost Mobile to compete with AT&T, T-Mobile, and Verizon</div>
+    <div class="article-keypoint">SpaceX, Boost Mobile 인수 추진 — 위성+지상 통신 결합으로 3대 이통사 직접 도전</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/02/spacex-reportedly-wants-to-buy-boost-mobile-to-compete-with-att-t-mobile-and-verizon/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 01:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Elon Musk, '지속 불가능하게 높은' 비용으로 Grok Bot 한도 축소</div>
+    <div class="article-title-en">Elon Musk throttles Grok Bot limits due to ‘unsustainably high’ costs</div>
+    <div class="article-keypoint">Grok Bot 비용 '지속 불가' 한도 축소 — AI 서비스 스케일과 수익성 간 긴장 현실화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/02/elon-musk-throttles-grok-bot-limits-due-to-unsustainably-high-costs/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 01:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">한국, 역대 최대 예산으로 '세계 최고 성능' 국산 AI 모델 개발 목표</div>
+    <div class="article-title-en">South Korea targets 'world's highest performance' sovereign AI model in record new budget</div>
+    <div class="article-keypoint">한국 2027년 예산 12.8% 증액·AI 반도체 21.3조 원 투자 — AI 주권 경쟁 국가 예산 레벨 격상</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/11/02/south-korea-ai-spending-budget.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 15:02 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Fed 연구논문: 서비스 수수료 민감도의 이질성 — ATM 수수료 사례 분석</div>
+    <div class="article-title-en">FEDS Paper: Heterogeneity in Service Fee Sensitivity: Evidence from ATM Surcharges</div>
+    <div class="article-keypoint">ATM 수수료 민감도 이질성 연구 — 금융 포용성 정책 설계에 미시적 근거 제공</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/heterogeneity-in-service-fee-sensitivity-evidence-from-atm-surcharges.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 00:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">OpenAI, ChatGPT의 Chat 탭과 Work 탭 통합 발표</div>
+    <div class="article-title-en">OpenAI is finally merging ChatGPT’s Chat and Work tabs</div>
+    <div class="article-keypoint">ChatGPT·Codex 풀 통합 — AI 플랫폼 사용 효율화 및 요금 구조 단순화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/02/openai-is-finally-merging-chatgpts-chat-and-work-tabs/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 22:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Trump 행정부, 임신 관련 고용 보호 규정 롤백 계획 추진</div>
+    <div class="article-title-en">Trump Administration Said to Plan Rolling Back Pregnancy-Related Job Protections</div>
+    <div class="article-keypoint">임신 관련 고용 보호 규정 롤백 추진 — 노동시장 규제 후퇴로 기업 비용 구조 변화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/11/02/business/economy/eeoc-trump-administration-pregnancy-fertility-abortion.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 05:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Hillman Solutions 실적, EPS 소폭 상회 — 매출은 추정치 하회</div>
+    <div class="article-title-en">Hillman Solutions earnings beat by $0.01, revenue fell short of estimates</div>
+    <div class="article-keypoint">Hillman Solutions, EPS 소폭 상회·매출 부진 — 산업재 수요 회복 강도 의구심 지속</div>
+    <a class="article-link" href="https://www.investing.com/news/earnings/hillman-solutions-earnings-beat-by-001-revenue-fell-short-of-estimates-4993036" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 22:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Nasdaq-100 레버리지 ETF에 강세 베팅한 투자자들, 저점 매수에서 손실</div>
+    <div class="article-title-en">Traders rushing into a leveraged ETF to make a bullish bet on the Nasdaq-100 just got burned</div>
+    <div class="article-keypoint">Nasdaq-100 레버리지 ETF 저점 매수 베팅 실패 — 기술주 변동성 속 타이밍 리스크 경고</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/traders-rushing-into-a-leveraged-etf-to-make-a-bullish-bet-on-the-nasdaq-100-just-got-burned-d6775191?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 07:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">유출 파일이 Acrisure 실적 발표 전 대출기관을 곤혹스럽게 만들다</div>
+    <div class="article-title-en">Leaked File Put Lenders in Bind Before Acrisure’s Earnings Win</div>
+    <div class="article-keypoint">Acrisure 내부 스프레드시트 유출 후 어닝 개선 — 정보 거버넌스 리스크와 신용 신뢰 충돌</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-02/leaked-file-put-lenders-in-bind-before-acrisure-s-earnings-win" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 06:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">스테이블코인에서 파운데이션으로 — Tether CEO, '어둠을 줄이기' 위한 Asimov식 비전 공개</div>
+    <div class="article-title-en">From Stablecoin To Foundation: Tether CEO Unveils Asimovian Vision To "Reduce The Darkness"</div>
+    <div class="article-keypoint">Tether CEO, Asimov 개념으로 스테이블코인을 문명 보존 인프라로 재포지셔닝</div>
+    <a class="article-link" href="https://www.zerohedge.com/crypto/stablecoin-foundation-tether-ceo-unveils-asimovian-vision-reduce-darkness" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 05:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Morning Risk Report: Binance, 역대 최대 크립토 해킹 피해 후 출금 재개</div>
+    <div class="article-title-en">The Morning Risk Report: Binance Resumes Withdrawals After Suffering Biggest-Ever Crypto Hack</div>
+    <div class="article-keypoint">Binance 역대 최대 크립토 해킹 후 출금 재개 — 거래소 보안 리스크 프리미엄 재부각</div>
+    <a class="article-link" href="https://www.wsj.com/risk-compliance-journal/the-morning-risk-report-binance-resumes-withdrawals-after-suffering-biggest-ever-crypto-hack-435c0f7e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/02 21:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">"전혀 용납 불가" — Trump, NYT 보도 후 전직 미국 검사의 $5,000만 Concord 계약 맹비난</div>
+    <div class="article-title-en">"Not Acceptable At All": Trump Blasts Former US Attorney's $50M Concord Deal After NYT Report</div>
+    
+    <a class="article-link" href="https://www.zerohedge.com/political/not-acceptable-all-trump-blasts-former-us-attorneys-50m-concord-deal-after-nyt-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/03 05:30 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
