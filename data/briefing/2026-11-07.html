@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-07 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/07 07:48 KST</div>
+    <div class="header-date">2026-11-07</div>
+    <div class="header-headline">중간선거 민주당 압승 — AI·데이터센터주 구조적 역풍 현실화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Anthropic IPO(추수감사절 전 목표) 강행 여부 — 테크 셀오프·AI 지출 둔화 속 밸류에이션 신뢰 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">중간선거 민주당 압승 — AI·데이터센터 규제 역풍과 시장 충격</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">이번 사이클에서 새롭게 부각된 점은 민주당의 의회 탈환이 단순한 정치 이벤트를 넘어 AI 인프라 투자에 대한 즉각적 시장 반응을 촉발했다는 것이다. 민주당 의원들이 AI·데이터센터 규제 강화를 공약으로 내세운 가운데, 글로벌 AI 주식이 중간선거 결과에 직접 반응하며 급락했고, Nvidia·AMD 등 반도체주는 '폭력적 매도'에 이은 제한적 반등에 그쳤다. Microsoft가 선거 후 Oracle과의 AI 임대 계약을 전격 해지하며 데이터센터 투자 위축의 첫 가시적 사례를 만들었고, 데이터센터 확장 제한이 오히려 AI 버블의 연착륙 안전판이 될 수 있다는 역설적 분석도 등장했다. Trump 측 경제 수석 Hassett은 선거 참패에도 경제 정책 기조 변화는 없다고 선언했으나, 관세 무용론과 맞물려 행정부 레임덕 우려가 가중되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Nvidia·Micron 반등 vs. AI 지출 둔화 — 반도체·AI 인프라 수요의 진짜 균열</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#12</span>
+    </div>
+    <div class="theme-summary">Nvidia·AMD 등 반도체주가 대규모 셀오프 이후 기술적 반등을 보였으나, 애널리스트들은 추가 변동성을 경고하며 반등의 지속성에 의문을 표하고 있다. Micron 주가는 역사적 저평가 구간에 진입했다는 평가와, 반도체 사이클 하강기에 실적 창출력 자체가 훼손될 수 있다는 반론이 온라인에서 격렬하게 충돌 중이다. Ramp의 기업 지출 데이터에 따르면 AI 사용량은 계속 늘고 있지만 실제 지출은 정체 상태로, 가격 인하와 비용 최적화가 AI 하이퍼그로스 전제를 흔들고 있다. Anthropic은 테크 셀오프가 한창인 가운데도 추수감사절 이전 IPO를 $1.5조 밸류에이션으로 강행할 의사를 밝혀, AI 플랫폼 자금조달 구조의 신뢰성 검증이 본격화되고 있다. AI 해킹 위협의 고도화(OpenAI 전직 직원 스파이 혐의, 사이버 공격 AI 활용 급증)도 AI 수익화 신뢰에 추가 균열 요인으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Tesla Cybertruck 생산 종료·SpaceX 인수 추진 — Musk 제국 전략 재편과 정치 베팅 충돌</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #13~#17</span>
+    </div>
+    <div class="theme-summary">Elon Musk가 Tesla Cybertruck 생산을 공식 종료하고 해당 텍사스 공장을 Cybercab(자율주행 택시) 생산으로 전환한다고 발표, 고가 전기 픽업트럭 프로젝트의 실패를 공식 인정했다. 동시에 SpaceX는 통신 대기업에 도전하기 위한 대형 인수를 추진 중이며, Musk는 직접 이 가능성을 열어뒀다. 러시아 안보위원회는 Starlink가 사회·정치 불안정화 도구로 활용될 수 있다고 경고하며 자국산 위성망(Rassvet) 긴급 확장을 촉구했고, 우크라이나 군 당국은 러시아가 이미 Rassvet을 군사 통신·드론 정밀 타격에 실전 투입하고 있다고 확인했다. Musk의 정치 베팅(공화당 최대 기부)이 민주당 압승으로 역풍을 맞은 가운데, 사업 전선에서도 Cybertruck 실패와 SpaceX 확장 도박이 교차하며 Musk 제국의 전략적 불확실성이 최고조에 달하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Fed 긴축 경로 재점화 — 고용 안정 속 추가 인상 압력과 정책 거버넌스 변수</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#20</span>
+    </div>
+    <div class="theme-summary">안정적인 노동시장 지표가 Fed의 점진적 금리 인상 경로를 뒷받침하는 가운데, San Francisco Fed 총재 Daly는 인플레이션 억제를 위해 추가 금리 인상이 필요하다고 재차 강조했다. Fed는 지난 주 회의에서 금리를 동결했지만 12월 인상 가능성은 시장에서 여전히 높게 반영되고 있으며, 이는 비트코인 등 위험자산의 주간 손실로도 연결됐다. 중간선거 이후 규제 환경 변화와 맞물려 채권시장은 관망 모드를 유지하고 있으며, AI 인프라 투자 위축이 실물 경기에 미칠 파급 효과가 Fed의 다음 판단 변수로 떠오르고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">이란 핵 긴장 고조 — 요오드 정제 배포와 Trump '준비 완료' 발언의 충돌</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#24</span>
+    </div>
+    <div class="theme-summary">이란이 자국민에게 핵 생존 지침과 함께 요오드 정제를 배포하기 시작한 가운데, Trump 대통령은 이란 'Pickaxe Mountain' 시설을 겨냥해 '준비 완료(Locked and Loaded)' 발언을 하며 군사 옵션을 공개적으로 경고했다. 이는 최근 이란이 핵협상을 지연시키면서 우라늄 농축을 가속화하고 있다는 정보 평가와 맞물려 호르무즈 해협 인근 긴장을 급격히 고조시키고 있다. Bessent 재무장관과 Greer 무역대표부 대표는 중국 측에 미중 무역 합의 이행을 강력히 촉구하는 한편, 대이란 경제 압박 강화 의지도 재확인해 복합 지정학 리스크가 에너지 시장 프리미엄을 자극하고 있다. Goldman Sachs의 연방대법원 파산-중재 소송, 미국 핵 연료 공급망 병목 등 금융·에너지 구조적 취약성도 동시에 부각되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #25~#30</span>
+    </div>
+    <div class="theme-summary">AI의 개발도상국 정부 활용 가능성, AI 식민주의 우려, 독일 대통령 후보 지명, AI 법적 책임(ChatGPT 소송), 우크라이나 내부 반역 수사, 플로리다 CAIR 운영 중단 등 다양한 주변부 이슈들이 오늘 뉴스 흐름에 산재했다. 이 중 AI 사이버 해킹 위협 고도화와 우크라이나 내부 균열(전 대변인 반역 수사 개시)은 각각 AI 보안 리스크와 전쟁 지속 여부에 미칠 간접 변수로 주목할 만하다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">중간선거 민주당 압승 — AI·데이터센터 규제 역풍과 시장 충격</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Microsoft, Oracle AI 임대 계약 전격 해지 — 선거 후 데이터센터 투자 위축 현실화</div>
+    <div class="article-title-en">Microsoft Pulls The Plug On Oracle AI Rental As Post-Election Data Center Fallout Spreads</div>
+    <div class="article-keypoint">Microsoft, 선거 후 Oracle AI 임대 계약 전격 해지 — 데이터센터 투자 위축 첫 가시화</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/microsoft-pulls-plug-oracle-ai-rental-post-election-data-center-fallout-spreads" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 05:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">미국 중간선거 결과에 글로벌 AI 주식 반응</div>
+    <div class="article-title-en">Global AI Stocks React to U.S. Midterm Results</div>
+    <div class="article-keypoint">민주당 압승 후 글로벌 AI 주식 급락 — 데이터센터 규제 공약이 시장 직격탄</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/11/06/ai-stock-market-us-midterms-democrats-data-centers-regulation/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 06:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">미국 증시, AI 공포발 3.2조 달러 폭락 후 미약한 반등</div>
+    <div class="article-title-en">US stocks stage tepid recovery after $3.2tn rout fuelled by AI fears </div>
+    <div class="article-keypoint">AI 공포발 $3.2조 셀오프 후 미국 증시 소폭 반등 — 역사적 회복 강도엔 크게 못 미쳐</div>
+    <a class="article-link" href="https://www.ft.com/content/088ed252-ea9c-4b61-b2d1-37295fd0f7c2?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">데이터센터 투자 위축, AI 버블로부터 실물 경제 보호할 수도</div>
+    <div class="article-title-en">Data-Center Pullback May Shield Real Economy From AI Bubble</div>
+    <div class="article-keypoint">민주당 집권 주의 데이터센터 확장 제한 — AI 버블 연착륙 안전판 역할 가능성</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-11-06/data-center-pullback-may-shield-real-economy-from-ai-bubble" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Hassett, 선거 참패 이후에도 경제 정책 기조 변화 없다고 밝혀</div>
+    <div class="article-title-en">Hassett Says No Economic Policy Shift Even After Election Rout</div>
+    <div class="article-keypoint">Hassett, 선거 참패에도 경제 정책 기조 불변 선언 — 트럼프 행정부 레임덕 우려 대응</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-06/hassett-says-no-economic-policy-shift-even-after-election-rout" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 00:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">트럼프가 세계에 가르쳐 준 것 — 관세는 무용하다</div>
+    <div class="article-title-en">Trump has taught the world that tariffs are useless</div>
+    <div class="article-keypoint">관세 무용론 현실화 — 공화당 중간선거 참패가 보호무역주의 정치·경제적 비용 입증</div>
+    <a class="article-link" href="https://www.ft.com/content/aab95234-0b9a-4b95-b1e5-d932669076d5?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 20:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Nvidia·Micron 반등 vs. AI 지출 둔화 — 반도체·AI 인프라 수요의 진짜 균열</span>
+    <span class="theme-label-range">Article #7~#12</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Nvidia·AMD 등 반도체주 반등 — '폭력적' 셀오프의 일시적 안도인가, 구조적 반전인가?</div>
+    <div class="article-title-en">Nvidia, AMD and other chip stocks rebound — but is relief from the ‘violent’ selloff only temporary?</div>
+    <div class="article-keypoint">반도체주 기술적 반등 — 그러나 AI 규제 역풍·수요 둔화로 추가 변동성 경고 지속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidia-amd-and-other-chip-stocks-rebound-is-the-violent-ai-selloff-over-8f7df533?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 06:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Micron 주가 역사적 저평가 — 온라인 격렬 논쟁 불러일으켜</div>
+    <div class="article-title-en">Micron’s stock is dirt cheap — and that’s igniting a fierce online debate</div>
+    <div class="article-keypoint">Micron 역사적 저평가 vs. 반도체 실적 하강 위험 — 사이클 판단 갈림길</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/microns-stock-is-dirt-cheap-and-thats-igniting-a-fierce-online-debate-0626791d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 05:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">OpenAI 전직 직원 스파이 혐의, 불인정 답변</div>
+    <div class="article-title-en">Ex-OpenAI employee accused of spying pleads not guilty</div>
+    <div class="article-keypoint">OpenAI 전직 직원 스파이 혐의 불인정 — AI 보안 취약성·내부 위협 리스크 현실화</div>
+    <a class="article-link" href="https://www.ft.com/content/daee9cd2-3477-4fcc-859f-46acb9fdfbd9?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 05:47 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Ramp 데이터, AI 지출 정체 시사 — Anthropic IPO 임박 속 우려 확산</div>
+    <div class="article-title-en">Ramp data shows AI spending stalling just as Anthropic nears its IPO</div>
+    <div class="article-keypoint">AI 지출은 정체, 사용량만 증가 — Anthropic IPO 앞두고 하이퍼그로스 가정에 균열</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/06/ramp-data-shows-ai-spending-stalling-just-as-anthropic-nears-its-ipo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 00:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Anthropic, $1.5조 밸류에이션 목표로 IPO 강행 추진</div>
+    <div class="article-title-en">Anthropic to press ahead with IPO targeting $1.5tn valuation</div>
+    <div class="article-keypoint">Anthropic, 테크 셀오프 무릅쓰고 $1.5조 밸류 IPO 추수감사절 전 강행 의지</div>
+    <a class="article-link" href="https://www.ft.com/content/314e17df-e7af-4814-b208-70a0557cb452?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">모닝 리스크 리포트: 해커들의 AI 활용 고도화로 기업 사이버 보안 위협 심화</div>
+    <div class="article-title-en">The Morning Risk Report: Companies Face Cyber Pain as Hackers Press AI Advantage</div>
+    <div class="article-keypoint">AI 활용 사이버 공격 급증 — 기업 사이버 방어 비용 상승 압력 가속화</div>
+    <a class="article-link" href="https://www.wsj.com/risk-compliance-journal/the-morning-risk-report-companies-face-cyber-pain-as-hackers-press-ai-advantage-706c84b7?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 20:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Tesla Cybertruck 생산 종료·SpaceX 인수 추진 — Musk 제국 전략 재편과 정치 베팅 충돌</span>
+    <span class="theme-label-range">Article #13~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Elon Musk, SpaceX 대형 인수 가능성 열어둬</div>
+    <div class="article-title-en">Elon Musk opens the door for a big SpaceX acquisition</div>
+    <div class="article-keypoint">SpaceX, 통신 대기업 도전 위한 대형 인수 추진 — Musk 제국 사업 재편 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/elon-musk-opens-the-door-for-a-big-spacex-acquisition-4f62bcad?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 06:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Tesla, Cybertruck 생산 종료 — Musk, 로보틱스·AI에 집중하기로</div>
+    <div class="article-title-en">Tesla to wind down Cybertruck production as Elon Musk focuses on robotics and AI</div>
+    <div class="article-keypoint">Tesla Cybertruck 생산 종료 — 텍사스 공장 Cybercab 전환, Musk 로보틱스·AI 집중 선언</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/nov/06/tesla-to-wind-down-cybertruck-production-as-elon-musk-focuses-on-robotics-and-ai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 21:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">러시아 안보위, Elon Musk의 Starlink에 대응한 자국 위성망 긴급 확장 촉구</div>
+    <div class="article-title-en">Russia must swiftly expand its answer to Elon Musk's Starlink satellites, security council says</div>
+    <div class="article-keypoint">러시아 안보위, Starlink 대항 자국 위성망 긴급 확장 촉구 — 우주 통신 패권 경쟁 가속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/russian-security-council-says-starlinkoneweb-satellite-services-pose-risk-to-sovereign-countries-ria" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 21:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">러시아, 자체 Starlink 대항 위성망을 우크라이나 군사 통신에 실전 투입 중 — 우크라이나 발표</div>
+    <div class="article-title-en">Russia using own version of Starlink for military comms over Ukraine, Kyiv says</div>
+    <div class="article-keypoint">러시아 Rassvet, 우크라이나 전선 군사 통신·드론 정밀화에 실전 투입 확인</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/russia-using-own-version-of-starlink-for-military-comms-over-ukraine-kyiv-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 23:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Musk, 고비용 애완 프로젝트 Cybertruck 단종 결정</div>
+    <div class="article-title-en">Cybertruck’s run comes to an end as Musk kills off pricey pet project</div>
+    <div class="article-keypoint">Cybertruck 판매 부진·리콜로 단종 확정 — Musk, 고가 전기픽업 실패 공식 인정</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/is-it-the-end-of-the-cybertruck-elon-musk-announces-factory-will-shift-production-3e33cafd?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 03:54 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Fed 긴축 경로 재점화 — 고용 안정 속 추가 인상 압력과 정책 거버넌스 변수</span>
+    <span class="theme-label-range">Article #18~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">안정적 노동시장, Fed의 점진적 금리 인상 경로 뒷받침</div>
+    <div class="article-title-en">Stable Labor Market Keeps Fed on Track to Raise Rates Gradually</div>
+    <div class="article-keypoint">Fed 12월 인상 가능성 유지 — 고용 안정이 긴축 경로 이탈 차단하는 핵심 변수</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/11/06/business/economy/stable-labor-market-to-keep-fed-on-track-to-raise-rates-gradually.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 22:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">비트코인, 중간선거 후 규제 불확실성·고용지표에 주간 손실 기록</div>
+    <div class="article-title-en">Bitcoin set for weekly loss on post-midterms regulatory uncertainty, jobs report</div>
+    <div class="article-keypoint">비트코인 주간 손실 — 중간선거 규제 불확실성·고용 호조 따른 Fed 긴축 압력 교차</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-slips-to-75k-as-us-regulatory-uncertainty-grows-5006596" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 22:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Fed Daly 총재, 인플레 억제 위해 추가 금리 인상 필요하다고 밝혀</div>
+    <div class="article-title-en">Fed’s Daly Says More Rate Hikes Likely Needed to Tame Prices</div>
+    <div class="article-keypoint">Fed Daly, 추가 금리 인상 필요성 재확인 — 인플레 억제까지 긴축 기조 유지 시사</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-06/fed-s-daly-says-more-rate-increases-likely-needed-to-tame-prices" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 03:24 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">이란 핵 긴장 고조 — 요오드 정제 배포와 Trump '준비 완료' 발언의 충돌</span>
+    <span class="theme-label-range">Article #21~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Bessent·Greer, 중국의 미중 무역 합의 이행 미흡에 우려 표명</div>
+    <div class="article-title-en">Bessent, Greer Raise Concerns on China Trade Deal Compliance</div>
+    <div class="article-keypoint">Bessent·Greer, 미중 무역 합의 이행 압박 — 대중 견제와 대이란 복합 경제 압박 동시 가동</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-06/bessent-greer-raise-concerns-on-china-trade-deal-actions" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 02:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">미국 핵 에너지 부활, 연료 공급망 한계에 부딪혀</div>
+    <div class="article-title-en">America’s Nuclear Revival Is Running Into a Fuel Supply Wall</div>
+    <div class="article-keypoint">미국 핵 발전 용량 세계 최대이나 연료 공급망 병목 — AI 전력 수요 급증 속 구조적 위기</div>
+    <a class="article-link" href="https://oilprice.com/Alternative-Energy/Nuclear-Power/Americas-Nuclear-Revival-Is-Running-Into-a-Fuel-Supply-Wall.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">미 연방대법원, Goldman Sachs의 파산 중재 청구 심리 수용</div>
+    <div class="article-title-en">Supreme Court to Hear Goldman Sachs’ Bankruptcy Arbitration Bid</div>
+    <div class="article-keypoint">Goldman Sachs, 파산법원의 중재 합의 무효화 권한 연방대법원에 심리 청구</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-06/supreme-court-to-hear-goldman-sachs-bankruptcy-arbitration-bid" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 04:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">이란, 요오드 정제 배포 — Trump, 'Pickaxe Mountain' 겨냥 군사 경고</div>
+    <div class="article-title-en">Iran Reportedly Hands Out Iodine Tablets As Trump Locks Crosshairs On Pickaxe Mountain</div>
+    <div class="article-keypoint">이란, 요오드 정제 배포·핵 생존 지침 — Trump '준비 완료' 경고와 충돌하며 충돌 위험 고조</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/trump-says-us-locked-and-loaded-renewed-strikes-against-iran" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 03:44 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #25~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">AI, 정부가 시민을 돕는 도구가 될 수 있다</div>
+    <div class="article-title-en">AI Can Help Governments Help Citizens</div>
+    <div class="article-keypoint">AI, 개도국 정부 서비스 혁신 도구로 부상 — 프론티어 리스크보다 포용적 활용 논쟁</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/low-middle-income-countries-must-build-ai-capacity-to-help-citizens-by-kalpana-kochhar-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 21:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">AI 식민주의는 막을 수 있는가?</div>
+    <div class="article-title-en">Can AI Colonialism Be Prevented?</div>
+    <div class="article-keypoint">AI 식민주의 경고 — 중견국 연대 없이는 AI 혁명이 디지털 종속 재생산 우려</div>
+    <a class="article-link" href="https://www.project-syndicate.org/onpoint/middle-powers-must-build-their-own-ai-stack-to-avoid-ai-imperialism-by-jayant-sinha-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/06 18:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">기후 시위대, 암스테르담 Microsoft 데이터센터 공사장 점거 — 'AI 반대' 구호 외쳐</div>
+    <div class="article-title-en">Climate Rioters Storm Microsoft Data Center Site In Amsterdam, Chant "Free Palestine" & "F**k AI" </div>
+    <div class="article-keypoint">암스테르담 Microsoft 데이터센터 공사장 기후 활동가 점거 — AI 인프라 사회적 저항 가시화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/climate-rioters-storm-microsoft-data-center-site-amsterdam-chant-free-palestine-fk-ai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 02:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Merz 측, 전 장관 Ilse Aigner를 독일 대통령 후보로 지지 — 보도</div>
+    <div class="article-title-en">Merz's party backs former minister Ilse Aigner for German president, media reports say</div>
+    <div class="article-keypoint">독일 CDU, Ilse Aigner를 대통령 후보 지지 — Merz 연립 내부 긴장 완화 신호</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/merzs-party-backs-former-minister-ilse-aigner-for-german-president-media-reports-say" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 02:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">CAIR, DeSantis 행정부의 테러 단체 지정 발효 후 플로리다 운영 전면 중단</div>
+    <div class="article-title-en">CAIR Shuts Down Florida Operations After DeSantis Administration's Terror Designation Takes Effect</div>
+    <div class="article-keypoint">플로리다 CAIR, DeSantis의 테러 지정 발효로 운영 전면 중단</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/cair-shuts-down-florida-operations-after-desantis-administrations-terror-designation" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 05:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">우크라이나 검찰총장실, Zelensky 전 대변인에 반역 혐의 수사 개시</div>
+    <div class="article-title-en">Ukraine's Prosecutor General's Office Initiates Treason Protocols Against Zelensky's Former Press Secretary</div>
+    <div class="article-keypoint">우크라이나 전 대통령 대변인 반역 혐의 수사 개시 — 내부 균열 신호</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/ukraines-prosecutor-generals-office-initiates-treason-protocols-against-zelenskys" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/07 03:40 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
