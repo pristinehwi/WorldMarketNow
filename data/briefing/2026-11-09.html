@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-09 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/09 07:48 KST</div>
+    <div class="header-date">2026-11-09</div>
+    <div class="header-headline">Jensen Huang 불륜·중국 스파이 의혹 — Nvidia 거버넌스 위기</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Nvidia 이사회 독립조사 결과 및 반도체 수출통제 허점 추가 폭로 여부 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Jensen Huang 스파이 스캔들 — Nvidia CEO 리스크와 반도체 수출통제 허점 동시 폭발</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Nvidia CEO Jensen Huang이 중국 정보기관과 연루된 것으로 의심받는 여성과 불륜 관계였음을 직접 인정하고 임직원에게 사과 서한을 발송했다는 것이다. Nvidia 이사회는 독립 조사를 개시했으며, Huang은 현 직책을 유지한 채 조사에 협력할 방침이다. 동시에 미국 상무부가 제재 대상 기업과 연계된 중국 업체들에 Nvidia H200 칩 반입을 승인해 왔다는 사실이 별도로 드러나, 수출통제 집행의 구조적 허점이 함께 조명됐다. 두 사안이 겹치면서 미중 기술패권 갈등의 새로운 균열이 가시화되고, 반도체 섹터 거버넌스·규제 리스크가 동시에 부상하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">중동 지정학 — 후티 리야드 금융지구 타격과 Aramco 스카이라인 피격</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#10</span>
+    </div>
+    <div class="theme-summary">예멘 후티 반군이 사우디아라비아 리야드 금융 중심지를 공격해 Saudi Aramco 타워를 포함한 랜드마크 건물이 피해를 입었다. 이는 약 한 달 전 리야드 공항 타격에 이은 연속 공세로, 사우디 금융허브를 겨냥한 패턴이 뚜렷해지고 있다. 에너지 인프라가 아닌 금융 중심지로의 타격 확대는 유가 프리미엄 및 걸프 지역 투자심리에 추가 부담 요인이다. 자포리자 원전이 외부 전력 공급 차단으로 비상발전에 의존하는 상황도 에너지 공급망 취약성을 동시에 부각시키고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI·기술주 셀오프 — 고용 지표 선방에도 주가 동조 급락과 AI 수익화 신뢰 균열</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#15</span>
+    </div>
+    <div class="theme-summary">미국 증시가 오랜만에 종목 간 동조화를 회복했지만, 하필 1년 이상 만의 최대 급락 국면과 맞물렸다. AI 관련 화이트칼라 고용은 전문직 서비스 부문 7만 명 증가로 아직 대규모 대체 신호가 없으나, 한 이코노미스트는 이를 '헤드 페이크'로 경고했다. BYD의 IP 침해 소송과 SpaceX 이사회를 둘러싼 Sequoia 내부 갈등 등 기술 섹터 거버넌스 이슈도 겹치며 투자심리를 압박하고 있다. HBM 메모리 병목 해소 여부는 AI 인프라 수요 지속성의 핵심 변수로 주목된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">민주당 압승 후폭풍 — 크립토 규제 역풍과 트럼프 측근 권력 생태계 흔들림</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #16~#20</span>
+    </div>
+    <div class="theme-summary">중간선거 민주당 압승 이후 크립토 시장이 2개월 최저치로 급락하며 직격탄을 맞았고, 민주당은 트럼프 가문의 크립토 사업에 대한 조사를 예고했다. 트럼프 측근 Laura Loomer가 접근권 대가로 현금을 받았다는 내부 증언이 추가 등장하며 트럼프 측 비공식 권력 구조에 대한 의혹이 증폭됐다. 법무장관 Todd Blanche는 조사를 추진하는 민주당 의원들에 대한 기소 가능성을 배제하지 않겠다고 밝혀 정치·사법 긴장이 고조되고 있다. 이스라엘 선거에서 Netanyahu 경쟁자 Eisenkot이 광범위 연립 구성을 모색하지만 경로는 불투명하다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">비전통 금융·사이버 리스크 — 천연가스 숏 과밀과 해킹 위협 동시 고조</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#24</span>
+    </div>
+    <div class="theme-summary">헤지펀드의 미국 천연가스 선물 순매도 포지션이 사상 최대 수준까지 쌓인 가운데, 다음 주 한파 가능성이 대규모 숏 스퀴즈 촉매로 부상하고 있다. AI가 IT 시스템 취약점을 증폭시키는 환경에서 대규모 해킹과 가상 핵경보 등 사이버 위협이 일상화될 수 있다는 전문가 경고가 나왔다. 사이버보안 VC 시장도 활성화되는 가운데, 전직 비밀경호국 요원 출신이 약 2억5000만 달러 규모 2호 펀드를 준비 중이다. 뉴질랜드 집권 국민당의 선거 우위 확보로 NZD가 소폭 강세를 보이는 등 선진국 소규모 개방 경제의 정치 리스크도 부분적으로 가격에 반영되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #25~#30</span>
+    </div>
+    <div class="theme-summary">이번 묶음에는 금융·지정학·산업 테마와 직접 연관성이 낮은 기사들이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Jensen Huang 스파이 스캔들 — Nvidia CEO 리스크와 반도체 수출통제 허점 동시 폭발</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Nvidia, CEO Jensen Huang이 외국 정보기관의 표적이었다는 보도 후 조사 착수</div>
+    <div class="article-title-en">Nvidia opens investigation after report CEO Jensen Huang was target of foreign intelligence</div>
+    <div class="article-keypoint">Nvidia CEO 중국 스파이 연루 의혹 — 이사회 독립조사 개시, 반도체 거버넌스 리스크 부각</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/nov/08/nvidia-jensen-huang-investigation" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">미국, 빈 사무실과 제재 연계 의혹 중국 기업들에 Nvidia 칩 반입 승인</div>
+    <div class="article-title-en">U.S. Cleared Nvidia Chips to Chinese Firms With Empty Offices and Troubling Ties</div>
+    <div class="article-keypoint">상무부, 제재 연계 중국 기업에 H200 칩 승인 — 수출통제 집행 허점 구조적으로 노출</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/11/07/business/economy/nvidia-chips-chinese-firms.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 06:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">'나는 부족했다': Nvidia 직원들에게 보낸 Jensen Huang의 불륜 사과 서한 전문</div>
+    <div class="article-title-en">‘I have fallen short’: Read Jensen Huang’s letter to Nvidia about his affair </div>
+    <div class="article-keypoint">Huang, 불륜 사과 서한 발송 — CEO 리스크 현실화, Nvidia 주가·신뢰도 압박 가속</div>
+    <a class="article-link" href="https://www.washingtonpost.com/technology/2026/11/08/read-jensen-huangs-letter-nvidia-about-his-affair-with-suspected-chinese-spy/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 07:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Nvidia 이사회, CEO가 중국 스파이 혐의자와 불륜 후 스파이 표적 보도 조사</div>
+    <div class="article-title-en">Nvidia’s Board Investigates Reports That CEO Was Spying Target After Affair</div>
+    <div class="article-keypoint">Nvidia 이사회 조사 착수, Huang 직위 유지 — 단기 경영 연속성 확보 vs. 장기 평판 리스크 상존</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/nvidias-board-to-investigate-reports-that-jensen-huang-was-spying-target-c630325e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 07:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Nvidia 이사회, CEO Jensen Huang과 스파이 의혹 여성의 관계 조사 착수 — 알아야 할 것들</div>
+    <div class="article-title-en">Nvidia’s board will probe CEO Jensen Huang’s relationship with an alleged spy. Here’s what to know.</div>
+    <div class="article-keypoint">Huang, 직책 유지·조사 협력 선언 — '오늘 뉴스가 Nvidia를 늦추지 않는다' 공식 입장</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidias-board-will-probe-ceo-jensen-huangs-relationship-with-an-alleged-spy-heres-what-to-know-86656cd9?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 06:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Nvidia Huang, 중국 스파이 관계 의혹 후 불륜 인정</div>
+    <div class="article-title-en">Nvidia’s Huang admits to affair after allegations of relationship with Chinese spy</div>
+    <div class="article-keypoint">Huang 불륜 공식 인정 — 중국 스파이 접점 의혹과 맞물려 미중 기술전쟁 새 뇌관</div>
+    <a class="article-link" href="https://www.ft.com/content/1397e2f4-d7f5-4cbb-a4d9-04ecf661d1aa?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 07:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Nvidia 이사회, 중국 스파이 의심 여성과의 관계로 CEO 조사 착수</div>
+    <div class="article-title-en">Nvidia board to investigate CEO over relationship with suspected Chinese spy</div>
+    <div class="article-keypoint">Nvidia CEO 스파이 의혹 — 불륜 인정 후 이사회 조사, 반도체 섹터 리더십 리스크 현실화</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/11/08/nvidia-opens-investigation-into-ceo-over-relationship-with-suspected-chinese-spy/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 05:58 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">중동 지정학 — 후티 리야드 금융지구 타격과 Aramco 스카이라인 피격</span>
+    <span class="theme-label-range">Article #8~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">자포리자 원전, 외부 전력 공급 차단으로 또다시 비상발전에 의존</div>
+    <div class="article-title-en">Zaporizhzhia nuclear plant relying on generators again after losing external power supply</div>
+    <div class="article-keypoint">자포리자 원전, 외부 전력 차단으로 비상발전 재가동 — 유럽 에너지 안보 취약성 재부각</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zaporizhzhia-nuclear-plant-loses-external-power-supply-russian-installed-management-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 17:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">예멘 후티, 리야드 금융지구 공격 주장 — Aramco 타워 피해</div>
+    <div class="article-title-en">Yemen's Houthis claim attack on Riyadh financial district, Aramco skyscraper damaged</div>
+    <div class="article-keypoint">후티, 리야드 금융지구 Aramco 타워 타격 — 에너지 인프라 넘어 금융허브로 공세 확대</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/11/08/saudi-capital-s-financial-district-targeted-in-attack-aramco-skyscraper-damaged_6774880_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 20:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Saudi Aramco 타워, 리야드 금융허브 대상 이례적 공격으로 피해</div>
+    <div class="article-title-en">Saudi Aramco Tower Targeted in Rare Strike on Riyadh Finance Hub</div>
+    <div class="article-keypoint">후티, Aramco 타워 직격 — 리야드 공항 타격 한 달 만에 금융허브로 공세 범위 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-08/saudi-aramco-tower-targeted-in-rare-strike-on-riyadh-finance-hub" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 02:15 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI·기술주 셀오프 — 고용 지표 선방에도 주가 동조 급락과 AI 수익화 신뢰 균열</span>
+    <span class="theme-label-range">Article #11~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Sequoia 파트너들, Roelof Botha의 SpaceX 이사회 합류에 사전 통보 못 받아</div>
+    <div class="article-title-en">Sequoia partners reportedly blindsided when Roelof Botha joined SpaceX board</div>
+    <div class="article-keypoint">Sequoia 파트너들, Botha의 SpaceX 이사회 합류에 사전 통보 없어 — 대형 VC 거버넌스 균열</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/08/sequoia-partners-reportedly-blindsided-when-roelof-botha-joined-spacex-board/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 04:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">오랜만에 동반 움직임 보이는 주식시장 — 단 하락 국면에서의 동조화라는 문제</div>
+    <div class="article-title-en">Stocks are moving in sync again for the first time in a while. There’s just one problem.</div>
+    <div class="article-keypoint">미국 증시 1년여 만에 최대 급락과 종목 동조화 동시 발생 — 하락 압력 광범위 확산 신호</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/stocks-are-moving-in-sync-again-for-the-first-time-in-a-while-theres-just-one-problem-c953bf72?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">중국 자동차 BYD 네덜란드 사무소, JLR '카피캣 차량' 주장으로 압수수색</div>
+    <div class="article-title-en">Chinese carmaker BYD’s offices in Netherlands raided over JLR ‘copycat car’ claim</div>
+    <div class="article-keypoint">JLR, BYD 네덜란드 사무소 압수수색 — 중국 전기차의 IP 침해 법적 대응 본격화</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/nov/08/chinese-carmaker-byd-offices-raided-netherlands-land-rover-copycat-claim" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 01:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">AI가 화이트칼라 일자리를 빼앗고 있나? 최신 고용 보고서는 '아직은 아니다'</div>
+    <div class="article-title-en">Is AI taking white-collar jobs? Latest hiring report suggests not yet.</div>
+    <div class="article-keypoint">AI 확산에도 전문직 고용 7만 명 증가 — 단기 대체 효과 미미하나 '헤드 페이크' 경고</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/11/07/white-collar-hiring-jumps-october-complicating-ai-story/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">HBM이 메모리 병목의 해법이 될 수 있을까?</div>
+    <div class="article-title-en">Could HBF be the solution to the Memory bottleneck?</div>
+    <div class="article-keypoint">HBM 메모리 병목 해소 여부 — AI 인프라 확장 지속성의 핵심 하드웨어 변수</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/could-hbf-be-the-solution-to-the-memory-bottleneck-5010334" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 22:10 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">민주당 압승 후폭풍 — 크립토 규제 역풍과 트럼프 측근 권력 생태계 흔들림</span>
+    <span class="theme-label-range">Article #16~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Netanyahu 경쟁자 Eisenkot, '광범위 연립' 모색하지만 집권 경로는 불투명</div>
+    <div class="article-title-en">Netanyahu rival Eisenkot seeks ‘wide’ government but path to power uncertain</div>
+    <div class="article-keypoint">이스라엘 Eisenkot, 광범위 연립 모색 — Netanyahu 이후 정치 지형 재편 가능성 불투명</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/middle-east/netanyahu-rival-eisenkot-seeks-wide-government-but-path-to-power-uncertain" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 02:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">'내가 직접 Laura Loomer에게 돈을 줬다': 두 번째 내부 인사, 현금이 Trump 접근권을 샀다고 증언</div>
+    <div class="article-title-en">"I Personally Paid Laura Loomer": Second Insider Says Cash Bought Access To Trump - And She Still Talks To Him Daily</div>
+    <div class="article-keypoint">트럼프 측근 Laura Loomer 현금 접근권 거래 추가 증언 — 비공식 권력 구조 의혹 증폭</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/i-personally-paid-laura-loomer-second-insider-says-cash-bought-access-trump-and-she-still" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 04:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">미국 중간선거 이후 크립토, 2개월 만의 최저치로 급락</div>
+    <div class="article-title-en">Cryptocurrencies slide to two-month lows after US midterms</div>
+    <div class="article-keypoint">민주당 압승 직후 크립토 2개월 최저치 급락 — 규제 강화 우려 가격 반영 가속</div>
+    <a class="article-link" href="https://www.investing.com/news/forex-news/cryptocurrencies-slide-to-twomonth-lows-after-us-midterms-5010335" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 22:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">크립토 업계, Trump 연루 의혹 청산 압박에 긴장 — 민주당, 대선 후 조사 예고</div>
+    <div class="article-title-en">Crypto industry braces for reckoning over Trump ties</div>
+    <div class="article-keypoint">민주당, 트럼프 가문 크립토 사업 조사 예고 — 디지털자산 규제 리스크 급격히 상승</div>
+    <a class="article-link" href="https://www.ft.com/content/f1b98a61-4103-447c-bb9a-3dccc0819f61?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 14:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Blanche, Trump 관리 조사 계획 민주당 의원 기소 가능성 배제 안 해</div>
+    <div class="article-title-en">Blanche Won't Rule Out Prosecuting Democrats Who Plan To Investigate Trump Officials</div>
+    <div class="article-keypoint">법무장관 Blanche, 민주당 의원 기소 가능성 배제 안 해 — 정치·사법 긴장 고조</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/blanche-wont-rule-out-prosecuting-democrats-who-plan-investigate-trump-officials" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 07:25 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">비전통 금융·사이버 리스크 — 천연가스 숏 과밀과 해킹 위협 동시 고조</span>
+    <span class="theme-label-range">Article #21~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">해커를 체포했다가 18개월간 무고 누명 싸운 그가, 이제 사이버보안 VC로</div>
+    <div class="article-title-en">He arrested a hacker, then spent 18 months clearing his own name. Now he’s a cybersecurity VC.</div>
+    <div class="article-keypoint">전직 Secret Service 요원, 사이버보안 VC 2호 펀드 약 $250M 준비 — 보안 투자 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/08/the-ex-secret-service-agent-who-flipped-a-hacker-is-now-raising-a-second-250m-cybersecurity-fund/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 02:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">뜨거운 냉장고·가짜 핵경보·60억 달러 해킹: 우리는 해킹 전염병의 초입에 있나?</div>
+    <div class="article-title-en">Hot fridges, a fake nuclear alert and a $6bn heist: are we in the foothills of a hacking epidemic?</div>
+    <div class="article-keypoint">AI가 IT 취약점 증폭, 사이버 해킹 일상화 경고 — 보안 인프라 투자 필요성 재부각</div>
+    <a class="article-link" href="https://www.theguardian.com/news/ng-interactive/2026/nov/08/hot-fridges-a-fake-nuclear-alert-and-a-6bn-heist-are-we-in-the-foothills-of-a-hacking-epidemic" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 15:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">한파 한 번이면 헤지펀드의 사상 최대 미국 천연가스 숏을 불태울 수 있을까</div>
+    <div class="article-title-en">Could One Big Cold Snap Torch Hedge Funds' Record US NatGas Shorts</div>
+    <div class="article-keypoint">헤지펀드 천연가스 사상 최대 순매도 — 한파 도래 시 숏 스퀴즈 리스크 임박</div>
+    <a class="article-link" href="https://www.zerohedge.com/weather/could-one-big-cold-snap-torch-hedge-funds-record-us-natgas-shorts" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">뉴질랜드 달러 강세 — 집권 국민당이 선거 우위 확보</div>
+    <div class="article-title-en">New Zealand Dollar Advances as Ruling Party Gets Election Edge</div>
+    <div class="article-keypoint">뉴질랜드 국민당 선거 우위 — NZD 소폭 강세, 정치 안정 기대 반영</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-08/new-zealand-dollar-advances-as-ruling-party-gets-election-edge" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 07:07 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #25~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">1월6일 사면 피고인, 연방판사 협박 혐의로 재기소</div>
+    <div class="article-title-en">Pardoned Jan. 6 Defendant Charged With Threatening Federal Judges</div>
+    <div class="article-keypoint">1월6일 사면 피고인, 연방판사 협박 혐의 재기소 — 사법 독립성 침해 우려 재점화</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/pardoned-jan-6-defendant-charged-threatening-federal-judges" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 06:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">GCSE 과목 조기 도입, 학교를 '조기 입시 공장'으로 만들 위험 — Powell 경고</div>
+    <div class="article-title-en">Teaching GCSE topics younger risks turning schools into ‘early exam factories’, Powell warns</div>
+    <div class="article-keypoint">Powell 교육장관, 중학교 GCSE 조기 도입 비판 — 정책 무관 기사</div>
+    <a class="article-link" href="https://www.theguardian.com/education/2026/nov/08/gcses-teaching-england-curriculum-education-secretary-lucy-powell" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 03:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Russell Brand 사건, 미디어 여성 보호 경각심의 계기 돼야 — Lisa Nandy</div>
+    <div class="article-title-en">Russell Brand case must be wake-up call to protect women in media, Lisa Nandy says</div>
+    <div class="article-keypoint">Russell Brand 사건, 미디어 업계 여성 착취 경각심 — 금융·지정학 무관 기사</div>
+    <a class="article-link" href="https://www.theguardian.com/media/2026/nov/08/women-abuse-media-industry-lisa-nandy-russell-brand" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 04:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Apple의 해변 친화적 iPad Mini와 Amazon 고급 Alexa 태블릿과 함께한 일주일</div>
+    <div class="article-title-en">My Week With Apple’s Beach-Friendly iPad Mini and Amazon’s Upscale Alexa Tablet</div>
+    <div class="article-keypoint">iPad Mini·Amazon 태블릿 리뷰 — 소비자 기기 시장 무관 기사</div>
+    <a class="article-link" href="https://www.wsj.com/tech/personal-tech/apple-ipad-mini-amazon-alexa-tablet-best-in-years-c5004bac?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">호주 은행 ANZ, 연간 현금이익 31% 증가 발표</div>
+    <div class="article-title-en">Australian lender ANZ reports 31% rise in full-year cash profit</div>
+    <div class="article-keypoint">ANZ, 연간 현금이익 31% 증가 — 호주 대형 은행 실적 개선, 금리 환경 수혜 반영</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/australian-lender-anz-reports-31-rise-in-fullyear-cash-profit-5010331" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/08 22:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">SNL, Elon Musk 인상 새로 선보여 — '남아공이 만든 최악의 것'</div>
+    <div class="article-title-en">SNL has a new impression of Elon Musk, ‘the worst thing South Africa has ever done’</div>
+    <div class="article-keypoint">SNL, Musk 인상 풍자 — 사회문화적 반응, 직접 시장 임팩트 없음</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/08/snl-has-a-new-impression-of-elon-musk-the-worst-thing-south-africa-has-ever-done/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 03:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
