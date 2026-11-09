@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-10 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/10 07:48 KST</div>
+    <div class="header-date">2026-11-10</div>
+    <div class="header-headline">Jensen Huang 중국 스파이 스캔들 — FBI 수사·이사회 조사 동시 가동</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Nvidia 이사회 조사 결과 및 의회 반도체 수출규제 강화 입법 속도 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Jensen Huang 스파이 스캔들 — FBI·의회·이사회 삼중 압박과 Nvidia 지배구조 리스크</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#10</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Trump 대통령이 FBI가 Jensen Huang을 조사 중이라고 공개 언급하면서 스캔들이 단순 사내 기밀 유출 의혹을 넘어 연방 수사 단계로 격상됐다는 것이다. Nvidia 이사회는 Huang이 중국 정보기관과 연루된 것으로 의심받는 임원과 불륜 관계였음을 인정한 사실을 받아 공식 조사에 착수했으며, Huang 본인은 직원들에게 사과 이메일을 발송했다. 미 하원 민주당 원내대표는 의회 차원의 경위 파악을 촉구하며 대중국 반도체 수출 제한 강화 필요성을 역설했고, 일부 의원들은 이 사건을 계기로 AI 칩 수출 통제 감독을 강화하는 입법을 추진할 것임을 시사했다. Nvidia가 싱가포르 소재 Megaspeed의 상무부 조사를 중단시키는 데 개입했다는 보도까지 겹치면서, 수출통제 집행 허점이 동시에 도마 위에 올랐다. Trump·Musk 등 실리콘밸리 주요 인사들이 Huang을 공개 옹호하고 있으나, 이사회의 후임 계획 수립 필요성 논의가 본격화되는 등 Nvidia의 기업 거버넌스와 중국 시장 접근 전략 모두 중대한 기로에 섰다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">CPI·PPI·Fed 연사 릴레이 — 고용 서프라이즈 이후 추가 긴축 경로 재점화</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #11~#14</span>
+    </div>
+    <div class="theme-summary">10월 고용지표가 월가 전망치를 상회하는 호조로 발표된 직후, 이번 주는 CPI·PPI 발표와 Fed 연사들의 연이은 발언이 예정돼 있어 금리 경로 재평가의 분기점이 될 전망이다. Richmond Fed 총재 Barkin은 견조한 수요와 끈적한 인플레이션을 근거로 추가 인상이 불가피하다고 밝히면서도 신중한 속도 조절을 강조했다. Trump 대통령이 Fed 의장 Warsh와 통화했다고 주장했으나 Warsh의 9월 공식 일정표에는 해당 기록이 없는 것으로 나타나, Fed 독립성에 대한 정치적 압박 논란이 재부상하고 있다. 채권·기술주 이중 압박이 현실화되는 가운데, 이번 주 발표될 인플레이션 데이터가 12월 FOMC 결정의 핵심 변수로 부상했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">반도체·AI 인프라 — 칩주 급락 후 저가 매수 논쟁과 AI 에너지 수요 가속</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #15~#17</span>
+    </div>
+    <div class="theme-summary">Nvidia·Micron·Sandisk 등 주요 칩주가 가파르게 하락한 가운데, 일부 애널리스트는 이를 과잉 반응으로 보고 저가 매수 기회라고 주장하는 반면 다른 쪽은 AI 지출 사이클 둔화 가능성을 이유로 신중론을 유지하고 있다. AI 인프라 에너지 수요와 관련해서는 Anthropic이 34억 달러 규모의 천연가스 터빈을 매입했다는 사실이 공개되며, 대규모 AI 데이터센터 운영에 따른 에너지 비용 리스크와 공급 계약의 적정성에 의문이 제기됐다. Anthropic은 IPO 로드쇼를 개시하는 동시에 신규 모델 Claude Fable을 전작 대비 20% 할인된 가격에 출시해 수익화보다 시장점유율 확대를 우선시하는 전략을 택했다. AI 칩 수요와 AI 플랫폼 수익화의 실질적 괴리가 동시에 부각되면서 섹터 전반의 밸류에이션 근거가 시험대에 오른 국면이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Trump 정치 생태계 재편 — 스티브 밀러 비서실장 발탁·관세 포퓰리즘·Hegseth 탄핵</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #18~#20</span>
+    </div>
+    <div class="theme-summary">민주당의 중간선거 압승 이후 Trump는 스티브 밀러를 비서실장으로 임명하며 측근 강경 노선을 고수하는 선택을 했고, 이는 의회 협치 가능성보다 충성 기반 통치를 택한 신호로 해석된다. 관세 포퓰리즘에 대해 유권자들은 여전히 지지를 보내고 있으나, 의회 권력 구도 변화로 실제 정책 실행에는 구조적 역풍이 예상된다. 국방장관 Hegseth에 대해서는 켄터키 공화당 하원의원 Thomas Massie가 이란에 대한 불법 전쟁 수행 등 8개 조항의 탄핵안을 제출해 행정부 내 균열이 가시화됐다. Trump이 Jensen Huang·FBI 수사 발언을 공개적으로 한 점, Warsh와의 비공개 통화 주장 등 Trump 행정부의 사법·금융 거버넌스 개입 패턴이 복합적으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">AI 규제·사회 리스크 — 아동 보호·IPO 신뢰성·기업 AI 도입 양극화</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #21~#24</span>
+    </div>
+    <div class="theme-summary">Meta가 인스타그램의 AI 기반 연령 추정 기술을 전 세계로 확대 적용하고, 프랑스 Macron 대통령이 아동 위협 AI 사용 금지를 주장하며 국제 AI 거버넌스 논의가 아동 보호 의제로 수렴되는 흐름이 뚜렷해졌다. AI 기업 IPO와 자금조달 측면에서는 Anthropic의 로드쇼와 함께 모델 가격 인하가 동시에 진행되고 있어, 플랫폼 수익화 지속 가능성에 대한 투자자 질적 검증이 강화되고 있다. 교육 플랫폼 Nerdy는 Q3 순손실에도 마진 개선을 이유로 주가가 반등하며, AI 도입 초기 기업 간 수익화 양극화가 심화되고 있음을 보여줬다. 이와 함께 심장 치료제 임상 실패 사례는 AI 신약 개발 기대감에 경종을 울리는 사례로 주목된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #25~#30</span>
+    </div>
+    <div class="theme-summary">Boeing은 항공기 생산 램프업 지연으로 인력 과잉 상태가 됐다며 대규모 감원을 예고했고, 이는 미국 제조업 고용시장에 추가 하방 변수로 작용할 수 있다. Barrick Mining의 Fourmile 금광 개발 연구 일정이 불확실해지면서 주요 금광 프로젝트의 공급 전망에 불확실성이 더해졌다. 일본 타카이치 총리는 야심찬 경제 의제 재원 마련을 위해 새로운 자금 조달 수단을 모색 중이지만, 재정 규칙 완화에 따른 리스크가 부각되고 있다. Waymo 로보택시가 소프트웨어 패치 이후에도 스쿨버스 불법 추월을 반복했다는 연방 조사 결과가 나오면서 자율주행 규제 신뢰성에 의문이 제기됐다. Skydance는 Paramount·Warner Bros. Discovery 합병 이후 첫 실적을 발표하며 60억 달러 시너지 목표와 Paramount+·HBO Max 번들 계획을 제시했다. 금 사기 피해가 노인층을 중심으로 급증하고 있다는 사회 경보도 발표됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Jensen Huang 스파이 스캔들 — FBI·의회·이사회 삼중 압박과 Nvidia 지배구조 리스크</span>
+    <span class="theme-label-range">Article #1~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Nvidia 스파이 의혹, 대중국 AI 칩 접근 제한 입법 강화 촉발 전망 — 의원들</div>
+    <div class="article-title-en">Nvidia spy allegations likely to spur laws to tighten China’s access to AI chips, say some lawmakers</div>
+    <div class="article-keypoint">의원들, Jensen Huang 스캔들 계기로 대중국 AI 칩 수출통제 입법 강화 추진 가시화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/nvidia-spy-allegations-likely-to-spur-laws-to-tighten-chinas-access-to-ai-chips-say-experts" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 07:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Nvidia CEO Jensen Huang 스파이 스캔들 전개 타임라인</div>
+    <div class="article-title-en">A Timeline of Nvidia CEO Jensen Huang’s Suspected Spy Drama</div>
+    <div class="article-keypoint">Jensen Huang 불륜·스파이 스캔들 전말 — Nvidia CEO 리스크가 미중 반도체 전쟁 변수로 부상</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/a-timeline-of-nvidia-ceo-jensen-huangs-suspected-spy-drama-05cbebf3?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 07:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Trump의 Nvidia Huang과의 밀접한 관계, 외국 정보 우려 불거지며 재조명</div>
+    <div class="article-title-en">Trump’s close ties to Nvidia’s Huang scrutinised after foreign intelligence concerns</div>
+    <div class="article-keypoint">Trump, Huang과 밀착 관계 재조명 — 정치적 비호가 수출통제 집행 약화 의혹으로 연결</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trumps-close-ties-to-nvidias-huang-scrutinised-after-foreign-intelligence-concerns" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 04:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">칩 스릴러: 아날로그 허니트랩이 Nvidia AI 선구자 Jensen Huang을 덫에 빠뜨렸나?</div>
+    <div class="article-title-en">Chip thrills: Has the analog honeypot ensnared Nvidia’s AI pioneer Jensen Huang?</div>
+    <div class="article-keypoint">허니트랩 수법이 첨단기술 시대에도 유효 — Nvidia CEO 사례가 기업 보안 취약성 경종</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/chip-thrills-has-the-analog-honeypot-ensnared-nvidias-ai-pioneer-jensen-huang" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 22:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">미국 하원 민주당 원내대표, Nvidia 경위 파악 촉구·대중국 칩 수출 제한 요구</div>
+    <div class="article-title-en">US House Democratic leader says lawmakers need answers on Nvidia, wants China chip restrictions</div>
+    <div class="article-keypoint">하원 민주당, Nvidia 경위 파악·대중국 칩 수출 제한 강화 촉구 — 의회 압박 본격화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-house-democratic-leader-says-lawmakers-need-answers-on-nvidia-wants-china-chip-restrictions" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 07:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Jensen Huang의 중국 스파이 추정 인물과의 불륜, Nvidia의 중국 사업 전략에 먹구름</div>
+    <div class="article-title-en">Jensen Huang’s affair with alleged Chinese spy puts Nvidia’s China ambitions under scrutiny</div>
+    <div class="article-keypoint">Huang 스파이 스캔들, Nvidia의 대중국 로비·칩 수출 완화 전략에 직접 타격</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/09/jensen-huangs-affair-with-alleged-chinese-spy-puts-nvidias-china-ambitions-under-scrutiny/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 03:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">실리콘밸리와 Trump, 중국 스파이 추정 인물과의 불륜 인정 후 Nvidia CEO 옹호</div>
+    <div class="article-title-en">Silicon Valley and Trump rally behind Nvidia CEO after his affair with alleged Chinese spy</div>
+    <div class="article-keypoint">Trump·Musk, Huang 공개 옹호 — 이사회 후계 계획 논의 착수, 지배구조 리스크 현실화</div>
+    <a class="article-link" href="https://www.theguardian.com/technology/2026/nov/09/nvidia-jensen-huang-affair-trump-musk" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 03:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Trump, FBI가 Nvidia Jensen Huang 조사 중이라고 발언</div>
+    <div class="article-title-en">Trump says FBI is ‘looking into’ Nvidia’s Jensen Huang</div>
+    <div class="article-keypoint">Trump, FBI가 Huang 조사 중 공개 발언 — 스캔들이 연방 수사 단계로 격상</div>
+    <a class="article-link" href="https://www.ft.com/content/cbabf2da-2079-4b69-88e3-0ba84cf8d6fd?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 07:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Nvidia 이사회, CEO가 스파이 활동 표적이었다는 보도 공식 조사 착수</div>
+    <div class="article-title-en">Nvidia’s Board Investigates Reports That CEO Was Spying Target After Affair</div>
+    <div class="article-keypoint">Nvidia 이사회, Huang CEO 스파이 피해 의혹 공식 조사 착수 — 거버넌스 위기 현실화</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/nvidias-board-to-investigate-reports-that-jensen-huang-was-spying-target-c630325e?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 20:02 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">미 상무부의 Megaspeed 조사, Nvidia 개입 후 중단된 것으로 드러나</div>
+    <div class="article-title-en">U.S. Commerce Dept. Inquiry Into Megaspeed Was Halted After Nvidia Intervention</div>
+    <div class="article-keypoint">Nvidia, 상무부의 싱가포르 Megaspeed 조사 중단 개입 — 수출통제 집행 허점 의혹 확산</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/11/09/business/economy/nvidia-megaspeed-investigation-huang.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 03:38 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">CPI·PPI·Fed 연사 릴레이 — 고용 서프라이즈 이후 추가 긴축 경로 재점화</span>
+    <span class="theme-label-range">Article #11~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Fed, Mutual Federal Bancorp의 두 건 신청 승인 발표</div>
+    <div class="article-title-en">Federal Reserve Board announces approval of two applications by Mutual Federal Bancorp, MHC, and MFB Bancorp, Inc.</div>
+    <div class="article-keypoint">Fed, Mutual Federal Bancorp 지주사 전환 승인 — 소형 지역은행 구조 재편 가속</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/orders20261109a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">이번 주 주요 이벤트: CPI·PPI·Fed 연사 릴레이·어닝 시즌 마무리</div>
+    <div class="article-title-en">Key Events This Week: CPI, PPI, Fed Speakers Galore And The End Of Earnings Season</div>
+    <div class="article-keypoint">이번 주 CPI·PPI·Fed 연사 릴레이 — 10월 고용 호조 이후 12월 추가 인상 현실화 가늠자</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/key-events-week-cpi-ppi-fed-speakers-galore-and-end-earnings-season" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 02:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Trump, Fed 의장과 통화했다고 발언 — Warsh 공식 일정표에 기록 없어</div>
+    <div class="article-title-en">Trump talked with Fed chief, but there’s no record of it on Warsh’s calendar</div>
+    <div class="article-keypoint">Trump, Warsh와 통화 주장했지만 공식 일정표에 기록 없어 — Fed 독립성 압박 논란 재점화</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/11/09/fed-kevin-warsh-calendar-shows-no-trump-calls-trump-says-they-talked/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Fed Barkin, 금리 인상 방향은 명확 — 신중한 속도 조절 필요</div>
+    <div class="article-title-en">Fed’s Barkin Says Policy Direction Clear, Needs Careful Pace</div>
+    <div class="article-keypoint">Barkin, 견조 수요·고인플레 근거로 추가 인상 불가피 — 신중한 속도 조절 병행 강조</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-09/fed-s-barkin-says-policy-direction-clear-but-needs-careful-pace" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 02:06 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">반도체·AI 인프라 — 칩주 급락 후 저가 매수 논쟁과 AI 에너지 수요 가속</span>
+    <span class="theme-label-range">Article #15~#17</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">애널리스트들 '칩 주식 저평가' 주장 — 지금이 매수 타이밍인가?</div>
+    <div class="article-title-en">Analysts say these chip stocks are bargains. Is it time to buy?</div>
+    <div class="article-keypoint">Nvidia·Micron 급락 후 저가 매수 vs 신중론 — 반도체 사이클 방향성 판단 분기점</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/analysts-say-these-chip-stocks-are-bargains-is-it-time-to-buy-fb5fdde8?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 05:48 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Anthropic, AI 천연가스 열풍에 동참 — $34억 규모 터빈 구매</div>
+    <div class="article-title-en">Anthropic joins AI’s natural gas frenzy, buys $3.4B worth of turbines</div>
+    <div class="article-keypoint">Anthropic, $34억 천연가스 터빈 매입 — AI 에너지 비용 급증과 공급 계약 리스크 부각</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/09/anthropic-joins-ais-natural-gas-frenzy-buys-3-4b-worth-of-turbines/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 01:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Anthropic, IPO 로드쇼 개시와 동시에 신규 모델 20% 할인 출시</div>
+    <div class="article-title-en">Anthropic Drops New Fable At 20% Discount As IPO Roadshow Reportedly Kicks Off</div>
+    <div class="article-keypoint">Anthropic, IPO 로드쇼 개시와 동시에 모델 20% 가격 인하 — 수익화보다 점유율 우선 전략</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/anthropic-drops-new-fable-thats-20-cheaper-ipo-roadshow-reportedly-kicks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 07:40 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Trump 정치 생태계 재편 — 스티브 밀러 비서실장 발탁·관세 포퓰리즘·Hegseth 탄핵</span>
+    <span class="theme-label-range">Article #18~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Trump, 의회를 잃게 한 장본인을 비서실장으로 발탁한 이유</div>
+    <div class="article-title-en">Why Trump Crowned the Man Who Cost Him Congress</div>
+    <div class="article-keypoint">Trump, 스티브 밀러 비서실장 발탁 — 중간선거 패배 후 강경 노선 고수 의지 재확인</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/why-trump-promoted-stephen-miller-despite-voter-repudiation-by-stephen-holmes-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 01:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">공화당 의원, Pete Hegseth 국방장관 탄핵안 제출</div>
+    <div class="article-title-en">Republican congressman launches impeachment against Pete Hegseth</div>
+    <div class="article-keypoint">Massie 의원, Hegseth 국방장관 탄핵안 8개 조항 제출 — 행정부 내 균열 가시화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/11/09/republican-launches-impeachment-against-pete-hegseth_6776266_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 06:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump 관세와 미국 포퓰리즘</div>
+    <div class="article-title-en">Trump tariffs and American populism </div>
+    <div class="article-keypoint">Trump 관세 포퓰리즘, 중간선거 이후에도 유권자 지지 유지 — 정책 실행 역풍과 괴리</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-11-09/trump-tariffs-and-american-populism" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">AI 규제·사회 리스크 — 아동 보호·IPO 신뢰성·기업 AI 도입 양극화</span>
+    <span class="theme-label-range">Article #21~#24</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">심장약 임상 실패, 유사 치료제 개발 경쟁사에 불안감 확산</div>
+    <div class="article-title-en">A failed trial for a heart drug casts shadow over rivals developing similar therapies</div>
+    <div class="article-keypoint">심장약 임상 실패 — Lp(a) 저하 효과에도 심혈관 혜택 없어, AI 신약 개발 기대 경계 신호</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/a-failed-trial-for-a-heart-drug-casts-shadow-over-rivals-developing-similar-therapies-2d9bd79f?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 06:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">실적 발표 녹취록: Nerdy, Q3 2026 순손실 기록 — 마진 개선에 주가는 급등</div>
+    <div class="article-title-en">Earnings call transcript: Nerdy posts Q3 2026 loss, shares jump on margin gains</div>
+    <div class="article-keypoint">Nerdy, Q3 순손실에도 마진 개선에 주가 반등 — AI 도입 초기 기업 수익화 양극화 심화</div>
+    <a class="article-link" href="https://www.investing.com/news/transcripts/earnings-call-transcript-nerdy-posts-q3-2026-loss-shares-jump-on-margin-gains-93CH-5013576" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/09 22:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Macron, 아동 위협 AI 사용 금지 촉구</div>
+    <div class="article-title-en">Macron wants AI ban wherever it threatens children</div>
+    <div class="article-keypoint">Macron, 아동 위협 AI 사용 금지 촉구 — EU 차원 AI 규제 아동 보호 의제 부상</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/pixels/article/2026/11/09/macron-wants-ai-ban-wherever-it-threatens-children_6776299_13.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Meta, Instagram AI 연령 추정 기술 글로벌 확대</div>
+    <div class="article-title-en">Meta expands Instagram’s AI age-guessing tech globally</div>
+    <div class="article-keypoint">Meta, AI 연령 추정 기술 글로벌 확대 — 플랫폼 아동 보호 규제 강화 선제 대응</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/09/meta-expands-instagrams-ai-age-guessing-tech-globally/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 00:32 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #25~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Barrick, Fourmile 금광 개발 계획 재검토 — 연구 완료 시점 불확실</div>
+    <div class="article-title-en">Barrick (GOLD) Revisits Fourmile Gold Deposit Plans, Study Deadline Uncertain</div>
+    <div class="article-keypoint">Barrick Fourmile 금광 개발 일정 불확실 — 세계 최대 금 발견지 공급 전망에 하방 압력</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-09/barrick-gold-revisits-fourmile-gold-deposit-plans-study-deadline-uncertain" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 05:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">타카이치, 재정 지출 충당 위한 새 자금 조달 수단 모색 — 리스크 내재</div>
+    <div class="article-title-en">Takaichi’s Hunt for New Cash to Fund Spending Harbors Risks</div>
+    <div class="article-keypoint">타카이치, 새 재원 조달 도구 모색 — 재정 규칙 완화 시 국채 시장 변동성 확대 가능성</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-09/takaichi-s-hunt-for-new-cash-to-fund-spending-harbors-risks" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Boeing, 공장 생산 속도 저하로 '과잉 인력' 판단 — 대규모 감원 계획</div>
+    <div class="article-title-en">Boeing To Cut Thousands Of Workers As Slower Factory Ramp Leaves It "Overstaffed"</div>
+    <div class="article-keypoint">Boeing, 생산 지연으로 대규모 감원 예고 — 미국 제조업 고용 하방 압력 추가</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/boeing-cut-thousands-workers-slower-factory-ramp-leaves-it-overstaffed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 03:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Skydance, 합병 이후 첫 실적 발표</div>
+    <div class="article-title-en">Skydance Reports First Earnings Since Merger</div>
+    <div class="article-keypoint">Skydance, Paramount·WBD 합병 후 첫 실적 — $60B 시너지·스트리밍 번들 전략 제시</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-09/skydance-reports-first-earnings-since-merger-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 07:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Waymo 로보택시, 소프트웨어 패치 이후에도 스쿨버스 불법 추월 반복 — 연방 조사</div>
+    <div class="article-title-en">Waymo robotaxis kept illegally passing school buses after software fix, feds say</div>
+    <div class="article-keypoint">Waymo, 소프트웨어 패치 후에도 스쿨버스 불법 추월 반복 — 자율주행 규제 신뢰성 훼손</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/09/waymo-robotaxis-kept-illegally-passing-school-buses-after-software-fix-feds-say/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 00:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">노인층, 금 사기에 무방비로 노출</div>
+    <div class="article-title-en">Old People Are Falling For Gold Scams Like Crazy</div>
+    <div class="article-keypoint">노인층 금 사기 급증 — 과열된 금 선호 심리가 금융 취약계층 피해로 전이</div>
+    <a class="article-link" href="https://www.zerohedge.com/personal-finance/old-people-are-falling-gold-scams-crazy" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/10 07:20 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
