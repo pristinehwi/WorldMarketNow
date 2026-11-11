@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-12 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/12 07:48 KST</div>
+    <div class="header-date">2026-11-12</div>
+    <div class="header-headline">Nvidia CEO 해임 임박 — 반도체 AI 생태계 최대 리스크</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Jensen Huang 의회 청문 응답 시한(수요일) 및 Nvidia 이사회 결정 — 반도체·AI 섹터 변동성 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Nvidia CEO 해임 위기 — 지배구조 충격과 AI 금융망 연쇄 리스크</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#6</span>
+    </div>
+    <div class="theme-summary">WSJ 보도로 Nvidia 이사회가 Jensen Huang CEO 해임을 준비 중이라는 소식이 전해지며 반도체·AI 섹터 전반에 충격파가 확산됐다. Huang은 자신에게 보고하는 임원과의 불륜 관계 폭로에 이어 중국 스파이 혐의 여성과의 관계까지 2차 스캔들이 겹치며 이사회 압박이 임계점에 달했다. 의회 공화당은 Huang에게 수요일 오후까지 비공개 청문 응답을 요구했고, 재무장관 Bessent와 상무장관 Lutnick은 Megaspeed에 대한 첨단 칩 수출 제한 미비를 놓고 행정부 내부에서도 충돌했다. Nvidia의 AI 금융망 분석에서는 동사가 여러 기업과 복잡하게 얽혀 있어 CEO 리스크가 단순 주가 하락을 넘어 광범위한 경제·금융 피해로 번질 수 있다는 경고가 제기됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">CoreWeave 실적 반등 — AI 인프라 수익화 신뢰 회복과 칩·에너지주 동반 랠리</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #7~#10</span>
+    </div>
+    <div class="theme-summary">CoreWeave의 호실적과 부채 규율 강화 선언이 AI 인프라 투자 심리를 단숨에 되살리며 Micron, Lumentum 등 칩 섹터 전반에 광범위한 랠리를 촉발했다. Nasdaq 100은 중간선거 이후 누적 손실을 거의 모두 만회하며 저가 매수세를 끌어들였다. CoreWeave는 고객 선불 결제, 계약 담보 단기 차입, 단기 계약 전환 등 복합 자금조달 전략으로 AI 성장을 이어가는 구조를 공개했다. Bloom Energy 등 데이터센터 전력 공급 기업도 덩달아 반등하며 AI 에너지 수요 테마가 재점화됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">AI 플랫폼 확장과 IPO 신뢰성 — Anthropic·OpenAI·TSMC의 자본 연대와 검증대</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #11~#15</span>
+    </div>
+    <div class="theme-summary">Anthropic IPO가 AI 주식 랠리의 '다음 국면을 여는 핵심 블록'으로 지목되며 월가의 시선이 집중됐다. TSMC는 Anthropic과 OpenAI에 최대 10억 달러 지분 투자를 승인하며 칩 제조사가 모델 개발사와 직접 자본으로 결합하는 새 구조를 제시했다. OpenAI는 분기 매출이 처음으로 100억 달러를 돌파했으며, 이는 직전 분기 67억 달러 대비 약 50% 급증한 수치다. 영국 스타트업 Fractile은 7억 2천만 달러 라운드를 완료하며 목적형 AI 칩 경쟁에서 최상위 자금 조달 기업으로 부상했다. AI 플랫폼 수익화의 실제 속도가 증명되면서 IPO·VC 시장의 질적 검증 압력도 동시에 높아지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 에너지·인프라 한계 — 전력망 병목과 양자컴퓨팅 대안론의 부상</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #16~#18</span>
+    </div>
+    <div class="theme-summary">AI 데이터센터의 전력·수자원 수요가 임계점에 근접하면서 에너지 인프라 병목이 AI 확장의 가장 현실적인 제약으로 부각되고 있다. 유럽은 AI 데이터센터 용량 확충을 서두르고 있지만 전력망 과부하와 지역 사회 반발이 심화되며 기술 주권 목표와 현실 사이의 간극이 커지고 있다. 이러한 에너지 압박의 구조적 해법으로 양자컴퓨팅이 거론되기 시작했으나, 아직 상용화까지는 상당한 시간이 필요한 상황이다. Meta는 Instagram에서 AI 기반 연령 추정 기술을 확대 적용하며 플랫폼 내 AI 활용이 규제·윤리 검증 영역으로 진입했음을 보여줬다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">이란 위협 고조 — Bessent 군사기지 이전과 호르무즈 긴장의 금융시장 전이</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #19~#21</span>
+    </div>
+    <div class="theme-summary">이란의 암살 위협이 '상당히 진전된 단계'에 이르렀다는 평가 속에 재무장관 Scott Bessent가 워싱턴 자택을 떠나 군사기지로 이전했다. Bessent는 이란 경제 봉쇄를 주도한 핵심 인물로, 그에 대한 위협은 대이란 제재 강화 기조가 역으로 미국 정책 당국자를 겨냥하는 국면으로 전환됐음을 시사한다. 중간선거에서 공화당이 패배한 이후 JD Vance가 이란과의 전쟁을 패인으로 지목하는 등 행정부 내 균열이 가시화되고 있다. 이러한 지정학 긴장은 호르무즈 해협 에너지 공급 리스크와 맞물려 유가·채권 시장의 잠재 변동성 요인으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #22~#30</span>
+    </div>
+    <div class="theme-summary">금 가격은 Fed 금리 인상 기대 강화로 이틀 연속 하락했으며, 유가 하락이 더 이상 국채 금리를 낮추지 못하는 구조적 디커플링이 확인됐다. Fed 내부에서는 뉴욕 연은 총재 John Williams의 임기 종료 시점을 둘러싼 규정 논쟁이 부상하고 있다. 사모신용 시장에서는 BC Partners가 Investcorp BDC 인수를 발표하며 1조 8천억 달러 규모 시장의 구조조정 흐름이 가속됐다. Trump는 Palantir 보안 책임자를 CISA 수장으로 지명하며 사이버 방어 체계에 민간 AI 기업 인사를 전진 배치했고, BBC 명예훼손 소송에서 재판 진행 판결을 받아냈다. Zelensky는 아부다비 미러 협상 이후 평화 진전이 미국의 대러 접근법에 달려 있다고 밝혔다. 생명의 기원과 관련된 대사 경로 연구 기사는 금융·시장과 무관한 과학 콘텐츠다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Nvidia CEO 해임 위기 — 지배구조 충격과 AI 금융망 연쇄 리스크</span>
+    <span class="theme-label-range">Article #1~#6</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Nvidia, 2차 불륜 스캔들에 Huang 해임 준비 — 주가 급락 보도</div>
+    <div class="article-title-en">Nvidia Preparing To Fire Huang After 2nd Affair Bombshell, Stock Knifes Lower: Report</div>
+    <div class="article-keypoint">Nvidia 이사회, Jensen Huang CEO 해임 준비 — 2차 스캔들로 주가 급락</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/caught-video-jensen-huang-reportedly-had-second-affair-time-his-own-nvidia-executive" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 07:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Trump 행정부 내부, Nvidia 스캔들 핵심 기업 Megaspeed를 둘러싸고 충돌</div>
+    <div class="article-title-en">Trump Officials Clashed Over Megaspeed, Firm at Heart of Nvidia Affair</div>
+    <div class="article-keypoint">Bessent-Lutnick 충돌 — Megaspeed 칩 수출 제한 공백이 행정부 내 갈등으로 비화</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/11/11/business/economy/nvidia-affair-spy-bessent-lutnick.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 02:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">분석: Nvidia는 대마불사인가 — AI 금융망이 리스크 판돈을 키우다</div>
+    <div class="article-title-en">Analysis: Is Nvidia too big to fail? Its AI financing web raises the stakes</div>
+    <div class="article-keypoint">Nvidia AI 금융망 복잡성 — CEO 리스크가 광범위한 경제·금융 피해로 전이 가능</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/11/11/nvidia-jensen-huang-ai-financial-system-risk.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 05:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Nvidia, CEO Jensen Huang 해임 준비 — WSJ 보도</div>
+    <div class="article-title-en">Nvidia is preparing to oust CEO Jensen Huang, WSJ reports</div>
+    <div class="article-keypoint">Nvidia 이사회, Huang CEO 해임 준비 보도 — WSJ 확인으로 지배구조 리스크 현실화</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/nvidia-is-preparing-to-oust-ceo-jensen-huang-wsj-reports-5019991" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/11 22:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Nvidia CEO Huang, 직속 임원과 불륜 관계 — NYT 보도</div>
+    <div class="article-title-en">Nvidia CEO Huang had relationship with executive who reported to him, NYT reports</div>
+    <div class="article-keypoint">Huang, 보고 계열 임원과 불륜 관계 추가 폭로 — 2차 스캔들로 이사회 압박 가중</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/nvidia-ceo-huang-had-relationship-with-executive-who-reported-to-him-nyt-reports-5019992" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/11 22:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">의회, Jensen Huang에게 중국 스파이 불륜 의혹 관련 답변 요구</div>
+    <div class="article-title-en">Congress to call Jensen Huang in to answer for alleged Chinese spy affair</div>
+    <div class="article-keypoint">의회, Huang에 수요일까지 중국 스파이 관련 비공개 청문 응답 요구 — 정치 압박 임계점</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/11/congress-to-call-jensen-huang-in-to-answer-for-alleged-chinese-spy-affair/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 04:22 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">CoreWeave 실적 반등 — AI 인프라 수익화 신뢰 회복과 칩·에너지주 동반 랠리</span>
+    <span class="theme-label-range">Article #7~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">CoreWeave 호실적, Micron·Lumentum 등 AI 관련주에 광범위한 활력 주입</div>
+    <div class="article-title-en">CoreWeave just gave a shot in the arm to Micron, Lumentum and the rest of the AI trade</div>
+    <div class="article-keypoint">CoreWeave 호실적이 Micron·Lumentum 등 칩 섹터 광범위 랠리를 촉발</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/micron-and-other-ai-stocks-surge-as-coreweave-calms-wall-streets-worst-fears-0a18152a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Bloom Energy 주가 반등 — 데이터센터 우려 완화에 수혜</div>
+    <div class="article-title-en">Bloom Energy’s stock is rallying as data-center jitters subside</div>
+    <div class="article-keypoint">CoreWeave 낙관론에 Bloom Energy 반등 — AI 데이터센터 전력 수요 테마 재점화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/bloom-energys-stock-is-soaring-as-data-center-jitters-subside-5fda5689?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 06:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">CoreWeave, 고객 선불 결제·단기 계약으로 AI 성장 자금 조달</div>
+    <div class="article-title-en">CoreWeave turns to customer prepayments, shorter contracts to fund AI growth</div>
+    <div class="article-keypoint">CoreWeave, 선불 결제·담보 차입·단기 계약으로 AI 성장 자금 조달 구조 공개</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/11/coreweave-turns-to-customer-prepayments-shorter-contracts-to-fund-ai-growth/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 04:54 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">CoreWeave가 AI 우려를 잠재우며 Nasdaq 100 랠리 견인</div>
+    <div class="article-title-en">Nasdaq 100 Rallies as CoreWeave Quells AI Fears, Draws Buyers In</div>
+    <div class="article-keypoint">Nasdaq 100, CoreWeave 효과로 중간선거 후 누적 손실 거의 만회하며 반등</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-11/us-equity-futures-rise-as-ai-enthusiasm-counters-hot-inflation" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/11 22:28 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">AI 플랫폼 확장과 IPO 신뢰성 — Anthropic·OpenAI·TSMC의 자본 연대와 검증대</span>
+    <span class="theme-label-range">Article #11~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Anthropic IPO, AI 트레이드 다음 국면을 여는 '젠가 블록'</div>
+    <div class="article-title-en">Anthropic IPO Is ‘Jenga Block’ Holding Up Next Leg of AI Trade</div>
+    <div class="article-keypoint">Anthropic IPO, AI 주식 랠리 다음 국면을 여는 핵심 분기점으로 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-11/anthropic-ipo-is-jenga-block-holding-up-next-leg-of-ai-trade" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 06:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">TSMC, Anthropic·OpenAI에 최대 10억 달러 투자 계획 승인</div>
+    <div class="article-title-en">TSMC Approves Up to $1 Billion Investment Plan in Anthropic, OpenAI</div>
+    <div class="article-keypoint">TSMC, Anthropic·OpenAI에 최대 $10억 지분 투자 — 칩 제조사-모델 개발사 자본 결합</div>
+    <a class="article-link" href="https://www.wsj.com/tech/ai/tsmc-approves-up-to-1-billion-investment-plan-in-anthropic-openai-3e4b4997?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/11 14:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">OpenAI 분기 매출, 처음으로 100억 달러 돌파 보도</div>
+    <div class="article-title-en">OpenAI’s quarterly revenue reportedly crosses $10B for the first time</div>
+    <div class="article-keypoint">OpenAI 분기 매출 첫 $100억 돌파 — 직전 분기 $67억 대비 약 50% 급증</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/11/openais-quarterly-revenue-reportedly-crosses-10b-for-the-first-time/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 01:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">영국 Fractile, 7억 2천만 달러 라운드로 AI 칩 경쟁 선두권 도약</div>
+    <div class="article-title-en">With $720M round, Britain’s Fractile gets a leg up in the race for AI chips</div>
+    <div class="article-keypoint">Fractile, $7.2억 라운드 완료 — 목적형 AI 칩 경쟁 최상위 자금 조달 기업 등극</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/11/with-720m-round-britains-fractile-gets-a-leg-up-in-the-race-for-ai-chips/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 04:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Databricks의 새 AI 에이전트, CEO Ali Ghodsi에게 가감 없는 현실을 전달하다</div>
+    <div class="article-title-en">Databricks’ new AI agent tells CEO Ali Ghodsi the unvarnished truth</div>
+    <div class="article-keypoint">Databricks Genie 에이전트, CEO에게 조직 내 미여과 정보 제공 — 기업 AI 도입 사례 가속</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/11/databricks-new-ai-agent-tells-ceo-ali-ghodsi-the-unvarnished-truth/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 00:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 에너지·인프라 한계 — 전력망 병목과 양자컴퓨팅 대안론의 부상</span>
+    <span class="theme-label-range">Article #16~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">양자컴퓨팅, AI의 폭주하는 전력 수요 해법으로 주목받다</div>
+    <div class="article-title-en">Quantum Computing Is Being Pitched as the Fix for AI's Runaway Power Appetite</div>
+    <div class="article-keypoint">AI 전력 수요 급증 — 양자컴퓨팅이 구조적 에너지 해법 대안으로 부상 가속</div>
+    <a class="article-link" href="https://oilprice.com/Energy/Energy-General/Quantum-Computing-Is-Being-Pitched-as-the-Fix-for-AIs-Runaway-Power-Appetite.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">유럽의 AI 야망은 전력망 한계를 넘어서고 있다</div>
+    <div class="article-title-en">Europe’s AI Dreams Exceed Its Grid</div>
+    <div class="article-keypoint">유럽 AI 데이터센터 전력망 한계 — 기술 주권 목표와 그리드 현실의 충돌 심화</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/europe-must-invest-in-grid-expansion-and-address-public-opposition-to-data-centers-by-sona-muzikarova-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 02:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Meta AI, Instagram에서 성인이라고 해도 연령 추정 실시한다</div>
+    <div class="article-title-en">Meta's AI Will Now Guess Your Age On Instagram... Even If You Say You're An Adult</div>
+    <div class="article-keypoint">Meta, Instagram AI 연령 추정 기술 확대 — 플랫폼 AI 활용이 규제 검증 단계 진입</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/metas-ai-will-now-guess-your-age-instagram-even-if-you-say-youre-adult" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 07:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">이란 위협 고조 — Bessent 군사기지 이전과 호르무즈 긴장의 금융시장 전이</span>
+    <span class="theme-label-range">Article #19~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">George Friedman, 미국 중간선거 후폭풍 분석</div>
+    <div class="article-title-en">George Friedman Breaks Down America’s Midterm Fallout</div>
+    <div class="article-keypoint">중간선거 공화당 패배 후 이란 전쟁 책임론 — Vance 발언으로 행정부 균열 가시화</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/george-friedman-breaks-down-americas-midterm-fallout/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 06:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">재무장관 Scott Bessent, 이란 위협에 군사기지로 이전 보도</div>
+    <div class="article-title-en">US Treasury chief Scott Bessent is reportedly latest Trump official to move to military base</div>
+    <div class="article-keypoint">Bessent, 이란 위협으로 군사기지 이전 — 대이란 제재 역풍이 정책 당국자를 직접 겨냥</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/2026/nov/11/us-treasury-chief-scott-bessent-moves-military-base-iran-threats" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/11 18:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">대이란 강경파 Bessent, 위협 '상당히 진전된 단계'에 군사기지 거주</div>
+    <div class="article-title-en">Iran Hawk Bessent Now Lives Behind A Military Gate As Threats Reach 'More Than Advanced Stage'</div>
+    <div class="article-keypoint">이란 위협 '상당히 진전된 단계' — 호르무즈 긴장과 맞물려 에너지·채권 변동성 경계</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/iran-hawk-bessent-now-lives-behind-military-gate-threats-reach-more-advanced-stage" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 05:45 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">대사 불꽃이 생명의 시작을 촉발했을 수 있다</div>
+    <div class="article-title-en">How a Metabolic Spark Could Have Jump-Started Life</div>
+    <div class="article-keypoint">생명 대사 경로 연구 — 시장 관련성 없는 과학 콘텐츠</div>
+    <a class="article-link" href="https://www.quantamagazine.org/what-is-the-metabolism-first-theory-for-the-origin-of-life-20261111/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 00:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Fed 금리 인상 기대 강화에 금 이틀 연속 하락</div>
+    <div class="article-title-en">Gold drops for a second straight session on boost to Fed rate hike expectations</div>
+    <div class="article-keypoint">Fed 인상 기대 강화에 금 이틀 연속 하락, 귀금속 조정 압력 지속</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/gold-steadies-near-4035-after-sharp-selloff-as-december-fed-hike-bets-firm-5017433" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/11 22:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">CAE, Q2 실적 예상치 상회로 연간 전망 상향 조정</div>
+    <div class="article-title-en">CAE raises full-year outlook as Q2 earnings top estimates</div>
+    <div class="article-keypoint">CAE 연간 전망 상향 — 방산·AI 복합 수혜 실적 개선 흐름 확인</div>
+    <a class="article-link" href="https://www.investing.com/news/earnings/cae-raises-fullyear-outlook-as-q2-earnings-top-estimates-93CH-5020000" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/11 22:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">유가 하락이 더 이상 미 국채 금리를 낮추지 못하는 이유</div>
+    <div class="article-title-en">Falling oil prices are no longer enough to bring down borrowing costs in the world’s most important bond market</div>
+    <div class="article-keypoint">유가 하락과 국채 금리 디커플링 확인 — 인플레 우려가 에너지 쇼크 넘어 구조화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/falling-oil-prices-are-no-longer-enough-to-bring-down-borrowing-costs-in-the-worlds-most-important-bond-market-3176d25a?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 06:42 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">Zelensky, 평화협상 진전은 미국의 대러 접근 방식에 달려 있다고 발언</div>
+    <div class="article-title-en">Ukraine’s Zelensky says progress in peace talks hinges on US approach to Russia</div>
+    <div class="article-keypoint">아부다비 미러 협상 후 Zelensky, 평화 진전은 미국의 대러 접근법에 달려 있다고 강조</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraines-zelenskiy-says-progress-in-peace-talks-hinges-on-us-approach-to-russia" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Fed의 또 다른 큰 논쟁: John Williams 임기를 언제 끝내야 하나</div>
+    <div class="article-title-en">The Fed’s Other Big Debate: When Should John Williams’ Term End?</div>
+    <div class="article-keypoint">Fed 뉴욕 연은 Williams 임기 규정 논쟁 — 통화정책 거버넌스 불확실성 잠재 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-11/retirement-rules-spark-exit-date-debate-for-ny-fed-s-williams" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 00:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">BC Partners, 사모신용 구조조정 속 Investcorp BDC 인수</div>
+    <div class="article-title-en">BC Partners to Buy Investcorp BDC Amid Private Credit Shakeout</div>
+    <div class="article-keypoint">BC Partners, Investcorp BDC 인수 — $1.8조 사모신용 시장 구조조정 흐름 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-11/bc-partners-to-buy-investcorp-bdc-amid-private-credit-shakeout" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 07:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Trump, Palantir 보안 책임자를 CISA 수장으로 지명</div>
+    <div class="article-title-en">Trump Picks Palantir's Security Chief To Run CISA</div>
+    <div class="article-keypoint">Trump, Palantir 보안 책임자를 CISA 수장 지명 — 사이버 방어에 민간 AI 인사 전진 배치</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/trump-picks-palantirs-security-chief-run-cisa" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 04:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Trump, BBC 상대 명예훼손 소송에서 주요 판결 승리</div>
+    <div class="article-title-en">Trump Wins Major Ruling In Defamation Lawsuit Against BBC</div>
+    <div class="article-keypoint">Trump, BBC 상대 명예훼손 소송 재판 진행 허가 — 미디어·법적 리스크 확대</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/trump-wins-major-ruling-defamation-lawsuit-against-bbc" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/12 03:20 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
