@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-15 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/15 07:48 KST</div>
+    <div class="header-date">2026-11-15</div>
+    <div class="header-headline">Nvidia 포스트-황 시대 — 반도체·AI 패권 공백과 지배구조 충격</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Trump-Xi-Putin 선전 3자 정상회담(목요일) 앞두고 Nvidia 수출통제·지정학 변수 동시 점화</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Nvidia 지배구조 붕괴 — Jensen Huang 퇴장 이후 반도체·AI 패권 공백 현실화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#9</span>
+    </div>
+    <div class="theme-summary">이번 주기에서 새롭게 부각된 점은 Elon Musk를 포함한 테크 CEO 115,000명 이상이 Jensen Huang 복귀 청원에 서명했음에도 불구하고 아시아 각국 정부가 칩 공급 확약 재확인에 나서는 등 외부 충격이 현실 정책으로 전이되고 있다는 것이다. Bessent 재무장관과 Lutnick 상무장관 간 Nvidia 대중 수출통제 방향을 둘러싼 행정부 내부 균열이 표면화되었으며, Megaspeed 스캔들에 대한 책임 공방이 Trump의 아시아·태평양 순방 외교 일정에도 직접적인 부담으로 작용하고 있다. 구리 가격은 거의 4개월 만에 최저치로 하락하며 5주 연속 약세를 기록했고, 시장은 Huang 공백을 AI 금속 수요 둔화의 직접 촉매로 해석하고 있다. 채권시장은 반대로 주식 변동성 회피 수요가 몰리며 투자등급 회사채 수익률 6%대가 부각되는 등 자산 간 자본 재배치 흐름이 뚜렷하다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">SpaceX·Tesla 자본 재편 — Starship 기술 돌파와 Tesla 합병론이 여는 Musk 제국 재설계</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #10~#15</span>
+    </div>
+    <div class="theme-summary">SpaceX가 귀환 Starship 상단 로켓 포획에 성공하며 완전 재사용 유인 로켓 목표에 결정적 이정표를 세웠다. 동시에 Musk는 SpaceX와 Tesla 합병 가능성을 직접 피칭하며, S&P 500 편입이 좌절된 SpaceX의 우회 경로로 활용하는 전략적 구도가 부상했다. Tesla의 Cybercab이 일부 고객에게 $29,990 가격으로 선주문을 개시하며 완전 자율주행 상용화 로드맵이 구체화되고 있고, 두 회사 합병 시 지수 편입·유동성·지배구조 변수가 시장의 핵심 관심사로 떠오른다. Zelenskiy의 Starshield 속도 제한 비판은 Musk 제국의 군사·지정학적 영향력이 양날의 검임을 재확인시킨다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Trump-Xi-Putin 3자 회담과 지정학 재편 — 우크라이나·핵군축·관세의 삼중 교차점</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #16~#20</span>
+    </div>
+    <div class="theme-summary">백악관이 Trump-Xi-Putin 선전 3자 정상회담을 공식 확인하며 핵군축 의제를 전면에 내세운 반면, 우크라이나 문제는 의제에서 배제되었다. Macron은 우크라이나 지원 축소가 불공정한 강화를 강요하는 행위이자 유럽 전체에 대한 위협이라고 경고하며 서방 동맹 내 균열을 부각시켰다. 이 회담은 Nvidia 수출통제 갈등과 맞물려 미중 기술·안보 협상의 맥락이 뒤섞이는 복합 리스크 구도를 형성한다. Bitcoin이 $64,000 아래로 하락하고 ETF 순유출이 7거래일 연속 지속되는 가운데, Trump Media의 $1bn 부채 압박도 가중되어 지정학 불확실성이 위험자산 전반에 전이되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Fed 긴축 경로와 채권시장 — Collins '점진적 인상' 발언과 크레딧 랠리의 공존</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #21</span>
+    </div>
+    <div class="theme-summary">Boston Fed 총재 Collins가 '안정적이고 점진적인' 금리 인상 경로가 적절하다고 발언하며 추가 긴축 기조를 재확인했다. 주식시장의 변동성이 고조되는 상황에서 역설적으로 미국 투자등급 회사채는 최근 수주간 랠리를 이어가고 있으며, 6%대 수익률이 머니매니저들의 피난처로 부각되고 있다. Nvidia 지배구조 충격이 주식에서 채권으로의 자본 이동을 가속시키는 촉매로 작용하고 있으며, 크레딧 시장은 긴축 환경 속에서도 상대적 안정성을 유지하는 이례적 국면을 보이고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">실물자산·에너지 인프라 재편 — 싱가포르 금 금고·Amazon 핵 반응로·MS 글로벌 장애</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #22~#25</span>
+    </div>
+    <div class="theme-summary">싱가포르 통화청(MAS)이 500톤 규모의 국가 금 보관소를 개설하며 $650억 규모의 금 보유 현지화 전략을 공식화해, 금 시장의 관심이 '누가 사는가'에서 '어디에 보관하는가'로 이동하고 있음을 상징한다. Amazon이 Fermi 원전에 초기 전력 용량 계약을 체결하며 하이퍼스케일러의 핵에너지 의존 심화를 재확인했고, 원전 타임라인 지연이 AI 데이터센터 전력 조달 리스크를 구조적으로 높이고 있다. Microsoft는 정부·병원·경찰 통신망에 영향을 미친 글로벌 서비스 장애를 복구 완료했으나, 미국 항공 통신 장애가 구형 구리선 유지보수에서 비롯되었다는 사실은 디지털 인프라의 아날로그 취약성을 환기시킨다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #26~#30</span>
+    </div>
+    <div class="theme-summary">이탈리아 개인정보보호청의 Meta $8.8억 과징금 부과, 이스라엘 Eisenkot의 아랍계 시민 차별 발언 비판, 프랑스 Riner의 대선 출마 선언과 Macron 지지 거부, 미국 트럼프 행정부의 대형 수용시설 논란 등 개별 정치·사회 이슈들이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Nvidia 지배구조 붕괴 — Jensen Huang 퇴장 이후 반도체·AI 패권 공백 현실화</span>
+    <span class="theme-label-range">Article #1~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">황 없는 Nvidia: AI 딜 중단이 금속 시장에 미치는 의미</div>
+    <div class="article-title-en">Nvidia Without Huang: What a Pause in AI Deals Means for Metals</div>
+    <div class="article-keypoint">Huang 공백이 구리 4개월 최저·5주 연속 하락 촉매로 작용, AI 금속 수요 전망 직격</div>
+    <a class="article-link" href="https://oilprice.com/Metals/Commodities/Nvidia-Without-Huang-What-a-Pause-in-AI-Deals-Means-for-Metals.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 07:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Nvidia 사태 이후 6% 수익률 회사채 매력 부상: 크레딧 위클리</div>
+    <div class="article-title-en">Juicy 6% Yields Gain Appeal After Nvidia Drama: Credit Weekly</div>
+    <div class="article-keypoint">주식 변동성 속 투자등급 회사채 6%대 수익률 부각, 크레딧 시장으로 자본 이탈 가속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-14/juicy-6-yields-gain-appeal-after-nvidia-drama-credit-weekly" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Bessent-Lutnick, Nvidia 대중국 수출규제 놓고 충돌</div>
+    <div class="article-title-en">Bessent, Lutnick Clash Over Nvidia China Curbs</div>
+    <div class="article-keypoint">Bessent-Lutnick 대중 Nvidia 수출통제 충돌 표면화 — 행정부 반도체 정책 방향 불확실성 고조</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-14/bessent-lutnick-clash-over-nvidia-china-curbs-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 23:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Nvidia 사태, Trump 아시아·태평양 순방에 드리운 그림자</div>
+    <div class="article-title-en">Nvidia affair will hang over Trump’s upcoming trip to Asia-Pacific</div>
+    <div class="article-keypoint">Nvidia-Megaspeed 스캔들이 Trump 아시아·태평양 순방 외교 의제에 직접 부담으로 전이</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/nvidia-affair-will-hang-over-trumps-upcoming-trip-to-asia-pacific" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 14:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">뉴스레터 '더 바텀 라인': Nvidia는 이제 예전과 같지 않을 것</div>
+    <div class="article-title-en">
+        The Bottom Line newsletter: Nvidia will never be the same
+      </div>
+    <div class="article-keypoint">Jensen Huang 퇴장 이후 Nvidia 근본적 변화 불가피 — AI 산업 리더십 공백 장기화 우려</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/11/14/the-bottom-line-newsletter-nvidia-will-never-be-the-same" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 20:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">아시아 각국 정부, Jensen Huang CEO 퇴진에 반응</div>
+    <div class="article-title-en">Asian governments react to Nvidia CEO Jensen Huang’s exit</div>
+    <div class="article-keypoint">아시아 각국 정부, Huang 퇴진 후 칩 공급 확약 재확인 — 반도체 공급망 외교 긴장 고조</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/14/asian-governments-react-to-nvidia-ceo-jensen-huangs-exit/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 01:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Jensen Huang 사태의 승자와 패자는 누구인가</div>
+    <div class="article-title-en">Who are the winners and losers from the Jensen Huang affair?</div>
+    <div class="article-keypoint">Huang 사태 최대 수혜자는 중국 수출 강경파 — 추가 반도체 수출통제 입법 압력 가속 전망</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/who-are-the-winners-and-losers-from-the-jensen-huang-affairs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 23:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">이탈리아, Meta에 사진 개인정보 침해로 $8.8억 과징금 부과</div>
+    <div class="article-title-en">Italy fines Meta $880 million over photo privacy</div>
+    <div class="article-keypoint">이탈리아 Meta $8.8억 과징금 — 유럽 AI·데이터 규제 강화 흐름 속 플랫폼 비용 리스크 현실화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/international/article/2026/11/14/italy-fines-meta-880mn-over-photo-privacy_6780820_4.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 00:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Jensen Huang의 몰락이 빅테크에 의미하는 것</div>
+    <div class="article-title-en">What Jensen Huang’s Downfall Means for Big Tech</div>
+    <div class="article-keypoint">Jensen Huang 퇴장이 빅테크 AI 투자 신뢰·제조업 귀환 복잡성에 미치는 구조적 함의</div>
+    <a class="article-link" href="https://www.wsj.com/tech/what-jensen-huangs-downfall-means-for-big-tech-9e6ca5df?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 21:50 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">SpaceX·Tesla 자본 재편 — Starship 기술 돌파와 Tesla 합병론이 여는 Musk 제국 재설계</span>
+    <span class="theme-label-range">Article #10~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">SpaceX, 귀환 Starship 로켓 포획 성공 — Musk 화성 재사용 로켓 목표 돌파구</div>
+    <div class="article-title-en">SpaceX catches returning Starship rocket in breakthrough for Musk</div>
+    <div class="article-keypoint">Starship 상단 로켓 포획 성공 — 완전 재사용 유인 로켓 상용화 경로 결정적 이정표</div>
+    <a class="article-link" href="https://www.ft.com/content/ce7c8ab1-8337-4c32-8494-5142ec1697dd?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 07:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">SpaceX의 S&P 500 편입 재점화 — Musk, Tesla 합병 카드 피칭</div>
+    <div class="article-title-en">SpaceX’s S&P 500 Bid Gets New Life as Musk Pitches Tesla Merger</div>
+    <div class="article-keypoint">SpaceX-Tesla 합병 피칭 — S&P 500 우회 편입 가능성과 Musk 지배구조 집중 리스크 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-14/spacex-s-s-p-500-bid-gets-new-life-as-musk-pitches-tesla-merger" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">SpaceX, Starship 신형 착륙 방식으로 포획 성공</div>
+    <div class="article-title-en">(Digital) SpaceX Catches Starship in Novel Landing </div>
+    <div class="article-keypoint">SpaceX Starship 신형 착륙 방식 성공 확인, 재사용 로켓 경제성 혁신 가시화</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-14/-digital-spacex-catches-starship-in-novel-landing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 07:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Elon Musk 등 테크 CEO들, Nvidia에 Jensen Huang 복귀 요구 청원 서명</div>
+    <div class="article-title-en">Elon Musk, other tech execs sign petition calling on Nvidia to reinstate Jensen Huang</div>
+    <div class="article-keypoint">Musk 등 테크 CEO·115,000명 Huang 복귀 청원 — Nvidia 이사회 압박 수위 급상승</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/14/elon-musk-other-tech-execs-sign-petition-calling-on-nvidia-to-reinstate-jensen-huang/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 06:41 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">우크라이나 Zelenskiy, SpaceX의 속도 제한에 비판 수위 높여</div>
+    <div class="article-title-en">Ukraine's Zelenskiy escalates criticism of SpaceX over speed caps</div>
+    <div class="article-keypoint">Zelenskiy, Starshield 속도 제한 비판 — Musk 위성 인프라의 군사적 의존도 리스크 재점화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraines-zelenskiy-escalates-criticism-of-spacex-over-speed-caps" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 23:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Tesla, Cybercab 주문을 '선별 고객'에게 개인 구매용으로 개시</div>
+    <div class="article-title-en">Tesla Opens Cybercab Orders To "Select Customers" For Personal Use </div>
+    <div class="article-keypoint">Tesla Cybercab $29,990 선주문 개시 — 완전 자율주행 상용화 로드맵 구체화 첫 단계</div>
+    <a class="article-link" href="https://www.zerohedge.com/technology/tesla-opens-cybercab-orders-select-customers-personal-use" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 06:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Trump-Xi-Putin 3자 회담과 지정학 재편 — 우크라이나·핵군축·관세의 삼중 교차점</span>
+    <span class="theme-label-range">Article #16~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Bitcoin $64,000 하회 — ETF 순유출 7거래일 연속 지속</div>
+    <div class="article-title-en">Bitcoin falls below $64,000 as ETF outflows extend to seventh straight day</div>
+    <div class="article-keypoint">Bitcoin $64,000 하회·ETF 7일 연속 순유출 — 지정학 불확실성·리스크오프 심화 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-slides-below-68000-as-anthropic-ipo-frenzy-drains-market-liquidity-5027106" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 22:19 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Eisenkot, Netanyahu의 이스라엘 아랍계 시민 대상 '인종차별적' 캠페인 비난</div>
+    <div class="article-title-en">Eisenkot condemns Netanyahu’s ‘racist’ campaign against Israel’s Arab citizens</div>
+    <div class="article-keypoint">Eisenkot, Netanyahu 아랍계 차별 캠페인 비판 — 이스라엘 연립정부 구성 균열 심화</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/nov/13/eisenkot-accuses-netanyahu-of-racist-campaign-against-israels-arab-minority" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 20:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">백악관, 전례 없는 Trump-Xi-Putin 3자 정상회담 확인 — 핵군축 포함·우크라이나 배제</div>
+    <div class="article-title-en">White House Confirms Unprecedented Trump-Xi-Putin Trilateral Summit: Nukes In, Ukraine Out</div>
+    <div class="article-keypoint">Trump-Xi-Putin 선전 3자 회담 확정 — 핵군축 의제 부상·우크라이나 배제로 지정학 판도 급변</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/white-house-confirms-unprecedented-trump-xi-putin-trilateral-summit-nukes-ukraine-out" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 01:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">우크라이나 지원 축소는 더 많은 전쟁을 부를 것: Macron 경고</div>
+    <div class="article-title-en">Reducing Ukraine aid sets scene for more war: Macron</div>
+    <div class="article-keypoint">Macron, 우크라이나 지원 축소는 유럽 전체 위협 경고 — 서방 동맹 균열 가시화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/reducing-ukraine-aid-sets-scene-for-more-war-macron" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 05:28 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">Trump Media, Bitcoin 베팅 실패로 $10억 부채 위기에 직면</div>
+    <div class="article-title-en">Trump Media group stares down $1bn debt crunch as bitcoin bet fades </div>
+    <div class="article-keypoint">Trump Media 주가·Bitcoin 동반 급락으로 $1bn 부채 위기 — 자산 매각 또는 고비용 차환 압박</div>
+    <a class="article-link" href="https://www.ft.com/content/ada459c4-5f43-4a4a-bc6c-90de8897a4f0?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 22:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Fed 긴축 경로와 채권시장 — Collins '점진적 인상' 발언과 크레딧 랠리의 공존</span>
+    <span class="theme-label-range">Article #21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Fed Collins 총재, '안정적이고 점진적인' 금리 인상이 적절</div>
+    <div class="article-title-en">Fed’s Collins Says ‘Steady, Gradual’ Rate Hikes Appropriate</div>
+    <div class="article-keypoint">Collins '점진적 금리 인상' 적절 발언 — 추가 긴축 경로 재확인, 금리 민감 자산 압박 지속</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-14/fed-s-collins-says-steady-gradual-rate-hikes-appropriate" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 00:08 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">실물자산·에너지 인프라 재편 — 싱가포르 금 금고·Amazon 핵 반응로·MS 글로벌 장애</span>
+    <span class="theme-label-range">Article #22~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Trump 행정부, 미국 항공 통신 장애 원인은 구형 구리선 교체 작업</div>
+    <div class="article-title-en">Repair of old copper wiring caused US flight disruption: Trump administration</div>
+    <div class="article-keypoint">구형 구리선 교체 작업이 미국 항공 통신 마비 초래 — 디지털 인프라 아날로그 취약성 경고</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/expect-more-flight-cancellations-us-transport-chief-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 00:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">싱가포르, 금의 미래에 $650억 베팅</div>
+    <div class="article-title-en">Singapore Makes a $65 Billion Bet on the Future of Gold</div>
+    <div class="article-keypoint">싱가포르 $650억 금 보관소 개설 — 금 시장 패러다임이 '매입'에서 '보관 주권'으로 전환</div>
+    <a class="article-link" href="https://oilprice.com/Metals/Gold/Singapore-Makes-a-65-Billion-Bet-on-the-Future-of-Gold.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 03:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Amazon, 타임라인 지연 속 Fermi 원전으로 복귀</div>
+    <div class="article-title-en">Amazon Returns To Fermi As Reactor Timelines Slip Further Away</div>
+    <div class="article-keypoint">Amazon, Fermi 원전 전력 계약 체결 — 하이퍼스케일러 핵에너지 의존 심화·타임라인 지연 리스크</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/amazon-returns-fermi-reactor-timelines-slip-further-away" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">Microsoft, 글로벌 서비스 장애 전면 복구 완료 발표</div>
+    <div class="article-title-en">Microsoft says all services restored after global outage</div>
+    <div class="article-keypoint">Microsoft 글로벌 서비스 장애 복구 완료 — 정부·병원·경찰 통신망 취약성 재노출 경고</div>
+    <a class="article-link" href="https://www.washingtonpost.com/the-seven/2026/11/14/microsoft-services-restored-after-global-outage/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 23:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #26~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">'씁쓸한 기분이 남아요': 고령의 어머니가 사촌에게 차 수리비로 $800을 줬습니다. 걱정해야 할까요?</div>
+    <div class="article-title-en">‘It leaves me with a sour taste’: My elderly mother gave our cousin $800 for a car repair. Should I be worried?</div>
+    <div class="article-keypoint">고령층 금융 판단 취약성 사례 — 개인 재무 보호 맥락에서 AI 활용 논의 연결 가능</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/it-leaves-me-with-a-sour-taste-my-elderly-mother-gave-our-cousin-800-for-a-car-repair-should-i-be-worried-88dbd188?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">기자가 사과 50여 종을 직접 먹어보며 가장 아삭한 품종을 찾다</div>
+    <div class="article-title-en">Our Reporter Tried About 50 Apple Varieties to Find the Crispest One</div>
+    <div class="article-keypoint">무관 소비생활 기사 — 시장 관련성 없음</div>
+    <a class="article-link" href="https://www.wsj.com/style/our-reporter-tried-about-50-apple-varieties-to-find-the-crispest-one-3151d4ce?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 22:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">'그들은 나머지 우리에게도 올 것': Jon Stewart, Maddow의 Trump '메가 교도소' 발언에 고개 끄덕</div>
+    <div class="article-title-en">'They're Coming For The Rest Of Us': Jon Stewart Nods Along As Maddow Comes Unglued Over Trump 'Mega-Prisons'</div>
+    <div class="article-keypoint">Trump 대형 수용시설 논란 — 행정부 이민 정책 사법·정치 리스크 지속</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/theyre-coming-rest-us-jon-stewart-nods-along-maddow-comes-unglued-over-trump-mega-prisons" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 03:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">프랑스 대권 주자 Riner, Macron과 거리두기</div>
+    <div class="article-title-en">France presidential hopeful Riner distances himself from Macron</div>
+    <div class="article-keypoint">Riner, Macron 지지를 '독이 든 성배'로 거부 — 프랑스 대선 중도 세력 분열 심화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/politics/article/2026/11/14/france-presidential-hopeful-riner-distances-himself-from-macron_6780787_5.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/15 00:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">'어디에도 속하지 않는 시민들'이 결국 이겼다</div>
+    <div class="article-title-en">The citizens of nowhere won in the end</div>
+    <div class="article-keypoint">무관 사회문화 기사 — 시장 관련성 없음</div>
+    <a class="article-link" href="https://www.ft.com/content/9bc5e047-9993-4123-8f22-a59c5de245e9?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/14 14:00 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
