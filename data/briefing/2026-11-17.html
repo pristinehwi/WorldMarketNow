@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-17 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/17 07:48 KST</div>
+    <div class="header-date">2026-11-17</div>
+    <div class="header-headline">美, AI칩 클라우드 우회 차단·Nvidia 지배구조 혼돈 동시 충격</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Nvidia 실적 발표·Anthropic IPO·Bessent 10일 최후통첩 — AI 투자 신뢰의 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Nvidia 지배구조 붕괴 — Bessent 최후통첩·복귀 캠페인·실적 삼중 충돌</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#8</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Bessent 재무장관이 Nvidia 이사회에 10일 기한을 주며 외부 CEO 선임을 공식 요구한 것으로, 정부가 민간 기업 지배구조에 직접 개입하는 전례 없는 국면이 열렸다. Jensen Huang 퇴진 이후 그의 측근들은 공개서한·전화·단체 채팅 등을 통해 복귀 캠페인을 벌이고 있으나, Nvidia는 공식적으로 복귀 가능성을 배제했다. 실적 발표가 이번 주 예정된 가운데 시장은 Nvidia가 AI 생태계 금융 지원을 축소할지 여부에 촉각을 곤두세우고 있으며, 이 불확실성이 Nasdaq 100의 사흘 연속 하락을 이끌었다. Trump 대통령은 Jensen Huang의 중국 스파이 연루 의혹이 국가 안보를 위협하지 않는다고 발언해 자국 정보기관 결론과 충돌하며 혼선을 가중시켰다. Huang 오스터 이후 Nvidia 주가는 추가 하락세를 이어가고 있어 반도체·AI 섹터 전반의 투자 심리를 압박하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI칩 수출통제 2.0 — 클라우드 우회 차단과 아시아 데이터센터 충격</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #9~#15</span>
+    </div>
+    <div class="theme-summary">오늘 가장 구체적인 정책 변화는 미국이 '클라우드 루프홀'을 공식 차단한 것으로, 중국 기업이 싱가포르·말레이시아·태국·인도네시아·브라질 등 5개 우회 거점 데이터센터를 통해 고성능 AI칩을 임대·이용하는 방식에 라이선스 의무를 부과했다. Trump의 아시아 순방에 맞춰 발표된 이 조치는 싱가포르 등 동남아 데이터센터 산업에 직접 타격을 주며, 해당 국가들이 새 규정 검토에 착수했다. Lutnick 상무장관이 Nvidia 칩 수출 제한을 의도적으로 지연시켰다는 의혹을 Bessent가 제기한 가운데 Trump는 Lutnick을 옹호해 행정부 내 균열이 표면화됐다. Nvidia 주가는 정부의 강경 발언 이후 추가 하락하며 반도체 섹터 전반의 셀오프를 심화시켰다. Quad 정상회의에서는 호주가 미·일과 함께 AI 공급망 협약에 서명하며 AI 기술 패권 경쟁이 다자 외교 무대로 확전됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Fed의 AI 경제 대응 — Warsh 생산성 태스크포스와 금융안정 리스크 경고</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #16~#20</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Fed 의장 Warsh가 'AI·생산성·일자리 태스크포스'를 출범시키며 AI 붐이 노동시장과 거시경제에 미치는 영향을 공식 분석 과제로 채택했다는 것이다. Warsh는 직원들이 AI 충격에 대한 다양한 시나리오를 이미 작성 중임을 밝혀, Fed가 통화정책 운영 프레임워크 자체를 AI 시대에 맞게 재설계하는 단계에 진입했음을 시사했다. Fed 이사 Barr는 별도 연설에서 AI가 금융 안정에 미치는 잠재적 리스크를 경고하며 감독 체계 강화 필요성을 역설했다. 이번 주 다수의 Fed 연사 발언과 소매판매 지표가 예정되어 있어 AI 발 생산성 서프라이즈와 기존 긴축 경로 간의 긴장이 채권시장의 방향성 탐색을 이끌 전망이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">Anthropic IPO·AI 플랫폼 자본 재편 — Nvidia 불확실성 속 대안 베팅 가속</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #21~#23</span>
+    </div>
+    <div class="theme-summary">이번 주 Anthropic의 IPO가 예정된 가운데 Nvidia 지배구조 혼란과 칩 수출 규제 강화로 AI 생태계 자본 흐름이 플랫폼 레이어로 재배치될 가능성이 부각되고 있다. AI 인프라 불확실성이 커지는 환경에서 Anthropic은 OpenAI와의 패권 경쟁 속 독립적 플랫폼으로서의 투자 매력을 부각시키고 있다. 한편 OpenAI는 CSAM 콘텐츠 차단을 위한 새 이미지 분류기를 출시하고 ChatGPT에 경고 시스템을 도입해 AI 안전·신뢰성 이슈에 선제 대응했다. 반면 캘리포니아 법무장관은 OpenAI를 상대로 80건의 '통제 불능' 사례를 근거로 소송을 제기해 AI 플랫폼 규제 리스크가 IPO 신뢰성에 부담을 주고 있다. 아시아 증시는 Nvidia 실적과 Anthropic IPO를 앞두고 하락 출발이 예고되어 AI 무역의 취약성이 글로벌 리스크오프로 전이되는 양상이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">Berkshire·Rinehart·EU 관세 — 실물자산·방산·인프라 자본 재배치 신호</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #24~#27</span>
+    </div>
+    <div class="theme-summary">Berkshire Hathaway는 미국 주택시장에 대한 베팅을 강화해 Lennar 지분을 거의 두 배로 늘린 반면, 일부 은행주를 매도해 금융 섹터 내 선별적 재편 흐름을 보였다. 호주 최대 부호 Rinehart는 미국 방산·항공우주주와 SpaceX 지분을 추가 매입해 미국 달러 자산 내에서도 방산·우주 인프라로의 자금 이동이 가속화되고 있음을 시사했다. EU는 인도·일본·대만·터키·베트남산 철강에 반덤핑 관세를 부과하며 11월 17일부터 시행, 글로벌 공급망 비용 상승 압력이 자동차·항공·가전 섹터로 전이될 위험이 높아졌다. 우크라이나 핵시설 사고 위험 증가에 대한 38개국 핵안전 규제기관의 공동 경고는 에너지 인프라 취약성을 재부각시키며 겨울철 유럽 에너지 수급 불안을 자극하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #28~#30</span>
+    </div>
+    <div class="theme-summary">Summit Therapeutics의 폐암 치료제가 FDA 승인을 받지 못해 주가가 급락했으며, 규제 당국은 생존 기간 연장 증거를 추가로 요구했다. 실업률 정의의 지역별 차이에 관한 분석과 억만장자의 정치적 영향력을 제한하려는 미국 중간선거 사례 연구는 직접적인 시장 임팩트는 제한적이나 정책 환경의 배경 맥락으로 참고할 수 있다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Nvidia 지배구조 붕괴 — Bessent 최후통첩·복귀 캠페인·실적 삼중 충돌</span>
+    <span class="theme-label-range">Article #1~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Micron·AMD 등 AI 관련주 하락, 반도체 섹터 셀오프 심화</div>
+    <div class="article-title-en">Micron, AMD and other AI stocks fall as the chip sector’s selloff intensifies</div>
+    <div class="article-keypoint">Nvidia 실적 앞두고 AI 생태계 금융 지원 축소 우려로 칩·AI주 셀오프 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/micron-amd-and-other-ai-stocks-fall-as-the-chip-sectors-selloff-intensifies-48e38bdf?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 06:17 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Nvidia 실적, Jensen Huang 퇴진 위기 그림자 속 사이드쇼로 전락</div>
+    <div class="article-title-en">Nvidia Earnings Are Sideshow as Huang’s Ouster Looms Over Market</div>
+    <div class="article-keypoint">Jensen Huang 오스터 국면에서 Nvidia 실적 발표 — 사상 가장 불확실한 어닝 시즌</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-16/nvidia-earnings-are-sideshow-as-huang-s-ouster-looms-over-market" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 06:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Trump, 전 Nvidia CEO Jensen Huang의 중국 스파이 스캔들이 국가 안보 위협 아니라고 주장</div>
+    <div class="article-title-en">Trump says ex-Nvidia CEO Jensen Huang’s affair with an alleged Chinese spy did not threaten national security</div>
+    <div class="article-keypoint">Trump, Jensen Huang 중국 스파이 의혹 국가안보 무관 발언 — 정보기관 결론과 충돌</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/16/trump-says-ex-nvidia-ceo-jensen-huangs-affair-with-an-alleged-chinese-spy-did-not-threaten-national-security/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 04:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Nasdaq 100, Nvidia 실적 앞두고 사흘 연속 하락</div>
+    <div class="article-title-en">Nasdaq 100 Tumbles for Third Day With Nvidia Earnings on Horizon</div>
+    <div class="article-keypoint">Nasdaq 100 사흘째 하락 — Nvidia 실적·Anthropic IPO 앞둔 AI 투자 불안이 주도</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-16/nasdaq-100-plunges-as-nvidia-earnings-anthropic-ipo-on-horizon" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 03:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">'역외 위장 법인은 명백했다' — Bessent, Nvidia 이사회에 10일 기한·외부인 CEO 선임 요구</div>
+    <div class="article-title-en">"These Shell Companies Were Obvious": Bessent Gives Nvidia Board 10 Days, Wants Outsider To Replace Huang</div>
+    <div class="article-keypoint">Bessent, Nvidia 이사회에 10일 최후통첩·외부 CEO 선임 요구 — 정부 개입 전례 없는 국면</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/these-shell-companies-were-obvious-bessent-gives-nvidia-board-10-days-wants-outsider-replace" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 00:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Jensen Huang을 Nvidia CEO로 복귀시키려는 캠페인</div>
+    <div class="article-title-en">The Campaign to Bring Back Jensen Huang as Nvidia CEO</div>
+    <div class="article-keypoint">Jensen Huang 측근들, 복귀 캠페인 전개 — 법적 압박 강화 속 이사회 결정 번복 압력</div>
+    <a class="article-link" href="https://www.wsj.com/tech/the-campaign-to-bring-back-jensen-huang-as-nvidia-ceo-e91b0b2c?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/16 23:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Nvidia, 복귀 캠페인 확산에도 Huang 복귀 공식 배제</div>
+    <div class="article-title-en">Nvidia rules out Huang comeback as campaign for his return grows</div>
+    <div class="article-keypoint">Nvidia, Jensen Huang 복귀 공식 배제 — 지배구조 불확실성 장기화 신호</div>
+    <a class="article-link" href="https://www.investing.com/news/stock-market-news/silicon-valley-leaders-back-call-for-jensen-huangs-return-to-nvidia-5029956" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/16 22:18 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Nasdaq 100 2.7% 급락 — AI 무역 핵심 주간의 암울한 출발</div>
+    <div class="article-title-en">Nasdaq 100 sinks 2.7% in gloomy start to pivotal week for AI trade</div>
+    <div class="article-keypoint">Nasdaq 100 2.7% 급락 — Nvidia 매도 압력이 AI 섹터 전반 리스크오프 촉발</div>
+    <a class="article-link" href="https://www.ft.com/content/12d927a9-98b1-40b9-8f75-01fb56a693d1?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 06:58 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI칩 수출통제 2.0 — 클라우드 우회 차단과 아시아 데이터센터 충격</span>
+    <span class="theme-label-range">Article #9~#15</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Trump, Nvidia 칩 수출 제한 지연 의혹받는 Lutnick 상무장관 옹호 — 실시간 업데이트</div>
+    <div class="article-title-en">Trump defends commerce secretary Lutnick for allegedly slow-walking Nvidia chip export restrictions – live</div>
+    <div class="article-keypoint">Lutnick 수출 제한 지연 의혹 속 Trump 옹호 — 행정부 내 AI칩 정책 균열 표면화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/nov/16/donald-trump-asia-visit-democrats-republicans-elizabeth-warren-faa-air-disruption-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 07:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">싱가포르, 데이터센터 타격 우려 속 미국 AI칩 수출 신규 규정 검토 착수</div>
+    <div class="article-title-en">Singapore studying new US rules on AI chip exports that may hit data centres</div>
+    <div class="article-keypoint">싱가포르, 미국의 AI칩 수출 신규 규정 검토 착수 — 동남아 데이터센터 타격 우려</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/singapore-studying-new-us-rules-on-ai-chip-exports-that-may-hit-data-centres" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 06:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Trump 행정부, 중국행 AI칩 우회 허점 차단 규정 발표 — 대통령 아시아 순방 직전</div>
+    <div class="article-title-en">Trump Administration Moves to Close A.I. Chip Loophole Ahead of China Trip</div>
+    <div class="article-keypoint">Trump, 아시아 순방 맞춰 AI칩 클라우드 우회 차단 규정 발표 — 중국 접근 봉쇄 가속</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/11/16/us/politics/trump-china-ai-chip-loophole.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 06:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Nvidia 주가 추가 하락 — 미국 정부의 강경 발언 여파</div>
+    <div class="article-title-en">Nvidia’s stock extends decline following harsh words from the U.S. government</div>
+    <div class="article-keypoint">상무부, 중국의 클라우드 우회 고성능 칩 접근 차단 규정 발표 — Nvidia 주가 추가 하락</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidias-stock-extends-declines-following-harsh-words-from-the-u-s-government-d721188e?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 06:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Albanese, Quad 정상회의 앞두고 Trump의 AI 공급망 협약 서명 — AI 기술 대중 견제</div>
+    <div class="article-title-en">Albanese signs on to Trump’s AI supply chain pact before leaders’ meeting at Quad summit</div>
+    <div class="article-keypoint">호주, 미·일과 AI 공급망 협약 서명 — Quad 정상회의서 AI 기술 패권 대중 견제 다자화</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/2026/nov/16/albanese-treads-tightrope-in-upcoming-trump-meeting-wanting-indo-pacific-engagement-and-end-to-iran-and-ukraine-wars" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">미국, '클라우드 우회 허점' 차단 — Jensen 퇴진 직후, AI칩 임대 및 5개 우회 거점 라이선스 의무화</div>
+    <div class="article-title-en">US Closes The "Cloud Loophole": Days After Jensen's Exit, New Rule Puts AI Chip Rentals To China And Five "Diversion" Hubs Under License</div>
+    <div class="article-keypoint">미국, 클라우드 우회 AI칩 임대 차단 규정 발효 — 4년간 허점 공식 봉쇄</div>
+    <a class="article-link" href="https://www.zerohedge.com/markets/us-closes-cloud-loophole-days-after-jensens-exit-new-rule-puts-ai-chip-rentals-china-and" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 05:20 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Trump 아시아 순방에 맞춰 미국, 중국의 AI칩 접근 추가 차단 조치 발표</div>
+    <div class="article-title-en">US to curb China’s access to AI chips as Trump heads to Asia</div>
+    <div class="article-keypoint">Trump 아시아 순방 중 AI칩 추가 수출 통제 발표 — 싱가포르 등 5개국 라이선스 의무화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-to-curb-chinas-access-to-ai-chips-as-trump-heads-to-asia" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/16 23:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Fed의 AI 경제 대응 — Warsh 생산성 태스크포스와 금융안정 리스크 경고</span>
+    <span class="theme-label-range">Article #16~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Warsh 의장, Fed 생산성·일자리 태스크포스 컨퍼런스 개회사</div>
+    <div class="article-title-en">Warsh, Opening Remarks</div>
+    <div class="article-keypoint">Warsh Fed 의장, AI 생산성·고용 충격 시나리오 공식 분석 착수 선언</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/warsh20261116a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Fed 의장, AI 붐의 경제적 불확실성 조명</div>
+    <div class="article-title-en">Fed Chairman Highlights Economic Uncertainty of A.I. Boom</div>
+    <div class="article-keypoint">Fed, AI 붐이 노동시장에 미치는 영향 분석 태스크포스 공식 출범</div>
+    <a class="article-link" href="https://www.nytimes.com/2026/11/16/business/economy/warsh-ai-economy.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 06:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Fed의 Warsh, AI 경제 충격 시나리오 작성 중임을 공식 확인</div>
+    <div class="article-title-en">Fed’s Warsh Says Staff Are Gaming Out Contingencies on AI Impact</div>
+    <div class="article-keypoint">Warsh, AI 충격 시나리오 사전 작성 중 — Fed 정책 프레임 재설계 진입</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-16/fed-s-warsh-says-staff-are-gaming-out-contingencies-on-ai-impact" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Barr 이사, AI의 잠재적 금융 안정 리스크 연설</div>
+    <div class="article-title-en">Barr, Some Potential Financial Stability Implications of Artificial Intelligence</div>
+    <div class="article-keypoint">Fed 이사 Barr, AI의 금융 안정 리스크 경고 — 감독 체계 강화 필요성 역설</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/barr20261116a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/16 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">이번 주 주요 이벤트: NVDA 실적·Anthropic IPO·소매판매·미중 정상회담·Fed 연사 릴레이 등</div>
+    <div class="article-title-en">Key Events This Busy Week: NVDA Eernings, Anthropic IPO, Retail Sales, US-China Summit, Fed Speakers Galore And Much More</div>
+    <div class="article-keypoint">이번 주 NVDA 실적·Anthropic IPO·미중 정상회담·Fed 연사 릴레이 동시 개최</div>
+    <a class="article-link" href="https://www.zerohedge.com/economics/key-events-busy-week-nvda-eernings-anthropic-ipo-retail-sales-us-china-summit-fed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 01:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">Anthropic IPO·AI 플랫폼 자본 재편 — Nvidia 불확실성 속 대안 베팅 가속</span>
+    <span class="theme-label-range">Article #21~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">OpenAI, CSAM 대응 이미지 분류기·ChatGPT 경고 시스템 출시</div>
+    <div class="article-title-en">OpenAI releases a new image classifier and ChatGPT warnings to combat CSAM</div>
+    <div class="article-keypoint">OpenAI, CSAM 차단 이미지 분류기 출시 — AI 안전성 선제 대응으로 규제 리스크 방어</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/16/openai-releases-a-new-image-classifier-and-chatgpt-warnings-to-combat-csam/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 02:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">Nvidia 실적·Anthropic IPO 앞두고 아시아 증시 하락 전망 — 시장 동향 종합</div>
+    <div class="article-title-en">Asian Stocks to Fall Ahead of Nvidia, Anthropic: Markets Wrap</div>
+    <div class="article-keypoint">Nvidia 실적·Anthropic IPO 앞두고 아시아 증시 하락 출발 예고 — AI 무역 취약성 글로벌 전이</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-16/stock-market-today-dow-s-p-live-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 07:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">OpenAI, 캘리포니아주로부터 AI '통제 불능' 80건 관련 소송 피소</div>
+    <div class="article-title-en">OpenAI sued by California over 80 ‘loss of control’ incidents</div>
+    <div class="article-keypoint">캘리포니아, OpenAI 상대 '통제 불능' 80건 소송 — AI 플랫폼 규제 리스크 현실화</div>
+    <a class="article-link" href="https://www.ft.com/content/1e18af77-d434-4871-81cc-b0e74a0e97bd?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 05:48 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">Berkshire·Rinehart·EU 관세 — 실물자산·방산·인프라 자본 재배치 신호</span>
+    <span class="theme-label-range">Article #24~#27</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">Berkshire, 침체 미국 주택시장 베팅 확대 — 일부 은행주는 매도</div>
+    <div class="article-title-en">Berkshire upped its bet on a beleaguered U.S. housing market, while souring on these bank stocks</div>
+    <div class="article-keypoint">Berkshire, Lennar 지분 거의 2배 확대 — 미국 주택시장 저점 베팅 강화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/berkshire-upped-its-bet-on-a-beleaguered-u-s-housing-market-while-souring-on-these-bank-stocks-2e8de402?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 07:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">억만장자 Rinehart, 미국 방산주·SpaceX 지분 확대</div>
+    <div class="article-title-en">Billionaire Rinehart Boosts US Defense and SpaceX Holdings</div>
+    <div class="article-keypoint">Rinehart, SpaceX·방산주 지분 확대 — 달러 자산 내 방산·우주 인프라 집중</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-16/billionaire-rinehart-boosts-us-defense-and-spacex-holdings" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 07:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">EU, 인도·일본·대만·터키·베트남산 철강에 반덤핑 관세 부과</div>
+    <div class="article-title-en">EU sets tariffs on steel from India, Japan, Taiwan, Turkey, Vietnam</div>
+    <div class="article-keypoint">EU, 아시아·터키산 철강에 반덤핑 관세 부과 — 11월 17일 발효, 공급망 비용 상승 압력</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/eu-sets-tariffs-on-steel-from-india-japan-taiwan-turkey-vietnam" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 02:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">우크라이나 핵사고 위험 이번 겨울 더 높아졌다 — 핵안전 규제기관들 경고</div>
+    <div class="article-title-en">Risk of nuclear accident in Ukraine increasing this winter, atomic safety regulators say</div>
+    <div class="article-keypoint">38개국 핵안전 규제기관, 우크라이나 핵시설 사고 위험 증가 경고 — 겨울철 에너지 불안 가중</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/risk-of-nuclear-accident-in-ukraine-increasing-this-winter-atomic-safety-regulators-say" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/16 20:49 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #28~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">억만장자의 정치적 지배력 깨기</div>
+    <div class="article-title-en">Breaking Billionaires’ Political Grip</div>
+    <div class="article-keypoint">억만장자 정치 자금의 선거 영향력 — 규제 환경 변화 가능성 배경 맥락</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/fight-against-oligarchy-does-not-end-at-ballot-box-by-maira-martini-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/16 20:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">지역별 실업률 정의의 차이</div>
+    <div class="article-title-en">Geographic differences in unemployment definitions</div>
+    <div class="article-keypoint">실업률 정의의 지역별 차이 분석 — 직접적 시장 임팩트 제한적</div>
+    <a class="article-link" href="https://fred.stlouisfed.org/blog/2026/11/geographic-differences-in-unemployment-definitions" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/16 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">FDA, 바이오텍 최대 관심 항암제 승인 거절 — 해당 기업 주가 급락</div>
+    <div class="article-title-en">The FDA declined to approve one of biotech’s most closely watched cancer drugs. The company’s stock tumbled.</div>
+    <div class="article-keypoint">Summit Therapeutics 폐암 신약 FDA 승인 거절 — 생존 연장 증거 부재로 주가 급락</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-fda-declined-to-approve-one-of-biotechs-most-closely-watched-cancer-drugs-d7c6a0a3?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/17 07:21 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
