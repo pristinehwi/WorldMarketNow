@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-21 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/21 07:51 KST</div>
+    <div class="header-date">2026-11-21</div>
+    <div class="header-headline">AI 셀오프 $2.3조 — Anthropic IPO 실패와 Nvidia SEC 조사 동시 충격</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Anthropic 주가 IPO가 하회 여부 및 Nvidia SEC 조사 확대 범위 — AI 투자 신뢰 붕괴 분기점</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Anthropic IPO 실망과 AI 투자 신뢰 균열 — 나스닥 2026년 상승분 전부 반납</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#8</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Anthropic 주가가 IPO 첫날 급락해 공모가를 위협하는 수준까지 밀리며 나스닥이 2026년 연간 상승분을 전부 반납했다는 것이다. Anthropic의 주가 불안은 단순 개별 종목 문제를 넘어 'AI 빅테크 밸류에이션 전반에 대한 시장 불신'으로 확산되는 신호로 해석되고 있다. 여기에 Pentagon 기술 책임자가 CNBC에 출연해 Anthropic을 '공급망 리스크'로 직접 지목하면서 기관 수요의 추가 이탈 가능성이 부각됐다. 한편 Anthropic 연구진은 AI 모델 Claude가 리만 가설을 증명했다고 주장했으나 독립 검증이 이뤄지지 않은 상태에서 IPO 타이밍과 맞물려 오히려 신뢰도 논란을 키웠다. 락업 해제 물량 부담과 맞물려 향후 1년간 공급 과잉 압력이 주가에 지속적으로 작용할 것이라는 분석도 제기됐다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Nvidia SEC 조사 심화와 반도체 $2.3조 주간 증발 — 2008년 이후 최악의 주간 성과</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #9~#14</span>
+    </div>
+    <div class="theme-summary">이번 주 반도체 대형주 지수가 25년 만에 최악의 주간 하락률을 기록하며 시가총액 기준 $2.3조가 증발했고, Nvidia는 최근 7거래일 동안에만 $1.16조가 사라지며 2008년 이후 최장 연속 주간 하락 기록을 경신했다. 특히 오늘 SEC의 Nvidia 조사 심화 보도가 장 중 추가 급락을 촉발했으며, 이는 단순 실적 불안을 넘어 지배구조·수출통제·규제 리스크가 복합적으로 작동하는 구조임을 보여준다. 중국 AI 기업들이 Nvidia 칩에 고도로 의존하고 있어 수출통제 강화 시 중국발 수요 절벽이 추가적인 하방 압력으로 작용할 수 있다는 경고도 제기됐다. Trump 대통령은 Jensen Huang이 '큰 사과' 후 복귀해야 한다고 발언했으나 현실화 가능성은 낮게 평가된다. 메모리 반도체 Micron·Sandisk의 저렴한 밸류에이션이 오히려 반도체 사이클 고점의 신호일 수 있다는 애널리스트 경고도 함께 나왔다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Fed 거버넌스와 AI 경제 대응 — Warsh 의장의 AI 혁명론과 Cook의 글로벌 맥락 발언</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #15~#18</span>
+    </div>
+    <div class="theme-summary">Fed 의장 Kevin Warsh가 AI를 경제적 전환점으로 명시하며 고용과 금리 경로에 대한 불확실성을 공개적으로 인정했다. 이는 AI발 생산성 충격이 통화정책 프레임 자체를 재설계해야 할 수 있다는 신호로, 시장은 향후 Fedspeak에서 AI 경제론이 금리 결정에 어떻게 반영될지를 주시하고 있다. Governor Waller는 대학생 대상 행사에서 개회사를 맡아 실질적인 통화정책 메시지보다는 교육적 역할에 집중했다. Governor Cook은 글로벌 맥락에서 미국 경제를 조망하는 연설을 진행했으며, 무역 충격과 지정학적 복잡성이 Fed 대응을 어렵게 만들고 있음을 시사했다. 세 발언을 종합하면 Fed 내부에서 AI·무역·지정학의 삼중 불확실성을 소화하는 과정이 현재 진행 중임을 보여준다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">지정학 리스크와 금융시장 변동성 — 호르무즈 추가 공격·VIX 급등·금 최악의 주간</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #19~#23</span>
+    </div>
+    <div class="theme-summary">호르무즈 해협에서 또 다시 유조선 공격이 발생한 가운데 Bessent 재무장관이 이란이 '압박받고 있다'고 발언하며 긴장이 지속되고 있다. 같은 기간 VIX는 2025년 관세 혼란 이후 최고 수준으로 급등했고, S&P 500은 7개월 만에 최악의 주간 성과를 기록했다. 금 현물은 8개월 만에 최악의 주간 하락을 기록했으며 금 선물은 2020년 3월 이후 최대 주간 하락폭을 기록해, 안전자산 쏠림보다 현금화 압력이 더 강하게 작동했음을 시사한다. Trump-Xi 회담에서 양측이 군사 AI 의사결정에 인간 개입 원칙에 합의했다는 Bessent의 발언은 AI 군비경쟁 완화의 단초로 주목되지만 구체적 이행 메커니즘은 불명확하다. ECB Lagarde 총재는 프랑크푸르트 뱅킹 콩그레스에서 유럽의 자체 성장동력 강화 필요성을 강조하며 대외 의존도 축소를 촉구했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">AI·사이버보안 M&A와 빅테크 규제 — CrowdStrike-Zscaler 대형 딜과 OpenAI 소송</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #24~#26</span>
+    </div>
+    <div class="theme-summary">CrowdStrike가 시가총액 $320억 규모의 Zscaler 인수 협상 중이라는 보도가 나오며 사이버보안 섹터 최대 규모 M&A 가능성이 부각됐다. AI 주식 셀오프 국면에서도 사이버보안은 AI 인프라 확장의 필수 수혜 영역으로 자본이 재배치되는 흐름을 보여준다. 오리건주는 OpenAI를 상대로 $20억 규모의 소송을 제기하며 미성년자 안전 위반 혐의를 주장했고, 이는 AI 플랫폼 기업에 대한 주(州) 단위 규제 선례가 될 수 있다. 영국에서는 노벨 경제학자가 Anthropic과 OpenAI에 영국 정부에 데이터를 제공하라고 촉구하며 AI 데이터 거버넌스 논쟁이 대서양 양안으로 확산되는 모습이다. 네트워크 복원력 이론 연구에서도 AI 인프라 취약 구조에 대한 학문적 관심이 높아지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #27~#30</span>
+    </div>
+    <div class="theme-summary">이번 주 기타 기사들은 직접적인 금융·거시 임팩트보다는 사회·정치·지역 이슈에 집중됐다. GOP 보좌관의 증오범죄 조작 혐의, 뉴욕시 Rikers Island 교도소 2032년 폐쇄 계획, Amazon의 NYC 배달 법안 반대 캠페인, Vanguard 플랫폼의 Anthropic IPO 첫날 소매 투자자 참여 현황, 그리고 소규모 광물 기업 Anteros Metals의 사모 증자 등이 포함된다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Anthropic IPO 실망과 AI 투자 신뢰 균열 — 나스닥 2026년 상승분 전부 반납</span>
+    <span class="theme-label-range">Article #1~#8</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Anthropic 주가 급락 — IPO 공모가 위로는 간신히 사수</div>
+    <div class="article-title-en">Anthropic’s stock sees dramatic slide but manages to stay above its IPO price</div>
+    <div class="article-keypoint">Anthropic 주가 IPO가 위협 — 개장 이틀째 급락, 나머지 테크주에 부정적 신호</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/anthropics-stock-slides-closer-to-ipo-price-and-drags-down-the-ai-trade-cc43a0c4?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Anthropic IPO의 숨겨진 함정 — 수십억 달러 규모의 락업 해제 물량 대기 중</div>
+    <div class="article-title-en">The hidden catch in Anthropic’s IPO: Billions of locked-up shares are waiting in the wings</div>
+    <div class="article-keypoint">Anthropic 락업 해제 물량 부담 — 향후 1년간 주가 오버행 리스크 구체화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/the-hidden-catch-in-anthropics-ipo-billions-of-locked-up-shares-are-waiting-in-the-wings-279d33ce?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:39 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">나스닥 2026년 상승분 전부 반납 — Anthropic 이틀째 하락이 AI 셀오프 심화</div>
+    <div class="article-title-en">Nasdaq erases all 2026 gains as AI sell-off dampens Anthropic’s second day of trading</div>
+    <div class="article-keypoint">나스닥 2026년 상승분 전부 반납 — Anthropic IPO 실망이 AI 섹터 전반 하락 촉발</div>
+    <a class="article-link" href="https://www.theguardian.com/business/2026/nov/20/global-stock-markets-slump-anthropic-ipo-ai-sell-off" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Anthropic 연구원, AI 챗봇 Claude가 수학 최대 난제를 풀었다고 주장</div>
+    <div class="article-title-en">Anthropic researcher says AI chatbot Claude solved math’s greatest riddle</div>
+    <div class="article-keypoint">Claude의 리만 가설 증명 주장 — 미검증 상태로 IPO 타이밍과 맞물려 신뢰도 논란</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/anthropic-researcher-says-ai-chatbot-claude-solved-maths-greatest-riddle" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 05:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">'명백한 공급망 리스크' — Pentagon, 주가 하락 중인 Anthropic을 CNBC에서 직접 비판</div>
+    <div class="article-title-en">"Definitely" A Supply Chain Risk: Pentagon Goes On CNBC To Bash Anthropic As Stock Slides Toward IPO Price</div>
+    <div class="article-keypoint">Pentagon, Anthropic을 공급망 리스크로 공개 지목 — 기관 수요 이탈 가속 우려</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/definitely-supply-chain-risk-pentagon-goes-cnbc-bash-anthropic-stock-slides-toward-ipo-price" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 04:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Claude가 수학 최대 난제를 풀었나? Anthropic 소속 수학자도 타이밍이 '최악'이라고 인정</div>
+    <div class="article-title-en">Did Claude Just Solve Math's Most Famous Problem? Even Anthropic's Mathematician Admits The Timing Is 'Horrible'</div>
+    <div class="article-keypoint">Claude 리만 가설 증명 주장 — Anthropic 수학자도 IPO 타이밍이 '최악'이라고 인정</div>
+    <a class="article-link" href="https://www.zerohedge.com/science/did-claude-just-solve-maths-most-famous-problem-even-anthropics-mathematician-admits-timing" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 05:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">노벨 경제학자, Anthropic·OpenAI에 영국 정부에 데이터 제공 촉구</div>
+    <div class="article-title-en">Give UK Your Data, Nobel Economist Tells Anthropic and OpenAI</div>
+    <div class="article-keypoint">영국, Anthropic·OpenAI에 정부 데이터 제공 촉구 — AI 데이터 거버넌스 국제 논쟁 확산</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-20/give-uk-your-data-nobel-economist-tells-anthropic-and-openai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/20 17:43 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Anthropic 데뷔 첫날 Vanguard 자기주도 투자자의 대다수는 남성</div>
+    <div class="article-title-en">Men made up most of Vanguard’s self-directed investors in Anthropic debut</div>
+    <div class="article-keypoint">Vanguard 소매 투자자 Anthropic IPO 첫날 대거 참여 — 개인 수요에도 주가 하락으로 신뢰 균열</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/11/20/men-made-up-most-vanguards-investors-anthropic-debut/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:09 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Nvidia SEC 조사 심화와 반도체 $2.3조 주간 증발 — 2008년 이후 최악의 주간 성과</span>
+    <span class="theme-label-range">Article #9~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Micron·Sandisk 주가가 저평가처럼 보이지만 애널리스트들은 오히려 위험 신호라고 경고</div>
+    <div class="article-title-en">Micron and Sandisk stocks might look like bargains, but analysts say that’s actually a red flag</div>
+    <div class="article-keypoint">Micron·Sandisk 저밸류에이션은 반도체 사이클 고점 경고 신호로 해석</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/micron-and-sandisk-stocks-might-look-like-bargains-but-analysts-say-thats-actually-a-red-flag-da1f1f5d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">AI 패닉에 반도체주 주간 $2.3조 증발 — 칩 대형주 25년 만에 최악의 주간 성과</div>
+    <div class="article-title-en">Chip stocks see $2.3 trillion weekly wipeout as panic grips the AI trade</div>
+    <div class="article-keypoint">반도체 지수 주간 $2.3조 증발 — 25년 만에 최악의 주간 하락률 기록</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/chip-stocks-see-2-3-trillion-weekly-wipeout-as-panic-grips-the-ai-trade-371f2f03?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 07:44 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">모닝 리스크 리포트: 중국 AI 기업들은 Nvidia 칩에 중독돼 있다 — 이제 금단현상이 시작된다</div>
+    <div class="article-title-en">The Morning Risk Report: China’s AI Firms Are Hooked on Nvidia Chips. Now Comes the Withdrawal.</div>
+    <div class="article-keypoint">중국 AI 기업, Nvidia 칩 의존도 과도 — 수출통제 강화 시 단기 수요 절벽 현실화</div>
+    <a class="article-link" href="https://www.wsj.com/risk-compliance-journal/the-morning-risk-report-chinas-ai-firms-are-hooked-on-nvidia-chips-now-comes-the-withdrawal-57391e23?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/20 21:57 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Nvidia 주가, 2008년 이후 최장 연속 주간 하락 기록 경신</div>
+    <div class="article-title-en">Nvidia’s stock clinches a stretch of weekly losses not seen since 2008</div>
+    <div class="article-keypoint">Nvidia, 7거래일 연속 하락으로 $1.16조 증발 — 2008년 이후 최장 주간 연속 손실</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidias-stock-heads-for-a-stretch-of-weekly-losses-unseen-since-2008-91aba9a6?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Nvidia, SEC 조사 심화로 AI 시장 셀오프 가속 | Closing Bell</div>
+    <div class="article-title-en">Nvidia Plunges as SEC Probe Deepens AI Market Selloff | Closing Bell</div>
+    <div class="article-keypoint">SEC의 Nvidia 조사 심화 — 규제 리스크가 실적 불안에 더해 복합 하락 압력</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-20/nvidia-plunges-on-sec-probe-closing-bell-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 07:08 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Trump, Huang이 '큰 사과' 후 Nvidia에 복귀해야 한다고 발언</div>
+    <div class="article-title-en">Trump Says Huang Should Return to Nvidia After ‘Big Apology’</div>
+    <div class="article-keypoint">Trump, Huang '큰 사과' 후 복귀 촉구 — 현실화 가능성 낮지만 지배구조 공백 장기화 시사</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-20/trump-huang-should-return-to-nvidia-after-big-apology-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 07:31 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Fed 거버넌스와 AI 경제 대응 — Warsh 의장의 AI 혁명론과 Cook의 글로벌 맥락 발언</span>
+    <span class="theme-label-range">Article #15~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Fed, College Fed Challenge 수상자 발표</div>
+    <div class="article-title-en">Federal Reserve announces College Fed Challenge winners</div>
+    <div class="article-keypoint">Fed, College Fed Challenge 수상자 발표 — 실질 통화정책 시그널 없는 행사성 이벤트</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/pressreleases/other20261120b.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Waller, 2026 National College Fed Challenge Finals 개회사</div>
+    <div class="article-title-en">Waller, Opening Remarks</div>
+    <div class="article-keypoint">Waller, College Fed Challenge 개회사 — 실질적 통화정책 발언 없이 교육 행사에 집중</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/waller20261120a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/20 22:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Cook, 글로벌 맥락에서 본 미국 경제</div>
+    <div class="article-title-en">Cook, The U.S. Economy in Global Context</div>
+    <div class="article-keypoint">Cook 글로벌 맥락 연설 — 무역·지정학 복합 충격이 Fed 정책 대응 복잡성 가중</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/cook20261120a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 02:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Peterson: Fed 의장은 AI 혁명이 온다고 본다 — 이제 그 의미를 해석해야 한다</div>
+    <div class="article-title-en">Peterson: The Fed's chairman sees an AI revolution coming. Now he has to figure out what it means</div>
+    <div class="article-keypoint">Warsh Fed 의장, AI 혁명이 고용·금리 경로 불확실성 키운다고 공개 인정</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/11/16/kevin-warsh-fed-ai-jobs-productivity-interest-rateshtml.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:07 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">지정학 리스크와 금융시장 변동성 — 호르무즈 추가 공격·VIX 급등·금 최악의 주간</span>
+    <span class="theme-label-range">Article #19~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Trump·Xi, 군사 AI 의사결정에 인간 개입 원칙 합의 — Bessent 발언</div>
+    <div class="article-title-en">Trump, Xi agreed that military AI decisions should involve humans, Bessent says</div>
+    <div class="article-keypoint">Trump-Xi, 군사 AI에 인간 개입 원칙 합의 — AI 군비경쟁 완화 단초, 이행 불확실</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-xi-agreed-that-military-ai-decisions-should-involve-humans-bessent-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 01:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">호르무즈 해협 또 유조선 공격 — Bessent '이란이 압박받고 있다'고 발언</div>
+    <div class="article-title-en">Another Tanker Attacked In Hormuz Strait As Bessent Boasts Iranians Are 'Being Squeezed'</div>
+    <div class="article-keypoint">호르무즈 추가 유조선 공격 — 이란 압박 지속으로 에너지 공급 리스크 프리미엄 유지</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/another-tanker-attacked-hormuz-strait-bessent-boasts-iranians-are-being-squeezed" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 03:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">금 현물 8개월 만에 최악의 주간 하락 — 금 선물은 2020년 3월 이후 최대 주간 낙폭</div>
+    <div class="article-title-en">Spot gold posts worst week in 8 months, futures notch worst week since March 2020</div>
+    <div class="article-keypoint">금 현물 8개월 만에 최악의 주간 — 안전자산 대신 현금화 압력이 우세한 시장 환경</div>
+    <a class="article-link" href="https://www.investing.com/news/commodities-news/gold-slides-to-14mth-low-set-for-weekly-drop-amid-fed-hike-bets-5040648" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/20 22:23 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">VIX, 2025년 관세 혼란 이후 최고치 급등 — 변동성 경고 신호 점등</div>
+    <div class="article-title-en">VIX Hits Highest Level Since 2025 Tariff Turmoil as Volatility Warning Flash</div>
+    <div class="article-keypoint">VIX, 2025년 관세 혼란 이후 최고치 — S&P 500 7개월 만에 최악의 주간 성과 동반</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-20/vix-hits-highest-level-since-2025-tariff-turmoil-as-volatility-warning-flash" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:22 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">Christine Lagarde: 적시에 행동하라</div>
+    <div class="article-title-en"> Christine Lagarde: Acting in time</div>
+    <div class="article-keypoint">Lagarde ECB 마지막 뱅킹 콩그레스 연설 — 유럽 자체 성장동력 강화와 대외 의존 축소 촉구</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261120~e52bcc4db2.en.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/20 17:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">AI·사이버보안 M&A와 빅테크 규제 — CrowdStrike-Zscaler 대형 딜과 OpenAI 소송</span>
+    <span class="theme-label-range">Article #24~#26</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">네트워크 연구진, '완전 복원력' 이론 완성</div>
+    <div class="article-title-en">Network Researchers Nail Down Theory of ‘Perfect Resilience’</div>
+    <div class="article-keypoint">네트워크 완전 복원력 이론 정립 — AI 인프라 루프 장애 취약 구조 4가지 특정</div>
+    <a class="article-link" href="https://www.quantamagazine.org/network-researchers-nail-down-theory-of-perfect-resilience-20261120/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/20 23:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">CrowdStrike, 사이버보안 기업 Zscaler 인수 협상 중</div>
+    <div class="article-title-en">CrowdStrike Said in Talks to Buy Cybersecurity Firm Zscaler</div>
+    <div class="article-keypoint">CrowdStrike, Zscaler 인수 협상 — 사이버보안 역대 최대 M&A 가능성 부상</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-20/crowdstrike-said-in-talks-to-buy-zscaler-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:53 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">오리건주, OpenAI 상대 $20억 소송 제기 — 학교 총격범과의 채팅 내용 인용</div>
+    <div class="article-title-en">Oregon Hits OpenAI With $2 Billion Lawsuit That Cites Chilling Chats With School Shooter</div>
+    <div class="article-keypoint">오리건주, OpenAI 상대 $20억 소송 — 미성년자 안전 위반으로 주 단위 규제 선례 형성</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/oregon-hits-openai-2-billion-lawsuit-cites-chilling-chats-school-shooter" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 05:20 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #27~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">증오범죄 조작: GOP 보좌관, 복부에 'Trump Whore' 낙서 후 위장 피습 혐의로 연방 기소</div>
+    <div class="article-title-en">Hate Hoax: GOP Aide Paid To Be Slashed, Had "Trump Whore" Scrawled On Her Belly, Then Faked Zip-Tie Ambush, Feds Say</div>
+    <div class="article-keypoint">GOP 보좌관 증오범죄 조작 혐의 — 연방 기소로 정치적 파장 예상</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/hate-hoax-gop-aide-paid-be-slashed-had-trump-whore-scrawled-her-belly-then-faked-zip-tie" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 06:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">Amazon, NYC 고객에게 Mamdani 지지 배달 법안 반대 촉구</div>
+    <div class="article-title-en">Amazon Urges NYC Customers to Oppose Mamdani-Backed Delivery Bill</div>
+    <div class="article-keypoint">Amazon, NYC 배달 법안에 고객 동원 반발 — 주문당 $5 추가 요금 경고로 압박</div>
+    <a class="article-link" href="https://www.wsj.com/business/logistics/amazon-urges-nyc-customers-to-oppose-mamdani-backed-delivery-bill-0461ea54?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 05:32 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Mamdani 뉴욕시장, 2032년까지 Rikers Island 교도소 폐쇄 계획 발표</div>
+    <div class="article-title-en">Mayor Mamdani announces plan to close New York's Rikers Island jail by 2032</div>
+    <div class="article-keypoint">NYC, Rikers Island 교도소 2032년 폐쇄 계획 발표 — 자치구별 교도소 전환으로 지연</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/mayor-mamdani-announces-plan-to-close-new-yorks-rikers-island-jail-by-2032" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/21 03:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Anteros Metals, 사모 증자 규모 C$150만으로 수정</div>
+    <div class="article-title-en">Anteros Metals amends private placement to raise up to C$1.5M</div>
+    <div class="article-keypoint">Anteros Metals, C$150만 사모 증자 규모 수정 — 소형 광물 기업 자금 조달 환경 반영</div>
+    <a class="article-link" href="https://www.investing.com/news/company-news/anteros-metals-amends-private-placement-to-raise-up-to-c15m-93CH-5042790" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/20 22:20 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
