@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-24 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/24 07:49 KST</div>
+    <div class="header-date">2026-11-24</div>
+    <div class="header-headline">Jensen Huang 복귀로 Nvidia 31.5% 급등·나스닥 7% 폭등</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Huang 복귀 후 AI 랠리 지속 여부 및 Trump 개입 부패 논란 확산 경계</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Jensen Huang 복귀 — Trump·Vance 개입과 AI 랠리 부활의 정치경제학</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#10</span>
+    </div>
+    <div class="theme-summary">Jensen Huang의 Nvidia CEO 전격 복귀가 오늘 시장 최대 이벤트로, Nvidia 주가 31.5% 급등과 함께 나스닥이 7%, S&P 500이 4.7% 폭등하며 최근 1년 이상 최대 단일일 상승을 기록했다. Trump 대통령이 Vance 부통령을 Nvidia 이사회 설득 사절로 활용하고, Bessent 재무장관이 강경 입장에서 돌연 선회하는 과정이 드러나며 행정부의 직접 개입 경로가 가시화됐다. Trump는 Huang 복귀 발표 전 보유 중이던 Nvidia 주식으로 최대 1,500만 달러의 차익을 거둔 것으로 추정되어, 민주당 주요 의원들이 부패 우려를 공식 제기했다. 이번 복귀는 AI 거래 신뢰 회복의 단기 촉매로 작용했으나, 정치 개입·지배구조 불투명성·이해충돌 의혹이 중첩되어 랠리의 지속 가능성에 구조적 불확실성을 남겼다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">AI 자본 생태계 재편 — Nvidia 복귀 수혜주·Amazon $7.5B 딜·Anthropic 코드 에이전트</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #11~#16</span>
+    </div>
+    <div class="theme-summary">Huang 복귀 효과는 Nvidia 직접 수혜를 넘어 Oracle, CoreWeave, Nebius, Iren 등 AI 클라우드 인프라 전반으로 확산됐으며, Nvidia의 생태계 금융 지원 구조가 이들 주가 급등의 핵심 배경으로 재조명됐다. Amazon은 Decart의 AI 최적화 기술을 약 75억 달러에 인수하며 자체 Trainium 칩의 속도·효율 개선을 꾀하는 전략적 베팅을 단행했고, 애널리스트들은 이를 대형 GPU 조달 대비 '비교적 저렴한' 경쟁력 확보 경로로 평가했다. Anthropic은 AI 에이전트가 코드 리뷰·수정·승인을 자동화하는 'Claude Ship'을 출시하며 개발자 생산성 플랫폼으로의 진화를 가속화했다. 이와 동시에 AI 버블 붕괴 시 낙폭 경고 목소리도 병존하며, 도트컴 버블 대비 현재 밸류에이션 과열 여부에 대한 시장 내 긴장이 유지되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">Fed 거버넌스와 통화정책 — Warsh 체제 'Fed Put' 부활 여부와 Bowman 조용한 기간 위반 조사</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #17~#20</span>
+    </div>
+    <div class="theme-summary">주식시장 급락 국면에서 Warsh 차기 의장 체제 하 'Fed Put'이 부활할지 여부가 시장의 핵심 관심사로 부상했으며, 12월 금리 인상 가시화와 맞물려 중앙은행 대응 경로의 불확실성이 고조됐다. Fed 내부 감찰관이 Michelle Bowman 이사가 Bank of America 주최 프라이빗 클라이언트 만찬에 참석하며 '조용한 기간(quiet period)' 규정을 위반했는지 여부를 조사 중인 사실이 공개됐다. ECB Philip Lane 이사는 기후변화와 통화정책의 연계성을 별도 논문으로 발표, 중앙은행의 비전통적 위험 대응 프레임워크 논의를 이어갔다. 은행 유동성·자본 요건의 후생 효과를 다룬 Fed 연구 논문도 개정 발표되어, 거시건전성 규제 최적 설계에 대한 학술·정책 논의가 동시에 진행 중이다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">지정학 리스크 다층화 — 러시아 핵 위성·우크라이나 드론 리비아 타격·SpaceX 신뢰 균열</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #21~#25</span>
+    </div>
+    <div class="theme-summary">독일 정보 당국이 러시아가 60일 이내 핵탄두 탑재 위성 '스푸트니크-S'를 우주에 배치할 수 있다고 경고했고, NATO는 이에 대응해 우주 방어 공약을 재확인했다. 우크라이나 해군 드론이 리비아 벵가지 항구에 정박 중이던 러시아 전함을 격침시키며 Kyiv의 작전 반경이 지중해까지 확장됐음을 공식 인정했고, Zelenskyy는 러시아의 추가 대규모 타격 정보를 공유하며 서방의 방공 지원을 촉구했다. 영국 국방장관은 SpaceX가 우크라이나군의 Starlink 사용을 제한한 조치가 유럽 동맹국들의 신뢰를 크게 훼손했다고 공개 비판, 민간 우주 인프라의 지정학적 신뢰성 문제가 재점화됐다. 이들 지정학 리스크는 단기적으로 에너지·방산 섹터와 안전자산 수요에 간접 압력을 형성하는 구조적 배경으로 작용하고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">AI 인프라·산업 파급 — 영국 제조업 PMI 27개월 최고와 데이터센터 수요 가시화</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #26~#28</span>
+    </div>
+    <div class="theme-summary">AI 데이터센터 건설 붐이 영국 제조업 생산을 27개월 만에 최고 수준으로 끌어올린 것으로 PMI 조사에서 확인됐으며, 디지털 인프라 투자가 실물 경제 지표에 직접 반영되는 경로가 구체화됐다. Cisco와 OpenAI가 공동으로 에이전틱 AI 보안 프로젝트 'Shirudo'를 출시하며 AI 시스템의 운영 보안 프레임워크 구축 경쟁이 가속화됐다. DNA 수복 메커니즘의 유전자 편집 기술 응용을 다룬 연구는 AI와 바이오테크 융합 분야의 기초과학 발전을 보여주는 사례로, 중장기 기술 투자 테마로서의 잠재력을 시사한다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #29~#30</span>
+    </div>
+    <div class="theme-summary">달러 추가 강세 여력에 대해 Goldman Sachs가 금리 경로를 근거로 긍정적 시각을 유지했으며, 이는 신흥국 통화 및 원자재 가격 흐름에 간접적 영향을 미치는 변수다. Amazon의 반지의 제왕 시리즈 관련 콘텐츠 전략 논란은 스트리밍 플랫폼의 콘텐츠 ROI 의문을 재소환하는 사례로 남는다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Jensen Huang 복귀 — Trump·Vance 개입과 AI 랠리 부활의 정치경제학</span>
+    <span class="theme-label-range">Article #1~#10</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">Jensen Huang 복귀 최대 수혜주는 어디인가</div>
+    <div class="article-title-en">These stocks are the biggest gainers after Jensen Huang’s return to Nvidia</div>
+    <div class="article-keypoint">Jensen Huang 복귀 — Nvidia 31.5% 급등으로 AI 랠리 신뢰 단기 회복</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/these-stocks-are-the-biggest-gainers-after-jensen-huangs-return-to-nvidia-bb886140?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">민주당 의원들, Jensen Huang Nvidia 복귀 과정의 Trump 개입에 부패 우려 제기</div>
+    <div class="article-title-en">Top Democrats raise corruption concerns after Trump involvement in Jensen Huang’s Nvidia reinstatement – live</div>
+    <div class="article-keypoint">민주당, Trump·Huang 복귀 개입 부패 의혹 공식 제기 — 지배구조 리스크 정치화</div>
+    <a class="article-link" href="https://www.theguardian.com/us-news/live/2026/nov/23/donald-trump-democrats-republicans-presidential-primary-midterms-house-latest-news-updates" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 07:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Bessent의 Jensen Huang에 대한 태도 급변이 보여주는 Trump와 중국의 관계</div>
+    <div class="article-title-en">Peterson: Here’s what Bessent’s about-face on Jensen Huang reveals about Trump and China</div>
+    <div class="article-keypoint">Bessent 태도 급선회 — 행정부의 Nvidia 개입 경로와 대중국 칩 정책 신뢰성 훼손</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/11/23/nvidia-jensen-huang-trump-bessent-china.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Jensen Huang 복귀에 미국 증시 1년여 만에 최대 상승</div>
+    <div class="article-title-en">U.S. stocks see best day in more than a year, as return of Jensen Huang revives AI enthusiasm</div>
+    <div class="article-keypoint">Huang 복귀로 나스닥 7%·S&P 4.7% 폭등 — AI 무역 신뢰 회복의 최대 단일일 반등</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/u-s-stocks-see-best-day-in-more-than-a-year-as-return-of-jensen-huang-revives-ai-enthusiasm-c3b9d274?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:51 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">Trump, Vance를 Nvidia 이사회 설득 사절로 보내 CEO 복귀 도왔다</div>
+    <div class="article-title-en">Trump tapped Vance as emissary to Nvidia board to ease concerns about reinstating CEO, source says</div>
+    <div class="article-keypoint">Trump, Vance를 Nvidia 이사회 설득 사절로 활용 — 행정부 기업 지배구조 개입 전례 형성</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-tapped-vance-as-emissary-to-nvidia-board-to-ease-concerns-about-reinstating-ceo-source-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump, Vance에게 Jensen Huang의 Nvidia 복귀 설득 요청</div>
+    <div class="article-title-en">Trump Asked Vance to Help Persuade Nvidia to Bring Back Jensen Huang</div>
+    <div class="article-keypoint">Trump, Vance 통해 Huang 복귀 주도 — AI 랠리 방어와 정치적 주가 개입 논란 동시 점화</div>
+    <a class="article-link" href="https://www.wsj.com/politics/policy/nvidia-ceo-trump-vance-jensen-huang-bdec91c3?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 04:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Trump, Huang 복귀 추진으로 AI 거래에 하방 지지선 형성</div>
+    <div class="article-title-en">Trump Puts a Floor Under AI Trade With Push for Huang’s Return</div>
+    <div class="article-keypoint">Trump, AI 랠리 붕괴 직전 Huang 복귀 추진 — 행정부가 AI 주가 하방 지지선 역할 자임</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-23/trump-puts-a-floor-under-ai-trade-with-push-for-huang-s-return" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:29 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">Trump, Huang 복귀 후 Nvidia 주식으로 최대 $1,500만 차익 추정</div>
+    <div class="article-title-en">Trump made up to $15mn on Nvidia shares after Huang’s return</div>
+    <div class="article-keypoint">Trump, Nvidia 주식 최대 $1,500만 차익 — 이해충돌·내부자 거래 의혹으로 정치 리스크 확대</div>
+    <a class="article-link" href="https://www.ft.com/content/67b0a070-c2a9-4229-885a-383cca657763?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 07:21 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">나스닥 7% 급등 — Nvidia 주가 31.5% 폭등</div>
+    <div class="article-title-en">Nasdaq jumps 7% as Nvidia shares soar</div>
+    <div class="article-keypoint">Nvidia 31.5%·나스닥 7% 급등 — AI 복귀 랠리의 시장 충격 규모 가시화</div>
+    <a class="article-link" href="https://www.ft.com/content/0f5a7285-fbf1-4120-86df-c9cca29644fc?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 07:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Huang 복귀로 시장 급반등 — 지난주 낙폭 일부 회복</div>
+    <div class="article-title-en">Markets soar as Huang returns as Nvidia CEO</div>
+    <div class="article-keypoint">Huang 복귀 선반영 랠리 — 지난주 손실의 일부만 회복, 추가 변동성 경계 필요</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/11/23/markets-soar-huang-returns-nvidia-ceo/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:43 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">AI 자본 생태계 재편 — Nvidia 복귀 수혜주·Amazon $7.5B 딜·Anthropic 코드 에이전트</span>
+    <span class="theme-label-range">Article #11~#16</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Oracle·CoreWeave 주가 급등 — AI 자금 흐름 지속 베팅 확산</div>
+    <div class="article-title-en">Oracle and CoreWeave stocks stage big gains as investors bet the AI cash will keep flowing</div>
+    <div class="article-keypoint">Nvidia 생태계 금융 지원 구조 — Oracle·CoreWeave 등 클라우드 인프라 주가 동반 급등</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oracle-and-coreweave-stocks-stage-big-gains-as-investors-bet-the-ai-cash-will-keep-flowing-eeb1aa85?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:24 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Nvidia 주가 재급등 — AI 랠리 추격 매수 전 알아야 할 것들</div>
+    <div class="article-title-en">Nvidia’s stock is surging again. What to know before chasing the AI rally.</div>
+    <div class="article-keypoint">Huang 복귀 AI 랠리 — 단기 안도 vs. 추가 변동성 대비 필요성 병존</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidias-stock-is-surging-again-what-to-know-before-chasing-the-ai-rally-226688d7?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 07:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">Amazon, 자체 칩 성능 향상을 위한 '저비용' 해법 발견 가능성</div>
+    <div class="article-title-en">Amazon may have just found a ‘cheap’ way to get a lot more out of its chips</div>
+    <div class="article-keypoint">Amazon, Decart $7.5B 인수 — Trainium 칩 경쟁력 강화와 AI 최적화 기술 내재화 가속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/amazon-may-have-just-found-a-cheap-way-to-get-a-lot-more-out-of-its-chips-bd822bd5?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:33 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">Anthropic, Claude Ship 출시 — AI 에이전트가 코드 리뷰·수정·승인 자동화</div>
+    <div class="article-title-en">Anthropic launches Claude Ship, letting AI agents review, fix, and approve code changes</div>
+    <div class="article-keypoint">Anthropic Claude Ship 출시 — AI 에이전트의 코드 자동화로 개발 파이프라인 병목 해소</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/23/anthropic-launches-claude-ship-letting-ai-agents-review-fix-and-approve-code-changes/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">AI 버블 붕괴 시 충격은 심각할 것 — 과거 버블과의 비교</div>
+    <div class="article-title-en">If the AI Bubble Is Bursting, the Fallout Will Be Severe</div>
+    <div class="article-keypoint">AI 버블 붕괴 시 낙폭 심화 경고 — S&P 500 조정 속 도트컴 버블 대비 밸류에이션 재점검</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/ai-bubble-why-fallout-will-be-severe-by-desmond-lachman-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/23 23:04 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Amazon, AI 최적화 기술 확보 위해 Decart를 $75억에 인수 — Trainium 칩 판매 준비</div>
+    <div class="article-title-en">Amazon snaps up Decart’s AI optimization tech for $7.5B as it prepares to sell Trainium chips</div>
+    <div class="article-keypoint">Amazon, Decart 인수로 Trainium 칩 성능 개선 — 대형 GPU 의존도 축소 전략 구체화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/23/amazon-snaps-up-decarts-ai-optimization-tech-for-7-5b-as-it-prepares-to-sell-trainium-chips/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 02:14 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">Fed 거버넌스와 통화정책 — Warsh 체제 'Fed Put' 부활 여부와 Bowman 조용한 기간 위반 조사</span>
+    <span class="theme-label-range">Article #17~#20</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Fed 연구 논문: 은행 유동성·자본 요건의 후생 효과(개정판)</div>
+    <div class="article-title-en">FEDS Paper: The Welfare Effects of Bank Liquidity and Capital Requirements(Revised)</div>
+    <div class="article-keypoint">은행 유동성·자본 규제 최적 설계 논쟁 — 거시건전성 정책 후생 효과 재검토 가속</div>
+    <a class="article-link" href="https://www.federalreserve.gov/econres/feds/the-welfare-effects-of-bank-liquidity-and-capital-requirements.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 02:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Philip R. Lane: 기후변화와 통화정책</div>
+    <div class="article-title-en"> Philip R. Lane: Climate change and monetary policy</div>
+    <div class="article-keypoint">ECB Lane, 기후변화-통화정책 연계 논문 발표 — 비전통적 중앙은행 역할 논의 확대</div>
+    <a class="article-link" href="https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261123~b5816801a0.en.pdf" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/23 23:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Fed 내부 감찰관, Bowman 이사의 커뮤니케이션 규정 위반 여부 조사</div>
+    <div class="article-title-en">Fed’s Watchdog Probes Whether Bowman Broke Communications Rules</div>
+    <div class="article-keypoint">Fed 감찰관, Bowman 이사 조용한 기간 위반 여부 조사 — 중앙은행 거버넌스 신뢰 균열</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-23/fed-s-watchdog-probes-whether-bowman-broke-communications-rules" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">증시 급락이 Warsh 체제 'Fed Put' 부활 가능성 논쟁 재점화</div>
+    <div class="article-title-en">US Stock Selloff Revives Question of a Fed ‘Put,’ This Time Under Warsh</div>
+    <div class="article-keypoint">Warsh 체제 'Fed Put' 부활 여부 — 12월 금리 인상 가시화 속 시장 안전망 불확실성 고조</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-11-23/us-stock-selloff-revives-question-of-a-fed-put-this-time-under-warsh" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/23 21:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">지정학 리스크 다층화 — 러시아 핵 위성·우크라이나 드론 리비아 타격·SpaceX 신뢰 균열</span>
+    <span class="theme-label-range">Article #21~#25</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Zelenskyy, 러시아 우크라이나 추가 공격 계획 정보 입수 발표</div>
+    <div class="article-title-en">Zelenskiy says intelligence shows Russia planning new strikes on Ukraine</div>
+    <div class="article-keypoint">Zelenskyy, 러시아 추가 타격 정보 공개 — 서방 방공 지원 확대 촉구 긴박감 고조</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/zelenskiy-says-intelligence-shows-russia-planning-new-strikes-on-ukraine" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 06:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">영국, SpaceX의 우크라이나 위성통신 제한이 신뢰를 훼손했다고 밝혀</div>
+    <div class="article-title-en">Britain says SpaceX restrictions in Ukraine 'dented confidence and trust'</div>
+    <div class="article-keypoint">영국, SpaceX의 Starlink 우크라이나 제한 공개 비판 — 민간 우주 인프라 지정학 신뢰도 훼손</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/britain-says-spacex-restrictions-in-ukraine-dented-confidence-and-trust" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 02:37 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">NATO, 러시아 핵 위성 보도에 우주 방어 공약 재확인</div>
+    <div class="article-title-en">NATO vows space defence after Russia nuclear satellite report</div>
+    <div class="article-keypoint">러시아 핵 위성 배치 계획 — NATO 우주 방어 공약 재확인으로 지정학 리스크 프리미엄 상승</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/nato-vows-space-defence-after-russia-nuclear-satellite-report" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 04:59 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">우크라이나 해군 드론, 리비아에서 러시아 전함 격침</div>
+    <div class="article-title-en">Ukrainian Naval Drones Sink Russian Warship in Libya</div>
+    <div class="article-keypoint">우크라이나 드론, 리비아 항구 러시아 전함 격침 — 작전 반경 지중해 확장으로 분쟁 지리적 확대</div>
+    <a class="article-link" href="https://oilprice.com/Latest-Energy-News/World-News/Ukrainian-Naval-Drones-Sink-Russian-Warship-in-Libya.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 00:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">독일, 러시아가 60일 이내 핵무기를 우주에 배치할 준비 중이라고 경고</div>
+    <div class="article-title-en">Russia poised to put nuclear weapon in space within 60 days, Germany warns</div>
+    <div class="article-keypoint">독일, 러시아 핵 위성 60일 내 배치 경고 — 우주 핵 억제력 재편으로 안보 리스크 프리미엄 급부상</div>
+    <a class="article-link" href="https://www.ft.com/content/dd00f616-1fef-4a26-a5f9-2b1bf83cc489?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 02:37 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">AI 인프라·산업 파급 — 영국 제조업 PMI 27개월 최고와 데이터센터 수요 가시화</span>
+    <span class="theme-label-range">Article #26~#28</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">DNA 수복 시스템의 놀라운 정교함 — 유전자 편집 기술의 핵심 원리</div>
+    <div class="article-title-en">The Incredible, Elegant DNA Repair System Makes Gene Editing Work</div>
+    <div class="article-keypoint">DNA 수복 시스템의 유전자 편집 응용 — AI·바이오 융합 기초과학 중장기 투자 테마 부상</div>
+    <a class="article-link" href="https://www.quantamagazine.org/the-incredible-elegant-dna-repair-system-makes-gene-editing-work-20261123/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 00:27 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Cisco·OpenAI, 에이전틱 AI 보안 프로젝트 Shirudo 출범</div>
+    <div class="article-title-en">Cisco, OpenAI Launch Project to Safeguard Agentic AI</div>
+    <div class="article-keypoint">Cisco-OpenAI 에이전틱 AI 보안 프로젝트 Shirudo — 운영 보안 프레임워크 구축 경쟁 가속</div>
+    <a class="article-link" href="https://www.wsj.com/tech/cisco-openai-launch-project-to-safeguard-agentic-ai-f48e6420?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 07:12 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">AI 데이터센터, 영국 공장 수요 견인 — PMI 27개월 최고 기록</div>
+    <div class="article-title-en">AI Data Centers Drive Up Demand at Britain’s Factories, PMI Says</div>
+    <div class="article-keypoint">AI 데이터센터 건설 붐 — 영국 제조업 PMI 27개월 최고로 실물 경제 직접 견인 확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-23/ai-data-centers-drive-up-demand-at-britain-s-factories-pmi-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/23 18:30 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #29~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Amazon 반지의 제왕 시리즈, 과도한 정치적 올바름으로 또 다시 실패</div>
+    <div class="article-title-en">Amazon's Lord Of The Rings Series Triples Down On Wokeness...And Failure</div>
+    <div class="article-keypoint">Amazon 반지의 제왕 시리즈 흥행 부진 지속 — 스트리밍 콘텐츠 ROI 전략 재검토 압박</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/amazons-lord-rings-series-doubles-down-wokenessand-failure" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 05:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Goldman Sachs, 금리 경로 고려 시 달러 추가 강세 여력 남아있다</div>
+    <div class="article-title-en">Goldman Says Dollar ‘Has Some Fight’ Left on Rates Path</div>
+    <div class="article-keypoint">Goldman, 달러 추가 강세 여력 유지 전망 — 금리 경로가 신흥국 통화·원자재 흐름 좌우</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-23/goldman-s-trivedi-says-dollar-has-some-fight-left-on-rate-path" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/24 02:37 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
