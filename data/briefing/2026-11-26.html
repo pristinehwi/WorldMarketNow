@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-26 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/26 07:48 KST</div>
+    <div class="header-date">2026-11-26</div>
+    <div class="header-headline">Nvidia 지배구조 혼란 속 AI 칩 패권 정치화 가속</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Nvidia 주가 추가 반납 여부 및 PCE 3.3% 고착화에 따른 Fed 동결 장기화 재확인 여부</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Nvidia 지배구조 정치화 — Jensen Huang 복귀의 허실과 AI 칩 패권 균열</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#7</span>
+    </div>
+    <div class="theme-summary">Jensen Huang의 Nvidia CEO 복귀가 Trump 행정부의 직접 개입에 의한 것이라는 해석이 확산되면서, AI 칩 패권이 기업 거버넌스가 아닌 정치적 힘에 의해 좌우된다는 우려가 새롭게 부각됐다. Nvidia 주가는 월요일 반등분을 대부분 반납했고, Vanda Research에 따르면 지난주 저점 매수한 개인 투자자들의 차익은 거의 소멸됐다. Trump가 Nvidia CEO 복귀의 공을 자처하는 한편, 오픈소스 AI 진영에서는 이번 사태를 Anthropic 등 클로즈드 AI 세력의 '쿠데타'로 규정하며 반발하고 있다. 미국의 대중국 AI 칩 수출 통제가 강화되는 가운데, Nvidia가 미국 기술 패권의 핵심 병목이라는 사실이 오히려 그 지배구조를 정치적으로 취약하게 만드는 역설이 부각된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Anthropic IPO 후 진통 — SpaceX 대비 초라한 출발과 AI 플랫폼 밸류에이션 재점검</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #8~#11</span>
+    </div>
+    <div class="theme-summary">Anthropic이 IPO 직후 10% 급락했다가 劇的으로 반등하는 등 공개시장에서 극심한 변동성을 경험하면서, $81.3B 밸류에이션의 신뢰성이 시험대에 올랐다. SpaceX의 안정적인 상장 초기 흐름과 대비되며 Anthropic의 첫 거래일 험로가 더욱 선명하게 대비된다. CEO Dario Amodei는 AI에 인간 통제권을 이양한다는 경쟁사들의 비판을 '터무니없다'고 반박했으나, Claude 출력물이 소프트웨어로 직접 설치되는 기능 확장은 자율화 논란에 불을 지피고 있다. 오픈소스 AI 진영은 Anthropic의 IPO 자체를 클로즈드 AI 세력의 과도한 자본 집중으로 비판하며, AI 거버넌스 갈등이 자본시장 내러티브와 충돌하는 구도가 형성되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">SpaceX 궤도 데이터센터 승인 — AI 인프라 우주화의 자본·규제 함의</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #12~#14</span>
+    </div>
+    <div class="theme-summary">FCC가 SpaceX의 우주 AI 데이터센터 위성 최대 100만 기 발사 계획을 승인하면서, AI 인프라 경쟁이 지상을 넘어 궤도로 확장되는 새로운 국면이 열렸다. FCC는 과학연구 위협 등 반대 측 주요 우려를 규제 권한 밖이라며 기각했고, 이는 향후 궤도 자원 선점 경쟁에서 SpaceX가 규제 선점 우위를 확보했음을 의미한다. Musk와 SpaceX는 별도로 약 $178억 규모의 Trump 계정 주식 기부 계획을 발표하며 정치적 연대를 강화했다. AI 데이터센터의 전력·토지 제약이 심화되는 현실에서 궤도 데이터센터는 차세대 인프라 투자 테마로 부상하고 있으나, 경제성과 기술적 실현 가능성에 대한 시장의 검증은 아직 초기 단계다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">PCE 3.3% 고착·Beige Book 임금 상승 — Fed 동결 장기화와 Warsh 체제 딜레마</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#18</span>
+    </div>
+    <div class="theme-summary">Fed이 선호하는 인플레이션 지표인 근원 PCE가 전년 대비 3.3% 상승(2023년 이후 최고)을 기록하면서, 연내 금리 인하 기대가 한층 더 후퇴했다. Beige Book은 대부분의 지역에서 완만한 성장과 함께 임금 압력이 높아지고 있음을 확인해 Fed의 조기 완화 여지를 더욱 좁혔다. Steve Liesman은 Greenspan이 1990년대 인터넷 붐에서 생산성 향상을 믿고 금리를 동결한 사례를 들어, Warsh가 AI 붐에서 같은 베팅을 하기 어려운 이유로 현재의 인플레이션 고착화를 지적했다. Bowman 연준 부의장은 미주 지역 은행 감독 현대화 의제를 발표하며, 규제 환경 변화에 대응하는 연준의 구조 개혁 방향을 제시했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">AI 생태계 자본 재편 — Oracle·CoreWeave 반등, Amazon-Meta 협업, EU €500억 투자</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #19~#23</span>
+    </div>
+    <div class="theme-summary">대규모 매도세 이후 Oracle과 CoreWeave 등 AI 인프라 관련주가 장 마감 전 반등에 성공하며 AI 투자 심리가 완전히 붕괴되지 않았음을 보여줬다. Amazon과 Meta가 AI 에이전트 Muse의 2개월 봉쇄를 해제하는 협상을 진행 중인 것으로 알려지며, 빅테크 간 AI 플랫폼 연합의 가능성이 열리고 있다. OpenAI는 ChatGPT와 Work 경험을 통합하면서 헤비 유저의 사용량 한도를 줄이는 정책을 도입해 수익화 압박이 가시화되고 있다. EU는 미국 및 비유럽 기술 의존도 축소를 목표로 AI·양자컴퓨팅 분야에 €500억 투자 계획을 발표하며, 글로벌 AI 자본 경쟁이 국가 단위로 확전되는 양상을 보이고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #24~#30</span>
+    </div>
+    <div class="theme-summary">AI 테크 급락 속에서도 HP가 실적 서프라이즈로 두드러진 상승세를 보였으며, 거시 투자자 Raoul Pal은 달러가 주식·암호화폐의 선행 지표라고 강조하며 2027년 경기침체 가능성을 낮게 봤다. 미국의 새 관세 발표는 인도에 무역협정 체결 압박을 높였고, 인도 수출업체들의 불확실성이 확대됐다. 영국에서는 데이터센터 수요 급증에 따른 아마존 유역 불법 주석광 채굴 문제가 환경·규제 리스크로 부각됐으며, Trump의 출생 시민권 제한 행정명령은 연방 판사에 의해 두 번째로 저지됐다. 우크라이나 종전 협상에서 Trump는 민주당의 의회 탈환 전 크렘린 친화적 합의를 원하는 것으로 분석되나 협상 창이 좁아지고 있다는 평가가 제기됐다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Nvidia 지배구조 정치화 — Jensen Huang 복귀의 허실과 AI 칩 패권 균열</span>
+    <span class="theme-label-range">Article #1~#7</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">미국 AI 초크포인트를 누가 통제하는가?</div>
+    <div class="article-title-en">Who Controls America’s AI Chokepoint?</div>
+    <div class="article-keypoint">Nvidia AI 칩 패권이 정치적 힘에 좌우 — 기업 거버넌스 공백이 미국 기술 헤게모니 취약점</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/nvidia-scandal-who-controls-americas-ai-chokepoint-by-carla-norrlof-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/25 22:52 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">반도체, 지정학, 그리고 AI의 한계</div>
+    <div class="article-title-en">Microchips, Geopolitics, and the Limits of AI</div>
+    <div class="article-keypoint">반도체가 현대판 석유 — 지정학적 무기화 가속 속 공급망 통제권 경쟁 심화</div>
+    <a class="article-link" href="https://geopoliticalfutures.com/microchips-geopolitics-and-the-limits-of-ai/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 07:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">Nvidia 주가, 월요일 반등분 대부분 반납 — 저점매수 차익 소멸</div>
+    <div class="article-title-en">Nvidia’s stock has given back a big chunk of Monday’s rally as dip buyers cash in</div>
+    <div class="article-keypoint">Nvidia, 월요일 반등분 대부분 반납 — 저점매수 개인투자자 차익 소멸로 추가 하락 압력</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidias-stock-is-giving-back-more-than-half-of-mondays-rally-as-dip-buyers-cash-in-ee4fa52c?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 07:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">Trump이 정말 Nvidia CEO 복귀의 공을 주장할 수 있나? — Full Story 팟캐스트</div>
+    <div class="article-title-en">Can Trump really claim the Nvidia CEO’s return? – Full Story podcast</div>
+    <div class="article-keypoint">Trump, Nvidia CEO 복귀 공 자처 — AI 칩 기업 거버넌스의 정치화가 투자 불확실성 증폭</div>
+    <a class="article-link" href="https://www.theguardian.com/australia-news/audio/2026/nov/26/can-trump-really-claim-the-nvidia-ceos-return-full-story-podcast" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/25 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">AI 거래 압박 지속 속 미국 주식 변동성 장 마감 하락</div>
+    <div class="article-title-en">US stocks close lower in volatile session as AI trade remains under pressure</div>
+    <div class="article-keypoint">AI 무역 긴장 속 Anthropic 반등·Nvidia 하락 — AI 섹터 내 종목 차별화 심화</div>
+    <a class="article-link" href="https://www.ft.com/content/705eb84c-801d-4a96-b908-e366511e886a?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 06:26 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">Trump의 Nvidia '전례 없는 개입'</div>
+    <div class="article-title-en">Trump’s ‘Unprecedented Intervention’ in Nvidia</div>
+    <div class="article-keypoint">Trump의 Nvidia 개입, '전례 없는' 평가 — AI 국가 자산화와 기업 독립성 훼손 논란</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/11/25/jensen-huang-reinstated-nvidia-trump-pardon-ai-big-tech/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 04:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">Anthropic의 Claude 출력물, 소프트웨어로 직접 설치 가능</div>
+    <div class="article-title-en">Anthropic’s Claude Output Can Be Installed as Software</div>
+    <div class="article-keypoint">Claude 출력물 소프트웨어 직접 설치 기능 — AI 자율화 경계 확장과 거버넌스 논란 재점화</div>
+    <a class="article-link" href="https://www.wsj.com/cio-journal/anthropics-claude-output-can-be-installed-as-software-e840ac45?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/25 23:26 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Anthropic IPO 후 진통 — SpaceX 대비 초라한 출발과 AI 플랫폼 밸류에이션 재점검</span>
+    <span class="theme-label-range">Article #8~#11</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">'나는 진짜 쿠데타였다고 생각한다': Aaron Day, Nvidia·Anthropic·오픈소스 AI 전쟁을 말하다</div>
+    <div class="article-title-en">"I Actually Do Think It Was A Coup": Aaron Day On Nvidia, Anthropic, & The War On Open-Source AI</div>
+    <div class="article-keypoint">오픈소스 진영, Anthropic IPO를 'AI 쿠데타'로 규정 — $81.3B 밸류와 거버넌스 갈등 충돌</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/i-actually-do-think-it-was-coup-aaron-day-nvidia-anthropic-war-open-source-ai" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 07:05 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Anthropic, 10% 급락 후 극적 반등 — 시장의 劇的인 회복 | 클로징 벨</div>
+    <div class="article-title-en">Anthropic Rebounds From 10% Drop as Markets Stage Dramatic Recovery | Closing Bell</div>
+    <div class="article-keypoint">Anthropic 10% 급락 후 극적 반등 — IPO 직후 변동성 확대로 밸류에이션 신뢰 재시험</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-25/anthropic-rebounds-from-selloff-closing-bell-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 06:38 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Anthropic의 IPO 후 고전, SpaceX의 순조로운 출발과 대조</div>
+    <div class="article-title-en">Anthropic’s Post-IPO Woes Contrast With SpaceX’s Start</div>
+    <div class="article-keypoint">Anthropic, SpaceX 대비 초라한 IPO 출발 — 기술적·시장 요인이 추가 하락 압력 지속 전망</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-25/anthropic-s-post-ipo-struggles-contrast-with-spacex-s-early-days" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 01:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">Anthropic CEO Dario Amodei, AI에 인간 통제권 이양 비판 '터무니없다' 반박</div>
+    <div class="article-title-en">Anthropic’s Dario Amodei calls accusations of surrendering human control to AI ‘absurd’</div>
+    <div class="article-keypoint">Amodei, AI 통제권 이양 비판 반박 — Claude 자율화 논란 속 AI 거버넌스 갈등 심화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/25/anthropics-dario-amodei-calls-accusations-of-surrendering-human-control-to-ai-absurd/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 04:44 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">SpaceX 궤도 데이터센터 승인 — AI 인프라 우주화의 자본·규제 함의</span>
+    <span class="theme-label-range">Article #12~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">Elon Musk와 SpaceX, 약 $178억을 'Trump 계정'에 기부 예정</div>
+    <div class="article-title-en">Elon Musk and SpaceX to donate roughly $17.8 billion to ‘Trump accounts’</div>
+    <div class="article-keypoint">SpaceX $178억 규모 Trump 계정 주식 기부 — Musk의 정치적 연대가 자본시장 이해와 교차</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/elon-musk-and-spacex-to-donate-roughly-17-8-billion-to-trump-accounts-071c12e1?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 06:50 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">FCC, SpaceX의 우주 AI 데이터센터 위성 발사 계획 승인</div>
+    <div class="article-title-en">FCC approves SpaceX plan to put AI data centers in space</div>
+    <div class="article-keypoint">FCC, SpaceX 궤도 데이터센터 위성 100만 기 발사 승인 — AI 인프라 우주화 규제 선례</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/25/fcc-approves-spacex-plan-to-put-ai-data-centers-in-space/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 05:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">미국, SpaceX의 궤도 데이터센터 위성 최대 100만 기 발사 허가</div>
+    <div class="article-title-en">US clears SpaceX to launch up to one million orbital data centre satellites</div>
+    <div class="article-keypoint">FCC, SpaceX 궤도 데이터센터 위성 최대 100만 기 발사 허가 — 우주 인프라 선점 가속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/us-clears-spacex-to-launch-up-to-one-million-orbital-data-centre-satellites" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 06:05 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">PCE 3.3% 고착·Beige Book 임금 상승 — Fed 동결 장기화와 Warsh 체제 딜레마</span>
+    <span class="theme-label-range">Article #15~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">Bowman 부의장, '미주 은행 감독 현대화: 공동 의제' 연설</div>
+    <div class="article-title-en">Bowman, Modernizing Banking Supervision: A Shared Agenda for the Americas</div>
+    <div class="article-keypoint">Bowman 연준 부의장, 미주 은행 감독 현대화 의제 발표 — 규제 개혁 방향 주시 필요</div>
+    <a class="article-link" href="https://www.federalreserve.gov/newsevents/speech/bowman20261125a.htm" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/25 21:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Liesman: Greenspan이 생산성에 베팅할 수 있었던 이유 — Warsh는 왜 금리 인상이 필요한가</div>
+    <div class="article-title-en">Liesman: Why Greenspan could bet on productivity — and Warsh needs to hike</div>
+    <div class="article-keypoint">Warsh, Greenspan식 생산성 베팅 불가 — 근원 PCE 고착이 AI 발 금리 동결 정당화 불허</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/11/25/kevin-warsh-greenspan-fed-rates-ai-inflation.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 06:56 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">PCE 데이터가 Fed 정책에 의미하는 것</div>
+    <div class="article-title-en">What the PCE Data Means for Fed Policy</div>
+    <div class="article-keypoint">근원 PCE 3.3%(2023년 이후 최고) — 연내 금리 인하 기대 추가 후퇴, 동결 장기화 확인</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/videos/2026-11-25/what-the-pce-data-means-for-fed-policy-video" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/25 23:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">Fed Beige Book, 완만한 성장과 임금 압력 상승 확인</div>
+    <div class="article-title-en">Fed Beige Book Shows Moderate Growth, Uptick in Wage Pressures</div>
+    <div class="article-keypoint">Beige Book, 임금 압력 상승·완만한 성장 확인 — Fed 조기 완화 여지 추가 축소</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-25/fed-beige-book-shows-moderate-growth-uptick-in-wage-pressures" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 04:35 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">AI 생태계 자본 재편 — Oracle·CoreWeave 반등, Amazon-Meta 협업, EU €500억 투자</span>
+    <span class="theme-label-range">Article #19~#23</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">Oracle, CoreWeave 등 테크주, 급락 후 반등</div>
+    <div class="article-title-en">Oracle, CoreWeave and other tech stocks bounce back after selloff</div>
+    <div class="article-keypoint">AI 매도세 후 Oracle·CoreWeave 반등 — AI 인프라 투자 심리 붕괴 여부 가늠자</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/oracles-stock-sinks-toward-a-3-year-low-as-the-ai-trade-continues-to-unravel-d4698d77?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 07:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">OpenAI, ChatGPT와 Work 통합하며 헤비유저 사용 한도 조기 도달 경고</div>
+    <div class="article-title-en">OpenAI says heavy ChatGPT users may hit limits sooner as it merges Chat and Work</div>
+    <div class="article-keypoint">OpenAI ChatGPT-Work 통합, 헤비유저 한도 축소 — AI 수익화 압박과 사용자 이탈 리스크</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/25/openai-says-heavy-chatgpt-users-may-hit-limits-sooner-as-it-merges-chat-and-work/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 05:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">Amazon과 Meta, AI 에이전트 Muse 봉쇄 해제 협상 중</div>
+    <div class="article-title-en">Amazon and Meta reportedly in talks to lift blockade on AI agent Muse</div>
+    <div class="article-keypoint">Amazon-Meta, AI 에이전트 Muse 봉쇄 해제 협상 — 빅테크 AI 플랫폼 연합 가능성 가시화</div>
+    <a class="article-link" href="https://techcrunch.com/2026/11/25/amazon-and-meta-reportedly-in-talks-to-lift-blockade-on-ai-agent-muse/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/25 23:10 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">EU, AI·양자컴퓨팅에 €500억 투자 계획 발표</div>
+    <div class="article-title-en">EU plans €50 billion investment in AI and quantum computing</div>
+    <div class="article-keypoint">EU AI·양자컴퓨팅 €500억 투자 계획 — 미국 의존 탈피 선언, 글로벌 AI 자본 경쟁 국가화</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/economy/article/2026/11/25/eu-plans-50-billion-investment-in-ai-and-quantum-computing_6788115_19.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/25 20:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">데이터센터가 아마존 '금보다 더 파괴적인' 불법 채굴 급증을 유발하는 방식</div>
+    <div class="article-title-en">How datacentres are driving an illegal mining rush in the Amazon ‘more devastating than gold’</div>
+    <div class="article-keypoint">데이터센터 수요가 아마존 유역 불법 주석광 채굴 급증 유발 — AI 인프라 공급망 환경 리스크</div>
+    <a class="article-link" href="https://www.theguardian.com/global-development/2026/nov/25/tin-cassiterite-brazil-amazon-illegal-mining-datacentres-evs" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/25 22:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #24~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">HP, 테크 급락장 속 실적 서프라이즈로 두드러진 강세</div>
+    <div class="article-title-en">HP’s stock is a standout gainer in the tech selloff, as an earnings beat still matters</div>
+    <div class="article-keypoint">HP 실적 서프라이즈로 AI 하락장 속 이례적 상승 — 펀더멘털 차별화 가능성 재부각</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/hps-stock-is-a-standout-gainer-in-the-tech-rout-as-an-earnings-beat-still-matters-8f6c76ad?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 06:36 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">미국 관세 제안, 인도의 무역협정 체결 압박 가중</div>
+    <div class="article-title-en">US Tariff Proposal Raises Stakes for India to Clinch Trade Deal</div>
+    <div class="article-keypoint">미국 관세 발표로 인도 무역협상 압박 가중 — 협상 타결 실패 시 추가 관세 불확실성 확대</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-25/us-tariff-proposal-raises-stakes-for-india-to-clinch-trade-deal" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 06:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">재무부, Milburn의 청년실업 대책 비용 우려 제기</div>
+    <div class="article-title-en">Treasury raises cost concerns over Milburn plan on youth unemployment</div>
+    <div class="article-keypoint">영국 재무부, 청년실업 지원 지출 절감 압박 — AI 전환기 사회 안전망 비용 갈등 부각</div>
+    <a class="article-link" href="https://www.theguardian.com/society/2026/nov/25/treasury-spending-concerns-proposed-support-youth-unemployment-milburn-review" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 04:15 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">Jensen Huang 구제는 AI 붐의 마지막 위기가 아닐 것</div>
+    <div class="article-title-en">
+        Jensen Huang’s bail-out will not be the AI boom’s last
+      </div>
+    <div class="article-keypoint">Jensen Huang 복귀 불구 Wall Street 불안 지속 — AI 붐 지속 가능성에 대한 불신 잔존</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/11/25/jensen-huangs-bail-out-will-not-be-the-ai-booms-last" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 06:09 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">거시 투자자 Raoul Pal이 주식·암호화폐의 핵심 신호로 달러를 주목하는 이유</div>
+    <div class="article-title-en">Why macro investor Raoul Pal says the dollar is the signal to watch for stocks and crypto</div>
+    <div class="article-keypoint">Raoul Pal, 달러가 주식·크립토 선행지표 — 유동성 사이클 관점의 자산배분 시그널 주목</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/why-macro-investor-raoul-pal-says-the-dollar-is-the-signal-to-watch-for-stocks-and-crypto-d36f3c49?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 04:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Trump의 출생 시민권 제한 행정명령, 두 번째 판사에 의해 저지</div>
+    <div class="article-title-en">Trump’s newest order curtailing birthright citizenship is blocked by second judge</div>
+    <div class="article-keypoint">Trump 출생 시민권 제한, 두 번째 연방판사 저지 — 이민 정책 불확실성 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trumps-newest-order-curtailing-birthright-citizenship-is-blocked-by-second-judge" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 06:31 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">Trump, 우크라이나 합의에 절박하지만 협상 창 닫히고 있다</div>
+    <div class="article-title-en">Trump Is Desperate For a Ukraine Deal, but the Window Is Closing</div>
+    <div class="article-keypoint">Trump, 민주당 의회 탈환 전 우크라이나 종전 압박 — 지정학 불확실성 창이 급속히 좁아지는 중</div>
+    <a class="article-link" href="https://foreignpolicy.com/2026/11/25/trump-putin-ukraine-russia-peace-deal-corruption-kushner-witkoff/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 01:47 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
