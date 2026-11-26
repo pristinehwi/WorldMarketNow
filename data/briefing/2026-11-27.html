@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-27 Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    color: #e8e8f0;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  /* 헤더 */
+  .header {
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: #6666aa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header-headline {
+    font-size: 15px;
+    color: #a0b4ff;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  /* TODAY'S WATCH */
+  .watch-box {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a2a);
+    border: 1px solid #2a4a7a;
+    border-left: 3px solid #4a8aff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .watch-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a8aff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .watch-text {
+    font-size: 14px;
+    color: #c8d8ff;
+    line-height: 1.6;
+  }
+  /* 테마 카드 */
+  .theme-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #1e1e3a;
+  }
+  .theme-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .theme-range {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+  .theme-summary {
+    background: #111128;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #c0c0d8;
+    line-height: 1.8;
+    border-top: 1px solid #1e1e3a;
+  }
+  /* 구분선 */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6666aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  /* 테마 레이블 (기사 목록) */
+  .theme-label {
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .theme-label-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .theme-label-range {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  /* 기사 아이템 */
+  .article-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .article-num {
+    display: inline-block;
+    background: #1e1e3a;
+    color: #8888cc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .article-title-kr {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .article-title-en {
+    font-size: 12px;
+    color: #6666aa;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .article-keypoint {
+    font-size: 12px;
+    color: #ff8888;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 8px;
+    border-left: 2px solid #ff4444;
+  }
+  .article-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #4a8aff;
+    text-decoration: none;
+    background: #0d1a2a;
+    border: 1px solid #2a4a7a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .article-link:hover { background: #1a2a4a; }
+  .article-meta {
+    font-size: 10px;
+    color: #444466;
+  }
+  /* 푸터 */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a2e;
+    text-align: center;
+    font-size: 11px;
+    color: #444466;
+  }
+  /* 모바일 */
+  @media (max-width: 480px) {
+    .header-date { font-size: 18px; }
+    .header-headline { font-size: 13px; }
+    .theme-summary { font-size: 12px; }
+    .article-title-kr { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-meta">Market Intelligence · 2026/11/27 07:48 KST</div>
+    <div class="header-date">2026-11-27</div>
+    <div class="header-headline">Nvidia 동남아 칩 선적 중단 — AI 수출통제 혼란 현실화</div>
+  </div>
+
+  <!-- TODAY'S WATCH -->
+  
+  <div class="watch-box">
+    <div class="watch-label">Today's Watch</div>
+    <div class="watch-text">Nvidia 동남아 4개국 선적 중단 여파 및 추가 수출통제 범위 확대 여부 주시</div>
+  </div>
+  
+
+  <!-- 테마 요약 카드 -->
+
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a3a5c;border-bottom:1px solid #2a5a8c;">
+      <span class="theme-title" style="color:#a8d4ff;">Nvidia 동남아 선적 중단 — AI 칩 수출통제의 공급망 충격 가시화</span>
+      <span class="theme-range" style="color:#a8d4ff;">Article #1~#5</span>
+    </div>
+    <div class="theme-summary">오늘 새롭게 부각된 점은 Nvidia가 동남아 4개국에 대한 AI 서버 선적을 실제로 중단하면서 수출통제 리스크가 이론적 위협에서 현실적 공급 충격으로 전환되었다는 것이다. 이는 단순한 지정학적 긴장을 넘어 데이터센터 붐에 의존하는 역내 AI 인프라 투자 계획에 직접적 타격을 가하고 있다. 동시에 Kioxia 같은 AI 연관 반도체주가 일본 최저 밸류에이션으로 추락하며 AI 붐의 지속 가능성에 대한 시장의 의구심이 반도체 섹터 전반으로 확산되는 양상이다. Nvidia에 대한 시장 신뢰도 역시 추가 균열 가능성이 있으며, 'Bank of AI'로 불리는 Nvidia의 복합 위험 요인은 단기 반등 이후에도 해소되지 않은 상태다. Trump 행정부의 관세 압박이 '차이나 플러스 원' 전략을 채택한 기업들에도 불똥이 튀면서 AI 공급망 다변화 전략 자체가 흔들리고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1e5c3a;border-bottom:1px solid #2e8c5a;">
+      <span class="theme-title" style="color:#a8ffcc;">Fed 거버넌스·통화정책 재편 — Andreessen의 Fed 태스크포스 개입과 매파 기조 긴장</span>
+      <span class="theme-range" style="color:#a8ffcc;">Article #6~#9</span>
+    </div>
+    <div class="theme-summary">Marc Andreessen이 Trump 동맹으로서 Fed 태스크포스에 합류해 규제 완화를 주장하고 나선 것이 오늘 새롭게 주목받는 각도다. 이는 Fed의 정치적 독립성 논쟁에 민간 빅테크 자본의 목소리가 직접 개입하는 새로운 국면을 의미한다. 한편 매파적 Fed는 금융시장 혼란에도 불구하고 인플레이션을 최우선 과제로 삼아 금리 인상 기조를 유지할 태세이며, 이는 AI 투자 붐과 직접 충돌하는 긴장을 고조시킨다. 영국 중앙은행도 헤지펀드 레버리지 급증에 따른 금융 안정 리스크에 대응해 국채 레포 시장 개혁을 추진 중이어서, 주요국 중앙은행의 금융안정 대응이 동시에 진행되는 국면이다. Andrew Bailey 영란은행 총재는 미공개 AI 모델이 암호화 체계에 가하는 위협을 경고하며 금융시스템 보안 리스크를 새로운 의제로 제기했다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c2d1a;border-bottom:1px solid #8c4d2a;">
+      <span class="theme-title" style="color:#ffc4a8;">지정학 다층화 — 관세 압박·우크라이나·러시아 핵위성·중동 긴장의 복합 작용</span>
+      <span class="theme-range" style="color:#ffc4a8;">Article #10~#14</span>
+    </div>
+    <div class="theme-summary">미국이 14개 무역 파트너국에 대한 추가 관세를 예고하며 무역협정 체결을 압박하고 있어, 글로벌 공급망 재편 압력이 한층 강화되고 있다. 러시아의 핵 탑재 위성 '스푸트니크-S'가 60일 내 발사 가능 상태로 조립 완료되었다는 보도는 우주 군사화 리스크를 새롭게 부각시키며 방산·위성 섹터에 함의를 던진다. 우크라이나는 북한이 러시아에 대한 미사일 공급을 일시 중단했다고 밝혀 러북 군사 동맹에 균열 가능성이 제기되고 있으며, Zelensky는 민주당 주도 의회로부터의 추가 군사 지원을 모색하고 있다. 이러한 다층적 지정학 리스크는 VIX 변동성과 안전자산 수요에 복합적으로 작용하고 있으며, 캐리 트레이드에 대한 월가의 경계감도 높아지고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#2d1a5c;border-bottom:1px solid #4d2a8c;">
+      <span class="theme-title" style="color:#c4a8ff;">AI 인프라·자본 재편 — 우주 데이터센터 승인과 Anthropic 직원 富의 행방</span>
+      <span class="theme-range" style="color:#c4a8ff;">Article #15~#18</span>
+    </div>
+    <div class="theme-summary">Trump 행정부가 Musk의 Starmind 위성 100만 개 발사를 통한 우주 데이터센터 계획을 승인하면서 AI 인프라의 우주화라는 새로운 자본 배치 경쟁이 가시화되었다. Mexico는 SpaceX의 멕시코 영공 사용 허가와 발사 기지 이전 가능성을 놓고 미국 항공 당국과의 협의를 요청하는 등 SpaceX 확장에 따른 외교적 마찰도 현실화되고 있다. Anthropic IPO 이후 직원들의 대규모 현금화 가능성이 주목받고 있으며, 이 자금이 자선 기관 등으로 흘러가는 경로가 AI 섹터 내 자본 재분배 패턴으로 부상하고 있다. 구리 가격은 추수감사절 연휴 반등을 보였으나 AI 관련 주의 장중 급반전이 나타나는 등 뚜렷한 모멘텀 형성에는 실패해 AI 인프라 투자 심리의 불안정성이 지속되고 있다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#1a4a5c;border-bottom:1px solid #2a7a8c;">
+      <span class="theme-title" style="color:#a8e8ff;">유럽·글로벌 거버넌스 재편 — ECB 차기 총재 부상과 EU 예산 협상 가속</span>
+      <span class="theme-range" style="color:#a8e8ff;">Article #19~#21</span>
+    </div>
+    <div class="theme-summary">스페인의 Pablo Hernandez de Cos가 Christine Lagarde의 후임 ECB 총재 유력 후보로 부상하면서 유로존 통화정책의 차기 리더십 구도가 가시화되고 있다. 그의 주요 과제는 2% 목표의 두 배에 달하는 인플레이션을 안정시키는 것이 될 전망이며, ECB의 정책 기조 연속성 여부에 시장의 관심이 모인다. EU 지도부는 Friedrich Merz 독일 총리 주도로 연내 중장기 예산 합의를 목표로 협상을 가속화하고 있으나 금요일 추가 협상은 열리지 않아 타결까지는 여전히 난항이 예상된다. 이러한 유럽 거버넌스 재편은 달러 대비 유로화 방향성 및 유럽 AI 투자 환경에 중장기적 영향을 미칠 변수로 주목된다.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header" style="background:#5c1a2d;border-bottom:1px solid #8c2a4d;">
+      <span class="theme-title" style="color:#ffa8c4;">기타</span>
+      <span class="theme-range" style="color:#ffa8c4;">Article #22~#30</span>
+    </div>
+    <div class="theme-summary">시장 충돌 공포에 따른 은퇴 자산 운용 전략, Taylor Swift 연구자 등 직접적 시장·정치·기술 맥락과 거리가 먼 기사들이 포함된다. Bitcoin은 $60,500 선 위를 유지하고 있으나 금리와 규제 불확실성이 지속되며 뚜렷한 방향성을 잡지 못하고 있다. 카자흐스탄 국내 은행들이 금광 인수를 위해 10억 달러 이상의 대출을 지원하도록 정부가 독려한 사례는 자원 국유화 압력의 새로운 양태를 보여준다. 뉴욕시 임대료 동결 판결 유지, 이민자 Medicaid 차단 소송, 그리스 PFAS 오염, 나가 독립운동가 유물 전시 등은 개별 사회·정치적 사안이다.</div>
+  </div>
+  <hr class="section-divider">
+  <div class="section-title">Articles by Theme</div>
+
+  <div class="theme-label" style="background:#1a3a5c;border:1px solid #2a5a8c;">
+    <span class="theme-label-title">Nvidia 동남아 선적 중단 — AI 칩 수출통제의 공급망 충격 가시화</span>
+    <span class="theme-label-range">Article #1~#5</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#1</span>
+    <div class="article-title-kr">AI 충격에 Kioxia, 일본 최저 밸류에이션 블루칩으로 추락 — 강세론자 주목</div>
+    <div class="article-title-en">AI Rout Makes Kioxia Japan’s Cheapest Blue Chip, Backing Bulls</div>
+    <div class="article-keypoint">AI 우려로 Kioxia 일본 최저 밸류에이션 — 반도체 섹터 전반으로 AI 회의론 확산</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-26/ai-rout-makes-kioxia-japan-s-cheapest-blue-chip-backing-bulls" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 07:30 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#2</span>
+    <div class="article-title-kr">Nvidia와 AI 트레이드 전반, 위기 아직 끝나지 않았다</div>
+    <div class="article-title-en">Nvidia and the whole AI trade aren’t out of the woods — not by a long shot</div>
+    <div class="article-keypoint">Nvidia, 수출통제·지배구조 복합 리스크 미해소 — AI 무역의 구조적 취약성 지속</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/nvidia-and-the-whole-ai-trade-arent-out-of-the-woods-not-by-a-long-shot-bccc0025?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 23:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#3</span>
+    <div class="article-title-kr">"극심한 혼란 야기": Nvidia, 동남아 4개국에 AI 칩 선적 중단</div>
+    <div class="article-title-en">"Causing Sheer Chaos": Nvidia Halts AI Chip Shipments To Four Southeast Asian Countries</div>
+    <div class="article-keypoint">Nvidia, 동남아 4개국 AI 서버 선적 중단 — 수출통제가 현실적 공급 충격으로 전환</div>
+    <a class="article-link" href="https://www.zerohedge.com/ai/nvidia-halts-ai-chip-shipments-four-southwest-asian-countries" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 00:55 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#4</span>
+    <div class="article-title-kr">트럼프의 최신 관세, '차이나 플러스 원' 전략의 허점을 드러내다</div>
+    <div class="article-title-en">Trump’s Latest Tariffs Undercut the ‘China Plus One’ Idea</div>
+    <div class="article-keypoint">트럼프 관세, '차이나 플러스 원' 다변화 기업에도 타격 — 공급망 재편 전략 흔들림</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/newsletters/2026-11-26/trump-s-latest-tariffs-undercut-the-china-plus-one-idea" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 21:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#5</span>
+    <div class="article-title-kr">의견: Nvidia에게 그 천재적 괴짜가 정말 필요한가?</div>
+    <div class="article-title-en">Opinion | Does Nvidia Really Need Its Brilliant Nutjob?</div>
+    <div class="article-keypoint">트럼프 개입으로 Jensen Huang 조기 복귀 — 투자자, 그의 실질 가치 미검증 우려</div>
+    <a class="article-link" href="https://www.wsj.com/opinion/does-nvidia-really-need-its-brilliant-nutjob-33b21d47?mod=rss_Technology" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 03:10 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1e5c3a;border:1px solid #2e8c5a;">
+    <span class="theme-label-title">Fed 거버넌스·통화정책 재편 — Andreessen의 Fed 태스크포스 개입과 매파 기조 긴장</span>
+    <span class="theme-label-range">Article #6~#9</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#6</span>
+    <div class="article-title-kr">테크 억만장자, 연방준비제도에 규제 완화 주장 위해 태스크포스 합류</div>
+    <div class="article-title-en">Tech billionaire takes his case against red tape to the Federal Reserve</div>
+    <div class="article-keypoint">Andreessen, Fed 태스크포스서 규제 완화 주장 — 중앙은행 독립성에 빅테크 자본 개입</div>
+    <a class="article-link" href="https://www.washingtonpost.com/business/2026/11/26/billionaire-marc-andreessen-takes-case-against-red-tape-federal-reserve/" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 19:00 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#7</span>
+    <div class="article-title-kr">BOE, 헤지펀드 레버리지 리스크에 레포 시장 개혁 추진</div>
+    <div class="article-title-en">BOE Prepares Repo Reform as Hedge Fund Leverage Raises Risks</div>
+    <div class="article-keypoint">BOE, 헤지펀드 레버리지 급증에 국채 레포 개혁 추진 — 금융안정 리스크 선제 대응</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-26/boe-ploughs-ahead-with-gilt-repo-market-reform-next-year" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 20:14 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#8</span>
+    <div class="article-title-kr">매파 Fed, 주식시장 혼란에도 금리 인상 기조 유지 태세</div>
+    <div class="article-title-en">Hawkish Fed poised to raise rates despite stock market turmoil</div>
+    <div class="article-keypoint">매파 Fed, 주식시장 혼란에도 금리 인상 기조 유지 — AI 투자 붐과 정면 충돌 우려</div>
+    <a class="article-link" href="https://www.ft.com/content/3890f725-66dd-4613-8a60-d9e3ea38d25a?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 23:58 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#9</span>
+    <div class="article-title-kr">Andrew Bailey 총재, 미공개 AI 모델이 암호화 보안 우려 키웠다 경고</div>
+    <div class="article-title-en">Andrew Bailey says unreleased AI models have raised encryption concerns</div>
+    <div class="article-keypoint">Bailey 영란은행 총재, 미공개 AI 모델이 금융 암호화 체계 위협한다 경고</div>
+    <a class="article-link" href="https://www.ft.com/content/450920b9-82b8-4a66-960b-5740aa7f94ae?syn-25a6b1a6=1" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 02:13 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c2d1a;border:1px solid #8c4d2a;">
+    <span class="theme-label-title">지정학 다층화 — 관세 압박·우크라이나·러시아 핵위성·중동 긴장의 복합 작용</span>
+    <span class="theme-label-range">Article #10~#14</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#10</span>
+    <div class="article-title-kr">Zelensky, 민주당 주도 신의회로부터 추가 군사 지원 모색 의향 밝혀</div>
+    <div class="article-title-en">Zelensky Says He Will Seek More Military Aid From New Dem-Controlled Congress</div>
+    <div class="article-keypoint">Zelensky, 민주당 주도 의회로부터 추가 군사 지원 모색 — 우크라 지원 지속 여부 관건</div>
+    <a class="article-link" href="https://www.zerohedge.com/geopolitical/zelensky-says-he-will-seek-more-military-aid-new-dem-controlled-congress" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 07:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#11</span>
+    <div class="article-title-kr">미국의 관세 인상 위협, 무역 파트너국에 협정 체결 압박 가중</div>
+    <div class="article-title-en">U.S. tariff-hike threats pile pressure on partners to sign trade deals</div>
+    <div class="article-keypoint">미국, 14개 무역 파트너국 추가 관세 예고 — 무역협정 체결 압박 본격화</div>
+    <a class="article-link" href="https://www.cnbc.com/2026/11/26/us-tariffs-hike-trade-agreement.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 21:46 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#12</span>
+    <div class="article-title-kr">러시아가 우주에서 핵무기를 폭발시키면 어떤 일이 벌어질까?</div>
+    <div class="article-title-en">What would happen if Russia detonated a nuclear weapon in space?</div>
+    <div class="article-keypoint">러시아, 핵 탑재 위성 60일 내 발사 가능 상태 — 우주 군사화 리스크 급부상</div>
+    <a class="article-link" href="https://www.theguardian.com/world/2026/nov/26/what-would-be-the-fallout-from-a-nuclear-armed-satellite-detonated-into-space" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 03:13 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#13</span>
+    <div class="article-title-kr">우크라이나, 북한이 러시아 동맹에 미사일 공급 일시 중단했다고 밝혀</div>
+    <div class="article-title-en">Ukraine says North Korea temporarily halted missile shipments to ally Russia</div>
+    <div class="article-keypoint">우크라이나, 북한이 러시아에 대한 미사일 공급 일시 중단 주장 — 러북 균열 가능성</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/ukraine-says-north-korea-temporarily-halted-missile-shipments-to-ally-russia" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 01:01 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#14</span>
+    <div class="article-title-kr">월가, 캐리 트레이드에 점점 더 신중해지다</div>
+    <div class="article-title-en">Wall Street se vuelve más cauteloso con el carry trade</div>
+    <div class="article-keypoint">월가, 캐리 트레이드에 경계감 고조 — 변동성 확대로 20% 수익 전략 재검토</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-26/wall-street-se-vuelve-mas-cauteloso-con-el-carry-trade-mwxrpht6" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 01:29 KST</div>
+  </div>
+  <div class="theme-label" style="background:#2d1a5c;border:1px solid #4d2a8c;">
+    <span class="theme-label-title">AI 인프라·자본 재편 — 우주 데이터센터 승인과 Anthropic 직원 富의 행방</span>
+    <span class="theme-label-range">Article #15~#18</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#15</span>
+    <div class="article-title-kr">멕시코, SpaceX 영공 사용 관련 미국과 협상 요청</div>
+    <div class="article-title-en">Mexico seeking talks with US on SpaceX airspace use</div>
+    <div class="article-keypoint">멕시코, SpaceX 영공 사용 협상 요청 — Musk 우주 사업 확장의 외교 마찰 가시화</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/mexico-seeking-talks-with-us-on-spacex-airspace-use" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 01:16 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#16</span>
+    <div class="article-title-kr">Elon Musk, 정말로 우주에 AI 데이터센터를 구축할 수 있을까?</div>
+    <div class="article-title-en">Can Elon Musk really put AI datacentres in space? - The Latest</div>
+    <div class="article-keypoint">트럼프, Musk의 우주 데이터센터 100만 위성 발사 승인 — AI 인프라 우주화 가속</div>
+    <a class="article-link" href="https://www.theguardian.com/news/video/2026/nov/26/can-elon-musk-really-put-ai-datacentres-in-space-the-latest" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 03:34 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#17</span>
+    <div class="article-title-kr">Anthropic의 돈방석에 앉은 직원들, 그 富를 어떻게 쓸까?</div>
+    <div class="article-title-en">
+        How will Anthropic’s cashed-up employees spend their riches?
+      </div>
+    <div class="article-keypoint">Anthropic IPO 후 직원 대규모 현금화 — AI 섹터 내 자본 재분배 패턴 주목</div>
+    <a class="article-link" href="https://www.economist.com/business/2026/11/26/how-will-anthropics-cashed-up-employees-spend-their-riches" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 22:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#18</span>
+    <div class="article-title-kr">구리의 추수감사절 반등, 본격 상승세의 시작은 아닐 수 있다</div>
+    <div class="article-title-en">Why Copper's Thanksgiving Bounce May Not Be the Start of Anything</div>
+    <div class="article-keypoint">구리 추수감사절 반등에도 AI주 장중 급반전 — 뚜렷한 모멘텀 형성 실패</div>
+    <a class="article-link" href="https://oilprice.com/Metals/Commodities/Why-Coppers-Thanksgiving-Bounce-May-Not-Be-the-Start-of-Anything.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 01:00 KST</div>
+  </div>
+  <div class="theme-label" style="background:#1a4a5c;border:1px solid #2a7a8c;">
+    <span class="theme-label-title">유럽·글로벌 거버넌스 재편 — ECB 차기 총재 부상과 EU 예산 협상 가속</span>
+    <span class="theme-label-range">Article #19~#21</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#19</span>
+    <div class="article-title-kr">올리가르키에 대한 반란</div>
+    <div class="article-title-en">The Revolt Against Oligarchy</div>
+    <div class="article-keypoint">억만장자 권력 집중이 민주주의·경제적 기회를 위협한다는 반(反)올리가르키 담론 부상</div>
+    <a class="article-link" href="https://www.project-syndicate.org/commentary/rise-of-oligarchy-fueling-global-backlash-youth-protests-by-jayati-ghosh-2026-11?utm_source=rss&utm_medium=feed&utm_campaign=main&utm_content=en" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 01:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#20</span>
+    <div class="article-title-kr">스페인의 Pablo Hernandez de Cos, Christine Lagarde 후임 ECB 총재 유력</div>
+    <div class="article-title-en">Spain’s Pablo Hernandez de Cos poised to succeed Christine Lagarde as European Central Bank president</div>
+    <div class="article-keypoint">Cos, Lagarde 후임 ECB 총재 유력 — 2% 두 배 인플레 안정이 최우선 과제</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/spains-de-cos-poised-to-succeed-lagarde-as-european-central-bank-president" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 00:25 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#21</span>
+    <div class="article-title-kr">EU 지도부, 연내 예산 합의 목표 — Merz 발언</div>
+    <div class="article-title-en">EU leaders aim for budget deal before the end of the year, Merz says</div>
+    <div class="article-keypoint">EU 지도부, 연내 중장기 예산 합의 목표 — 협상 가속하나 금요일 추가 회의 없어</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/europe/eu-leaders-aim-for-budget-deal-before-the-end-of-the-year-merz-says" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 06:16 KST</div>
+  </div>
+  <div class="theme-label" style="background:#5c1a2d;border:1px solid #8c2a4d;">
+    <span class="theme-label-title">기타</span>
+    <span class="theme-label-range">Article #22~#30</span>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#22</span>
+    <div class="article-title-kr">시장 붕괴가 두렵습니다. 100만 달러 은퇴 자산 중 40만 달러를 연금에 넣어야 할까요?</div>
+    <div class="article-title-en">I’m terrified of a market crash. Should I put $400,000 of my $1 million retirement savings into an annuity?</div>
+    <div class="article-keypoint">은퇴자 100만 달러 자산 중 40만 달러 연금 전환 고민 — 시장 충돌 공포 심화</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/were-in-our-50s-and-terrified-of-a-market-crash-should-we-put-400-000-of-our-1-million-retirement-savings-into-an-annuity-1943f240?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 06:45 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#23</span>
+    <div class="article-title-kr">트럼프, 추수감사절 메시지서 정적·이민자·연방정부 맹비난</div>
+    <div class="article-title-en">Trump uses Thanksgiving message to lash out at political foes, immigrants, federal government</div>
+    <div class="article-keypoint">트럼프, 추수감사절 메시지서 정적·이민자·연방정부 공격 — 정치 갈등 지속</div>
+    <a class="article-link" href="https://www.straitstimes.com/world/united-states/trump-uses-thanksgiving-message-to-lash-out-at-political-foes-immigrants-federal-government" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 03:06 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#24</span>
+    <div class="article-title-kr">카자흐스탄, 국내 은행에 금광 기업 인수 자금 지원 독려</div>
+    <div class="article-title-en">Kazakhstan Encouraged Local Banks to Finance Deal for Gold Miner</div>
+    <div class="article-keypoint">카자흐스탄, 국내 은행에 금광 인수 10억 달러 대출 독려 — 자원 국유화 압력 新양태</div>
+    <a class="article-link" href="https://www.bloomberg.com/news/articles/2026-11-26/kazakhstan-encouraged-local-banks-to-finance-deal-for-gold-miner" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 02:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#25</span>
+    <div class="article-title-kr">은퇴한 교수, Taylor Swift 연구자로 재탄생</div>
+    <div class="article-title-en">This retired professor has reinvented himself — as a Taylor Swift scholar</div>
+    <div class="article-keypoint">은퇴 교수, Taylor Swift 학자로 변신 — 시장 무관 기사</div>
+    <a class="article-link" href="https://www.marketwatch.com/story/this-retired-professor-has-reinvented-himself-as-a-taylor-swift-scholar-88456c8d?mod=mw_rss_topstories" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 23:35 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#26</span>
+    <div class="article-title-kr">난민 등 이민자들, 트럼프의 Medicaid 차단에 소송 제기</div>
+    <div class="article-title-en">Refugees, Other Immigrants Sue To Block Trump's Medicaid Cutoff</div>
+    <div class="article-keypoint">이민자, 트럼프 Medicaid 차단에 소송 제기 — 미국 사회보장 정책 법적 공방 지속</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/refugees-other-immigrants-sue-block-trumps-medicaid-cutoff" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 03:40 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#27</span>
+    <div class="article-title-kr">그리스 '미니 두바이', PFAS로 심각하게 오염된 것으로 밝혀져</div>
+    <div class="article-title-en">Greece's 'mini Dubai' is heavily contaminated with PFAS</div>
+    <div class="article-keypoint">그리스 '미니 두바이' 개발 부지, PFAS 오염 심각 — 럭셔리 개발과 환경 리스크 충돌</div>
+    <a class="article-link" href="https://www.lemonde.fr/en/les-decodeurs/article/2026/11/26/greece-s-mini-dubai-is-heavily-contaminated-with-pfas_6789400_8.html" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 02:07 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#28</span>
+    <div class="article-title-kr">옥스퍼드 박물관, 나가 독립운동가 Gaidinliu의 압수 유물 첫 공개 전시</div>
+    <div class="article-title-en">Oxford museum displays seized belongings of Naga freedom fighter Gaidinliu for first time</div>
+    <div class="article-keypoint">영국 박물관, 나가 독립운동가 유물 첫 전시 — 식민지 유물 반환 논의 맥락</div>
+    <a class="article-link" href="https://www.theguardian.com/culture/2026/nov/26/oxford-pitt-rivers-museum-naga-gaidinliu" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 04:03 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#29</span>
+    <div class="article-title-kr">Bitcoin, $60,500 선 위 유지하나 금리·규제 불안 지속</div>
+    <div class="article-title-en">Bitcoin stays afloat above $60.5k, but rates, regulatory fears persist</div>
+    <div class="article-keypoint">Bitcoin, $60,500 선 유지하나 금리·규제 불확실성에 방향성 부재 지속</div>
+    <a class="article-link" href="https://www.investing.com/news/cryptocurrency-news/bitcoin-recovers-to-605k-but-rates-regulatory-fears-persist-5052101" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/26 22:11 KST</div>
+  </div>
+  <div class="article-item">
+    <span class="article-num">#30</span>
+    <div class="article-title-kr">판사, 뉴욕시 임대료 동결 유지 판결 — Mamdani 손 들어줘</div>
+    <div class="article-title-en">Judge Upholds NYC Rent Freeze, Siding With "Reckless And Irresponsible" Mamdani Over Landlords</div>
+    <div class="article-keypoint">뉴욕시 임대료 동결 판결 유지 — 시장보다 정치·법적 사안</div>
+    <a class="article-link" href="https://www.zerohedge.com/political/judge-upholds-nyc-rent-freeze-siding-reckless-and-irresponsible-mamdani-over-landlords" target="_blank" rel="noopener">기사 원문 보기 →</a>
+    <div class="article-meta">2026/11/27 01:20 KST</div>
+  </div>
+  <div class="footer">
+    자동탐색 및 브리핑 · Junhwi Bae · WorldMarketNow
+  </div>
+
+</div>
+</body>
+</html>
